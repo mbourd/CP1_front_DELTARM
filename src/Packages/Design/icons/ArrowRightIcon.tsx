@@ -1,0 +1,10 @@
+import React from 'react';
+import { SvgIcon, SvgIconProps } from '@material-ui/core';
+
+export const ArrowRightIcon: React.FC<SvgIconProps> = (props) => {
+  return (
+    <SvgIcon viewBox={'0 0 24 24'} {...props}>
+      <path d="M22.707,11.293L15,3.586L13.586,5l6,6H2c-0.553,0-1,0.448-1,1s0.447,1,1,1h17.586l-6,6L15,20.414 l7.707-7.707C23.098,12.316,23.098,11.684,22.707,11.293z" />
+    </SvgIcon>
+  );
+};

@@ -1,0 +1,91 @@
+{
+  "name": "cp1",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "BROWSER=none react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint ./src --ext .tsx --config .eslintrc",
+    "lint:fix": "eslint ./src --ext .tsx --config .eslintrc --fix",
+    "lint:style": "stylelint './src/**/*.{ts,tsx}'",
+    "lint:style:fix": "stylelint './src/**/*.{ts,tsx}' --fix"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "@types/diff": "^4.0.2",
+    "@types/history": "^4.7.8",
+    "@types/i18next": "^13.0.0",
+    "@types/jest": "^24.0.0",
+    "@types/jwt-decode": "^2.2.1",
+    "@types/localforage": "^0.0.34",
+    "@types/lodash": "^4.14.165",
+    "@types/node": "^12.0.0",
+    "@types/react": "^16.9.0",
+    "@types/react-dom": "^16.9.0",
+    "@types/react-i18next": "^8.1.0",
+    "@types/react-router-dom": "^5.1.6",
+    "@types/styled-components": "^5.1.4",
+    "@types/superagent": "^4.1.10",
+    "diff": "^4.0.2",
+    "i18next": "^19.8.3",
+    "i18next-browser-languagedetector": "^6.0.1",
+    "jwt-decode": "^3.0.0",
+    "localforage": "^1.9.0",
+    "lodash": "^4.17.20",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-i18next": "^11.7.3",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.3",
+    "styled-components": "^5.2.0",
+    "superagent": "^6.1.0",
+    "typescript": "~3.7.2"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@types/faker": "^5.1.4",
+    "@typescript-eslint/eslint-plugin": "^4.4.1",
+    "@typescript-eslint/parser": "^4.4.1",
+    "babel-plugin-macros": "^2.8.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.4",
+    "faker": "^5.1.0",
+    "husky": "^4.3.0",
+    "prettier": "^2.1.2",
+    "stylelint": "^13.7.2",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-recommended": "^3.0.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-order": "^4.1.0",
+    "stylelint-prettier": "^1.1.2",
+    "stylelint-processor-styled-components": "^1.10.0"
+  }
+}
