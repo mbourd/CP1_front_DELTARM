@@ -1,9 +1,9 @@
 import { makeStyles, Theme } from '@material-ui/core';
 import { IBadge } from './types';
 
-export const useStyles = makeStyles<Theme, IBadge>({
+export const useStyles = makeStyles<Theme, Pick<IBadge, 'bgc' | 'color' | 'fontFamily'>>({
   badge: {
-    backgroundColor: ({ backgroundColor }) => backgroundColor || '#000000',
+    backgroundColor: ({ bgc }) => bgc || '#000000',
     color: ({ color }) => color || '#FFFFFF',
     fontFamily: ({ fontFamily }) => fontFamily || 'inherit',
   },

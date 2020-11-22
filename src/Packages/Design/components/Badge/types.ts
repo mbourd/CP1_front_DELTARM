@@ -1,5 +1,5 @@
 export interface IBadge {
-  backgroundColor?: string;
+  bgc?: string;
   color?: string;
   fontFamily?: string;
   showZero?: boolean;

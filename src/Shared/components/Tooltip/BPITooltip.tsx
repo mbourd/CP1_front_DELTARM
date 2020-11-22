@@ -14,7 +14,7 @@ export const BPITooltip: React.FC<Pick<ITooltip, 'title' | 'placement' | 'childr
       title={title}
       placement={placement}
       color={theme.color.text.main}
-      backgroundColor={theme.color.white.main}
+      bgc={theme.color.white.main}
       fontFamily={theme.font.text.main}
       fontSize={theme.sizing.normal}
     >

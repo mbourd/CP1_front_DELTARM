@@ -7,7 +7,7 @@ export const useStyles = makeStyles<Theme, Omit<ITooltip, 'children' | 'placemen
     fontSize: ({ fontSize }) => fontSize,
   },
   tooltip: {
-    backgroundColor: ({ backgroundColor }) => backgroundColor,
+    backgroundColor: ({ bgc }) => bgc,
     color: ({ color }) => color,
     border: ({ color }) => '1px solid ' + color,
     fontSize: ({ fontSize }) => fontSize,

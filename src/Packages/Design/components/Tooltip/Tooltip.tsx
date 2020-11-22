@@ -7,13 +7,13 @@ import { ITooltip } from './types';
 export const Tooltip: React.FC<ITooltip> = ({
   children,
   color = '#000000',
-  backgroundColor = '#FFFFFF',
+  bgc = '#FFFFFF',
   fontFamily = 'inherit',
   fontSize = 'inherit',
   placement = 'bottom',
   title,
 }): React.ReactElement => {
-  const classes = useStyles({ color, backgroundColor, fontFamily, fontSize });
+  const classes = useStyles({ color, bgc, fontFamily, fontSize });
 
   return (
     <MUITooltip classes={classes} arrow={true} placement={placement} title={title}>

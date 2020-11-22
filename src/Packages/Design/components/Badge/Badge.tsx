@@ -8,10 +8,10 @@ export const Badge: React.FC<IBadge> = ({
   showZero = false,
   content,
   color = '#FFFFFF',
-  backgroundColor = '#000000',
+  bgc = '#000000',
   fontFamily = 'inherit',
 }): React.ReactElement => {
-  const classes = useStyles({ color, backgroundColor, fontFamily });
+  const classes = useStyles({ color, bgc, fontFamily });
 
   return (
     <MUIBadge classes={classes} badgeContent={content} showZero={showZero}>

@@ -9,7 +9,7 @@ export const BPIBadge: React.FC<Pick<IBadge, 'content'>> = ({ children, content 
     <Badge
       content={content}
       color={theme.color.white.main}
-      backgroundColor={theme.color.active.main}
+      bgc={theme.color.active.main}
       fontFamily={theme.font.text.main}
     >
       {children}
