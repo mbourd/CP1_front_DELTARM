@@ -10,7 +10,7 @@ export const Search: React.FC = (): React.ReactElement => {
 
   return (
     <SearchStyled>
-      <InputSearch radius border={0} background={theme.color.white.main} placeholder={trans('searchPlaceholder')} />
+      <InputSearch border={0} bgc={theme.color.white.main} placeholder={trans('searchPlaceholder')} />
     </SearchStyled>
   );
 };

@@ -5,14 +5,14 @@ interface IProps {
   background: string;
   color: string;
   spacing: string;
-  radius: string | boolean;
+  radius: number;
 }
 
 export const InputBaseStyled = styled.label<IProps>`
   align-items: center;
   background-color: ${({ background }) => background};
   border: ${({ border }) => border}px solid ${({ color }) => color};
-  border-radius: ${({ radius }) => radius as string};
+  border-radius: ${({ radius }) => radius + 'px'};
   display: flex;
   padding: ${({ spacing }) => spacing};
 
@@ -21,16 +21,8 @@ export const InputBaseStyled = styled.label<IProps>`
     cursor: pointer;
   }
 
-  .MuiInputBase-root {
-    color: ${({ color }) => color};
-    width: 100%;
-  }
-
+  .MuiInputBase-root,
   .MuiInputBase-input {
-    background-color: transparent;
-    border-radius: ${({ radius }) => radius as string};
-    color: ${({ color }) => color};
-    flex: 1;
     font-family: ${({ theme }) => theme.font.text.main};
     margin-left: ${({ spacing }) => spacing};
     width: 100%;

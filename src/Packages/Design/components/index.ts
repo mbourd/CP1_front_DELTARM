@@ -3,3 +3,4 @@ export * from './Tooltip';
 export * from './Loaders';
 export * from './Popper';
 export * from './Button';
+export * from './Input';

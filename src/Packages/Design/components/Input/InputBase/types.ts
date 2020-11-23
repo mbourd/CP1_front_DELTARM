@@ -10,16 +10,16 @@ export interface IInputBase {
   /**
    * Background color.
    */
-  background?: string;
+  bgc?: string;
 
   /**
    * Color from theme.color like 'primary', 'secondary', 'text', ...
    */
   color?: Exclude<keyof IColor, keyof INotificationType>;
   /**
-   * Set border radius value. Set true to  use default value.
+   * Set border radius value in pixel.
    */
-  radius?: boolean | string;
+  radius?: number;
 
   /**
    * Input status like 'success', 'error', ...

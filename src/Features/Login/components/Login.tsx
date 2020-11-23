@@ -16,10 +16,10 @@ const Login: React.FC = (): React.ReactElement => {
         <form className={'form-container'}>
           <HeadingOne variant={'light'}>{trans('login')}</HeadingOne>
           <InputContainerStyled>
-            <InputUser radius={true} color={'white'} placeholder={trans('username')} autoFocus={true} />
+            <InputUser color={'white'} placeholder={trans('username')} autoFocus={true} bgc={'transparent'} />
           </InputContainerStyled>
           <InputContainerStyled>
-            <InputPassword radius={true} color={'white'} placeholder={trans('password')} />
+            <InputPassword color={'white'} placeholder={trans('password')} bgc={'transparent'} />
           </InputContainerStyled>
         </form>
       </div>

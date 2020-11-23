@@ -6,7 +6,7 @@ import { useTheme } from 'Styles';
 
 export const InputBase: React.FC<IInputBase> = ({
   color = 'text',
-  radius = false,
+  radius = 50,
   status,
   icon = false,
   name,
@@ -21,7 +21,7 @@ export const InputBase: React.FC<IInputBase> = ({
   type = 'text',
   value,
   border = 1,
-  background = 'transparent',
+  bgc = '#FFF',
 }): React.ReactElement => {
   const theme = useTheme();
 
@@ -31,10 +31,10 @@ export const InputBase: React.FC<IInputBase> = ({
     <InputBaseStyled
       className={status || ''}
       border={border}
-      background={background}
+      background={bgc}
       color={c ? c.main : theme.color.text.main}
       spacing={theme.spacing.xSmall}
-      radius={radius === true ? '50px' : radius}
+      radius={radius}
     >
       {icon}
       <MUIInputBase
