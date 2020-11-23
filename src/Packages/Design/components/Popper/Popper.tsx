@@ -7,18 +7,15 @@ export const Popper: React.FC<IPopper> = ({
   children,
   open,
   element,
-  classes,
   border,
   shadow,
   bgc = '#FFFFFF',
   bdr = '4px',
   placement,
-  x,
-  y,
 }): React.ReactElement => {
   return (
     <MUIPopper open={open} anchorEl={element} placement={placement}>
-      <PopperStyled x={x} y={y} border={border} shadow={shadow} bgc={bgc} bdr={bdr} className={classes || ''}>
+      <PopperStyled border={border} shadow={shadow} bgc={bgc} bdr={bdr}>
         {children}
       </PopperStyled>
     </MUIPopper>

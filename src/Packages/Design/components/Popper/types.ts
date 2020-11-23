@@ -14,14 +14,5 @@ export interface IPopper {
    * Border radius.
    */
   bdr?: string;
-  classes?: string;
   placement?: PopperPlacementType;
-  /**
-   * Horizontal placement value.
-   */
-  x?: string;
-  /**
-   * Vertical placement value.
-   */
-  y?: string;
 }
