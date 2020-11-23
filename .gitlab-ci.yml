@@ -1,0 +1,78 @@
+.only-default: &only-default
+  only:
+    - master
+    - merge_requests
+
+image: node:12-alpine
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - ./node_modules
+
+variables:
+  PROJECT_PATH: /builds/$CI_PROJECT_PATH
+  DOCKER_HOST: tcp://docker:2375/
+  DOCKER_TLS_CERTDIR: ""
+  DOCKER_DRIVER: overlay2
+
+stages:
+  - dependencies
+#  - linters and test
+  - build and deploy
+
+install dependencies:
+  <<: *only-default
+  stage: dependencies
+#  only:
+#    - master
+#    - merge_requests
+#    - tags
+  script:
+    - yarn install
+
+#check js:
+#  <<: *only-default
+#  stage: linters and test
+#  script:
+#    - yarn run eslint
+
+#check styles:
+#  <<: *only-default
+#  stage: linters and test
+#  script:
+#    - yarn run stylelint
+
+#run tests:
+#  <<: *only-default
+#  stage: linters and test
+#  script:
+#    - yarn run test
+
+deploy:
+ stage: build and deploy
+ only:
+   - mater
+ before_script:
+   - apk update && apk add openssh rsync
+   - eval $(ssh-agent -s)
+   - echo "$GITLAB_CI_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+   - mkdir -p ~/.ssh
+   - chmod 700 ~/.ssh
+   - ssh-keyscan $SERVER_HOST >> ~/.ssh/known_hosts
+   - chmod 644 ~/.ssh/known_hosts
+   - docker login $CONTAINER_REGISTRY -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN
+ script:
+   - rsync -avz -e 'ssh' $SERVER_USER@$SERVER_HOST:$DOCS_PATH $PWD/src
+   - mkdir -p $PWD/src/docs/dist/images
+   - cp -r $PWD/src/docs/dist/* $PWD/src/docs
+   - docker run --rm -t -w="/var/www/assets" -v $PWD:/var/www/assets node:12-alpine sh -c "yarn run build"
+   - docker build -t $APP_IMAGE_TAG_NAME -f ci/Dockerfile .
+   - docker push $APP_IMAGE_TAG_NAME
+   # Up UI Doc application
+   - ssh $SERVER_USER@$SERVER_HOST "
+     docker rm -f app_ui_doc &&
+     docker rmi -f $APP_IMAGE_TAG_NAME &&
+     docker login $CONTAINER_REGISTRY -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN &&
+     docker run --name app_ui_doc --restart=on-failure:10 -d -p 8080:8000 $APP_IMAGE_TAG_NAME
+     "
