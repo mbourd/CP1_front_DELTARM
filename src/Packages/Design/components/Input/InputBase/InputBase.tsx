@@ -33,7 +33,6 @@ export const InputBase: React.FC<IInputBase> = ({
       borderSize={border}
       bgc={bgc}
       fontColor={c ? c.main : theme.color.text.main}
-      paddingValue={theme.spacing.xSmall}
       radiusSize={radius}
       className={(className || '') + (status ? ' ' + status : '')}
     >

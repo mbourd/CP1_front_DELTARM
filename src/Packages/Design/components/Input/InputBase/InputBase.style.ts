@@ -4,7 +4,6 @@ interface IProps {
   borderSize: number;
   bgc: string;
   fontColor: string;
-  paddingValue: string;
   radiusSize: number;
 }
 
@@ -14,18 +13,23 @@ export const InputBaseStyled = styled.label<IProps>`
   border: ${({ borderSize }) => borderSize}px solid ${({ fontColor }) => fontColor};
   border-radius: ${({ radiusSize }) => radiusSize + 'px'};
   display: flex;
-  padding: ${({ paddingValue }) => paddingValue};
+  padding: ${({ theme }) => theme.spacing.xSmall};
 
   .MuiSvgIcon-root {
     color: ${({ fontColor }) => fontColor};
     cursor: pointer;
   }
 
+  .MuiInputBase-root {
+    width: 100%;
+  }
+
   .MuiInputBase-root,
   .MuiInputBase-input {
+    background-color: transparent};
     color: ${({ fontColor }) => fontColor};
     font-family: ${({ theme }) => theme.font.text.main};
-    margin-left: ${({ paddingValue }) => paddingValue};
+    margin-left: ${({ theme }) => theme.spacing.xSmall};
     width: 100%;
   }
 

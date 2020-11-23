@@ -8,6 +8,7 @@ import { Filter } from './Filter/Filter';
 import { cards } from './fixtures';
 import { Sort } from './Sort/Sort';
 import { Button } from 'Shared/components';
+import { Divider, Paper } from '@material-ui/core';
 
 export const Manage: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Manage');
@@ -15,17 +16,18 @@ export const Manage: React.FC = (): React.ReactElement => {
   return (
     <ManageStyled>
       <HeadingOne>{trans('manage')}</HeadingOne>
-      <div className={'search-container'}>
+      <Paper className={'search-container'} elevation={0}>
         <Search />
-      </div>
-      <div className={'filter-and-sort-container'}>
+        <Divider className={'divider'} orientation="vertical" />
         <Filter />
         <Sort />
+      </Paper>
+      <div className={'buttons-container'}>
         <Button type={'default'} size={'small'}>
-          Lancer la recherche
+          {trans('searchButtonLabel')}
         </Button>
         <Button color={'error'} size={'small'}>
-          Réinitialiser les filtres
+          {trans('resetFilterButtonLabel')}
         </Button>
       </div>
       {cards.map((card) => {

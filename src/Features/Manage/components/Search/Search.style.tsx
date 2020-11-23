@@ -1,6 +1,5 @@
-import React from 'react';
 import styled from 'styled-components/macro';
 
-export const SearchStyled = styled(({ children }) => <>{children}</>)`
-  margin-bottom: ${({ theme }) => theme.spacing.xLarge};
+export const SearchStyled = styled.div`
+  width: 100%;
 `;

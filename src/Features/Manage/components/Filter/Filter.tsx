@@ -15,7 +15,7 @@ export const Filter: React.FC = (): React.ReactElement => {
 
   return (
     <FilterStyled>
-      <FilterIcon onClick={handleClick} />
+      <FilterIcon onClick={handleClick} className={'filter-icon'} fontSize={'small'} />
       <Popper open={open} element={anchorEl} placement={'bottom-end'} border={'1px solid ' + theme.color.primary.main}>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. A adipisci consectetur expedita explicabo magnam

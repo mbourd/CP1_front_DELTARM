@@ -30,5 +30,13 @@ translation.addBatchResource({
       en: 'Classify without continuation',
       fr: 'Classer sans suite',
     },
+    searchButtonLabel: {
+      en: 'Find file',
+      fr: 'Lancer la recherche',
+    },
+    resetFilterButtonLabel: {
+      en: 'Reset filters',
+      fr: 'Réinitialiser les filtres',
+    },
   },
 });

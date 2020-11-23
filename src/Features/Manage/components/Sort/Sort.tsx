@@ -5,7 +5,7 @@ import { SortIcon } from 'Styles';
 export const Sort: React.FC = (): React.ReactElement => {
   return (
     <SortStyled>
-      <SortIcon />
+      <SortIcon className={'sort-icon'} fontSize={'small'} />
     </SortStyled>
   );
 };
