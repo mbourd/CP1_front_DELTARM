@@ -34,7 +34,6 @@ export const InputBase: React.FC<IInputBase> = ({
       background={background}
       color={c ? c.main : theme.color.text.main}
       spacing={theme.spacing.xSmall}
-      font={theme.font.text.main}
       radius={radius === true ? '50px' : radius}
     >
       {icon}

@@ -4,9 +4,9 @@ import { color } from '../../../variables';
 export const BPIColor: IColor = {
   ...color,
   primary: {
-    light: 'rgba(255, 205, 0, 0.1)',
+    light: '#faaf0b',
     main: '#FFCD00',
-    dark: '#FFCD00',
+    dark: '#e7ab00',
   },
   secondary: {
     light: '#5E514D',

@@ -2,7 +2,7 @@ import styled from 'styled-components/macro';
 import { cardHeight, stateHeight, actionsWidth } from '../types';
 
 export const ActionsStyled = styled.div`
-  background-color: ${({ theme }) => theme.color.primary.light};
+  background-color: rgba(255, 205, 0, 0.1);
   height: ${cardHeight - stateHeight}px;
   position: absolute;
   right: 0;

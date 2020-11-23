@@ -3,10 +3,8 @@ import styled from 'styled-components/macro';
 interface IProps {
   border: number;
   background: string;
-
   color: string;
   spacing: string;
-  font: string;
   radius: string | boolean;
 }
 
@@ -33,7 +31,7 @@ export const InputBaseStyled = styled.label<IProps>`
     border-radius: ${({ radius }) => radius as string};
     color: ${({ color }) => color};
     flex: 1;
-    font-family: ${({ font }) => font};
+    font-family: ${({ theme }) => theme.font.text.main};
     margin-left: ${({ spacing }) => spacing};
     width: 100%;
   }
