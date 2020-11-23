@@ -22,6 +22,7 @@ export const InputBase: React.FC<IInputBase> = ({
   value,
   border = 1,
   bgc = '#FFF',
+  className,
 }): React.ReactElement => {
   const theme = useTheme();
 
@@ -29,12 +30,12 @@ export const InputBase: React.FC<IInputBase> = ({
 
   return (
     <InputBaseStyled
-      className={status || ''}
-      border={border}
-      background={bgc}
-      color={c ? c.main : theme.color.text.main}
-      spacing={theme.spacing.xSmall}
-      radius={radius}
+      borderSize={border}
+      bgc={bgc}
+      fontColor={c ? c.main : theme.color.text.main}
+      paddingValue={theme.spacing.xSmall}
+      radiusSize={radius}
+      className={(className || '') + (status ? ' ' + status : '')}
     >
       {icon}
       <MUIInputBase

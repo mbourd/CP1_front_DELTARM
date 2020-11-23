@@ -85,4 +85,9 @@ export interface IInputBase {
    * Input value.
    */
   value?: string;
+
+  /**
+   * Additional classes.
+   */
+  className?: string;
 }

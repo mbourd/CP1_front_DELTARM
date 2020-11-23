@@ -1,30 +1,31 @@
 import styled from 'styled-components/macro';
 
 interface IProps {
-  border: number;
-  background: string;
-  color: string;
-  spacing: string;
-  radius: number;
+  borderSize: number;
+  bgc: string;
+  fontColor: string;
+  paddingValue: string;
+  radiusSize: number;
 }
 
 export const InputBaseStyled = styled.label<IProps>`
   align-items: center;
-  background-color: ${({ background }) => background};
-  border: ${({ border }) => border}px solid ${({ color }) => color};
-  border-radius: ${({ radius }) => radius + 'px'};
+  background-color: ${({ bgc }) => bgc};
+  border: ${({ borderSize }) => borderSize}px solid ${({ fontColor }) => fontColor};
+  border-radius: ${({ radiusSize }) => radiusSize + 'px'};
   display: flex;
-  padding: ${({ spacing }) => spacing};
+  padding: ${({ paddingValue }) => paddingValue};
 
   .MuiSvgIcon-root {
-    color: ${({ color }) => color};
+    color: ${({ fontColor }) => fontColor};
     cursor: pointer;
   }
 
   .MuiInputBase-root,
   .MuiInputBase-input {
+    color: ${({ fontColor }) => fontColor};
     font-family: ${({ theme }) => theme.font.text.main};
-    margin-left: ${({ spacing }) => spacing};
+    margin-left: ${({ paddingValue }) => paddingValue};
     width: 100%;
   }
 
