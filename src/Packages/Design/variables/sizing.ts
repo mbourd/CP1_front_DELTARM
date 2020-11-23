@@ -10,7 +10,7 @@ export const sizing: ISizing = {
   xSmall: '0.65rem', // 10.4
   xxSmall: '0.57rem', // 9.12
   icon: '1.625rem', // 26
-  radius: '5px',
+  radius: '4px',
   lineHeight: '20px',
   heading: {
     one: '2.8rem',
