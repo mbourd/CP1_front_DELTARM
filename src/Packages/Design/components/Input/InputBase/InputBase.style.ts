@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro';
+import { makeStyles, Theme } from '@material-ui/core';
 
 interface IProps {
   borderSize: number;
@@ -6,6 +7,18 @@ interface IProps {
   fontColor: string;
   radiusSize: number;
 }
+
+interface IUseStylesProps {
+  fontFamily: string;
+  fontColor: string;
+}
+
+export const useStyles = makeStyles<Theme, IUseStylesProps>({
+  input: {
+    fontFamily: ({ fontFamily }) => fontFamily,
+    color: ({ fontColor }) => fontColor,
+  },
+});
 
 export const InputBaseStyled = styled.label<IProps>`
   align-items: center;
@@ -28,7 +41,6 @@ export const InputBaseStyled = styled.label<IProps>`
   .MuiInputBase-input {
     background-color: transparent};
     color: ${({ fontColor }) => fontColor};
-    font-family: ${({ theme }) => theme.font.text.main};
     margin-left: ${({ theme }) => theme.spacing.xSmall};
     width: 100%;
   }

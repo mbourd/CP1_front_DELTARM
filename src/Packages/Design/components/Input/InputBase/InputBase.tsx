@@ -1,6 +1,6 @@
 import React from 'react';
 import { InputBase as MUIInputBase } from '@material-ui/core';
-import { InputBaseStyled } from './InputBase.style';
+import { InputBaseStyled, useStyles } from './InputBase.style';
 import { IInputBase } from './types';
 import { useTheme } from 'Styles';
 
@@ -21,14 +21,12 @@ export const InputBase: React.FC<IInputBase> = ({
   type = 'text',
   value,
   border = 1,
-  bgc = '#FFF',
+  bgc = '#FFFFFF',
   className,
 }): React.ReactElement => {
   const theme = useTheme();
-
   const c = theme.color[color];
-
-  // Todo: use make style
+  const classes = useStyles({ fontFamily: theme.font.text.main, fontColor: c ? c.main : theme.color.text.main });
 
   return (
     <InputBaseStyled
@@ -40,6 +38,7 @@ export const InputBase: React.FC<IInputBase> = ({
     >
       {icon}
       <MUIInputBase
+        classes={classes}
         name={name}
         autoFocus={autoFocus}
         defaultValue={defaultValue}

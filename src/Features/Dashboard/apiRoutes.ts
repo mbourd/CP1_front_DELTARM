@@ -36,7 +36,7 @@ apiRouter.registerRoute({
   method: 'get',
   queries: {
     cli_id: getEnv('CLIENT_ID'),
-    user_id: 2,
+    user_id: 1,
   },
   handler: (data) => {
     const folders = data.dashboard.dossier;
