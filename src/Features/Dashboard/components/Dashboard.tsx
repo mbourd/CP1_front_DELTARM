@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Grid } from '@material-ui/core';
 
 import { useTrans, useApi } from 'Services';
-import { HeadingOne, PageLoader } from 'Shared/components';
+import { Error, HeadingOne, PageLoader } from 'Shared/components';
 import { DashboardStyled } from './Dashboard.style';
 import { Card } from './Card/Card';
 import { ICard } from './Card/types';
@@ -16,8 +16,13 @@ const Dashboard: React.FC = (): React.ReactElement => {
   }, [send]);
 
   if (error) {
-    return <DashboardStyled>Error</DashboardStyled>;
-    // Todo: Show toast
+    const label = trans('errorLabel');
+
+    return (
+      <Error title={'Oops...'} redirect={{ label: label, link: '/' }}>
+        {trans('errorMessage')}
+      </Error>
+    );
   }
 
   if (isLoading || !data) {

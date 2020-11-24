@@ -6,6 +6,7 @@ export interface IButton {
   size?: 'small' | 'medium' | 'large';
   type?: 'default' | 'alt';
   component?: 'button' | 'a';
+  href?: string;
   disabled?: boolean;
   onClick?: (e: React.MouseEvent) => void;
 }

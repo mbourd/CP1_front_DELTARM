@@ -28,6 +28,8 @@ export const InputBase: React.FC<IInputBase> = ({
 
   const c = theme.color[color];
 
+  // Todo: use make style
+
   return (
     <InputBaseStyled
       borderSize={border}

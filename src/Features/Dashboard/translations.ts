@@ -26,5 +26,13 @@ translation.addBatchResource({
       en: 'Files to Validate',
       fr: 'Dossiers à Valider',
     },
+    errorLabel: {
+      en: 'Report the problem',
+      fr: 'Signaler le problème',
+    },
+    errorMessage: {
+      en: 'The server is not responding.',
+      fr: 'Le serveur ne répond pas.',
+    },
   },
 });
