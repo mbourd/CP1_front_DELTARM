@@ -20,36 +20,13 @@ variables:
 
 stages:
   - dependencies
-#  - linters and test
   - build and deploy
 
 install dependencies:
   <<: *only-default
   stage: dependencies
-#  only:
-#    - master
-#    - merge_requests
-#    - tags
   script:
     - yarn install
-
-#check js:
-#  <<: *only-default
-#  stage: linters and test
-#  script:
-#    - yarn run eslint
-
-#check styles:
-#  <<: *only-default
-#  stage: linters and test
-#  script:
-#    - yarn run stylelint
-
-#run tests:
-#  <<: *only-default
-#  stage: linters and test
-#  script:
-#    - yarn run test
 
 deploy develop:
   stage: build and deploy
@@ -67,7 +44,7 @@ deploy develop:
     - chmod 644 ~/.ssh/known_hosts
     - docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN
   script:
-    - yarn run build
+    - yarn run build --profile
     - cp ci/Dockerfile Dockerfile
     - cp ci/nginx.conf nginx.conf
     - docker build -t $APP_IMAGE_TAG_NAME .
