@@ -1,6 +1,6 @@
-FROM node:12-alpine
-COPY build build
-COPY ci/app.js app.js
-RUN yarn add express
-EXPOSE 8000
-CMD ["node", "app.js"]
+FROM nginx:1.19-alpine
+COPY ./build /usr/share/nginx/html
+RUN rm /etc/nginx/conf.d/default.conf
+COPY ./nginx.conf /etc/nginx/conf.d
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
