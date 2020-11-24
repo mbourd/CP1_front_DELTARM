@@ -67,7 +67,7 @@ deploy develop:
     - chmod 644 ~/.ssh/known_hosts
     - docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN
   script:
-    - yarn run build --profile
+    - yarn run build
     - cp ci/Dockerfile Dockerfile
     - cp ci/nginx.conf nginx.conf
     - docker build -t $APP_IMAGE_TAG_NAME .
