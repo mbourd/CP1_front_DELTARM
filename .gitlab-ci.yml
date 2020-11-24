@@ -3,9 +3,12 @@
     - master
     - develop
     - merge_requests
-    - ci
 
-image: node:12-alpine
+#image: node:12-alpine
+image: docker:19.03.1
+
+services:
+  - docker:19.03.1-dind
 
 cache:
   key: $CI_COMMIT_REF_SLUG
@@ -26,12 +29,12 @@ install dependencies:
   <<: *only-default
   stage: dependencies
   script:
-    - yarn install
+    - docker run --rm -w="/app" -v $PWD:/app node:12-alpine sh -c "yarn install"
 
 deploy develop:
   stage: build and deploy
   only:
-    - ci
+    - develop
   variables:
     APP_IMAGE_TAG_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
   before_script:
@@ -44,7 +47,7 @@ deploy develop:
     - chmod 644 ~/.ssh/known_hosts
     - docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN
   script:
-    - yarn run build --profile
+    - docker run --rm -w="/app" -v $PWD:/app node:12-alpine sh -c "yarn run build --profile"
     - cp ci/Dockerfile Dockerfile
     - cp ci/nginx.conf nginx.conf
     - docker build -t $APP_IMAGE_TAG_NAME .
