@@ -52,29 +52,29 @@ install dependencies:
 #    - yarn run test
 
 deploy develop:
- stage: build and deploy
- only:
-   - ci
- variables:
-   APP_IMAGE_TAG_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
- before_script:
-   - apk update && apk add openssh rsync
-   - eval $(ssh-agent -s)
-   - echo "$GITLAB_CI_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
-   - mkdir -p ~/.ssh
-   - chmod 700 ~/.ssh
-   - ssh-keyscan $SERVER_HOST_DEV >> ~/.ssh/known_hosts
-   - chmod 644 ~/.ssh/known_hosts
-   - docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN
- script:
-   - yarn run build --profile
-   - cp ci/Dockerfile Dockerfile
-   - cp ci/nginx.conf nginx.conf
-   - docker build -t $APP_IMAGE_TAG_NAME .
-   - docker push $APP_IMAGE_TAG_NAME
-   - ssh $SERVER_USER@$SERVER_HOST "
-#     docker rm -f cp1_front_dev &&
-#     docker rmi -f $APP_IMAGE_TAG_NAME &&
-     docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN &&
-     docker run --name cp1_front_dev --restart=on-failure:10 -d -p 80:80 $APP_IMAGE_TAG_NAME
-     "
+  stage: build and deploy
+  only:
+    - ci
+  variables:
+    APP_IMAGE_TAG_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+  before_script:
+    - apk update && apk add openssh rsync
+    - eval $(ssh-agent -s)
+    - echo "$GITLAB_CI_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan $SERVER_HOST_DEV >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    - docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN
+  script:
+    - yarn run build --profile
+    - cp ci/Dockerfile Dockerfile
+    - cp ci/nginx.conf nginx.conf
+    - docker build -t $APP_IMAGE_TAG_NAME .
+    - docker push $APP_IMAGE_TAG_NAME
+    - ssh $SERVER_USER@$SERVER_HOST "
+#      docker rm -f cp1_front_dev &&
+#      docker rmi -f $APP_IMAGE_TAG_NAME &&
+      docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN &&
+      docker run --name cp1_front_dev --restart=on-failure:10 -d -p 80:80 $APP_IMAGE_TAG_NAME
+      "
