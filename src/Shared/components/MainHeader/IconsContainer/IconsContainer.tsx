@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { BPITooltip, BPIBadge } from 'Shared/components';
 import { CommentIcon, FileIcon, PlayerIcon } from 'Styles';
 import { useTrans } from 'Services';
-import { IconsContainerStyled } from './MainHeader.style';
+import { IconsContainerStyled } from './IconsContainer.style';
 
 export const IconsContainer: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('MainHeader');

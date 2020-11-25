@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { BPITooltip } from 'Shared/components';
 import { FranceFlagIcon, UnitedStatesFlagIcon } from 'Styles';
 import { useTrans } from 'Services';
-import { FlagsContainerStyled } from './MainHeader.style';
+import { FlagsContainerStyled } from './FlagsContainer.style';
 
 export const FlagsContainer: React.FC = (): React.ReactElement => {
   const [trans, changeLanguage, currentLang] = useTrans('MainHeader');

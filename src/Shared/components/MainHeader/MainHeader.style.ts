@@ -41,37 +41,3 @@ export const MainHeaderStyled = styled.header`
     }
   }
 `;
-
-export const IconsContainerStyled = styled.div`
-  bottom: 0;
-  height: 36px;
-  left: 5px;
-  margin: auto;
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 290px;
-
-  a {
-    display: inline-block;
-    margin: 0 ${({ theme }) => theme.spacing.medium};
-    vertical-align: middle;
-  }
-`;
-
-export const FlagsContainerStyled = styled.div`
-  bottom: 0;
-  height: ${({ theme }) => theme.sizing.xLarge};
-  margin: auto;
-  position: absolute;
-  right: ${({ theme }) => theme.spacing.xxLarge};
-  top: 0;
-
-  .flags {
-    cursor: pointer;
-    display: inline-block;
-    line-height: ${({ theme }) => theme.sizing.xLarge};
-    margin: 0 ${({ theme }) => theme.spacing.xSmall};
-    vertical-align: middle;
-  }
-`;

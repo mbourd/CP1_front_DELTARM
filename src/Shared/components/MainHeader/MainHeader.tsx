@@ -6,8 +6,8 @@ import './translations';
 import logo from './logo.png';
 import { router, useTrans } from 'Services';
 import { MenuIcon } from 'Styles';
-import { IconsContainer } from './IconsContainer';
-import { FlagsContainer } from './FlagsContainer';
+import { IconsContainer } from './IconsContainer/IconsContainer';
+import { FlagsContainer } from './FlagsContainer/FlagsContainer';
 
 export const MainHeader: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('MainHeader');
@@ -20,7 +20,7 @@ export const MainHeader: React.FC = (): React.ReactElement => {
 
   return (
     <MainHeaderStyled id={'main-header'}>
-      <Link to={dashboardPath ? dashboardPath : ''} className={'brand'}>
+      <Link to={dashboardPath ? dashboardPath : '/'} className={'brand'}>
         <img src={logo} alt={trans('brand')} />
       </Link>
       <IconsContainer />
