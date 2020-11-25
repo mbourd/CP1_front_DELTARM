@@ -1,22 +1,17 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { MainHeaderStyled } from './MainHeader.style';
 import './translations';
+import { MainHeaderStyled } from './MainHeader.style';
 import logo from './logo.png';
 import { router, useTrans } from 'Services';
-import { MenuIcon } from 'Styles';
 import { IconsContainer } from './IconsContainer/IconsContainer';
 import { FlagsContainer } from './FlagsContainer/FlagsContainer';
+import { MainNav } from '..';
 
 export const MainHeader: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('MainHeader');
-  const [active, isActive] = useState(false);
   const dashboardPath = router.generatePath('dashboard');
-
-  const toggleMenu = useCallback(() => {
-    isActive(!active);
-  }, [active]);
 
   return (
     <MainHeaderStyled id={'main-header'}>
@@ -25,7 +20,7 @@ export const MainHeader: React.FC = (): React.ReactElement => {
       </Link>
       <IconsContainer />
       <FlagsContainer />
-      <MenuIcon className={'menu' + (active ? ' active' : '')} onClick={toggleMenu} fontSize={'default'} />
+      <MainNav />
     </MainHeaderStyled>
   );
 };

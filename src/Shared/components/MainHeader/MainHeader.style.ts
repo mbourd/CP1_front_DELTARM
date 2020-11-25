@@ -8,7 +8,7 @@ export const MainHeaderStyled = styled.header`
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: 100;
 
   .brand {
     bottom: 0;
@@ -27,7 +27,7 @@ export const MainHeaderStyled = styled.header`
     }
   }
 
-  .menu {
+  .menu-icon {
     bottom: 0;
     color: ${({ theme }) => theme.color.text.dark};
     cursor: pointer;
@@ -37,7 +37,7 @@ export const MainHeaderStyled = styled.header`
     top: 0;
 
     &.active {
-      color: ${({ theme }) => theme.color.active.main};
+      color: ${({ theme }) => theme.color.primary.main};
     }
   }
 `;
