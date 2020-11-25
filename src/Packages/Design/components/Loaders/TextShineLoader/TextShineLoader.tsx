@@ -9,7 +9,7 @@ export const TextShineLoader: React.FC<ITextShineLoader> = ({
   colors = ['#000000', '#FFFFFF'],
 }): React.ReactElement => {
   return (
-    <TextShineLoaderStyled speed={speed} colors={colors} className={'text-shine-loader'}>
+    <TextShineLoaderStyled speed={speed} colors={colors} className={'_LoaderTextShine'}>
       {text || children}
     </TextShineLoaderStyled>
   );

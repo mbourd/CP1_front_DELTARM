@@ -14,7 +14,7 @@ export const Popper: React.FC<IPopper> = ({
   placement,
 }): React.ReactElement => {
   return (
-    <MUIPopper open={open} anchorEl={element} placement={placement}>
+    <MUIPopper className={'_Popper'} open={open} anchorEl={element} placement={placement}>
       <PopperStyled border={border} shadow={shadow} bgc={bgc} bdr={bdr}>
         {children}
       </PopperStyled>

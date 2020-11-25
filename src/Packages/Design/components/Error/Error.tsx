@@ -6,7 +6,7 @@ import { Button } from '../Button';
 
 export const Error: React.FC<IError> = ({ title, children, message, redirect }): React.ReactElement => {
   return (
-    <ErrorStyled>
+    <ErrorStyled className={'_Error'}>
       <h1 className={'_Error-title'}>{title}</h1>
       <p className={'_Error-text'}>
         <img src={image} alt={title as string} className={'_Error-picture'} />

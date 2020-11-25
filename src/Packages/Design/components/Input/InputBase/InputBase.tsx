@@ -36,7 +36,7 @@ export const InputBase: React.FC<IInputBase> = ({
       bgc={bgc}
       fontColor={c ? c.main : theme.color.text.main}
       radiusSize={radius}
-      className={(className || '') + (status ? ' _Input-' + status : '')}
+      className={'_Input ' + (className || '') + (status ? ' _Input-' + status : '')}
     >
       {icon}
       <MUIInputBase

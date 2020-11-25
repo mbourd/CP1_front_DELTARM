@@ -24,7 +24,15 @@ export const Button: React.FC<IButton> = ({
   });
 
   return (
-    <MUIButton classes={classes} size={size} component={component} disabled={disabled} onClick={onClick} href={href}>
+    <MUIButton
+      className={'_Button'}
+      classes={classes}
+      size={size}
+      component={component}
+      disabled={disabled}
+      onClick={onClick}
+      href={href}
+    >
       {children}
     </MUIButton>
   );
