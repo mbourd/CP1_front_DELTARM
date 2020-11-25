@@ -4,7 +4,7 @@ import './Checkbox.style';
 import { CheckboxStyled } from './Checkbox.style';
 
 export const Checkbox: React.FC<ICheckbox> = ({
-  checked = true,
+  checked = false,
   color = 'text',
   checkedColor = 'primary',
   size = 'small',
@@ -30,8 +30,10 @@ export const Checkbox: React.FC<ICheckbox> = ({
       checkedColor={checkedColor}
       size={size}
     >
-      <span className={'_Checkbox-input'}>
-        <span className={'_Checkbox-mark'} />
+      <span>
+        <span className={'_Checkbox-input'}>
+          <span className={'_Checkbox-mark'} />
+        </span>
       </span>
       {label || children ? <span className={'_Checkbox-label'}>{label || children}</span> : null}
       <input type={'checkbox'} name={name} checked={isChecked} onChange={onValueChange} />

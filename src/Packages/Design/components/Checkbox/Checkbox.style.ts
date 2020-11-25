@@ -14,7 +14,7 @@ export const CheckboxStyled = styled.label<IProps>`
   flex-wrap: nowrap;
 
   ._Checkbox-input {
-    border: 2px solid ${({ theme, mainColor }) => theme.color[mainColor].main};
+    border: 1px solid ${({ theme, mainColor }) => theme.color[mainColor].main};
     border-radius: 3px;
     display: block;
     position: relative;
@@ -37,7 +37,7 @@ export const CheckboxStyled = styled.label<IProps>`
 
   ._Checkbox-label {
     color: ${({ theme }) => theme.color.text.main};
-    font-family: ${({ theme }) => theme.font.formLabel.main};
+    font-family: ${({ theme }) => theme.font.text.main};
     margin-left: ${({ theme }) => theme.spacing.small};
     transition: all ${({ theme }) => theme.transition.time};
   }
@@ -81,8 +81,8 @@ export const CheckboxStyled = styled.label<IProps>`
 
   &._Checkbox-small {
     ._Checkbox-input {
-      height: 20px;
-      width: 20px;
+      height: 18px;
+      width: 18px;
 
       ._Checkbox-mark {
         height: 10px;

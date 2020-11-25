@@ -20,6 +20,10 @@ export const ManageStyled = styled.div`
     .divider {
       margin-right: ${({ theme }) => theme.spacing.normal};
     }
+
+    .filter-icon.active {
+      color: ${({ theme }) => theme.color.primary.main};
+    }
   }
 
   .buttons-container {

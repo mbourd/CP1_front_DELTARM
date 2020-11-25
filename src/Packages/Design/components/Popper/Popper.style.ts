@@ -7,5 +7,4 @@ export const PopperStyled = styled.div<Pick<IPopper, 'border' | 'shadow' | 'bgc'
   border-radius: ${({ bdr }) => bdr};
   box-shadow: ${({ shadow }) => shadow};
   margin-top: 5px;
-  padding: ${({ theme }) => theme.spacing.normal};
 `;
