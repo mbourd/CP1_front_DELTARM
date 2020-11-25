@@ -1,14 +1,20 @@
 import React, { Suspense, StrictMode } from 'react';
 import ReactDOM from 'react-dom';
+import { ThemeProvider } from 'styled-components/macro';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { App } from './App';
+import { PageLoader } from './Shared/components';
+
+import { BPITheme } from 'Styles';
 
 ReactDOM.render(
   <StrictMode>
     <Router>
-      <Suspense fallback={'Loading !'}>
-        <App />
-      </Suspense>
+      <ThemeProvider theme={BPITheme}>
+        <Suspense fallback={<PageLoader text={'...'} />}>
+          <App />
+        </Suspense>
+      </ThemeProvider>
     </Router>
   </StrictMode>,
   document.getElementById('root'),
