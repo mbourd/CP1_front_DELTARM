@@ -7,13 +7,13 @@ import { Button } from '../Button';
 export const Error: React.FC<IError> = ({ title, children, message, redirect }): React.ReactElement => {
   return (
     <ErrorStyled>
-      <h1>{title}</h1>
-      <p>
-        <img src={image} alt={title as string} />
+      <h1 className={'_Error-title'}>{title}</h1>
+      <p className={'_Error-text'}>
+        <img src={image} alt={title as string} className={'_Error-picture'} />
       </p>
-      {message || children ? <p className={'message'}>{message || children}</p> : null}
+      {message || children ? <p className={'_Error-message _Error-text'}>{message || children}</p> : null}
       {redirect ? (
-        <p>
+        <p className={'_Error-text'}>
           <Button component={'a'} href={redirect.link}>
             {redirect.label}
           </Button>

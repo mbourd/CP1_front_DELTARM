@@ -8,13 +8,13 @@ export const StairsLoader: React.FC<IStairsLoader> = ({
   speed = 4,
 }): React.ReactElement => {
   return (
-    <StairsLoaderStyled barsColor={barsColor} ballColor={ballColor} speed={speed} className={'stairs-loader'}>
-      <div className={'loader__bar'} />
-      <div className={'loader__bar'} />
-      <div className={'loader__bar'} />
-      <div className={'loader__bar'} />
-      <div className={'loader__bar'} />
-      <div className={'loader__ball'} />
+    <StairsLoaderStyled barsColor={barsColor} ballColor={ballColor} speed={speed} className={'_LoaderStairs'}>
+      <div className={'_LoaderStairs-bar'} />
+      <div className={'_LoaderStairs-bar'} />
+      <div className={'_LoaderStairs-bar'} />
+      <div className={'_LoaderStairs-bar'} />
+      <div className={'_LoaderStairs-bar'} />
+      <div className={'_LoaderStairs-ball'} />
     </StairsLoaderStyled>
   );
 };

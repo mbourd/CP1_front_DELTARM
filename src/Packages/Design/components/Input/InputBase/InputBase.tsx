@@ -4,6 +4,8 @@ import { InputBaseStyled, useStyles } from './InputBase.style';
 import { IInputBase } from './types';
 import { useTheme } from 'Styles';
 
+// Todo: rename to Input
+
 export const InputBase: React.FC<IInputBase> = ({
   color = 'text',
   radius = 50,
@@ -34,7 +36,7 @@ export const InputBase: React.FC<IInputBase> = ({
       bgc={bgc}
       fontColor={c ? c.main : theme.color.text.main}
       radiusSize={radius}
-      className={(className || '') + (status ? ' ' + status : '')}
+      className={(className || '') + (status ? ' _Input-' + status : '')}
     >
       {icon}
       <MUIInputBase

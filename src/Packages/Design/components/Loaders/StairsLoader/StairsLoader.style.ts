@@ -7,7 +7,7 @@ export const StairsLoaderStyled = styled.div<IStairsLoader>`
   position: relative;
   width: 75px;
 
-  .loader__bar {
+  ._LoaderStairs-bar {
     background: ${({ barsColor }) => barsColor};
     bottom: 0;
     height: 50%;
@@ -15,32 +15,32 @@ export const StairsLoaderStyled = styled.div<IStairsLoader>`
     transform-origin: center bottom;
     width: 10px;
   }
-  .loader__bar:nth-child(1) {
+  ._LoaderStairs-bar:nth-child(1) {
     animation: barUp1 ${({ speed }) => speed}s infinite;
     left: 0;
     transform: scale(1, 0.2);
   }
-  .loader__bar:nth-child(2) {
+  ._LoaderStairs-bar:nth-child(2) {
     animation: barUp2 ${({ speed }) => speed}s infinite;
     left: 15px;
     transform: scale(1, 0.4);
   }
-  .loader__bar:nth-child(3) {
+  ._LoaderStairs-bar:nth-child(3) {
     animation: barUp3 ${({ speed }) => speed}s infinite;
     left: 30px;
     transform: scale(1, 0.6);
   }
-  .loader__bar:nth-child(4) {
+  ._LoaderStairs-bar:nth-child(4) {
     animation: barUp4 ${({ speed }) => speed}s infinite;
     left: 45px;
     transform: scale(1, 0.8);
   }
-  .loader__bar:nth-child(5) {
+  ._LoaderStairs-bar:nth-child(5) {
     animation: barUp5 ${({ speed }) => speed}s infinite;
     left: 60px;
     transform: scale(1, 1);
   }
-  .loader__ball {
+  ._LoaderStairs-ball {
     animation: ball ${({ speed }) => speed}s infinite;
     background: ${({ ballColor }) => ballColor};
     border-radius: 50%;
