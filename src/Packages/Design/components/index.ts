@@ -5,3 +5,4 @@ export * from './Popper';
 export * from './Button';
 export * from './Input';
 export * from './Error';
+export * from './Checkbox';
