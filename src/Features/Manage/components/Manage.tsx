@@ -1,6 +1,6 @@
 import React from 'react';
 import { ManageStyled } from './Manage.style';
-import { HeadingOne, Checkbox } from 'Shared/components';
+import { HeadingOne } from 'Shared/components';
 import { useTrans } from 'Services';
 import { Search } from './Search/Search';
 import { Card } from './Card/Card';
@@ -16,7 +16,6 @@ export const Manage: React.FC = (): React.ReactElement => {
   return (
     <ManageStyled>
       <HeadingOne>{trans('manage')}</HeadingOne>
-      <Checkbox />
       <Paper className={'search-container'} elevation={0}>
         <Search />
         <Divider className={'divider'} orientation="vertical" />

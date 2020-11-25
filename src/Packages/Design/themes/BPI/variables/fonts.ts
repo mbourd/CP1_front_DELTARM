@@ -50,6 +50,7 @@ export const BPIFont: IFont = {
   secondary: BPIFontPalette.regular,
   text: BPIFontPalette.regular,
   heading: BPIFontPalette.bold,
+  formLabel: BPIFontPalette.medium,
   success: BPIFontPalette.light,
   warning: BPIFontPalette.light,
   info: BPIFontPalette.light,

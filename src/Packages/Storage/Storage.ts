@@ -129,6 +129,12 @@ export class Storage implements IStorage {
     return this;
   }
 
+  public setFlashMessage(key: string, value: any): this {
+    // Todo
+
+    return this;
+  }
+
   private buildResponse<T>(promise: Promise<T>): void {
     promise
       .then((value) => {

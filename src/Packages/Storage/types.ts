@@ -35,4 +35,5 @@ export interface IStorage {
     iteratee: (value: T, key: string, iterationNumber: number) => U,
     callback?: (error: Error, result: U) => void,
   ) => IStorage;
+  setFlashMessage: (key: string, value: any) => IStorage;
 }

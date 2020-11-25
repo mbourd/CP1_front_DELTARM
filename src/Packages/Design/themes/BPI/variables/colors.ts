@@ -20,7 +20,7 @@ export const BPIColor: IColor = {
   },
   background: {
     light: '#F4F7F6',
-    main: '#F4F7F6',
+    main: '#F0F8F7',
     dark: '#F4F7F6',
   },
   icon: {
