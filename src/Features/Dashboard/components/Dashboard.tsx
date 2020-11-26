@@ -19,7 +19,7 @@ const Dashboard: React.FC = (): React.ReactElement => {
     const label = trans('errorLabel');
 
     return (
-      <Error title={'Oops...'} redirect={{ label: label, link: '/' }}>
+      <Error title={'Oops!'} redirect={{ label: label, link: '/' }}>
         {trans('errorMessage')}
       </Error>
     );

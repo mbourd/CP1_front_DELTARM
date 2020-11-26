@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import {
   FolderIcon,
@@ -18,8 +18,15 @@ export const MainNav: React.FC = (): React.ReactElement => {
   const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(null);
   const theme = useTheme();
 
-  const handleClick = (event: React.MouseEvent<SVGSVGElement>) => {
-    setAnchorEl(anchorEl ? null : event.currentTarget);
+  const handleClick = useCallback(
+    (event: React.MouseEvent<SVGSVGElement>) => {
+      setAnchorEl(anchorEl ? null : event.currentTarget);
+    },
+    [anchorEl],
+  );
+
+  const hideNav = () => {
+    setAnchorEl(null);
   };
 
   const open = Boolean(anchorEl);
@@ -42,27 +49,27 @@ export const MainNav: React.FC = (): React.ReactElement => {
               <ListItemText>Firstname Name</ListItemText>
             </ListItem>
 
-            <ListItem component={Link} to={'/manage'}>
+            <ListItem component={Link} to={'/manage'} onClick={hideNav}>
               <FolderOpenIcon />
               <ListItemText>Dossiers à traiter</ListItemText>
             </ListItem>
 
-            <ListItem component={Link} to={'/manage'}>
+            <ListItem component={Link} to={'/manage'} onClick={hideNav}>
               <FolderInfoIcon />
               <ListItemText>Dossiers rejetés</ListItemText>
             </ListItem>
 
-            <ListItem component={Link} to={'/manage'}>
+            <ListItem component={Link} to={'/manage'} onClick={hideNav}>
               <FolderWaitingIcon />
               <ListItemText>Dossiers en validation</ListItemText>
             </ListItem>
 
-            <ListItem component={Link} to={'/manage'}>
+            <ListItem component={Link} to={'/manage'} onClick={hideNav}>
               <FolderIcon />
               <ListItemText>Tous les dossiers</ListItemText>
             </ListItem>
 
-            <ListItem component={Link} to={'/logout'}>
+            <ListItem component={Link} to={'/logout'} onClick={hideNav}>
               <PowerIcon />
               <ListItemText>Déconnexion</ListItemText>
             </ListItem>

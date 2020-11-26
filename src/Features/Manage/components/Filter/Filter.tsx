@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Grid } from '@material-ui/core';
 import { FilterStyled } from './Filter.style';
 import { FilterIcon, useTheme } from 'Styles';
@@ -8,9 +8,12 @@ export const Filter: React.FC = (): React.ReactElement => {
   const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(null);
   const theme = useTheme();
 
-  const handleClick = (event: React.MouseEvent<SVGSVGElement>) => {
-    setAnchorEl(anchorEl ? null : event.currentTarget);
-  };
+  const handleClick = useCallback(
+    (event: React.MouseEvent<SVGSVGElement>) => {
+      setAnchorEl(anchorEl ? null : event.currentTarget);
+    },
+    [anchorEl],
+  );
 
   const open = Boolean(anchorEl);
 

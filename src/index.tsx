@@ -5,12 +5,13 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { App } from './App';
 import { PageLoader } from './Shared/components';
 
-import { BPITheme } from 'Styles';
+import { BPIGlobalStyle, BPITheme } from 'Styles';
 
 ReactDOM.render(
   <StrictMode>
     <Router>
       <ThemeProvider theme={BPITheme}>
+        <BPIGlobalStyle />
         <Suspense fallback={<PageLoader text={'...'} />}>
           <App />
         </Suspense>
