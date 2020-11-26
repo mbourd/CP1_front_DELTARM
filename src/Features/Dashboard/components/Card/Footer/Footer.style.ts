@@ -5,6 +5,7 @@ export const FooterStyled = styled.footer<Pick<ICardFooter, 'color'>>`
   height: ${footerHeight}px;
   padding: 0 ${({ theme }) => theme.sizing.normal};
   text-align: right;
+  text-transform: lowercase;
 
   .MuiSvgIcon-root,
   a {

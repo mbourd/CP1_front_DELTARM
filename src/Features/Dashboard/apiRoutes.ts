@@ -1,34 +1,20 @@
-import _ from 'lodash';
-
 import { apiRouter, getEnv } from 'Services';
 import { ICard, ICardBodyRow, ICardFooter, ICardHeader } from './components/Card/types';
 
-interface IApiState {
-  state_id: number;
-  state_role: number;
-  state_name: string;
-}
-
 interface IApiStage {
+  nb_file_stage: number;
   stage_id: number;
   stage_name: string;
 }
 
-const getColor = (state: IApiState): string => {
-  if (state.state_id === 1 && state.state_role === 0) {
-    return '#007E33';
-  }
-
-  if (state.state_id === 2 && state.state_role === 0) {
-    return '#FF8800';
-  }
-
-  if (state.state_id === 2 && state.state_role === 1) {
-    return '#9D65C9';
-  }
-
-  return '#CC0000';
-};
+interface IApiFile {
+  nb_file_state: number;
+  stages: IApiStage[];
+  state_color: string;
+  state_id: number;
+  state_name: string;
+  state_role: number;
+}
 
 apiRouter.registerRoute({
   name: 'dashboard',
@@ -39,44 +25,33 @@ apiRouter.registerRoute({
     user_id: 1,
   },
   handler: (data) => {
-    const folders = data.dashboard.dossier;
-    const stages: IApiStage[] = data.dashboard.stage;
-    const states: IApiState[] = data.dashboard.state;
+    const files: IApiFile[] = data.data;
 
     const cards: ICard[] = [];
 
-    states.map((state) => {
-      const color = getColor(state);
-
+    files.map((file) => {
       const cardHeader: ICardHeader = {
-        children: state.state_name,
-        color,
+        children: file.nb_file_state + ' ' + file.state_name,
+        color: file.state_color,
       };
-      const cardBodyRows: ICardBodyRow[] = [];
 
       const cardFooter: ICardFooter = {
-        state: state.state_id,
-        role: state.state_role,
-        children: state.state_name,
-        color,
+        state: file.state_id,
+        role: file.state_role,
+        children: file.nb_file_state + ' ' + file.state_name,
+        color: file.state_color,
       };
 
-      const filteredFolders = _.filter(folders, { state_id: state.state_id, state_role: state.state_role });
+      const cardBodyRows: ICardBodyRow[] = [];
 
-      stages.map((stage) => {
-        const stageFolders = _.filter(filteredFolders, { stage_id: stage.stage_id });
-
-        const count = stageFolders.length;
-
-        if (count > 0) {
-          cardBodyRows.push({
-            stage: stage.stage_id,
-            text: 'file',
-            count,
-            color,
-            stageName: stage.stage_name,
-          });
-        }
+      file.stages.slice(0, 4).map((stage) => {
+        cardBodyRows.push({
+          stage: stage.stage_id,
+          text: 'file',
+          count: stage.nb_file_stage,
+          color: file.state_color,
+          stageName: stage.stage_name,
+        });
 
         return stage;
       });
@@ -89,7 +64,7 @@ apiRouter.registerRoute({
         footer: cardFooter,
       });
 
-      return state;
+      return file;
     });
 
     return cards;
