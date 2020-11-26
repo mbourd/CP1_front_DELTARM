@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const cardHeight = 360;
+export const cardHeight = 450;
 export const headerHeight = 50;
 export const footerHeight = 30;
 

@@ -44,7 +44,7 @@ apiRouter.registerRoute({
 
       const cardBodyRows: ICardBodyRow[] = [];
 
-      file.stages.slice(0, 4).map((stage) => {
+      file.stages.map((stage) => {
         cardBodyRows.push({
           stage: stage.stage_id,
           text: 'file',

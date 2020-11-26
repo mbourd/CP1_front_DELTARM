@@ -8,7 +8,7 @@ import { ICard } from './types';
 
 export const Card: React.FC<ICard> = ({ header, body, footer }): React.ReactElement => {
   return (
-    <CardStyled>
+    <CardStyled cardColor={header.color}>
       <MUICard elevation={0}>
         <Header {...header}>{header.children}</Header>
         <Body {...body} />
