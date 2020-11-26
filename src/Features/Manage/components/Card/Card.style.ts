@@ -9,6 +9,7 @@ export const CardStyled = styled.div<IProps>`
   margin-bottom: ${({ theme }) => theme.spacing.normal};
 
   .MuiCard-root {
+    border: 1px solid ${({ color }) => color};
     height: ${cardHeight}px;
     position: relative;
   }

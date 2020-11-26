@@ -26,7 +26,7 @@ export const MainNavStyled = styled.div`
       }
 
       &:first-child {
-        background-color: ${({ theme }) => theme.color.text.main};
+        background-color: ${({ theme }) => theme.color.secondary.main};
         border-bottom: none;
         color: ${({ theme }) => theme.color.white.main};
 

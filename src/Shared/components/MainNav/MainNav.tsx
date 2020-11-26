@@ -39,7 +39,7 @@ export const MainNav: React.FC = (): React.ReactElement => {
         element={anchorEl}
         placement={'bottom-end'}
         bdr={'0'}
-        border={'1px solid ' + theme.color.text.main}
+        border={'1px solid ' + theme.color.secondary.main}
         onClickAway={() => setAnchorEl(null)}
       >
         <MainNavStyled>
