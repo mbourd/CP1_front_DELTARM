@@ -16,11 +16,11 @@ const Dashboard: React.FC = (): React.ReactElement => {
   }, [send]);
 
   if (error) {
-    const label = trans('errorLabel');
+    const label = trans('serverErrorLabel', { ns: 'Default' });
 
     return (
       <Error title={'Oops!'} redirect={{ label: label, link: '/' }}>
-        {trans('errorMessage')}
+        {trans('serverErrorMessage', { ns: 'Default' })}
       </Error>
     );
   }
@@ -29,7 +29,7 @@ const Dashboard: React.FC = (): React.ReactElement => {
     return (
       <DashboardStyled>
         <HeadingOne>{trans('dashboard')}</HeadingOne>
-        <PageLoader text={trans('loading')} />
+        <PageLoader text={trans('loading', { ns: 'Default' })} />
       </DashboardStyled>
     );
   }
