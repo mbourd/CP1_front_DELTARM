@@ -8,6 +8,7 @@ import { Filter } from './Filter/Filter';
 import { Button } from 'Shared/components';
 import { Divider, Paper } from '@material-ui/core';
 import { ICard } from './Card/types';
+import { SearchModal } from './Search/Modal/SearchModal';
 
 export const Manage: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Manage');
@@ -63,7 +64,7 @@ export const Manage: React.FC = (): React.ReactElement => {
     }
 
     setIsModalOpen(true);
-  }, []);
+  }, [trans]);
 
   useEffect(() => {
     send('manage', {}, queries);
@@ -121,6 +122,7 @@ export const Manage: React.FC = (): React.ReactElement => {
         </Button>
       </div>
       {files.length > 0 ? files : <p className={'empty'}>{trans('empty')}</p>}
+      <SearchModal open={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </ManageStyled>
   );
 };
