@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ManageStyled } from './Manage.style';
 import { Error, HeadingOne, PageLoader } from 'Shared/components';
 import { router, storage, useApi, useTrans } from 'Services';
@@ -12,10 +12,10 @@ import { ICard } from './Card/types';
 export const Manage: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Manage');
   const { error, isLoading, send, data } = useApi<ICard[]>();
-
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const initStages: Record<number | string, true> = {};
   const initStates: Record<number | string, true> = {};
-
   const queries = router.getQueries();
 
   if (queries.stage_id) {
@@ -54,6 +54,17 @@ export const Manage: React.FC = (): React.ReactElement => {
     router.redirectTo('manage', {}, filters);
   }, []);
 
+  const onSearch = useCallback(() => {
+    const value = storage.getRuntimeData<string>('manageSearchValue');
+    if (!value || !/[a-z0-9]+\/[a-z0-9]+/i.test(value)) {
+      setErrorMessage(trans('searchError'));
+
+      return;
+    }
+
+    setIsModalOpen(true);
+  }, []);
+
   useEffect(() => {
     send('manage', {}, queries);
   }, [send, queries]);
@@ -84,6 +95,7 @@ export const Manage: React.FC = (): React.ReactElement => {
   return (
     <ManageStyled>
       <HeadingOne>{trans('manage')}</HeadingOne>
+      <p className={'error-message'}>{errorMessage}</p>
       <Paper className={'search-container'} elevation={0}>
         <Search />
         <Divider className={'divider'} orientation="vertical" />
@@ -91,7 +103,9 @@ export const Manage: React.FC = (): React.ReactElement => {
         {/*<Sort />*/}
       </Paper>
       <div className={'buttons-container'}>
-        <Button size={'small'}>{trans('searchButtonLabel')}</Button>
+        <Button size={'small'} onClick={onSearch}>
+          {trans('searchButtonLabel')}
+        </Button>
         <Button color={'success'} size={'small'} onClick={applyFilters}>
           {trans('applyFilter')}
         </Button>

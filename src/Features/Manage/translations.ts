@@ -46,5 +46,9 @@ translation.addBatchResource({
       en: 'No files available',
       fr: 'Pas de dossiers disponible',
     },
+    searchError: {
+      en: 'No files available',
+      fr: "Le format de la recherche n'est pas valide.",
+    },
   },
 });
