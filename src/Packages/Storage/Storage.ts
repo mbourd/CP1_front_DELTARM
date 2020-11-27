@@ -11,12 +11,30 @@ import {
   createEventCallbackType,
   removeEventCallbackType,
 } from './types';
+import { getByKey } from './getByKey';
 
 export class Storage implements IStorage {
   private _successCallback: onSuccessParamType = null;
   private _errorCallback: onErrorParamType = null;
   private _createEventCallbacks: Record<string, createEventCallbackType> = {};
   private _removeEventCallbacks: Record<string, removeEventCallbackType> = {};
+  private _runtimeData: Record<string, any> = {};
+
+  public setRuntimeData(key: string, value: any): this {
+    this._runtimeData[key] = value;
+
+    return this;
+  }
+
+  public getRuntimeData<T>(key: string): T | undefined {
+    return getByKey<T>(this._runtimeData, key);
+  }
+
+  public removeRuntimeData(key: string): this {
+    delete this._runtimeData[key];
+
+    return this;
+  }
 
   public onSuccess(callback: onSuccessParamType): this {
     this._successCallback = callback;

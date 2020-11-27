@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core';
 import { FilterStyled, BadgeStyled } from './Filter.style';
 import { FilterIcon, useTheme } from 'Styles';
 import { BPIBadge, Checkbox, Popper } from 'Shared/components';
-import { useApi } from 'Services';
+import { storage, useApi } from 'Services';
 import { IApiStage, IApiState } from '../../apiRoutes';
 
 interface IProps {
@@ -35,11 +35,15 @@ export const Filter: React.FC<IProps> = ({ initStages = {}, initStates = {} }): 
       if (type === 'stages') {
         input.checked ? (stages[id] = true) : delete stages[id];
 
+        storage.setRuntimeData('manage', { filter: { stages, states } });
+
         setStages(stages);
       }
 
       if (type === 'states') {
         input.checked ? (states[id] = true) : delete states[id];
+
+        storage.setRuntimeData('manage', { filter: { stages, states } });
 
         setStates(states);
       }
@@ -51,7 +55,8 @@ export const Filter: React.FC<IProps> = ({ initStages = {}, initStates = {} }): 
 
   useEffect(() => {
     send('manageFilters');
-  }, [send]);
+    storage.setRuntimeData('manage', { filter: { stages, states } });
+  }, [send, stages, states]);
 
   let altContent: null | React.ReactNode = null;
 

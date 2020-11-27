@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { ManageStyled } from './Manage.style';
 import { Error, HeadingOne, PageLoader } from 'Shared/components';
-import { router, useApi, useTrans } from 'Services';
+import { router, storage, useApi, useTrans } from 'Services';
 import { Search } from './Search/Search';
 import { Card } from './Card/Card';
 import { Filter } from './Filter/Filter';
@@ -19,7 +19,7 @@ export const Manage: React.FC = (): React.ReactElement => {
   const queries = router.getQueries();
 
   if (queries.stage_id) {
-    queries.stage_id.split(/[,;]/).map((stageId) => {
+    queries.stage_id.split(/[,;_]/).map((stageId) => {
       initStages[stageId] = true;
 
       return stageId;
@@ -27,12 +27,32 @@ export const Manage: React.FC = (): React.ReactElement => {
   }
 
   if (queries.state_id) {
-    queries.state_id.split(/[,;]/).map((stateId) => {
+    queries.state_id.split(/[,;_]/).map((stateId) => {
       initStates[stateId] = true;
 
       return stateId;
     });
   }
+
+  const applyFilters = useCallback(() => {
+    const stages = storage.getRuntimeData<Record<string, true>>('manage.filter.stages');
+    const states = storage.getRuntimeData<Record<string, true>>('manage.filter.states');
+
+    const filters: Record<string, string> = {};
+
+    const stageValues = stages ? Object.keys(stages).join('_') : undefined;
+    const stateValues = states ? Object.keys(states).join('_') : undefined;
+
+    if (stageValues) {
+      filters.stage_id = stageValues;
+    }
+
+    if (stateValues) {
+      filters.state_id = stateValues;
+    }
+
+    router.redirectTo('manage', {}, filters);
+  }, []);
 
   useEffect(() => {
     send('manage', {}, queries);
@@ -72,21 +92,15 @@ export const Manage: React.FC = (): React.ReactElement => {
       </Paper>
       <div className={'buttons-container'}>
         <Button size={'small'}>{trans('searchButtonLabel')}</Button>
-        <Button
-          color={'success'}
-          size={'small'}
-          onClick={() => {
-            send('manage');
-          }}
-        >
+        <Button color={'success'} size={'small'} onClick={applyFilters}>
           {trans('applyFilter')}
         </Button>
         <Button
           color={'error'}
           size={'small'}
           onClick={() => {
+            storage.removeRuntimeData('manage');
             router.redirectTo('manage');
-            send('manage');
           }}
         >
           {trans('resetFilterButtonLabel')}

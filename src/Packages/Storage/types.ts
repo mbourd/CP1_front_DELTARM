@@ -36,4 +36,7 @@ export interface IStorage {
     callback?: (error: Error, result: U) => void,
   ) => IStorage;
   setFlashMessage: (key: string, value: any) => IStorage;
+  setRuntimeData: (key: string, value: any) => IStorage;
+  getRuntimeData: <T>(key: string) => T | undefined;
+  removeRuntimeData: (key: string) => IStorage;
 }
