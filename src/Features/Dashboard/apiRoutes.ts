@@ -51,6 +51,8 @@ apiRouter.registerRoute({
           count: stage.nb_file_stage,
           color: file.state_color,
           stageName: stage.stage_name,
+          state: file.state_id,
+          role: file.state_role,
         });
 
         return stage;

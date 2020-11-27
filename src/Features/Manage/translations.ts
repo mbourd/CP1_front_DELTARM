@@ -8,7 +8,7 @@ translation.addBatchResource({
     },
     searchPlaceholder: {
       en: 'Find a file',
-      fr: 'Rechercher un dossier',
+      fr: 'Rechercher un dossier (N°Dossier / N°Avenant)',
     },
     filter: {
       en: 'Filter',

@@ -62,8 +62,8 @@ export const useApi = <T>(
       }
 
       currentRoute.current = route;
-      const mergeBody = Object.assign(route.body || {}, body);
-      const mergeQueries = Object.assign(route.queries || {}, queries);
+      const mergeBody = Object.assign({}, route.body || {}, body);
+      const mergeQueries = Object.assign({}, route.queries || {}, queries);
       request.setUrl(url).setMethod(route.method).setQueries(mergeQueries).setBody(mergeBody);
 
       setIsLoading(true);

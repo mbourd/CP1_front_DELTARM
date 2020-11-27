@@ -13,6 +13,8 @@ export interface ICardBodyRow {
   count: number;
   text: string;
   stage: number;
+  state: number;
+  role: number;
   stageName: string;
   color: string;
 }

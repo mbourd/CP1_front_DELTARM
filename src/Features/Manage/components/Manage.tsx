@@ -13,12 +13,28 @@ export const Manage: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Manage');
   const { error, isLoading, send, data } = useApi<ICard[]>();
 
-  const initStages = {};
-  const initStates = {};
+  const initStages: Record<number | string, true> = {};
+  const initStates: Record<number | string, true> = {};
+
   const queries = router.getQueries();
 
+  if (queries.stage_id) {
+    queries.stage_id.split(/[,;]/).map((stageId) => {
+      initStages[stageId] = true;
+
+      return stageId;
+    });
+  }
+
+  if (queries.state_id) {
+    queries.state_id.split(/[,;]/).map((stateId) => {
+      initStates[stateId] = true;
+
+      return stateId;
+    });
+  }
+
   useEffect(() => {
-    // Todo: test call api without hooks
     send('manage', {}, queries);
   }, [send, queries]);
 
@@ -70,6 +86,7 @@ export const Manage: React.FC = (): React.ReactElement => {
           size={'small'}
           onClick={() => {
             router.redirectTo('manage');
+            send('manage');
           }}
         >
           {trans('resetFilterButtonLabel')}
