@@ -17,4 +17,5 @@ export interface IPopper {
   bdr?: string;
   placement?: PopperPlacementType;
   onClickAway?: (event: React.MouseEvent<Document>) => void;
+  zIndex?: number;
 }

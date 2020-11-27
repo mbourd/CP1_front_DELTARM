@@ -1,14 +1,14 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
-import { Link } from 'react-router-dom';
 import { RowStyled } from './Row.style';
 import { ICardBodyRow } from '../../types';
 import { router, useTrans } from 'Services';
+import { Link } from 'Shared/components';
 
 export const Row: React.FC<ICardBodyRow> = ({ count, text, stage, stageName, color }): React.ReactElement => {
   const [trans] = useTrans('Dashboard');
 
-  const path = router.generatePath('manage', {}, { stage });
+  const path = router.generatePath('manage', {}, { stage_id: stage });
 
   return (
     <RowStyled color={color}>
@@ -19,7 +19,9 @@ export const Row: React.FC<ICardBodyRow> = ({ count, text, stage, stageName, col
         <Grid className={'text'} component={'span'}>
           {trans(text, { count })} :{' '}
           <span className={'stage'}>
-            <Link to={path || '/manage'}>{stageName}</Link>
+            <Link to={path || '/manage'} reload>
+              {stageName}
+            </Link>
           </span>
         </Grid>
       </Grid>

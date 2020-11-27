@@ -14,7 +14,9 @@ export const FilterStyled = styled.section`
 
   .MuiGrid-container {
     .MuiGrid-root {
-      height: 200px;
+      height: 300px;
+      overflow-y: auto;
+
       div {
         margin-bottom: ${({ theme }) => theme.spacing.xSmall};
 
@@ -33,4 +35,13 @@ export const FilterStyled = styled.section`
       }
     }
   }
+`;
+
+export const BadgeStyled = styled.section`
+  margin-right: ${({ theme }) => theme.spacing.normal};
+`;
+
+export const FooterStyled = styled.div`
+  margin-top: ${({ theme }) => theme.spacing.normal};
+  text-align: right;
 `;

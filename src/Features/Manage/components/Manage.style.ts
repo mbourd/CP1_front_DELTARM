@@ -18,7 +18,7 @@ export const ManageStyled = styled.div`
     .filter-icon,
     .sort-icon,
     .divider {
-      margin-right: ${({ theme }) => theme.spacing.normal};
+      margin-left: ${({ theme }) => theme.spacing.normal};
     }
 
     .filter-icon.active {

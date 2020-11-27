@@ -1,12 +1,25 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
-import { FilterStyled } from './Filter.style';
+import { FilterStyled, BadgeStyled } from './Filter.style';
 import { FilterIcon, useTheme } from 'Styles';
-import { Checkbox, Popper } from 'Shared/components';
+import { BPIBadge, Checkbox, Popper } from 'Shared/components';
+import { useApi } from 'Services';
+import { IApiStage, IApiState } from '../../apiRoutes';
 
-export const Filter: React.FC = (): React.ReactElement => {
+interface IProps {
+  initStages?: Record<number, true>;
+  initStates?: Record<number, true>;
+}
+
+export const Filter: React.FC<IProps> = ({ initStages = {}, initStates = {} }): React.ReactElement => {
+  const { error, isLoading, send, data } = useApi<{ stages: IApiStage[]; states: IApiState[] }>();
   const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(null);
+  const [stages, setStages] = useState<Record<number, true>>(initStages);
+  const [states, setStates] = useState<Record<number, true>>(initStates);
   const theme = useTheme();
+
+  const countStages = Object.keys(stages).length;
+  const countStates = Object.keys(states).length;
 
   const handleClick = useCallback(
     (event: React.MouseEvent<SVGSVGElement>) => {
@@ -15,43 +28,95 @@ export const Filter: React.FC = (): React.ReactElement => {
     [anchorEl],
   );
 
+  const onChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>, type: 'stages' | 'states', id: number) => {
+      const input = e.currentTarget;
+
+      if (type === 'stages') {
+        input.checked ? (stages[id] = true) : delete stages[id];
+
+        setStages(stages);
+      }
+
+      if (type === 'states') {
+        input.checked ? (states[id] = true) : delete states[id];
+
+        setStates(states);
+      }
+    },
+    [stages, states],
+  );
+
   const open = Boolean(anchorEl);
+
+  useEffect(() => {
+    send('manageFilters');
+  }, [send]);
+
+  let altContent: null | React.ReactNode = null;
+
+  if (isLoading || !data) {
+    altContent = 'Loading...';
+  }
+
+  if (error) {
+    altContent = 'Error';
+  }
 
   return (
     <>
-      <FilterIcon onClick={handleClick} className={'filter-icon' + (open ? ' active' : '')} fontSize={'small'} />
+      <BadgeStyled>
+        {countStages + countStates > 0 ? (
+          <BPIBadge content={countStages + countStates}>
+            <FilterIcon onClick={handleClick} className={'filter-icon' + (open ? ' active' : '')} fontSize={'small'} />
+          </BPIBadge>
+        ) : (
+          <FilterIcon onClick={handleClick} className={'filter-icon' + (open ? ' active' : '')} fontSize={'small'} />
+        )}
+      </BadgeStyled>
       <Popper
         open={open}
         element={anchorEl}
         placement={'bottom-end'}
         border={'1px solid ' + theme.color.primary.main}
         onClickAway={() => setAnchorEl(null)}
+        zIndex={10}
       >
         <FilterStyled>
           <header className={'title'}>Filtrer les dossiers</header>
           <Grid container wrap={'nowrap'} alignItems={'center'}>
-            <Grid item className={'stages'} xs={6}>
-              <div>
-                <Checkbox label={'My stage'} />
-              </div>
-              <div>
-                <Checkbox label={'My stage'} />
-              </div>
-              <div>
-                <Checkbox label={'My stage'} />
-              </div>
-            </Grid>
-            <Grid item className={'states'} xs={6}>
-              <div>
-                <Checkbox label={'My state'} />
-              </div>
-              <div>
-                <Checkbox label={'My state'} />
-              </div>
-              <div>
-                <Checkbox label={'My state'} />
-              </div>
-            </Grid>
+            {data ? (
+              <>
+                <Grid item className={'stages'} xs={6}>
+                  {data.stages.map((stage) => {
+                    return (
+                      <div key={stage.stage_id}>
+                        <Checkbox
+                          checked={stages[stage.stage_id]}
+                          label={stage.stage_name.toLowerCase()}
+                          onChange={(e) => onChange(e, 'stages', stage.stage_id)}
+                        />
+                      </div>
+                    );
+                  })}
+                </Grid>
+                <Grid item className={'states'} xs={6}>
+                  {data.states.map((state) => {
+                    return (
+                      <div key={state.state_id}>
+                        <Checkbox
+                          checked={states[state.state_id]}
+                          label={state.state_name.toLowerCase()}
+                          onChange={(e) => onChange(e, 'states', state.state_id)}
+                        />
+                      </div>
+                    );
+                  })}
+                </Grid>
+              </>
+            ) : (
+              altContent
+            )}
           </Grid>
         </FilterStyled>
       </Popper>

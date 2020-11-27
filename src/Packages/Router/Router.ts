@@ -205,6 +205,8 @@ export class Router implements IRouter {
     return this;
   }
 
+  // public reload(): this {}
+
   public redirectToUrl(url: string, queries?: RouterQueriesType, params?: RouterParamsType): this {
     if (!this._history) {
       return this;

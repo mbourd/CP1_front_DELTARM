@@ -13,9 +13,10 @@ export const Popper: React.FC<IPopper> = ({
   bdr = '4px',
   placement,
   onClickAway,
+  zIndex = 100000,
 }): React.ReactElement => {
   return (
-    <MUIPopper className={'_Popper'} open={open} anchorEl={element} placement={placement}>
+    <MUIPopper className={'_Popper'} open={open} anchorEl={element} placement={placement} style={{ zIndex: zIndex }}>
       {onClickAway ? (
         <ClickAwayListener onClickAway={onClickAway}>
           <PopperStyled border={border} shadow={shadow} bgc={bgc} bdr={bdr}>

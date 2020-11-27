@@ -42,8 +42,4 @@ export const BPIGlobalStyle = createGlobalStyle`
       color: ${({ theme }) => theme.color.hover.main};
     }
   }
-
-  ._Popper {
-    z-index: 100000;
-  }
 `;

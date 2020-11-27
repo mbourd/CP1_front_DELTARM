@@ -34,9 +34,17 @@ translation.addBatchResource({
       en: 'Find file',
       fr: 'Lancer la recherche',
     },
+    applyFilter: {
+      en: 'Apply filters',
+      fr: 'Appliquer les filtres',
+    },
     resetFilterButtonLabel: {
       en: 'Reset filters',
       fr: 'Réinitialiser les filtres',
+    },
+    empty: {
+      en: 'No files available',
+      fr: 'Pas de dossiers disponible',
     },
   },
 });

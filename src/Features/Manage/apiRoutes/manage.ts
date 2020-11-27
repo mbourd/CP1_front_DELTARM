@@ -1,5 +1,5 @@
 import { apiRouter, getEnv } from 'Services';
-import { ICard, IData } from './components/Card/types';
+import { ICard, IData } from '../components/Card/types';
 
 interface IApiFileData {
   label: string;
@@ -34,9 +34,15 @@ apiRouter.registerRoute({
     apiFiles.map((apiFile) => {
       const fileData: IData[] = [];
       apiFile.file_data.map((apiFileData) => {
+        let value = apiFileData.value;
+        if (apiFileData.type === 'date') {
+          const date = new Date(value);
+          value = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+        }
+
         fileData.push({
           label: apiFileData.label,
-          value: apiFileData.value,
+          value: value,
         });
 
         return apiFileData;

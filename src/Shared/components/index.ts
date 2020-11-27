@@ -6,3 +6,4 @@ export * from './Heading';
 export * from './Loader/PageLoader';
 export * from './Tooltip/BPITooltip';
 export * from './Badge/BPIBadge';
+export * from './Link/Link';
