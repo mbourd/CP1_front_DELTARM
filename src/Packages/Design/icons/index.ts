@@ -17,3 +17,4 @@ export * from './FolderInfoIcon';
 export * from './FolderWaitingIcon';
 export * from './FolderIcon';
 export * from './PowerIcon';
+export * from './LockedIcon';

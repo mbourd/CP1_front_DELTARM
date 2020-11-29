@@ -1,10 +1,10 @@
 import { router } from 'Services';
-import { Edit } from 'Features/Edit';
+import { Dashboard } from 'Features/Dashboard';
 
 router.registerRoute({
-  name: 'edit',
-  path: '/file/:id/edit',
-  component: Edit,
+  name: 'dashboard',
+  path: '/',
+  component: Dashboard,
   exact: true,
   strict: false,
   sensitive: false,

@@ -4,7 +4,7 @@ import { ICard } from '../types';
 import { ActionsStyled } from './Actions.style';
 import { BPIBadge, BPITooltip } from 'Shared/components';
 import { CommentIcon, EditIcon, StopIcon } from 'Styles';
-import { useTrans } from 'Services';
+import { router, useTrans } from 'Services';
 
 export const Actions: React.FC<Pick<ICard, 'id' | 'comments'>> = ({ id, comments }): React.ReactElement => {
   const [trans] = useTrans('Manage');
@@ -12,7 +12,7 @@ export const Actions: React.FC<Pick<ICard, 'id' | 'comments'>> = ({ id, comments
   return (
     <ActionsStyled>
       <BPITooltip title={trans('edit')} placement={'left'}>
-        <Link to={'/?' + id}>
+        <Link to={router.generatePath('edit', { id }) || '/'}>
           <EditIcon className={'icon'} />
         </Link>
       </BPITooltip>
