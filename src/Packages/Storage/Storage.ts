@@ -11,27 +11,27 @@ import {
   createEventCallbackType,
   removeEventCallbackType,
 } from './types';
-import { getByKey } from './getByKey';
+import { getByKey, setByKey } from './helpers';
 
 export class Storage implements IStorage {
   private _successCallback: onSuccessParamType = null;
   private _errorCallback: onErrorParamType = null;
   private _createEventCallbacks: Record<string, createEventCallbackType> = {};
   private _removeEventCallbacks: Record<string, removeEventCallbackType> = {};
-  private _runtimeData: Record<string, any> = {};
+  private _data: Record<string, any> = {};
 
-  public setRuntimeData(key: string, value: any): this {
-    this._runtimeData[key] = value;
+  public setData(key: string, value: any): this {
+    setByKey(this._data, key, value);
 
     return this;
   }
 
-  public getRuntimeData<T>(key: string): T | undefined {
-    return getByKey<T>(this._runtimeData, key);
+  public getData<T>(key: string): T | undefined {
+    return getByKey<T>(this._data, key);
   }
 
-  public removeRuntimeData(key: string): this {
-    delete this._runtimeData[key];
+  public removeData(key: string): this {
+    delete this._data[key];
 
     return this;
   }
@@ -143,12 +143,6 @@ export class Storage implements IStorage {
     callback?: (error: Error, result: U) => void,
   ): this {
     this.buildResponse(localforage.iterate<T, U>(iteratee, callback));
-
-    return this;
-  }
-
-  public setFlashMessage(key: string, value: any): this {
-    // Todo
 
     return this;
   }

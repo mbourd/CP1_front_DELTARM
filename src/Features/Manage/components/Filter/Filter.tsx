@@ -35,7 +35,7 @@ export const Filter: React.FC<IProps> = ({ initStages = {}, initStates = {} }): 
       if (type === 'stages') {
         input.checked ? (stages[id] = true) : delete stages[id];
 
-        storage.setRuntimeData('manage', { filter: { stages, states } });
+        storage.setData('manage', { filter: { stages, states } });
 
         setStages(stages);
       }
@@ -43,7 +43,7 @@ export const Filter: React.FC<IProps> = ({ initStages = {}, initStates = {} }): 
       if (type === 'states') {
         input.checked ? (states[id] = true) : delete states[id];
 
-        storage.setRuntimeData('manage', { filter: { stages, states } });
+        storage.setData('manage', { filter: { stages, states } });
 
         setStates(states);
       }
@@ -55,7 +55,7 @@ export const Filter: React.FC<IProps> = ({ initStages = {}, initStates = {} }): 
 
   useEffect(() => {
     send('manageFilters');
-    storage.setRuntimeData('manage', { filter: { stages, states } });
+    storage.setData('manage', { filter: { stages, states } });
   }, [send, stages, states]);
 
   let altContent: null | React.ReactNode = null;

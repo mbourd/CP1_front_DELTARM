@@ -36,8 +36,8 @@ export const Manage: React.FC = (): React.ReactElement => {
   }
 
   const applyFilters = useCallback(() => {
-    const stages = storage.getRuntimeData<Record<string, true>>('manage.filter.stages');
-    const states = storage.getRuntimeData<Record<string, true>>('manage.filter.states');
+    const stages = storage.getData<Record<string, true>>('manage.filter.stages');
+    const states = storage.getData<Record<string, true>>('manage.filter.states');
 
     const filters: Record<string, string> = {};
 
@@ -56,7 +56,7 @@ export const Manage: React.FC = (): React.ReactElement => {
   }, []);
 
   const onSearch = useCallback(() => {
-    const value = storage.getRuntimeData<string>('manageSearchValue');
+    const value = storage.getData<string>('manageSearchValue');
     if (!value || !/[a-z0-9]+\/[a-z0-9]+/i.test(value)) {
       setErrorMessage(trans('searchError'));
 
@@ -101,7 +101,6 @@ export const Manage: React.FC = (): React.ReactElement => {
         <Search />
         <Divider className={'divider'} orientation="vertical" />
         <Filter initStages={initStages} initStates={initStates} />
-        {/*<Sort />*/}
       </Paper>
       <div className={'buttons-container'}>
         <Button size={'small'} onClick={onSearch}>
@@ -114,7 +113,7 @@ export const Manage: React.FC = (): React.ReactElement => {
           color={'error'}
           size={'small'}
           onClick={() => {
-            storage.removeRuntimeData('manage');
+            storage.removeData('manage');
             router.redirectTo('manage');
           }}
         >

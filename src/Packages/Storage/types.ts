@@ -35,8 +35,7 @@ export interface IStorage {
     iteratee: (value: T, key: string, iterationNumber: number) => U,
     callback?: (error: Error, result: U) => void,
   ) => IStorage;
-  setFlashMessage: (key: string, value: any) => IStorage;
-  setRuntimeData: (key: string, value: any) => IStorage;
-  getRuntimeData: <T>(key: string) => T | undefined;
-  removeRuntimeData: (key: string) => IStorage;
+  setData: (key: string, value: any) => IStorage;
+  getData: <T>(key: string) => T | undefined;
+  removeData: (key: string) => IStorage;
 }
