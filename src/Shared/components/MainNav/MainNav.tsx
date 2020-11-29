@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { List, ListItem, ListItemText } from '@material-ui/core';
 import {
   FolderIcon,
   FolderInfoIcon,
@@ -12,11 +13,12 @@ import {
 } from 'Styles';
 import { MainNavStyled } from './MainNav.style';
 import { Popper } from 'Shared/components';
-import { List, ListItem, ListItemText } from '@material-ui/core';
+import { router, useTrans } from 'Services';
 
 export const MainNav: React.FC = (): React.ReactElement => {
   const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(null);
   const theme = useTheme();
+  const [trans] = useTrans('Default');
 
   const handleClick = useCallback(
     (event: React.MouseEvent<SVGSVGElement>) => {
@@ -49,29 +51,41 @@ export const MainNav: React.FC = (): React.ReactElement => {
               <ListItemText>Firstname Name</ListItemText>
             </ListItem>
 
-            <ListItem component={Link} to={'/manage'} onClick={hideNav}>
+            <ListItem
+              component={Link}
+              to={router.generatePath('manage', {}, { state_id: 1 }) || '/manage'}
+              onClick={hideNav}
+            >
               <FolderOpenIcon />
-              <ListItemText>Dossiers à traiter</ListItemText>
+              <ListItemText>{trans('filesToBeProcessed')}</ListItemText>
             </ListItem>
 
-            <ListItem component={Link} to={'/manage'} onClick={hideNav}>
-              <FolderInfoIcon />
-              <ListItemText>Dossiers rejetés</ListItemText>
-            </ListItem>
-
-            <ListItem component={Link} to={'/manage'} onClick={hideNav}>
+            <ListItem
+              component={Link}
+              to={router.generatePath('manage', {}, { state_id: 2 }) || '/manage'}
+              onClick={hideNav}
+            >
               <FolderWaitingIcon />
-              <ListItemText>Dossiers en validation</ListItemText>
+              <ListItemText>{trans('filesInValidation')}</ListItemText>
             </ListItem>
 
-            <ListItem component={Link} to={'/manage'} onClick={hideNav}>
+            <ListItem
+              component={Link}
+              to={router.generatePath('manage', {}, { state_id: 3 }) || '/manage'}
+              onClick={hideNav}
+            >
+              <FolderInfoIcon />
+              <ListItemText>{trans('rejectedFiles')}</ListItemText>
+            </ListItem>
+
+            <ListItem component={Link} to={router.generatePath('manage') || '/manage'} onClick={hideNav}>
               <FolderIcon />
-              <ListItemText>Tous les dossiers</ListItemText>
+              <ListItemText>{trans('allFiles')}</ListItemText>
             </ListItem>
 
             <ListItem component={Link} to={'/logout'} onClick={hideNav}>
               <PowerIcon />
-              <ListItemText>Déconnexion</ListItemText>
+              <ListItemText>{trans('logout')}</ListItemText>
             </ListItem>
           </List>
         </MainNavStyled>

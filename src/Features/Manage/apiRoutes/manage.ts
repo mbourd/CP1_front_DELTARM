@@ -8,7 +8,7 @@ interface IApiFileData {
 }
 
 interface IApiFile {
-  file_id: number;
+  file_id: string;
   file_nb_comment: number;
   stage_id: number;
   stage_name: string;

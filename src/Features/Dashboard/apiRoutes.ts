@@ -22,7 +22,7 @@ apiRouter.registerRoute({
   method: 'get',
   queries: {
     cli_id: getEnv('CLIENT_ID'),
-    user_id: 1,
+    user_id: '1',
   },
   handler: (data) => {
     const files: IApiFile[] = data.data;

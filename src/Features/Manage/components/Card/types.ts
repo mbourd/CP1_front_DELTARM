@@ -8,7 +8,7 @@ export interface IData {
 }
 
 export interface ICard {
-  id: number;
+  id: string;
   color: string;
   comments?: number;
   data: IData[];
