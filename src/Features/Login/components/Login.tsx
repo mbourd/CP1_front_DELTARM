@@ -14,7 +14,7 @@ const Login: React.FC = (): React.ReactElement => {
       <img src={bg} alt={'Login'} />
       <div className={'overlay'}>
         <form className={'form-container'}>
-          <HeadingOne variant={'light'}>{trans('login')}</HeadingOne>
+          <HeadingOne variant={'light'}>{trans('pageTitle')}</HeadingOne>
           <InputContainerStyled>
             <InputUser color={'white'} placeholder={trans('username')} autoFocus={true} bgc={'transparent'} />
           </InputContainerStyled>

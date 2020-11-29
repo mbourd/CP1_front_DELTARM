@@ -13,7 +13,7 @@ export const Edit: React.FC = (): React.ReactElement => {
   return (
     <EditStyled>
       <HeadingOne>
-        <p>{trans('edit')}</p>
+        <p>{trans('pageTitle')}</p>
         <EditTitleFileStyled>
           <FolderOpenIcon />
           <span>{id}</span>

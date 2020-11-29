@@ -95,7 +95,7 @@ export const Manage: React.FC = (): React.ReactElement => {
 
   return (
     <ManageStyled>
-      <HeadingOne>{trans('manage')}</HeadingOne>
+      <HeadingOne>{trans('pageTitle')}</HeadingOne>
       <p className={'error-message'}>{errorMessage}</p>
       <Paper className={'search-container'} elevation={0}>
         <Search />

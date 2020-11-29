@@ -2,7 +2,7 @@ import { translation } from 'Services';
 
 translation.addBatchResource({
   Login: {
-    login: {
+    pageTitle: {
       en: 'Log in',
       fr: 'Connexion',
     },

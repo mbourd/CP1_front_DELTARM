@@ -2,7 +2,7 @@ import { translation } from 'Services';
 
 translation.addBatchResource({
   Dashboard: {
-    dashboard: {
+    pageTitle: {
       en: 'Dashboard',
       fr: 'Tableau de bord',
     },

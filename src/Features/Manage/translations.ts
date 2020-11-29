@@ -2,7 +2,7 @@ import { translation } from 'Services';
 
 translation.addBatchResource({
   Manage: {
-    manage: {
+    pageTitle: {
       en: 'Manage',
       fr: 'Gestion',
     },

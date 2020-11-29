@@ -36,7 +36,7 @@ const Dashboard: React.FC = (): React.ReactElement => {
 
   return (
     <DashboardStyled>
-      <HeadingOne>{trans('dashboard')}</HeadingOne>
+      <HeadingOne>{trans('pageTitle')}</HeadingOne>
       <Grid container>
         {data.map((card, key) => {
           return (
