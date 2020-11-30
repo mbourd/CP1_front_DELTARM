@@ -6,5 +6,13 @@ translation.addBatchResource({
       en: 'Edit',
       fr: 'Edition',
     },
+    submitForValidation: {
+      en: 'Submit for validation',
+      fr: 'Soumettre à validation',
+    },
+    classifyWithoutContinuation: {
+      en: 'Classify without continuation',
+      fr: 'Classer sans suite',
+    },
   },
 });

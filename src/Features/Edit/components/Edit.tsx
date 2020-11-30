@@ -5,6 +5,7 @@ import { router, useTrans } from 'Services';
 import { HeadingOne } from 'Shared/components';
 import { FolderOpenIcon } from 'Styles';
 import { NavItem } from './NavItem/NavItem';
+import { Information } from './Information/Information';
 
 export const Edit: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Edit');
@@ -31,7 +32,7 @@ export const Edit: React.FC = (): React.ReactElement => {
           </List>
         </Grid>
         <Grid item className={'content'}>
-          Content
+          <Information />
         </Grid>
       </Grid>
     </EditStyled>

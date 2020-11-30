@@ -103,10 +103,8 @@ export const Manage: React.FC = (): React.ReactElement => {
         <Filter initStages={initStages} initStates={initStates} />
       </Paper>
       <div className={'buttons-container'}>
-        <Button size={'small'} onClick={onSearch}>
-          {trans('searchButtonLabel')}
-        </Button>
-        <Button color={'success'} size={'small'} onClick={applyFilters}>
+        <Button onClick={onSearch}>{trans('searchButtonLabel')}</Button>
+        <Button color={'success'} onClick={applyFilters}>
           {trans('applyFilter')}
         </Button>
         <Button

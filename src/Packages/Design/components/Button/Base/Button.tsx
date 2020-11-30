@@ -1,39 +1,47 @@
 import React from 'react';
 import { Button as MUIButton } from '@material-ui/core';
-import { useStyles } from './Button.style';
+import { ButtonStyled } from './Button.style';
 import { useTheme } from 'Styles';
 import { IButton } from '../types';
 
 export const Button: React.FC<IButton> = ({
   children,
   color = 'primary',
-  size = 'medium',
+  size = 'small',
   type = 'default',
   component = 'button',
+  startIcon,
+  endIcon,
   href,
   disabled,
   onClick,
 }): React.ReactElement => {
   const theme = useTheme();
-  const classes = useStyles({
-    color: theme.color[color],
-    font: theme.font.medium.main,
-    type,
-    transition: theme.transition.time,
-    disabled,
-  });
+
+  let startIconCloned = null;
+  let endIconCloned = null;
+
+  if (React.isValidElement(startIcon)) {
+    startIconCloned = React.cloneElement(startIcon, { className: '_ButtonIcon _ButtonStartIcon' });
+  }
+
+  if (React.isValidElement(endIcon)) {
+    endIconCloned = React.cloneElement(endIcon, { className: '_ButtonIcon _ButtonEndIcon' });
+  }
 
   return (
-    <MUIButton
-      className={'_Button'}
-      classes={classes}
-      size={size}
-      component={component}
-      disabled={disabled}
-      onClick={onClick}
-      href={href}
-    >
-      {children}
-    </MUIButton>
+    <ButtonStyled className={'_Button'} colorType={theme.color[color]} type={type} disabled={disabled}>
+      <MUIButton
+        size={size}
+        component={component}
+        disabled={disabled}
+        onClick={onClick}
+        href={href}
+        startIcon={startIconCloned}
+        endIcon={endIconCloned}
+      >
+        {children}
+      </MUIButton>
+    </ButtonStyled>
   );
 };
