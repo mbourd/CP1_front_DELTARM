@@ -9,7 +9,7 @@ export const Search: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Manage');
 
   const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    storage.setData('manageSearchValue', e.currentTarget.value);
+    storage.setData('manage.search.value', e.currentTarget.value);
   }, []);
 
   return (

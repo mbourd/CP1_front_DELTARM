@@ -9,3 +9,7 @@ export interface IFormText {
   color?: keyof IColor;
   className?: string;
 }
+
+export interface IFormError {
+  className?: string;
+}

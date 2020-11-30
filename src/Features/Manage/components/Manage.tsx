@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ManageStyled } from './Manage.style';
-import { Error, HeadingOne, PageLoader } from 'Shared/components';
+import { Error, FormError, HeadingOne, PageLoader } from 'Shared/components';
 import { router, storage, useApi, useTrans } from 'Services';
 import { Search } from './Search/Search';
 import { Card } from './Card/Card';
@@ -56,7 +56,7 @@ export const Manage: React.FC = (): React.ReactElement => {
   }, []);
 
   const onSearch = useCallback(() => {
-    const value = storage.getData<string>('manageSearchValue');
+    const value = storage.getData<string>('manage.search.value');
     if (!value || !/[a-z0-9]+\/[a-z0-9]+/i.test(value)) {
       setErrorMessage(trans('searchError'));
 
@@ -96,7 +96,7 @@ export const Manage: React.FC = (): React.ReactElement => {
   return (
     <ManageStyled>
       <HeadingOne>{trans('pageTitle')}</HeadingOne>
-      <p className={'error-message'}>{errorMessage}</p>
+      <FormError>{errorMessage}</FormError>
       <Paper className={'search-container'} elevation={0}>
         <Search />
         <Divider className={'divider'} orientation="vertical" />

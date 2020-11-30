@@ -50,7 +50,6 @@ export const font: IFont = {
   secondary: fontVariant.regular,
   text: fontVariant.regular,
   heading: fontVariant.bold,
-  formError: fontVariant.regular,
   success: fontVariant.light,
   warning: fontVariant.light,
   info: fontVariant.light,

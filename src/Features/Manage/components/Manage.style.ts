@@ -26,14 +26,6 @@ export const ManageStyled = styled.div`
     }
   }
 
-  .error-message {
-    color: ${({ theme }) => theme.color.error.main};
-    font-family: ${({ theme }) => theme.font.formError.italic};
-    font-size: ${({ theme }) => theme.sizing.small};
-    margin-bottom: ${({ theme }) => theme.spacing.xSmall};
-    padding-left: ${({ theme }) => theme.spacing.small};
-  }
-
   .buttons-container {
     margin-bottom: ${({ theme }) => theme.spacing.xLarge};
     text-align: right;
