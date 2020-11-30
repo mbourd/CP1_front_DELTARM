@@ -1,8 +1,8 @@
 import React from 'react';
 import { InputBase as MUIInputBase } from '@material-ui/core';
 import { InputBaseStyled, useStyles } from './InputBase.style';
-import { IInputBase } from './types';
 import { useTheme } from 'Styles';
+import { IInputBase } from '../types';
 
 // Todo: rename to Input
 

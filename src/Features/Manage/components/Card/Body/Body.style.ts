@@ -7,10 +7,5 @@ export const BodyStyled = styled.div`
 
   .MuiGrid-item {
     padding: 10px;
-
-    .label {
-      font-family: ${({ theme }) => theme.font.medium.main};
-      margin-bottom: ${({ theme }) => theme.spacing.xSmall};
-    }
   }
 `;

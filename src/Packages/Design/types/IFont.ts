@@ -27,7 +27,6 @@ export interface IFont extends Record<keyof INotificationType, IFontVariant> {
   readonly extraBold: IFontVariant;
   readonly primary: IFontVariant;
   readonly secondary: IFontVariant;
-  readonly formLabel: IFontVariant;
   readonly formError: IFontVariant;
   readonly text: IFontVariant;
   readonly heading: IFontVariant;

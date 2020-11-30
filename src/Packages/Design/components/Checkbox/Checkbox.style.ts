@@ -4,7 +4,6 @@ import { IColor } from '../../types';
 interface IProps {
   mainColor: keyof IColor;
   checkedColor: keyof IColor;
-  size: 'small' | 'medium' | 'large';
 }
 
 export const CheckboxStyled = styled.label<IProps>`
@@ -13,14 +12,16 @@ export const CheckboxStyled = styled.label<IProps>`
   display: inline-flex;
   flex-wrap: nowrap;
 
-  ._Checkbox-input {
+  ._CheckboxInput {
     border: 1px solid ${({ theme, mainColor }) => theme.color[mainColor].main};
     border-radius: 3px;
     display: block;
+    height: 18px;
     position: relative;
     transition: all ${({ theme }) => theme.transition.time};
+    width: 18px;
 
-    ._Checkbox-mark {
+    ._CheckboxMark {
       border-radius: 1px;
       bottom: 0;
       display: block;
@@ -35,59 +36,27 @@ export const CheckboxStyled = styled.label<IProps>`
     }
   }
 
-  ._Checkbox-label {
+  ._CheckboxLabel {
     color: ${({ theme }) => theme.color.text.main};
     font-family: ${({ theme }) => theme.font.text.main};
+    font-size: ${({ theme }) => theme.sizing.normal};
     margin-left: ${({ theme }) => theme.spacing.small};
     transition: all ${({ theme }) => theme.transition.time};
   }
 
-  &._Checkbox-checked {
-    ._Checkbox-input {
+  &._CheckboxChecked {
+    ._CheckboxInput {
       border-color: ${({ theme, checkedColor }) => theme.color[checkedColor].main};
-      ._Checkbox-mark {
+
+      ._CheckboxMark {
         background-color: ${({ theme, checkedColor }) => theme.color[checkedColor].main};
-      }
-    }
-
-    ._Checkbox-label {
-      color: ${({ theme, checkedColor }) => theme.color[checkedColor].main};
-    }
-  }
-
-  &._Checkbox-large {
-    ._Checkbox-input {
-      height: 30px;
-      width: 30px;
-
-      ._Checkbox-mark {
-        height: 20px;
-        width: 20px;
-      }
-    }
-  }
-
-  &._Checkbox-medium {
-    ._Checkbox-input {
-      height: 24px;
-      width: 24px;
-
-      ._Checkbox-mark {
-        height: 14px;
-        width: 14px;
-      }
-    }
-  }
-
-  &._Checkbox-small {
-    ._Checkbox-input {
-      height: 18px;
-      width: 18px;
-
-      ._Checkbox-mark {
         height: 10px;
         width: 10px;
       }
+    }
+
+    ._CheckboxLabel {
+      color: ${({ theme, checkedColor }) => theme.color[checkedColor].main};
     }
   }
 

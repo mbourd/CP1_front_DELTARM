@@ -7,3 +7,4 @@ export * from './Input';
 export * from './Error';
 export * from './Checkbox';
 export * from './Modal';
+export * from './Form';
