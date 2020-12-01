@@ -8,6 +8,6 @@ export interface IRadio {
   name?: string;
   type?: 'checkbox' | 'radio';
   value?: string;
-  label?: React.ReactNode;
+  label?: NonNullable<React.ReactNode>;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }

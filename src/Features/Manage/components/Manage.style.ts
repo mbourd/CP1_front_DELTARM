@@ -22,7 +22,7 @@ export const ManageStyled = styled.div`
     }
 
     .filter-icon.active {
-      color: ${({ theme }) => theme.color.primary.main};
+      color: ${({ theme }) => theme.color.active.main};
     }
   }
 

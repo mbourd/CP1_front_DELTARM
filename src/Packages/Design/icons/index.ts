@@ -19,3 +19,6 @@ export * from './FolderIcon';
 export * from './PowerIcon';
 export * from './LockedIcon';
 export * from './UserCheckedIcon';
+export * from './ListIcon';
+export * from './CheckboxIcon';
+export * from './SelectIcon';

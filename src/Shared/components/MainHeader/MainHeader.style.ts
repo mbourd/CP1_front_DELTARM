@@ -37,7 +37,7 @@ export const MainHeaderStyled = styled.header`
     top: 0;
 
     &.active {
-      color: ${({ theme }) => theme.color.primary.main};
+      color: ${({ theme }) => theme.color.active.main};
     }
   }
 `;

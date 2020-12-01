@@ -13,6 +13,7 @@ export interface IColor extends Record<keyof INotificationType, IColorVariant> {
   readonly background: IColorVariant;
   readonly white: IColorVariant;
   readonly disabled: IColorVariant;
+  readonly transparent: IColorVariant;
   readonly icon: IColorVariant;
   readonly hover: IColorVariant;
   readonly active: IColorVariant;

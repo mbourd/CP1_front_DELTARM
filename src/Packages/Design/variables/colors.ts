@@ -31,6 +31,11 @@ export const color: IColor = {
     main: '#E0DDDC',
     dark: '#E0DDDC',
   },
+  transparent: {
+    light: 'transparent',
+    main: 'transparent',
+    dark: 'transparent',
+  },
   error: {
     light: '#E57373',
     main: '#F44336',

@@ -8,4 +8,6 @@ export * from './Error';
 export * from './Checkbox';
 export * from './Radio';
 export * from './Modal';
+export * from './Select';
 export * from './Form';
+export * from './TextEllipsis';

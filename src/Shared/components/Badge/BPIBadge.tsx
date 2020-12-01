@@ -6,12 +6,7 @@ export const BPIBadge: React.FC<Pick<IBadge, 'content'>> = ({ children, content 
   const theme = useTheme();
 
   return (
-    <Badge
-      content={content}
-      color={theme.color.white.main}
-      bgc={theme.color.active.main}
-      fontFamily={theme.font.text.main}
-    >
+    <Badge content={content} color={theme.color.white.main} bgc={'#FF9642'} fontFamily={theme.font.text.main}>
       {children}
     </Badge>
   );

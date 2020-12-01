@@ -29,12 +29,12 @@ export const BPIColor: IColor = {
     dark: '#5E514D',
   },
   active: {
-    light: '#FF9642',
-    main: '#FF9642',
-    dark: '#FF9642',
+    light: '#faaf0b',
+    main: '#faaf0b',
+    dark: '#faaf0b',
   },
   hover: {
-    light: '#FFCD00',
+    light: 'rgba(255, 205, 0, 0.1)',
     main: '#FFCD00',
     dark: '#FFCD00',
   },

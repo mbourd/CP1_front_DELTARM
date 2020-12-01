@@ -4,7 +4,7 @@ import { getByKey } from './getByKey';
  * Gets data from theme.
  *
  * @example
- *  getThemeData<string>('key.subKey.subSuhKey');
+ *  getThemeData<string>('key.subKey.subSubKey');
  */
 export function getThemeData<T>(key?: string): T {
   // @ts-ignore
