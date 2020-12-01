@@ -34,5 +34,25 @@ translation.addBatchResource({
       en: 'Logout',
       fr: 'Déconnexion',
     },
+    information: {
+      en: 'Information',
+      fr: 'Informations',
+    },
+    settingUp: {
+      en: 'Setting up',
+      fr: 'Mise en place',
+    },
+    disbursement: {
+      en: 'Disbursement',
+      fr: 'Décaissement',
+    },
+    postDisbursement: {
+      en: 'Post Disbursement',
+      fr: 'Post Décaissement',
+    },
+    cloture: {
+      en: 'Cloture',
+      fr: 'Cloture',
+    },
   },
 });

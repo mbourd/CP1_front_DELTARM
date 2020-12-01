@@ -14,5 +14,13 @@ translation.addBatchResource({
       en: 'Classify without continuation',
       fr: 'Classer sans suite',
     },
+    required: {
+      en: 'Required',
+      fr: 'Obligatoires',
+    },
+    optional: {
+      en: 'Optional',
+      fr: 'facultatives',
+    },
   },
 });

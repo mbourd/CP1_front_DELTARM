@@ -24,11 +24,11 @@ export const Edit: React.FC = (): React.ReactElement => {
       <Grid container wrap={'nowrap'}>
         <Grid item className={'nav'}>
           <List>
-            <NavItem label={'Informations'} active />
-            <NavItem label={'Mise en place'} />
-            <NavItem label={'Décaissement'} locked />
-            <NavItem label={'Post Décaissement'} locked />
-            <NavItem label={'Cloture'} locked />
+            <NavItem label={trans('information', { ns: 'Default' })} active />
+            <NavItem label={trans('settingUp', { ns: 'Default' })} />
+            <NavItem label={trans('disbursement', { ns: 'Default' })} locked />
+            <NavItem label={trans('postDisbursement', { ns: 'Default' })} locked />
+            <NavItem label={trans('cloture', { ns: 'Default' })} locked />
           </List>
         </Grid>
         <Grid item className={'content'}>
