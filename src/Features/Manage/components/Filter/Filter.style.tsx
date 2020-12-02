@@ -38,7 +38,7 @@ export const FilterStyled = styled.section`
 `;
 
 export const BadgeStyled = styled.section`
-  margin-right: ${({ theme }) => theme.spacing.normal};
+  margin-left: ${({ theme }) => theme.spacing.small};
 `;
 
 export const FooterStyled = styled.div`

@@ -16,9 +16,10 @@ export const Search: React.FC = (): React.ReactElement => {
     <SearchStyled>
       <InputBase
         border={0}
+        bdr={'4px'}
         bgc={theme.color.white.main}
         placeholder={trans('searchPlaceholder')}
-        className={'BPIInputBase'}
+        className={'_BPIInputBase'}
         onChange={onChange}
       />
     </SearchStyled>

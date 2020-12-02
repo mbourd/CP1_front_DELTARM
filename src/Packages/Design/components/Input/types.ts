@@ -19,7 +19,7 @@ export interface IInputBase {
   /**
    * Set border radius value in pixel.
    */
-  radius?: number;
+  bdr?: string;
 
   /**
    * Input status like 'success', 'error', ...

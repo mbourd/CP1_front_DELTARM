@@ -6,19 +6,14 @@ export const ManageStyled = styled.div`
 
   .search-container {
     align-items: center;
-    border-radius: 50px;
+    border-radius: ${({ theme }) => theme.sizing.radius};
     display: flex;
     margin-bottom: ${({ theme }) => theme.spacing.normal};
+    padding: ${({ theme }) => '0 ' + theme.spacing.normal + ' 0 ' + theme.spacing.small};
 
     .divider {
       height: 28px;
       margin: 4px;
-    }
-
-    .filter-icon,
-    .sort-icon,
-    .divider {
-      margin-left: ${({ theme }) => theme.spacing.normal};
     }
 
     .filter-icon.active {

@@ -5,7 +5,7 @@ interface IProps {
   borderSize: number;
   bgc: string;
   fontColor: string;
-  radiusSize: number;
+  radiusSize: string;
 }
 
 interface IUseStylesProps {
@@ -24,7 +24,7 @@ export const InputBaseStyled = styled.label<IProps>`
   align-items: center;
   background-color: ${({ bgc }) => bgc};
   border: ${({ borderSize }) => borderSize}px solid ${({ fontColor }) => fontColor};
-  border-radius: ${({ radiusSize }) => radiusSize + 'px'};
+  border-radius: ${({ radiusSize }) => radiusSize};
   display: flex;
   padding: ${({ theme }) => theme.spacing.xSmall};
 
