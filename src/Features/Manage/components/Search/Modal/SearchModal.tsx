@@ -22,19 +22,9 @@ export const SearchModal: React.FC = (): React.ReactElement | null => {
     const prod_id = Object.keys(
       storage.getData<Record<string, true>>('edit.selected.product') as Record<string, true>,
     )[0];
-
-    const queries = {
-      prod_id,
-      file_num,
-      file_avenant,
-      file_produit: '',
-      file_borrower: '',
-      file_codecp: '',
-      file_manager: '',
-    };
-
+    const queries = { ...storage.getData<Record<string, any>>('edit.create.queries'), prod_id };
     send('createFile', {}, queries);
-  }, [file_num, file_avenant, send]);
+  }, [send]);
 
   useEffect(() => {
     send('searchFile', {}, { file_num, file_avenant });
@@ -69,7 +59,7 @@ export const SearchModal: React.FC = (): React.ReactElement | null => {
   if (data && data.error && !data.fileId && data.type === 'DRM_CREATE') {
     return (
       <Modal open={isOpen} onClose={() => setIsOpen(false)}>
-        <SearchModalStyled>{'Echec de la création du dossier'}</SearchModalStyled>
+        <SearchModalStyled>{data.errorMessage}</SearchModalStyled>
       </Modal>
     );
   }
@@ -105,6 +95,15 @@ export const SearchModal: React.FC = (): React.ReactElement | null => {
     const firstItem: Record<string, true> = {
       [Object.keys(data.productList)[0]]: true,
     };
+
+    storage.setData('edit.create.queries', {
+      file_num,
+      file_avenant,
+      file_produit: data.fileProduit,
+      file_borrower: data.fileBorrower,
+      file_codecp: data.fileCodecp,
+      file_manager: data.fileManager,
+    });
 
     const footer = (
       <SearchModalFooterStyled>

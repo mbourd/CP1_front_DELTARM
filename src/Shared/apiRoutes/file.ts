@@ -10,6 +10,10 @@ export interface IFileSearchApiReturn {
   topMessage?: string;
   productList?: Record<string, ISelectData>;
   file?: { key: string; type: string; value: string }[];
+  fileBorrower?: string;
+  fileCodecp?: string;
+  fileManager?: string;
+  fileProduit?: string;
 }
 
 apiRouter.registerRoute({
@@ -78,6 +82,10 @@ apiRouter.registerRoute({
       topMessage: data.data.msg_top,
       productList,
       file: data.data.data_file,
+      fileBorrower: data.data.file_borrower,
+      fileCodecp: data.data.file_codecp,
+      fileManager: data.data.file_manager,
+      fileProduit: data.data.file_produit,
     };
   },
 });
