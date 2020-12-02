@@ -1,5 +1,35 @@
 import styled from 'styled-components/macro';
 
 export const SearchModalStyled = styled.div`
-  border: 1px solid red;
+  font-weight: bold;
+  line-height: ${({ theme }) => theme.sizing.xLarge};
+  margin-top: ${({ theme }) => theme.spacing.xxLarge};
+`;
+
+export const SearchModalFooterStyled = styled.div`
+  margin: ${({ theme }) => theme.spacing.normal};
+
+  ._Button:first-child {
+    margin-right: ${({ theme }) => theme.spacing.medium};
+  }
+`;
+
+export const SearchModalBPIContentStyled = styled.div`
+  .top-message,
+  .bottom-message {
+    font-weight: bold;
+    margin: ${({ theme }) => theme.spacing.normal} 0;
+  }
+
+  .file-info {
+    margin: 0 ${({ theme }) => theme.spacing.normal};
+  }
+
+  .product-list {
+    margin: ${({ theme }) => theme.spacing.large} ${({ theme }) => theme.spacing.normal};
+  }
+
+  .MuiGrid-item {
+    padding: ${({ theme }) => theme.spacing.small} 0;
+  }
 `;

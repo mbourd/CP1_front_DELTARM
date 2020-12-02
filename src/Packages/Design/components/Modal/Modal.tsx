@@ -7,9 +7,10 @@ import { IModal } from './types';
 export const Modal: React.FC<IModal> = ({
   children,
   className,
-  open = true,
+  open = false,
+  closable = true,
   footer,
-  header = 'Header',
+  header,
   width = 'md',
   height = '80%',
   dividers = false,
@@ -30,14 +31,16 @@ export const Modal: React.FC<IModal> = ({
       }}
     >
       <DialogTitle disableTypography={true} className={'_ModalTitle'}>
-        <div>{header}</div>
-        <IconButton
-          className={'_ModalClose' + (className ? ' ' + className : '')}
-          classes={IconClasses}
-          onClick={onClose}
-        >
-          <CloseIcon />
-        </IconButton>
+        {header ? <div>{header}</div> : null}
+        {closable ? (
+          <IconButton
+            className={'_ModalClose' + (className ? ' ' + className : '')}
+            classes={IconClasses}
+            onClick={onClose}
+          >
+            <CloseIcon />
+          </IconButton>
+        ) : null}
       </DialogTitle>
       <DialogContent dividers={dividers} className={'_ModalContent'}>
         {children}

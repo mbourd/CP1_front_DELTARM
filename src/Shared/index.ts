@@ -1,1 +1,2 @@
+import './apiRoutes';
 import './translations';

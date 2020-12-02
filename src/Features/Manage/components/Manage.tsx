@@ -119,7 +119,7 @@ export const Manage: React.FC = (): React.ReactElement => {
         </Button>
       </div>
       {files.length > 0 ? files : <p className={'empty'}>{trans('empty')}</p>}
-      <SearchModal open={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      {isModalOpen ? <SearchModal /> : null}
     </ManageStyled>
   );
 };

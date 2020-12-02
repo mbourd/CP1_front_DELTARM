@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 export interface IModal {
   /**
    * Modal header.
    */
-  header?: string | React.ReactElement;
+  header?: NonNullable<ReactNode>;
   /**
    * Modal footer.
    */
-  footer?: string | React.ReactElement;
+  footer?: NonNullable<ReactNode>;
   /**
    * Modal width.
    */
@@ -28,11 +28,15 @@ export interface IModal {
   /**
    * Modal content.
    */
-  children?: string | React.ReactElement;
+  children?: NonNullable<ReactNode>;
   /**
    * Open / close modal.
    */
   open?: boolean;
+  /**
+   * Modal can be closed
+   */
+  closable?: boolean;
   /**
    * Display the top and bottom dividers.
    */

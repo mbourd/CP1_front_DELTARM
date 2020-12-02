@@ -13,7 +13,7 @@ export const Select: React.FC<ISelect> = ({
   labelBgc = 'transparent',
   labelBdr,
   label,
-  open = true,
+  open = false,
   bdc = 'primary',
   bdr,
   children,
@@ -28,7 +28,9 @@ export const Select: React.FC<ISelect> = ({
   const sizing = useSizing();
   const [isOpen, setIsOpen] = useState(open);
   if (!multiple) {
-    selectedValues = { [Object.keys(selectedValues)[0]]: true };
+    const first = Object.keys(selectedValues)[0];
+
+    selectedValues = first ? { [first]: true } : {};
   }
   const [selected, setSelected] = useState(selectedValues);
 
