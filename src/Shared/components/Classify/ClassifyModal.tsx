@@ -1,9 +1,8 @@
 import React, { useCallback } from 'react';
-import './apiRoutes';
 import { Button, FormLabel, Modal, PageLoader } from 'Shared/components';
 import { useApi, useTrans, router } from 'Services';
-import { IData } from './apiRoutes';
-import { ModalFooterStyled } from './WithoutContinuationModal.style';
+import { ModalFooterStyled } from './ClassifyModal.style';
+import { INonCaseData } from 'Shared/apiRoutes';
 
 interface IProps {
   open: boolean;
@@ -11,8 +10,8 @@ interface IProps {
   fileId: string;
 }
 
-export const WithoutContinuationModal: React.FC<IProps> = ({ open, onClose, fileId }): React.ReactElement | null => {
-  const { error, isLoading, send, data } = useApi<IData>();
+export const ClassifyModal: React.FC<IProps> = ({ open, onClose, fileId }): React.ReactElement | null => {
+  const { error, isLoading, send, data } = useApi<INonCaseData>();
   const [trans] = useTrans('Default');
 
   const submit = useCallback(() => {

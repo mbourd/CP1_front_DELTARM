@@ -6,5 +6,5 @@ export * from './ServerError/ServerError';
 export * from './Heading';
 export * from './Loader/PageLoader';
 export * from './Tooltip/BPITooltip';
-export * from './WithoutContinuationModal/WithoutContinuationModal';
+export * from './Classify/ClassifyModal';
 export * from './Badge/BPIBadge';

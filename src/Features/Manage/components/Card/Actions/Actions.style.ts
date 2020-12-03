@@ -9,8 +9,10 @@ export const ActionsStyled = styled.div`
   top: ${stateHeight}px;
   width: ${actionsWidth}px;
 
-  a {
+  a,
+  .classify {
     border-bottom: 1px dotted ${({ theme }) => theme.color.primary.main};
+    cursor: pointer;
     display: block;
     height: ${(cardHeight - stateHeight) / 3}px;
     position: relative;

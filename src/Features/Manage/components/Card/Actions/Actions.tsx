@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ICard } from '../types';
 import { ActionsStyled } from './Actions.style';
-import { BPIBadge, BPITooltip } from 'Shared/components';
+import { BPIBadge, BPITooltip, ClassifyModal } from 'Shared/components';
 import { CommentIcon, EditIcon, StopIcon } from 'Styles';
 import { router, useTrans } from 'Services';
 
 export const Actions: React.FC<Pick<ICard, 'id' | 'comments'>> = ({ id, comments }): React.ReactElement => {
   const [trans] = useTrans('Manage');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <ActionsStyled>
@@ -30,10 +31,11 @@ export const Actions: React.FC<Pick<ICard, 'id' | 'comments'>> = ({ id, comments
         </Link>
       </BPITooltip>
       <BPITooltip title={trans('classify')} placement={'left'}>
-        <Link to={'/?' + id}>
+        <span onClick={() => setIsModalOpen(true)} className={'classify'}>
           <StopIcon className={'icon'} />
-        </Link>
+        </span>
       </BPITooltip>
+      {isModalOpen ? <ClassifyModal open={isModalOpen} onClose={() => setIsModalOpen(false)} fileId={id} /> : null}
     </ActionsStyled>
   );
 };

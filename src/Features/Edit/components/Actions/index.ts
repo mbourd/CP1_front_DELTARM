@@ -1,2 +1,2 @@
 export * from './SubmitForValidation/SubmitForValidation';
-export * from './WithoutContinuation/WithoutContinuation';
+export * from './Classify/Classify';

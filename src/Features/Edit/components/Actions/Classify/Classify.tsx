@@ -1,21 +1,21 @@
 import React, { useContext, useState } from 'react';
-import { Button, WithoutContinuationModal } from 'Shared/components';
+import { Button, ClassifyModal } from 'Shared/components';
 import { StopIcon } from 'Styles';
 import { useTrans } from 'Services';
-import { WithoutContinuationStyled } from './WithoutContinuation.style';
-import { EditContext } from '../../../EditContext';
+import { EditContext } from 'Features/Edit';
+import { ClassifyStyled } from './Classify.style';
 
-export const WithoutContinuation: React.FC = (): React.ReactElement => {
+export const Classify: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Edit');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { fileId } = useContext(EditContext);
 
   return (
-    <WithoutContinuationStyled className={'action'}>
+    <ClassifyStyled className={'action'}>
       <Button color={'error'} type={'alt'} startIcon={<StopIcon />} onClick={() => setIsModalOpen(!isModalOpen)}>
         {trans('classifyWithoutContinuation')}
       </Button>
-      <WithoutContinuationModal open={isModalOpen} onClose={() => setIsModalOpen(false)} fileId={fileId} />
-    </WithoutContinuationStyled>
+      {isModalOpen ? <ClassifyModal open={isModalOpen} onClose={() => setIsModalOpen(false)} fileId={fileId} /> : null}
+    </ClassifyStyled>
   );
 };

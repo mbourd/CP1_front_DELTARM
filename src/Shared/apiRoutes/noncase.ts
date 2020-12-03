@@ -1,6 +1,6 @@
 import { apiRouter, getEnv } from 'Services';
 
-export interface IData {
+export interface INonCaseData {
   error: boolean;
   errorMessage?: string;
   returnMessage?: string;
@@ -14,7 +14,7 @@ apiRouter.registerRoute({
     cli_id: getEnv('CLIENT_ID'),
     user_id: 1,
   },
-  handler: (response): IData => {
+  handler: (response): INonCaseData => {
     return {
       error: response.return_code !== 1,
       errorMessage: response.error_message,
