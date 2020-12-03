@@ -4,22 +4,22 @@ export interface IApiSection {
   section_id: string;
   section_lib: string;
   section_locked: boolean;
-  section_num: string;
+  stage_code: string;
 }
 
 export interface ISection {
   id: string;
-  num: string;
+  code: string;
   label: string;
   locked: boolean;
 }
 
 export interface IApiCurrentSection {
-  section_num: string;
+  section_id: string;
   chapters: IApiChapter[];
 }
 
 export interface ICurrentSection {
-  num: string;
+  id: string;
   chapters: IChapter[];
 }

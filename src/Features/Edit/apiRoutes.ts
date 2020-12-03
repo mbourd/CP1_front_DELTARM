@@ -69,7 +69,7 @@ apiRouter.registerRoute({
 
     const currentSection: ICurrentSection = {
       chapters,
-      num: '' + apiData.current_section.section_num,
+      id: '' + apiData.current_section.section_id,
     };
 
     const sections: ISection[] = [];
@@ -77,7 +77,7 @@ apiRouter.registerRoute({
     apiData.sections.map((section) => {
       sections.push({
         id: '' + section.section_id,
-        num: '' + section.section_num,
+        code: '' + section.stage_code,
         label: section.section_lib,
         locked: section.section_locked,
       });

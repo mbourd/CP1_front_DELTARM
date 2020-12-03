@@ -12,19 +12,23 @@ interface IProps {
 }
 
 export const ValidationModal: React.FC<IProps> = ({ open, onClose }): React.ReactElement | null => {
-  const { error, isLoading, send, data } = useApi<IData>();
+  const { request, error, isLoading, send, data } = useApi<IData>();
   const [trans] = useTrans('Default');
   const { fileId } = useContext(EditContext);
 
-  useEffect(() => {
-    send('getValidators', {}, { file_id: fileId });
-  }, [send]);
-
-  const submit = useCallback(() => {
+  const handleSubmit = useCallback(() => {
     const selectedValues = storage.getData<Record<string, true>>('edit.selected.validators');
     const selectedValue = Object.keys(selectedValues as Record<string, true>)[0];
     send('askValidation', {}, { file_id: fileId, ask_to_user_id: selectedValue });
-  }, []);
+  }, [send, fileId]);
+
+  useEffect(() => {
+    send('getValidators', {}, { file_id: fileId });
+
+    return () => {
+      request.abort();
+    };
+  }, [send, fileId, request]);
 
   const storeSelectedValues = useCallback((selectedValues: Record<string, true>) => {
     storage.setData('edit.selected.validators', selectedValues);
@@ -75,7 +79,7 @@ export const ValidationModal: React.FC<IProps> = ({ open, onClose }): React.Reac
         <Button color={'error'} onClick={onClose}>
           Annuler la soumission
         </Button>
-        <Button color={'success'} onClick={submit}>
+        <Button color={'success'} onClick={handleSubmit}>
           Soumettre à validation
         </Button>
       </ModalFooterStyled>

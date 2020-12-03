@@ -20,7 +20,7 @@ export const SubmitForValidation: React.FC = (): React.ReactElement => {
       >
         {trans('submitForValidation')}
       </Button>
-      <ValidationModal open={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      {isModalOpen ? <ValidationModal open={isModalOpen} onClose={() => setIsModalOpen(false)} /> : null}
     </SubmitForValidationStyled>
   );
 };

@@ -1,4 +1,4 @@
-import request from 'superagent';
+import request, { SuperAgentRequest } from 'superagent';
 
 import {
   ApiRequestBasicAuthType,
@@ -23,6 +23,7 @@ export class ApiRequest implements IApiRequest {
   private _method: ApiRequestMethodType = 'get';
   private _bearerToken: ApiRequestBearerTokenType = null;
   private _basicAuth: ApiRequestBasicAuthType = null;
+  private _agent: SuperAgentRequest | null = null;
 
   constructor(host: ApiRequestHostType, protocol: ApiRequestProtocolType = 'https') {
     this._protocol = protocol;
@@ -31,6 +32,14 @@ export class ApiRequest implements IApiRequest {
       'Content-type',
       'application/json; charset=UTF-8',
     );
+  }
+
+  abort(): this {
+    if (this._agent) {
+      this._agent.abort();
+    }
+
+    return this;
   }
 
   getBasicAuth(): ApiRequestBasicAuthType {
@@ -192,6 +201,8 @@ export class ApiRequest implements IApiRequest {
   send(): Promise<any> {
     return new Promise((resolve, reject) => {
       const agent = request[this._method](`${this._protocol}://${this._host}${this._url}`);
+
+      this._agent = agent;
 
       agent.set(this._headers);
 

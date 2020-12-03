@@ -12,6 +12,7 @@ export type ApiRequestBearerTokenType = string | null;
 export type ApiRequestBasicAuthType = { login: string; password: string } | null;
 
 export interface IApiRequest {
+  abort(): IApiRequest;
   getBasicAuth(): ApiRequestBasicAuthType;
   setBasicAuth(login: string, password: string): IApiRequest;
   getBody(): ApiRequestBodyType;

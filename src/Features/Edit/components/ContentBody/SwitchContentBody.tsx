@@ -3,20 +3,17 @@ import { Information } from './Information/Information';
 import { SettingUp } from './SettingUp/SettingUp';
 import { Disbursement } from './Disbursement/Disbursement';
 import { PostDisbursement } from './PostDisbursement/PostDisbursement';
+import { storage } from 'Services';
 
-interface IProps {
-  current: string;
-}
-
-export const SwitchContentBody: React.FC<IProps> = ({ current }): React.ReactElement | null => {
-  switch (current) {
-    case '1':
+export const SwitchContentBody: React.FC = (): React.ReactElement | null => {
+  switch (storage.getData('edit.section.active')) {
+    case 'INFO':
       return <Information />;
-    case '2':
+    case 'MEP':
       return <SettingUp />;
-    case '3':
+    case 'DEC_1':
       return <Disbursement />;
-    case '4':
+    case 'POST_DEC':
       return <PostDisbursement />;
   }
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, List } from '@material-ui/core';
 import { EditStyled, EditTitleFileStyled } from './Edit.style';
-import { router, useApi, useTrans } from 'Services';
+import { router, storage, useApi, useTrans } from 'Services';
 import { HeadingOne, ServerError } from 'Shared/components';
 import { FolderOpenIcon } from 'Styles';
 import { NavItem } from './NavItem/NavItem';
@@ -47,19 +47,23 @@ export const Edit: React.FC = (): React.ReactElement => {
           <Grid item className={'nav'}>
             <List>
               {data.sections.map((section) => {
+                if (section.id === currentSection) {
+                  storage.setData('edit.section.active', section.code);
+                }
+
                 return (
                   <NavItem
-                    key={section.num}
+                    key={section.id}
                     item={section}
-                    active={section.num === currentSection}
-                    onClick={section.locked ? undefined : (num: string) => setCurrentSection(num)}
+                    active={section.id === currentSection}
+                    onClick={section.locked ? undefined : (id: string) => setCurrentSection(id)}
                   />
                 );
               })}
             </List>
           </Grid>
           <Grid item className={'content'}>
-            <SwitchContentBody current={currentSection} />
+            <SwitchContentBody />
           </Grid>
         </Grid>
       </EditContext.Provider>
