@@ -4,7 +4,7 @@ import { ContentTitle } from '../../ContentTitle/ContentTitle';
 import { ContentHeader } from '../../ContentHeader/ContentHeader';
 import { DisplayControl } from '../../Control';
 
-export const SettingUp: React.FC = (): React.ReactElement | null => {
+export const Disbursement: React.FC = (): React.ReactElement | null => {
   const { data } = useContext(EditContext);
 
   if (!data) {
@@ -14,7 +14,7 @@ export const SettingUp: React.FC = (): React.ReactElement | null => {
   return (
     <>
       <ContentHeader />
-      <ContentTitle>Mise en place</ContentTitle>
+      <ContentTitle>Décaissement</ContentTitle>
       <DisplayControl controls={data.currentSection.chapters[0].controls} />
     </>
   );
