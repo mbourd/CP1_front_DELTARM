@@ -18,7 +18,7 @@ export const Edit: React.FC = (): React.ReactElement => {
   const { id } = router.getParams();
 
   useEffect(() => {
-    send('edit', {}, { file_id: id, section_num: currentSection });
+    send('edit', {}, { file_id: id, section_id: currentSection });
   }, [send, id, currentSection]);
 
   if (error) {

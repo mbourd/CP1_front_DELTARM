@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Button, Error, FormLabel, Modal, PageLoader, FormText, Select } from 'Shared/components';
 import { SearchModalStyled, SearchModalFooterStyled, SearchModalBPIContentStyled } from './SearchModal.style';
 import { router, storage, useApi, useTrans } from 'Services';

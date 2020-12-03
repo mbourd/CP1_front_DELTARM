@@ -16,9 +16,9 @@ apiRouter.registerRoute({
   },
   handler: (response): INonCaseData => {
     return {
-      error: response.return_code !== 1,
-      errorMessage: response.error_message,
-      returnMessage: response.return_message,
+      error: response.data.return_code !== 1,
+      errorMessage: response.data.error_message,
+      returnMessage: response.data.return_message,
     };
   },
 });
