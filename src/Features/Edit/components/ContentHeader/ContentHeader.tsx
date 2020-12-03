@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core';
 import { ContentHeaderStyled } from './ContentHeader.style';
 import { BPIBadge } from 'Shared/components';
 import { CommentIcon } from 'Styles';
-// import { SubmitForValidation, WithoutContinuation } from '../Actions';
+import { SubmitForValidation, WithoutContinuation } from '../Actions';
 
 export const ContentHeader: React.FC = (): React.ReactElement => {
   return (
@@ -15,8 +15,8 @@ export const ContentHeader: React.FC = (): React.ReactElement => {
           </BPIBadge>
         </Grid>
         <Grid item className={'right'}>
-          {/*<SubmitForValidation />*/}
-          {/*<WithoutContinuation />*/}
+          <SubmitForValidation />
+          <WithoutContinuation />
         </Grid>
       </Grid>
     </ContentHeaderStyled>

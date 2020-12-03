@@ -4,11 +4,11 @@ export interface IModal {
   /**
    * Modal header.
    */
-  header?: NonNullable<ReactNode>;
+  header?: ReactNode;
   /**
    * Modal footer.
    */
-  footer?: NonNullable<ReactNode>;
+  footer?: ReactNode;
   /**
    * Modal width.
    */
