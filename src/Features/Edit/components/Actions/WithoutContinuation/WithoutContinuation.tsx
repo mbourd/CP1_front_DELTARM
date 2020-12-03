@@ -7,6 +7,8 @@ import { WithoutContinuationStyled } from './WithoutContinuation.style';
 export const WithoutContinuation: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Edit');
 
+  // url : /file/noncase
+
   return (
     <WithoutContinuationStyled className={'action'}>
       <Button color={'error'} type={'alt'} startIcon={<StopIcon />}>

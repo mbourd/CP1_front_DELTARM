@@ -17,10 +17,6 @@ export interface IApiAnswerChoice {
   choice_lib: string;
 }
 
-export interface IAnswerChoice {
-  [id: string]: ISelectData;
-}
-
 export interface IApiControl {
   control_desc_1: string | null;
   control_desc_2: string | null;
@@ -44,5 +40,5 @@ export interface IControl {
   title: string;
   type: ControlTypeType;
   value: string;
-  answerChoices?: IAnswerChoice[];
+  answerChoices?: Record<string, ISelectData>;
 }

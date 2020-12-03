@@ -5,11 +5,11 @@ import { router, useApi, useTrans } from 'Services';
 import { HeadingOne, ServerError } from 'Shared/components';
 import { FolderOpenIcon } from 'Styles';
 import { NavItem } from './NavItem/NavItem';
-import { Information } from './Information/Information';
 import { IData } from '../types';
 import { EditContext } from '../EditContext';
 import { NoData } from './NoData/NoData';
 import { IsLoading } from './IsLoading/IsLoading';
+import { SwitchContentBody } from './ContentBody/SwitchContentBody';
 
 export const Edit: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Edit');
@@ -59,7 +59,7 @@ export const Edit: React.FC = (): React.ReactElement => {
             </List>
           </Grid>
           <Grid item className={'content'}>
-            <Information />
+            <SwitchContentBody current={currentSection} />
           </Grid>
         </Grid>
       </EditContext.Provider>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
 import { TabHeaderStyled } from './TabHeader.style';
-import { IChapter } from '../../../types';
+import { IChapter } from 'Features/Edit/types';
 
 interface ITabHeader {
   index: number;

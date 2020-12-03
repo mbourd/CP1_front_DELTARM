@@ -24,6 +24,7 @@ export interface ISelectLabel {
   bdr?: string;
   onClick?: () => void;
   isOpen?: boolean;
+  isDisabled?: boolean;
   containerBdc?: keyof IColor;
 }
 
@@ -32,6 +33,7 @@ export interface ISelect {
   data: Record<string, ISelectData>;
   multiple?: boolean;
   selectedValues?: Record<string, true>;
+  disabled?: boolean;
 
   labelColor?: keyof IColor;
   /**

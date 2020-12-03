@@ -1,11 +1,11 @@
 import React, { useCallback, useContext, useState } from 'react';
 import { InformationStyled } from './Information.style';
-import { ContentHeader } from '../ContentHeader/ContentHeader';
 import { TabHeader } from './TabHeader/TabHeader';
 import { TabContent } from './TabContent/TabContent';
 import { EditContext } from 'Features';
 import { IControl } from 'Features/Edit/types';
-import { DisplayControl } from '../Control';
+import { ContentHeader } from '../../ContentHeader/ContentHeader';
+import { DisplayControl } from '../../Control';
 
 export const Information: React.FC = (): React.ReactElement | null => {
   const [current, setCurrent] = useState(0);

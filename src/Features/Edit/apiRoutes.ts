@@ -1,15 +1,6 @@
 import { apiRouter, getEnv } from 'Services';
-import {
-  IAction,
-  IApiData,
-  IChapter,
-  IControl,
-  ICurrentSection,
-  IData,
-  ISection,
-  IState,
-  IAnswerChoice,
-} from './types';
+import { IAction, IApiData, IChapter, IControl, ICurrentSection, IData, ISection, IState } from './types';
+import { ISelectData } from '../../Packages/Design/components/Select';
 
 apiRouter.registerRoute({
   name: 'edit',
@@ -50,15 +41,13 @@ apiRouter.registerRoute({
         };
 
         if (control.control_answer_choices) {
-          const answerChoices: IAnswerChoice[] = [];
+          const answerChoices: Record<string, ISelectData> = {};
           control.control_answer_choices.map((answer) => {
-            answerChoices.push({
-              [answer.choice_id]: {
-                id: '' + answer.choice_id,
-                label: answer.choice_lib,
-                value: answer.choice_id,
-              },
-            });
+            answerChoices[answer.choice_id] = {
+              id: '' + answer.choice_id,
+              label: answer.choice_lib,
+              value: answer.choice_id,
+            };
 
             return answer;
           });

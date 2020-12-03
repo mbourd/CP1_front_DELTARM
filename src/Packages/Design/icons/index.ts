@@ -22,3 +22,4 @@ export * from './UserCheckedIcon';
 export * from './ListIcon';
 export * from './CheckboxIcon';
 export * from './SelectIcon';
+export * from './EuroIcon';

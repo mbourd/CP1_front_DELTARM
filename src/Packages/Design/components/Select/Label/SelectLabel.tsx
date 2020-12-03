@@ -13,6 +13,7 @@ export const SelectLabel: React.FC<ISelectLabel> = ({
   onClick,
   bdr,
   isOpen = false,
+  isDisabled = false,
   containerBdc = 'primary',
   children,
 }): React.ReactElement => {
@@ -27,7 +28,13 @@ export const SelectLabel: React.FC<ISelectLabel> = ({
       isOpen={isOpen}
       containerBdc={containerBdc}
     >
-      <MUIButton className={'_SelectLabelButton'} disableRipple disableElevation onClick={onClick}>
+      <MUIButton
+        className={'_SelectLabelButton'}
+        disableRipple
+        disableElevation
+        onClick={onClick}
+        disabled={isDisabled}
+      >
         <span className={'container'}>
           <span className={'right'}>
             <TextEllipsis>{children}</TextEllipsis>

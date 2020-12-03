@@ -14,6 +14,7 @@ export const Select: React.FC<ISelect> = ({
   labelBdr,
   label,
   open = false,
+  disabled = false,
   bdc = 'primary',
   bdr,
   children,
@@ -98,6 +99,7 @@ export const Select: React.FC<ISelect> = ({
           bdr={labelBdr || sizing.radius}
           onClick={toggleSelect}
           isOpen={isOpen}
+          isDisabled={disabled}
           containerBdc={bdc}
         >
           {labels.length > 0 ? labels.join(' | ') : label || children}
