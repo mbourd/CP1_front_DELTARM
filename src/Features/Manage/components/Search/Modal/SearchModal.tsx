@@ -5,8 +5,12 @@ import { router, storage, useApi, useTrans } from 'Services';
 import { IFileSearchApiReturn } from 'Shared/apiRoutes';
 import { Grid } from '@material-ui/core';
 
-export const SearchModal: React.FC = (): React.ReactElement | null => {
-  const [isOpen, setIsOpen] = useState(true);
+interface IProps {
+  open: boolean;
+  onClose: () => void;
+}
+
+export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactElement | null => {
   const [trans] = useTrans('Manage');
   const { error, isLoading, send, data } = useApi<IFileSearchApiReturn>();
 
@@ -34,7 +38,7 @@ export const SearchModal: React.FC = (): React.ReactElement | null => {
     const label = trans('serverErrorLabel', { ns: 'Default' });
 
     return (
-      <Modal open={isOpen} onClose={() => setIsOpen(false)}>
+      <Modal open={open} onClose={onClose}>
         <Error title={'Oops!'} redirect={{ label: label, link: '/' }}>
           {trans('serverErrorMessage', { ns: 'Default' })}
         </Error>
@@ -44,7 +48,7 @@ export const SearchModal: React.FC = (): React.ReactElement | null => {
 
   if (isLoading) {
     return (
-      <Modal open={isOpen} closable={false}>
+      <Modal open={open} closable={false}>
         <PageLoader text={'Traitement en cours ...'} />
       </Modal>
     );
@@ -58,7 +62,7 @@ export const SearchModal: React.FC = (): React.ReactElement | null => {
 
   if (data && data.error && !data.fileId && data.type === 'DRM_CREATE') {
     return (
-      <Modal open={isOpen} onClose={() => setIsOpen(false)}>
+      <Modal open={open} onClose={onClose}>
         <SearchModalStyled>{data.errorMessage}</SearchModalStyled>
       </Modal>
     );
@@ -67,7 +71,7 @@ export const SearchModal: React.FC = (): React.ReactElement | null => {
   if (data && data.error && !data.fileId && data.type === 'DRM') {
     const footer = (
       <SearchModalFooterStyled>
-        <Button color={'error'} onClick={() => setIsOpen(false)}>
+        <Button color={'error'} onClick={onClose}>
           {'Annuler la recherche'}
         </Button>
         <Button color={'success'} onClick={() => send('searchFileKSIOP', {}, { file_num, file_avenant })}>
@@ -77,7 +81,7 @@ export const SearchModal: React.FC = (): React.ReactElement | null => {
     );
 
     return (
-      <Modal open={isOpen} footer={footer} onClose={() => setIsOpen(false)}>
+      <Modal open={open} footer={footer} onClose={onClose}>
         <SearchModalStyled>{data.errorMessage}</SearchModalStyled>
       </Modal>
     );
@@ -85,7 +89,7 @@ export const SearchModal: React.FC = (): React.ReactElement | null => {
 
   if (data && data.error && !data.file && data.type === 'KSIOP') {
     return (
-      <Modal open={isOpen} onClose={() => setIsOpen(false)}>
+      <Modal open={open} onClose={onClose}>
         <SearchModalStyled>{"Le dossier rechercher n'existe pas"}</SearchModalStyled>
       </Modal>
     );
@@ -107,7 +111,7 @@ export const SearchModal: React.FC = (): React.ReactElement | null => {
 
     const footer = (
       <SearchModalFooterStyled>
-        <Button color={'error'} onClick={() => setIsOpen(false)}>
+        <Button color={'error'} onClick={onClose}>
           {'Annuler la création'}
         </Button>
         <Button color={'success'} onClick={createFile}>
@@ -117,7 +121,7 @@ export const SearchModal: React.FC = (): React.ReactElement | null => {
     );
 
     return (
-      <Modal open={isOpen} onClose={() => setIsOpen(false)} footer={footer}>
+      <Modal open={open} onClose={onClose} footer={footer}>
         <SearchModalBPIContentStyled>
           <p className={'top-message'}>{data.topMessage}</p>
           <Grid container className={'file-info'}>

@@ -9,7 +9,7 @@ export interface INonCaseData {
 apiRouter.registerRoute({
   name: 'fileNonCase',
   path: '/file/noncase',
-  method: 'get',
+  method: 'post',
   queries: {
     cli_id: getEnv('CLIENT_ID'),
     user_id: 1,
