@@ -1,2 +1,2 @@
 export * from './file';
-export * from './noncase';
+export * from './classify';

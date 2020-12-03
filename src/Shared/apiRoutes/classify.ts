@@ -7,7 +7,7 @@ export interface INonCaseData {
 }
 
 apiRouter.registerRoute({
-  name: 'fileNonCase',
+  name: 'classify',
   path: '/file/noncase',
   method: 'post',
   queries: {

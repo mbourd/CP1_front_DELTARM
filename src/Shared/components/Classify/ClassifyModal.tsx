@@ -15,7 +15,7 @@ export const ClassifyModal: React.FC<IProps> = ({ open, onClose, fileId }): Reac
   const [trans] = useTrans('Default');
 
   const submit = useCallback(() => {
-    send('fileNonCase', {}, { file_id: fileId });
+    send('classify', {}, { file_id: fileId });
   }, [fileId, send]);
 
   let content = <FormLabel>Souhaitez-vous classer ce dossier sans suite ?</FormLabel>;
@@ -47,7 +47,8 @@ export const ClassifyModal: React.FC<IProps> = ({ open, onClose, fileId }): Reac
   }
 
   if (data && data.error) {
-    content = <p>{data.errorMessage}</p>;
+    content = <p>{data.errorMessage || data.returnMessage}</p>;
+    footer = null;
   }
 
   return (
