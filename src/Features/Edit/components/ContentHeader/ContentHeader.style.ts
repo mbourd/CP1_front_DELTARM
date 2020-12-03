@@ -1,13 +1,11 @@
 import styled from 'styled-components/macro';
 
 export const ContentHeaderStyled = styled.div`
-  //border: 1px solid red;
-
   .right {
-    width: 100%;
     text-align: right;
+    width: 100%;
 
-    ._Button {
+    .action {
       margin-right: ${({ theme }) => theme.spacing.medium};
 
       &:last-child {

@@ -12,6 +12,15 @@ export type ControlTypeType =
   | 'radio'
   | 'checkbox';
 
+export interface IApiAnswerChoice {
+  choice_id: string;
+  choice_lib: string;
+}
+
+export interface IAnswerChoice {
+  [id: string]: ISelectData;
+}
+
 export interface IApiControl {
   control_desc_1: string | null;
   control_desc_2: string | null;
@@ -22,7 +31,7 @@ export interface IApiControl {
   control_title: string;
   control_type: ControlTypeType;
   control_value: string;
-  control_answer_choices: { choice_id: string; choice_lib: string }[];
+  control_answer_choices?: IApiAnswerChoice[];
 }
 
 export interface IControl {
@@ -35,5 +44,5 @@ export interface IControl {
   title: string;
   type: ControlTypeType;
   value: string;
-  answerChoices: Record<string, ISelectData>[];
+  answerChoices?: IAnswerChoice[];
 }

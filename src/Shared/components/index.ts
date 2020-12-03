@@ -2,6 +2,7 @@ export * from 'Packages/Design/components';
 export * from './MainContent/MainContent';
 export * from './MainHeader/MainHeader';
 export * from './MainNav/MainNav';
+export * from './ServerError/ServerError';
 export * from './Heading';
 export * from './Loader/PageLoader';
 export * from './Tooltip/BPITooltip';

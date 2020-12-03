@@ -9,6 +9,7 @@ export interface IApiSection {
 
 export interface ISection {
   id: string;
+  num: string;
   label: string;
   locked: boolean;
 }
@@ -19,6 +20,6 @@ export interface IApiCurrentSection {
 }
 
 export interface ICurrentSection {
-  id: string;
+  num: string;
   chapters: IChapter[];
 }

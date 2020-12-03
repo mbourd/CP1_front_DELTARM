@@ -1,25 +1,33 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
 import { TabHeaderStyled } from './TabHeader.style';
-import { useTrans } from 'Services';
+import { IChapter } from '../../../types';
 
 interface ITabHeader {
   index: number;
   setCurrentContent: (current: number) => void;
+  chapters: IChapter[];
 }
 
-export const TabHeader: React.FC<ITabHeader> = ({ index, setCurrentContent }): React.ReactElement => {
-  const [trans] = useTrans('Edit');
-
+export const TabHeader: React.FC<ITabHeader> = ({ chapters, index, setCurrentContent }): React.ReactElement => {
   return (
     <TabHeaderStyled>
       <Grid container alignItems={'center'} wrap={'nowrap'}>
-        <Grid item xs={6} className={index === 0 ? 'active' : ''} onClick={() => setCurrentContent(0)}>
-          {trans('required')}
-        </Grid>
-        <Grid item xs={6} className={index === 1 ? 'active' : ''} onClick={() => setCurrentContent(1)}>
-          {trans('optional')}
-        </Grid>
+        {chapters.map((chapter, key) => {
+          const label = chapter.label.replace(/informations? */i, '');
+
+          return (
+            <Grid
+              item
+              xs={6}
+              className={index === key ? 'active' : ''}
+              onClick={() => setCurrentContent(key)}
+              key={key}
+            >
+              {label}
+            </Grid>
+          );
+        })}
       </Grid>
     </TabHeaderStyled>
   );

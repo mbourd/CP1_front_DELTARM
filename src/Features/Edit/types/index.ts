@@ -2,6 +2,9 @@ export * from './IAction';
 export * from './IFile';
 export * from './ISection';
 export * from './IChapter';
+export * from './IControl';
+export * from './IState';
+export * from './IData';
 
 export const CONTENT_TYPE = {
   1: 'INFORMATION',

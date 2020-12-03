@@ -1,15 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, List } from '@material-ui/core';
 import { EditStyled, EditTitleFileStyled } from './Edit.style';
-import { router, useTrans } from 'Services';
-import { HeadingOne } from 'Shared/components';
+import { router, useApi, useTrans } from 'Services';
+import { HeadingOne, ServerError } from 'Shared/components';
 import { FolderOpenIcon } from 'Styles';
 import { NavItem } from './NavItem/NavItem';
 import { Information } from './Information/Information';
+import { IData } from '../types';
+import { EditContext } from '../EditContext';
+import { NoData } from './NoData/NoData';
+import { IsLoading } from './IsLoading/IsLoading';
 
 export const Edit: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Edit');
+  const { error, isLoading, send, data } = useApi<IData>();
+  const [currentSection, setCurrentSection] = useState('1');
   const { id } = router.getParams();
+
+  useEffect(() => {
+    send('edit', {}, { file_id: id, section_num: currentSection });
+  }, [send, id, currentSection]);
+
+  if (error) {
+    return <ServerError />;
+  }
+
+  if (isLoading) {
+    return <IsLoading id={id} />;
+  }
+
+  if (!data) {
+    return <NoData id={id} />;
+  }
 
   return (
     <EditStyled>
@@ -20,21 +42,27 @@ export const Edit: React.FC = (): React.ReactElement => {
           <span>{id}</span>
         </EditTitleFileStyled>
       </HeadingOne>
-
-      <Grid container wrap={'nowrap'}>
-        <Grid item className={'nav'}>
-          <List>
-            <NavItem label={trans('information', { ns: 'Default' })} active />
-            <NavItem label={trans('settingUp', { ns: 'Default' })} />
-            <NavItem label={trans('disbursement', { ns: 'Default' })} locked />
-            <NavItem label={trans('postDisbursement', { ns: 'Default' })} locked />
-            <NavItem label={trans('cloture', { ns: 'Default' })} locked />
-          </List>
+      <EditContext.Provider value={{ data, fileId: id }}>
+        <Grid container wrap={'nowrap'}>
+          <Grid item className={'nav'}>
+            <List>
+              {data.sections.map((section) => {
+                return (
+                  <NavItem
+                    key={section.num}
+                    item={section}
+                    active={section.num === currentSection}
+                    onClick={section.locked ? undefined : (num: string) => setCurrentSection(num)}
+                  />
+                );
+              })}
+            </List>
+          </Grid>
+          <Grid item className={'content'}>
+            <Information />
+          </Grid>
         </Grid>
-        <Grid item className={'content'}>
-          <Information />
-        </Grid>
-      </Grid>
+      </EditContext.Provider>
     </EditStyled>
   );
 };

@@ -2,19 +2,20 @@ import React from 'react';
 import { ListItem } from '@material-ui/core';
 import { NavItemTextStyled, NavItemStyled } from './NavItem.style';
 import { LockedIcon } from 'Styles';
+import { ISection } from '../../types';
 
 interface INavItem {
-  label: string;
-  locked?: boolean;
-  active?: boolean;
+  item: ISection;
+  active: boolean;
+  onClick?: (id: string) => void;
 }
 
-export const NavItem: React.FC<INavItem> = ({ label, locked = false, active = false }): React.ReactElement => {
+export const NavItem: React.FC<INavItem> = ({ item, onClick, active = false }): React.ReactElement => {
   return (
-    <ListItem disableGutters>
-      <NavItemStyled className={'item'} locked={locked} active={active}>
-        {locked ? <LockedIcon /> : null}
-        <NavItemTextStyled>{label}</NavItemTextStyled>
+    <ListItem disableGutters onClick={onClick && !active ? () => onClick(item.num) : undefined}>
+      <NavItemStyled className={'item'} locked={item.locked} active={active}>
+        {item.locked && !active ? <LockedIcon /> : null}
+        <NavItemTextStyled>{item.label}</NavItemTextStyled>
       </NavItemStyled>
     </ListItem>
   );

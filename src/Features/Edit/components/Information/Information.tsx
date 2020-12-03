@@ -1,31 +1,33 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { InformationStyled } from './Information.style';
 import { ContentHeader } from '../ContentHeader/ContentHeader';
 import { TabHeader } from './TabHeader/TabHeader';
 import { TabContent } from './TabContent/TabContent';
+import { EditContext } from 'Features';
+import { IControl } from 'Features/Edit/types';
+import { DisplayControl } from '../Control';
 
-export const Information: React.FC = (): React.ReactElement => {
+export const Information: React.FC = (): React.ReactElement | null => {
   const [current, setCurrent] = useState(0);
+  const { data } = useContext(EditContext);
 
   const setCurrentContent = useCallback((index: number) => {
     setCurrent(index);
   }, []);
 
-  let content = null;
-
-  if (current === 0) {
-    content = <p>Informations obligatoires</p>;
+  if (!data) {
+    return null;
   }
 
-  if (current === 1) {
-    content = <p>Informations facultatives</p>;
-  }
+  const controls: IControl[] = data.currentSection.chapters[current].controls;
 
   return (
     <InformationStyled>
       <ContentHeader />
-      <TabHeader setCurrentContent={setCurrentContent} index={current} />
-      <TabContent>{content}</TabContent>
+      <TabHeader chapters={data.currentSection.chapters} setCurrentContent={setCurrentContent} index={current} />
+      <TabContent>
+        <DisplayControl controls={controls} />
+      </TabContent>
     </InformationStyled>
   );
 };

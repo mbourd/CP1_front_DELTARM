@@ -1,13 +1,11 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
 import { ContentHeaderStyled } from './ContentHeader.style';
-import { Button, BPIBadge } from 'Shared/components';
-import { CommentIcon, StopIcon, UserCheckedIcon } from 'Styles';
-import { useTrans } from 'Services';
+import { BPIBadge } from 'Shared/components';
+import { CommentIcon } from 'Styles';
+// import { SubmitForValidation, WithoutContinuation } from '../Actions';
 
 export const ContentHeader: React.FC = (): React.ReactElement => {
-  const [trans] = useTrans('Edit');
-
   return (
     <ContentHeaderStyled>
       <Grid container alignItems={'center'} wrap={'nowrap'}>
@@ -17,12 +15,8 @@ export const ContentHeader: React.FC = (): React.ReactElement => {
           </BPIBadge>
         </Grid>
         <Grid item className={'right'}>
-          <Button color={'success'} type={'alt'} startIcon={<UserCheckedIcon />}>
-            {trans('submitForValidation')}
-          </Button>
-          <Button color={'error'} type={'alt'} startIcon={<StopIcon />}>
-            {trans('classifyWithoutContinuation')}
-          </Button>
+          {/*<SubmitForValidation />*/}
+          {/*<WithoutContinuation />*/}
         </Grid>
       </Grid>
     </ContentHeaderStyled>

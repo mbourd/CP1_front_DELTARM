@@ -8,7 +8,7 @@ import { IInputBase } from '../types';
 
 export const InputBase: React.FC<IInputBase> = ({
   color = 'text',
-  bdr = '50px',
+  bdr,
   status,
   icon = false,
   name,
@@ -35,7 +35,7 @@ export const InputBase: React.FC<IInputBase> = ({
       borderSize={border}
       bgc={bgc}
       fontColor={c ? c.main : theme.color.text.main}
-      radiusSize={bdr}
+      bdr={bdr || theme.sizing.radius}
       className={'_Input ' + (className || '') + (status ? ' _Input-' + status : '')}
     >
       {icon}

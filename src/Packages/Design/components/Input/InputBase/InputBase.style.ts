@@ -5,7 +5,7 @@ interface IProps {
   borderSize: number;
   bgc: string;
   fontColor: string;
-  radiusSize: string;
+  bdr: string;
 }
 
 interface IUseStylesProps {
@@ -24,9 +24,8 @@ export const InputBaseStyled = styled.label<IProps>`
   align-items: center;
   background-color: ${({ bgc }) => bgc};
   border: ${({ borderSize }) => borderSize}px solid ${({ fontColor }) => fontColor};
-  border-radius: ${({ radiusSize }) => radiusSize};
+  border-radius: ${({ bdr }) => bdr};
   display: flex;
-  padding: ${({ theme }) => theme.spacing.xSmall};
 
   .MuiSvgIcon-root {
     color: ${({ fontColor }) => fontColor};
@@ -41,7 +40,7 @@ export const InputBaseStyled = styled.label<IProps>`
   .MuiInputBase-input {
     background-color: transparent};
     color: ${({ fontColor }) => fontColor};
-    margin-left: ${({ theme }) => theme.spacing.xSmall};
+    padding: 0 ${({ theme }) => theme.spacing.small};
     width: 100%;
   }
 
