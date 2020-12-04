@@ -31,13 +31,10 @@ export const MainNav: React.FC = (): React.ReactElement => {
     setAnchorEl(null);
   };
 
-  const open = Boolean(anchorEl);
-
   return (
     <>
-      <MenuIcon fontSize={'default'} onClick={handleClick} className={'menu-icon' + (open ? ' active' : '')} />
+      <MenuIcon fontSize={'default'} onClick={handleClick} className={'menu-icon' + (anchorEl ? ' active' : '')} />
       <Popper
-        open={open}
         element={anchorEl}
         placement={'bottom-end'}
         bdr={'0'}

@@ -52,7 +52,7 @@ export const ClassifyModal: React.FC<IProps> = ({ open, onClose, fileId }): Reac
   }
 
   return (
-    <Modal open={open} onClose={onClose} width={'sm'} height={'400px'} footer={footer}>
+    <Modal open={open} onClose={onClose} width={'sm'} footer={footer}>
       {content}
     </Modal>
   );

@@ -51,8 +51,6 @@ export const Filter: React.FC<IProps> = ({ initStages = {}, initStates = {} }): 
     [stages, states],
   );
 
-  const open = Boolean(anchorEl);
-
   useEffect(() => {
     send('manageFilters');
     storage.setData('manage', { filter: { stages, states } });
@@ -73,14 +71,21 @@ export const Filter: React.FC<IProps> = ({ initStages = {}, initStates = {} }): 
       <BadgeStyled>
         {countStages + countStates > 0 ? (
           <BPIBadge content={countStages + countStates}>
-            <FilterIcon onClick={handleClick} className={'filter-icon' + (open ? ' active' : '')} fontSize={'small'} />
+            <FilterIcon
+              onClick={handleClick}
+              className={'filter-icon' + (anchorEl ? ' active' : '')}
+              fontSize={'small'}
+            />
           </BPIBadge>
         ) : (
-          <FilterIcon onClick={handleClick} className={'filter-icon' + (open ? ' active' : '')} fontSize={'small'} />
+          <FilterIcon
+            onClick={handleClick}
+            className={'filter-icon' + (anchorEl ? ' active' : '')}
+            fontSize={'small'}
+          />
         )}
       </BadgeStyled>
       <Popper
-        open={open}
         element={anchorEl}
         placement={'bottom-end'}
         border={'1px solid ' + theme.color.primary.main}

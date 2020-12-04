@@ -13,4 +13,10 @@ export const ContentHeaderStyled = styled.div`
       }
     }
   }
+
+  .comment-icon {
+    &.active {
+      color: ${({ theme }) => theme.color.active.main};
+    }
+  }
 `;

@@ -12,7 +12,7 @@ export const Modal: React.FC<IModal> = ({
   footer,
   header,
   width = 'md',
-  height = '80%',
+  height,
   dividers = false,
   onClose,
 }) => {

@@ -5,7 +5,6 @@ import { IPopper } from './types';
 
 export const Popper: React.FC<IPopper> = ({
   children,
-  open,
   element,
   border,
   shadow,
@@ -16,7 +15,13 @@ export const Popper: React.FC<IPopper> = ({
   zIndex = 100000,
 }): React.ReactElement => {
   return (
-    <MUIPopper className={'_Popper'} open={open} anchorEl={element} placement={placement} style={{ zIndex: zIndex }}>
+    <MUIPopper
+      className={'_Popper'}
+      open={!!element}
+      anchorEl={element}
+      placement={placement}
+      style={{ zIndex: zIndex }}
+    >
       {onClickAway ? (
         <ClickAwayListener onClickAway={onClickAway}>
           <PopperStyled border={border} shadow={shadow} bgc={bgc} bdr={bdr}>
