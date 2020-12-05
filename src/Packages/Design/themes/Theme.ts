@@ -1,6 +1,5 @@
 import { ITheme } from '../types';
-import { breakpoint, color, logo, sizing, spacing, font } from '../variables';
-import { getThemeData, getFromTheme } from '../helpers';
+import { breakpoint, color, sizing, spacing, font } from '../variables';
 
 export const theme: ITheme = {
   color,
@@ -8,11 +7,8 @@ export const theme: ITheme = {
   spacing,
   font,
   breakpoint,
-  logo,
   transition: {
     time: '0.3s',
   },
   data: {},
-  getData: getThemeData,
-  get: getFromTheme,
 };

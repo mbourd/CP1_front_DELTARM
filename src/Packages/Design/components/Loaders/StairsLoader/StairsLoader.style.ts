@@ -5,6 +5,16 @@ export const StairsLoaderStyled = styled.div<IStairsLoader>`
   height: 100px;
   margin: auto;
   position: relative;
+  transform: ${({ size }) => {
+    switch (size) {
+      case 'sm':
+        return 'scale(0.6)';
+      case 'md':
+        return 'scale(0.8)';
+    }
+
+    return 'scale(1)';
+  }};
   width: 75px;
 
   ._LoaderStairsBar {

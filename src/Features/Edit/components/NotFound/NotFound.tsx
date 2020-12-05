@@ -1,6 +1,6 @@
 import React from 'react';
-import { NoDataStyled } from './NoData.style';
-import { HeadingOne } from 'Shared/components';
+import { NotFoundStyled } from './NotFound.style';
+import { ErrorNoData, HeadingOne } from 'Shared/components';
 import { EditStyled, EditTitleFileStyled } from '../Edit.style';
 import { useTrans } from 'Services';
 import { FolderOpenIcon } from 'Styles';
@@ -9,7 +9,7 @@ interface IProps {
   id: string;
 }
 
-export const NoData: React.FC<IProps> = ({ id }): React.ReactElement => {
+export const NotFound: React.FC<IProps> = ({ id }): React.ReactElement => {
   const [trans] = useTrans('Edit');
 
   return (
@@ -21,7 +21,9 @@ export const NoData: React.FC<IProps> = ({ id }): React.ReactElement => {
           <span>{id}</span>
         </EditTitleFileStyled>
       </HeadingOne>
-      <NoDataStyled>Données non disponibles</NoDataStyled>
+      <NotFoundStyled>
+        <ErrorNoData message={"Le dossier recherché n'exisite pas"} />
+      </NotFoundStyled>
     </EditStyled>
   );
 };

@@ -1,72 +1,76 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, List } from '@material-ui/core';
 import { EditStyled, EditTitleFileStyled } from './Edit.style';
-import { router, storage, useApi, useTrans } from 'Services';
-import { HeadingOne, ServerError } from 'Shared/components';
+import { router, storage, SwitchCallState, useApi, useTrans } from 'Services';
+import { HeadingOne } from 'Shared/components';
 import { FolderOpenIcon } from 'Styles';
 import { NavItem } from './NavItem/NavItem';
 import { IData } from '../types';
 import { EditContext } from '../EditContext';
-import { NoData } from './NoData/NoData';
 import { IsLoading } from './IsLoading/IsLoading';
 import { SwitchContentBody } from './ContentBody/SwitchContentBody';
+import { NotFound } from './NotFound/NotFound';
 
 export const Edit: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Edit');
-  const { error, isLoading, send, data } = useApi<IData>();
-  const [currentSection, setCurrentSection] = useState('1');
+  const { request, callState, send, data } = useApi<IData>();
+  const [currentSection, setCurrentSection] = useState<string | null>(null);
   const { id } = router.getParams();
 
   useEffect(() => {
-    send('edit', {}, { file_id: id, section_id: currentSection });
-  }, [send, id, currentSection]);
+    const queries: Record<string, any> = { file_id: id };
+    if (currentSection) {
+      queries.section_id = currentSection;
+    }
 
-  if (error) {
-    return <ServerError />;
-  }
+    send('edit', {}, queries);
 
-  if (isLoading) {
-    return <IsLoading id={id} />;
-  }
-
-  if (!data) {
-    return <NoData id={id} />;
-  }
+    return () => {
+      request.abort();
+    };
+  }, [send, id, currentSection, request]);
 
   return (
-    <EditStyled>
-      <HeadingOne>
-        <p>{trans('pageTitle')}</p>
-        <EditTitleFileStyled>
-          <FolderOpenIcon />
-          <span>{id}</span>
-        </EditTitleFileStyled>
-      </HeadingOne>
-      <EditContext.Provider value={{ data, fileId: id }}>
-        <Grid container wrap={'nowrap'}>
-          <Grid item className={'nav'}>
-            <List>
-              {data.sections.map((section) => {
-                if (section.id === currentSection) {
-                  storage.setData('edit.section.active', section.code);
-                }
+    <SwitchCallState
+      callState={callState}
+      states={{ IS_LOADING: <IsLoading id={id} />, NOT_FOUND: <NotFound id={id} /> }}
+    >
+      <EditStyled>
+        <HeadingOne>
+          <p>{trans('pageTitle')}</p>
+          <EditTitleFileStyled>
+            <FolderOpenIcon />
+            <span>{id}</span>
+          </EditTitleFileStyled>
+        </HeadingOne>
+        <EditContext.Provider value={{ data, fileId: id }}>
+          <Grid container wrap={'nowrap'}>
+            <Grid item className={'nav'}>
+              <List>
+                {data?.sections.map((section) => {
+                  const current = currentSection || data?.currentSection.id;
 
-                return (
-                  <NavItem
-                    key={section.id}
-                    item={section}
-                    active={section.id === currentSection}
-                    onClick={section.locked ? undefined : (id: string) => setCurrentSection(id)}
-                  />
-                );
-              })}
-            </List>
+                  if (section.id === current) {
+                    storage.setData('edit.section.active', section.code);
+                  }
+
+                  return (
+                    <NavItem
+                      key={section.id}
+                      item={section}
+                      active={section.id === current}
+                      onClick={section.locked ? undefined : (id: string) => setCurrentSection(id)}
+                    />
+                  );
+                })}
+              </List>
+            </Grid>
+            <Grid item className={'content'}>
+              <SwitchContentBody />
+            </Grid>
           </Grid>
-          <Grid item className={'content'}>
-            <SwitchContentBody />
-          </Grid>
-        </Grid>
-      </EditContext.Provider>
-    </EditStyled>
+        </EditContext.Provider>
+      </EditStyled>
+    </SwitchCallState>
   );
 };

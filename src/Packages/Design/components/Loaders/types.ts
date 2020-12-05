@@ -1,11 +1,12 @@
 export interface IStairsLoader {
-  barsColor: string;
+  barsColor?: string;
   ballColor?: string;
   /**
    * Animation speed in second.
    * @default 4
    */
   speed?: number;
+  size?: 'sm' | 'md' | 'lg';
 }
 
 export interface ITextShineLoader {

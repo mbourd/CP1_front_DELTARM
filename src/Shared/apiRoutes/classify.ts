@@ -21,4 +21,7 @@ apiRouter.registerRoute({
       returnMessage: response.data.return_message,
     };
   },
+  callState: () => {
+    return 'SUCCESS';
+  },
 });

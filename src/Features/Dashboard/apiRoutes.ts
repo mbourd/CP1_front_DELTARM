@@ -24,6 +24,13 @@ apiRouter.registerRoute({
     cli_id: getEnv('CLIENT_ID'),
     user_id: '1',
   },
+  callState: (data, error, currentState) => {
+    if (currentState === 'SUCCESS' && data.length === 0) {
+      return 'NO_DATA';
+    }
+
+    return currentState;
+  },
   handler: (data) => {
     const files: IApiFile[] = data.data;
 

@@ -4,7 +4,6 @@ export * from './IFont';
 export * from './ISizing';
 export * from './ISpacing';
 export * from './IBreakpoint';
-export * from './ILogo';
 export * from './IMisc';
 export * from './ITheme';
 export * from './ITransition';

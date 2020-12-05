@@ -34,6 +34,7 @@ export interface ISelect {
   multiple?: boolean;
   selectedValues?: Record<string, true>;
   disabled?: boolean;
+  closable?: boolean;
 
   labelColor?: keyof IColor;
   /**
@@ -80,6 +81,7 @@ export interface ISelect {
   onInit?: (selectedValues: Record<string, true>) => void;
   onOpen?: (selectedValues: Record<string, true>) => void;
   onClose?: (selectedValues: Record<string, true>) => void;
+  onChange?: (selectedValues: Record<string, true>) => void;
 }
 
 export interface ISelectContext {

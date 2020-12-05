@@ -4,7 +4,7 @@ export * from './Loaders';
 export * from './Popper';
 export * from './Button';
 export * from './Input';
-export * from './Error';
+export * from './ApiResponse';
 export * from './Checkbox';
 export * from './Radio';
 export * from './Modal';

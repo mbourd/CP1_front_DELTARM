@@ -21,7 +21,7 @@ export const BPIGlobalStyle = createGlobalStyle`
   }
 
   #root {
-    padding-top: ${({ theme }) => theme.getData<string>('header.height')};
+    padding-top: ${({ theme }) => theme.data.header.height};
   }
 
   a {

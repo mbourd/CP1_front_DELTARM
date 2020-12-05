@@ -13,6 +13,24 @@ export const SwitchContentBody: React.FC = (): React.ReactElement | null => {
       return <SettingUp />;
     case 'DEC_1':
       return <Disbursement />;
+    case 'DEC_2':
+      return <Disbursement />;
+    case 'DEC_3':
+      return <Disbursement />;
+    case 'DEC_4':
+      return <Disbursement />;
+    case 'DEC_5':
+      return <Disbursement />;
+    case 'DEC_6':
+      return <Disbursement />;
+    case 'DEC_7':
+      return <Disbursement />;
+    case 'DEC_8':
+      return <Disbursement />;
+    case 'DEC_9':
+      return <Disbursement />;
+    case 'DEC_10':
+      return <Disbursement />;
     case 'POST_DEC':
       return <PostDisbursement />;
   }

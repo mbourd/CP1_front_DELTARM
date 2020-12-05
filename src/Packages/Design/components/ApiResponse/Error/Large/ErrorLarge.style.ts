@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 
-export const ErrorStyled = styled.div`
+export const ErrorLargeStyled = styled.div`
   text-align: center;
 
   ._ErrorTitle {
@@ -10,18 +10,19 @@ export const ErrorStyled = styled.div`
     margin: ${({ theme }) => theme.spacing.xLarge} 0;
   }
 
+  ._ErrorIcon {
+    margin-bottom: ${({ theme }) => theme.spacing.xLarge};
+  }
+
   ._ErrorPicture {
     display: block;
     margin: auto;
     width: 40%;
   }
 
-  ._ErrorText {
-    margin-bottom: ${({ theme }) => theme.spacing.xLarge};
-  }
-
   ._ErrorMessage {
     font-size: ${({ theme }) => theme.sizing.large};
     line-height: 35px;
+    margin-bottom: ${({ theme }) => theme.spacing.xLarge};
   }
 `;

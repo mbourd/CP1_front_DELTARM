@@ -40,7 +40,7 @@ export const InputBaseStyled = styled.label<IProps>`
   .MuiInputBase-input {
     background-color: transparent};
     color: ${({ fontColor }) => fontColor};
-    padding: 0 ${({ theme }) => theme.spacing.small};
+    padding: 0 ${({ theme }) => theme.spacing.xSmall};
     width: 100%;
   }
 

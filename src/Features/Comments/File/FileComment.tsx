@@ -4,6 +4,7 @@ import { BPIBadge, Popper } from 'Shared/components';
 import { CommentIcon } from 'Styles';
 import { Card } from '@material-ui/core';
 import { FileCommentBody } from './Body/FileCommentBody';
+import { FileCommentFooter } from './Footer/FileCommentFooter';
 
 export const FileComment: React.FC = (): React.ReactElement => {
   const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(null);
@@ -31,6 +32,7 @@ export const FileComment: React.FC = (): React.ReactElement => {
           <Card>
             <FileCommentHeaderStyled>Commentaires liés au dossier</FileCommentHeaderStyled>
             <FileCommentBody />
+            <FileCommentFooter />
           </Card>
         </FileCommentStyled>
       </Popper>

@@ -8,20 +8,11 @@ import {
   ApiRequestQueriesType,
 } from './Request';
 import { ApiRequest } from './Request';
-import { FakeResponse } from './Response';
 import { IApiRouter, IApiRouteDef } from './Router';
-import { UseApiReturnType } from './types';
+import { UseApiReturnType, IUseApiError, UseApiCallStateType } from './types';
 
 /**
  * Hook to use for call api.
- *
- * @param host Server host.
- * @param protocol Server protocol.
- * @param router
- * @example
- *    // ...
- *    const { request, isLoading, data, error, send } = useApi('jsonplaceholder.typicode.com', 'https');
- *    // ...
  */
 export const useApi = <T>(
   host: ApiRequestHostType,
@@ -29,22 +20,32 @@ export const useApi = <T>(
   router: IApiRouter,
 ): UseApiReturnType<T> => {
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState<T | null>(null);
-  const [error, setError] = useState<any | null>(null);
 
   const currentRoute = useRef<IApiRouteDef | null>(null);
+  const data = useRef<T | null>(null);
+  const error = useRef<IUseApiError | null>(null);
+  const callState = useRef<UseApiCallStateType>('NOT_INIT');
   const request = useMemo(() => new ApiRequest(host, protocol), [host, protocol]);
 
   const send = useCallback(
     (name: string, params?: ApiRequestParamsType, queries?: ApiRequestQueriesType, body?: ApiRequestBodyType) => {
       currentRoute.current = null;
       const route = router.getRoute(name);
+      data.current = null;
+      error.current = null;
+
+      callState.current = 'IS_LOADING';
+      setIsLoading(true);
 
       if (!route) {
-        const error = new Error();
-        error.name = 'NoRouteDefinition';
-        error.message = `Route definition '${name}' not found!`;
-        setError(error);
+        error.current = {
+          name: 'NoRouteDefinition',
+          message: `Route definition '${name}' not found!`,
+          status: 400,
+        };
+        callState.current = 'ERROR';
+        data.current = null;
+        setIsLoading(false);
 
         return;
       }
@@ -53,10 +54,14 @@ export const useApi = <T>(
       const url = router.generateUrl(route.path, mergeParams);
 
       if (!url) {
-        const error = new Error();
-        error.name = 'UrlGeneration';
-        error.message = 'Url generation failed!';
-        setError(error);
+        error.current = {
+          name: 'UrlGeneration',
+          message: 'Url generation failed!',
+          status: 400,
+        };
+        callState.current = 'ERROR';
+        data.current = null;
+        setIsLoading(false);
 
         return;
       }
@@ -66,14 +71,14 @@ export const useApi = <T>(
       const mergeQueries = Object.assign({}, route.queries || {}, queries);
       request.setUrl(url).setMethod(route.method).setQueries(mergeQueries).setBody(mergeBody);
 
-      setIsLoading(true);
-
       if (currentRoute.current && currentRoute.current.fixtures) {
         let body = currentRoute.current.fixtures();
         if (currentRoute.current.handler) {
           body = currentRoute.current.handler(body);
         }
-        setData(body);
+        data.current = body;
+        error.current = null;
+        callState.current = 'SUCCESS';
         setIsLoading(false);
 
         return;
@@ -85,37 +90,46 @@ export const useApi = <T>(
           if (currentRoute.current && currentRoute.current.handler) {
             res.body = currentRoute.current.handler(res.body);
           }
-          setData(res.body);
+          callState.current = 'SUCCESS';
+          if (currentRoute.current && currentRoute.current.callState) {
+            callState.current = currentRoute.current.callState(res.body, null, callState.current);
+          }
+          data.current = res.body;
+          error.current = null;
           setIsLoading(false);
         })
-        .catch((error) => {
-          if (error.response) {
-            setError(error.response);
-          } else {
-            setError({
-              ...FakeResponse,
-              header: request.getHeaders(),
-              headers: request.getHeaders(),
-              error: error,
-              text: '',
-              body: {},
-              type: 'BadResponse',
-              status: 500,
-              statusText: 'error',
-              ok: false,
-              serverError: true,
-              accepted: false,
-              badRequest: true,
-              notAcceptable: true,
-              created: false,
-            });
-          }
+        .catch((err) => {
+          if (err.response) {
+            error.current = {
+              name: 'ErrorWithResponse',
+              message: err.message,
+              status: err.status,
+              headers: err.response.headers,
+              response: err.response,
+            };
 
+            callState.current = 'BAD_REQUEST';
+          } else {
+            error.current = {
+              name: 'ErrorWithoutResponse',
+              message: '',
+              status: err.status || 500,
+            };
+            callState.current = 'SERVER_ERROR';
+          }
+          data.current = null;
+          if (currentRoute.current && currentRoute.current.callState) {
+            callState.current = currentRoute.current.callState(null, err, callState.current);
+          }
           setIsLoading(false);
         });
     },
     [request, router],
   );
 
-  return { request, isLoading, data, error, send };
+  if (error.current && error.current.status >= 400 && error.current.status <= 499) {
+    callState.current = error.current?.response ? 'BAD_REQUEST' : 'NOT_FOUND';
+  }
+
+  return { request, isLoading, data: data.current, error: error.current, callState: callState.current, send };
 };

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
-import { Button, Error, FormLabel, Modal, PageLoader, FormText, Select } from 'Shared/components';
+import { Button, FormLabel, Modal, PageLoader, FormText, Select } from 'Shared/components';
 import { SearchModalStyled, SearchModalFooterStyled, SearchModalBPIContentStyled } from './SearchModal.style';
-import { router, storage, useApi, useTrans } from 'Services';
+import { router, storage, useApi } from 'Services';
 import { IFileSearchApiReturn } from 'Shared/apiRoutes';
 import { Grid } from '@material-ui/core';
 
@@ -11,7 +11,6 @@ interface IProps {
 }
 
 export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactElement | null => {
-  const [trans] = useTrans('Manage');
   const { error, isLoading, send, data } = useApi<IFileSearchApiReturn>();
 
   const file = (storage.getData('manage.search.value') as string).split(/ *\/ */);
@@ -35,13 +34,9 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
   }, [send, file_num, file_avenant]);
 
   if (error) {
-    const label = trans('serverErrorLabel', { ns: 'Default' });
-
     return (
       <Modal open={open} onClose={onClose}>
-        <Error title={'Oops!'} redirect={{ label: label, link: '/' }}>
-          {trans('serverErrorMessage', { ns: 'Default' })}
-        </Error>
+        <p>Error</p>
       </Modal>
     );
   }

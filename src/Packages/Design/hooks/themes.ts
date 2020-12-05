@@ -1,6 +1,5 @@
 import { useTheme as useThemeStyled } from 'styled-components/macro';
-import { IBreakpoint, IColor, IFont, ILogo, ISizing, ISpacing } from '../types';
-import { getThemeData } from '../helpers';
+import { IBreakpoint, IColor, IFont, ISizing, ISpacing } from '../types';
 
 export const useTheme = (key?: string) => {
   const theme = useThemeStyled();
@@ -29,12 +28,4 @@ export const useFont = (): IFont => {
 
 export const useBreakpoint = (): IBreakpoint => {
   return useTheme('breakpoint');
-};
-
-export const useLogo = (): ILogo => {
-  return useTheme('logo');
-};
-
-export const useThemeData = <T>(key?: string): T => {
-  return getThemeData<T>(key);
 };

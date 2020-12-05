@@ -1,4 +1,5 @@
 import { ApiRequestBodyType, ApiRequestMethodType, ApiRequestParamsType, ApiRequestQueriesType } from '../Request';
+import { UseApiCallStateType } from '../types';
 
 export interface IApiRouter {
   addRoute: (route: IApiRouteDef) => IApiRouter;
@@ -45,4 +46,8 @@ export interface IApiRouteDef {
    * Use fake data instead of api data.
    */
   fixtures?: () => NonNullable<any>;
+  /**
+   * Use this callback to return new call state.
+   */
+  callState?: (body: any, error: any, currentState: UseApiCallStateType) => UseApiCallStateType;
 }

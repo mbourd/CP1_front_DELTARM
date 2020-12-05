@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './apiRoutes';
-import { Button } from 'Shared/components';
+import { Button, Popper } from 'Shared/components';
 import { UserCheckedIcon } from 'Styles';
 import { useTrans } from 'Services';
 import { SubmitForValidationStyled } from './SubmitForValidation.style';
-import { ValidationModal } from './ValidationModal';
+import { ValidationPopper } from './Popper/ValidationPopper';
 
 export const SubmitForValidation: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Edit');
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState<Element | null>(null);
 
   return (
     <SubmitForValidationStyled className={'action'}>
@@ -16,11 +16,16 @@ export const SubmitForValidation: React.FC = (): React.ReactElement => {
         color={'success'}
         type={'alt'}
         startIcon={<UserCheckedIcon />}
-        onClick={() => setIsModalOpen(!isModalOpen)}
+        onClick={(e) => {
+          setAnchorEl(anchorEl ? null : e.currentTarget);
+        }}
       >
         {trans('submitForValidation')}
       </Button>
-      {isModalOpen ? <ValidationModal open={isModalOpen} onClose={() => setIsModalOpen(false)} /> : null}
+
+      <Popper element={anchorEl} placement={'bottom-end'} onClickAway={() => setAnchorEl(null)} zIndex={2}>
+        <ValidationPopper />
+      </Popper>
     </SubmitForValidationStyled>
   );
 };

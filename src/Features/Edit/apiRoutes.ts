@@ -1,6 +1,6 @@
 import { apiRouter, getEnv } from 'Services';
 import { IAction, IApiData, IChapter, IControl, ICurrentSection, IData, ISection, IState } from './types';
-import { ISelectData } from '../../Packages/Design/components/Select';
+import { ISelectData } from 'Shared/components';
 
 apiRouter.registerRoute({
   name: 'edit',

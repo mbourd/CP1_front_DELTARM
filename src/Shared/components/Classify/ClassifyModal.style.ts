@@ -6,4 +6,8 @@ export const ModalFooterStyled = styled.div`
   ._Button:first-child {
     margin-right: ${({ theme }) => theme.spacing.medium};
   }
+
+  ._Button:last-child {
+    margin-right: 0;
+  }
 `;

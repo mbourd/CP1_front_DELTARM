@@ -15,6 +15,7 @@ export const Select: React.FC<ISelect> = ({
   label,
   open = false,
   disabled = false,
+  closable = true,
   bdc = 'primary',
   bdr,
   children,
@@ -25,6 +26,7 @@ export const Select: React.FC<ISelect> = ({
   onInit,
   onOpen,
   onClose,
+  onChange,
 }): React.ReactElement => {
   const sizing = useSizing();
   const [isOpen, setIsOpen] = useState(open);
@@ -50,11 +52,15 @@ export const Select: React.FC<ISelect> = ({
   }, [onClose, onOpen, selected, isOpen]);
 
   const closeSelect = useCallback(() => {
+    if (!closable) {
+      return;
+    }
+
     setIsOpen(false);
     if (onClose) {
       onClose(selected);
     }
-  }, [onClose, selected]);
+  }, [onClose, selected, closable]);
 
   const onValueChange = useCallback(
     (input: HTMLInputElement, value: ISelectData) => {
@@ -74,9 +80,13 @@ export const Select: React.FC<ISelect> = ({
         selectedVal = selected;
       }
 
+      if (onChange) {
+        onChange(selectedVal);
+      }
+
       setSelected(selectedVal);
     },
-    [selected, multiple],
+    [selected, multiple, onChange],
   );
 
   const labels = Object.keys(selected).map((id) => {
@@ -97,7 +107,7 @@ export const Select: React.FC<ISelect> = ({
           color={labelColor}
           bgc={labelBgc}
           bdr={labelBdr || sizing.radius}
-          onClick={toggleSelect}
+          onClick={closable ? toggleSelect : undefined}
           isOpen={isOpen}
           isDisabled={disabled}
           containerBdc={bdc}

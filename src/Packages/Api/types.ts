@@ -3,8 +3,9 @@ import { ApiRequest, ApiRequestBodyType, ApiRequestParamsType, ApiRequestQueries
 export type UseApiReturnType<T> = {
   request: ApiRequest;
   data: T | null;
-  error: any | null;
+  error: IUseApiError | null;
   isLoading: boolean;
+  callState: UseApiCallStateType;
   send: (
     name: string,
     params?: ApiRequestParamsType,
@@ -12,3 +13,22 @@ export type UseApiReturnType<T> = {
     body?: ApiRequestBodyType,
   ) => void;
 };
+
+export type UseApiCallStateType =
+  | 'NOT_INIT'
+  | 'INIT'
+  | 'IS_LOADING'
+  | 'NO_DATA'
+  | 'NOT_FOUND'
+  | 'BAD_REQUEST'
+  | 'ERROR'
+  | 'SERVER_ERROR'
+  | 'SUCCESS';
+
+export interface IUseApiError {
+  name: string;
+  message: string;
+  status: number;
+  headers?: Record<string, any>;
+  response?: Record<string, any>;
+}
