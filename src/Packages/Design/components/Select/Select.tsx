@@ -90,7 +90,7 @@ export const Select: React.FC<ISelect> = ({
   );
 
   const labels = Object.keys(selected).map((id) => {
-    return data[id].label;
+    return data[id] ? data[id].label : null;
   });
 
   useEffect(() => {

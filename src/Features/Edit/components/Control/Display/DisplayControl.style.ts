@@ -4,4 +4,8 @@ export const DisplayControlStyled = styled.div`
   .MuiGrid-item {
     padding: ${({ theme }) => theme.spacing.normal};
   }
+  ._FormError {
+    padding: 0;
+    position: absolute;
+  }
 `;

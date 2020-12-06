@@ -7,6 +7,7 @@ export interface IApiData {
   current_section: IApiCurrentSection;
   sections: IApiSection[];
   state: IApiState;
+  nb_comment: number;
 }
 
 export interface IData {
@@ -14,4 +15,5 @@ export interface IData {
   currentSection: ICurrentSection;
   sections: ISection[];
   state: IState;
+  countComments: number;
 }

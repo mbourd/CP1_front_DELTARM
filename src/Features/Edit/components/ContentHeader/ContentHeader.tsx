@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid } from '@material-ui/core';
 import { ContentHeaderStyled } from './ContentHeader.style';
 
-import { SubmitForValidation, Classify } from '../Actions';
+import { SubmitForValidation, Classify, Accept, Reject } from '../Actions';
 import { FileComment } from 'Features';
 
 export const ContentHeader: React.FC = (): React.ReactElement => {
@@ -15,6 +15,8 @@ export const ContentHeader: React.FC = (): React.ReactElement => {
         <Grid item className={'right'}>
           <SubmitForValidation />
           <Classify />
+          {/*<Accept />*/}
+          {/*<Reject />*/}
         </Grid>
       </Grid>
     </ContentHeaderStyled>

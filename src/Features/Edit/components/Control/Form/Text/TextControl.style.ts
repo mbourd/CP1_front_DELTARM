@@ -1,3 +1,10 @@
 import styled from 'styled-components/macro';
 
-export const TextControlStyled = styled.div``;
+export const TextControlStyled = styled.div`
+  position: relative;
+
+  .MuiSvgIcon-root:hover {
+    color: inherit;
+    cursor: inherit;
+  }
+`;

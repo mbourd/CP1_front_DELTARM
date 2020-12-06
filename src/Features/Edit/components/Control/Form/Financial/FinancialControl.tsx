@@ -1,10 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { IControl } from 'Features/Edit/types';
-import { FormLabel, InputBase } from 'Shared/components';
+import { FormError, FormLabel, InputBase } from 'Shared/components';
 import { FinancialControlStyled } from './FinancialControl.style';
 import { EuroIcon } from 'Styles';
-import { useApi } from 'Services';
+import { storage, useApi } from 'Services';
 
 interface IProps {
   control: IControl;
@@ -13,13 +13,31 @@ interface IProps {
 
 export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.ReactElement => {
   const { send } = useApi<void>();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const value = storage.getData<string>('edit.control.' + control.id + '.value');
 
   const saveValue = useCallback(
     (value: string) => {
+      if (control.mandatory && !/^[1-9][0-9]*$/.test(value)) {
+        setErrorMessage('Saisissez un nombre');
+
+        return;
+      }
+
+      storage.setData('edit.control.' + control.id + '.value', value);
+      setErrorMessage(null);
       send('setControlValue', {}, { file_id: fileId, elm_id: control.id, elm_val: value });
     },
-    [send, fileId, control.id],
+    [send, fileId, control.id, control.mandatory],
   );
+
+  useEffect(() => {
+    const val = storage.getData<string>('edit.control.' + control.id + '.value');
+
+    if (control.mandatory && control.editable && !val && !control.value) {
+      setErrorMessage('Valeur obligatoire');
+    }
+  }, [control.id, control.mandatory, control.value, control.editable]);
 
   return (
     <Grid item xs={6}>
@@ -29,10 +47,11 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
           placeholder={control.editable ? control.title : control.value}
           disabled={!control.editable}
           color={control.editable ? 'text' : 'disabled'}
-          defaultValue={control.value}
+          defaultValue={value || control.value}
           icon={<EuroIcon />}
           onChange={(e) => saveValue(e.currentTarget.value)}
         />
+        {errorMessage ? <FormError>{errorMessage}</FormError> : null}
       </FinancialControlStyled>
     </Grid>
   );

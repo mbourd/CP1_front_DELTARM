@@ -96,6 +96,7 @@ apiRouter.registerRoute({
       currentSection,
       sections,
       state,
+      countComments: apiData.nb_comment,
     };
 
     return data;
@@ -110,7 +111,24 @@ apiRouter.registerRoute({
     cli_id: getEnv('CLIENT_ID'),
     user_id: '1',
   },
-  handler: (response) => {
-    console.log(response);
+});
+
+apiRouter.registerRoute({
+  name: 'acceptValidation',
+  path: '/validate/accept',
+  method: 'post',
+  queries: {
+    cli_id: getEnv('CLIENT_ID'),
+    user_id: 1,
+  },
+});
+
+apiRouter.registerRoute({
+  name: 'rejectValidation',
+  path: '/validate/reject',
+  method: 'post',
+  queries: {
+    cli_id: getEnv('CLIENT_ID'),
+    user_id: 1,
   },
 });

@@ -14,14 +14,4 @@ apiRouter.registerRoute({
     cli_id: getEnv('CLIENT_ID'),
     user_id: 1,
   },
-  handler: (response): INonCaseData => {
-    return {
-      error: response.data.return_code !== 1,
-      errorMessage: response.data.error_message,
-      returnMessage: response.data.return_message,
-    };
-  },
-  callState: () => {
-    return 'SUCCESS';
-  },
 });

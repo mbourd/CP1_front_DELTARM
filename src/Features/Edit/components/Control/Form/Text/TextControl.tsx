@@ -1,9 +1,9 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { TextControlStyled } from './TextControl.style';
 import { Grid } from '@material-ui/core';
 import { IControl } from 'Features/Edit/types';
-import { FormLabel, InputBase } from 'Shared/components';
-import { useApi } from 'Services';
+import { FormError, FormLabel, InputBase } from 'Shared/components';
+import { storage, useApi } from 'Services';
 
 interface IProps {
   control: IControl;
@@ -12,13 +12,24 @@ interface IProps {
 
 export const TextControl: React.FC<IProps> = ({ control, fileId }): React.ReactElement => {
   const { send } = useApi<void>();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const value = storage.getData<string>('edit.control.' + control.id + '.value');
 
   const saveValue = useCallback(
     (value: string) => {
+      storage.setData('edit.control.' + control.id + '.value', value);
       send('setControlValue', {}, { file_id: fileId, elm_id: control.id, elm_val: value });
     },
     [send, fileId, control.id],
   );
+
+  useEffect(() => {
+    const val = storage.getData<string>('edit.control.' + control.id + '.value');
+
+    if (control.mandatory && control.editable && !val && !control.value) {
+      setErrorMessage('Valeur obligatoire');
+    }
+  }, [control.id, control.mandatory, control.value, control.editable]);
 
   return (
     <Grid item xs={6}>
@@ -28,9 +39,10 @@ export const TextControl: React.FC<IProps> = ({ control, fileId }): React.ReactE
           placeholder={control.editable ? control.title : control.value}
           disabled={!control.editable}
           color={control.editable ? 'text' : 'disabled'}
-          defaultValue={control.value}
+          defaultValue={value || control.value}
           onChange={(e) => saveValue(e.currentTarget.value)}
         />
+        {errorMessage ? <FormError>{errorMessage}</FormError> : null}
       </TextControlStyled>
     </Grid>
   );

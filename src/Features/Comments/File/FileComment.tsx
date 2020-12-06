@@ -12,7 +12,8 @@ import { FileCommentStyled, FileCommentHeaderStyled } from './FileComment.style'
 export const FileComment: React.FC = (): React.ReactElement => {
   const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(null);
   const { request, error, callState, send, data } = useApi<IFileComment>();
-  const { fileId } = useContext(EditContext);
+  const context = useContext(EditContext);
+  const { fileId } = context;
 
   useEffect(() => {
     send('getFileComments', {}, { file_id: fileId });
@@ -22,13 +23,9 @@ export const FileComment: React.FC = (): React.ReactElement => {
     };
   }, [send, fileId, request]);
 
-  // if (data) {
-  //   console.log(data);
-  // }
-
   return (
     <>
-      <BPIBadge content={5}>
+      <BPIBadge content={context.data?.countComments}>
         <CommentIcon
           fontSize={'large'}
           className={'comment-icon' + (anchorEl ? ' active' : '')}

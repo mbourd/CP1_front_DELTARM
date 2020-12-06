@@ -43,6 +43,17 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
     return null;
   }
 
+  if (callState === 'SUCCESS' && data && route?.type === 'KSIOP') {
+    storage.setData('edit.create.queries', {
+      file_num,
+      file_avenant,
+      file_produit: data.fileProduit,
+      file_borrower: data.fileBorrower,
+      file_codecp: data.fileCodecp,
+      file_manager: data.fileManager,
+    });
+  }
+
   let footer = null;
   // const content = null;
 
@@ -57,6 +68,19 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
             Rechercher chez KSIOP
           </Button>
         ) : null}
+      </SearchModalFooterStyled>
+    );
+  }
+
+  if (callState === 'SUCCESS' && route?.type === 'KSIOP') {
+    footer = (
+      <SearchModalFooterStyled>
+        <Button color={'error'} onClick={onClose}>
+          Annuler la création
+        </Button>
+        <Button color={'success'} onClick={createFile}>
+          Confirmer la création
+        </Button>
       </SearchModalFooterStyled>
     );
   }
@@ -111,7 +135,9 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
                     multiple={false}
                     closable={false}
                     open={true}
-                    // selectedValues={firstItem}
+                    selectedValues={{
+                      [Object.keys(data.productList)[0] || '-1']: true,
+                    }}
                     onInit={setProduct}
                     onClose={setProduct}
                   >

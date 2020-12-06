@@ -35,6 +35,14 @@ export interface ISelect {
   selectedValues?: Record<string, true>;
   disabled?: boolean;
   closable?: boolean;
+  /**
+   * Start at 0.
+   */
+  selectByIndex?: number | number[];
+  /**
+   * Select by ids.
+   */
+  select?: string[];
 
   labelColor?: keyof IColor;
   /**
