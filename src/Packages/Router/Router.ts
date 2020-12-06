@@ -189,7 +189,7 @@ export class Router implements IRouter {
   /**
    * Redirect to route using its name.
    */
-  public redirectTo(name: string, params?: RouterParamsType, queries?: RouterQueriesType): this {
+  public redirectTo(name: string, params?: RouterParamsType, queries?: RouterQueriesType, force?: boolean): this {
     if (!this._history) {
       return this;
     }
@@ -198,6 +198,10 @@ export class Router implements IRouter {
 
     if (!url) {
       return this;
+    }
+
+    if (force) {
+      window.location.replace(url);
     }
 
     this._history.push(url);

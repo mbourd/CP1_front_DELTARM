@@ -5,7 +5,6 @@ export interface IFileSearchApiReturn {
   error: boolean;
   errorMessage: string | null;
   fileId: string | null;
-  type: 'DRM' | 'KSIOP' | 'DRM_CREATE';
   bottomMessage?: string;
   topMessage?: string;
   productList?: Record<string, ISelectData>;
@@ -20,6 +19,7 @@ apiRouter.registerRoute({
   name: 'searchFile',
   path: '/file/search',
   method: 'get',
+  type: 'DRM',
   queries: {
     cli_id: getEnv('CLIENT_ID'),
     user_id: '1',
@@ -29,7 +29,6 @@ apiRouter.registerRoute({
       error: !data.data.file_id,
       errorMessage: data.data.return_message,
       fileId: data.data.file_id,
-      type: 'DRM',
     };
   },
 });
@@ -38,6 +37,7 @@ apiRouter.registerRoute({
   name: 'createFile',
   path: '/file/create',
   method: 'post',
+  type: 'DRM_CREATE',
   queries: {
     cli_id: getEnv('CLIENT_ID'),
     user_id: '1',
@@ -47,7 +47,6 @@ apiRouter.registerRoute({
       error: !data.data.file_id,
       errorMessage: data.data.return_message,
       fileId: data.data.file_id,
-      type: 'DRM_CREATE',
     };
   },
 });
@@ -56,6 +55,7 @@ apiRouter.registerRoute({
   name: 'searchFileKSIOP',
   path: '/call_api_bpi',
   method: 'get',
+  type: 'KSIOP',
   queries: {
     cli_id: getEnv('CLIENT_ID'),
     user_id: '1',
@@ -77,7 +77,6 @@ apiRouter.registerRoute({
       error: !data.data.data_file,
       errorMessage: data.data.return_message,
       fileId: data.data.file_id,
-      type: 'KSIOP',
       bottomMessage: data.data.msg_bottom,
       topMessage: data.data.msg_top,
       productList,

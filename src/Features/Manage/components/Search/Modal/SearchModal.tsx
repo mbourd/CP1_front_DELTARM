@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect } from 'react';
-import { Button, FormLabel, Modal, PageLoader, FormText, Select } from 'Shared/components';
-import { SearchModalStyled, SearchModalFooterStyled, SearchModalBPIContentStyled } from './SearchModal.style';
-import { router, storage, useApi } from 'Services';
-import { IFileSearchApiReturn } from 'Shared/apiRoutes';
 import { Grid } from '@material-ui/core';
+import { Button, Modal, StairsLoader, Error500, BadRequest, FormLabel, FormText, Select } from 'Shared/components';
+import { SearchModalBPIContentStyled, SearchModalFooterStyled } from './SearchModal.style';
+import { router, storage, SwitchCallState, useApi } from 'Services';
+import { IFileSearchApiReturn } from 'Features/Manage';
 
 interface IProps {
   open: boolean;
@@ -11,7 +11,7 @@ interface IProps {
 }
 
 export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactElement | null => {
-  const { error, isLoading, send, data } = useApi<IFileSearchApiReturn>();
+  const { request, error, callState, route, send, data } = useApi<IFileSearchApiReturn | null>();
 
   const file = (storage.getData('manage.search.value') as string).split(/ *\/ */);
   const file_num = file[0];
@@ -31,126 +31,99 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
 
   useEffect(() => {
     send('searchFile', {}, { file_num, file_avenant });
+
+    return () => {
+      request.abort();
+    };
   }, [send, file_num, file_avenant]);
 
-  if (error) {
-    return (
-      <Modal open={open} onClose={onClose}>
-        <p>Error</p>
-      </Modal>
-    );
-  }
-
-  if (isLoading) {
-    return (
-      <Modal open={open} closable={false}>
-        <PageLoader text={'Traitement en cours ...'} />
-      </Modal>
-    );
-  }
-
-  if (data && !data.error && data.fileId) {
-    router.redirectTo('edit', { id: file_num });
+  if (callState === 'SUCCESS' && data && (route?.type === 'DRM' || route?.type === 'DRM_CREATE')) {
+    router.redirectTo('edit', { id: data.fileId });
 
     return null;
   }
 
-  if (data && data.error && !data.fileId && data.type === 'DRM_CREATE') {
-    return (
-      <Modal open={open} onClose={onClose}>
-        <SearchModalStyled>{data.errorMessage}</SearchModalStyled>
-      </Modal>
-    );
-  }
+  let footer = null;
+  // const content = null;
 
-  if (data && data.error && !data.fileId && data.type === 'DRM') {
-    const footer = (
+  if (callState === 'BAD_REQUEST' && route?.type === 'DRM') {
+    footer = (
       <SearchModalFooterStyled>
         <Button color={'error'} onClick={onClose}>
-          {'Annuler la recherche'}
+          Annuler la recherche
         </Button>
-        <Button color={'success'} onClick={() => send('searchFileKSIOP', {}, { file_num, file_avenant })}>
-          {'Rechercher chez KSIOP'}
-        </Button>
+        {route?.type === 'DRM' ? (
+          <Button color={'success'} onClick={() => send('searchFileKSIOP', {}, { file_num, file_avenant })}>
+            Rechercher chez KSIOP
+          </Button>
+        ) : null}
       </SearchModalFooterStyled>
     );
-
-    return (
-      <Modal open={open} footer={footer} onClose={onClose}>
-        <SearchModalStyled>{data.errorMessage}</SearchModalStyled>
-      </Modal>
-    );
   }
 
-  if (data && data.error && !data.file && data.type === 'KSIOP') {
-    return (
-      <Modal open={open} onClose={onClose}>
-        <SearchModalStyled>{"Le dossier rechercher n'existe pas"}</SearchModalStyled>
-      </Modal>
-    );
-  }
-
-  if (data && !data.error && data.file && data.productList && data.type === 'KSIOP') {
-    const firstItem: Record<string, true> = {
-      [Object.keys(data.productList)[0]]: true,
-    };
-
-    storage.setData('edit.create.queries', {
-      file_num,
-      file_avenant,
-      file_produit: data.fileProduit,
-      file_borrower: data.fileBorrower,
-      file_codecp: data.fileCodecp,
-      file_manager: data.fileManager,
-    });
-
-    const footer = (
-      <SearchModalFooterStyled>
-        <Button color={'error'} onClick={onClose}>
-          {'Annuler la création'}
-        </Button>
-        <Button color={'success'} onClick={createFile}>
-          {'Confirmer la création'}
-        </Button>
-      </SearchModalFooterStyled>
-    );
-
-    return (
-      <Modal open={open} onClose={onClose} footer={footer}>
-        <SearchModalBPIContentStyled>
-          <p className={'top-message'}>{data.topMessage}</p>
-          <Grid container className={'file-info'}>
-            {data.file.map((file, key) => {
-              return (
-                <Grid item key={key} xs={4}>
-                  <p>
-                    <FormLabel>{file.key}</FormLabel>
-                  </p>
-                  <p>
-                    <FormText>{file.value}</FormText>
-                  </p>
-                </Grid>
-              );
-            })}
-          </Grid>
-          <div className={'product-list'}>
-            <FormLabel>Selectionner une famille de produit</FormLabel>
-            <Select
-              name={'productList'}
-              data={data.productList}
-              multiple={false}
-              selectedValues={firstItem}
-              onInit={setProduct}
-              onClose={setProduct}
-            >
-              Selectionner une famille de produit
-            </Select>
-          </div>
-          <p className={'bottom-message'}>{data.bottomMessage}</p>
-        </SearchModalBPIContentStyled>
-      </Modal>
-    );
-  }
-
-  return null;
+  return (
+    <Modal open={open} onClose={onClose} footer={footer}>
+      <SwitchCallState
+        callState={callState}
+        states={{
+          IS_LOADING: <StairsLoader size={'md'} />,
+          SERVER_ERROR: <Error500 size={'md'} message={'Le serveur ne répond pas'} />,
+          BAD_REQUEST:
+            route?.type === 'KSIOP' ? (
+              <BadRequest
+                size={'md'}
+                message={error?.response ? error?.response.body.error_msg : ''}
+                title={'Réponse de KSIOP'}
+              />
+            ) : (
+              <BadRequest
+                size={'md'}
+                message={error?.response ? error?.response.body.error_msg : ''}
+                title={'Dossier introuvable !'}
+              />
+            ),
+        }}
+      >
+        {data ? (
+          <SearchModalBPIContentStyled>
+            <p className={'top-message'}>{data.topMessage}</p>
+            <Grid container className={'file-info'}>
+              {data.file?.map((file, key) => {
+                return (
+                  <Grid item key={key} xs={4}>
+                    <p>
+                      <FormLabel>{file.key}</FormLabel>
+                    </p>
+                    <p>
+                      <FormText>{file.value}</FormText>
+                    </p>
+                  </Grid>
+                );
+              })}
+            </Grid>
+            <div className={'product-list'}>
+              {data.productList ? (
+                <>
+                  <FormLabel>Selectionner une famille de produit</FormLabel>
+                  <Select
+                    name={'productList'}
+                    data={data.productList}
+                    multiple={false}
+                    closable={false}
+                    open={true}
+                    // selectedValues={firstItem}
+                    onInit={setProduct}
+                    onClose={setProduct}
+                  >
+                    Selectionner une famille de produit
+                  </Select>
+                </>
+              ) : null}
+            </div>
+            <p className={'bottom-message'}>{data.bottomMessage}</p>
+          </SearchModalBPIContentStyled>
+        ) : null}
+      </SwitchCallState>
+    </Modal>
+  );
 };

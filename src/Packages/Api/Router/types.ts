@@ -27,6 +27,10 @@ export interface IApiRouteDef {
    */
   path: string;
   /**
+   * Custom keyword.
+   */
+  type?: string;
+  /**
    * Default params of route.
    */
   params?: ApiRequestParamsType;

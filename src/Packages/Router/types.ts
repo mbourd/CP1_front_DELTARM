@@ -40,7 +40,7 @@ export interface IRouter {
   /**
    * Redirect to route using its name.
    */
-  redirectTo: (name: string, params?: RouterParamsType, queries?: RouterQueriesType) => IRouter;
+  redirectTo: (name: string, params?: RouterParamsType, queries?: RouterQueriesType, force?: boolean) => IRouter;
   redirectToUrl: (url: string, queries?: RouterQueriesType, params?: RouterParamsType) => IRouter;
 }
 

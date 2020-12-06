@@ -131,5 +131,13 @@ export const useApi = <T>(
     callState.current = error.current?.response ? 'BAD_REQUEST' : 'NOT_FOUND';
   }
 
-  return { request, isLoading, data: data.current, error: error.current, callState: callState.current, send };
+  return {
+    request,
+    isLoading,
+    data: data.current,
+    error: error.current,
+    callState: callState.current,
+    route: currentRoute.current,
+    send,
+  };
 };

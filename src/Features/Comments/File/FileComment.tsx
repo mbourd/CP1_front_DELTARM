@@ -22,9 +22,9 @@ export const FileComment: React.FC = (): React.ReactElement => {
     };
   }, [send, fileId, request]);
 
-  if (data) {
-    console.log(data);
-  }
+  // if (data) {
+  //   console.log(data);
+  // }
 
   return (
     <>

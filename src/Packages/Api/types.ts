@@ -1,4 +1,5 @@
 import { ApiRequest, ApiRequestBodyType, ApiRequestParamsType, ApiRequestQueriesType } from './Request';
+import { IApiRouteDef } from './Router';
 
 export type UseApiReturnType<T> = {
   request: ApiRequest;
@@ -6,6 +7,7 @@ export type UseApiReturnType<T> = {
   error: IUseApiError | null;
   isLoading: boolean;
   callState: UseApiCallStateType;
+  route: IApiRouteDef | null;
   send: (
     name: string,
     params?: ApiRequestParamsType,
