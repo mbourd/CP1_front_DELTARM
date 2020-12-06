@@ -101,3 +101,16 @@ apiRouter.registerRoute({
     return data;
   },
 });
+
+apiRouter.registerRoute({
+  name: 'setControlValue',
+  path: '/control/set_value',
+  method: 'post',
+  queries: {
+    cli_id: getEnv('CLIENT_ID'),
+    user_id: '1',
+  },
+  handler: (response) => {
+    console.log(response);
+  },
+});

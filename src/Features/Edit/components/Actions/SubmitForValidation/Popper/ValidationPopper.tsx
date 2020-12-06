@@ -35,7 +35,6 @@ export const ValidationPopper: React.FC = (): React.ReactElement => {
           callState={callState}
           states={{
             IS_LOADING: <StairsLoader size={'md'} />,
-            ERROR: <Error500 size={'md'} message={'Le serveur ne répond pas'} />,
             SERVER_ERROR: <Error500 size={'md'} message={'Le serveur ne répond pas'} />,
             BAD_REQUEST: (
               <BadRequest

@@ -17,7 +17,7 @@ export const ErrorSmallStyled = styled.div`
   ._ErrorPicture {
     display: block;
     margin: auto;
-    width: 10%;
+    width: 18%;
   }
 
   ._ErrorMessage {
