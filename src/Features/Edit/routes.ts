@@ -8,4 +8,9 @@ router.registerRoute({
   exact: true,
   strict: false,
   sensitive: false,
+  props: {
+    title: 'Edition',
+    apiRouteName: 'edit',
+    apiSaveControlRouteName: 'setControlValue',
+  },
 });

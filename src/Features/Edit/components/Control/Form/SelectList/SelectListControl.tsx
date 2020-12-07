@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core';
 import { IControl } from 'Features/Edit/types';
 import { FormError, FormLabel, Select } from 'Shared/components';
 import { SelectListControlStyled } from './SelectListControl.style';
-import { storage, useApi } from 'Services';
+import { storage, useApi, useRouter } from 'Services';
 
 interface IProps {
   control: IControl;
@@ -13,6 +13,8 @@ interface IProps {
 export const SelectListControl: React.FC<IProps> = ({ control, fileId }): React.ReactElement => {
   const { send } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { currentRoute } = useRouter();
+
   const value = storage.getData<string>('edit.control.' + control.id + '.value');
   // const first = Object.keys(control.answerChoices || {})[0];
 
@@ -26,7 +28,7 @@ export const SelectListControl: React.FC<IProps> = ({ control, fileId }): React.
     (value: string) => {
       setErrorMessage(null);
       storage.setData('edit.control.' + control.id + '.value', value);
-      send('setControlValue', {}, { file_id: fileId, elm_id: control.id, elm_val: value });
+      send(currentRoute?.props?.apiSaveControlRouteName, {}, { file_id: fileId, elm_id: control.id, elm_val: value });
     },
     [send, fileId, control.id],
   );

@@ -22,7 +22,7 @@ apiRouter.registerRoute({
   type: 'DRM',
   queries: {
     cli_id: getEnv('CLIENT_ID'),
-    user_id: '1',
+    user_id: getEnv('USER_ID'),
   },
   handler: (data): IFileSearchApiReturn => {
     return {
@@ -40,7 +40,7 @@ apiRouter.registerRoute({
   type: 'DRM_CREATE',
   queries: {
     cli_id: getEnv('CLIENT_ID'),
-    user_id: '1',
+    user_id: getEnv('USER_ID'),
   },
   handler: (data): IFileSearchApiReturn => {
     return {
@@ -58,7 +58,7 @@ apiRouter.registerRoute({
   type: 'KSIOP',
   queries: {
     cli_id: getEnv('CLIENT_ID'),
-    user_id: '1',
+    user_id: getEnv('USER_ID'),
   },
   handler: (data): IFileSearchApiReturn => {
     const productList: Record<string, ISelectData> = {};

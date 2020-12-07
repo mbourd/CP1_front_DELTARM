@@ -4,11 +4,11 @@ import { Card } from '@material-ui/core';
 import { IData } from '../apiRoutes';
 import { BadRequest, Button, Error500, RequestSuccess, Select, StairsLoader } from 'Shared/components';
 import { storage, SwitchCallState, useApi } from 'Services';
-import { EditContext } from 'Features/Edit';
+import { EditValidationContext } from 'Features/Edit';
 
 export const ValidationPopper: React.FC = (): React.ReactElement => {
   const { request, error, callState, send, data } = useApi<IData>();
-  const { fileId } = useContext(EditContext);
+  const { fileId } = useContext(EditValidationContext);
 
   useEffect(() => {
     send('getValidators', {}, { file_id: fileId });

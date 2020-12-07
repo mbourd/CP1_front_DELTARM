@@ -1,14 +1,14 @@
 import React, { useContext } from 'react';
 import { IControl } from 'Features/Edit/types';
 import { TextControl, SelectListControl, FinancialControl, IntegerControl } from './Form';
-import { EditContext } from 'Features/Edit';
+import { EditValidationContext } from 'Features/Edit';
 
 interface IProps {
   control: IControl;
 }
 
 export const SwitchControlItem: React.FC<IProps> = ({ control }): React.ReactElement | null => {
-  const { fileId } = useContext(EditContext);
+  const { fileId } = useContext(EditValidationContext);
 
   switch (control.type) {
     case 'text':

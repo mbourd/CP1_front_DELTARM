@@ -22,7 +22,7 @@ apiRouter.registerRoute({
   method: 'get',
   queries: {
     cli_id: getEnv('CLIENT_ID'),
-    user_id: '1',
+    user_id: getEnv('USER_ID'),
   },
   handler: (response): IFileComment[] => {
     const data: IApiFileComment[] = response.data;
@@ -59,10 +59,10 @@ apiRouter.registerRoute({
 apiRouter.registerRoute({
   name: 'addComment',
   path: '/comment/add',
-  method: 'get',
+  method: 'post',
   queries: {
     cli_id: getEnv('CLIENT_ID'),
-    user_id: '1',
+    user_id: getEnv('USER_ID'),
   },
   handler: (response): IAddComment => {
     const data: IApiAddComment = response.data;

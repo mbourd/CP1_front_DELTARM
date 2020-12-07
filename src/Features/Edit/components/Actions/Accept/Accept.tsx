@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { Button, ClassifyModal } from 'Shared/components';
 import { CheckIcon } from 'Styles';
-import { EditContext } from 'Features/Edit';
+import { EditValidationContext } from 'Features/Edit';
 import { AcceptStyled } from './Accept.style';
 
 export const Accept: React.FC = (): React.ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { fileId } = useContext(EditContext);
+  const { fileId } = useContext(EditValidationContext);
 
   return (
     <AcceptStyled className={'action'}>

@@ -3,7 +3,7 @@ import { Card } from '@material-ui/core';
 import { BadRequest, BPIBadge, Error500, ErrorNotFound, Popper, StairsLoader } from 'Shared/components';
 import { CommentIcon } from 'Styles';
 import { SwitchCallState, useApi } from 'Services';
-import { EditContext } from 'Features/Edit';
+import { EditValidationContext } from 'Features/Edit';
 import { IFileComment } from '../types';
 import { FileCommentBody } from './Body/FileCommentBody';
 import { FileCommentFooter } from './Footer/FileCommentFooter';
@@ -12,7 +12,7 @@ import { FileCommentStyled, FileCommentHeaderStyled } from './FileComment.style'
 export const FileComment: React.FC = (): React.ReactElement => {
   const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(null);
   const { request, error, callState, send, data } = useApi<IFileComment[]>();
-  const context = useContext(EditContext);
+  const context = useContext(EditValidationContext);
   const { fileId } = context;
 
   useEffect(() => {

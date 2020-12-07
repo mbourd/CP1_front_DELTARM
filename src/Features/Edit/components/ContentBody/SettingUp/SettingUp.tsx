@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import { EditContext } from 'Features';
+import { EditValidationContext } from 'Features';
 import { ContentTitle } from '../../ContentTitle/ContentTitle';
 import { ContentHeader } from '../../ContentHeader/ContentHeader';
 import { DisplayControl } from '../../Control';
 
 export const SettingUp: React.FC = (): React.ReactElement | null => {
-  const { data } = useContext(EditContext);
+  const { data } = useContext(EditValidationContext);
 
   if (!data) {
     return null;

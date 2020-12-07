@@ -2,13 +2,13 @@ import React, { useContext, useState } from 'react';
 import { Button, ClassifyModal } from 'Shared/components';
 import { StopIcon } from 'Styles';
 import { useTrans } from 'Services';
-import { EditContext } from 'Features/Edit';
+import { EditValidationContext } from 'Features/Edit';
 import { ClassifyStyled } from './Classify.style';
 
 export const Classify: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Edit');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { fileId } = useContext(EditContext);
+  const { fileId } = useContext(EditValidationContext);
 
   return (
     <ClassifyStyled className={'action'}>

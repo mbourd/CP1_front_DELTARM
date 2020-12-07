@@ -4,15 +4,15 @@ import { HeadingOne, PageLoader } from 'Shared/components';
 import { EditStyled } from '../Edit.style';
 
 interface IProps {
-  id: string;
+  title: string;
 }
 
-export const IsLoading: React.FC<IProps> = ({ id }): React.ReactElement => {
+export const IsLoading: React.FC<IProps> = ({ title }): React.ReactElement => {
   const [trans] = useTrans('Edit');
 
   return (
     <EditStyled>
-      <HeadingOne>{trans('pageTitle')}</HeadingOne>
+      <HeadingOne>{title}</HeadingOne>
       <div>
         <PageLoader text={trans('loading', { ns: 'Default' })} />
       </div>

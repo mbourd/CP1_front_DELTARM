@@ -2,18 +2,15 @@ import React from 'react';
 import { NotFoundStyled } from './NotFound.style';
 import { ErrorNoData, HeadingOne } from 'Shared/components';
 import { EditStyled } from '../Edit.style';
-import { useTrans } from 'Services';
 
 interface IProps {
-  id: string;
+  title: string;
 }
 
-export const NotFound: React.FC<IProps> = ({ id }): React.ReactElement => {
-  const [trans] = useTrans('Edit');
-
+export const NotFound: React.FC<IProps> = ({ title }): React.ReactElement => {
   return (
     <EditStyled>
-      <HeadingOne>{trans('pageTitle')}</HeadingOne>
+      <HeadingOne>{title}</HeadingOne>
       <NotFoundStyled>
         <ErrorNoData message={"Le dossier recherché n'exisite pas"} />
       </NotFoundStyled>

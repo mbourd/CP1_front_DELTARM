@@ -3,7 +3,7 @@ import { TextControlStyled } from './TextControl.style';
 import { Grid } from '@material-ui/core';
 import { IControl } from 'Features/Edit/types';
 import { FormError, FormLabel, InputBase } from 'Shared/components';
-import { storage, useApi } from 'Services';
+import { storage, useApi, useRouter } from 'Services';
 
 interface IProps {
   control: IControl;
@@ -13,12 +13,14 @@ interface IProps {
 export const TextControl: React.FC<IProps> = ({ control, fileId }): React.ReactElement => {
   const { send } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { currentRoute } = useRouter();
+
   const value = storage.getData<string>('edit.control.' + control.id + '.value');
 
   const saveValue = useCallback(
     (value: string) => {
       storage.setData('edit.control.' + control.id + '.value', value);
-      send('setControlValue', {}, { file_id: fileId, elm_id: control.id, elm_val: value });
+      send(currentRoute?.props?.apiSaveControlRouteName, {}, { file_id: fileId, elm_id: control.id, elm_val: value });
     },
     [send, fileId, control.id],
   );

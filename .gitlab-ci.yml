@@ -67,7 +67,7 @@ deploy demo:
   only:
     - demo
   variables:
-    APP_IMAGE_TAG_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+    APP_IMAGE_TAG_NAME_DEMO: "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}_demo"
   before_script:
     - apk update && apk add openssh rsync
     - eval $(ssh-agent -s)
@@ -78,15 +78,15 @@ deploy demo:
     - chmod 644 ~/.ssh/known_hosts
     - docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN
   script:
-    - cp .env .env.production
+    - cp .env.demo .env.production
     - docker run --rm -w="/app" -v $PWD:/app node:12-alpine sh -c "yarn run build --profile"
     - cp ci/Dockerfile Dockerfile
     - cp ci/nginx.conf nginx.conf
-    - docker build -t $APP_IMAGE_TAG_NAME .
-    - docker push $APP_IMAGE_TAG_NAME
+    - docker build -t $APP_IMAGE_TAG_NAME_DEMO .
+    - docker push $APP_IMAGE_TAG_NAME_DEMO
     - ssh $SERVER_USER@$SERVER_HOST_DEV "
-      docker rm -f cp1_front_dev &&
-      docker rmi -f $APP_IMAGE_TAG_NAME &&
+      docker rm -f cp1_front_dev_demo &&
+      docker rmi -f $APP_IMAGE_TAG_NAME_DEMO &&
       docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN &&
-      docker run --name cp1_front_dev --restart=on-failure:10 -d -p 80:80 $APP_IMAGE_TAG_NAME
+      docker run --name cp1_front_dev_demo --restart=on-failure:10 -d -p 8090:80 $APP_IMAGE_TAG_NAME_DEMO
       "

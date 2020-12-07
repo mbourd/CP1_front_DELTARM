@@ -109,7 +109,7 @@ apiRouter.registerRoute({
   method: 'post',
   queries: {
     cli_id: getEnv('CLIENT_ID'),
-    user_id: '1',
+    user_id: getEnv('USER_ID'),
   },
 });
 

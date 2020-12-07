@@ -4,7 +4,7 @@ import { IControl } from 'Features/Edit/types';
 import { FormError, FormLabel, InputBase } from 'Shared/components';
 import { FinancialControlStyled } from './FinancialControl.style';
 import { EuroIcon } from 'Styles';
-import { storage, useApi } from 'Services';
+import { storage, useApi, useRouter } from 'Services';
 
 interface IProps {
   control: IControl;
@@ -14,6 +14,7 @@ interface IProps {
 export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.ReactElement => {
   const { send } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { currentRoute } = useRouter();
   const value = storage.getData<string>('edit.control.' + control.id + '.value');
 
   const saveValue = useCallback(
@@ -26,7 +27,7 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
 
       setErrorMessage(null);
       storage.setData('edit.control.' + control.id + '.value', value);
-      send('setControlValue', {}, { file_id: fileId, elm_id: control.id, elm_val: value });
+      send(currentRoute?.props?.apiSaveControlRouteName, {}, { file_id: fileId, elm_id: control.id, elm_val: value });
     },
     [send, fileId, control.id, control.mandatory],
   );
