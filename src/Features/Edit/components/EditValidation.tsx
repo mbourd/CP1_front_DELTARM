@@ -31,7 +31,7 @@ export const EditValidation: React.FC<IProps> = ({ title, apiRouteName }): React
     return () => {
       request.abort();
     };
-  }, [send, id, currentSection, request]);
+  }, [send, id, currentSection, request, apiRouteName]);
 
   return (
     <SwitchCallState

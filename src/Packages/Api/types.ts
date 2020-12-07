@@ -13,7 +13,7 @@ export type UseApiReturnType<T> = {
     params?: ApiRequestParamsType,
     queries?: ApiRequestQueriesType,
     body?: ApiRequestBodyType,
-  ) => void;
+  ) => Promise<any> | void;
 };
 
 export type UseApiCallStateType =

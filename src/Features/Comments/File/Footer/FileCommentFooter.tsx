@@ -1,31 +1,45 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { FileCommentFooterStyled } from './FileCommentFooter.style';
 import { InputBase } from 'Shared/components';
-import { EditValidationContext } from 'Features/Edit';
 import { useApi } from 'Services';
-import { IAddComment } from '../../apiRoutes';
+import { EditValidationContext } from 'Features/Edit';
 
-export const FileCommentFooter: React.FC = (): React.ReactElement => {
-  const [value, setValue] = useState('');
-  const { send } = useApi<IAddComment>();
-  const { fileId } = useContext(EditValidationContext);
+interface IProps {
+  addComment: () => void;
+}
 
-  const addComment = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      const val = e.currentTarget.value;
+export const FileCommentFooter: React.FC<IProps> = ({ addComment }): React.ReactElement => {
+  const addCommentApi = useApi(true);
+  const context = useContext(EditValidationContext);
+  const { fileId } = context;
 
-      send('addComment', {}, { file_id: fileId, comment: 'toto' });
+  const onAddComment = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter') {
+        const input = e.currentTarget.querySelector('input');
 
-      // const comment: IFileComment = {
-      //   date: '',
-      //   user: '',
-      //   message: val,
-      //   id: 45,
-      // };
+        if (!input) {
+          return;
+        }
 
-      setValue('');
-    }
-  }, []);
+        const val = input.value.trim();
+
+        if (!val || val === '') {
+          return;
+        }
+
+        const promise = addCommentApi.send('addComment', {}, { file_id: fileId, comment: val });
+
+        if (promise) {
+          promise.then(() => {
+            addComment();
+            input.value = '';
+          });
+        }
+      }
+    },
+    [addComment, addCommentApi, fileId],
+  );
 
   return (
     <FileCommentFooterStyled>
@@ -33,9 +47,7 @@ export const FileCommentFooter: React.FC = (): React.ReactElement => {
         color={'disabled'}
         bdr={'50px'}
         placeholder={'Appuyez sur la touche ENTRER pour valider votre message'}
-        onKeyPress={addComment}
-        onChange={(e) => setValue(e.currentTarget.value)}
-        value={value}
+        onKeyPress={onAddComment}
       />
     </FileCommentFooterStyled>
   );

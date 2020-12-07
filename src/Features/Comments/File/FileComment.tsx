@@ -1,17 +1,18 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import { Card } from '@material-ui/core';
-import { BadRequest, BPIBadge, Error500, ErrorNotFound, Popper, StairsLoader } from 'Shared/components';
+import { BPIBadge, Popper } from 'Shared/components';
 import { CommentIcon } from 'Styles';
-import { SwitchCallState, useApi } from 'Services';
+import { useApi } from 'Services';
 import { EditValidationContext } from 'Features/Edit';
 import { IFileComment } from '../types';
 import { FileCommentBody } from './Body/FileCommentBody';
-import { FileCommentFooter } from './Footer/FileCommentFooter';
 import { FileCommentStyled, FileCommentHeaderStyled } from './FileComment.style';
+import { FileCommentFooter } from './Footer/FileCommentFooter';
 
 export const FileComment: React.FC = (): React.ReactElement => {
   const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(null);
-  const { request, error, callState, send, data } = useApi<IFileComment[]>();
+  const { request, send, data } = useApi<IFileComment[]>();
+
   const context = useContext(EditValidationContext);
   const { fileId } = context;
 
@@ -22,6 +23,10 @@ export const FileComment: React.FC = (): React.ReactElement => {
       request.abort();
     };
   }, [send, fileId, request]);
+
+  const addComment = useCallback(() => {
+    send('getFileComments', {}, { file_id: fileId });
+  }, [send, fileId]);
 
   return (
     <>
@@ -44,29 +49,9 @@ export const FileComment: React.FC = (): React.ReactElement => {
       >
         <FileCommentStyled>
           <Card>
-            <SwitchCallState
-              callState={callState}
-              states={{
-                IS_LOADING: <StairsLoader size={'md'} />,
-                SERVER_ERROR: <Error500 size={'sm'} title={'Le serveur ne répond pas'} />,
-                NOT_FOUND: <ErrorNotFound size={'sm'} title={'Commentaires introuvables'} />,
-                BAD_REQUEST: (
-                  <BadRequest
-                    size={'sm'}
-                    message={error?.response ? error?.response.body.error_msg : ''}
-                    title={'Echec !'}
-                  />
-                ),
-              }}
-            >
-              {data ? (
-                <>
-                  <FileCommentHeaderStyled>Commentaires liés au dossier</FileCommentHeaderStyled>
-                  <FileCommentBody comments={data} />
-                  <FileCommentFooter />
-                </>
-              ) : null}
-            </SwitchCallState>
+            <FileCommentHeaderStyled>Commentaires liés au dossier</FileCommentHeaderStyled>
+            {data ? <FileCommentBody comments={data} /> : null}
+            <FileCommentFooter addComment={addComment} />
           </Card>
         </FileCommentStyled>
       </Popper>
