@@ -8,6 +8,14 @@ interface IApiFileComment {
   comment_user_name: string;
 }
 
+interface IApiAddComment {
+  comment_id: number;
+}
+
+export interface IAddComment {
+  id: number;
+}
+
 apiRouter.registerRoute({
   name: 'getFileComments',
   path: '/comment/file',
@@ -21,10 +29,23 @@ apiRouter.registerRoute({
     const comments: IFileComment[] = [];
 
     data.map((datum) => {
+      const date = new Date(datum.comment_ts);
+
       comments.push({
         id: datum.comment_id,
         message: datum.comment_text,
-        date: datum.comment_ts,
+        date:
+          date.getDate() +
+          '/' +
+          (date.getMonth() + 1) +
+          '/' +
+          date.getFullYear() +
+          ' à ' +
+          date.getHours() +
+          ':' +
+          date.getMinutes() +
+          ':' +
+          date.getSeconds(),
         user: datum.comment_user_name,
       });
 
@@ -32,5 +53,22 @@ apiRouter.registerRoute({
     });
 
     return comments;
+  },
+});
+
+apiRouter.registerRoute({
+  name: 'addComment',
+  path: '/comment/add',
+  method: 'get',
+  queries: {
+    cli_id: getEnv('CLIENT_ID'),
+    user_id: '1',
+  },
+  handler: (response): IAddComment => {
+    const data: IApiAddComment = response.data;
+
+    return {
+      id: data.comment_id,
+    };
   },
 });

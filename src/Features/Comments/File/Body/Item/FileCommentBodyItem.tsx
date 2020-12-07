@@ -1,21 +1,35 @@
 import React from 'react';
 import { FileCommentBodyItemStyled } from './FileCommentBodyItem.style';
 import { Avatar, Grid } from '@material-ui/core';
+import { IFileComment } from '../../../types';
+import { randomColor } from 'Styles';
 
-export const FileCommentBodyItem: React.FC = (): React.ReactElement => {
+interface IFileCommentBodyItem {
+  comment: IFileComment;
+}
+
+export const FileCommentBodyItem: React.FC<IFileCommentBodyItem> = ({ comment }): React.ReactElement => {
+  const lastFirst = comment.user.split(' ');
+  let firstLetters = '';
+  if (lastFirst.length > 0) {
+    firstLetters += lastFirst[0].charAt(0);
+  }
+
+  if (lastFirst.length > 1) {
+    firstLetters += lastFirst[1].charAt(0);
+  }
+
   return (
-    <FileCommentBodyItemStyled>
+    <FileCommentBodyItemStyled bgc={randomColor()}>
       <Grid container alignItems={'center'} wrap={'nowrap'}>
         <Grid item>
-          <Avatar>ND</Avatar>
+          <Avatar>{firstLetters}</Avatar>
         </Grid>
         <Grid item>
           <p className={'author'}>
-            Nicolas Dupont - <span className={'date'}>02/10/2020 à 23:10:32</span>
+            {comment.user} - <span className={'date'}>{comment.date}</span>
           </p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda blanditiis et expedita fuga impedit ipsa
-          ipsam maxime mollitia nesciunt odio officia quaerat quia quibusdam ratione recusandae saepe suscipit, totam!
-          Quisquam!
+          {comment.message}
         </Grid>
       </Grid>
     </FileCommentBodyItemStyled>

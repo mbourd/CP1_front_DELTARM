@@ -1,15 +1,20 @@
 import styled from 'styled-components/macro';
 
-export const FileCommentBodyItemStyled = styled.div`
+interface IProps {
+  bgc: string;
+}
+
+export const FileCommentBodyItemStyled = styled.div<IProps>`
   .MuiGrid-item:first-child {
     padding-right: ${({ theme }) => theme.spacing.small};
   }
 
   .MuiAvatar-root {
-    width: 40px;
-    height: 40px;
+    background-color: ${({ bgc }) => bgc};
     font-family: ${({ theme }) => theme.font.medium.main};
+    height: 40px;
     line-height: 1px;
+    width: 40px;
   }
 
   .author {
@@ -17,7 +22,7 @@ export const FileCommentBodyItemStyled = styled.div`
   }
 
   .date {
+    color: #5e514d;
     font-family: ${({ theme }) => theme.font.light.main};
-    color: ${({ theme }) => theme.color.disabled.main};
   }
 `;

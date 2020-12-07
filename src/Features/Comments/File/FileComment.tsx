@@ -11,7 +11,7 @@ import { FileCommentStyled, FileCommentHeaderStyled } from './FileComment.style'
 
 export const FileComment: React.FC = (): React.ReactElement => {
   const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(null);
-  const { request, error, callState, send, data } = useApi<IFileComment>();
+  const { request, error, callState, send, data } = useApi<IFileComment[]>();
   const context = useContext(EditContext);
   const { fileId } = context;
 
@@ -25,7 +25,7 @@ export const FileComment: React.FC = (): React.ReactElement => {
 
   return (
     <>
-      <BPIBadge content={context.data?.countComments}>
+      <BPIBadge content={data?.length}>
         <CommentIcon
           fontSize={'large'}
           className={'comment-icon' + (anchorEl ? ' active' : '')}
@@ -59,9 +59,13 @@ export const FileComment: React.FC = (): React.ReactElement => {
                 ),
               }}
             >
-              <FileCommentHeaderStyled>Commentaires liés au dossier</FileCommentHeaderStyled>
-              <FileCommentBody />
-              <FileCommentFooter />
+              {data ? (
+                <>
+                  <FileCommentHeaderStyled>Commentaires liés au dossier</FileCommentHeaderStyled>
+                  <FileCommentBody comments={data} />
+                  <FileCommentFooter />
+                </>
+              ) : null}
             </SwitchCallState>
           </Card>
         </FileCommentStyled>

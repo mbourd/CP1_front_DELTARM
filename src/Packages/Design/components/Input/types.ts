@@ -60,6 +60,7 @@ export interface IInputBase {
    * Input change value callback.
    */
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 
   /**
    * Input placeholder.
