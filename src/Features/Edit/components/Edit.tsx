@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, List } from '@material-ui/core';
-import { EditStyled, EditTitleFileStyled } from './Edit.style';
+import { EditStyled } from './Edit.style';
 import { router, storage, SwitchCallState, useApi, useTrans } from 'Services';
 import { HeadingOne } from 'Shared/components';
-import { FolderOpenIcon } from 'Styles';
 import { NavItem } from './NavItem/NavItem';
 import { IData } from '../types';
 import { EditContext } from '../EditContext';
@@ -36,13 +35,7 @@ export const Edit: React.FC = (): React.ReactElement => {
       states={{ IS_LOADING: <IsLoading id={id} />, NOT_FOUND: <NotFound id={id} /> }}
     >
       <EditStyled>
-        <HeadingOne>
-          <p>{trans('pageTitle')}</p>
-          <EditTitleFileStyled>
-            <FolderOpenIcon />
-            <span>{id}</span>
-          </EditTitleFileStyled>
-        </HeadingOne>
+        <HeadingOne>{trans('pageTitle')}</HeadingOne>
         <EditContext.Provider value={{ data, fileId: id }}>
           <Grid container wrap={'nowrap'}>
             <Grid item className={'nav'}>

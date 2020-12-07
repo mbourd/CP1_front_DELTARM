@@ -1,8 +1,7 @@
 import React from 'react';
 import { useTrans } from 'Services';
 import { HeadingOne, PageLoader } from 'Shared/components';
-import { FolderOpenIcon } from 'Styles';
-import { EditStyled, EditTitleFileStyled } from '../Edit.style';
+import { EditStyled } from '../Edit.style';
 
 interface IProps {
   id: string;
@@ -13,13 +12,7 @@ export const IsLoading: React.FC<IProps> = ({ id }): React.ReactElement => {
 
   return (
     <EditStyled>
-      <HeadingOne>
-        <p>{trans('pageTitle')}</p>
-        <EditTitleFileStyled>
-          <FolderOpenIcon />
-          <span>{id}</span>
-        </EditTitleFileStyled>
-      </HeadingOne>
+      <HeadingOne>{trans('pageTitle')}</HeadingOne>
       <div>
         <PageLoader text={trans('loading', { ns: 'Default' })} />
       </div>
