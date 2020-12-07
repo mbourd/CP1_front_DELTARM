@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ManageStyled } from './Manage.style';
-import { FormError, HeadingOne } from 'Shared/components';
+import { BreadCrumb, FormError, HeadingOne } from 'Shared/components';
 import { router, storage, SwitchCallState, useApi, useTrans } from 'Services';
 import { Search } from './Search/Search';
 import { Card } from './Card/Card';
@@ -77,36 +77,39 @@ export const Manage: React.FC = (): React.ReactElement => {
   }, [send, queries, request]);
 
   return (
-    <SwitchCallState callState={callState} states={{ IS_LOADING: <IsLoading />, NO_DATA: <NoData /> }}>
-      <ManageStyled>
-        <HeadingOne>{trans('pageTitle')}</HeadingOne>
-        <FormError>{errorMessage}</FormError>
-        <Paper className={'search-container'} elevation={0}>
-          <Search />
-          <Divider className={'divider'} orientation="vertical" />
-          <Filter initStages={initStages} initStates={initStates} />
-        </Paper>
-        <div className={'buttons-container'}>
-          <Button onClick={onSearch}>{trans('searchButtonLabel')}</Button>
-          <Button color={'success'} onClick={applyFilters}>
-            {trans('applyFilter')}
-          </Button>
-          <Button
-            color={'error'}
-            size={'small'}
-            onClick={() => {
-              storage.removeData('manage');
-              router.redirectTo('manage');
-            }}
-          >
-            {trans('resetFilterButtonLabel')}
-          </Button>
-        </div>
-        {data?.map((card) => {
-          return <Card {...card} key={card.id} />;
-        })}
-        {isModalOpen ? <SearchModal open={isModalOpen} onClose={() => setIsModalOpen(false)} /> : null}
-      </ManageStyled>
-    </SwitchCallState>
+    <>
+      <BreadCrumb values={['Dashboard', 'Manage']} />
+      <SwitchCallState callState={callState} states={{ IS_LOADING: <IsLoading />, NO_DATA: <NoData /> }}>
+        <ManageStyled>
+          <HeadingOne>{trans('pageTitle')}</HeadingOne>
+          <FormError>{errorMessage}</FormError>
+          <Paper className={'search-container'} elevation={0}>
+            <Search />
+            <Divider className={'divider'} orientation="vertical" />
+            <Filter initStages={initStages} initStates={initStates} />
+          </Paper>
+          <div className={'buttons-container'}>
+            <Button onClick={onSearch}>{trans('searchButtonLabel')}</Button>
+            <Button color={'success'} onClick={applyFilters}>
+              {trans('applyFilter')}
+            </Button>
+            <Button
+              color={'error'}
+              size={'small'}
+              onClick={() => {
+                storage.removeData('manage');
+                router.redirectTo('manage');
+              }}
+            >
+              {trans('resetFilterButtonLabel')}
+            </Button>
+          </div>
+          {data?.map((card) => {
+            return <Card {...card} key={card.id} />;
+          })}
+          {isModalOpen ? <SearchModal open={isModalOpen} onClose={() => setIsModalOpen(false)} /> : null}
+        </ManageStyled>
+      </SwitchCallState>
+    </>
   );
 };

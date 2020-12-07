@@ -25,3 +25,5 @@ export * from './SelectIcon';
 export * from './EuroIcon';
 export * from './CheckIcon';
 export * from './ReturnIcon';
+export * from './HomeIcon';
+export * from './PenIcon';

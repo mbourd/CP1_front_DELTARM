@@ -1,5 +1,6 @@
 import React from 'react';
 import { EditValidation } from './EditValidation';
+import { BreadCrumb } from 'Shared/components';
 
 interface IProps {
   title: string;
@@ -7,5 +8,10 @@ interface IProps {
 }
 
 export const Edit: React.FC<IProps> = (props): React.ReactElement => {
-  return <EditValidation {...props} />;
+  return (
+    <>
+      <BreadCrumb values={['Dashboard', 'Manage', 'Edit']} />
+      <EditValidation {...props} />
+    </>
+  );
 };
