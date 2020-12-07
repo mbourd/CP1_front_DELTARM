@@ -52,7 +52,7 @@ export const Edit: React.FC = (): React.ReactElement => {
                       key={section.id}
                       item={section}
                       active={section.id === current}
-                      onClick={section.locked ? undefined : (id: string) => setCurrentSection(id)}
+                      onClick={(id: string) => setCurrentSection(id)}
                     />
                   );
                 })}

@@ -11,8 +11,8 @@ export const NavItemStyled = styled.span<IProps>`
   border-bottom-width: 1px;
   border-color: ${({ theme }) => theme.color.primary.main};
   border-style: dotted;
-  cursor: ${({ locked, active }) => {
-    if (locked || active) {
+  cursor: ${({ active }) => {
+    if (active) {
       return 'default';
     }
 

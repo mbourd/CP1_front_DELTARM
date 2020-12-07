@@ -14,7 +14,7 @@ export const NavItem: React.FC<INavItem> = ({ item, onClick, active = false }): 
   return (
     <ListItem disableGutters onClick={onClick && !active ? () => onClick(item.id) : undefined}>
       <NavItemStyled className={'item'} locked={item.locked} active={active}>
-        {item.locked && !active ? <LockedIcon /> : null}
+        {item.locked ? <LockedIcon /> : null}
         <NavItemTextStyled>{item.label}</NavItemTextStyled>
       </NavItemStyled>
     </ListItem>

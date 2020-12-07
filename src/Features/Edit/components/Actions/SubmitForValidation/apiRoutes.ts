@@ -20,7 +20,7 @@ apiRouter.registerRoute({
   method: 'get',
   queries: {
     cli_id: getEnv('CLIENT_ID'),
-    user_id: 1,
+    user_id: getEnv('USER_ID'),
   },
   handler: (response): IData => {
     const validators: Record<string, ISelectData> = {};
@@ -50,7 +50,7 @@ apiRouter.registerRoute({
   method: 'post',
   queries: {
     cli_id: getEnv('CLIENT_ID'),
-    user_id: 1,
+    user_id: getEnv('USER_ID'),
   },
   handler: (response): IData => {
     return {

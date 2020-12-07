@@ -24,8 +24,8 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
         return;
       }
 
-      storage.setData('edit.control.' + control.id + '.value', value);
       setErrorMessage(null);
+      storage.setData('edit.control.' + control.id + '.value', value);
       send('setControlValue', {}, { file_id: fileId, elm_id: control.id, elm_val: value });
     },
     [send, fileId, control.id, control.mandatory],
