@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { IControl } from 'Features/Edit/types';
-import { FormLabel, InputBase } from 'Shared/components';
+import { FormError, FormLabel, InputBase } from 'Shared/components';
 import { IntegerControlStyled } from './IntegerControl.style';
 import { storage, useApi } from 'Services';
 
@@ -12,15 +12,30 @@ interface IProps {
 
 export const IntegerControl: React.FC<IProps> = ({ control, fileId }): React.ReactElement => {
   const { send } = useApi<void>();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const value = storage.getData<string>('edit.control.' + control.id + '.value');
 
   const saveValue = useCallback(
     (value: string) => {
+      if (control.mandatory && !/^[1-9][0-9]*$/.test(value)) {
+        setErrorMessage('Saisissez un nombre');
+
+        return;
+      }
+
       storage.setData('edit.control.' + control.id + '.value', value);
       send('setControlValue', {}, { file_id: fileId, elm_id: control.id, elm_val: value });
     },
-    [send, fileId, control.id],
+    [send, fileId, control.id, control.mandatory],
   );
+
+  useEffect(() => {
+    const val = storage.getData<string>('edit.control.' + control.id + '.value');
+
+    if (control.mandatory && control.editable && !val && !control.value) {
+      setErrorMessage('Valeur obligatoire');
+    }
+  }, [control.id, control.mandatory, control.value, control.editable]);
 
   return (
     <Grid item xs={6}>
@@ -33,6 +48,7 @@ export const IntegerControl: React.FC<IProps> = ({ control, fileId }): React.Rea
           defaultValue={value || control.value}
           onChange={(e) => saveValue(e.currentTarget.value)}
         />
+        {errorMessage ? <FormError>{errorMessage}</FormError> : null}
       </IntegerControlStyled>
     </Grid>
   );
