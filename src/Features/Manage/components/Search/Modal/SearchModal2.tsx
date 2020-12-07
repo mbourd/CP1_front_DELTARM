@@ -120,9 +120,9 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
         <SearchModalBPIContentStyled>
           <p className={'top-message'}>{data.topMessage}</p>
           <Grid container className={'file-info'}>
-            {data.file.map((file, key) => {
+            {data.file.map((file, index) => {
               return (
-                <Grid item key={key} xs={4}>
+                <Grid item key={index} xs={4}>
                   <p>
                     <FormLabel>{file.key}</FormLabel>
                   </p>

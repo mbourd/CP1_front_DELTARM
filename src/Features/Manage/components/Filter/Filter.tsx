@@ -98,9 +98,9 @@ export const Filter: React.FC<IProps> = ({ initStages = {}, initStates = {} }): 
             {data ? (
               <>
                 <Grid item className={'stages'} xs={6}>
-                  {data.stages.map((stage) => {
+                  {data.stages.map((stage, index) => {
                     return (
-                      <div key={stage.stage_id}>
+                      <div key={index}>
                         <Checkbox
                           checked={stages[stage.stage_id]}
                           label={stage.stage_name.toLowerCase()}
@@ -111,9 +111,9 @@ export const Filter: React.FC<IProps> = ({ initStages = {}, initStates = {} }): 
                   })}
                 </Grid>
                 <Grid item className={'states'} xs={6}>
-                  {data.states.map((state) => {
+                  {data.states.map((state, index) => {
                     return (
-                      <div key={state.state_id}>
+                      <div key={index}>
                         <Checkbox
                           checked={states[state.state_id]}
                           label={state.state_name.toLowerCase()}

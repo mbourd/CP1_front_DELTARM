@@ -12,8 +12,8 @@ export const DisplayControl: React.FC<IProps> = ({ controls }): React.ReactEleme
   return (
     <DisplayControlStyled>
       <Grid container>
-        {controls.map((control) => {
-          return <SwitchControlItem key={control.id} control={control} />;
+        {controls.map((control, index) => {
+          return <SwitchControlItem key={index} control={control} />;
         })}
       </Grid>
     </DisplayControlStyled>

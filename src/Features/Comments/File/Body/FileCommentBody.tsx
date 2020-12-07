@@ -10,8 +10,8 @@ interface IFileCommentBody {
 export const FileCommentBody: React.FC<IFileCommentBody> = ({ comments }): React.ReactElement => {
   return (
     <FileCommentBodyStyled>
-      {comments.map((comment) => {
-        return <FileCommentBodyItem comment={comment} key={comment.id} />;
+      {comments.map((comment, index) => {
+        return <FileCommentBodyItem comment={comment} key={index} />;
       })}
     </FileCommentBodyStyled>
   );

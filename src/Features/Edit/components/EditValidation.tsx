@@ -44,7 +44,7 @@ export const EditValidation: React.FC<IProps> = ({ title, apiRouteName }): React
           <Grid container wrap={'nowrap'}>
             <Grid item className={'nav'}>
               <List>
-                {data?.sections.map((section) => {
+                {data?.sections.map((section, index) => {
                   const current = currentSection || data?.currentSection.id;
 
                   if (section.id === current) {
@@ -53,7 +53,7 @@ export const EditValidation: React.FC<IProps> = ({ title, apiRouteName }): React
 
                   return (
                     <NavItem
-                      key={section.id}
+                      key={index}
                       item={section}
                       active={section.id === current}
                       onClick={(id: string) => setCurrentSection(id)}

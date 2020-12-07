@@ -12,8 +12,6 @@ interface IBreadCrumb {
 }
 
 export const BreadCrumb: React.FC<IBreadCrumb> = ({ values }): React.ReactElement => {
-  // const values = ['Dashboard', 'Manage', 'Edit', 'Validation'];
-
   return (
     <BreadCrumbStyled>
       <Grid container alignItems={'center'}>
@@ -21,7 +19,7 @@ export const BreadCrumb: React.FC<IBreadCrumb> = ({ values }): React.ReactElemen
           switch (value) {
             case 'Dashboard':
               return (
-                <Grid item>
+                <Grid item key={index}>
                   <HomeIcon fontSize={'small'} />
                   {index === values.length - 1 ? (
                     <span>Tableau de board</span>
@@ -32,7 +30,7 @@ export const BreadCrumb: React.FC<IBreadCrumb> = ({ values }): React.ReactElemen
               );
             case 'Manage':
               return (
-                <>
+                <React.Fragment key={index}>
                   <Grid item>
                     <ArrowRightAltIcon fontSize={'small'} />
                   </Grid>
@@ -44,11 +42,11 @@ export const BreadCrumb: React.FC<IBreadCrumb> = ({ values }): React.ReactElemen
                       <Link to={router.generatePath('manage') || '/'}>Gestion</Link>
                     )}
                   </Grid>
-                </>
+                </React.Fragment>
               );
             case 'Edit':
               return (
-                <>
+                <React.Fragment key={index}>
                   <Grid item>
                     <ArrowRightAltIcon fontSize={'small'} />
                   </Grid>
@@ -56,11 +54,11 @@ export const BreadCrumb: React.FC<IBreadCrumb> = ({ values }): React.ReactElemen
                     <PenIcon fontSize={'small'} />
                     <span>Edition</span>
                   </Grid>
-                </>
+                </React.Fragment>
               );
             case 'Validation':
               return (
-                <>
+                <React.Fragment key={index}>
                   <Grid item>
                     <ArrowRightAltIcon fontSize={'small'} />
                   </Grid>
@@ -68,7 +66,7 @@ export const BreadCrumb: React.FC<IBreadCrumb> = ({ values }): React.ReactElemen
                     <UserCheckedIcon fontSize={'small'} />
                     <span>Validation</span>
                   </Grid>
-                </>
+                </React.Fragment>
               );
           }
         })}

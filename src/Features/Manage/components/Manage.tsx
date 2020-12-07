@@ -104,8 +104,8 @@ export const Manage: React.FC = (): React.ReactElement => {
               {trans('resetFilterButtonLabel')}
             </Button>
           </div>
-          {data?.map((card) => {
-            return <Card {...card} key={card.id} />;
+          {data?.map((card, index) => {
+            return <Card {...card} key={index} />;
           })}
           {isModalOpen ? <SearchModal open={isModalOpen} onClose={() => setIsModalOpen(false)} /> : null}
         </ManageStyled>

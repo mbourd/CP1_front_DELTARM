@@ -8,9 +8,9 @@ export const Body: React.FC<Pick<ICard, 'data'>> = ({ data }): React.ReactElemen
   return (
     <BodyStyled>
       <Grid container>
-        {data.map((datum, key) => {
+        {data.map((datum, index) => {
           return (
-            <Grid item sm={4} key={key}>
+            <Grid item sm={4} key={index}>
               <FormLabel>{datum.label}</FormLabel>
               <p>
                 <FormText>{datum.value}</FormText>

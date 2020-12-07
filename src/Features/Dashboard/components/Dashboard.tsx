@@ -24,9 +24,9 @@ const Dashboard: React.FC = (): React.ReactElement => {
         <DashboardStyled>
           <HeadingOne>{trans('pageTitle')}</HeadingOne>
           <Grid container>
-            {data?.map((card, key) => {
+            {data?.map((card, index) => {
               return (
-                <Grid item xs={12} md={6} key={key}>
+                <Grid item xs={12} md={6} key={index}>
                   <Card {...card} />
                 </Grid>
               );
