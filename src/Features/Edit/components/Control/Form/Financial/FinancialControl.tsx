@@ -50,7 +50,7 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
           color={control.editable ? 'text' : 'disabled'}
           defaultValue={value || control.value}
           icon={<EuroIcon />}
-          onChange={(e) => saveValue(e.currentTarget.value)}
+          onBlur={(e) => saveValue(e.currentTarget.value)}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
       </FinancialControlStyled>

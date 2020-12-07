@@ -18,6 +18,7 @@ export const InputBase: React.FC<IInputBase> = ({
   id,
   onChange,
   onKeyPress,
+  onBlur,
   placeholder,
   readOnly,
   required,
@@ -54,6 +55,7 @@ export const InputBase: React.FC<IInputBase> = ({
         value={value}
         onChange={onChange}
         onKeyPress={onKeyPress}
+        onBlur={onBlur}
       />
     </InputBaseStyled>
   );

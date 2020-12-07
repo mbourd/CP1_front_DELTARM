@@ -48,7 +48,7 @@ export const IntegerControl: React.FC<IProps> = ({ control, fileId }): React.Rea
           disabled={!control.editable}
           color={control.editable ? 'text' : 'disabled'}
           defaultValue={value || control.value}
-          onChange={(e) => saveValue(e.currentTarget.value)}
+          onBlur={(e) => saveValue(e.currentTarget.value)}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
       </IntegerControlStyled>
