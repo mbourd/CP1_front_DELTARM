@@ -1,5 +1,6 @@
 import { apiRouter, getEnv } from 'Services';
 import { ICard, IData } from '../components/Card/types';
+import { AppActionContextType } from 'Shared/types';
 
 interface IApiFileData {
   label: string;
@@ -16,6 +17,7 @@ interface IApiFile {
   state_name: string;
   state_color: string;
   file_data: IApiFileData[];
+  file_context: AppActionContextType;
 }
 
 apiRouter.registerRoute({
@@ -53,6 +55,7 @@ apiRouter.registerRoute({
         color: apiFile.state_color,
         comments: apiFile.file_nb_comment,
         data: fileData,
+        context: apiFile.file_context,
       });
 
       return apiFile;

@@ -1,5 +1,6 @@
 import { apiRouter, getEnv } from 'Services';
 import { ICard, ICardBodyRow, ICardFooter, ICardHeader } from './components/Card/types';
+import { AppActionContextType } from 'Shared/types';
 
 interface IApiStage {
   nb_file_stage: number;
@@ -14,6 +15,7 @@ interface IApiFile {
   state_id: number;
   state_name: string;
   state_role: number;
+  file_context: AppActionContextType;
 }
 
 apiRouter.registerRoute({
@@ -71,6 +73,7 @@ apiRouter.registerRoute({
           data: cardBodyRows,
         },
         footer: cardFooter,
+        context: file.file_context,
       });
 
       return file;

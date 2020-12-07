@@ -3,10 +3,11 @@ import styled from 'styled-components/macro';
 export const BreadCrumbStyled = styled.div`
   background-color: ${({ theme }) => theme.color.background.main};
   left: 0;
-  margin-top: 3px;
+  margin-top: 0;
   padding: ${({ theme }) => theme.spacing.small};
   position: fixed;
   top: ${({ theme }) => theme.data.header.height};
+  width: 100%;
   z-index: 99;
 
   .MuiGrid-item {

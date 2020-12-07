@@ -12,6 +12,10 @@ interface IBreadCrumb {
 }
 
 export const BreadCrumb: React.FC<IBreadCrumb> = ({ values }): React.ReactElement => {
+  const queries = router.getQueries();
+  const { id } = router.getParams();
+  const isComment = queries.comments === '1';
+
   return (
     <BreadCrumbStyled>
       <Grid container alignItems={'center'}>
@@ -22,7 +26,7 @@ export const BreadCrumb: React.FC<IBreadCrumb> = ({ values }): React.ReactElemen
                 <Grid item key={index}>
                   <HomeIcon fontSize={'small'} />
                   {index === values.length - 1 ? (
-                    <span>Tableau de board</span>
+                    <span>Tableau de bord</span>
                   ) : (
                     <Link to={router.generatePath('dashboard') || '/'}>Tableau de board</Link>
                   )}
@@ -52,7 +56,11 @@ export const BreadCrumb: React.FC<IBreadCrumb> = ({ values }): React.ReactElemen
                   </Grid>
                   <Grid item>
                     <PenIcon fontSize={'small'} />
-                    <span>Edition</span>
+                    {id && isComment ? (
+                      <a href={router.generatePath('edit', { id }) || '/'}>Edition</a>
+                    ) : (
+                      <span>Edition</span>
+                    )}
                   </Grid>
                 </React.Fragment>
               );
@@ -64,11 +72,17 @@ export const BreadCrumb: React.FC<IBreadCrumb> = ({ values }): React.ReactElemen
                   </Grid>
                   <Grid item>
                     <UserCheckedIcon fontSize={'small'} />
-                    <span>Validation</span>
+                    {id && isComment ? (
+                      <a href={router.generatePath('edit', { id }) || '/'}>Validation</a>
+                    ) : (
+                      <span>Validation</span>
+                    )}
                   </Grid>
                 </React.Fragment>
               );
           }
+
+          return value;
         })}
       </Grid>
     </BreadCrumbStyled>

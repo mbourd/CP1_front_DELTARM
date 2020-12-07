@@ -9,7 +9,13 @@ apiRouter.registerRoute({
     cli_id: getEnv('CLIENT_ID'),
     user_id: getEnv('USER_ID'),
   },
-  handler: editValidationHandlerCallback,
+  handler: (response: any) => {
+    try {
+      return editValidationHandlerCallback(response);
+    } catch (e) {
+      return null;
+    }
+  },
 });
 
 apiRouter.registerRoute({

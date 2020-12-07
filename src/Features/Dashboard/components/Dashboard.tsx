@@ -20,7 +20,10 @@ const Dashboard: React.FC = (): React.ReactElement => {
   return (
     <>
       <BreadCrumb values={['Dashboard']} />
-      <SwitchCallState callState={callState} states={{ IS_LOADING: <IsLoading />, NO_DATA: <NoData /> }}>
+      <SwitchCallState
+        callState={callState}
+        states={{ IS_LOADING: <IsLoading />, NO_DATA: <NoData />, SERVER_ERROR: <NoData /> }}
+      >
         <DashboardStyled>
           <HeadingOne>{trans('pageTitle')}</HeadingOne>
           <Grid container>

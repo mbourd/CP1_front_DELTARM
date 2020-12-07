@@ -36,38 +36,46 @@ export const EditValidation: React.FC<IProps> = ({ title, apiRouteName }): React
   return (
     <SwitchCallState
       callState={callState}
-      states={{ IS_LOADING: <IsLoading title={title} />, NOT_FOUND: <NotFound title={title} /> }}
+      states={{
+        IS_LOADING: <IsLoading title={title} />,
+        NOT_FOUND: <NotFound title={title} />,
+        BAD_REQUEST: <NotFound title={title} />,
+      }}
     >
-      <EditStyled>
-        <HeadingOne>{title}</HeadingOne>
-        <EditValidationContext.Provider value={{ data, fileId: id }}>
-          <Grid container wrap={'nowrap'}>
-            <Grid item className={'nav'}>
-              <List>
-                {data?.sections.map((section, index) => {
-                  const current = currentSection || data?.currentSection.id;
+      {data ? (
+        <EditStyled>
+          <HeadingOne>{title}</HeadingOne>
+          <EditValidationContext.Provider value={{ data, fileId: id }}>
+            <Grid container wrap={'nowrap'}>
+              <Grid item className={'nav'}>
+                <List>
+                  {data?.sections.map((section, index) => {
+                    const current = currentSection || data?.currentSection.id;
 
-                  if (section.id === current) {
-                    storage.setData('edit.section.active', section.code);
-                  }
+                    if (section.id === current) {
+                      storage.setData('edit.section.active', section.code);
+                    }
 
-                  return (
-                    <NavItem
-                      key={index}
-                      item={section}
-                      active={section.id === current}
-                      onClick={(id: string) => setCurrentSection(id)}
-                    />
-                  );
-                })}
-              </List>
+                    return (
+                      <NavItem
+                        key={index}
+                        item={section}
+                        active={section.id === current}
+                        onClick={(id: string) => setCurrentSection(id)}
+                      />
+                    );
+                  })}
+                </List>
+              </Grid>
+              <Grid item className={'content'}>
+                <SwitchContentBody />
+              </Grid>
             </Grid>
-            <Grid item className={'content'}>
-              <SwitchContentBody />
-            </Grid>
-          </Grid>
-        </EditValidationContext.Provider>
-      </EditStyled>
+          </EditValidationContext.Provider>
+        </EditStyled>
+      ) : (
+        <NotFound title={title} />
+      )}
     </SwitchCallState>
   );
 };

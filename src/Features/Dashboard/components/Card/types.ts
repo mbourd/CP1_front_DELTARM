@@ -1,4 +1,5 @@
 import React from 'react';
+import { AppActionContextType } from 'Shared/types';
 
 export const cardHeight = 450;
 export const headerHeight = 50;
@@ -34,4 +35,5 @@ export interface ICard {
   header: ICardHeader;
   body: ICardBody;
   footer: ICardFooter;
+  context: AppActionContextType;
 }
