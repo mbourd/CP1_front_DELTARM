@@ -1,0 +1,47 @@
+{
+  "data": [
+    {
+      "file_context": "EDIT",
+      "file_data": [
+        {
+          "label": "Numéro Dossier",
+          "type": "text",
+          "value": "DOS_FORM/01"
+        },
+        {
+          "label": "Type Produit",
+          "type": "text",
+          "value": "Produit Financier reçu de KSIOP"
+        },
+        {
+          "label": "Contrepartie",
+          "type": "text",
+          "value": "szghszm ldrbnn - CP_olsyr"
+        },
+        {
+          "label": "Créé le",
+          "type": "date",
+          "value": "Tue, 08 Dec 2020 14:58:11 GMT"
+        },
+        {
+          "label": "Edité le",
+          "type": "date",
+          "value": "Tue, 08 Dec 2020 14:58:11 GMT"
+        },
+        {
+          "label": "Edité par",
+          "type": "text",
+          "value": "Jérôme OLIVIER"
+        }
+      ],
+      "file_id": "fce17219-a69a-4cd6-b966-9da99b7dea60",
+      "file_nb_comment": 0,
+      "stage_id": 1,
+      "stage_name": "Mise en Place",
+      "state_color": "#9D65C9",
+      "state_id": 2,
+      "state_name": "Dossiers à Valider",
+      "state_role": 1
+    }
+  ]
+}

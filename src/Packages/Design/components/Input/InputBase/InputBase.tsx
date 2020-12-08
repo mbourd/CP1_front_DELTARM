@@ -26,6 +26,8 @@ export const InputBase: React.FC<IInputBase> = ({
   border = 1,
   bgc = '#FFFFFF',
   className,
+  multiline = false,
+  multilineRows = 2,
 }): React.ReactElement => {
   const theme = useTheme();
   const c = theme.color[color];
@@ -54,6 +56,8 @@ export const InputBase: React.FC<IInputBase> = ({
         onChange={onChange}
         onKeyPress={onKeyPress}
         onBlur={onBlur}
+        multiline={multiline}
+        rows={multiline ? multilineRows : undefined}
       />
     </InputBaseStyled>
   );

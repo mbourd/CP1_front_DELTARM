@@ -40,6 +40,8 @@ export interface IInputBase {
    * Input auto focus.
    */
   autoFocus?: boolean;
+  multiline?: boolean;
+  multilineRows?: number;
 
   /**
    * Input default value.

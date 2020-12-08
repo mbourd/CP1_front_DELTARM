@@ -90,6 +90,7 @@ export const editValidationHandlerCallback = (response: any) => {
     sections,
     state,
     countComments: apiData.nb_comment,
+    validationCount: apiData.valid_num,
   };
 
   return data;

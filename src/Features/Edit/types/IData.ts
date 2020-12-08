@@ -8,6 +8,7 @@ export interface IApiData {
   sections: IApiSection[];
   state: IApiState;
   nb_comment: number;
+  valid_num?: string;
 }
 
 export interface IData {
@@ -16,4 +17,5 @@ export interface IData {
   sections: ISection[];
   state: IState;
   countComments: number;
+  validationCount?: string;
 }

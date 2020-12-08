@@ -4,7 +4,7 @@ import { EditValidationContext } from 'Features/Edit';
 
 export const RejectValidation: React.FC = (): React.ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { fileId } = useContext(EditValidationContext);
+  const { fileId, data } = useContext(EditValidationContext);
 
   return (
     <>
@@ -20,6 +20,9 @@ export const RejectValidation: React.FC = (): React.ReactElement => {
           successMessage={'La validation a été refusé'}
           message={'Souhaitez-vous refuser cette validation ?'}
           postRouteName={'actionRejectValidation'}
+          comment
+          commentRequired
+          queries={data?.validationCount ? { valid_num: data?.validationCount } : {}}
         />
       ) : null}
     </>

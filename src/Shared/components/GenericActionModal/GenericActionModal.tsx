@@ -1,7 +1,17 @@
-import React, { useCallback } from 'react';
-import { Button, FormLabel, Modal, StairsLoader, Error500, RequestSuccess, BadRequest } from 'Shared/components';
-import { useApi, SwitchCallState, router } from 'Services';
-import { GenericActionModalStyled } from './GenericActionModal.style';
+import React, { useCallback, useState } from 'react';
+import {
+  Button,
+  FormLabel,
+  Modal,
+  StairsLoader,
+  Error500,
+  RequestSuccess,
+  BadRequest,
+  InputBase,
+  FormError,
+} from 'Shared/components';
+import { useApi, SwitchCallState, router, storage } from 'Services';
+import { GenericActionModalStyled, GenericActionCommentModalStyled } from './GenericActionModal.style';
 
 interface IProps {
   open: boolean;
@@ -12,6 +22,9 @@ interface IProps {
   message: string;
   postRouteName: string;
   redirectRouteName?: 'manage' | 'edit';
+  comment?: boolean;
+  commentRequired?: boolean;
+  queries?: Record<string, string>;
 }
 
 export const GenericActionModal: React.FC<IProps> = ({
@@ -23,11 +36,28 @@ export const GenericActionModal: React.FC<IProps> = ({
   message,
   postRouteName,
   redirectRouteName = 'manage',
+  comment = false,
+  commentRequired = false,
+  queries = {},
 }): React.ReactElement | null => {
   const { request, callState, send, error } = useApi<any>();
+  const [commentError, setCommentError] = useState<string | null>(null);
 
   const submit = useCallback(() => {
-    send(postRouteName, {}, { file_id: fileId });
+    const q: Record<string, string> = { file_id: fileId };
+
+    if (comment) {
+      const com = storage.getData<string>('validation.reject.comments');
+      if (commentRequired && !com) {
+        return setCommentError('Ce champ est obligatoire');
+      }
+
+      if (com) {
+        q['reject_comment'] = com;
+      }
+    }
+
+    send(postRouteName, {}, Object.assign({}, q, queries));
   }, [fileId, send, postRouteName]);
 
   const footer: React.ReactNode = (
@@ -83,6 +113,22 @@ export const GenericActionModal: React.FC<IProps> = ({
           ),
         }}
       >
+        {comment ? (
+          <GenericActionCommentModalStyled>
+            <FormLabel>Ajouter un commentaire</FormLabel>
+            <InputBase
+              multiline
+              multilineRows={10}
+              placeholder={'Ajouter un commentaire'}
+              onChange={(e) => {
+                storage.setData('validation.reject.comments', e.currentTarget.value);
+                setCommentError(null);
+              }}
+            />
+            <FormError>{commentError}</FormError>
+          </GenericActionCommentModalStyled>
+        ) : null}
+
         <FormLabel>{message}</FormLabel>
       </SwitchCallState>
     </Modal>

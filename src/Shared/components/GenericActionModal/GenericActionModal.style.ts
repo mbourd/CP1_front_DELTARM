@@ -11,3 +11,7 @@ export const GenericActionModalStyled = styled.div`
     margin-right: 0;
   }
 `;
+
+export const GenericActionCommentModalStyled = styled.div`
+  margin-bottom: ${({ theme }) => theme.spacing.medium};
+`;
