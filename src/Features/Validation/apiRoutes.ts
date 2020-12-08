@@ -27,23 +27,3 @@ apiRouter.registerRoute({
     user_id: getEnv('USER_ID'),
   },
 });
-
-apiRouter.registerRoute({
-  name: 'acceptValidation',
-  path: '/validate/accept',
-  method: 'post',
-  queries: {
-    cli_id: getEnv('CLIENT_ID'),
-    user_id: getEnv('USER_ID'),
-  },
-});
-
-apiRouter.registerRoute({
-  name: 'rejectValidation',
-  path: '/validate/reject',
-  method: 'post',
-  queries: {
-    cli_id: getEnv('CLIENT_ID'),
-    user_id: getEnv('USER_ID'),
-  },
-});

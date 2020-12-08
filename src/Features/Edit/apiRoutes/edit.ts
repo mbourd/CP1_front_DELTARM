@@ -1,5 +1,5 @@
 import { apiRouter, getEnv } from 'Services';
-import { IAction, IApiData, IChapter, IControl, ICurrentSection, IData, ISection, IState } from './types';
+import { IAction, IApiData, IChapter, IControl, ICurrentSection, IData, ISection, IState } from '../types';
 import { ISelectData } from 'Shared/components';
 
 export const editValidationHandlerCallback = (response: any) => {
@@ -12,6 +12,7 @@ export const editValidationHandlerCallback = (response: any) => {
       id: '' + datum.id_action,
       label: datum.action_lib,
       url: datum.route,
+      code: datum.action_code,
     });
 
     return datum;
@@ -108,15 +109,5 @@ apiRouter.registerRoute({
     } catch (e) {
       return null;
     }
-  },
-});
-
-apiRouter.registerRoute({
-  name: 'setControlValue',
-  path: '/control/set_value',
-  method: 'post',
-  queries: {
-    cli_id: getEnv('CLIENT_ID'),
-    user_id: getEnv('USER_ID'),
   },
 });

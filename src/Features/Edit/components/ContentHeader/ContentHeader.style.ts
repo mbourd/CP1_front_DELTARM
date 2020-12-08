@@ -19,4 +19,12 @@ export const ContentHeaderStyled = styled.div`
       color: ${({ theme }) => theme.color.active.main};
     }
   }
+
+  ._Button {
+    margin-right: ${({ theme }) => theme.spacing.medium};
+  }
+
+  ._Button:last-child {
+    margin-right: 0;
+  }
 `;

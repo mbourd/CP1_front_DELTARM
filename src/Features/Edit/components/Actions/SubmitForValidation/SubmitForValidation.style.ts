@@ -6,8 +6,4 @@ export const SubmitForValidationStyled = styled.div`
 
 export const ModalFooterStyled = styled.div`
   padding: ${({ theme }) => theme.spacing.normal};
-
-  ._Button:first-child {
-    margin-right: ${({ theme }) => theme.spacing.medium};
-  }
 `;

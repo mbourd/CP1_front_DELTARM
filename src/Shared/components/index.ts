@@ -8,3 +8,4 @@ export * from './Tooltip/BPITooltip';
 export * from './Classify/ClassifyModal';
 export * from './Badge/BPIBadge';
 export * from './BreadCrumb/BreadCrumb';
+export * from './GenericActionModal/GenericActionModal';

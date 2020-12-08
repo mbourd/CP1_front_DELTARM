@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 
-export const ModalFooterStyled = styled.div`
+export const GenericActionModalStyled = styled.div`
   padding: ${({ theme }) => theme.spacing.normal};
 
   ._Button:first-child {
