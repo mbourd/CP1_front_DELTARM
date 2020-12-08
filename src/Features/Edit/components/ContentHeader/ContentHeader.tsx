@@ -51,7 +51,6 @@ export const ContentHeader: React.FC = (): React.ReactElement => {
                 return <RejectValidation />;
             }
           })}
-          <PostDisbursement />
         </Grid>
       </Grid>
     </ContentHeaderStyled>
