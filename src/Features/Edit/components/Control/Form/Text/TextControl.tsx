@@ -30,7 +30,7 @@ export const TextControl: React.FC<IProps> = ({ control, fileId }): React.ReactE
       storage.setData('edit.control.' + control.id + '.value', value);
       send(currentRoute?.props?.apiSaveControlRouteName, {}, { file_id: fileId, elm_id: control.id, elm_val: value });
     },
-    [send, fileId, control.id, currentRoute],
+    [send, fileId, control.id, currentRoute, control.mandatory],
   );
 
   useEffect(() => {

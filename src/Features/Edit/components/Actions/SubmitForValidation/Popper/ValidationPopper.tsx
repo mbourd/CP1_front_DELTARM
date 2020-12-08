@@ -8,21 +8,26 @@ import { EditValidationContext } from 'Features/Edit';
 
 export const ValidationPopper: React.FC = (): React.ReactElement => {
   const { request, error, callState, send, data } = useApi<IData>();
-  const { fileId } = useContext(EditValidationContext);
+  const context = useContext(EditValidationContext);
 
   useEffect(() => {
-    send('getValidators', {}, { file_id: fileId });
+    const q: Record<string, string> = { file_id: context.fileId };
+    if (context.data?.validationCount) {
+      q['valid_num'] = context.data?.validationCount;
+    }
+
+    send('getValidators', {}, q);
 
     return () => {
       request.abort();
     };
-  }, [send, fileId, request]);
+  }, [send, context.fileId, request, context.data]);
 
   const handleSubmit = useCallback(() => {
     const selectedValues = storage.getData<Record<string, true>>('edit.selected.validators');
     const selectedValue = Object.keys(selectedValues as Record<string, true>)[0];
-    send('askValidation', {}, { file_id: fileId, ask_to_user_id: selectedValue });
-  }, [send, fileId]);
+    send('askValidation', {}, { file_id: context.fileId, ask_to_user_id: selectedValue });
+  }, [send, context.fileId]);
 
   const storeSelectedValues = useCallback((selectedValues: Record<string, true>) => {
     storage.setData('edit.selected.validators', selectedValues);
