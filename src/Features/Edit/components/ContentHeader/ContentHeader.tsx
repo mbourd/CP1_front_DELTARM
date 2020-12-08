@@ -51,7 +51,6 @@ export const ContentHeader: React.FC = (): React.ReactElement => {
                 return <RejectValidation key={index} />;
             }
           })}
-          <RejectValidation />
         </Grid>
       </Grid>
     </ContentHeaderStyled>
