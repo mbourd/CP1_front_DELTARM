@@ -1,47 +1,389 @@
 {
-  "data": [
-    {
-      "file_context": "EDIT",
-      "file_data": [
+  "data": {
+    "actions": [
+      {
+        "action_code": "VALIDASK",
+        "action_lib": "Demande de Validation",
+        "id_action": 8,
+        "route": "/validate/ask"
+      },
+      {
+        "action_code": "NONCASE",
+        "action_lib": "Classer sans-suite",
+        "id_action": 2,
+        "route": "/file/noncase"
+      },
+      {
+        "action_code": "CANCEL",
+        "action_lib": "Annuler le dossier",
+        "id_action": 1,
+        "route": "/file/cancel"
+      }
+    ],
+    "current_section": {
+      "chapters": [
         {
-          "label": "Numéro Dossier",
-          "type": "text",
-          "value": "DOS_FORM/01"
+          "chap_lib": "Informations Obligatoires",
+          "chap_num": 1,
+          "controls": [
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": false,
+              "control_id": 452,
+              "control_mandatory": true,
+              "control_previous_value": null,
+              "control_title": "Nom de la contrepartie emprunteuse",
+              "control_type": "text",
+              "control_value": "tjorurw sxyzf"
+            },
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": false,
+              "control_id": 453,
+              "control_mandatory": true,
+              "control_previous_value": null,
+              "control_title": "Nom du gestionnaire (KSIOP)",
+              "control_type": "text",
+              "control_value": "delftq cxacogyztoym"
+            },
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": false,
+              "control_id": 454,
+              "control_mandatory": false,
+              "control_previous_value": null,
+              "control_title": "Réseau",
+              "control_type": "text",
+              "control_value": "ILE DE FRANCE"
+            },
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": false,
+              "control_id": 455,
+              "control_mandatory": false,
+              "control_previous_value": null,
+              "control_title": "Service",
+              "control_type": "text",
+              "control_value": "SERVICE EQUIPEMENT - IDF"
+            },
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": false,
+              "control_id": 456,
+              "control_mandatory": true,
+              "control_previous_value": null,
+              "control_title": "Nom du produit commercial",
+              "control_type": "text",
+              "control_value": "Produit Financier reçu de KSIOP"
+            },
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": false,
+              "control_id": 457,
+              "control_mandatory": true,
+              "control_previous_value": null,
+              "control_title": "N° Dossier",
+              "control_type": "text",
+              "control_value": "DOS456/123"
+            },
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": false,
+              "control_id": 458,
+              "control_mandatory": true,
+              "control_previous_value": null,
+              "control_title": "Famille de Produit",
+              "control_type": "text",
+              "control_value": "CBM / Location Financière"
+            },
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": false,
+              "control_id": 459,
+              "control_mandatory": true,
+              "control_previous_value": null,
+              "control_title": "Gestionnaire CP1",
+              "control_type": "text",
+              "control_value": "Jérôme OLIVIER"
+            },
+            {
+              "control_answer_choices": [
+                {
+                  "choice_id": 1,
+                  "choice_lib": "BPI France Chef de File"
+                },
+                {
+                  "choice_id": 2,
+                  "choice_lib": "BPI France Partenaire"
+                },
+                {
+                  "choice_id": 3,
+                  "choice_lib": "BPI France Seul"
+                },
+                {
+                  "choice_id": 4,
+                  "choice_lib": "Syndication"
+                }
+              ],
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": true,
+              "control_id": 460,
+              "control_mandatory": true,
+              "control_previous_value": null,
+              "control_title": "Montage du financement",
+              "control_type": "selectlist",
+              "control_value": "4"
+            },
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": false,
+              "control_id": 461,
+              "control_mandatory": true,
+              "control_previous_value": null,
+              "control_title": "N° de la contrepartie emprunteuse / Crédit Preneur",
+              "control_type": "integer",
+              "control_value": "CP_oicpr"
+            },
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": true,
+              "control_id": 462,
+              "control_mandatory": true,
+              "control_previous_value": null,
+              "control_title": "N°Autorisation",
+              "control_type": "text",
+              "control_value": "ghgfjh"
+            },
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": true,
+              "control_id": 463,
+              "control_mandatory": true,
+              "control_previous_value": null,
+              "control_title": "Montant de l'Autorisation",
+              "control_type": "financial",
+              "control_value": "7858"
+            },
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": true,
+              "control_id": 464,
+              "control_mandatory": true,
+              "control_previous_value": null,
+              "control_title": "Montant global de l'opération",
+              "control_type": "financial",
+              "control_value": "122323"
+            },
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": true,
+              "control_id": 465,
+              "control_mandatory": true,
+              "control_previous_value": null,
+              "control_title": "Montant du financement QP Bpifrance",
+              "control_type": "financial",
+              "control_value": "5556"
+            },
+            {
+              "control_answer_choices": [
+                {
+                  "choice_id": 1,
+                  "choice_lib": "Oui"
+                },
+                {
+                  "choice_id": 2,
+                  "choice_lib": "Non"
+                }
+              ],
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": true,
+              "control_id": 466,
+              "control_mandatory": true,
+              "control_previous_value": null,
+              "control_title": "Intervention Bpifrance Garantie",
+              "control_type": "selectlist",
+              "control_value": "1"
+            }
+          ]
         },
         {
-          "label": "Type Produit",
-          "type": "text",
-          "value": "Produit Financier reçu de KSIOP"
-        },
-        {
-          "label": "Contrepartie",
-          "type": "text",
-          "value": "szghszm ldrbnn - CP_olsyr"
-        },
-        {
-          "label": "Créé le",
-          "type": "date",
-          "value": "Tue, 08 Dec 2020 14:58:11 GMT"
-        },
-        {
-          "label": "Edité le",
-          "type": "date",
-          "value": "Tue, 08 Dec 2020 14:58:11 GMT"
-        },
-        {
-          "label": "Edité par",
-          "type": "text",
-          "value": "Jérôme OLIVIER"
+          "chap_lib": "Informations Facultatives (Suivi Dossier / Gestion)",
+          "chap_num": 2,
+          "controls": [
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": true,
+              "control_id": 467,
+              "control_mandatory": false,
+              "control_previous_value": null,
+              "control_title": "N° DC / SDC",
+              "control_type": "text",
+              "control_value": null
+            },
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": true,
+              "control_id": 468,
+              "control_mandatory": false,
+              "control_previous_value": null,
+              "control_title": "Date d'accord / de décision",
+              "control_type": "date",
+              "control_value": null
+            },
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": true,
+              "control_id": 469,
+              "control_mandatory": false,
+              "control_previous_value": null,
+              "control_title": "Date de la lettre d'offre / Notification client / Offre client",
+              "control_type": "date",
+              "control_value": null
+            },
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": true,
+              "control_id": 470,
+              "control_mandatory": false,
+              "control_previous_value": null,
+              "control_title": "Chargé d'affaires",
+              "control_type": "text",
+              "control_value": null
+            },
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": true,
+              "control_id": 471,
+              "control_mandatory": false,
+              "control_previous_value": null,
+              "control_title": "Décideur",
+              "control_type": "text",
+              "control_value": null
+            },
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": true,
+              "control_id": 472,
+              "control_mandatory": false,
+              "control_previous_value": null,
+              "control_title": "Durée du financement / Contrat en mois",
+              "control_type": "integer",
+              "control_value": null
+            },
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": true,
+              "control_id": 473,
+              "control_mandatory": false,
+              "control_previous_value": null,
+              "control_title": "Durée de la période de différée en mois",
+              "control_type": "integer",
+              "control_value": null
+            },
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": true,
+              "control_id": 474,
+              "control_mandatory": false,
+              "control_previous_value": null,
+              "control_title": "Taux de la période de préloyer",
+              "control_type": "percent",
+              "control_value": null
+            },
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": true,
+              "control_id": 475,
+              "control_mandatory": false,
+              "control_previous_value": null,
+              "control_title": "Taux de la période de remboursement / loyer",
+              "control_type": "percent",
+              "control_value": null
+            },
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": true,
+              "control_id": 476,
+              "control_mandatory": false,
+              "control_previous_value": null,
+              "control_title": "Date probable Entrée en Loyer / Consolidation",
+              "control_type": "date",
+              "control_value": null
+            },
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": true,
+              "control_id": 477,
+              "control_mandatory": false,
+              "control_previous_value": null,
+              "control_title": "Date butoir Entrée en Loyer / Consolidation",
+              "control_type": "date",
+              "control_value": null
+            },
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": true,
+              "control_id": 478,
+              "control_mandatory": false,
+              "control_previous_value": null,
+              "control_title": "Date de Procès Verbal de Réception",
+              "control_type": "date",
+              "control_value": null
+            },
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": true,
+              "control_id": 479,
+              "control_mandatory": false,
+              "control_previous_value": null,
+              "control_title": "VR en %",
+              "control_type": "percent",
+              "control_value": null
+            },
+            {
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": true,
+              "control_id": 480,
+              "control_mandatory": false,
+              "control_previous_value": null,
+              "control_title": "Date de signature du dossier / contrat",
+              "control_type": "date",
+              "control_value": null
+            }
+          ]
         }
       ],
-      "file_id": "fce17219-a69a-4cd6-b966-9da99b7dea60",
-      "file_nb_comment": 0,
-      "stage_id": 1,
-      "stage_name": "Mise en Place",
-      "state_color": "#9D65C9",
-      "state_id": 2,
-      "state_name": "Dossiers à Valider",
-      "state_role": 1
-    }
-  ]
+      "section_id": 48
+    },
+    "nb_comment": 0
+  }
 }

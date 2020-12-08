@@ -35,6 +35,7 @@ export interface ISelect {
   selectedValues?: Record<string, true>;
   disabled?: boolean;
   closable?: boolean;
+  closeOnSelect?: boolean;
   /**
    * Start at 0.
    */

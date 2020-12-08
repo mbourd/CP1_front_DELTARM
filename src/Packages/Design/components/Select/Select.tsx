@@ -27,6 +27,7 @@ export const Select: React.FC<ISelect> = ({
   onOpen,
   onClose,
   onChange,
+  closeOnSelect = false,
 }): React.ReactElement => {
   const sizing = useSizing();
   const [isOpen, setIsOpen] = useState(open);
@@ -85,8 +86,12 @@ export const Select: React.FC<ISelect> = ({
       }
 
       setSelected(selectedVal);
+
+      if (closeOnSelect) {
+        closeSelect();
+      }
     },
-    [selected, multiple, onChange],
+    [selected, multiple, onChange, closeOnSelect, closeSelect],
   );
 
   const labels = Object.keys(selected).map((id) => {

@@ -3,7 +3,7 @@ import { ValidationPopperStyled } from './ValidationPopper.style';
 import { Card } from '@material-ui/core';
 import { IData } from '../apiRoutes';
 import { BadRequest, Button, Error500, RequestSuccess, Select, StairsLoader } from 'Shared/components';
-import { storage, SwitchCallState, useApi } from 'Services';
+import { router, storage, SwitchCallState, useApi } from 'Services';
 import { EditValidationContext } from 'Features/Edit';
 
 export const ValidationPopper: React.FC = (): React.ReactElement => {
@@ -27,6 +27,10 @@ export const ValidationPopper: React.FC = (): React.ReactElement => {
   const storeSelectedValues = useCallback((selectedValues: Record<string, true>) => {
     storage.setData('edit.selected.validators', selectedValues);
   }, []);
+
+  if (callState === 'SUCCESS' && data?.type === 'ASK_VALIDATION') {
+    router.redirectTo('manage');
+  }
 
   return (
     <ValidationPopperStyled>
@@ -68,7 +72,7 @@ export const ValidationPopper: React.FC = (): React.ReactElement => {
               </div>
             </>
           ) : (
-            <RequestSuccess size={'md'} message={'Le dossier a bien été classé'} title={'Opération réussie'} />
+            <RequestSuccess size={'md'} message={'La validation a été soumise !'} title={'Opération réussie'} />
           )}
         </SwitchCallState>
       </Card>

@@ -19,6 +19,14 @@ export const TextControl: React.FC<IProps> = ({ control, fileId }): React.ReactE
 
   const saveValue = useCallback(
     (value: string) => {
+      if (control.mandatory && !value.trim()) {
+        setErrorMessage('Valeur obligatoire');
+
+        return;
+      }
+
+      setErrorMessage(null);
+
       storage.setData('edit.control.' + control.id + '.value', value);
       send(currentRoute?.props?.apiSaveControlRouteName, {}, { file_id: fileId, elm_id: control.id, elm_val: value });
     },

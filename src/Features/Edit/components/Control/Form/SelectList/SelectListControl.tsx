@@ -46,6 +46,7 @@ export const SelectListControl: React.FC<IProps> = ({ control, fileId }): React.
       <SelectListControlStyled>
         <FormLabel>{control.title}</FormLabel>
         <Select
+          closeOnSelect
           name={'selectList' + control.id}
           data={control.answerChoices || {}}
           selectedValues={selectedValue}
