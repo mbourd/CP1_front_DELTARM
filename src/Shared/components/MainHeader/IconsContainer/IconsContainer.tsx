@@ -16,7 +16,7 @@ export const IconsContainer: React.FC = (): React.ReactElement => {
   return (
     <IconsContainerStyled>
       <BPITooltip title={trans('reports')}>
-        <a href={data ? data.data.full_url : ''} target={'_blank'} rel={'noreferrer'}>
+        <a href={data ? data.data.full_url : ''} target={'_blank'} rel={'noopener noreferrer'}>
           <FileIcon fontSize={'large'} />
         </a>
       </BPITooltip>
