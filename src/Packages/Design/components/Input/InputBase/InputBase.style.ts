@@ -32,13 +32,27 @@ export const InputBaseStyled = styled.label<IProps>`
     cursor: pointer;
   }
 
-  .MuiInputBase-root {
-    width: 100%;
-  }
-
   .MuiInputBase-root,
-  .MuiInputBase-input {
-    background-color: transparent};
+  .MuiTextField-root {
+    &:hover {
+      &:before {
+      }
+    }
+
+    .MuiInput-underline:hover:not(.Mui-disabled):before {
+      border: none;
+    }
+
+    .MuiInput-underline.Mui-disabled:before,
+    .MuiInput-underline:before {
+      border: none;
+    }
+
+    .MuiInputBase-root,
+    .MuiInputBase-input {
+      background-color: transparent;
+    }
+
     color: ${({ fontColor }) => fontColor};
     padding: 0 ${({ theme }) => theme.spacing.xSmall};
     width: 100%;

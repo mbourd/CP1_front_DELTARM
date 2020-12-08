@@ -43,6 +43,7 @@ export const DateControl: React.FC<IProps> = ({ control, fileId }): React.ReactE
           color={control.editable ? 'text' : 'disabled'}
           defaultValue={value || control.value}
           onBlur={(e) => saveValue(e.currentTarget.value)}
+          type={'date'}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
       </DateControlStyled>

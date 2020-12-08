@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputBase as MUIInputBase } from '@material-ui/core';
+import { TextField as MUIInputBase } from '@material-ui/core';
 import { InputBaseStyled, useStyles } from './InputBase.style';
 import { useTheme } from 'Styles';
 import { IInputBase } from '../types';
@@ -20,7 +20,6 @@ export const InputBase: React.FC<IInputBase> = ({
   onKeyPress,
   onBlur,
   placeholder,
-  readOnly,
   required,
   type = 'text',
   value,
@@ -49,7 +48,6 @@ export const InputBase: React.FC<IInputBase> = ({
         disabled={disabled}
         id={id}
         placeholder={placeholder}
-        readOnly={readOnly}
         required={required}
         type={type}
         value={value}

@@ -27,28 +27,28 @@ export const ContentHeader: React.FC = (): React.ReactElement => {
           <FileComment />
         </Grid>
         <Grid item className={'right'}>
-          {data?.actions.map((action) => {
+          {data?.actions.map((action, index) => {
             switch (action.code) {
               case 'CANCEL':
-                return <Cancel />;
+                return <Cancel key={index} />;
               case 'NONCASE':
-                return <Classify />;
+                return <Classify key={index} />;
               case 'OWNER':
-                return <ChangeOwner />;
+                return <ChangeOwner key={index} />;
               case 'NEWDEC':
-                return <NewDisbursement />;
+                return <NewDisbursement key={index} />;
               case 'CANCELDEC':
-                return <CancelDisbursement />;
+                return <CancelDisbursement key={index} />;
               case 'POSTDEC':
-                return <PostDisbursement />;
+                return <PostDisbursement key={index} />;
               case 'CLOSE':
                 return <Close />;
               case 'VALIDASK':
-                return <SubmitForValidation />;
+                return <SubmitForValidation key={index} />;
               case 'ACCEPT':
-                return <AcceptValidation />;
+                return <AcceptValidation key={index} />;
               case 'REJECT':
-                return <RejectValidation />;
+                return <RejectValidation key={index} />;
             }
           })}
         </Grid>
