@@ -34,11 +34,6 @@ export const InputBaseStyled = styled.label<IProps>`
 
   .MuiInputBase-root,
   .MuiTextField-root {
-    &:hover {
-      &:before {
-      }
-    }
-
     .MuiInput-underline:hover:not(.Mui-disabled):before {
       border: none;
     }
