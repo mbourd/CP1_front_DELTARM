@@ -44,10 +44,10 @@ export const ContentHeader: React.FC = (): React.ReactElement => {
               case 'CLOSE':
                 return <Close />;
               case 'VALIDASK':
-                return <AcceptValidation />;
-              case 'toto':
                 return <SubmitForValidation />;
-              case 'tata':
+              case 'ACCEPT':
+                return <AcceptValidation />;
+              case 'REJECT':
                 return <RejectValidation />;
             }
           })}
