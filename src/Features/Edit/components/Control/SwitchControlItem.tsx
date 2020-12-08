@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { IControl } from 'Features/Edit/types';
-import { TextControl, SelectListControl, FinancialControl, IntegerControl } from './Form';
+import { TextControl, SelectListControl, FinancialControl, IntegerControl, DateControl } from './Form';
 import { EditValidationContext } from 'Features/Edit';
 
 interface IProps {
@@ -19,6 +19,8 @@ export const SwitchControlItem: React.FC<IProps> = ({ control }): React.ReactEle
       return <FinancialControl control={control} fileId={fileId} />;
     case 'integer':
       return <IntegerControl control={control} fileId={fileId} />;
+    case 'date':
+      return <DateControl control={control} fileId={fileId} />;
   }
 
   return null;
