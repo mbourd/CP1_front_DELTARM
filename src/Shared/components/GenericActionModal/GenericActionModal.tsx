@@ -58,7 +58,7 @@ export const GenericActionModal: React.FC<IProps> = ({
     }
 
     send(postRouteName, {}, Object.assign({}, q, queries));
-  }, [fileId, send, postRouteName]);
+  }, [fileId, send, postRouteName, comment, commentRequired, queries]);
 
   const footer: React.ReactNode = (
     <GenericActionModalStyled>
