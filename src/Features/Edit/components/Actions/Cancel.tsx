@@ -18,7 +18,7 @@ export const Cancel: React.FC = (): React.ReactElement => {
           fileId={fileId}
           actionLabel={'Annuler le dossier'}
           successMessage={'Le dossier a été annulé'}
-          message={'Souhaitez-vous rejeter cette validation ?'}
+          message={'Souhaitez-vous annuler ce dossier ?'}
           postRouteName={'actionCancel'}
         />
       ) : null}
