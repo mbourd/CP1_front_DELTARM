@@ -6,6 +6,7 @@ import {
   ApiRequestBodyType,
   ApiRequestHeadersType,
   ApiRequestHostType,
+  ApiRequestJWTType,
   ApiRequestMethodType,
   ApiRequestProtocolType,
   ApiRequestQueriesType,
@@ -22,6 +23,7 @@ export class ApiRequest implements IApiRequest {
   private _headers: ApiRequestHeadersType = {};
   private _method: ApiRequestMethodType = 'get';
   private _bearerToken: ApiRequestBearerTokenType = null;
+  private _jwt: ApiRequestJWTType = null;
   private _basicAuth: ApiRequestBasicAuthType = null;
   private _agent: SuperAgentRequest | null = null;
 
@@ -162,6 +164,16 @@ export class ApiRequest implements IApiRequest {
     return this._bearerToken;
   }
 
+  setJWT(token: ApiRequestJWTType): this {
+    this._jwt = token;
+
+    return this;
+  }
+
+  getJWT(): ApiRequestJWTType {
+    return this._jwt;
+  }
+
   get(url: string, queries: ApiRequestQueriesType = {}, body: ApiRequestBodyType = {}): Promise<any> {
     this.setUrl(url).setMethod('get').setQueries(queries).setBody(body);
 
@@ -208,6 +220,10 @@ export class ApiRequest implements IApiRequest {
 
       if (this._bearerToken) {
         agent.set('Authorization', `Bearer ${this._bearerToken}`);
+      }
+
+      if (this._jwt) {
+        agent.set('Authorization', `JWT ${this._jwt}`);
       }
 
       if (this._basicAuth) {
