@@ -13,7 +13,7 @@ interface IProps {
 export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactElement | null => {
   const { error, isLoading, route, send, data } = useApi<IFileSearchApiReturn>();
 
-  const file = (storage.getData('manage.search.value') as string).split(/ *\/ */);
+  const file = (storage.getData('shared.component.search.value') as string).split(/ *\/ */);
   const file_num = file[0];
   const file_avenant = file[1];
 

@@ -58,7 +58,7 @@ export const Manage: React.FC = (): React.ReactElement => {
   }, []);
 
   const onSearch = useCallback(() => {
-    const value = storage.getData<string>('manage.search.value');
+    const value = storage.getData<string>('shared.component.search.value');
     if (!value || !/[a-z0-9]+\/[a-z0-9]+/i.test(value)) {
       setErrorMessage(trans('searchError'));
 

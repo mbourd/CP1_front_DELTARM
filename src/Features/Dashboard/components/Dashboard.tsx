@@ -8,6 +8,7 @@ import { Card } from './Card/Card';
 import { ICard } from './Card/types';
 import { IsLoading } from './IsLoading';
 import { NoData } from './NoData';
+import { DashboardSearch } from './Search/DashboardSearch';
 
 const Dashboard: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Dashboard');
@@ -26,6 +27,7 @@ const Dashboard: React.FC = (): React.ReactElement => {
       >
         <DashboardStyled>
           <HeadingOne>{trans('pageTitle')}</HeadingOne>
+          <DashboardSearch />
           <Grid container>
             {data?.map((card, index) => {
               return (
