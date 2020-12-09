@@ -27,3 +27,4 @@ export * from './CheckIcon';
 export * from './ReturnIcon';
 export * from './HomeIcon';
 export * from './PenIcon';
+export * from './HelpIcon';

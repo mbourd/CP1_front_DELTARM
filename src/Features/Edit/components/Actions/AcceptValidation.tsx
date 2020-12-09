@@ -4,7 +4,7 @@ import { EditValidationContext } from 'Features/Edit';
 
 export const AcceptValidation: React.FC = (): React.ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { fileId } = useContext(EditValidationContext);
+  const { fileId, data } = useContext(EditValidationContext);
 
   return (
     <>
@@ -20,6 +20,7 @@ export const AcceptValidation: React.FC = (): React.ReactElement => {
           successMessage={'Le dossier a été validé'}
           message={'Souhaitez-vous valider ce dossier ?'}
           postRouteName={'actionAcceptValidation'}
+          queries={data?.validationCount ? { valid_num: data?.validationCount } : {}}
         />
       ) : null}
     </>
