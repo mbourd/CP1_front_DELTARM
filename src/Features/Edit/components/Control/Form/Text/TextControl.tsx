@@ -5,6 +5,7 @@ import { IControl } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
 import { storage, useApi, useRouter } from 'Services';
 import { ControlLabel } from '../ControlLabel';
+import { ControlFooter } from '../ControlFooter';
 
 interface IProps {
   control: IControl;
@@ -27,9 +28,14 @@ export const TextControl: React.FC<IProps> = ({ control, fileId }): React.ReactE
       }
 
       setErrorMessage(null);
-
       storage.setData('edit.control.' + control.id + '.value', value);
-      send(currentRoute?.props?.apiSaveControlRouteName, {}, { file_id: fileId, elm_id: control.id, elm_val: value });
+      const q: Record<string, string> = { file_id: fileId, elm_id: control.id };
+
+      if (value) {
+        q['elm_val'] = value;
+      }
+
+      send(currentRoute?.props?.apiSaveControlRouteName, {}, q);
     },
     [send, fileId, control.id, currentRoute, control.mandatory],
   );
@@ -54,6 +60,7 @@ export const TextControl: React.FC<IProps> = ({ control, fileId }): React.ReactE
           onBlur={(e) => saveValue(e.currentTarget.value)}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
+        <ControlFooter control={control} />
       </TextControlStyled>
     </Grid>
   );

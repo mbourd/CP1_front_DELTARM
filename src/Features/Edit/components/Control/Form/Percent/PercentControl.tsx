@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { IControl } from 'Features/Edit/types';
-import { FormError, Select } from 'Shared/components';
+import { FormError, InputBase } from 'Shared/components';
+import { PercentControlStyled } from './PercentControl.style';
 import { storage, useApi, useRouter } from 'Services';
-import { SelectListControlStyled } from './SelectListControl.style';
 import { ControlLabel } from '../ControlLabel';
 import { ControlFooter } from '../ControlFooter';
 
@@ -12,54 +12,65 @@ interface IProps {
   fileId: string;
 }
 
-export const SelectListControl: React.FC<IProps> = ({ control, fileId }): React.ReactElement => {
+export const PercentControl: React.FC<IProps> = ({ control, fileId }): React.ReactElement => {
   const { send } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
 
   const value = storage.getData<string>('edit.control.' + control.id + '.value');
-  const selectedValue: Record<string, true> = { [value || control.value || '']: true };
 
   const saveValue = useCallback(
     (value: string) => {
+      if (control.mandatory && !/^[0-9]+\.?[0-9]*$/.test(value)) {
+        setErrorMessage('Saisissez un pourcentage');
+
+        return;
+      }
+
+      if (control.mandatory) {
+        try {
+          const x = parseFloat(value);
+          if (isNaN(x) || x < 0 || x > 100) {
+            setErrorMessage('Saisissez un pourcentage');
+
+            return;
+          }
+        } catch {
+          setErrorMessage('Saisissez un pourcentage');
+
+          return;
+        }
+      }
+
       setErrorMessage(null);
       storage.setData('edit.control.' + control.id + '.value', value);
       send(currentRoute?.props?.apiSaveControlRouteName, {}, { file_id: fileId, elm_id: control.id, elm_val: value });
     },
-    [send, fileId, control.id, currentRoute],
+    [send, fileId, control.id, control.mandatory, currentRoute],
   );
 
   useEffect(() => {
     const val = storage.getData<string>('edit.control.' + control.id + '.value');
 
     if (control.mandatory && control.editable && !val && !control.value) {
-      setErrorMessage('Valeur obligatoire');
+      setErrorMessage('Saisissez un pourcentage');
     }
   }, [control.id, control.mandatory, control.value, control.editable]);
 
   return (
     <Grid item xs={6}>
-      <SelectListControlStyled className={'control-container'}>
+      <PercentControlStyled>
         <ControlLabel control={control} />
-        <Select
-          closeOnSelect
-          name={'selectList' + control.id}
-          data={control.answerChoices || {}}
-          selectedValues={selectedValue}
-          labelColor={control.editable ? 'text' : 'disabled'}
-          labelBdc={control.editable ? 'text' : 'disabled'}
-          multiple={false}
+        <InputBase
+          placeholder={control.editable ? control.title : control.value}
           disabled={!control.editable}
-          onChange={(selectedValues) => {
-            const first = Object.keys(selectedValues)[0];
-            saveValue('' + first);
-          }}
-        >
-          {'Sélectionez une valeur'}
-        </Select>
+          color={control.editable ? 'text' : 'disabled'}
+          defaultValue={value || control.value}
+          onBlur={(e) => saveValue(e.currentTarget.value)}
+        />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ControlFooter control={control} />
-      </SelectListControlStyled>
+      </PercentControlStyled>
     </Grid>
   );
 };

@@ -35,7 +35,7 @@
               "control_previous_value": null,
               "control_title": "Nom de la contrepartie emprunteuse",
               "control_type": "text",
-              "control_value": "tjorurw sxyzf"
+              "control_value": "okzqgfy pizjiynlo"
             },
             {
               "control_desc_1": null,
@@ -46,7 +46,7 @@
               "control_previous_value": null,
               "control_title": "Nom du gestionnaire (KSIOP)",
               "control_type": "text",
-              "control_value": "delftq cxacogyztoym"
+              "control_value": "ujxm gonygdqyu"
             },
             {
               "control_desc_1": null,
@@ -57,7 +57,7 @@
               "control_previous_value": null,
               "control_title": "Réseau",
               "control_type": "text",
-              "control_value": "ILE DE FRANCE"
+              "control_value": "EST"
             },
             {
               "control_desc_1": null,
@@ -68,7 +68,7 @@
               "control_previous_value": null,
               "control_title": "Service",
               "control_type": "text",
-              "control_value": "SERVICE EQUIPEMENT - IDF"
+              "control_value": "SERVICE EQUIPEMENT - EST"
             },
             {
               "control_desc_1": null,
@@ -90,7 +90,7 @@
               "control_previous_value": null,
               "control_title": "N° Dossier",
               "control_type": "text",
-              "control_value": "DOS456/123"
+              "control_value": "DOS555/00"
             },
             {
               "control_desc_1": null,
@@ -112,7 +112,7 @@
               "control_previous_value": null,
               "control_title": "Gestionnaire CP1",
               "control_type": "text",
-              "control_value": "Jérôme OLIVIER"
+              "control_value": "Florian PESCE"
             },
             {
               "control_answer_choices": [
@@ -141,7 +141,7 @@
               "control_previous_value": null,
               "control_title": "Montage du financement",
               "control_type": "selectlist",
-              "control_value": "4"
+              "control_value": null
             },
             {
               "control_desc_1": null,
@@ -152,7 +152,7 @@
               "control_previous_value": null,
               "control_title": "N° de la contrepartie emprunteuse / Crédit Preneur",
               "control_type": "integer",
-              "control_value": "CP_oicpr"
+              "control_value": "CP_qudbx"
             },
             {
               "control_desc_1": null,
@@ -163,7 +163,7 @@
               "control_previous_value": null,
               "control_title": "N°Autorisation",
               "control_type": "text",
-              "control_value": "ghgfjh"
+              "control_value": null
             },
             {
               "control_desc_1": null,
@@ -174,7 +174,7 @@
               "control_previous_value": null,
               "control_title": "Montant de l'Autorisation",
               "control_type": "financial",
-              "control_value": "7858"
+              "control_value": null
             },
             {
               "control_desc_1": null,
@@ -185,7 +185,7 @@
               "control_previous_value": null,
               "control_title": "Montant global de l'opération",
               "control_type": "financial",
-              "control_value": "122323"
+              "control_value": null
             },
             {
               "control_desc_1": null,
@@ -196,7 +196,7 @@
               "control_previous_value": null,
               "control_title": "Montant du financement QP Bpifrance",
               "control_type": "financial",
-              "control_value": "5556"
+              "control_value": null
             },
             {
               "control_answer_choices": [
@@ -217,7 +217,7 @@
               "control_previous_value": null,
               "control_title": "Intervention Bpifrance Garantie",
               "control_type": "selectlist",
-              "control_value": "1"
+              "control_value": null
             }
           ]
         },
@@ -234,7 +234,7 @@
               "control_previous_value": null,
               "control_title": "N° DC / SDC",
               "control_type": "text",
-              "control_value": null
+              "control_value": "okzqgfy pizjiynlo333333"
             },
             {
               "control_desc_1": null,
@@ -384,6 +384,84 @@
       ],
       "section_id": 48
     },
-    "nb_comment": 0
+    "file": [
+      {
+        "key": "Numéro de Dossier",
+        "type": "text",
+        "value": "DOS555"
+      },
+      {
+        "key": "Avenant",
+        "type": "text",
+        "value": "00"
+      },
+      {
+        "key": "Produit KSIOP",
+        "type": "text",
+        "value": "CBM / Location Financière"
+      },
+      {
+        "key": "Contrepartie",
+        "type": "text",
+        "value": "okzqgfy pizjiynlo"
+      },
+      {
+        "key": "Code Contrepartie",
+        "type": "text",
+        "value": "CP_qudbx"
+      },
+      {
+        "key": "Création le",
+        "type": "date",
+        "value": "Wed, 09 Dec 2020 21:00:20 GMT"
+      },
+      {
+        "key": "Dossier créé par",
+        "type": "text",
+        "value": "Florian PESCE"
+      },
+      {
+        "key": "Dernière édition le",
+        "type": "date",
+        "value": "Wed, 09 Dec 2020 21:00:20 GMT"
+      },
+      {
+        "key": "Dernière édition par",
+        "type": "text",
+        "value": "Florian PESCE"
+      }
+    ],
+    "nb_comment": 0,
+    "sections": [
+      {
+        "section_id": 48,
+        "section_lib": "Informations",
+        "section_locked": false,
+        "stage_code": "INFO"
+      },
+      {
+        "section_id": 49,
+        "section_lib": "Mise en Place",
+        "section_locked": false,
+        "stage_code": "MEP"
+      },
+      {
+        "section_id": 50,
+        "section_lib": "Décaissement",
+        "section_locked": true,
+        "stage_code": "DEC_1"
+      },
+      {
+        "section_id": 70,
+        "section_lib": "Post-Décaissement",
+        "section_locked": true,
+        "stage_code": "POST_DEC"
+      }
+    ],
+    "state": {
+      "state_color": "007E33",
+      "state_id": 1,
+      "state_name": "Dossiers à Traiter"
+    }
   }
 }

@@ -6,6 +6,7 @@ import { FinancialControlStyled } from './FinancialControl.style';
 import { EuroIcon } from 'Styles';
 import { storage, useApi, useRouter } from 'Services';
 import { ControlLabel } from '../ControlLabel';
+import { ControlFooter } from '../ControlFooter';
 
 interface IProps {
   control: IControl;
@@ -24,6 +25,22 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
         setErrorMessage('Saisissez un nombre');
 
         return;
+      }
+
+      if (control.mandatory) {
+        try {
+          const v = parseInt(value, 10);
+
+          if (v < 999) {
+            setErrorMessage('Le nombre doit être superieur à 998');
+
+            return;
+          }
+        } catch {
+          setErrorMessage('Saisissez un nombre');
+
+          return;
+        }
       }
 
       setErrorMessage(null);
@@ -54,6 +71,7 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
           onBlur={(e) => saveValue(e.currentTarget.value)}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
+        <ControlFooter control={control} />
       </FinancialControlStyled>
     </Grid>
   );

@@ -5,6 +5,7 @@ import { IControl } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
 import { storage, useApi, useRouter } from 'Services';
 import { ControlLabel } from '../ControlLabel';
+import { ControlFooter } from '../ControlFooter';
 
 interface IProps {
   control: IControl;
@@ -47,6 +48,7 @@ export const DateControl: React.FC<IProps> = ({ control, fileId }): React.ReactE
           type={'date'}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
+        <ControlFooter control={control} />
       </DateControlStyled>
     </Grid>
   );

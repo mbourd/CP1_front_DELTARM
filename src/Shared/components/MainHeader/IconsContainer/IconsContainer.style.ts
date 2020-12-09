@@ -8,7 +8,7 @@ export const IconsContainerStyled = styled.div`
   position: absolute;
   right: 0;
   top: 0;
-  width: 290px;
+  width: 200px;
 
   a {
     display: inline-block;

@@ -5,6 +5,7 @@ import { IControl } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
 import { storage, useApi, useRouter } from 'Services';
 import { ControlLabel } from '../ControlLabel';
+import { ControlFooter } from '../ControlFooter';
 
 interface IProps {
   control: IControl;
@@ -56,6 +57,7 @@ export const CommentControl: React.FC<IProps> = ({ control, fileId }): React.Rea
           onBlur={(e) => saveValue(e.currentTarget.value)}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
+        <ControlFooter control={control} />
       </CommentControlStyled>
     </Grid>
   );
