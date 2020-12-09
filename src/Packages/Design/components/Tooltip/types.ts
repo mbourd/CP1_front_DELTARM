@@ -7,5 +7,5 @@ export interface ITooltip {
   fontFamily?: string;
   fontSize?: string;
   placement?: 'bottom' | 'left' | 'right' | 'top';
-  title: React.ReactElement;
+  title: React.ReactElement | string;
 }

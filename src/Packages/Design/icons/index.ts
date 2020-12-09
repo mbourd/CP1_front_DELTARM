@@ -28,3 +28,4 @@ export * from './ReturnIcon';
 export * from './HomeIcon';
 export * from './PenIcon';
 export * from './HelpIcon';
+export * from './WarningIcon';

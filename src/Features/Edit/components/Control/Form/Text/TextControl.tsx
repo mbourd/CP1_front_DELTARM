@@ -2,8 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { TextControlStyled } from './TextControl.style';
 import { Grid } from '@material-ui/core';
 import { IControl } from 'Features/Edit/types';
-import { FormError, FormLabel, InputBase } from 'Shared/components';
+import { FormError, InputBase } from 'Shared/components';
 import { storage, useApi, useRouter } from 'Services';
+import { ControlLabel } from '../ControlLabel';
 
 interface IProps {
   control: IControl;
@@ -44,7 +45,7 @@ export const TextControl: React.FC<IProps> = ({ control, fileId }): React.ReactE
   return (
     <Grid item xs={6}>
       <TextControlStyled>
-        <FormLabel>{control.title}</FormLabel>
+        <ControlLabel control={control} />
         <InputBase
           placeholder={control.editable ? control.title : control.value}
           disabled={!control.editable}

@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { IControl } from 'Features/Edit/types';
-import { FormError, FormLabel, Select } from 'Shared/components';
-import { SelectListControlStyled } from './SelectListControl.style';
+import { FormError, Select } from 'Shared/components';
 import { storage, useApi, useRouter } from 'Services';
+import { SelectListControlStyled } from './SelectListControl.style';
+import { ControlLabel } from '../ControlLabel';
 
 interface IProps {
   control: IControl;
@@ -16,13 +17,7 @@ export const SelectListControl: React.FC<IProps> = ({ control, fileId }): React.
   const { currentRoute } = useRouter();
 
   const value = storage.getData<string>('edit.control.' + control.id + '.value');
-  // const first = Object.keys(control.answerChoices || {})[0];
-
   const selectedValue: Record<string, true> = { [value || control.value || '']: true };
-
-  // if (control.mandatory) {
-  //   selectedValue = { [value || first]: true };
-  // }
 
   const saveValue = useCallback(
     (value: string) => {
@@ -44,7 +39,7 @@ export const SelectListControl: React.FC<IProps> = ({ control, fileId }): React.
   return (
     <Grid item xs={6}>
       <SelectListControlStyled>
-        <FormLabel>{control.title}</FormLabel>
+        <ControlLabel control={control} />
         <Select
           closeOnSelect
           name={'selectList' + control.id}

@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { IControl } from 'Features/Edit/types';
-import { FormError, FormLabel, InputBase } from 'Shared/components';
+import { FormError, InputBase } from 'Shared/components';
 import { FinancialControlStyled } from './FinancialControl.style';
 import { EuroIcon } from 'Styles';
 import { storage, useApi, useRouter } from 'Services';
+import { ControlLabel } from '../ControlLabel';
 
 interface IProps {
   control: IControl;
@@ -43,7 +44,7 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
   return (
     <Grid item xs={6}>
       <FinancialControlStyled>
-        <FormLabel>{control.title}</FormLabel>
+        <ControlLabel control={control} />
         <InputBase
           placeholder={control.editable ? control.title : control.value}
           disabled={!control.editable}

@@ -2,8 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { CommentControlStyled } from './CommentControl.style';
 import { Grid } from '@material-ui/core';
 import { IControl } from 'Features/Edit/types';
-import { FormError, FormLabel, InputBase } from 'Shared/components';
+import { FormError, InputBase } from 'Shared/components';
 import { storage, useApi, useRouter } from 'Services';
+import { ControlLabel } from '../ControlLabel';
 
 interface IProps {
   control: IControl;
@@ -44,7 +45,7 @@ export const CommentControl: React.FC<IProps> = ({ control, fileId }): React.Rea
   return (
     <Grid item xs={6}>
       <CommentControlStyled>
-        <FormLabel>{control.title}</FormLabel>
+        <ControlLabel control={control} />
         <InputBase
           multiline
           multilineRows={10}

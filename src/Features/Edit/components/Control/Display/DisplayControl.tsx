@@ -11,7 +11,7 @@ interface IProps {
 export const DisplayControl: React.FC<IProps> = ({ controls }): React.ReactElement => {
   return (
     <DisplayControlStyled>
-      <Grid container>
+      <Grid container className={'control-container'}>
         {controls.map((control, index) => {
           return <SwitchControlItem key={index} control={control} />;
         })}

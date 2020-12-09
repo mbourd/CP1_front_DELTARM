@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { IControl } from 'Features/Edit/types';
-import { FormError, FormLabel, InputBase } from 'Shared/components';
+import { FormError, InputBase } from 'Shared/components';
 import { IntegerControlStyled } from './IntegerControl.style';
 import { storage, useApi, useRouter } from 'Services';
+import { ControlLabel } from '../ControlLabel';
 
 interface IProps {
   control: IControl;
@@ -42,7 +43,7 @@ export const IntegerControl: React.FC<IProps> = ({ control, fileId }): React.Rea
   return (
     <Grid item xs={6}>
       <IntegerControlStyled>
-        <FormLabel>{control.title}</FormLabel>
+        <ControlLabel control={control} />
         <InputBase
           placeholder={control.editable ? control.title : control.value}
           disabled={!control.editable}
