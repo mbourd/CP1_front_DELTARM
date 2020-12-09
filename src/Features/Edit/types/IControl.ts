@@ -9,6 +9,7 @@ export type ControlTypeType =
   | 'date'
   | 'timestamp'
   | 'selectlist'
+  | 'comment'
   | 'radio'
   | 'checkbox';
 
