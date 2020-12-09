@@ -7,7 +7,7 @@ export const useApi = <T>(promise = false): UseApiReturnType<T> => {
   const { request, ...api } = DRMUseApi<T>(getEnv('API_HOST'), getEnv('API_PROTOCOL'), apiRouter, promise);
 
   useEffect(() => {
-    request.setJWT(security.getUser().getJwt());
+    request.setBearerToken(security.getUser().getJwt());
   }, [request]);
 
   return { request, ...api };

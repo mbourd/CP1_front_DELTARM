@@ -9,7 +9,6 @@ export type ApiRequestParamsType = Record<string, string | number>;
 export type ApiRequestQueriesType = Record<string, string | number>;
 export type ApiRequestBodyType = Record<string, any>;
 export type ApiRequestBearerTokenType = string | null;
-export type ApiRequestJWTType = string | null;
 export type ApiRequestBasicAuthType = { login: string; password: string } | null;
 
 export interface IApiRequest {
@@ -37,8 +36,6 @@ export interface IApiRequest {
   removeHeader(name: string): IApiRequest;
   setBearerToken(token: ApiRequestBearerTokenType): IApiRequest;
   getBearerToken(): ApiRequestBearerTokenType;
-  setJWT(token: ApiRequestJWTType): IApiRequest;
-  getJWT(): ApiRequestJWTType;
   get(url: string, queries: ApiRequestQueriesType, body: ApiRequestBodyType): Promise<ApiResponseBodyType>;
   head(url: string, queries: ApiRequestQueriesType, body: ApiRequestBodyType): Promise<ApiResponseBodyType>;
   post(url: string, body: ApiRequestBodyType, queries: ApiRequestQueriesType): Promise<ApiResponseBodyType>;
