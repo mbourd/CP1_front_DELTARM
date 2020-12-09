@@ -21,6 +21,7 @@ export const NewDisbursement: React.FC = (): React.ReactElement => {
           message={'Souhaitez-vous faire un autre décaissement ?'}
           postRouteName={'actionNewDisbursement'}
           redirectRouteName={'edit'}
+          forceRedirect
         />
       ) : null}
     </>

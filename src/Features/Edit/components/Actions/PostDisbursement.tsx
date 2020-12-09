@@ -20,6 +20,8 @@ export const PostDisbursement: React.FC = (): React.ReactElement => {
           successMessage={'Ce dossier a été passé Post-Décaissement'}
           message={'Souhaitez-vous Passer en Post-Décaissement ?'}
           postRouteName={'actionPostDisbursement'}
+          redirectRouteName={'edit'}
+          forceRedirect
         />
       ) : null}
     </>

@@ -24,6 +24,7 @@ interface IProps {
   redirectRouteName?: 'manage' | 'edit';
   comment?: boolean;
   commentRequired?: boolean;
+  forceRedirect?: boolean;
   queries?: Record<string, string>;
 }
 
@@ -38,6 +39,7 @@ export const GenericActionModal: React.FC<IProps> = ({
   redirectRouteName = 'manage',
   comment = false,
   commentRequired = false,
+  forceRedirect = false,
   queries = {},
 }): React.ReactElement | null => {
   const { request, callState, send, error } = useApi<any>();
@@ -69,7 +71,7 @@ export const GenericActionModal: React.FC<IProps> = ({
           onClose();
 
           if (callState === 'SUCCESS') {
-            router.redirectTo(redirectRouteName, { id: fileId });
+            router.redirectTo(redirectRouteName, { id: fileId }, {}, forceRedirect);
 
             return null;
           }
