@@ -68,7 +68,7 @@ export class Security implements ISecurity {
       return new User();
     }
 
-    return JSON.parse(stringifyUser);
+    return Object.assign(new User(), JSON.parse(stringifyUser));
   }
 }
 
