@@ -6,7 +6,6 @@
     - demo
     - merge_requests
 
-#image: node:12-alpine
 image: docker:19.03.1
 
 services:
@@ -49,7 +48,7 @@ deploy preprod:
     - chmod 644 ~/.ssh/known_hosts
     - docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN
   script:
-    - cp .env .env.production
+    - cp .env.preprod .env.production
     - docker run --rm -w="/app" -v $PWD:/app node:12-alpine sh -c "yarn run build --profile"
     - cp ci/preprod/Dockerfile Dockerfile
     - cp ci/preprod/nginx.conf nginx.conf
