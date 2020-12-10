@@ -1,4 +1,4 @@
-import { apiRouter, getEnv } from 'Services';
+import { apiRouter } from 'Services';
 import { ICard, ICardBodyRow, ICardFooter, ICardHeader } from './components/Card/types';
 import { AppActionContextType } from 'Shared/types';
 
@@ -22,10 +22,6 @@ apiRouter.registerRoute({
   name: 'dashboard',
   path: '/dashboard',
   method: 'get',
-  queries: {
-    cli_id: getEnv('CLIENT_ID'),
-    user_id: getEnv('USER_ID'),
-  },
   callState: (data, error, currentState) => {
     if (currentState === 'SUCCESS' && data.length === 0) {
       return 'NO_DATA';

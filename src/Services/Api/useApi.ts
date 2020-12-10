@@ -1,14 +1,12 @@
 import { useApi as DRMUseApi, UseApiReturnType, apiRouter } from 'Packages/Api';
-import { security } from 'Packages/Security';
-import { useEffect } from 'react';
-import { getEnv } from 'Services';
+import { useContext } from 'react';
+import { getEnv, SecurityContext } from 'Services';
 
 export const useApi = <T>(promise = false): UseApiReturnType<T> => {
-  const { request, ...api } = DRMUseApi<T>(getEnv('API_HOST'), getEnv('API_PROTOCOL'), apiRouter, promise);
+  const { jwt } = useContext(SecurityContext);
 
-  useEffect(() => {
-    request.setBearerToken(security.getUser().getJwt());
-  }, [request]);
+  const { request, ...api } = DRMUseApi<T>(getEnv('API_HOST'), getEnv('API_PROTOCOL'), apiRouter, promise);
+  request.setBearerToken(jwt);
 
   return { request, ...api };
 };

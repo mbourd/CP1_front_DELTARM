@@ -5,11 +5,11 @@ import { useLocation } from 'react-router-dom';
 import './translations';
 import { LoginStyled } from './Login.style';
 import { HeadingOne, PageLoader } from 'Shared/components';
-import { useTrans, useApi } from 'Services';
+import { useTrans, SecurityContext } from 'Services';
 
 const Login: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Login');
-  const { send } = useApi<any>();
+  const { login } = React.useContext(SecurityContext);
 
   const location = useLocation();
 
@@ -19,9 +19,9 @@ const Login: React.FC = (): React.ReactElement => {
 
   useEffect(() => {
     if (token) {
-      send('login', {}, { token });
+      login(token);
     }
-  }, [send, token]);
+  }, [login, token]);
 
   return (
     <LoginStyled>
