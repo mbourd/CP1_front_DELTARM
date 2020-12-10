@@ -1,4 +1,4 @@
-import { apiRouter, getEnv } from 'Services';
+import { apiRouter } from 'Services';
 import { IAction, IApiData, IChapter, IControl, ICurrentSection, IData, ISection, IState } from '../types';
 import { ISelectData } from 'Shared/components';
 
@@ -100,10 +100,6 @@ apiRouter.registerRoute({
   name: 'edit',
   path: '/edit',
   method: 'get',
-  queries: {
-    cli_id: getEnv('CLIENT_ID'),
-    user_id: getEnv('USER_ID'),
-  },
   handler: (response: any) => {
     try {
       return editValidationHandlerCallback(response);
