@@ -1,4 +1,4 @@
-import { apiRouter, getEnv } from 'Services';
+import { apiRouter } from 'Services';
 
 export interface IApiStage {
   stage_code: string;
@@ -17,10 +17,6 @@ apiRouter.registerRoute({
   name: 'manageFilters',
   path: '/manage/reference',
   method: 'get',
-  queries: {
-    cli_id: getEnv('CLIENT_ID'),
-    user_id: getEnv('USER_ID'),
-  },
   handler: (data) => {
     return {
       stages: data.data.stages,

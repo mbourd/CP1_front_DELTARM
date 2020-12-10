@@ -1,4 +1,4 @@
-import { apiRouter, getEnv } from 'Services';
+import { apiRouter } from 'Services';
 import { ICard, IData } from '../components/Card/types';
 import { AppActionContextType } from 'Shared/types';
 
@@ -24,10 +24,6 @@ apiRouter.registerRoute({
   name: 'manage',
   path: '/manage',
   method: 'get',
-  queries: {
-    cli_id: getEnv('CLIENT_ID'),
-    user_id: getEnv('USER_ID'),
-  },
   handler: (data) => {
     const files: ICard[] = [];
 

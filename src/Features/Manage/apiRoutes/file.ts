@@ -1,4 +1,4 @@
-import { apiRouter, getEnv } from 'Services';
+import { apiRouter } from 'Services';
 import { ISelectData } from 'Shared/components';
 
 export interface IFileSearchApiReturn {
@@ -20,10 +20,6 @@ apiRouter.registerRoute({
   path: '/file/search',
   method: 'get',
   type: 'DRM',
-  queries: {
-    cli_id: getEnv('CLIENT_ID'),
-    user_id: getEnv('USER_ID'),
-  },
   handler: (data): IFileSearchApiReturn => {
     return {
       error: !data.data.file_id,
@@ -38,10 +34,6 @@ apiRouter.registerRoute({
   path: '/file/create',
   method: 'post',
   type: 'DRM_CREATE',
-  queries: {
-    cli_id: getEnv('CLIENT_ID'),
-    user_id: getEnv('USER_ID'),
-  },
   handler: (data): IFileSearchApiReturn => {
     return {
       error: !data.data.file_id,
@@ -56,10 +48,6 @@ apiRouter.registerRoute({
   path: '/call_api_bpi',
   method: 'get',
   type: 'KSIOP',
-  queries: {
-    cli_id: getEnv('CLIENT_ID'),
-    user_id: getEnv('USER_ID'),
-  },
   handler: (data): IFileSearchApiReturn => {
     const productList: Record<string, ISelectData> = {};
 
