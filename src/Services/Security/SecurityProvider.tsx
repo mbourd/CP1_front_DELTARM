@@ -1,7 +1,9 @@
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import IdleTimer from 'react-idle-timer';
 import { router } from 'Packages/Router';
 import { ISecurity, IUser, JwtData, User } from 'Packages/Security';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useApi } from 'Services/Api';
+import { getEnv } from 'Packages/Helpers';
 
 export interface ISecurityProviderContext {
   user: IUser;
@@ -41,8 +43,11 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({ security, c
     [send],
   );
 
-  const logout = useCallback(async () => {
+  const logout = useCallback(() => {
     setUser(new User());
+    setTimeout(() => {
+      window.location.href = getEnv('LOGOUT_REDIRECT');
+    }, 1000);
   }, []);
 
   const context = useMemo(
@@ -81,5 +86,12 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({ security, c
     };
   }, [send, jwt, context.data]);
 
-  return <SecurityContext.Provider value={context}>{children}</SecurityContext.Provider>;
+  const idleTimeout = parseInt(getEnv('IDLE_TIMEOUT')) * 1000;
+
+  return (
+    <SecurityContext.Provider value={context}>
+      <IdleTimer timeout={idleTimeout} onIdle={logout} />
+      {children}
+    </SecurityContext.Provider>
+  );
 };

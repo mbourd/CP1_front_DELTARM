@@ -1,4 +1,4 @@
-import { apiRouter, getEnv } from 'Services';
+import { apiRouter } from 'Services';
 import { IFileComment } from './types';
 
 interface IApiFileComment {
@@ -12,10 +12,6 @@ apiRouter.registerRoute({
   name: 'getFileComments',
   path: '/comment/file',
   method: 'get',
-  queries: {
-    cli_id: getEnv('CLIENT_ID'),
-    user_id: getEnv('USER_ID'),
-  },
   handler: (response): IFileComment[] => {
     const data: IApiFileComment[] = response.data;
     const comments: IFileComment[] = [];
@@ -52,10 +48,6 @@ apiRouter.registerRoute({
   name: 'addComment',
   path: '/comment/add',
   method: 'post',
-  queries: {
-    cli_id: getEnv('CLIENT_ID'),
-    user_id: getEnv('USER_ID'),
-  },
   handler: (response): IFileComment => {
     const data: IApiFileComment = response.data;
     const date = new Date(data.comment_ts);

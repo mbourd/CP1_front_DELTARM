@@ -1,4 +1,4 @@
-import { apiRouter, getEnv } from 'Services';
+import { apiRouter } from 'Services';
 import { ISelectData } from 'Shared/components';
 
 interface IApiValidator {
@@ -18,10 +18,6 @@ apiRouter.registerRoute({
   name: 'getValidators',
   path: '/validate/validator',
   method: 'get',
-  queries: {
-    cli_id: getEnv('CLIENT_ID'),
-    user_id: getEnv('USER_ID'),
-  },
   handler: (response): IData => {
     const validators: Record<string, ISelectData> = {};
 
@@ -48,10 +44,6 @@ apiRouter.registerRoute({
   name: 'askValidation',
   path: '/validate/ask',
   method: 'post',
-  queries: {
-    cli_id: getEnv('CLIENT_ID'),
-    user_id: getEnv('USER_ID'),
-  },
   handler: (response): IData => {
     return {
       validators: {},
