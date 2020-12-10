@@ -133,8 +133,6 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
                     name={'productList'}
                     data={data.productList}
                     multiple={false}
-                    closable={false}
-                    open={true}
                     selectedValues={{
                       [Object.keys(data.productList)[0] || '-1']: true,
                     }}
