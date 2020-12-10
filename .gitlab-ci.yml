@@ -33,7 +33,6 @@ install dependencies:
   script:
     - docker run --rm -w="/app" -v $PWD:/app node:12-alpine sh -c "yarn install"
 
-
 deploy preprod:
   stage: build and deploy
   only:
@@ -52,17 +51,16 @@ deploy preprod:
   script:
     - cp .env .env.production
     - docker run --rm -w="/app" -v $PWD:/app node:12-alpine sh -c "yarn run build --profile"
-    - cp ci/Dockerfile Dockerfile
-    - cp ci/nginx.conf nginx.conf
+    - cp ci/preprod/Dockerfile Dockerfile
+    - cp ci/preprod/nginx.conf nginx.conf
     - docker build -t $APP_IMAGE_TAG_NAME .
     - docker push $APP_IMAGE_TAG_NAME
     - ssh $SERVER_USER@$SERVER_HOST_PP "
+      docker rm -f cp1_front_preprod &&
+      docker rmi -f $APP_IMAGE_TAG_NAME &&
       docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN &&
       docker run --name cp1_front_preprod --restart=on-failure:10 -d -p 80:80 -p 443:443 -v /home/deltarm/etc/ssl:/etc/nginx/certs $APP_IMAGE_TAG_NAME
       "
-#      docker rm -f cp1_front_preprod &&
-#      docker rmi -f $APP_IMAGE_TAG_NAME &&
-
 
 deploy develop:
   stage: build and deploy
@@ -82,8 +80,8 @@ deploy develop:
   script:
     - cp .env .env.production
     - docker run --rm -w="/app" -v $PWD:/app node:12-alpine sh -c "yarn run build --profile"
-    - cp ci/Dockerfile Dockerfile
-    - cp ci/nginx.conf nginx.conf
+    - cp ci/dev/Dockerfile Dockerfile
+    - cp ci/dev/nginx.conf nginx.conf
     - docker build -t $APP_IMAGE_TAG_NAME .
     - docker push $APP_IMAGE_TAG_NAME
     - ssh $SERVER_USER@$SERVER_HOST_DEV "
@@ -92,7 +90,6 @@ deploy develop:
       docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN &&
       docker run --name cp1_front_dev --restart=on-failure:10 -d -p 80:80 $APP_IMAGE_TAG_NAME
       "
-
 
 deploy demo:
   stage: build and deploy
@@ -112,8 +109,8 @@ deploy demo:
   script:
     - cp .env.demo .env.production
     - docker run --rm -w="/app" -v $PWD:/app node:12-alpine sh -c "yarn run build --profile"
-    - cp ci/Dockerfile Dockerfile
-    - cp ci/nginx.conf nginx.conf
+    - cp ci/dev/Dockerfile Dockerfile
+    - cp ci/dev/nginx.conf nginx.conf
     - docker build -t $APP_IMAGE_TAG_NAME_DEMO .
     - docker push $APP_IMAGE_TAG_NAME_DEMO
     - ssh $SERVER_USER@$SERVER_HOST_DEV "
