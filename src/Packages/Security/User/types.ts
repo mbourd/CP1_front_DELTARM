@@ -31,3 +31,10 @@ export type FromJwtUserType = {
   username: string;
   exp: number;
 };
+
+export type JwtData = {
+  exp: number;
+  iat: number;
+  cli_id: number;
+  user_id: number;
+};

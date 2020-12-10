@@ -1,28 +1,32 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { parse } from 'qs';
+import { useLocation } from 'react-router-dom';
 
 import './translations';
-import { LoginStyled, InputContainerStyled } from './Login.style';
-import bg from './bg.jpg';
-import { HeadingOne, InputPassword, InputUser } from 'Shared/components';
-import { useTrans } from 'Services';
+import { LoginStyled } from './Login.style';
+import { HeadingOne, PageLoader } from 'Shared/components';
+import { useTrans, SecurityContext } from 'Services';
 
 const Login: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Login');
+  const { login } = React.useContext(SecurityContext);
+
+  const location = useLocation();
+
+  const { token } = useMemo<{ token?: string }>(() => {
+    return parse(location.search, { ignoreQueryPrefix: true });
+  }, [location.search]);
+
+  useEffect(() => {
+    if (token) {
+      login(token);
+    }
+  }, [login, token]);
 
   return (
     <LoginStyled>
-      <img src={bg} alt={'Login'} />
-      <div className={'overlay'}>
-        <form className={'form-container'}>
-          <HeadingOne variant={'light'}>{trans('pageTitle')}</HeadingOne>
-          <InputContainerStyled>
-            <InputUser color={'white'} placeholder={trans('username')} autoFocus={true} bgc={'transparent'} />
-          </InputContainerStyled>
-          <InputContainerStyled>
-            <InputPassword color={'white'} placeholder={trans('password')} bgc={'transparent'} />
-          </InputContainerStyled>
-        </form>
-      </div>
+      <HeadingOne>{trans('pageTitle')}</HeadingOne>
+      <PageLoader text={trans('loading', { ns: 'Default' })} />
     </LoginStyled>
   );
 };
