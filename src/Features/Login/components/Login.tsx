@@ -1,21 +1,15 @@
-import React, { useEffect, useMemo } from 'react';
-import { parse } from 'qs';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useContext } from 'react';
 
 import './translations';
 import { LoginStyled } from './Login.style';
-import { HeadingOne, PageLoader } from 'Shared/components';
-import { useTrans, SecurityContext } from 'Services';
+import { PageLoader } from 'Shared/components';
+import { useTrans, SecurityContext, useRouter } from 'Services';
 
-const Login: React.FC = (): React.ReactElement => {
+const Login: React.FC = (): React.ReactElement | null => {
   const [trans] = useTrans('Login');
-  const { login } = React.useContext(SecurityContext);
-
-  const location = useLocation();
-
-  const { token } = useMemo<{ token?: string }>(() => {
-    return parse(location.search, { ignoreQueryPrefix: true });
-  }, [location.search]);
+  const { login } = useContext(SecurityContext);
+  const { queries } = useRouter();
+  const { token } = queries;
 
   useEffect(() => {
     if (token) {
@@ -25,8 +19,7 @@ const Login: React.FC = (): React.ReactElement => {
 
   return (
     <LoginStyled>
-      <HeadingOne>{trans('pageTitle')}</HeadingOne>
-      <PageLoader text={trans('loading', { ns: 'Default' })} />
+      <PageLoader text={trans('pageTitle')} />
     </LoginStyled>
   );
 };

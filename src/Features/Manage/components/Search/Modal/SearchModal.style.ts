@@ -9,8 +9,12 @@ export const SearchModalStyled = styled.div`
 export const SearchModalFooterStyled = styled.div`
   margin: ${({ theme }) => theme.spacing.normal};
 
-  ._Button:first-child {
+  ._Button {
     margin-right: ${({ theme }) => theme.spacing.medium};
+  }
+
+  ._Button:last-child {
+    margin-right: 0;
   }
 `;
 

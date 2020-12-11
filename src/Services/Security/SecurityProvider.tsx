@@ -38,7 +38,7 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({ security, c
       const user = new User();
       user.fromJwt(body.data.jwt);
       setUser(user);
-      router.redirectTo('dashboard');
+      router.redirectTo('dashboard', {}, {}, true);
     },
     [send],
   );

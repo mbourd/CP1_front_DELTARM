@@ -126,7 +126,7 @@ export class Router implements IRouter {
           .join('&');
     }
 
-    return generatePath(url, params);
+    return generatePath(url.replace(/\/\?$/, ''), params);
   }
 
   public getParams(): Record<string, string> {

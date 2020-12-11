@@ -55,7 +55,6 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
   }
 
   let footer = null;
-  // const content = null;
 
   if (callState === 'BAD_REQUEST' && route?.type === 'DRM') {
     footer = (
@@ -63,7 +62,7 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
         <Button color={'error'} onClick={onClose}>
           Annuler la recherche
         </Button>
-        {route?.type === 'DRM' ? (
+        {route?.type === 'DRM' && error?.response && error?.response.body.error_code !== 181 ? (
           <Button color={'success'} onClick={() => send('searchFileKSIOP', {}, { file_num, file_avenant })}>
             Rechercher chez KSIOP
           </Button>
@@ -86,7 +85,7 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
   }
 
   return (
-    <Modal open={open} onClose={onClose} footer={footer}>
+    <Modal open={open} onClose={onClose} footer={footer} height={'610px'}>
       <SwitchCallState
         callState={callState}
         states={{
@@ -138,6 +137,7 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
                     }}
                     onInit={setProduct}
                     onClose={setProduct}
+                    closeOnSelect
                   >
                     Selectionner une famille de produit
                   </Select>
