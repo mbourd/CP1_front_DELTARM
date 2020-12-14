@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Grid } from '@material-ui/core';
 
-import { useTrans, useApi, SwitchCallState } from 'Services';
+import { useTrans, useApi, SwitchCallState, useSecurity, SecurityContext } from 'Services';
 import { BreadCrumb, HeadingOne } from 'Shared/components';
 import { DashboardStyled } from './Dashboard.style';
 import { Card } from './Card/Card';
@@ -13,6 +13,13 @@ import { DashboardSearch } from './Search/DashboardSearch';
 const Dashboard: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Dashboard');
   const { callState, send, data } = useApi<ICard[]>();
+
+  const { user } = useSecurity();
+  const { logout } = useContext(SecurityContext);
+
+  if (!user.isLogged()) {
+    logout();
+  }
 
   useEffect(() => {
     send('dashboard');

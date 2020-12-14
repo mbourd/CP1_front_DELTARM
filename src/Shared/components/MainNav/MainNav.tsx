@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { List, ListItem, ListItemText } from '@material-ui/core';
 import {
@@ -13,12 +13,13 @@ import {
 } from 'Styles';
 import { MainNavStyled } from './MainNav.style';
 import { Popper } from 'Shared/components';
-import { router, useTrans } from 'Services';
+import { router, SecurityContext, useTrans } from 'Services';
 
 export const MainNav: React.FC = (): React.ReactElement => {
   const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(null);
   const theme = useTheme();
   const [trans] = useTrans('Default');
+  const { logout } = useContext(SecurityContext);
 
   const handleClick = useCallback(
     (event: React.MouseEvent<SVGSVGElement>) => {
@@ -80,7 +81,14 @@ export const MainNav: React.FC = (): React.ReactElement => {
               <ListItemText>{trans('allFiles')}</ListItemText>
             </ListItem>
 
-            <ListItem component={Link} to={'/logout'} onClick={hideNav}>
+            <ListItem
+              component={Link}
+              to={router.generatePath('logout') || '/logout'}
+              onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                e.preventDefault();
+                logout();
+              }}
+            >
               <PowerIcon />
               <ListItemText>{trans('logout')}</ListItemText>
             </ListItem>

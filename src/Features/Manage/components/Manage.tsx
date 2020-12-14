@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { ManageStyled } from './Manage.style';
 import { BreadCrumb, FormError, HeadingOne } from 'Shared/components';
-import { router, storage, SwitchCallState, useApi, useTrans } from 'Services';
+import { router, SecurityContext, storage, SwitchCallState, useApi, useSecurity, useTrans } from 'Services';
 import { Search } from './Search/Search';
 import { Card } from './Card/Card';
 import { Filter } from './Filter/Filter';
@@ -17,6 +17,13 @@ export const Manage: React.FC = (): React.ReactElement => {
   const { request, callState, send, data } = useApi<ICard[]>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { user } = useSecurity();
+  const { logout } = useContext(SecurityContext);
+
+  if (!user.isLogged()) {
+    logout();
+  }
+
   const initStages: Record<number | string, true> = {};
   const initStates: Record<number | string, true> = {};
   const queries = router.getQueries();

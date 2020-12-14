@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Grid, List } from '@material-ui/core';
 import { EditStyled } from './Edit.style';
-import { router, storage, SwitchCallState, useApi } from 'Services';
+import { router, SecurityContext, storage, SwitchCallState, useApi, useSecurity } from 'Services';
 import { HeadingOne } from 'Shared/components';
 import { NavItem } from './NavItem/NavItem';
 import { IData } from '../types';
@@ -9,6 +9,7 @@ import { EditValidationContext } from '../EditValidationContext';
 import { IsLoading } from './IsLoading/IsLoading';
 import { SwitchContentBody } from './ContentBody/SwitchContentBody';
 import { NotFound } from './NotFound/NotFound';
+import { SubHeader } from './SubHeader';
 
 interface IProps {
   title: string;
@@ -18,7 +19,13 @@ interface IProps {
 export const EditValidation: React.FC<IProps> = ({ title, apiRouteName }): React.ReactElement => {
   const { request, callState, send, data } = useApi<IData>();
   const [currentSection, setCurrentSection] = useState<string | null>(null);
+  const { user } = useSecurity();
+  const { logout } = useContext(SecurityContext);
   const { id } = router.getParams();
+
+  if (!user.isLogged()) {
+    logout();
+  }
 
   useEffect(() => {
     const queries: Record<string, any> = { file_id: id };
@@ -44,7 +51,10 @@ export const EditValidation: React.FC<IProps> = ({ title, apiRouteName }): React
     >
       {data ? (
         <EditStyled>
-          <HeadingOne>{title}</HeadingOne>
+          <HeadingOne>
+            <SubHeader title={title} data={data} />
+          </HeadingOne>
+
           <EditValidationContext.Provider value={{ data, fileId: id }}>
             <Grid container wrap={'nowrap'}>
               <Grid item className={'nav'}>

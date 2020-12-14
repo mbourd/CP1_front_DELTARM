@@ -1,3 +1,4 @@
+export * from './Logout';
 export * from './Login';
 export * from './Dashboard';
 export * from './Manage';

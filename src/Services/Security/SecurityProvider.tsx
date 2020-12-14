@@ -37,18 +37,18 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({ security, c
       const { body } = await send('login', {}, { token });
       const user = new User();
       user.fromJwt(body.data.jwt);
+      security.persistUser(user);
       setUser(user);
       router.redirectTo('dashboard');
     },
-    [send],
+    [send, security],
   );
 
   const logout = useCallback(() => {
+    security.logout(user);
     setUser(new User());
-    setTimeout(() => {
-      window.location.href = getEnv('LOGOUT_REDIRECT');
-    }, 1000);
-  }, []);
+    window.location.href = getEnv('LOGOUT_REDIRECT');
+  }, [security, user]);
 
   const context = useMemo(
     () => ({
@@ -60,10 +60,6 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({ security, c
     }),
     [security, user, jwt, login, logout],
   );
-
-  useEffect(() => {
-    security.persistUser(user);
-  }, [user, security]);
 
   useEffect(() => {
     let timeout: number | null = null;

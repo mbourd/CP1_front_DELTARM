@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useContext } from 'react';
 import { parse } from 'qs';
 import { useLocation } from 'react-router-dom';
 
@@ -9,7 +9,7 @@ import { useTrans, SecurityContext } from 'Services';
 
 const Login: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Login');
-  const { login } = React.useContext(SecurityContext);
+  const { login } = useContext(SecurityContext);
 
   const location = useLocation();
 
