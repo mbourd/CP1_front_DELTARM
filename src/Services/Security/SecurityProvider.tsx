@@ -34,12 +34,16 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({ security, c
 
   const login = useCallback(
     async (token: string) => {
-      const { body } = await send('login', {}, { token });
-      const user = new User();
-      user.fromJwt(body.data.jwt);
-      security.persistUser(user);
-      setUser(user);
-      router.redirectTo('dashboard');
+      try {
+        const { body } = await send('login', {}, { token });
+        const user = new User();
+        user.fromJwt(body.data.jwt);
+        security.persistUser(user);
+        setUser(user);
+        router.redirectTo('dashboard');
+      } catch {
+        router.redirectTo('loginError');
+      }
     },
     [send, security],
   );
