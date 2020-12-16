@@ -12,5 +12,6 @@ export const useStyles = makeStyles<Theme, Omit<ITooltip, 'children' | 'placemen
     border: ({ color }) => '1px solid ' + color,
     fontSize: ({ fontSize }) => fontSize,
     fontFamily: ({ fontFamily }) => fontFamily,
+    whiteSpace: 'pre-wrap',
   },
 });
