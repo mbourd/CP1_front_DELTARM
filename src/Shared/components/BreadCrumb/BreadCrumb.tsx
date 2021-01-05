@@ -28,7 +28,7 @@ export const BreadCrumb: React.FC<IBreadCrumb> = ({ values }): React.ReactElemen
                   {index === values.length - 1 ? (
                     <span>Tableau de bord</span>
                   ) : (
-                    <Link to={router.generatePath('dashboard') || '/'}>Tableau de board</Link>
+                    <Link to={router.generatePath('dashboard') || '/'}>Tableau de bord</Link>
                   )}
                 </Grid>
               );

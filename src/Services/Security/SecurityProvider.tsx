@@ -3,7 +3,7 @@ import IdleTimer from 'react-idle-timer';
 import { router } from 'Packages/Router';
 import { ISecurity, IUser, JwtData, User } from 'Packages/Security';
 import { useApi } from 'Services/Api';
-import { getEnv } from 'Packages/Helpers';
+import { getEnv } from 'Services/Helpers';
 
 export interface ISecurityProviderContext {
   user: IUser;
@@ -35,7 +35,7 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({ security, c
   const login = useCallback(
     async (token: string) => {
       try {
-        const { body } = await send('login', {}, { token });
+        const { body } = await send('loginDev');
         const user = new User();
         user.fromJwt(body.data.jwt);
         security.persistUser(user);

@@ -64,7 +64,7 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
         </Button>
         {route?.type === 'DRM' && error?.response && error?.response.body.error_code !== 181 ? (
           <Button color={'success'} onClick={() => send('searchFileKSIOP', {}, { file_num, file_avenant })}>
-            Rechercher chez KSIOP
+            Rechercher dans KSIOP
           </Button>
         ) : null}
       </SearchModalFooterStyled>
