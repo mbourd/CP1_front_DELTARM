@@ -35,7 +35,7 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({ security, c
   const login = useCallback(
     async (token: string) => {
       try {
-        const { body } = await send('loginDev');
+        const { body } = await send('login', {}, { token });
         const user = new User();
         user.fromJwt(body.data.jwt);
         security.persistUser(user);
