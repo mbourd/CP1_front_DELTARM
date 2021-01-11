@@ -5,3 +5,9 @@ apiRouter.registerRoute({
   path: '/aiv_url',
   method: 'get',
 });
+
+apiRouter.registerRoute({
+  name: 'userInfo',
+  path: '/user/info',
+  method: 'get',
+});
