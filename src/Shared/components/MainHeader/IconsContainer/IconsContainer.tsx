@@ -7,7 +7,7 @@ import { IconsContainerStyled } from './IconsContainer.style';
 
 export const IconsContainer: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('MainHeader');
-  const { send, data } = useApi<any>();
+  const { send, data } = useApi<any>({ waitForAuthenticated: true });
 
   useEffect(() => {
     send('AIVUrl');

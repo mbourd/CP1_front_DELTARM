@@ -9,7 +9,7 @@ interface IProps {
 }
 
 export const FileCommentFooter: React.FC<IProps> = ({ addComment }): React.ReactElement => {
-  const addCommentApi = useApi(true);
+  const addCommentApi = useApi({ promise: true });
   const context = useContext(EditValidationContext);
   const { fileId } = context;
 

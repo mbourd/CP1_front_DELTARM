@@ -29,7 +29,7 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({ security, c
   const [user, setUser] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
 
-  const { send, request } = useApi<unknown>(true);
+  const { send, request } = useApi<unknown>({ promise: true });
   request.setBearerToken(jwt);
 
   const login = useCallback(
