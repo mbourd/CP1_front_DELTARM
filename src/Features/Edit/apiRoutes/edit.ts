@@ -84,11 +84,16 @@ export const editValidationHandlerCallback = (response: any) => {
     name: apiData.state.state_name,
   };
 
+  const [{ value: fileNum }, { value: fileAvenant }, , { value: counterparty }] = apiData.file;
+
   const data: IData = {
     actions,
     currentSection,
     sections,
     state,
+    file: apiData.file,
+    number: fileNum + '/' + fileAvenant,
+    counterparty,
     countComments: apiData.nb_comment,
     validationCount: apiData.valid_num,
   };
