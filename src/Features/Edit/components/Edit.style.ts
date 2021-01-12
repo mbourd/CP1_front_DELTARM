@@ -2,8 +2,14 @@ import styled from 'styled-components/macro';
 
 export const EditStyled = styled.div`
   .nav {
+    position: relative;
     padding-top: ${({ theme }) => theme.spacing.medium};
     width: 400px;
+
+    .MuiList-root {
+      position: sticky;
+      top: 310px;
+    }
 
     .MuiListItem-root {
       padding: 0;
