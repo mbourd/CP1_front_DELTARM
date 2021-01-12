@@ -1,6 +1,8 @@
 import styled from 'styled-components/macro';
 
 export const EditStyled = styled.div`
+  padding-bottom: 20vh;
+
   .nav {
     position: relative;
     padding-top: ${({ theme }) => theme.spacing.medium};
