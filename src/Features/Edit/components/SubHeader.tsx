@@ -14,7 +14,9 @@ export const SubHeader: React.FC<IProps> = ({ title, data }): React.ReactElement
       <p>{title}</p>
       <EditTitleFileStyled>
         <FolderOpenIcon />
-        <span />
+        <span>
+          {data.number} &ndash; {data.counterparty}
+        </span>
       </EditTitleFileStyled>
     </div>
   );
