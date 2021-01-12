@@ -24,6 +24,23 @@ export const EditStyled = styled.div`
   }
 `;
 
+export const EditHeaderStyled = styled.div`
+  position: fixed;
+  left: 0;
+  right: 0;
+  background: ${({ theme }) => theme.color.background.main};
+  background: ${({ theme }) => {
+    const color = theme.color.background.main;
+
+    return `linear-gradient(to bottom, ${color} 0%, ${color} 65%, transparent 100%)`;
+  }};
+  z-index: 1;
+
+  & + * {
+    padding-top: 200px;
+  }
+`;
+
 export const EditTitleFileStyled = styled.p`
   align-items: center;
   display: inline-flex;

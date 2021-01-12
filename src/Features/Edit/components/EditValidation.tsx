@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Grid, List } from '@material-ui/core';
-import { EditStyled } from './Edit.style';
+import { EditHeaderStyled, EditStyled } from './Edit.style';
 import { router, SecurityContext, storage, SwitchCallState, useApi, useSecurity } from 'Services';
 import { HeadingOne } from 'Shared/components';
 import { NavItem } from './NavItem/NavItem';
@@ -51,9 +51,11 @@ export const EditValidation: React.FC<IProps> = ({ title, apiRouteName }): React
     >
       {data ? (
         <EditStyled>
-          <HeadingOne>
-            <SubHeader title={title} data={data} />
-          </HeadingOne>
+          <EditHeaderStyled>
+            <HeadingOne>
+              <SubHeader title={title} data={data} />
+            </HeadingOne>
+          </EditHeaderStyled>
 
           <EditValidationContext.Provider value={{ data, fileId: id }}>
             <Grid container wrap={'nowrap'}>
