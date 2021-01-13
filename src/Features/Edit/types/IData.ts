@@ -1,5 +1,6 @@
 import { IAction, IApiAction } from './IAction';
 import { IFileItem } from './IFile';
+import { IApiFileInfo } from './IFileInfo';
 import { IApiCurrentSection, IApiSection, ICurrentSection, ISection } from './ISection';
 import { IApiState, IState } from './IState';
 
@@ -9,6 +10,7 @@ export interface IApiData {
   sections: IApiSection[];
   state: IApiState;
   file: IFileItem[];
+  file_info: IApiFileInfo;
   nb_comment: number;
   valid_num?: string;
 }
@@ -20,7 +22,8 @@ export interface IData {
   state: IState;
   file: IFileItem[];
   number: string;
-  counterparty: string;
+  contrepartie: string;
+  productType: string;
   countComments: number;
   validationCount?: string;
 }

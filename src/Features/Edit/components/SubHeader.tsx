@@ -15,7 +15,7 @@ export const SubHeader: React.FC<IProps> = ({ title, data }): React.ReactElement
       <EditTitleFileStyled>
         <FolderOpenIcon />
         <span>
-          {data.number} &ndash; {data.counterparty}
+          {data.number} &ndash; {data.contrepartie} / {data.productType}
         </span>
       </EditTitleFileStyled>
     </div>
