@@ -11,7 +11,7 @@ interface IProps {
   initStates?: Record<number, true>;
 }
 
-export const Filter: React.FC<IProps> = ({ initStages = {}, initStates = {} }): React.ReactElement => {
+export const Filter: React.FC<IProps> = ({ initStages = {}, initStates = {}, children }): React.ReactElement => {
   const { error, isLoading, send, data } = useApi<{ stages: IApiStage[]; states: IApiState[] }>();
   const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(null);
   const [stages, setStages] = useState<Record<number, true>>(initStages);
@@ -128,6 +128,7 @@ export const Filter: React.FC<IProps> = ({ initStages = {}, initStates = {} }): 
               altContent
             )}
           </Grid>
+          <footer>{children}</footer>
         </FilterStyled>
       </Popper>
     </>

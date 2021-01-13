@@ -93,23 +93,24 @@ export const Manage: React.FC = (): React.ReactElement => {
           <Paper className={'search-container'} elevation={0}>
             <Search />
             <Divider className={'divider'} orientation="vertical" />
-            <Filter initStages={initStages} initStates={initStates} />
+            <Filter initStages={initStages} initStates={initStates}>
+              <Button color={'success'} onClick={applyFilters}>
+                {trans('applyFilter')}
+              </Button>
+              <Button
+                color={'error'}
+                size={'small'}
+                onClick={() => {
+                  storage.removeData('manage');
+                  router.redirectTo('manage');
+                }}
+              >
+                {trans('resetFilterButtonLabel')}
+              </Button>
+            </Filter>
           </Paper>
           <div className={'buttons-container'}>
             <Button onClick={onSearch}>{trans('searchButtonLabel')}</Button>
-            <Button color={'success'} onClick={applyFilters}>
-              {trans('applyFilter')}
-            </Button>
-            <Button
-              color={'error'}
-              size={'small'}
-              onClick={() => {
-                storage.removeData('manage');
-                router.redirectTo('manage');
-              }}
-            >
-              {trans('resetFilterButtonLabel')}
-            </Button>
           </div>
           {data?.map((card, index) => {
             return <Card {...card} key={index} />;

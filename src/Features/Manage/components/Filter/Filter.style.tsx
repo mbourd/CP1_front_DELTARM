@@ -35,6 +35,16 @@ export const FilterStyled = styled.section`
       }
     }
   }
+
+  footer {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: ${({ theme }) => theme.spacing.normal};
+
+    & > * + * {
+      margin-left: ${({ theme }) => theme.spacing.normal};
+    }
+  }
 `;
 
 export const BadgeStyled = styled.section`
