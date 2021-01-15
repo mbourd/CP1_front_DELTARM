@@ -94,9 +94,6 @@ export const Manage: React.FC = (): React.ReactElement => {
             <Search />
             <Divider className={'divider'} orientation="vertical" />
             <Filter initStages={initStages} initStates={initStates}>
-              <Button color={'success'} onClick={applyFilters}>
-                {trans('applyFilter')}
-              </Button>
               <Button
                 color={'error'}
                 size={'small'}
@@ -107,9 +104,22 @@ export const Manage: React.FC = (): React.ReactElement => {
               >
                 {trans('resetFilterButtonLabel')}
               </Button>
+              <Button color={'success'} onClick={applyFilters}>
+                {trans('applyFilter')}
+              </Button>
             </Filter>
           </Paper>
           <div className={'buttons-container'}>
+            <Button
+              color={'error'}
+              size={'small'}
+              onClick={() => {
+                storage.removeData('manage');
+                router.redirectTo('manage');
+              }}
+            >
+              {trans('resetFilterButtonLabel')}
+            </Button>
             <Button onClick={onSearch}>{trans('searchButtonLabel')}</Button>
           </div>
           {data?.map((card, index) => {
