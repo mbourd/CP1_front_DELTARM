@@ -42,7 +42,7 @@ export const EditHeaderStyled = styled.div`
 
     return `linear-gradient(to bottom, ${color} 0%, ${color} 65%, transparent 100%)`;
   }};
-  z-index: 1;
+  z-index: 5;
 
   & + * {
     padding-top: 200px;
