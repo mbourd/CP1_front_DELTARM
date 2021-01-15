@@ -13,6 +13,8 @@ export type ControlTypeType =
   | 'radio'
   | 'checkbox';
 
+export type ControlFontSize = 'standard' | 'bold';
+
 export interface IApiAnswerChoice {
   choice_id: string;
   choice_lib: string;
@@ -29,6 +31,8 @@ export interface IApiControl {
   control_type: ControlTypeType;
   control_value: string;
   control_answer_choices?: IApiAnswerChoice[];
+  control_font_color?: string;
+  control_font_size?: ControlFontSize;
 }
 
 export interface IControl {
@@ -42,4 +46,6 @@ export interface IControl {
   type: ControlTypeType;
   value: string;
   answerChoices?: Record<string, ISelectData>;
+  fontColor?: string;
+  fontSize?: ControlFontSize;
 }

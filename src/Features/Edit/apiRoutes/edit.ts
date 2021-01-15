@@ -31,6 +31,8 @@ export const editValidationHandlerCallback = (response: any) => {
         title: control.control_title,
         type: control.control_type,
         value: control.control_value,
+        fontColor: control.control_font_color,
+        fontSize: control.control_font_size,
       };
 
       if (control.control_answer_choices) {
