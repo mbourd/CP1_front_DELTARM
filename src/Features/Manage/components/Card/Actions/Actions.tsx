@@ -16,7 +16,7 @@ export const Actions: React.FC<Pick<ICard, 'id' | 'comments' | 'context'>> = ({
 
   return (
     <ActionsStyled>
-      <BPITooltip title={context === 'EDIT' ? 'Editer le dossier' : 'Validation'} placement={'left'}>
+      <BPITooltip title={context === 'EDIT' ? 'Editer le dossier' : 'Accéder à la validation'} placement={'left'}>
         <Link to={router.generatePath(context === 'EDIT' ? 'edit' : 'validation', { id }) || '/'}>
           {context === 'EDIT' ? <EditIcon className={'icon'} /> : <UserCheckedIcon className={'icon'} />}
         </Link>
