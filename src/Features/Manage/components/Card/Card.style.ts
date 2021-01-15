@@ -10,7 +10,7 @@ export const CardStyled = styled.div<IProps>`
 
   .MuiCard-root {
     border: 1px solid ${({ color }) => color};
-    height: ${cardHeight}px;
+    min-height: ${cardHeight}px;
     position: relative;
   }
 
