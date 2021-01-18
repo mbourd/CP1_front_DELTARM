@@ -31,8 +31,8 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
         try {
           const v = parseInt(value, 10);
 
-          if (v < 999) {
-            setErrorMessage('Le nombre doit être superieur à 998');
+          if (v < 1000) {
+            setErrorMessage('Le nombre doit être supérieur ou égal à 1000');
 
             return;
           }
