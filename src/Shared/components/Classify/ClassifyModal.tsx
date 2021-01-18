@@ -15,8 +15,10 @@ export const ClassifyModal: React.FC<IProps> = ({ open, onClose, fileId }): Reac
       fileId={fileId}
       actionLabel={'Classer sans suite'}
       successMessage={'Le dossier a bien été classé'}
-      message={'Souhaitez-vous classer ce dossier sans suite ?'}
+      message={'Confirmez-vous le classement sans suite du dossier ?'}
       postRouteName={'actionClassify'}
+      comment
+      commentRequired
     />
   );
 };

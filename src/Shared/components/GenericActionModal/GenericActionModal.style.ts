@@ -13,5 +13,5 @@ export const GenericActionModalStyled = styled.div`
 `;
 
 export const GenericActionCommentModalStyled = styled.div`
-  margin-bottom: ${({ theme }) => theme.spacing.medium};
+  margin-top: ${({ theme }) => theme.spacing.medium};
 `;

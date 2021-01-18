@@ -115,9 +115,10 @@ export const GenericActionModal: React.FC<IProps> = ({
           ),
         }}
       >
+        <FormLabel>{message}</FormLabel>
+
         {comment ? (
           <GenericActionCommentModalStyled>
-            <FormLabel>Ajouter un commentaire</FormLabel>
             <InputBase
               multiline
               multilineRows={10}
@@ -130,8 +131,6 @@ export const GenericActionModal: React.FC<IProps> = ({
             <FormError>{commentError}</FormError>
           </GenericActionCommentModalStyled>
         ) : null}
-
-        <FormLabel>{message}</FormLabel>
       </SwitchCallState>
     </Modal>
   );
