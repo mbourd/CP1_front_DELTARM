@@ -13,6 +13,7 @@ import {
   AcceptValidation,
   RejectValidation,
   PostDisbursement,
+  GenericAction,
 } from '../Actions';
 
 import { EditValidationContext, FileComment } from 'Features';
@@ -49,6 +50,27 @@ export const ContentHeader: React.FC = (): React.ReactElement => {
                 return <AcceptValidation key={index} />;
               case 'REJECT':
                 return <RejectValidation key={index} />;
+              case 'UNCLOSE':
+                return (
+                  <GenericAction
+                    key={index}
+                    action={action}
+                    message="Souhaitez-vous annuler la clôture du dossier ?"
+                    successMessage="La clôture du dossier a été annulée"
+                    postRouteName="actionUnclose"
+                  />
+                );
+              case 'UNNONCASE':
+                return (
+                  <GenericAction
+                    key={index}
+                    action={action}
+                    color="secondary"
+                    message="Souhaitez-vous annuler le statut sans-suite ?"
+                    successMessage="Le statut sans-suite du dossier a été annulé"
+                    postRouteName="actionUnnoncase"
+                  />
+                );
             }
           })}
         </Grid>

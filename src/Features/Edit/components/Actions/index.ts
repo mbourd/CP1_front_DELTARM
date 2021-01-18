@@ -7,4 +7,5 @@ export * from './CancelDisbursement';
 export * from './PostDisbursement';
 export * from './AcceptValidation';
 export * from './RejectValidation';
+export * from './GenericAction';
 export * from './Close';
