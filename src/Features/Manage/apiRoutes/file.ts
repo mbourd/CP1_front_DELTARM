@@ -15,6 +15,13 @@ export interface IFileSearchApiReturn {
   fileProduit?: string;
 }
 
+export interface IFileSearchFullResult {
+  file_avenant: string;
+  file_borrower: string;
+  file_id: string;
+  file_num: string;
+}
+
 apiRouter.registerRoute({
   name: 'searchFile',
   path: '/file/search',
@@ -26,6 +33,16 @@ apiRouter.registerRoute({
       errorMessage: data.data.return_message,
       fileId: data.data.file_id,
     };
+  },
+});
+
+apiRouter.registerRoute({
+  name: 'searchFileFull',
+  path: '/file/search_full',
+  method: 'get',
+  type: 'DRM',
+  handler: (data): IFileSearchFullResult[] => {
+    return data.data;
   },
 });
 

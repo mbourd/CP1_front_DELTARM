@@ -1,37 +1,63 @@
 import React, { useCallback, useState } from 'react';
 import { DashboardSearchStyled } from './DashboardSearch.style';
-import { Paper } from '@material-ui/core';
+import { FormControlLabel, Paper, Radio, RadioGroup } from '@material-ui/core';
 import { Button, FormError } from 'Shared/components';
 import { Search } from 'Features/Manage/components/Search/Search';
 import { SearchModal } from 'Features/Manage/components/Search/Modal/SearchModal';
 import { storage, useTrans } from 'Services';
+import { FullSearchModal } from 'Features/Manage/components/Search/Modal/FullSearchModal';
 
 export const DashboardSearch: React.FC = (): React.ReactElement => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchMode, setSearchMode] = useState('fileNum');
+  const [fullSearch, setFullSearch] = useState<string>();
   const [trans] = useTrans('Manage');
 
   const onSearch = useCallback(() => {
     const value = storage.getData<string>('shared.component.search.value');
-    if (!value || !/[a-z0-9]+\/[a-z0-9]+/i.test(value)) {
-      setErrorMessage(trans('searchError'));
 
-      return;
+    if (searchMode === 'fileNum') {
+      if (!value || !/[a-z0-9]+\/[a-z0-9]+/i.test(value)) {
+        setErrorMessage(trans('searchError'));
+
+        return;
+      }
+      setIsModalOpen(true);
+    } else {
+      setFullSearch(value);
     }
-
-    setIsModalOpen(true);
-  }, [trans]);
+  }, [trans, searchMode]);
 
   return (
     <DashboardSearchStyled>
       <FormError>{errorMessage}</FormError>
       <Paper className={'search-container'} elevation={0}>
-        <Search />
+        <Search
+          placeholder={
+            searchMode === 'fileNum' ? 'N°Dossier / N°Avenant' : 'Contrepartie emprunteuse ou nom de famille'
+          }
+        />
       </Paper>
       <div className={'buttons-container'}>
+        <div className="search-mode-toggle">
+          <RadioGroup value={searchMode} onChange={(_, value) => setSearchMode(value)} row>
+            <FormControlLabel
+              value="fileNum"
+              control={<Radio size="small" />}
+              label="Rechercher par numéro de dossier"
+            />
+            <FormControlLabel
+              value="full"
+              control={<Radio size="small" />}
+              label="Rechercher par contrepartie ou utilisateur"
+            />
+          </RadioGroup>
+        </div>
         <Button onClick={onSearch}>{trans('searchButtonLabel')}</Button>
       </div>
       {isModalOpen ? <SearchModal open={isModalOpen} onClose={() => setIsModalOpen(false)} /> : null}
+      {fullSearch && <FullSearchModal search={fullSearch} onClose={() => setFullSearch(undefined)} />}
     </DashboardSearchStyled>
   );
 };

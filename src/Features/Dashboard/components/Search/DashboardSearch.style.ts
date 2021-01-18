@@ -14,10 +14,16 @@ export const DashboardSearchStyled = styled.div`
   }
 
   .buttons-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
     margin-bottom: ${({ theme }) => theme.spacing.small};
-    text-align: right;
     text-transform: none;
-    vertical-align: middle;
+
+    .search-mode-toggle {
+      flex-grow: 1;
+      padding-left: 10px;
+    }
   }
 
   ._FormError {

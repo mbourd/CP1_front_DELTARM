@@ -4,7 +4,11 @@ import { InputBase } from 'Shared/components';
 import { useTheme } from 'Styles';
 import { storage, useTrans } from 'Services';
 
-export const Search: React.FC = (): React.ReactElement => {
+export interface SearchProps {
+  placeholder?: string;
+}
+
+export const Search: React.FC<SearchProps> = ({ placeholder }): React.ReactElement => {
   const theme = useTheme();
   const [trans] = useTrans('Manage');
 
@@ -18,7 +22,7 @@ export const Search: React.FC = (): React.ReactElement => {
         border={0}
         bdr={'4px'}
         bgc={theme.color.white.main}
-        placeholder={trans('searchPlaceholder')}
+        placeholder={placeholder || trans('searchPlaceholder')}
         className={'_BPIInputBase'}
         onChange={onChange}
       />
