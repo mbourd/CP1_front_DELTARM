@@ -10,9 +10,11 @@ import { ControlFooter } from '../ControlFooter';
 interface IProps {
   control: IControl;
   fileId: string;
+  regex?: string;
+  regexMessage?: string;
 }
 
-export const TextControl: React.FC<IProps> = ({ control, fileId }): React.ReactElement => {
+export const TextControl: React.FC<IProps> = ({ control, fileId, regex, regexMessage }): React.ReactElement => {
   const { send } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
@@ -27,6 +29,12 @@ export const TextControl: React.FC<IProps> = ({ control, fileId }): React.ReactE
         return;
       }
 
+      if (value && regex && !value.match(new RegExp(regex))) {
+        setErrorMessage(regexMessage || '');
+
+        return;
+      }
+
       setErrorMessage(null);
       storage.setData('edit.control.' + control.id + '.value', value);
       const q: Record<string, string> = { file_id: fileId, elm_id: control.id };
@@ -37,16 +45,20 @@ export const TextControl: React.FC<IProps> = ({ control, fileId }): React.ReactE
 
       send(currentRoute?.props?.apiSaveControlRouteName, {}, q);
     },
-    [send, fileId, control.id, currentRoute, control.mandatory],
+    [send, fileId, control.id, currentRoute, control.mandatory, regex, regexMessage],
   );
 
   useEffect(() => {
-    const val = storage.getData<string>('edit.control.' + control.id + '.value');
+    const val = storage.getData<string>('edit.control.' + control.id + '.value') || control.value;
 
-    if (control.mandatory && control.editable && !val && !control.value) {
+    if (control.mandatory && control.editable && !val) {
       setErrorMessage('Valeur obligatoire');
     }
-  }, [control.id, control.mandatory, control.value, control.editable]);
+
+    if (control.editable && val && regex && !val.match(new RegExp(regex))) {
+      setErrorMessage(regexMessage || '');
+    }
+  }, [control.id, control.mandatory, control.value, control.editable, regex, regexMessage]);
 
   return (
     <Grid item xs={6}>

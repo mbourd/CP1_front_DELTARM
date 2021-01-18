@@ -33,6 +33,15 @@ export const SwitchControlItem: React.FC<IProps> = ({ control }): React.ReactEle
       return <CommentControl control={control} fileId={fileId} />;
     case 'percent':
       return <PercentControl control={control} fileId={fileId} />;
+    case 'auth_num':
+      return (
+        <TextControl
+          control={control}
+          fileId={fileId}
+          regex="^AUT[0-9]+$"
+          regexMessage="Le numéro doit être de la forme AUTxxx"
+        />
+      );
   }
 
   return null;

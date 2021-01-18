@@ -11,7 +11,8 @@ export type ControlTypeType =
   | 'selectlist'
   | 'comment'
   | 'radio'
-  | 'checkbox';
+  | 'checkbox'
+  | 'auth_num';
 
 export type ControlFontSize = 'standard' | 'bold';
 
