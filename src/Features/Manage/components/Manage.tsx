@@ -6,17 +6,20 @@ import { Search } from './Search/Search';
 import { Card } from './Card/Card';
 import { Filter } from './Filter/Filter';
 import { Button } from 'Shared/components';
-import { Divider, Paper } from '@material-ui/core';
+import { Divider, FormControlLabel, Paper, Radio, RadioGroup } from '@material-ui/core';
 import { ICard } from './Card/types';
 import { SearchModal } from './Search/Modal/SearchModal';
 import { IsLoading } from './IsLoading';
 import { NoData } from './NoData';
+import { FullSearchModal } from './Search/Modal/FullSearchModal';
 
 export const Manage: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Manage');
   const { request, callState, send, data } = useApi<ICard[]>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchMode, setSearchMode] = useState('fileNum');
+  const [fullSearch, setFullSearch] = useState<string>();
   const { user } = useSecurity();
   const { logout } = useContext(SecurityContext);
 
@@ -66,14 +69,19 @@ export const Manage: React.FC = (): React.ReactElement => {
 
   const onSearch = useCallback(() => {
     const value = storage.getData<string>('shared.component.search.value');
-    if (!value || !/[a-z0-9]+\/[a-z0-9]+/i.test(value)) {
-      setErrorMessage(trans('searchError'));
 
-      return;
+    if (searchMode === 'fileNum') {
+      if (!value || !/[a-z0-9]+\/[a-z0-9]+/i.test(value)) {
+        setErrorMessage(trans('searchError'));
+
+        return;
+      }
+
+      setIsModalOpen(true);
+    } else {
+      setFullSearch(value);
     }
-
-    setIsModalOpen(true);
-  }, [trans]);
+  }, [trans, searchMode]);
 
   useEffect(() => {
     send('manage', {}, queries);
@@ -91,7 +99,11 @@ export const Manage: React.FC = (): React.ReactElement => {
           <HeadingOne>{trans('pageTitle')}</HeadingOne>
           <FormError>{errorMessage}</FormError>
           <Paper className={'search-container'} elevation={0}>
-            <Search />
+            <Search
+              placeholder={
+                searchMode === 'fileNum' ? 'N°Dossier / N°Avenant' : 'Contrepartie emprunteuse ou nom de famille'
+              }
+            />
             <Divider className={'divider'} orientation="vertical" />
             <Filter initStages={initStages} initStates={initStates}>
               <Button
@@ -110,6 +122,16 @@ export const Manage: React.FC = (): React.ReactElement => {
             </Filter>
           </Paper>
           <div className={'buttons-container'}>
+            <div className="search-mode-toggle">
+              <RadioGroup value={searchMode} onChange={(_, value) => setSearchMode(value)} row>
+                <FormControlLabel value="fileNum" control={<Radio size="small" />} label="Rechercher par numéro " />
+                <FormControlLabel
+                  value="full"
+                  control={<Radio size="small" />}
+                  label="Rechercher par contrepartie ou utilisateur"
+                />
+              </RadioGroup>
+            </div>
             <Button
               color={'error'}
               size={'small'}
@@ -126,6 +148,7 @@ export const Manage: React.FC = (): React.ReactElement => {
             return <Card {...card} key={index} />;
           })}
           {isModalOpen ? <SearchModal open={isModalOpen} onClose={() => setIsModalOpen(false)} /> : null}
+          {fullSearch && <FullSearchModal search={fullSearch} onClose={() => setFullSearch(undefined)} />}
         </ManageStyled>
       </SwitchCallState>
     </>

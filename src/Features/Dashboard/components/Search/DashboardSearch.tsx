@@ -42,11 +42,7 @@ export const DashboardSearch: React.FC = (): React.ReactElement => {
       <div className={'buttons-container'}>
         <div className="search-mode-toggle">
           <RadioGroup value={searchMode} onChange={(_, value) => setSearchMode(value)} row>
-            <FormControlLabel
-              value="fileNum"
-              control={<Radio size="small" />}
-              label="Rechercher par numéro de dossier"
-            />
+            <FormControlLabel value="fileNum" control={<Radio size="small" />} label="Rechercher par numéro" />
             <FormControlLabel
               value="full"
               control={<Radio size="small" />}

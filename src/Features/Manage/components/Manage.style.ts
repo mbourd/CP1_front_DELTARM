@@ -22,15 +22,19 @@ export const ManageStyled = styled.div`
   }
 
   .buttons-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
     margin-bottom: ${({ theme }) => theme.spacing.xLarge};
-    text-align: right;
     text-transform: none;
-    vertical-align: middle;
 
-    .MuiSvgIcon-root,
+    .search-mode-toggle {
+      flex-grow: 1;
+      padding-left: 10px;
+    }
+
     .MuiButton-root {
       margin-left: ${({ theme }) => theme.spacing.normal};
-      vertical-align: middle;
     }
   }
 `;
