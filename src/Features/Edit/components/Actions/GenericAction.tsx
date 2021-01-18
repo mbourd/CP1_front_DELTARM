@@ -37,6 +37,7 @@ export const GenericAction: FC<GenericActionProps> = ({
           message={message}
           postRouteName={postRouteName}
           redirectRouteName="edit"
+          forceRedirect
         />
       ) : null}
     </>
