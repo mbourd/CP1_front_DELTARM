@@ -1,10 +1,12 @@
 import { apiRouter } from 'Services';
 import { ISelectData } from 'Shared/components';
+import { AppActionContextType } from 'Shared/types';
 
 export interface IFileSearchApiReturn {
   error: boolean;
   errorMessage: string | null;
   fileId: string | null;
+  fileContext?: AppActionContextType;
   bottomMessage?: string;
   topMessage?: string;
   productList?: Record<string, ISelectData>;
@@ -32,6 +34,7 @@ apiRouter.registerRoute({
       error: !data.data.file_id,
       errorMessage: data.data.return_message,
       fileId: data.data.file_id,
+      fileContext: data.data.file_context,
     };
   },
 });

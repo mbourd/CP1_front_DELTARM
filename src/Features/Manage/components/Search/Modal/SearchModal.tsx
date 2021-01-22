@@ -38,7 +38,7 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
   }, [send, file_num, file_avenant, request]);
 
   if (callState === 'SUCCESS' && data && (route?.type === 'DRM' || route?.type === 'DRM_CREATE')) {
-    router.redirectTo('edit', { id: data.fileId });
+    router.redirectTo(data.fileContext === 'EDIT' ? 'edit' : 'validation', { id: data.fileId });
 
     return null;
   }
