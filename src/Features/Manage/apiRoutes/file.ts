@@ -20,6 +20,7 @@ export interface IFileSearchApiReturn {
 export interface IFileSearchFullResult {
   file_avenant: string;
   file_borrower: string;
+  file_context: AppActionContextType;
   file_id: string;
   file_num: string;
 }

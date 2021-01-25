@@ -23,7 +23,7 @@ export const FullSearchModal: FC<FullSearchModalProps> = ({ search, onClose }): 
     data && data.length > 0 ? (
       <Table>
         <TableBody>
-          {data.map(({ file_id, file_num, file_avenant, file_borrower }) => (
+          {data.map(({ file_id, file_num, file_context, file_avenant, file_borrower }) => (
             <TableRow hover key={file_id}>
               <TableCell>
                 <Typography variant="subtitle1">
@@ -35,7 +35,11 @@ export const FullSearchModal: FC<FullSearchModalProps> = ({ search, onClose }): 
               </TableCell>
               <TableCell>
                 <Box display="flex" justifyContent="flex-end">
-                  <Button color="success" type="alt" onClick={() => router.redirectTo('edit', { id: file_id })}>
+                  <Button
+                    color="success"
+                    type="alt"
+                    onClick={() => router.redirectTo(file_context === 'VALID' ? 'validation' : 'edit', { id: file_id })}
+                  >
                     Sélectionner
                   </Button>
                 </Box>
