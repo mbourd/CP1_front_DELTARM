@@ -1,7 +1,7 @@
 import { IFileSearchFullResult } from 'Features/Manage/apiRoutes';
 import { router, useApi } from 'Services';
 import React, { FC, useEffect } from 'react';
-import { Button, Modal } from 'Shared/components';
+import { BadRequest, Button, Modal } from 'Shared/components';
 import { SearchModalFooterStyled } from './SearchModal.style';
 import { Box, Table, TableBody, TableCell, TableRow, Typography } from '@material-ui/core';
 
@@ -50,7 +50,7 @@ export const FullSearchModal: FC<FullSearchModalProps> = ({ search, onClose }): 
       </Table>
     ) : (
       <Box display="flex" justifyContent="center" padding={6}>
-        Aucuns résultats
+        <BadRequest>Aucun résultat</BadRequest>
       </Box>
     );
 
