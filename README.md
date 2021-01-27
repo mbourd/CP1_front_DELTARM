@@ -1,5 +1,19 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Local authentication
+
+1. Run `yarn start`
+
+1. Open a new browser tab and open the inspector on the network tab
+
+1. Log into the V2 environment associated with the desired CP1 endpoint (e.g.: bpi-staging.deltarm.com for controle-api-dev.deltarm.com)
+
+1. If you're immediately redirected, find the `/session/open?token=<TOKEN>` request and copy the token
+
+   Otherwise click on the `CP1` menu in the sidebar and get the token from the json returned by the `/ada/?ajax=true` request
+
+1. In both cases you only have about 30 seconds from the moment the CP1 client is loaded to go to `localhost:3000/login?token=<PASTE TOKEN HERE>`
+
 ## Available Scripts
 
 In the project directory, you can run:
