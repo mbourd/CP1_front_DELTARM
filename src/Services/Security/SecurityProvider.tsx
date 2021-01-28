@@ -49,8 +49,10 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({ security, c
   );
 
   const logout = useCallback(() => {
-    security.logout(user);
-    setUser(new User());
+    const { error } = security.logout(user);
+    if (!error) {
+      setUser(new User());
+    }
     window.location.href = getEnv('LOGOUT_REDIRECT');
   }, [security, user]);
 

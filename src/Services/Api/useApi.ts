@@ -16,8 +16,10 @@ export const useApi = <T>({ promise = false, waitForAuthenticated = false }: Use
   request.setBearerToken(jwt);
 
   if (waitForAuthenticated && !request.getBearerToken()) {
-    api.send = () => undefined;
+    api.send = noop;
   }
 
   return { request, ...api };
 };
+
+const noop = () => undefined;
