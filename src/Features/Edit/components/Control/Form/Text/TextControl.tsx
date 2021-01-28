@@ -10,7 +10,7 @@ import { ControlFooter } from '../ControlFooter';
 interface IProps {
   control: IControl;
   fileId: string;
-  regex?: string;
+  regex?: RegExp;
   regexMessage?: string;
 }
 
@@ -29,7 +29,7 @@ export const TextControl: React.FC<IProps> = ({ control, fileId, regex, regexMes
         return;
       }
 
-      if (value && regex && !value.match(new RegExp(regex))) {
+      if (value && regex && !value.match(regex)) {
         setErrorMessage(regexMessage || '');
 
         return;
