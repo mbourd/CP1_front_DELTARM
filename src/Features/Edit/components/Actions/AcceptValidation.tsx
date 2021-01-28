@@ -21,6 +21,8 @@ export const AcceptValidation: React.FC = (): React.ReactElement => {
           message={'Souhaitez-vous valider ce dossier ?'}
           postRouteName={'actionAcceptValidation'}
           queries={data?.validationCount ? { valid_num: data?.validationCount } : {}}
+          comment
+          commentRequired
         />
       ) : null}
     </>
