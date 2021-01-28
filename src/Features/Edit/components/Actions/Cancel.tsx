@@ -16,9 +16,10 @@ export const Cancel: React.FC = (): React.ReactElement => {
           open={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           fileId={fileId}
-          actionLabel={'Annuler le dossier'}
+          actionLabel={'Oui'}
+          cancelLabel={'Non'}
           successMessage={'Le dossier a été annulé'}
-          message={'Souhaitez-vous annuler ce dossier ?'}
+          message={"Confirmez-vous l'annulation du dossier ?"}
           postRouteName={'actionCancel'}
         />
       ) : null}

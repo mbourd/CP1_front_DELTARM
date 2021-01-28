@@ -18,6 +18,7 @@ interface IProps {
   onClose: () => void;
   fileId: string;
   actionLabel: string;
+  cancelLabel?: string;
   successMessage: string;
   message: string;
   postRouteName: string;
@@ -33,6 +34,7 @@ export const GenericActionModal: React.FC<IProps> = ({
   onClose,
   fileId,
   actionLabel,
+  cancelLabel,
   successMessage,
   message,
   postRouteName,
@@ -77,7 +79,7 @@ export const GenericActionModal: React.FC<IProps> = ({
           }
         }}
       >
-        {callState === 'SUCCESS' ? 'Fermer' : 'Annuler'}
+        {cancelLabel || (callState === 'SUCCESS' ? 'Fermer' : 'Annuler')}
       </Button>
       {callState === 'NOT_INIT' ? (
         <Button color={'success'} onClick={submit}>
