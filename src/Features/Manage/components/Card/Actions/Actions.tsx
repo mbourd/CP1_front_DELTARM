@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { ICard } from '../types';
 import { ActionsStyled } from './Actions.style';
-import { BPIBadge, BPITooltip, ClassifyModal } from 'Shared/components';
-import { CommentIcon, EditIcon, StopIcon, UserCheckedIcon } from 'Styles';
+import { BPIBadge, BPITooltip } from 'Shared/components';
+import { CommentIcon, EditIcon, UserCheckedIcon } from 'Styles';
 import { router, useTrans } from 'Services';
 
 export const Actions: React.FC<Pick<ICard, 'id' | 'comments' | 'context'>> = ({
@@ -12,7 +12,6 @@ export const Actions: React.FC<Pick<ICard, 'id' | 'comments' | 'context'>> = ({
   context,
 }): React.ReactElement => {
   const [trans] = useTrans('Manage');
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <ActionsStyled>
@@ -34,12 +33,6 @@ export const Actions: React.FC<Pick<ICard, 'id' | 'comments' | 'context'>> = ({
           )}
         </Link>
       </BPITooltip>
-      <BPITooltip title={trans('classify')} placement={'left'}>
-        <span onClick={() => setIsModalOpen(true)} className={'classify'}>
-          <StopIcon className={'icon'} />
-        </span>
-      </BPITooltip>
-      {isModalOpen ? <ClassifyModal open={isModalOpen} onClose={() => setIsModalOpen(false)} fileId={id} /> : null}
     </ActionsStyled>
   );
 };

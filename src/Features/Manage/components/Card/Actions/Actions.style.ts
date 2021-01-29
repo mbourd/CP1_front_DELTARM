@@ -1,20 +1,19 @@
 import styled from 'styled-components/macro';
-import { cardHeight, stateHeight, actionsWidth } from '../types';
+import { stateHeight, actionsWidth } from '../types';
 
 export const ActionsStyled = styled.div`
   background-color: rgba(255, 205, 0, 0.1);
-  height: 100%;
   position: absolute;
   right: 0;
   top: ${stateHeight}px;
+  bottom: 0;
   width: ${actionsWidth}px;
 
-  a,
-  .classify {
+  a {
     border-bottom: 1px dotted ${({ theme }) => theme.color.primary.main};
     cursor: pointer;
     display: block;
-    height: ${(cardHeight - stateHeight) / 3}px;
+    height: 50%;
     position: relative;
 
     .icon {
