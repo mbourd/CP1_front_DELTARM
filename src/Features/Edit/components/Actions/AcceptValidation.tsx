@@ -22,7 +22,6 @@ export const AcceptValidation: React.FC = (): React.ReactElement => {
           postRouteName={'actionAcceptValidation'}
           queries={data?.validationCount ? { valid_num: data?.validationCount } : {}}
           comment
-          commentRequired
           commentParam="accept_comment"
         />
       ) : null}
