@@ -83,7 +83,11 @@ export const EditValidation: React.FC<IProps> = ({ title, apiRouteName }): React
               <Grid item className={'content'}>
                 {data.sectionHeader && (
                   <Box paddingBottom={5}>
-                    <Alert variant="outlined" severity={data.sectionHeader.type === 'alert' ? 'error' : 'success'}>
+                    <Alert
+                      variant="outlined"
+                      icon={false}
+                      severity={data.sectionHeader.type === 'alert' ? 'error' : 'success'}
+                    >
                       <PreWrapStyled>{data.sectionHeader.message}</PreWrapStyled>
                     </Alert>
                   </Box>
