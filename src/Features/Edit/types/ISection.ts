@@ -23,3 +23,15 @@ export interface ICurrentSection {
   id: string;
   chapters: IChapter[];
 }
+
+export type ISectionHeaderType = 'alert' | 'info';
+
+export interface IApiSectionHeader {
+  header_message: string | null;
+  header_type: ISectionHeaderType | null;
+}
+
+export interface ISectionHeader {
+  message: string;
+  type: ISectionHeaderType;
+}

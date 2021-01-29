@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Grid, List } from '@material-ui/core';
+import { Box, Grid, List } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import { EditHeaderStyled, EditStyled } from './Edit.style';
 import { router, SecurityContext, storage, SwitchCallState, useApi, useSecurity } from 'Services';
 import { HeadingOne } from 'Shared/components';
@@ -80,6 +81,13 @@ export const EditValidation: React.FC<IProps> = ({ title, apiRouteName }): React
                 </List>
               </Grid>
               <Grid item className={'content'}>
+                {data.sectionHeader && (
+                  <Box paddingBottom={5}>
+                    <Alert variant="outlined" severity={data.sectionHeader.type === 'alert' ? 'error' : 'success'}>
+                      {data.sectionHeader.message}
+                    </Alert>
+                  </Box>
+                )}
                 <SwitchContentBody />
               </Grid>
             </Grid>

@@ -86,6 +86,8 @@ export const editValidationHandlerCallback = (response: any) => {
     name: apiData.state.state_name,
   };
 
+  const { header_message, header_type } = apiData.section_header || {};
+
   const data: IData = {
     actions,
     currentSection,
@@ -97,6 +99,7 @@ export const editValidationHandlerCallback = (response: any) => {
     productType: apiData.file_info.product_type,
     countComments: apiData.nb_comment,
     validationCount: apiData.valid_num,
+    sectionHeader: header_message && header_type ? { message: header_message, type: header_type } : undefined,
   };
 
   return data;
