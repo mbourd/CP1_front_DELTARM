@@ -89,6 +89,13 @@ export const EditValidation: React.FC<IProps> = ({ title, apiRouteName }): React
                   </Box>
                 )}
                 <SwitchContentBody />
+                {data.sectionFooter && (
+                  <Box paddingY={5}>
+                    <Alert variant="outlined" severity="info">
+                      <PreWrapStyled>{data.sectionFooter.message}</PreWrapStyled>
+                    </Alert>
+                  </Box>
+                )}
               </Grid>
             </Grid>
           </EditValidationContext.Provider>

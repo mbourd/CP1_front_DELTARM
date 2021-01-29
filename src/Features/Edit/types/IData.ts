@@ -8,6 +8,8 @@ import {
   ICurrentSection,
   ISection,
   ISectionHeader,
+  IApiSectionFooter,
+  ISectionFooter,
 } from './ISection';
 import { IApiState, IState } from './IState';
 
@@ -21,6 +23,7 @@ export interface IApiData {
   nb_comment: number;
   valid_num?: string;
   section_header?: IApiSectionHeader;
+  section_footer?: IApiSectionFooter;
 }
 
 export interface IData {
@@ -35,4 +38,5 @@ export interface IData {
   countComments: number;
   validationCount?: string;
   sectionHeader?: ISectionHeader;
+  sectionFooter?: ISectionFooter;
 }

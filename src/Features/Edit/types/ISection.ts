@@ -37,3 +37,11 @@ export interface ISectionHeader {
   message: string;
   type: ISectionHeaderType;
 }
+
+export interface IApiSectionFooter {
+  footer_message?: string | null;
+}
+
+export interface ISectionFooter {
+  message: string;
+}
