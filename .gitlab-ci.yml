@@ -19,7 +19,7 @@ cache:
 variables:
   PROJECT_PATH: /builds/$CI_PROJECT_PATH
   DOCKER_HOST: tcp://docker:2375/
-  DOCKER_TLS_CERTDIR: ""
+  DOCKER_TLS_CERTDIR: ''
   DOCKER_DRIVER: overlay2
 
 stages:
@@ -46,7 +46,7 @@ deploy preprod:
     - chmod 700 ~/.ssh
     - ssh-keyscan $SERVER_HOST_PP >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-    - docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN
+    - docker login $CI_REGISTRY_IMAGE -u vberlier -p x2xy93Hz7Bo8zT9xtws2
   script:
     - cp .env.preprod .env.production
     - docker run --rm -w="/app" -v $PWD:/app node:12-alpine sh -c "yarn run build --profile"
@@ -57,7 +57,7 @@ deploy preprod:
     - ssh $SERVER_USER@$SERVER_HOST_PP "
       docker rm -f cp1_front_preprod &&
       docker rmi -f $APP_IMAGE_TAG_NAME &&
-      docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN &&
+      docker login $CI_REGISTRY_IMAGE -u vberlier -p x2xy93Hz7Bo8zT9xtws2 &&
       docker run --name cp1_front_preprod --restart=on-failure:10 -d -p 80:80 -p 443:443 -v /home/deltarm/etc/ssl:/etc/nginx/certs $APP_IMAGE_TAG_NAME
       "
 
@@ -75,7 +75,7 @@ deploy develop:
     - chmod 700 ~/.ssh
     - ssh-keyscan $SERVER_HOST_DEV >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-    - docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN
+    - docker login $CI_REGISTRY_IMAGE -u vberlier -p x2xy93Hz7Bo8zT9xtws2
   script:
     - cp .env .env.production
     - docker run --rm -w="/app" -v $PWD:/app node:12-alpine sh -c "yarn run build --profile"
@@ -86,7 +86,7 @@ deploy develop:
     - ssh $SERVER_USER@$SERVER_HOST_DEV "
       docker rm -f cp1_front_dev &&
       docker rmi -f $APP_IMAGE_TAG_NAME &&
-      docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN &&
+      docker login $CI_REGISTRY_IMAGE -u vberlier -p x2xy93Hz7Bo8zT9xtws2 &&
       docker run --name cp1_front_dev --restart=on-failure:10 -d -p 80:80 $APP_IMAGE_TAG_NAME
       "
 
@@ -95,7 +95,7 @@ deploy demo:
   only:
     - demo
   variables:
-    APP_IMAGE_TAG_NAME_DEMO: "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}_demo"
+    APP_IMAGE_TAG_NAME_DEMO: '${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}_demo'
   before_script:
     - apk update && apk add openssh rsync
     - eval $(ssh-agent -s)
@@ -104,7 +104,7 @@ deploy demo:
     - chmod 700 ~/.ssh
     - ssh-keyscan $SERVER_HOST_DEV >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-    - docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN
+    - docker login $CI_REGISTRY_IMAGE -u vberlier -p x2xy93Hz7Bo8zT9xtws2
   script:
     - cp .env.demo .env.production
     - docker run --rm -w="/app" -v $PWD:/app node:12-alpine sh -c "yarn run build --profile"
@@ -115,6 +115,6 @@ deploy demo:
     - ssh $SERVER_USER@$SERVER_HOST_DEV "
       docker rm -f cp1_front_dev_demo &&
       docker rmi -f $APP_IMAGE_TAG_NAME_DEMO &&
-      docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN &&
+      docker login $CI_REGISTRY_IMAGE -u vberlier -p x2xy93Hz7Bo8zT9xtws2 &&
       docker run --name cp1_front_dev_demo --restart=on-failure:10 -d -p 8090:80 $APP_IMAGE_TAG_NAME_DEMO
       "
