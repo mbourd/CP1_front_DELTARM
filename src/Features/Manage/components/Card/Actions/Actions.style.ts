@@ -17,14 +17,15 @@ export const ActionsStyled = styled.div`
     position: relative;
 
     .icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       bottom: 0;
-      height: 1em;
       left: 0;
       margin: auto;
       position: absolute;
       right: 0;
       top: 0;
-      width: 1em;
     }
 
     &:last-child {
