@@ -25,6 +25,7 @@ interface IProps {
   redirectRouteName?: 'manage' | 'edit';
   comment?: boolean;
   commentRequired?: boolean;
+  commentParam?: string;
   forceRedirect?: boolean;
   queries?: Record<string, string>;
 }
@@ -41,6 +42,7 @@ export const GenericActionModal: React.FC<IProps> = ({
   redirectRouteName = 'manage',
   comment = false,
   commentRequired = false,
+  commentParam,
   forceRedirect = false,
   queries = {},
 }): React.ReactElement | null => {
@@ -56,13 +58,13 @@ export const GenericActionModal: React.FC<IProps> = ({
         return setCommentError('Ce champ est obligatoire');
       }
 
-      if (com) {
-        q['reject_comment'] = com;
+      if (com && commentParam) {
+        q[commentParam] = com;
       }
     }
 
     send(postRouteName, {}, Object.assign({}, q, queries));
-  }, [fileId, send, postRouteName, comment, commentRequired, queries]);
+  }, [fileId, send, postRouteName, comment, commentRequired, commentParam, queries]);
 
   const footer: React.ReactNode = (
     <GenericActionModalStyled>

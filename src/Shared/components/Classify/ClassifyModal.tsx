@@ -19,6 +19,7 @@ export const ClassifyModal: React.FC<IProps> = ({ open, onClose, fileId }): Reac
       postRouteName={'actionClassify'}
       comment
       commentRequired
+      commentParam="reject_comment"
     />
   );
 };

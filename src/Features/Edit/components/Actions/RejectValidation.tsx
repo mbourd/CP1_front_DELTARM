@@ -22,6 +22,7 @@ export const RejectValidation: React.FC = (): React.ReactElement => {
           postRouteName={'actionRejectValidation'}
           comment
           commentRequired
+          commentParam="reject_comment"
           queries={data?.validationCount ? { valid_num: data?.validationCount } : {}}
         />
       ) : null}

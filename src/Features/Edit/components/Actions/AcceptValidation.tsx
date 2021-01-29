@@ -23,6 +23,7 @@ export const AcceptValidation: React.FC = (): React.ReactElement => {
           queries={data?.validationCount ? { valid_num: data?.validationCount } : {}}
           comment
           commentRequired
+          commentParam="accept_comment"
         />
       ) : null}
     </>
