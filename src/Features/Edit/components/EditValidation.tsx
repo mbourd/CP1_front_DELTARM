@@ -3,7 +3,7 @@ import { Box, Grid, List } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { EditHeaderStyled, EditStyled } from './Edit.style';
 import { router, SecurityContext, storage, SwitchCallState, useApi, useSecurity } from 'Services';
-import { HeadingOne } from 'Shared/components';
+import { HeadingOne, PreWrapStyled } from 'Shared/components';
 import { NavItem } from './NavItem/NavItem';
 import { IData } from '../types';
 import { EditValidationContext } from '../EditValidationContext';
@@ -84,7 +84,7 @@ export const EditValidation: React.FC<IProps> = ({ title, apiRouteName }): React
                 {data.sectionHeader && (
                   <Box paddingBottom={5}>
                     <Alert variant="outlined" severity={data.sectionHeader.type === 'alert' ? 'error' : 'success'}>
-                      {data.sectionHeader.message}
+                      <PreWrapStyled>{data.sectionHeader.message}</PreWrapStyled>
                     </Alert>
                   </Box>
                 )}

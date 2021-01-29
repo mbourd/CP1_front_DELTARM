@@ -3,6 +3,7 @@ export * from './MainContent/MainContent';
 export * from './MainHeader/MainHeader';
 export * from './MainNav/MainNav';
 export * from './Heading';
+export * from './PreWrap';
 export * from './Loader/PageLoader';
 export * from './Tooltip/BPITooltip';
 export * from './Classify/ClassifyModal';
