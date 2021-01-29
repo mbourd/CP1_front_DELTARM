@@ -38,7 +38,7 @@ export const SwitchControlItem: React.FC<IProps> = ({ control }): React.ReactEle
         <TextControl
           control={control}
           fileId={fileId}
-          regex={/^AUT[0-9]{1,6}$/i}
+          regex={/^AUT[0-9]{6}$/i}
           regexMessage="Le numéro doit être de la forme AUTxxxxxx"
         />
       );
