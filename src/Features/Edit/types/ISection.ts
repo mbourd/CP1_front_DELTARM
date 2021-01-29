@@ -4,6 +4,7 @@ export interface IApiSection {
   section_id: string;
   section_lib: string;
   section_locked: boolean;
+  section_hint?: string | null;
   stage_code: string;
 }
 
@@ -12,6 +13,7 @@ export interface ISection {
   code: string;
   label: string;
   locked: boolean;
+  tooltip?: string;
 }
 
 export interface IApiCurrentSection {

@@ -75,6 +75,7 @@ export const editValidationHandlerCallback = (response: any) => {
       code: '' + section.stage_code,
       label: section.section_lib,
       locked: section.section_locked,
+      tooltip: section.section_hint || undefined,
     });
 
     return section;
