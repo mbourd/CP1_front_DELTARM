@@ -29,6 +29,7 @@ export const Manage: React.FC = (): React.ReactElement => {
 
   const initStages: Record<number | string, true> = {};
   const initStates: Record<number | string, true> = {};
+  const initRoles: Record<number | string, true> = {};
   const queries = router.getQueries();
 
   if (queries.stage_id) {
@@ -47,14 +48,24 @@ export const Manage: React.FC = (): React.ReactElement => {
     });
   }
 
+  if (queries.role_id) {
+    queries.role_id.split(/[,;_]/).map((roleId) => {
+      initRoles[roleId] = true;
+
+      return roleId;
+    });
+  }
+
   const applyFilters = useCallback(() => {
     const stages = storage.getData<Record<string, true>>('manage.filter.stages');
     const states = storage.getData<Record<string, true>>('manage.filter.states');
+    const roles = storage.getData<Record<string, true>>('manage.filter.roles');
 
     const filters: Record<string, string> = {};
 
     const stageValues = stages ? Object.keys(stages).join('_') : undefined;
     const stateValues = states ? Object.keys(states).join('_') : undefined;
+    const roleValues = roles ? Object.keys(roles).join('_') : undefined;
 
     if (stageValues) {
       filters.stage_id = stageValues;
@@ -62,6 +73,10 @@ export const Manage: React.FC = (): React.ReactElement => {
 
     if (stateValues) {
       filters.state_id = stateValues;
+    }
+
+    if (roleValues) {
+      filters.role_id = roleValues;
     }
 
     router.redirectTo('manage', {}, filters);
@@ -108,7 +123,7 @@ export const Manage: React.FC = (): React.ReactElement => {
               }
             />
             <Divider className={'divider'} orientation="vertical" />
-            <Filter initStages={initStages} initStates={initStates}>
+            <Filter initStages={initStages} initStates={initStates} initRoles={initRoles}>
               <Button
                 color={'error'}
                 size={'small'}

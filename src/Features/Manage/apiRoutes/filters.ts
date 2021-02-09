@@ -10,6 +10,7 @@ export interface IApiState {
   state_code: string;
   state_color: string;
   state_id: number;
+  state_role: number;
   state_name: string;
 }
 

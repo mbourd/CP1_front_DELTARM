@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { FilterStyled, BadgeStyled } from './Filter.style';
 import { FilterIcon, useTheme } from 'Styles';
@@ -9,17 +9,36 @@ import { IApiStage, IApiState } from '../../apiRoutes';
 interface IProps {
   initStages?: Record<number, true>;
   initStates?: Record<number, true>;
+  initRoles?: Record<number, true>;
 }
 
-export const Filter: React.FC<IProps> = ({ initStages = {}, initStates = {}, children }): React.ReactElement => {
+export const Filter: React.FC<IProps> = ({
+  initStages = {},
+  initStates = {},
+  initRoles = {},
+  children,
+}): React.ReactElement => {
   const { error, isLoading, send, data } = useApi<{ stages: IApiStage[]; states: IApiState[] }>();
   const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(null);
   const [stages, setStages] = useState<Record<number, true>>(initStages);
-  const [states, setStates] = useState<Record<number, true>>(initStates);
+  const initStatesRef = useRef(initStates);
+  const initRolesRef = useRef(initRoles);
+
+  const [stateFilters, setStateFilters] = useState<{ state_id: number; state_role: number }[]>([]);
+
+  const states = useMemo<Record<number, true>>(
+    () => Object.fromEntries(stateFilters.map(({ state_id }) => [state_id, true])),
+    [stateFilters],
+  );
+  const roles = useMemo<Record<number, true>>(
+    () => Object.fromEntries(stateFilters.map(({ state_role }) => [state_role, true])),
+    [stateFilters],
+  );
+
   const theme = useTheme();
 
   const countStages = Object.keys(stages).length;
-  const countStates = Object.keys(states).length;
+  const countStates = Object.keys(stateFilters).length;
 
   const handleClick = useCallback(
     (event: React.MouseEvent<SVGSVGElement>) => {
@@ -28,33 +47,46 @@ export const Filter: React.FC<IProps> = ({ initStages = {}, initStates = {}, chi
     [anchorEl],
   );
 
-  const onChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>, type: 'stages' | 'states', id: number) => {
+  const onChangeStage = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
       const input = e.currentTarget;
 
-      if (type === 'stages') {
-        input.checked ? (stages[id] = true) : delete stages[id];
+      input.checked ? (stages[id] = true) : delete stages[id];
 
-        storage.setData('manage', { filter: { stages, states } });
-
-        setStages(stages);
-      }
-
-      if (type === 'states') {
-        input.checked ? (states[id] = true) : delete states[id];
-
-        storage.setData('manage', { filter: { stages, states } });
-
-        setStates(states);
-      }
+      setStages(stages);
     },
-    [stages, states],
+    [stages],
   );
+
+  const onChangeState = useCallback((e: React.ChangeEvent<HTMLInputElement>, state_id: number, state_role: number) => {
+    const input = e.currentTarget;
+
+    if (input.checked) {
+      setStateFilters((current) => [...current, { state_id, state_role }]);
+    } else {
+      setStateFilters((current) =>
+        current.filter((state) => state.state_id !== state_id || state.state_role !== state_role),
+      );
+    }
+  }, []);
 
   useEffect(() => {
     send('manageFilters');
-    storage.setData('manage', { filter: { stages, states } });
-  }, [send, stages, states]);
+  }, [send]);
+
+  useEffect(() => {
+    if (data?.states) {
+      setStateFilters(
+        data.states
+          .map(({ state_id, state_role }) => ({ state_id, state_role }))
+          .filter(({ state_id, state_role }) => initStatesRef.current[state_id] && initRolesRef.current[state_role]),
+      );
+    }
+  }, [data]);
+
+  useEffect(() => {
+    storage.setData('manage', { filter: { stages, states, roles } });
+  }, [stages, states, roles]);
 
   let altContent: null | React.ReactNode = null;
 
@@ -104,7 +136,7 @@ export const Filter: React.FC<IProps> = ({ initStages = {}, initStates = {}, chi
                         <Checkbox
                           checked={stages[stage.stage_id]}
                           label={stage.stage_name.toLowerCase()}
-                          onChange={(e) => onChange(e, 'stages', stage.stage_id)}
+                          onChange={(e) => onChangeStage(e, stage.stage_id)}
                         />
                       </div>
                     );
@@ -115,9 +147,12 @@ export const Filter: React.FC<IProps> = ({ initStages = {}, initStates = {}, chi
                     return (
                       <div key={index}>
                         <Checkbox
-                          checked={states[state.state_id]}
+                          checked={stateFilters.some(
+                            ({ state_id, state_role }) =>
+                              state.state_id === state_id && state.state_role === state_role,
+                          )}
                           label={state.state_name.toLowerCase()}
-                          onChange={(e) => onChange(e, 'states', state.state_id)}
+                          onChange={(e) => onChangeState(e, state.state_id, state.state_role)}
                         />
                       </div>
                     );
