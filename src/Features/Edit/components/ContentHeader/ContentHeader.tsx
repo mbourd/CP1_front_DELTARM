@@ -61,6 +61,9 @@ export const ContentHeader: React.FC = (): React.ReactElement => {
                     successMessage="La clôture du dossier a été annulée"
                     successCloseLabel="Fermer"
                     postRouteName="actionUnclose"
+                    comment
+                    commentRequired
+                    commentParam="unclose_comment"
                   />
                 );
               case 'UNNONCASE':

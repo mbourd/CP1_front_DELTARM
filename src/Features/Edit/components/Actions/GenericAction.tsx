@@ -11,6 +11,9 @@ export interface GenericActionProps extends IButton {
   actionLabel?: string;
   cancelLabel?: string;
   successCloseLabel?: string;
+  comment?: boolean;
+  commentRequired?: boolean;
+  commentParam?: string;
 }
 
 export const GenericAction: FC<GenericActionProps> = ({
@@ -23,6 +26,9 @@ export const GenericAction: FC<GenericActionProps> = ({
   actionLabel,
   cancelLabel,
   successCloseLabel,
+  comment,
+  commentRequired,
+  commentParam,
   ...props
 }): React.ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -46,6 +52,9 @@ export const GenericAction: FC<GenericActionProps> = ({
           postRouteName={postRouteName}
           redirectRouteName="edit"
           forceRedirect
+          comment={comment}
+          commentRequired={commentRequired}
+          commentParam={commentParam}
         />
       ) : null}
     </>
