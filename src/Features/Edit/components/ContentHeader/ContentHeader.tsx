@@ -56,7 +56,10 @@ export const ContentHeader: React.FC = (): React.ReactElement => {
                     key={index}
                     action={action}
                     message="Souhaitez-vous annuler la clôture du dossier ?"
+                    actionLabel="Oui"
+                    cancelLabel="Non"
                     successMessage="La clôture du dossier a été annulée"
+                    successCloseLabel="Fermer"
                     postRouteName="actionUnclose"
                   />
                 );
@@ -67,7 +70,10 @@ export const ContentHeader: React.FC = (): React.ReactElement => {
                     action={action}
                     color="secondary"
                     message="Souhaitez-vous annuler le statut sans-suite ?"
+                    actionLabel="Oui"
+                    cancelLabel="Non"
                     successMessage="Le statut sans-suite du dossier a été annulé"
+                    successCloseLabel="Fermer"
                     postRouteName="actionUnnoncase"
                   />
                 );

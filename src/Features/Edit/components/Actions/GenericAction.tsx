@@ -8,6 +8,9 @@ export interface GenericActionProps extends IButton {
   successMessage: string;
   message: string;
   postRouteName: string;
+  actionLabel?: string;
+  cancelLabel?: string;
+  successCloseLabel?: string;
 }
 
 export const GenericAction: FC<GenericActionProps> = ({
@@ -17,6 +20,9 @@ export const GenericAction: FC<GenericActionProps> = ({
   successMessage,
   message,
   postRouteName,
+  actionLabel,
+  cancelLabel,
+  successCloseLabel,
   ...props
 }): React.ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,8 +38,10 @@ export const GenericAction: FC<GenericActionProps> = ({
           open={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           fileId={fileId}
-          actionLabel={action.label}
+          actionLabel={actionLabel || action.label}
+          cancelLabel={cancelLabel}
           successMessage={successMessage}
+          successCloseLabel={successCloseLabel}
           message={message}
           postRouteName={postRouteName}
           redirectRouteName="edit"
