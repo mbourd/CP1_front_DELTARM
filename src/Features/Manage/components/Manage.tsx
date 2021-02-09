@@ -48,8 +48,8 @@ export const Manage: React.FC = (): React.ReactElement => {
     });
   }
 
-  if (queries.role_id) {
-    queries.role_id.split(/[,;_]/).map((roleId) => {
+  if (queries.state_role) {
+    queries.state_role.split(/[,;_]/).map((roleId) => {
       initRoles[roleId] = true;
 
       return roleId;
@@ -76,7 +76,7 @@ export const Manage: React.FC = (): React.ReactElement => {
     }
 
     if (roleValues) {
-      filters.role_id = roleValues;
+      filters.state_role = roleValues;
     }
 
     router.redirectTo('manage', {}, filters);

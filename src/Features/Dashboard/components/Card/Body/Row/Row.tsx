@@ -16,7 +16,7 @@ export const Row: React.FC<ICardBodyRow> = ({
 }): React.ReactElement => {
   const [trans] = useTrans('Dashboard');
 
-  const path = router.generatePath('manage', {}, { stage_id: stage, state_id: state, role_id: role });
+  const path = router.generatePath('manage', {}, { stage_id: stage, state_id: state, state_role: role });
 
   return (
     <RowStyled color={color}>
