@@ -19,7 +19,11 @@ export const Filter: React.FC<IProps> = ({
   children,
 }): React.ReactElement => {
   const { error, isLoading, send, data } = useApi<{ stages: IApiStage[]; states: IApiState[] }>();
-  const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(null);
+
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const anchorRef = useRef<HTMLElement | null>(null);
+  const anchorEl = useMemo(() => (isOpen ? anchorRef.current : null), [isOpen]);
+
   const [stages, setStages] = useState<Record<number, true>>(initStages);
   const initStatesRef = useRef(initStates);
   const initRolesRef = useRef(initRoles);
@@ -40,12 +44,9 @@ export const Filter: React.FC<IProps> = ({
   const countStages = Object.keys(stages).length;
   const countStates = Object.keys(stateFilters).length;
 
-  const handleClick = useCallback(
-    (event: React.MouseEvent<SVGSVGElement>) => {
-      setAnchorEl(anchorEl ? null : event.currentTarget);
-    },
-    [anchorEl],
-  );
+  const handleClick = useCallback(() => {
+    setIsOpen((value) => !value);
+  }, []);
 
   const onChangeStage = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
@@ -53,7 +54,7 @@ export const Filter: React.FC<IProps> = ({
 
       input.checked ? (stages[id] = true) : delete stages[id];
 
-      setStages(stages);
+      setStages({ ...stages });
     },
     [stages],
   );
@@ -100,7 +101,7 @@ export const Filter: React.FC<IProps> = ({
 
   return (
     <>
-      <BadgeStyled>
+      <BadgeStyled ref={anchorRef}>
         {countStages + countStates > 0 ? (
           <BPIBadge content={countStages + countStates}>
             <FilterIcon
@@ -121,7 +122,7 @@ export const Filter: React.FC<IProps> = ({
         element={anchorEl}
         placement={'bottom-end'}
         border={'1px solid ' + theme.color.primary.main}
-        onClickAway={() => setAnchorEl(null)}
+        onClickAway={() => setIsOpen(false)}
         zIndex={10}
       >
         <FilterStyled>

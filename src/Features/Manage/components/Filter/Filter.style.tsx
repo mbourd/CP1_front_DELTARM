@@ -48,7 +48,11 @@ export const FilterStyled = styled.section`
 `;
 
 export const BadgeStyled = styled.section`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-left: ${({ theme }) => theme.spacing.small};
+  height: 24px;
 `;
 
 export const FooterStyled = styled.div`
