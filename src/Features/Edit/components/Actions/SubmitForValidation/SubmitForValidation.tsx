@@ -24,7 +24,7 @@ export const SubmitForValidation: React.FC = (): React.ReactElement => {
       </Button>
 
       <Popper element={anchorEl} placement={'bottom-end'} onClickAway={() => setAnchorEl(null)} zIndex={2}>
-        <ValidationPopper />
+        <ValidationPopper onClose={() => setAnchorEl(null)} />
       </Popper>
     </SubmitForValidationStyled>
   );

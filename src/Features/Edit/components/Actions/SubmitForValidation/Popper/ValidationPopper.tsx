@@ -6,7 +6,11 @@ import { BadRequest, Button, Error500, RequestSuccess, Select, StairsLoader } fr
 import { router, storage, SwitchCallState, useApi } from 'Services';
 import { EditValidationContext } from 'Features/Edit';
 
-export const ValidationPopper: React.FC = (): React.ReactElement => {
+export interface ValidationPopperProps {
+  onClose?: () => void;
+}
+
+export const ValidationPopper: React.FC<ValidationPopperProps> = ({ onClose }): React.ReactElement => {
   const { request, error, callState, send, data } = useApi<IData>();
   const context = useContext(EditValidationContext);
 
@@ -46,11 +50,20 @@ export const ValidationPopper: React.FC = (): React.ReactElement => {
             IS_LOADING: <StairsLoader size={'md'} />,
             SERVER_ERROR: <Error500 size={'md'} message={'Le serveur ne répond pas'} />,
             BAD_REQUEST: (
-              <BadRequest
-                size={'md'}
-                message={error?.response ? error?.response.body.error_msg : ''}
-                title={'Echec !'}
-              />
+              <>
+                <BadRequest
+                  size={'md'}
+                  message={error?.response ? error?.response.body.error_msg : ''}
+                  title={'Echec !'}
+                />
+                {onClose && (
+                  <div className={'footer'}>
+                    <Button color={'error'} onClick={onClose}>
+                      Fermer
+                    </Button>
+                  </div>
+                )}
+              </>
             ),
           }}
         >
