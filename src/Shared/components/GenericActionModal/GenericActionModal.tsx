@@ -20,6 +20,7 @@ interface IProps {
   actionLabel: string;
   cancelLabel?: string;
   successMessage: string;
+  successCloseLabel?: string;
   message: string;
   postRouteName: string;
   redirectRouteName?: 'manage' | 'edit';
@@ -37,6 +38,7 @@ export const GenericActionModal: React.FC<IProps> = ({
   actionLabel,
   cancelLabel,
   successMessage,
+  successCloseLabel,
   message,
   postRouteName,
   redirectRouteName = 'manage',
@@ -81,7 +83,9 @@ export const GenericActionModal: React.FC<IProps> = ({
           }
         }}
       >
-        {cancelLabel || (callState === 'SUCCESS' ? 'Fermer' : 'Annuler')}
+        {(callState === 'SUCCESS' && successCloseLabel) ||
+          cancelLabel ||
+          (callState === 'SUCCESS' ? 'Fermer' : 'Annuler')}
       </Button>
       {callState === 'NOT_INIT' ? (
         <Button color={'success'} onClick={submit}>

@@ -19,6 +19,7 @@ export const Cancel: React.FC = (): React.ReactElement => {
           actionLabel={'Oui'}
           cancelLabel={'Non'}
           successMessage={'Le dossier a été annulé'}
+          successCloseLabel="Fermer"
           message={"Confirmez-vous l'annulation du dossier ?"}
           postRouteName={'actionCancel'}
         />
