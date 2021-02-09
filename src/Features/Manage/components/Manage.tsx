@@ -94,7 +94,10 @@ export const Manage: React.FC = (): React.ReactElement => {
   return (
     <>
       <BreadCrumb values={['Dashboard', 'Manage']} />
-      <SwitchCallState callState={callState} states={{ IS_LOADING: <IsLoading />, NO_DATA: <NoData /> }}>
+      <SwitchCallState
+        callState={callState}
+        states={{ IS_LOADING: <IsLoading />, NOT_INIT: <IsLoading />, NO_DATA: <NoData /> }}
+      >
         <ManageStyled>
           <HeadingOne>{trans('pageTitle')}</HeadingOne>
           <FormError>{errorMessage}</FormError>
