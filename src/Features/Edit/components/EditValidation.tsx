@@ -32,6 +32,7 @@ export const EditValidation: React.FC<IProps> = ({ title, apiRouteName }): React
     const queries: Record<string, any> = { file_id: id };
     if (currentSection) {
       queries.section_id = currentSection;
+      router.setQueries({});
     }
 
     send(apiRouteName, {}, queries);

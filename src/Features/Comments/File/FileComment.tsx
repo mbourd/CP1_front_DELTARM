@@ -44,6 +44,7 @@ export const FileComment: React.FC = (): React.ReactElement => {
           onClick={(e) => {
             iconRef.current = null;
             setAnchorEl(anchorEl ? null : e.currentTarget);
+            router.setQueries({});
           }}
         />
       </BPIBadge>
