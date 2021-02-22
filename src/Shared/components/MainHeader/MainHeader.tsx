@@ -6,7 +6,7 @@ import { MainHeaderStyled } from './MainHeader.style';
 import logo from './logo.png';
 import { router, useTrans } from 'Services';
 import { IconsContainer } from './IconsContainer/IconsContainer';
-import { FlagsContainer } from './FlagsContainer/FlagsContainer';
+// import { FlagsContainer } from './FlagsContainer/FlagsContainer';
 import { MainNav } from '..';
 
 export const MainHeader: React.FC = (): React.ReactElement => {
@@ -19,7 +19,7 @@ export const MainHeader: React.FC = (): React.ReactElement => {
         <img src={logo} alt={trans('brand')} />
       </Link>
       <IconsContainer />
-      <FlagsContainer />
+      {/* <FlagsContainer /> */}
       <MainNav />
     </MainHeaderStyled>
   );
