@@ -20,11 +20,11 @@ export const IconsContainer: React.FC = (): React.ReactElement => {
           <FileIcon fontSize={'large'} />
         </a>
       </BPITooltip>
-      <BPITooltip title={trans('tutorials')}>
+      {/* <BPITooltip title={trans('tutorials')}>
         <Link to={'/'}>
           <PlayerIcon fontSize={'large'} />
         </Link>
-      </BPITooltip>
+      </BPITooltip> */}
     </IconsContainerStyled>
   );
 };
