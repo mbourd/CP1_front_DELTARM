@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { SearchStyled } from './Search.style';
 import { InputBase } from 'Shared/components';
 import { useTheme } from 'Styles';
@@ -11,6 +11,10 @@ export interface SearchProps {
 export const Search: React.FC<SearchProps> = ({ placeholder }): React.ReactElement => {
   const theme = useTheme();
   const [trans] = useTrans('Manage');
+
+  useEffect(() => {
+    storage.setData('shared.component.search.value', '')
+  }, [])
 
   const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     storage.setData('shared.component.search.value', e.currentTarget.value);
