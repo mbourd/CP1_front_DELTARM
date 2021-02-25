@@ -68,8 +68,8 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({ security, c
   );
 
   useEffect(() => {
-    // let timeout: number | null = null;
-    let timeout: ReturnType<typeof setTimeout> = setTimeout(() => '', 1000);;
+
+    let timeout: ReturnType<typeof setTimeout> = setTimeout(() => '', 1000);
 
     if (jwt && context.data.exp) {
       const milliseconds = (context.data.exp * 1000 - Date.now()) / 2;
