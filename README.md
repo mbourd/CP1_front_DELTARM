@@ -51,8 +51,19 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+### Deployment
+
+The front-end part is totally separate from the back-end part and run by itself on a docker container. The docker container is launch by the CI on GitLab and builds all the necessary assets for every environments.
+
+If you need to redeploy the front-end on the server, just run the previous pipeline on GitLab, it will trigger the .gitlab-ci.yml.
+
+What it does : Installings dependencies and buildings assets, then deploy.
+
+The SSL certificates are physically on the server. The container is configure to get them on infrastructure for production and preproduction.
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+

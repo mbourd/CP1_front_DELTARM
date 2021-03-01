@@ -12,7 +12,7 @@ export const NotFound: React.FC<IProps> = ({ title }): React.ReactElement => {
     <EditStyled>
       <HeadingOne>{title}</HeadingOne>
       <NotFoundStyled>
-        <ErrorNoData message={"Le dossier recherché n'exisite pas"} />
+        <ErrorNoData message={"Le dossier recherché n'existe pas"} />
       </NotFoundStyled>
     </EditStyled>
   );

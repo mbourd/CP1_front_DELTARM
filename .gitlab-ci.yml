@@ -86,7 +86,7 @@ deploy develop:
       docker rm -f cp1_front_dev &&
       docker rmi -f $APP_IMAGE_TAG_NAME &&
       docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN &&
-      docker run --name cp1_front_dev --restart=on-failure:10 -d -p 80:80 $APP_IMAGE_TAG_NAME
+      docker run --name cp1_front_dev --restart=on-failure:10 -d -p 80:80 -p 443:443 -v /home/deltarm/etc/ssl:/etc/nginx/certs $APP_IMAGE_TAG_NAME
       "
 
 deploy prod:
