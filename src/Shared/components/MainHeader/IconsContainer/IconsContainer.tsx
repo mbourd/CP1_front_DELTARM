@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { BPITooltip } from 'Shared/components';
 import { FileIcon, PlayerIcon } from 'Styles';
 import { useApi, useTrans } from 'Services';
@@ -20,11 +19,11 @@ export const IconsContainer: React.FC = (): React.ReactElement => {
           <FileIcon fontSize={'large'} />
         </a>
       </BPITooltip>
-      {/* <BPITooltip title={trans('tutorials')}>
-        <Link to={'/'}>
+      <BPITooltip title={trans('F.A.Q')}>
+        <a target='__blank' href="https://cp1.stonly.com/kb/fr">
           <PlayerIcon fontSize={'large'} />
-        </Link>
-      </BPITooltip> */}
+        </a>
+      </BPITooltip>
     </IconsContainerStyled>
   );
 };
