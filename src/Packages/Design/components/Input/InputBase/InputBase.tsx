@@ -32,6 +32,7 @@ export const InputBase: React.FC<IInputBase> = ({
   const theme = useTheme();
   const c = theme.color[color];
   const classes = useStyles({ fontFamily: theme.font.text.main, fontColor: c ? c.main : theme.color.text.main });
+  const { input, ...MUIInputBaseClasse } = classes;
 
   return (
     <InputBaseStyled
@@ -43,7 +44,7 @@ export const InputBase: React.FC<IInputBase> = ({
     >
       {icon}
       <MUIInputBase
-        classes={classes}
+        classes={MUIInputBaseClasse}
         name={name}
         autoFocus={autoFocus}
         defaultValue={defaultValue}
