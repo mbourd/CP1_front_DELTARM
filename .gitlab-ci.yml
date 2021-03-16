@@ -71,6 +71,7 @@ deploy develop:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - echo "$GITLAB_CI_SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
     - eval "$(ssh-agent -s)"
     - ssh-add ~/.ssh/id_rsa 
     - ssh-keyscan -H $SERVER_HOST_DEV >> ~/.ssh/known_hosts
