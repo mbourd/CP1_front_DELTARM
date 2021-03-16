@@ -68,13 +68,12 @@ deploy develop:
     APP_IMAGE_TAG_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
   before_script:
     - apk update && apk add openssh rsync curl
+    - eval "$(ssh-agent -s)"
+    - echo "$GITLAB_CI_SSH_PRIVATE_KEY" |tr -d '\r' |ssh-add - > /dev/null
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - echo "$GITLAB_CI_SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
-    - chmod 600 ~/.ssh/id_rsa
-    - eval "$(ssh-agent -s)"
-    - ssh-add ~/.ssh/id_rsa
-    - echo $SERVER_HOST_DEV
+    - ssh-keyscan $SERVER_HOST_DEV >> ~/.ssh/know_hosts
+    - chmod 644 ~/.ssh/know_hosts
     - curl ifconfig.io
     - docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN
   script:
