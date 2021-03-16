@@ -68,7 +68,7 @@ deploy develop:
     APP_IMAGE_TAG_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
   before_script:
     - apk update && apk add openssh rsync curl
-    - curl ifconfig.io
+    - curl ifconfig.io 
     - eval "$(ssh-agent -s)"
     - echo "$GITLAB_CI_SSH_PRIVATE_KEY" |tr -d '\r' |ssh-add - > /dev/null
     - mkdir -p ~/.ssh
