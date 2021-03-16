@@ -75,7 +75,7 @@ deploy develop:
     - eval "$(ssh-agent -s)"
     - ssh-add ~/.ssh/id_rsa
     - echo $SERVER_HOST_DEV
-    - ssh-keyscan -H $SERVER_HOST_DEV 
+    - touch ~/.ssh/know_hosts 
     - ssh-keyscan -H $SERVER_HOST_DEV >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
     - docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN
