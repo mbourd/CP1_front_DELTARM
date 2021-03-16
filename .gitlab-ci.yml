@@ -85,7 +85,7 @@ deploy develop:
     - docker push $APP_IMAGE_TAG_NAME
     - ssh $SERVER_USER@$SERVER_HOST_DEV "
       docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN &&
-      docker pull $APP_IMAGE_TAG_NAME
+      docker pull $APP_IMAGE_TAG_NAME &&
       docker restart cp1_front_dev
       "
 
