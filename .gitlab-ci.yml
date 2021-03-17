@@ -119,3 +119,4 @@ deploy prod:
       docker pull $APP_IMAGE_TAG_NAME &&
       docker restart cp1_front_prod
       "
+
