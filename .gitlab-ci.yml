@@ -44,6 +44,7 @@ deploy preprod:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - ssh-keyscan $SERVER_HOST_PP >> ~/.ssh/known_hosts
+    - ssh-keyscan -H $SERVER_HOST_PP >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
     - docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN
   script:
@@ -54,10 +55,9 @@ deploy preprod:
     - docker build -t $APP_IMAGE_TAG_NAME .
     - docker push $APP_IMAGE_TAG_NAME
     - ssh $SERVER_USER@$SERVER_HOST_PP "
-      docker rm -f cp1_front_preprod &&
-      docker rmi -f $APP_IMAGE_TAG_NAME &&
       docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN &&
-      docker run --name cp1_front_preprod --restart=on-failure:10 -d -p 80:80 -p 443:443 -v /home/deltarm/etc/ssl:/etc/nginx/certs $APP_IMAGE_TAG_NAME
+      docker pull $APP_IMAGE_TAG_NAME &&
+      docker restart cp1_front_preprod
       "
 
 deploy develop:
@@ -67,12 +67,14 @@ deploy develop:
   variables:
     APP_IMAGE_TAG_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
   before_script:
-    - apk update && apk add openssh rsync
-    - eval $(ssh-agent -s)
-    - echo "$GITLAB_CI_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - apk update && apk add openssh rsync curl
+    - curl ifconfig.io 
+    - eval "$(ssh-agent -s)"
+    - echo "$GITLAB_CI_SSH_PRIVATE_KEY" |tr -d '\r' |ssh-add - > /dev/null
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - ssh-keyscan $SERVER_HOST_DEV >> ~/.ssh/known_hosts
+    - ssh-keyscan -H $SERVER_HOST_DEV >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
     - docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN
   script:
@@ -83,10 +85,9 @@ deploy develop:
     - docker build -t $APP_IMAGE_TAG_NAME .
     - docker push $APP_IMAGE_TAG_NAME
     - ssh $SERVER_USER@$SERVER_HOST_DEV "
-      docker rm -f cp1_front_dev &&
-      docker rmi -f $APP_IMAGE_TAG_NAME &&
       docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN &&
-      docker run --name cp1_front_dev --restart=on-failure:10 -d -p 80:80 -p 443:443 -v /home/deltarm/etc/ssl:/etc/nginx/certs $APP_IMAGE_TAG_NAME
+      docker pull $APP_IMAGE_TAG_NAME &&
+      docker restart cp1_front_dev
       "
 
 deploy prod:
@@ -112,8 +113,7 @@ deploy prod:
     - docker build -t $APP_IMAGE_TAG_NAME .
     - docker push $APP_IMAGE_TAG_NAME
     - ssh $SERVER_USER@$SERVER_HOST_PROD "
-      docker rm -f cp1_front_prod &&
-      docker rmi -f $APP_IMAGE_TAG_NAME &&
       docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN &&
-      docker run --name cp1_front_prod --restart=on-failure:10 -d -p 80:80 -p 443:443 -v /home/deltarm/etc/ssl:/etc/nginx/certs $APP_IMAGE_TAG_NAME
+      docker pull $APP_IMAGE_TAG_NAME &&
+      docker restart cp1_front_prod
       "
