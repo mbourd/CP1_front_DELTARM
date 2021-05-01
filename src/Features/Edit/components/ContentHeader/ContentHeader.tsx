@@ -16,7 +16,7 @@ import {
   GenericAction,
 } from '../Actions';
 
-import { EditValidationContext, FileComment } from 'Features';
+import { EditValidationContext, FileComment, FileAudit } from 'Features';
 
 export const ContentHeader: React.FC = (): React.ReactElement => {
   const { data } = useContext(EditValidationContext);
@@ -24,8 +24,11 @@ export const ContentHeader: React.FC = (): React.ReactElement => {
   return (
     <ContentHeaderStyled>
       <Grid container alignItems={'center'} wrap={'nowrap'}>
-        <Grid item className={'left'}>
+        <Grid item className={'icon-container'}>
           <FileComment />
+        </Grid>
+        <Grid item className={'icon-container'}>
+          <FileAudit />
         </Grid>
         <Grid item className={'right'}>
           {data?.actions.map((action, index) => {

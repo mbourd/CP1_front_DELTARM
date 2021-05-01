@@ -14,7 +14,16 @@ export const ContentHeaderStyled = styled.div`
     }
   }
 
-  .comment-icon {
+  .icon-container {
+    margin: 10px;
+  }
+
+  .audit-icon {
+    font-size: 2.49rem;
+  }
+
+  .comment-icon,
+  .audit-icon {
     &.active {
       color: ${({ theme }) => theme.color.active.main};
     }
