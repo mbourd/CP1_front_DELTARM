@@ -13,8 +13,8 @@ export const Search: React.FC<SearchProps> = ({ placeholder }): React.ReactEleme
   const [trans] = useTrans('Manage');
 
   useEffect(() => {
-    storage.setData('shared.component.search.value', '')
-  }, [])
+    storage.setData('shared.component.search.value', '');
+  }, []);
 
   const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     storage.setData('shared.component.search.value', e.currentTarget.value);

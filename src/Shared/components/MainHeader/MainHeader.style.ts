@@ -12,11 +12,11 @@ export const MainHeaderStyled = styled.header`
 
   .brand {
     bottom: 0;
-    display: block;
-    height: ${({ theme }) => theme.spacing.large};
+    display: inline-block;
+    height: 100%;
     left: ${({ theme }) => theme.spacing.normal};
     margin: auto;
-    position: absolute;
+    position: relative;
     top: 0;
     width: 180px;
 
@@ -25,6 +25,16 @@ export const MainHeaderStyled = styled.header`
       object-fit: contain;
       width: 100%;
     }
+  }
+
+  .app-name {
+    left: ${({ theme }) => theme.spacing.xxLarge};
+    bottom: ${({ theme }) => theme.spacing.xSmall};
+    margin: auto;
+    position: relative;
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
   }
 
   .menu-icon {
