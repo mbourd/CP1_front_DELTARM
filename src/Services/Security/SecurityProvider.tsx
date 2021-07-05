@@ -68,13 +68,12 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({ security, c
   );
 
   useEffect(() => {
-
     let timeout: ReturnType<typeof setTimeout> = setTimeout(() => '', 1000);
 
     if (jwt && context.data.exp) {
       const milliseconds = (context.data.exp * 1000 - Date.now()) / 2;
 
-       timeout = setTimeout(async () => {
+      timeout = setTimeout(async () => {
         const { body } = await send('refresh');
         const user = new User();
         user.fromJwt(body.data.jwt);
