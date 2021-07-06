@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { Grid } from '@material-ui/core';
 import { Button, Modal, StairsLoader, Error500, BadRequest, FormLabel, FormText, Select } from 'Shared/components';
 import { SearchModalBPIContentStyled, SearchModalFooterStyled } from './SearchModal.style';
-import { router, storage, SwitchCallState, useApi } from 'Services';
+import { apiRouter, router, storage, SwitchCallState, useApi } from 'Services';
 import { IFileSearchApiReturn } from 'Features/Manage';
 
 interface IProps {
@@ -57,14 +57,20 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
   let footer = null;
 
   if (callState === 'BAD_REQUEST' && route?.type === 'DRM') {
+    // case we don't find the file from search/file, we change the create url by client, ksiop only for BPI
+    if (error?.response?.body.data.btn[1]?.route.url) {
+      apiRouter.changeRouteUrl('searchFileKSIOP', error?.response?.body.data.btn[1].route.url);
+    }
     footer = (
       <SearchModalFooterStyled>
-        <Button color={'error'} onClick={onClose}>
-          Annuler la recherche
-        </Button>
-        {route?.type === 'DRM' && error?.response && error?.response.body.error_code === 180 ? (
+        {error?.response?.body.data.btn[0].lib && (
+          <Button color={'error'} onClick={onClose}>
+            {error?.response?.body.data.btn[0].lib}
+          </Button>
+        )}
+        {route?.type === 'DRM' && error?.response && (error?.response.body.error_code === 180 || 243) ? (
           <Button color={'success'} onClick={() => send('searchFileKSIOP', {}, { file_num, file_avenant })}>
-            Rechercher dans KSIOP
+            {error?.response?.body.data.btn[1].lib}
           </Button>
         ) : null}
       </SearchModalFooterStyled>
