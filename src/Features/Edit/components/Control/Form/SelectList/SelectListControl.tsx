@@ -55,7 +55,7 @@ export const SelectListControl: React.FC<IProps> = ({ control, fileId }): React.
             saveValue('' + first);
           }}
         >
-          {'Sélectionez une valeur'}
+          {'Sélectionner une valeur'}
         </Select>
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ControlFooter control={control} />
