@@ -44,6 +44,9 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
   }
 
   if (callState === 'SUCCESS' && data && route?.type === 'KSIOP') {
+    if (data.routeForFileCreation) {
+      apiRouter.changeRouteUrl('searchFileKSIOP', data.routeForFileCreation);
+    }
     storage.setData('edit.create.queries', {
       file_num,
       file_avenant,
