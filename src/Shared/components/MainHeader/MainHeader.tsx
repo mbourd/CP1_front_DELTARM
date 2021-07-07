@@ -26,6 +26,7 @@ export const MainHeader: React.FC = (): React.ReactElement => {
   const name = clientInfos?.data[0].cli_name;
 
   if (name) {
+    // dynamic title by client
     document.title = 'CP1 - ' + name;
   }
 
