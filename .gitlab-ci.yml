@@ -58,7 +58,7 @@ deploy preprod:
     - ssh $SERVER_USER@$SERVER_HOST_PP "
       docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN &&
       docker-compose -f /home/deltarm/client/docker-compose.yml pull &&
-      docker-compose -f /home/deltarm/client/docker-compose.yml restart
+      docker-compose -f /home/deltarm/client/docker-compose.yml up -d --remove-orphans
       "
 
 deploy develop:
@@ -88,7 +88,7 @@ deploy develop:
     - ssh $SERVER_USER@$SERVER_HOST_DEV "
       docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN &&
       docker-compose -f /home/deltarm/client/docker-compose.yml pull &&
-      docker-compose -f /home/deltarm/client/docker-compose.yml restart
+      docker-compose -f /home/deltarm/client/docker-compose.yml up -d --remove-orphans
       "
 
 deploy prod:
