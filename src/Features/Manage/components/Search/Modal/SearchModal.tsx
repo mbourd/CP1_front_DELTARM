@@ -44,6 +44,9 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
   }
 
   if (callState === 'SUCCESS' && data && route?.type === 'KSIOP') {
+    if (data.routeForFileCreation) {
+      apiRouter.changeRouteUrl('searchFileKSIOP', data.routeForFileCreation);
+    }
     storage.setData('edit.create.queries', {
       file_num,
       file_avenant,
@@ -133,7 +136,7 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
             <div className={'product-list'}>
               {data.productList ? (
                 <>
-                  <FormLabel>Selectionner une famille de produit</FormLabel>
+                  <FormLabel>Sélectionner une famille de produit</FormLabel>
                   <Select
                     name={'productList'}
                     data={data.productList}
@@ -145,7 +148,7 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
                     onClose={setProduct}
                     closeOnSelect
                   >
-                    Selectionner une famille de produit
+                    Sélectionner une famille de produit
                   </Select>
                 </>
               ) : null}
