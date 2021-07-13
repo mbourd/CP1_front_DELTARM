@@ -57,7 +57,8 @@ deploy preprod:
     - docker push $APP_IMAGE_TAG_NAME
     - ssh $SERVER_USER@$SERVER_HOST_PP "
       docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN &&
-      docker-compose -f /home/deltarm/client/docker-compose.yml up -d --remove-orphans
+      docker-compose -f /home/deltarm/client/docker-compose.preprod.yml pull &&
+      docker-compose -f /home/deltarm/client/docker-compose.preprod.yml up -d --remove-orphans
       "
 
 deploy develop:
@@ -68,7 +69,7 @@ deploy develop:
     APP_IMAGE_TAG_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
   before_script:
     - apk update && apk add openssh rsync curl
-    - curl ifconfig.io 
+    - curl ifconfig.io
     - eval "$(ssh-agent -s)"
     - echo "$GITLAB_CI_SSH_PRIVATE_KEY" |tr -d '\r' |ssh-add - > /dev/null
     - mkdir -p ~/.ssh
@@ -86,7 +87,8 @@ deploy develop:
     - docker push $APP_IMAGE_TAG_NAME
     - ssh $SERVER_USER@$SERVER_HOST_DEV "
       docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN &&
-      docker-compose -f /home/deltarm/client/docker-compose.yml up -d --remove-orphans
+      docker-compose -f /home/deltarm/client/docker-compose.dev.yml pull &&
+      docker-compose -f /home/deltarm/client/docker-compose.dev.yml up -d --remove-orphans
       "
 
 deploy prod:

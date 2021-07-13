@@ -15,6 +15,12 @@ export interface IFileSearchApiReturn {
   fileCodecp?: string;
   fileManager?: string;
   fileProduit?: string;
+  routeForFileCreation?: string;
+}
+
+export interface fileField {
+  key: string;
+  value: string;
 }
 
 export interface IFileSearchFullResult {
@@ -82,6 +88,11 @@ apiRouter.registerRoute({
       return product;
     });
 
+    const fileBorrower = data.data.file_fields.find((field: fileField) => field.key === 'file_borrower');
+    const fileCodecp = data.data.file_fields.find((field: fileField) => field.key === 'file_codecp');
+    const fileManager = data.data.file_fields.find((field: fileField) => field.key === 'file_manager');
+    const fileProduit = data.data.file_fields.find((field: fileField) => field.key === 'file_produit');
+
     return {
       error: !data.data.data_file,
       errorMessage: data.data.return_message,
@@ -90,10 +101,11 @@ apiRouter.registerRoute({
       topMessage: data.data.msg_top,
       productList,
       file: data.data.data_file,
-      fileBorrower: data.data.file_borrower,
-      fileCodecp: data.data.file_codecp,
-      fileManager: data.data.file_manager,
-      fileProduit: data.data.file_produit,
+      fileBorrower: fileBorrower.value,
+      fileCodecp: fileCodecp.value,
+      fileManager: fileManager.value,
+      fileProduit: fileProduit.value,
+      routeForFileCreation: data.data.route_for_file_creation,
     };
   },
 });

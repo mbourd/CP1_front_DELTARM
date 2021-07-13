@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useRef } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import { Card } from '@material-ui/core';
 import { BPIBadge, Popper } from 'Shared/components';
 import { CommentIcon } from 'Styles';
@@ -10,20 +10,18 @@ import { FileCommentStyled, FileCommentHeaderStyled } from './FileComment.style'
 import { FileCommentFooter } from './Footer/FileCommentFooter';
 
 export const FileComment: React.FC = (): React.ReactElement => {
-  const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(null);
+  const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | Element | null>(null);
   const { request, send, data } = useApi<IFileComment[]>();
   const context = useContext(EditValidationContext);
 
   const queries = router.getQueries();
   const { fileId } = context;
 
-  const iconRef = useRef<Element | null>(null);
-
   useEffect(() => {
     send('getFileComments', {}, { file_id: fileId });
 
     if (queries.comments === '1') {
-      iconRef.current = document.querySelector('.open-comments-icon');
+      setAnchorEl(document.querySelector('.open-comments-icon'));
     }
 
     return () => {
@@ -35,25 +33,28 @@ export const FileComment: React.FC = (): React.ReactElement => {
     send('getFileComments', {}, { file_id: fileId });
   }, [send, fileId]);
 
+  const handleClickAway = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <>
       <BPIBadge content={data?.length}>
         <CommentIcon
           fontSize={'large'}
-          className={'comment-icon open-comments-icon' + (iconRef.current || anchorEl ? ' active' : '')}
+          className={'comment-icon open-comments-icon' + (anchorEl ? ' active' : '')}
           onClick={(e) => {
-            iconRef.current = null;
             setAnchorEl(anchorEl ? null : e.currentTarget);
             router.setQueries({});
           }}
         />
       </BPIBadge>
       <Popper
-        element={iconRef.current || anchorEl}
+        element={anchorEl}
         placement={'bottom-start'}
         bdr={'0'}
         border={'0'}
-        onClickAway={() => setAnchorEl(null)}
+        onClickAway={handleClickAway}
         zIndex={2}
       >
         <FileCommentStyled>
