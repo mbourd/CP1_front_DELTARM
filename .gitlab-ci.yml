@@ -2,7 +2,7 @@
   only:
     - master
     - preprod
-    - develop
+    - staging
     - merge_requests
 
 image: docker:19.03.1
@@ -61,10 +61,10 @@ deploy preprod:
       docker-compose -f /home/deltarm/client/docker-compose.preprod.yml up -d --remove-orphans
       "
 
-deploy develop:
+deploy staging:
   stage: build and deploy
   only:
-    - develop
+    - staging
   variables:
     APP_IMAGE_TAG_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
   before_script:
@@ -81,14 +81,14 @@ deploy develop:
   script:
     - cp .env .env.production
     - docker run --rm -w="/app" -v $PWD:/app node:12-alpine sh -c "yarn run build --profile"
-    - cp ci/dev/Dockerfile Dockerfile
-    - cp ci/dev/nginx.conf nginx.conf
+    - cp ci/staging/Dockerfile Dockerfile
+    - cp ci/staging/nginx.conf nginx.conf
     - docker build -t $APP_IMAGE_TAG_NAME .
     - docker push $APP_IMAGE_TAG_NAME
     - ssh $SERVER_USER@$SERVER_HOST_DEV "
       docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN &&
-      docker-compose -f /home/deltarm/client/docker-compose.dev.yml pull &&
-      docker-compose -f /home/deltarm/client/docker-compose.dev.yml up -d --remove-orphans
+      docker-compose -f /home/deltarm/client/docker-compose.staging.yml pull &&
+      docker-compose -f /home/deltarm/client/docker-compose.staging.yml up -d --remove-orphans
       "
 
 deploy prod:
