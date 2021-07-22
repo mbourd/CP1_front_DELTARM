@@ -66,12 +66,12 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
     }
     footer = (
       <SearchModalFooterStyled>
-        {error?.response?.body.data.btn[0].lib && (
+        {error?.response?.body.data.btn[0] !== undefined && (
           <Button color={'error'} onClick={onClose}>
             {error?.response?.body.data.btn[0].lib}
           </Button>
         )}
-        {route?.type === 'DRM' && error?.response && (error?.response.body.error_code === 180 || 243) ? (
+        {error?.response?.body.data.btn[1] !== undefined ? (
           <Button color={'success'} onClick={() => send('searchFileKSIOP', {}, { file_num, file_avenant })}>
             {error?.response?.body.data.btn[1].lib}
           </Button>
