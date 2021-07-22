@@ -14,8 +14,14 @@ export const SettingUp: React.FC = (): React.ReactElement | null => {
   return (
     <>
       <ContentHeader />
-      <ContentTitle>Mise en place</ContentTitle>
-      <DisplayControl controls={data.currentSection.chapters[0].controls} />
+      {data.currentSection.chapters.map((chapter, index) => {
+        return (
+          <React.Fragment key={index}>
+            <ContentTitle>{chapter.label}</ContentTitle>
+            <DisplayControl controls={chapter.controls} />
+          </React.Fragment>
+        );
+      })}
     </>
   );
 };
