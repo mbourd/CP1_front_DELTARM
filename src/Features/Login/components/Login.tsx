@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import './translations';
 import { LoginStyled } from './Login.style';
 import { HeadingOne, PageLoader } from 'Shared/components';
-import { useTrans, SecurityContext, router } from 'Services';
+import { useTrans, SecurityContext } from 'Services';
 
 const Login: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Login');
@@ -20,7 +20,6 @@ const Login: React.FC = (): React.ReactElement => {
   useEffect(() => {
     if (token) {
       login(token);
-      router.redirectTo('dashboard');
     }
   }, [login, token]);
 
