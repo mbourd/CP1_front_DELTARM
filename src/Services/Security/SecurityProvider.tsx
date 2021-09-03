@@ -39,7 +39,7 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({ security, c
         const user = new User();
         user.fromJwt(body.data.jwt);
         security.persistUser(user);
-        setUser(user);
+        await setUser(user);
         router.redirectTo('dashboard');
       } catch {
         router.redirectTo('loginError');
