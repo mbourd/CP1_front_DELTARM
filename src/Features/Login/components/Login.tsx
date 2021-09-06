@@ -5,11 +5,12 @@ import { useLocation } from 'react-router-dom';
 import './translations';
 import { LoginStyled } from './Login.style';
 import { HeadingOne, PageLoader } from 'Shared/components';
-import { useTrans, SecurityContext } from 'Services';
+import { useTrans, SecurityContext, useSecurity } from 'Services';
 
 const Login: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Login');
   const { login } = useContext(SecurityContext);
+  const { user } = useSecurity();
 
   const location = useLocation();
 
@@ -22,6 +23,12 @@ const Login: React.FC = (): React.ReactElement => {
       login(token);
     }
   }, [login, token]);
+  useEffect(() => {
+    if (user.isLogged()) {
+      // We need the updated state immediately available
+      window.location.href = '/';
+    }
+  }, [user]);
 
   return (
     <LoginStyled>
