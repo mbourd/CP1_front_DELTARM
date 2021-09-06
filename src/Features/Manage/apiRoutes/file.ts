@@ -3,6 +3,7 @@ import { ISelectData } from 'Shared/components';
 import { AppActionContextType } from 'Shared/types';
 
 export interface IFileSearchApiReturn {
+  fileFields?: Record<string, string>;
   error: boolean;
   errorMessage: string | null;
   fileId: string | null;
@@ -42,6 +43,7 @@ apiRouter.registerRoute({
       errorMessage: data.data.return_message,
       fileId: data.data.file_id,
       fileContext: data.data.file_context,
+      fileFields: data.data.file_fields,
     };
   },
 });
@@ -66,6 +68,7 @@ apiRouter.registerRoute({
       error: !data.data.file_id,
       errorMessage: data.data.return_message,
       fileId: data.data.file_id,
+      fileFields: data.data.file_fields,
     };
   },
 });
@@ -87,11 +90,13 @@ apiRouter.registerRoute({
 
       return product;
     });
+    const fileFields: Record<string, string> = {};
 
-    const fileBorrower = data.data.file_fields.find((field: fileField) => field.key === 'file_borrower');
-    const fileCodecp = data.data.file_fields.find((field: fileField) => field.key === 'file_codecp');
-    const fileManager = data.data.file_fields.find((field: fileField) => field.key === 'file_manager');
-    const fileProduit = data.data.file_fields.find((field: fileField) => field.key === 'file_produit');
+    data.data.file_fields.map((field: any) => {
+      fileFields[field.key] = field.value;
+
+      return field;
+    });
 
     return {
       error: !data.data.data_file,
@@ -101,10 +106,7 @@ apiRouter.registerRoute({
       topMessage: data.data.msg_top,
       productList,
       file: data.data.data_file,
-      fileBorrower: fileBorrower.value,
-      fileCodecp: fileCodecp.value,
-      fileManager: fileManager.value,
-      fileProduit: fileProduit.value,
+      fileFields,
       routeForFileCreation: data.data.route_for_file_creation,
     };
   },
