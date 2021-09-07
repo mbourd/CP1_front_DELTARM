@@ -1,5 +1,5 @@
 import { useApi as DRMUseApi, UseApiReturnType, apiRouter } from 'Packages/Api';
-import { getEnv, useSecurity} from 'Services';
+import { getEnv, useSecurity } from 'Services';
 
 export interface UseApiOptions {
   promise?: boolean;

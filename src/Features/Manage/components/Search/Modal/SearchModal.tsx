@@ -42,25 +42,20 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
 
     return null;
   }
-
   if (callState === 'SUCCESS' && data && route?.type === 'KSIOP') {
     if (data.routeForFileCreation) {
       apiRouter.changeRouteUrl('searchFileKSIOP', data.routeForFileCreation);
     }
+    const createQueries = { ...data.fileFields };
     storage.setData('edit.create.queries', {
-      file_num,
-      file_avenant,
-      file_produit: data.fileProduit,
-      file_borrower: data.fileBorrower,
-      file_codecp: data.fileCodecp,
-      file_manager: data.fileManager,
+      ...createQueries,
     });
   }
 
   let footer = null;
 
   if (callState === 'BAD_REQUEST' && route?.type === 'DRM') {
-    // case we don't find the file from search/file, we change the create url by client, ksiop only for BPI
+    // case we don't find the file from search/file, we change the create url by client, ksiop is only for BPI
     if (error?.response?.body.data.btn[1]?.route.url) {
       apiRouter.changeRouteUrl('searchFileKSIOP', error?.response?.body.data.btn[1].route.url);
     }
