@@ -31,7 +31,7 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({ security, c
   const jwt = user.getJwt();
   const noop = () => undefined;
 
-  const { send, request } = useApi<unknown>({ promise: true });
+  const { send, request } = useApi<void>({ promise: true });
   request.setBearerToken(jwt);
 
   const login = useCallback(
@@ -41,7 +41,7 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({ security, c
         const user = new User();
         user.fromJwt(body.data.jwt);
         security.persistUser(user);
-        setUser(user, () => router.redirectTo('dashboard'));
+        setUser(user);
       } catch {
         router.redirectTo('loginError');
       }
