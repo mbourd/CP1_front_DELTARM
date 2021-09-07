@@ -1,10 +1,9 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import IdleTimer from 'react-idle-timer';
 import { router } from 'Packages/Router';
 import { ISecurity, IUser, JwtData, User } from 'Packages/Security';
 import { useApi } from 'Services/Api';
 import { getEnv } from 'Services/Helpers';
-import { useStateWithCallbackLazy } from 'use-state-with-callback';
 
 export interface ISecurityProviderContext {
   user: IUser;
@@ -27,9 +26,8 @@ export interface ISecurityProviderProps {
 }
 
 export const SecurityProvider: React.FC<ISecurityProviderProps> = ({ security, children }): React.ReactElement => {
-  const [user, setUser] = useStateWithCallbackLazy<IUser>(security.getUser());
+  const [user, setUser] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
-  const noop = () => undefined;
 
   const { send, request } = useApi<void>({ promise: true });
   request.setBearerToken(jwt);
@@ -52,7 +50,7 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({ security, c
   const logout = useCallback(() => {
     const { error } = security.logout(user);
     if (!error) {
-      setUser(new User(), noop);
+      setUser(new User());
     }
     window.location.href = getEnv('LOGOUT_REDIRECT');
   }, [security, user, setUser]);
@@ -78,7 +76,7 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({ security, c
         const { body } = await send('refresh');
         const user = new User();
         user.fromJwt(body.data.jwt);
-        setUser(user, noop);
+        setUser(user);
       }, milliseconds);
     }
 
