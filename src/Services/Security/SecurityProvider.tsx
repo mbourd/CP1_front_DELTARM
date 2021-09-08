@@ -29,7 +29,7 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({ security, c
   const [user, setUser] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
 
-  const { send, request } = useApi<unknown>({ promise: true });
+  const { send, request } = useApi<void>({ promise: true });
   request.setBearerToken(jwt);
 
   const login = useCallback(
@@ -40,12 +40,11 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({ security, c
         user.fromJwt(body.data.jwt);
         security.persistUser(user);
         setUser(user);
-        router.redirectTo('dashboard');
       } catch {
         router.redirectTo('loginError');
       }
     },
-    [send, security],
+    [send, security, setUser],
   );
 
   const logout = useCallback(() => {
@@ -54,7 +53,7 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({ security, c
       setUser(new User());
     }
     window.location.href = getEnv('LOGOUT_REDIRECT');
-  }, [security, user]);
+  }, [security, user, setUser]);
 
   const context = useMemo(
     () => ({
@@ -86,7 +85,7 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({ security, c
         clearTimeout(timeout);
       }
     };
-  }, [send, jwt, context.data]);
+  }, [send, jwt, context.data, setUser]);
 
   const idleTimeout = parseInt(getEnv('IDLE_TIMEOUT')) * 1000;
 
