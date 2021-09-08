@@ -8,12 +8,12 @@ import {
   FormLabel,
   FormText,
   Modal,
-  Select,
   StairsLoader,
 } from '../../../../../Packages/Design/components';
-import { Grid, Input } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import React, { useCallback, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import { GenerateFieldManual } from './GenerateFieldManual';
 
 interface IProps {
   open: boolean;
@@ -146,77 +146,15 @@ export const CreateModal: React.FC<IProps> = ({ onClose, open, dataManualInput }
             </Grid>
             <form className={'missing-fields-form'} onSubmit={handleSubmit(createFile)}>
               {dataManualInput.fields.map((field: any) => {
-                return field.type === 'selectList' ? (
-                  <Controller
-                    render={() => (
-                      <div className={'missing-fields'} key={field.id}>
-                        <FormLabel>{field.label}</FormLabel>
-                        <Select
-                          name={field.key}
-                          data={field.option}
-                          multiple={false}
-                          selectedValues={{
-                            [Object.keys(field.option)[0] || '-1']: true,
-                          }}
-                          onInit={setListMissingField}
-                          onClose={setListMissingField}
-                          closeOnSelect
-                        >
-                          {field.label}
-                        </Select>
-                      </div>
-                    )}
-                    rules={{
-                      pattern: field.format,
-                    }}
-                    control={control}
-                    name={field.key}
+                return (
+                  <GenerateFieldManual
+                    field={field}
                     key={field.order}
-                    defaultValue={''}
-                  />
-                ) : null;
-              })}
-              {dataManualInput.fields.map((field: any) => {
-                return field.type === 'float' ? (
-                  <Controller
-                    render={() => (
-                      <div className={'missing-fields'} key={field.id}>
-                        <FormLabel>{field.label}</FormLabel>
-                        <div className={'missing-field'}>
-                          <Input name={field.key} type={'number'} onBlur={handleLeaveField} placeholder={field.label} />
-                        </div>
-                      </div>
-                    )}
-                    rules={{
-                      pattern: field.format,
-                    }}
+                    handleLeaveField={handleLeaveField}
+                    setListMissingField={setListMissingField}
                     control={control}
-                    name={field.key}
-                    key={field.order}
-                    defaultValue={''}
                   />
-                ) : null;
-              })}
-              {dataManualInput.fields.map((field: any) => {
-                return field.type === 'string' ? (
-                  <Controller
-                    render={() => (
-                      <div className={'missing-fields'} key={field.id}>
-                        <FormLabel>{field.label}</FormLabel>
-                        <div className={'missing-field'}>
-                          <Input name={field.key} type={'text'} onBlur={handleLeaveField} placeholder={field.label} />
-                        </div>
-                      </div>
-                    )}
-                    rules={{
-                      pattern: field.format,
-                    }}
-                    control={control}
-                    name={field.key}
-                    key={field.order}
-                    defaultValue={''}
-                  />
-                ) : null;
+                );
               })}
             </form>
           </SearchModalBPIContentStyled>
