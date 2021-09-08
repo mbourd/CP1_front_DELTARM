@@ -172,7 +172,7 @@ export const CreateModal: React.FC<IProps> = ({ onClose, open, dataManualInput }
                     control={control}
                     name={field.key}
                     key={field.order}
-                    defaultValue={{ [Object.keys(field.option)[0] || '-1']: true }}
+                    defaultValue={''}
                   />
                 ) : null;
               })}
