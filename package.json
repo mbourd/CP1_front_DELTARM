@@ -69,8 +69,7 @@
     "react-scripts": "3.4.3",
     "styled-components": "^5.2.0",
     "superagent": "^6.1.0",
-    "typescript": "~3.7.2",
-    "use-state-with-callback": "^2.0.3"
+    "typescript": "~3.7.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
