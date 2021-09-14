@@ -44,9 +44,15 @@ export interface IMissingField {
 export interface IKSIOPManualInput {
   buttons: Array<{ action: string; label: string; order: string }>;
   fields: IMissingField[];
-  manualFile: { key: string; value: string }[];
+  manualFile: {
+    file_num: string;
+    file_avenant: string;
+    typedossier: string;
+  };
   header: string;
   title: string;
+  fileContext?: AppActionContextType;
+  fileId: string | null;
 }
 
 apiRouter.registerRoute({
@@ -93,6 +99,7 @@ apiRouter.registerRoute({
       manualFile: data.data.file,
       header: data.data.header,
       title: data.data.title,
+      fileId: data.data.file_id,
     };
   },
 });

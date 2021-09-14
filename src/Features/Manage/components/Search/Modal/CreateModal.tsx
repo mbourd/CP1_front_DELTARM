@@ -1,4 +1,4 @@
-import { apiRouter, SwitchCallState, useApi } from '../../../../../Services';
+import { apiRouter, SwitchCallState, useApi, router } from '../../../../../Services';
 import { IKSIOPManualInput } from '../../../apiRoutes';
 import { SearchModalBPIContentStyled, SearchModalFooterStyled } from './SearchModal.style';
 import {
@@ -23,7 +23,7 @@ interface IProps {
 
 export const CreateModal: React.FC<IProps> = ({ onClose, open, dataManualInput }): React.ReactElement | null => {
   const { handleSubmit, control } = useForm();
-  const { error, callState, send } = useApi<IKSIOPManualInput | null>();
+  const { error, callState, send, data } = useApi<IKSIOPManualInput | null>();
   const [missingFields, setStateMissingFields] = useState(true);
 
   // Have the current filled queries in object
@@ -58,6 +58,15 @@ export const CreateModal: React.FC<IProps> = ({ onClose, open, dataManualInput }
       'searchFileKSIOP',
       dataManualInput?.buttons[1].action ? dataManualInput?.buttons[1].action : '',
     );
+    const file_num = dataManualInput?.manualFile.file_num;
+    const file_avenant = dataManualInput?.manualFile.file_avenant;
+    const typedossier = dataManualInput?.manualFile.typedossier;
+    queries = {
+      ...queries,
+      file_num,
+      file_avenant,
+      typedossier,
+    };
     send('createFile', {}, queries);
   }, [send, dataManualInput]);
 
@@ -79,6 +88,12 @@ export const CreateModal: React.FC<IProps> = ({ onClose, open, dataManualInput }
     // verify before unlock send buttons, react hook form ?
     verifyValidForm();
   }, []);
+
+  if (callState === 'SUCCESS' && data) {
+    router.redirectTo(data.fileContext === 'VALID' ? 'validation' : 'edit', { id: data.fileId });
+
+    return null;
+  }
 
   const footer = (
     <SearchModalFooterStyled>
