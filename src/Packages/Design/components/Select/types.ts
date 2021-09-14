@@ -9,6 +9,8 @@ export interface ISelectData {
   id: string;
   label: NonNullable<React.ReactNode>;
   value?: string;
+  order?: string;
+  key?: string;
 }
 
 // export interface ISelectBody {
@@ -87,10 +89,11 @@ export interface ISelect {
    */
   bdr?: string;
 
-  onInit?: (selectedValues: Record<string, true>) => void;
-  onOpen?: (selectedValues: Record<string, true>) => void;
-  onClose?: (selectedValues: Record<string, true>) => void;
-  onChange?: (selectedValues: Record<string, true>) => void;
+  onInit?: (selectedValues: Record<string, true>, name?: string, data?: ISelectData | undefined) => void;
+  onOpen?: (selectedValues: Record<string, true>, name?: string, data?: ISelectData | undefined) => void;
+  onClose?: (selectedValues: Record<string, true>, name?: string, data?: ISelectData | undefined) => void;
+  onChange?: (selectedValues: Record<string, true>, name?: string, data?: ISelectData | undefined) => void;
+  onBlur?: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 }
 
 export interface ISelectContext {

@@ -32,6 +32,23 @@ export interface IFileSearchFullResult {
   file_num: string;
 }
 
+export interface IMissingField {
+  format: string | null;
+  key: string;
+  label: string;
+  value?: string | null;
+  type: string | null;
+  option?: ISelectData[];
+}
+
+export interface IKSIOPManualInput {
+  buttons: Array<{ action: string; label: string; order: string }>;
+  fields: IMissingField[];
+  manualFile: { key: string; value: string }[];
+  header: string;
+  title: string;
+}
+
 apiRouter.registerRoute({
   name: 'searchFile',
   path: '/file/search',
@@ -44,6 +61,38 @@ apiRouter.registerRoute({
       fileId: data.data.file_id,
       fileContext: data.data.file_context,
       fileFields: data.data.file_fields,
+    };
+  },
+});
+
+apiRouter.registerRoute({
+  name: 'KSIOPManualInput',
+  path: '/ksiop_manual_input',
+  method: 'post',
+  type: 'KSIOP',
+  handler: (data): IKSIOPManualInput => {
+    const fields: IMissingField[] = data.data.fields.map((field: IMissingField) => {
+      if (field.type === 'selectList') {
+        const newOptions: ISelectData[] = [];
+        field.option?.map((option: any) => {
+          newOptions[option.id] = {
+            id: option.id,
+            label: option.label,
+            value: option.value,
+          };
+          field.option = newOptions;
+        });
+      }
+
+      return field;
+    });
+
+    return {
+      buttons: data.data.btn,
+      fields,
+      manualFile: data.data.file,
+      header: data.data.header,
+      title: data.data.title,
     };
   },
 });
