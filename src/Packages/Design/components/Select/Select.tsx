@@ -37,6 +37,7 @@ export const Select: React.FC<ISelect> = ({
     selectedValues = first ? { [first]: true } : {};
   }
   const [selected, setSelected] = useState(selectedValues);
+  const [key] = useState<string>(name);
 
   const selectContainerRef = React.createRef<HTMLDivElement>();
 
@@ -59,9 +60,9 @@ export const Select: React.FC<ISelect> = ({
 
     setIsOpen(false);
     if (onClose) {
-      onClose(selected);
+      onClose(selected, key);
     }
-  }, [onClose, selected, closable]);
+  }, [onClose, selected, closable, key]);
 
   const onValueChange = useCallback(
     (input: HTMLInputElement, value: ISelectData) => {
@@ -100,9 +101,9 @@ export const Select: React.FC<ISelect> = ({
 
   useEffect(() => {
     if (onInit) {
-      onInit(selected);
+      onInit(selected, key);
     }
-  }, [onInit, selected]);
+  }, [onInit, selected, key]);
 
   return (
     <SelectContext.Provider value={{ data, multiple, name, selectedValues: selected, onChange: onValueChange }}>

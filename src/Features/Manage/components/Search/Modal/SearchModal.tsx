@@ -3,7 +3,8 @@ import { Grid } from '@material-ui/core';
 import { Button, Modal, StairsLoader, Error500, BadRequest, FormLabel, FormText, Select } from 'Shared/components';
 import { SearchModalBPIContentStyled, SearchModalFooterStyled } from './SearchModal.style';
 import { apiRouter, router, storage, SwitchCallState, useApi } from 'Services';
-import { IFileSearchApiReturn } from 'Features/Manage';
+import { IFileSearchApiReturn, IKSIOPManualInput } from 'Features/Manage';
+import { CreateModal } from './CreateModal';
 
 interface IProps {
   open: boolean;
@@ -12,6 +13,12 @@ interface IProps {
 
 export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactElement | null => {
   const { request, error, callState, route, send, data } = useApi<IFileSearchApiReturn | null>();
+  const {
+    send: sendManualInput,
+    data: dataManualInput,
+    callState: callStateManualInput,
+    route: routeManualInput,
+  } = useApi<IKSIOPManualInput | null>();
 
   const file = (storage.getData('shared.component.search.value') as string).split(/ *\/ */);
   const file_num = file[0];
@@ -52,8 +59,10 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
     });
   }
 
+  // Handle different footers between call states
+  // TODO find a better solution in this component
+  // we don't have the time and bpi wants specific handling for each call state
   let footer = null;
-
   if (callState === 'BAD_REQUEST' && route?.type === 'DRM') {
     // case we don't find the file from search/file, we change the create url by client, ksiop is only for BPI
     if (error?.response?.body.data.btn[1]?.route.url) {
@@ -63,12 +72,52 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
       <SearchModalFooterStyled>
         {error?.response?.body.data.btn[0] !== undefined && (
           <Button color={'error'} onClick={onClose}>
-            {error?.response?.body.data.btn[0].lib}
+            {error?.response?.body.data.btn[0].label}
           </Button>
         )}
         {error?.response?.body.data.btn[1] !== undefined ? (
           <Button color={'success'} onClick={() => send('searchFileKSIOP', {}, { file_num, file_avenant })}>
-            {error?.response?.body.data.btn[1].lib}
+            {error?.response?.body.data.btn[1].label}
+          </Button>
+        ) : null}
+      </SearchModalFooterStyled>
+    );
+  }
+
+  // Handle 503 from KSIOP, missing fields
+  if (callState === 'BAD_REQUEST' && error?.status === 503) {
+    if (error?.response?.body.data.btn[1]?.action) {
+      apiRouter.changeRouteUrl('KSIOPManualInput', error?.response?.body.data.btn[1].action);
+    }
+    const params = error?.response?.body.data.btn[1].params;
+
+    const paramsObject: Record<string, string> = {};
+
+    params.map((param: any) => (paramsObject[param.key] = param.value));
+
+    const fields_completed = paramsObject.fields_completed;
+    const fields_missing = paramsObject.fields_missing;
+    const typedossier = paramsObject.typedossier;
+    footer = (
+      <SearchModalFooterStyled>
+        {error?.response?.body.data.btn[0] !== undefined && (
+          <Button color={'error'} onClick={onClose}>
+            {error?.response?.body.data.btn[0].label}
+          </Button>
+        )}
+        {error?.response?.body.data.btn[1] !== undefined ? (
+          <Button
+            color={'success'}
+            onClick={() =>
+              sendManualInput(
+                'KSIOPManualInput',
+                {},
+                { file_num, file_avenant, typedossier },
+                { fields_missing, fields_completed },
+              )
+            }
+          >
+            {error?.response?.body.data.btn[1].label}
           </Button>
         ) : null}
       </SearchModalFooterStyled>
@@ -86,6 +135,15 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
         </Button>
       </SearchModalFooterStyled>
     );
+  }
+
+  if (
+    callStateManualInput === 'SUCCESS' &&
+    routeManualInput?.type === 'KSIOP' &&
+    routeManualInput.name === 'KSIOPManualInput'
+  ) {
+    // TODO split all cases like this ?
+    return <CreateModal open={open} onClose={onClose} dataManualInput={dataManualInput} />;
   }
 
   return (
