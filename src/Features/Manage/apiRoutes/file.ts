@@ -39,6 +39,7 @@ export interface IMissingField {
   value?: string | null;
   type: string | null;
   option?: ISelectData[];
+  order: string;
 }
 
 export interface IKSIOPManualInput {
