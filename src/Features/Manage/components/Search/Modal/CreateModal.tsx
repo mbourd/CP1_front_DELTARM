@@ -146,6 +146,7 @@ export const CreateModal: React.FC<IProps> = ({ onClose, open, dataManualInput }
             </Grid>
             <form className={'missing-fields-form'} onSubmit={handleSubmit(createFile)}>
               {dataManualInput.fields.map((field: any) => {
+                // if you want to return and use the order key : return field.order === index ? (...) : null
                 return (
                   <GenerateFieldManual
                     field={field}
