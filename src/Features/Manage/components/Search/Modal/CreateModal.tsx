@@ -50,6 +50,8 @@ export const CreateModal: React.FC<IProps> = ({ onClose, open, dataManualInput }
     });
     if (errors === 0) {
       setStateMissingFields(false);
+    } else {
+      setStateMissingFields(true);
     }
   }, [queries]);
 
