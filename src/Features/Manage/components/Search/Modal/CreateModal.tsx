@@ -1,5 +1,5 @@
 import { apiRouter, SwitchCallState, useApi, router } from '../../../../../Services';
-import { IKSIOPManualInput } from '../../../apiRoutes';
+import { IKSIOPManualInput, IMissingField } from '../../../apiRoutes';
 import { SearchModalBPIContentStyled, SearchModalFooterStyled } from './SearchModal.style';
 import {
   BadRequest,
@@ -28,7 +28,7 @@ export const CreateModal: React.FC<IProps> = ({ onClose, open, dataManualInput }
 
   // Have the current filled queries in object
   let queries: any;
-  dataManualInput?.fields.map((field: any) => {
+  dataManualInput?.fields.map((field: IMissingField) => {
     if (field.value) {
       queries = {
         ...queries,
@@ -131,7 +131,7 @@ export const CreateModal: React.FC<IProps> = ({ onClose, open, dataManualInput }
             <p className={'top-message'}>{dataManualInput.title}</p>
             <p className={'top-message'}>{dataManualInput.header}</p>
             <Grid container className={'file-info'}>
-              {dataManualInput.fields?.map((field: any, index) => {
+              {dataManualInput.fields?.map((field: IMissingField, index) => {
                 return field.value ? (
                   <Grid item key={index} xs={4}>
                     <p>
@@ -145,7 +145,7 @@ export const CreateModal: React.FC<IProps> = ({ onClose, open, dataManualInput }
               })}
             </Grid>
             <form className={'missing-fields-form'} onSubmit={handleSubmit(createFile)}>
-              {dataManualInput.fields.map((field: any) => {
+              {dataManualInput.fields.map((field: IMissingField) => {
                 // if you want to return and use the order key : return field.order === index ? (...) : null
                 return (
                   <GenerateFieldManual
