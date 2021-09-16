@@ -58,6 +58,8 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
     }
   }, [control.id, control.mandatory, control.value, control.editable]);
 
+  const controlValue = parseInt(control.value)?.toLocaleString();
+
   return (
     <Grid item xs={6}>
       <FinancialControlStyled>
@@ -66,7 +68,7 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
           placeholder={control.editable ? control.title : control.value}
           disabled={!control.editable}
           color={control.editable ? 'text' : 'disabled'}
-          defaultValue={value || control.value}
+          defaultValue={value || controlValue}
           icon={<EuroIcon />}
           onBlur={(e) => saveValue(e.currentTarget.value)}
         />

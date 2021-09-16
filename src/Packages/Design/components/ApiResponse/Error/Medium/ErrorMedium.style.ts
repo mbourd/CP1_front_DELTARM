@@ -25,6 +25,5 @@ export const ErrorMediumStyled = styled.div`
     line-height: 23px;
     margin-bottom: ${({ theme }) => theme.spacing.normal};
     white-space: pre-wrap;
-    text-align: left;
   }
 `;

@@ -29,12 +29,10 @@ export const MainHeaderStyled = styled.header`
 
   .app-name {
     left: ${({ theme }) => theme.spacing.xxLarge};
-    bottom: ${({ theme }) => theme.spacing.xSmall};
+    bottom: ${({ theme }) => theme.spacing.medium};
     margin: auto;
     position: relative;
     display: inline-block;
-    height: 100%;
-    vertical-align: middle;
   }
 
   .menu-icon {
