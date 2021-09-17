@@ -84,6 +84,16 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
     );
   }
 
+  if ((callState === 'SERVER_ERROR' || callState === 'BAD_REQUEST') && route?.type === 'KSIOP') {
+    footer = (
+      <SearchModalFooterStyled>
+        <Button color={'error'} onClick={onClose}>
+          Annuler
+        </Button>
+      </SearchModalFooterStyled>
+    );
+  }
+
   // Handle 503 from KSIOP, missing fields
   if (callState === 'BAD_REQUEST' && error?.status === 503) {
     if (error?.response?.body.data.btn[1]?.action) {
@@ -132,16 +142,6 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
         </Button>
         <Button color={'success'} onClick={createFile}>
           Confirmer la création
-        </Button>
-      </SearchModalFooterStyled>
-    );
-  }
-
-  if ((callState === 'SERVER_ERROR' || callState === 'BAD_REQUEST') && route?.type === 'KSIOP') {
-    footer = (
-      <SearchModalFooterStyled>
-        <Button color={'error'} onClick={onClose}>
-          Annuler
         </Button>
       </SearchModalFooterStyled>
     );
