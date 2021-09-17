@@ -137,7 +137,7 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
     );
   }
 
-  if (callState === 'SERVER_ERROR' && route?.type === 'KSIOP') {
+  if ((callState === 'SERVER_ERROR' || callState === 'BAD_REQUEST') && route?.type === 'KSIOP') {
     footer = (
       <SearchModalFooterStyled>
         <Button color={'error'} onClick={onClose}>
