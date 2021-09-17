@@ -134,13 +134,13 @@ export const CreateModal: React.FC<IProps> = ({ onClose, open, dataManualInput }
             <p className={'top-message'}>{dataManualInput.header}</p>
             <Grid container className={'file-info'}>
               {dataManualInput.fields?.map((field: IMissingField, index) => {
-                return field.value ? (
+                return field.value_to_display ? (
                   <Grid item key={index} xs={4}>
                     <p>
                       <FormLabel>{field.label}</FormLabel>
                     </p>
                     <p>
-                      <FormText>{field.value}</FormText>
+                      <FormText>{field.value_to_display}</FormText>
                     </p>
                   </Grid>
                 ) : null;
