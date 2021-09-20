@@ -28,6 +28,7 @@ export const Select: React.FC<ISelect> = ({
   onClose,
   onChange,
   closeOnSelect = false,
+  error = false,
 }): React.ReactElement => {
   const sizing = useSizing();
   const [isOpen, setIsOpen] = useState(open);
@@ -37,6 +38,7 @@ export const Select: React.FC<ISelect> = ({
     selectedValues = first ? { [first]: true } : {};
   }
   const [selected, setSelected] = useState(selectedValues);
+  const [initialValues] = useState(selectedValues);
   const [key] = useState<string>(name);
 
   const selectContainerRef = React.createRef<HTMLDivElement>();
@@ -104,6 +106,12 @@ export const Select: React.FC<ISelect> = ({
       onInit(selected, key);
     }
   }, [onInit, selected, key]);
+
+  useEffect(() => {
+    if (error) {
+      setSelected(initialValues);
+    }
+  }, [error, initialValues]);
 
   return (
     <SelectContext.Provider value={{ data, multiple, name, selectedValues: selected, onChange: onValueChange }}>

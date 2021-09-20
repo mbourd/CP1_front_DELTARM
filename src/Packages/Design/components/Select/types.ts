@@ -94,6 +94,7 @@ export interface ISelect {
   onClose?: (selectedValues: Record<string, true>, name?: string, data?: ISelectData | undefined) => void;
   onChange?: (selectedValues: Record<string, true>, name?: string, data?: ISelectData | undefined) => void;
   onBlur?: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  error?: boolean;
 }
 
 export interface ISelectContext {
