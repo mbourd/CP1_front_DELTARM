@@ -62,7 +62,7 @@ export const TextControl: React.FC<IProps> = ({ control, fileId, regex, regexMes
 
   useEffect(() => {
     if (error) {
-      setErrorMessage("Une erreur s'est produite durant l'enregistrement, veuillez réessayer");
+      setErrorMessage("Une erreur s'est produite durant l'enregistrement");
     }
   }, [error]);
 

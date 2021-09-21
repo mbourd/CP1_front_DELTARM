@@ -45,7 +45,7 @@ export const CommentControl: React.FC<IProps> = ({ control, fileId }): React.Rea
 
   useEffect(() => {
     if (error) {
-      setErrorMessage("Une erreur s'est produite durant l'enregistrement, veuillez réessayer");
+      setErrorMessage("Une erreur s'est produite durant l'enregistrement");
     }
   }, [error]);
 

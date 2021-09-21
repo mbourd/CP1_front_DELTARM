@@ -37,7 +37,7 @@ export const DateControl: React.FC<IProps> = ({ control, fileId }): React.ReactE
 
   useEffect(() => {
     if (error) {
-      setErrorMessage("Une erreur s'est produite durant l'enregistrement, veuillez réessayer");
+      setErrorMessage("Une erreur s'est produite durant l'enregistrement");
     }
   }, [error]);
 
