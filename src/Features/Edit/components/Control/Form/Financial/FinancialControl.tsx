@@ -14,7 +14,7 @@ interface IProps {
 }
 
 export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.ReactElement => {
-  const { send } = useApi<void>();
+  const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
   const value = storage.getData<string>('edit.control.' + control.id + '.value');
@@ -57,6 +57,12 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
       setErrorMessage('Valeur obligatoire');
     }
   }, [control.id, control.mandatory, control.value, control.editable]);
+
+  useEffect(() => {
+    if (error) {
+      setErrorMessage("Une erreur s'est produite durant l'enregistrement, veuillez réessayer");
+    }
+  }, [error]);
 
   const controlValue = parseInt(control.value)?.toLocaleString();
 
