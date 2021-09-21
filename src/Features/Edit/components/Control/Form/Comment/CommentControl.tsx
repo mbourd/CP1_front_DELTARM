@@ -13,7 +13,7 @@ interface IProps {
 }
 
 export const CommentControl: React.FC<IProps> = ({ control, fileId }): React.ReactElement => {
-  const { send } = useApi<void>();
+  const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
 
@@ -42,6 +42,12 @@ export const CommentControl: React.FC<IProps> = ({ control, fileId }): React.Rea
       setErrorMessage('Valeur obligatoire');
     }
   }, [control.id, control.mandatory, control.value, control.editable]);
+
+  useEffect(() => {
+    if (error) {
+      setErrorMessage("Une erreur s'est produite durant l'enregistrement, veuillez réessayer");
+    }
+  }, [error]);
 
   return (
     <Grid item xs={6}>
