@@ -8,6 +8,7 @@ import {
   DateControl,
   CommentControl,
   PercentControl,
+  UploadControl,
 } from './Form';
 import { EditValidationContext } from 'Features/Edit';
 
@@ -33,6 +34,8 @@ export const SwitchControlItem: React.FC<IProps> = ({ control }): React.ReactEle
       return <CommentControl control={control} fileId={fileId} />;
     case 'percent':
       return <PercentControl control={control} fileId={fileId} />;
+    case 'file_upload':
+      return <UploadControl control={control} fileId={fileId} />;
     case 'auth_num':
       return (
         <TextControl

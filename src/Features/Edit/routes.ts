@@ -1,4 +1,4 @@
-import { router } from 'Services';
+import { apiRouter, router } from 'Services';
 import { Edit } from 'Features/Edit';
 
 router.registerRoute({
@@ -13,4 +13,10 @@ router.registerRoute({
     apiRouteName: 'edit',
     apiSaveControlRouteName: 'setControlValue',
   },
+});
+
+apiRouter.registerRoute({
+  name: 'downloadFile',
+  path: '/control/get_upfile',
+  method: 'get',
 });

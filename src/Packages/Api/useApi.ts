@@ -1,7 +1,7 @@
 import { useMemo, useState, useRef, useCallback } from 'react';
 
 import {
-  ApiRequestBodyType,
+  ApiRequestBodyType, ApiRequestFileType, ApiRequestHeadersType,
   ApiRequestHostType,
   ApiRequestParamsType,
   ApiRequestProtocolType,
@@ -34,6 +34,8 @@ export const useApi = <T>(
       params?: ApiRequestParamsType,
       queries?: ApiRequestQueriesType,
       body?: ApiRequestBodyType,
+      headers?: ApiRequestHeadersType,
+      file?: ApiRequestFileType,
     ): Promise<any> | void => {
       currentRoute.current = null;
       const route = router.getRoute(name);
@@ -76,6 +78,18 @@ export const useApi = <T>(
       const mergeBody = Object.assign({}, route.body || {}, body);
       const mergeQueries = Object.assign({}, route.queries || {}, queries);
       request.setUrl(url).setMethod(route.method).setQueries(mergeQueries).setBody(mergeBody);
+      if (file) {
+        request.setBody(file);
+      }
+      if (headers) {
+        const keyHeaders = Object.keys(headers);
+        keyHeaders.forEach((key) => {
+          request.removeHeader(key);
+        });
+        for (const [key, value] of Object.entries(headers)) {
+          request.addHeader(key, value);
+        }
+      }
 
       if (currentRoute.current && currentRoute.current.fixtures) {
         let body = currentRoute.current.fixtures();
