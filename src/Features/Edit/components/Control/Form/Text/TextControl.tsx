@@ -15,7 +15,7 @@ interface IProps {
 }
 
 export const TextControl: React.FC<IProps> = ({ control, fileId, regex, regexMessage }): React.ReactElement => {
-  const { send } = useApi<void>();
+  const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
 
@@ -59,6 +59,12 @@ export const TextControl: React.FC<IProps> = ({ control, fileId, regex, regexMes
       setErrorMessage(regexMessage || '');
     }
   }, [control.id, control.mandatory, control.value, control.editable, regex, regexMessage]);
+
+  useEffect(() => {
+    if (error) {
+      setErrorMessage("Une erreur s'est produite durant l'enregistrement");
+    }
+  }, [error]);
 
   return (
     <Grid item xs={6}>
