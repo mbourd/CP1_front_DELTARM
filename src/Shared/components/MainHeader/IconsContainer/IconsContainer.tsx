@@ -20,7 +20,7 @@ export const IconsContainer: React.FC = (): React.ReactElement => {
         </a>
       </BPITooltip>
       <BPITooltip title={trans('F.A.Q')}>
-        <a target='__blank' href="https://cp1.stonly.com/kb/fr">
+        <a target="__blank" href="https://cp1.stonly.com/kb/fr">
           <PlayerIcon fontSize={'large'} />
         </a>
       </BPITooltip>
