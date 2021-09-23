@@ -64,7 +64,10 @@ deploy preprod:
 deploy staging:
   stage: build and deploy
   only:
+    - tags
     - staging
+  except:
+    - branches
   variables:
     APP_IMAGE_TAG_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
   before_script:
