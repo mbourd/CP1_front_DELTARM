@@ -32,7 +32,7 @@ export const MainNav: React.FC = (): React.ReactElement => {
     setAnchorEl(null);
   };
 
-  const { send, data } = useApi<any>({ waitForAuthenticated: true });
+  const { send, data: userInfos } = useApi<any>({ waitForAuthenticated: true });
 
   useEffect(() => {
     send('userInfo');
@@ -52,9 +52,11 @@ export const MainNav: React.FC = (): React.ReactElement => {
           <List component={'nav'}>
             <ListItem>
               <UserIcon />
-              <ListItemText>
-                {data?.data.user_first_name} {data?.data.user_last_name}
-              </ListItemText>
+              {userInfos && (
+                <ListItemText>
+                  {userInfos.data.user_first_name} {userInfos.data.user_last_name}
+                </ListItemText>
+              )}
             </ListItem>
 
             <ListItem

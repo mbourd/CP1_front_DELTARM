@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  front:
+    image: registry.gitlab.com/deltarm/cp1/client:staging
+    container_name: cp1_front_staging
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /home/deltarm/etc/ssl:/etc/nginx/certs

@@ -8,11 +8,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 1. Log into the V2 environment associated with the desired CP1 endpoint (e.g.: bpi-staging.deltarm.com for controle-api-dev.deltarm.com)
 
-1. If you're immediately redirected, find the `/session/open?token=<TOKEN>` request and copy the token
+1. Click on the `CP1` menu in the sidebar and get the token from the json returned by the `/ada/?ajax=true` request
 
-   Otherwise click on the `CP1` menu in the sidebar and get the token from the json returned by the `/ada/?ajax=true` request
-
-1. In both cases you only have about 30 seconds from the moment the CP1 client is loaded to go to `localhost:3000/login?token=<PASTE TOKEN HERE>`
+1. You only have about 30 seconds from the moment the CP1 client is loaded to go to `localhost:3000/login?token=<PASTE TOKEN HERE>`
 
 ## Available Scripts
 
@@ -66,4 +64,3 @@ The SSL certificates are physically on the server. The container is configure to
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-

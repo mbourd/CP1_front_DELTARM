@@ -14,7 +14,7 @@ interface IProps {
 }
 
 export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.ReactElement => {
-  const { send } = useApi<void>();
+  const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
   const value = storage.getData<string>('edit.control.' + control.id + '.value');
@@ -58,6 +58,14 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
     }
   }, [control.id, control.mandatory, control.value, control.editable]);
 
+  useEffect(() => {
+    if (error) {
+      setErrorMessage("Une erreur s'est produite durant l'enregistrement");
+    }
+  }, [error]);
+
+  const controlValue = parseInt(control.value)?.toLocaleString();
+
   return (
     <Grid item xs={6}>
       <FinancialControlStyled>
@@ -66,7 +74,7 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
           placeholder={control.editable ? control.title : control.value}
           disabled={!control.editable}
           color={control.editable ? 'text' : 'disabled'}
-          defaultValue={value || control.value}
+          defaultValue={value || controlValue}
           icon={<EuroIcon />}
           onBlur={(e) => saveValue(e.currentTarget.value)}
         />

@@ -3,6 +3,7 @@ import { ISelectData } from 'Shared/components';
 import { AppActionContextType } from 'Shared/types';
 
 export interface IFileSearchApiReturn {
+  fileFields?: Record<string, string>;
   error: boolean;
   errorMessage: string | null;
   fileId: string | null;
@@ -15,6 +16,12 @@ export interface IFileSearchApiReturn {
   fileCodecp?: string;
   fileManager?: string;
   fileProduit?: string;
+  routeForFileCreation?: string;
+}
+
+export interface fileField {
+  key: string;
+  value: string;
 }
 
 export interface IFileSearchFullResult {
@@ -23,6 +30,31 @@ export interface IFileSearchFullResult {
   file_context: AppActionContextType;
   file_id: string;
   file_num: string;
+}
+
+export interface IMissingField {
+  format: string | null;
+  key: string;
+  label: string;
+  value?: string | null;
+  value_to_display?: string | null;
+  type: string | null;
+  option?: ISelectData[];
+  order: string;
+}
+
+export interface IKSIOPManualInput {
+  buttons: Array<{ action: string; label: string; order: string }>;
+  fields: IMissingField[];
+  manualFile: {
+    file_num: string;
+    file_avenant: string;
+    typedossier: string;
+  };
+  header: string;
+  title: string;
+  fileContext?: AppActionContextType;
+  fileId: string | null;
 }
 
 apiRouter.registerRoute({
@@ -36,6 +68,40 @@ apiRouter.registerRoute({
       errorMessage: data.data.return_message,
       fileId: data.data.file_id,
       fileContext: data.data.file_context,
+      fileFields: data.data.file_fields,
+    };
+  },
+});
+
+apiRouter.registerRoute({
+  name: 'KSIOPManualInput',
+  path: '/ksiop_manual_input',
+  method: 'post',
+  type: 'KSIOP',
+  handler: (data): IKSIOPManualInput => {
+    const fields: IMissingField[] = data.data.fields.map((field: IMissingField) => {
+      if (field.type === 'selectList') {
+        const newOptions: ISelectData[] = [];
+        field.option?.map((option: any) => {
+          newOptions[option.id] = {
+            id: option.id,
+            label: option.label,
+            value: option.value,
+          };
+          field.option = newOptions;
+        });
+      }
+
+      return field;
+    });
+
+    return {
+      buttons: data.data.btn,
+      fields,
+      manualFile: data.data.file,
+      header: data.data.header,
+      title: data.data.title,
+      fileId: data.data.file_id,
     };
   },
 });
@@ -60,6 +126,7 @@ apiRouter.registerRoute({
       error: !data.data.file_id,
       errorMessage: data.data.return_message,
       fileId: data.data.file_id,
+      fileFields: data.data.file_fields,
     };
   },
 });
@@ -81,6 +148,13 @@ apiRouter.registerRoute({
 
       return product;
     });
+    const fileFields: Record<string, string> = {};
+
+    data.data.file_fields.map((field: any) => {
+      fileFields[field.key] = field.value;
+
+      return field;
+    });
 
     return {
       error: !data.data.data_file,
@@ -90,10 +164,8 @@ apiRouter.registerRoute({
       topMessage: data.data.msg_top,
       productList,
       file: data.data.data_file,
-      fileBorrower: data.data.file_borrower,
-      fileCodecp: data.data.file_codecp,
-      fileManager: data.data.file_manager,
-      fileProduit: data.data.file_produit,
+      fileFields,
+      routeForFileCreation: data.data.route_for_file_creation,
     };
   },
 });

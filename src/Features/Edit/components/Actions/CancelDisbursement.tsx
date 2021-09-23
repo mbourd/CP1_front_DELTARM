@@ -16,7 +16,7 @@ export const CancelDisbursement: React.FC = (): React.ReactElement => {
           open={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           fileId={fileId}
-          actionLabel={'Annuler le décaissement'}
+          actionLabel={'Oui, je veux.'}
           successMessage={'Le décaissement a été annulé'}
           message={'Souhaitez-vous annuler ce décaissement ?'}
           postRouteName={'actionCancelDisbursement'}

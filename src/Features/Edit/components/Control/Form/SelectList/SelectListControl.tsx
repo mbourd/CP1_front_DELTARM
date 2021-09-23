@@ -13,7 +13,7 @@ interface IProps {
 }
 
 export const SelectListControl: React.FC<IProps> = ({ control, fileId }): React.ReactElement => {
-  const { send } = useApi<void>();
+  const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
 
@@ -37,6 +37,12 @@ export const SelectListControl: React.FC<IProps> = ({ control, fileId }): React.
     }
   }, [control.id, control.mandatory, control.value, control.editable]);
 
+  useEffect(() => {
+    if (error) {
+      setErrorMessage("Une erreur s'est produite, veuillez re-sélectionner une valeur");
+    }
+  }, [error]);
+
   return (
     <Grid item xs={6}>
       <SelectListControlStyled className={'control-container'}>
@@ -54,8 +60,9 @@ export const SelectListControl: React.FC<IProps> = ({ control, fileId }): React.
             const first = Object.keys(selectedValues)[0];
             saveValue('' + first);
           }}
+          error={!!error}
         >
-          {'Sélectionez une valeur'}
+          {'Sélectionner une valeur'}
         </Select>
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ControlFooter control={control} />

@@ -11,3 +11,9 @@ apiRouter.registerRoute({
   path: '/user/info',
   method: 'get',
 });
+
+apiRouter.registerRoute({
+  name: 'clientInfo',
+  path: '/client/info',
+  method: 'get',
+});

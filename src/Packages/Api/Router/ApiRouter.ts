@@ -36,6 +36,13 @@ class ApiRouter implements IApiRouter {
     return route ? route : null;
   }
 
+  public changeRouteUrl(name: string, url: string): IApiRouteDef | null {
+    const route = this._routes[name];
+    route.path = url;
+
+    return route ? route : null;
+  }
+
   public getRoutes(): Record<string, IApiRouteDef> {
     return this._routes;
   }

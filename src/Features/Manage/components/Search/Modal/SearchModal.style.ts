@@ -33,7 +33,19 @@ export const SearchModalBPIContentStyled = styled.div`
     margin: ${({ theme }) => theme.spacing.large} ${({ theme }) => theme.spacing.normal};
   }
 
+  .missing-fields {
+    margin: ${({ theme }) => theme.spacing.large} ${({ theme }) => theme.spacing.normal};
+    .missing-field {
+      margin: ${({ theme }) => theme.spacing.normal};
+      display: inline-block;
+    }
+  }
+
   .MuiGrid-item {
     padding: ${({ theme }) => theme.spacing.small} 0;
+  }
+
+  .span {
+    margin-right: ${({ theme }) => theme.spacing.large};
   }
 `;
