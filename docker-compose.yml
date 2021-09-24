@@ -1,12 +1,11 @@
 version: "3.9"
 services:
-   front:
-     image: registry.gitlab.com/deltarm/cp1/client:preprod
-     container_name: cp1_front_preprod
-     restart: always
-     ports:
-        - 80:80
-        - 443:443
-     volumes:
-        - /home/deltarm/etc/ssl:/etc/nginx/certs
-
+  front:
+    image: registry.gitlab.com/deltarm/cp1/client:master
+    container_name: cp1_front_prod
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /home/deltarm/etc/ssl:/etc/nginx/certs
