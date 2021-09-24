@@ -7,7 +7,7 @@ import { PageLoader } from './Shared/components';
 
 import { BPIGlobalStyle, BPITheme } from 'Styles';
 import { AppMaintenance } from './AppMaintenance';
-const maintenanceMode = true;
+const maintenanceMode = false;
 
 ReactDOM.render(
   <StrictMode>
