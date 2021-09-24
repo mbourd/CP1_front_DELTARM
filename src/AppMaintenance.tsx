@@ -13,7 +13,7 @@ import { Login } from './Features';
 
 /* Maintenance mode below, use this component for maintenance mode, add admin users below so they still can see the app */
 const AppMaintenance = (): React.ReactElement => {
-  const adminUsers = [352764, 365010, 329563, 3, 329565, 290346];
+  const adminUsers = [352764, 3, 290346];
   const { user } = useSecurity();
   const jwt = user.getJwt();
   const userId: JwtData | null = security.decodeJwtToken(jwt ? jwt : '');
