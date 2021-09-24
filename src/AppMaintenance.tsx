@@ -20,7 +20,7 @@ const AppMaintenance = (): React.ReactElement => {
   const isAdmin = adminUsers.find((user) => userId?.user_id === user);
 
   return (
-    <SecurityProvider security={security}>w
+    <SecurityProvider security={security}>
       {jwt ? null : <Login />}
       {!!isAdmin ? (
         <>
