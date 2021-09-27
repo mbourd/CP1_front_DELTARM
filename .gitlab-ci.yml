@@ -116,6 +116,6 @@ deploy prod:
     - docker push $APP_IMAGE_TAG_NAME
     - ssh $SERVER_USER@$SERVER_HOST_PROD "
       docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN &&
-      docker pull $APP_IMAGE_TAG_NAME &&
-      docker restart cp1_front_prod
+      docker-compose -f /home/deltarm/client/docker-compose.yml pull &&
+      docker-compose -f /home/deltarm/client/docker-compose.yml up -d --remove-orphans
       "
