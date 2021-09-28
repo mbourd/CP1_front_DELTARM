@@ -1,10 +1,10 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { DashboardSearchStyled } from './DashboardSearch.style';
 import { FormControlLabel, Paper, Radio, RadioGroup } from '@material-ui/core';
 import { Button, FormError } from 'Shared/components';
 import { Search } from 'Features/Manage/components/Search/Search';
 import { SearchModal } from 'Features/Manage/components/Search/Modal/SearchModal';
-import { storage, useTrans } from 'Services';
+import { AppContext, storage, useTrans } from 'Services';
 import { FullSearchModal } from 'Features/Manage/components/Search/Modal/FullSearchModal';
 
 export const DashboardSearch: React.FC = (): React.ReactElement => {
@@ -13,12 +13,15 @@ export const DashboardSearch: React.FC = (): React.ReactElement => {
   const [searchMode, setSearchMode] = useState('fileNum');
   const [fullSearch, setFullSearch] = useState<string>();
   const [trans] = useTrans('Manage');
+  const { fileRegex, filePlaceholder } = useContext(AppContext);
+
+  const regex = new RegExp(fileRegex);
 
   const onSearch = useCallback(() => {
     const value = storage.getData<string>('shared.component.search.value');
 
     if (searchMode === 'fileNum') {
-      if (!value || !/[a-z0-9]+\/[a-z0-9]+/i.test(value)) {
+      if (!value || !regex.test(value)) {
         setErrorMessage(trans('searchError'));
 
         return;
@@ -27,16 +30,14 @@ export const DashboardSearch: React.FC = (): React.ReactElement => {
     } else {
       setFullSearch(value);
     }
-  }, [trans, searchMode]);
+  }, [trans, searchMode, regex]);
 
   return (
     <DashboardSearchStyled>
       <FormError>{errorMessage}</FormError>
       <Paper className={'search-container'} elevation={0}>
         <Search
-          placeholder={
-            searchMode === 'fileNum' ? 'N°Dossier / N°Avenant' : 'Contrepartie emprunteuse ou nom de famille'
-          }
+          placeholder={searchMode === 'fileNum' ? filePlaceholder : 'Contrepartie emprunteuse ou nom de famille'}
         />
       </Paper>
       <div className={'buttons-container'}>
