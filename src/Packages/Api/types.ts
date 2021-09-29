@@ -1,4 +1,11 @@
-import { ApiRequest, ApiRequestBodyType, ApiRequestParamsType, ApiRequestQueriesType } from './Request';
+import {
+  ApiRequest,
+  ApiRequestBodyType,
+  ApiRequestFileType,
+  ApiRequestHeadersType,
+  ApiRequestParamsType,
+  ApiRequestQueriesType,
+} from './Request';
 import { IApiRouteDef } from './Router';
 
 export type UseApiReturnType<T> = {
@@ -13,6 +20,8 @@ export type UseApiReturnType<T> = {
     params?: ApiRequestParamsType,
     queries?: ApiRequestQueriesType,
     body?: ApiRequestBodyType,
+    headers?: ApiRequestHeadersType,
+    file?: ApiRequestFileType,
   ) => Promise<any> | void;
 };
 

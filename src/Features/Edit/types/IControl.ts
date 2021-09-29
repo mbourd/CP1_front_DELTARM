@@ -10,6 +10,7 @@ export type ControlTypeType =
   | 'timestamp'
   | 'selectlist'
   | 'comment'
+  | 'file_upload'
   | 'radio'
   | 'checkbox'
   | 'auth_num';
@@ -34,6 +35,8 @@ export interface IApiControl {
   control_answer_choices?: IApiAnswerChoice[];
   control_font_color?: string;
   control_font_size?: ControlFontSize;
+  control_family: string;
+  control_regex: RegExp;
 }
 
 export interface IControl {
@@ -49,4 +52,6 @@ export interface IControl {
   answerChoices?: Record<string, ISelectData>;
   fontColor?: string;
   fontSize?: ControlFontSize;
+  family: string;
+  regex: RegExp;
 }

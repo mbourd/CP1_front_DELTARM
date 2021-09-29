@@ -24,9 +24,13 @@ export const SelectListControl: React.FC<IProps> = ({ control, fileId }): React.
     (value: string) => {
       setErrorMessage(null);
       storage.setData('edit.control.' + control.id + '.value', value);
-      send(currentRoute?.props?.apiSaveControlRouteName, {}, { file_id: fileId, elm_id: control.id, elm_val: value });
+      send(
+        currentRoute?.props?.apiSaveControlRouteName,
+        {},
+        { file_id: fileId, elm_id: control.id, elm_val: value, control_family: control.family },
+      );
     },
-    [send, fileId, control.id, currentRoute],
+    [send, fileId, control.id, control.family, currentRoute],
   );
 
   useEffect(() => {
