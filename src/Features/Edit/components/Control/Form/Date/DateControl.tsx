@@ -22,7 +22,7 @@ export const DateControl: React.FC<IProps> = ({ control, fileId }): React.ReactE
   const saveValue = useCallback(
     (value: string) => {
       if (control.regex && !value.match(control.regex)) {
-        setErrorMessage('Le format attendu n\'est pas valide');
+        setErrorMessage("Le format attendu n'est pas valide");
 
         return;
       }

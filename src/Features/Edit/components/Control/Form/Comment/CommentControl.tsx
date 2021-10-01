@@ -28,7 +28,7 @@ export const CommentControl: React.FC<IProps> = ({ control, fileId }): React.Rea
       }
 
       if (control.regex && !value.match(control.regex)) {
-        setErrorMessage('Le format attendu n\'est pas valide');
+        setErrorMessage("Le format attendu n'est pas valide");
 
         return;
       }

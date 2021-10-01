@@ -27,7 +27,7 @@ export const PercentControl: React.FC<IProps> = ({ control, fileId }): React.Rea
         return;
       }
       if (control.regex && !value.match(control.regex)) {
-        setErrorMessage('Le format attendu n\'est pas valide');
+        setErrorMessage("Le format attendu n'est pas valide");
 
         return;
       }
