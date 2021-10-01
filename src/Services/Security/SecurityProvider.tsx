@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import IdleTimer from 'react-idle-timer';
-import { router } from 'Packages/Router';
 import { ISecurity, IUser, JwtData, User } from 'Packages/Security';
 import { useApi } from 'Services/Api';
 import { getEnv } from 'Services/Helpers';
@@ -34,15 +33,11 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({ security, c
 
   const login = useCallback(
     async (token: string) => {
-      try {
-        const { body } = await send('login', {}, { token });
-        const user = new User();
-        user.fromJwt(body.data.jwt);
-        security.persistUser(user);
-        setUser(user);
-      } catch {
-        router.redirectTo('loginError');
-      }
+      const { body } = await send('login', {}, { token });
+      const user = new User();
+      user.fromJwt(body.data.jwt);
+      security.persistUser(user);
+      setUser(user);
     },
     [send, security, setUser],
   );

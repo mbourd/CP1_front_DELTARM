@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useContext } from 'react';
+import React, { useEffect, useMemo, useContext, useCallback } from 'react';
 import { parse } from 'qs';
 import { useLocation } from 'react-router-dom';
 
 import './translations';
 import { LoginStyled } from './Login.style';
 import { HeadingOne, PageLoader } from 'Shared/components';
-import { useTrans, SecurityContext, useSecurity } from 'Services';
+import { useTrans, SecurityContext, useSecurity, router } from 'Services';
 
 const Login: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Login');
@@ -18,17 +18,29 @@ const Login: React.FC = (): React.ReactElement => {
     return parse(location.search, { ignoreQueryPrefix: true });
   }, [location.search]);
 
+  const logUser = useCallback(
+    async (token: string) => {
+      await login(token);
+    },
+    [login],
+  );
+
   useEffect(() => {
     if (token) {
-      login(token);
+      logUser(token)
+        .then(() => {
+          if (user.isLogged()) {
+            // We need the updated state immediately available
+            window.location.href = '/';
+          }
+        })
+        .catch(() => {
+          router.redirectTo('loginError');
+        });
+    } else if (!token) {
+      router.redirectTo('dashboard');
     }
-  }, [login, token]);
-  useEffect(() => {
-    if (user.isLogged()) {
-      // We need the updated state immediately available
-      window.location.href = '/';
-    }
-  }, [user]);
+  }, [login, token, logUser, user]);
 
   return (
     <LoginStyled>
