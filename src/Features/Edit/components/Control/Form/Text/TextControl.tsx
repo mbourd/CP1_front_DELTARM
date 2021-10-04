@@ -29,7 +29,8 @@ export const TextControl: React.FC<IProps> = ({ control, fileId, regex, regexMes
         return;
       }
 
-      if (control.regex && !value.match(control.regex)) {
+      const regexControl = new RegExp(control.regex, 'i');
+      if (control.regex && !value.match(regexControl)) {
         setErrorMessage("Le format attendu n'est pas valide");
 
         return;
