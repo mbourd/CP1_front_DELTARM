@@ -16,7 +16,7 @@ export interface IAppContext {
   logoUrl: string | null;
   appName: string | null;
   filePlaceholder: string | undefined;
-  fileRegex: RegExp | string;
+  fileRegex: RegExp | string | null;
   titleName: string | null;
 }
 
@@ -32,7 +32,7 @@ export const AppContext = React.createContext<IAppContext>({
   logoUrl: null,
   appName: null,
   filePlaceholder: undefined,
-  fileRegex: '',
+  fileRegex: null,
   titleName: null,
 });
 

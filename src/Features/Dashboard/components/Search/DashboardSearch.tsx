@@ -15,13 +15,11 @@ export const DashboardSearch: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Manage');
   const { fileRegex, filePlaceholder } = useContext(AppContext);
 
-  const regex = new RegExp(fileRegex);
-
   const onSearch = useCallback(() => {
     const value = storage.getData<string>('shared.component.search.value');
 
     if (searchMode === 'fileNum') {
-      if (!value || !regex.test(value)) {
+      if (!value || (fileRegex && !new RegExp(fileRegex).test(value))) {
         setErrorMessage(trans('searchError'));
 
         return;
@@ -30,7 +28,7 @@ export const DashboardSearch: React.FC = (): React.ReactElement => {
     } else {
       setFullSearch(value);
     }
-  }, [trans, searchMode, regex]);
+  }, [trans, searchMode, fileRegex]);
 
   return (
     <DashboardSearchStyled>
