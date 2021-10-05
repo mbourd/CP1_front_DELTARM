@@ -11,9 +11,10 @@ import { Compliance } from '../Compliance/Compliance';
 interface IProps {
   control: IControl;
   fileId: string;
+  multiple: boolean;
 }
 
-export const SelectListControl: React.FC<IProps> = ({ control, fileId }): React.ReactElement => {
+export const SelectListControl: React.FC<IProps> = ({ control, fileId, multiple }): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
@@ -68,11 +69,14 @@ export const SelectListControl: React.FC<IProps> = ({ control, fileId }): React.
           selectedValues={selectedValue}
           labelColor={control.editable ? 'text' : 'disabled'}
           labelBdc={control.editable ? 'text' : 'disabled'}
-          multiple={false}
+          multiple={multiple}
           disabled={!control.editable}
           onChange={(selectedValues) => {
-            const first = Object.keys(selectedValues)[0];
-            saveValue('' + first);
+            const value =
+              Object.keys(selectedValues).length >= 2
+                ? Object.keys(selectedValues).join(';')
+                : Object.keys(selectedValues)[0];
+            saveValue('' + value);
           }}
           error={!!error}
           choiceIsKo={choiceIsKo}
