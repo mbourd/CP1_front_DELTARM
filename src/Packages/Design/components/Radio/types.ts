@@ -11,4 +11,5 @@ export interface IRadio {
   label?: NonNullable<React.ReactNode>;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   style?: React.CSSProperties;
+  disabled?: boolean;
 }

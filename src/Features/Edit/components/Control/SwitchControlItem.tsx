@@ -9,6 +9,7 @@ import {
   CommentControl,
   PercentControl,
   UploadControl,
+  CheckboxControl,
   InfoBlockControl,
 } from './Form';
 import { EditValidationContext } from 'Features/Edit';
@@ -31,6 +32,10 @@ export const SwitchControlItem: React.FC<IProps> = ({ control }): React.ReactEle
       return <SelectListControl multiple={false} control={control} fileId={fileId} />;
     case 'multiple_list':
       return <SelectListControl multiple={true} control={control} fileId={fileId} />;
+    case 'radio':
+      return <CheckboxControl multiple={false} control={control} fileId={fileId} />;
+    case 'checkbox':
+      return <CheckboxControl multiple={true} control={control} fileId={fileId} />;
     case 'financial':
       return <FinancialControl control={control} fileId={fileId} />;
     case 'integer':
