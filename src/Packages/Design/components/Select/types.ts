@@ -11,6 +11,7 @@ export interface ISelectData {
   value?: string;
   order?: string;
   key?: string;
+  isKo?: boolean;
 }
 
 // export interface ISelectBody {

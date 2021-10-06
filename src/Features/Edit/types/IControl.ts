@@ -20,6 +20,24 @@ export type ControlFontSize = 'standard' | 'bold';
 export interface IApiAnswerChoice {
   choice_id: string;
   choice_lib: string;
+  choice_is_ko?: boolean;
+}
+
+export interface IComplianceData {
+  compliance_elm_desc_1: string | null;
+  compliance_elm_desc_2: string | null;
+  compliance_elm_family: string | null;
+  compliance_elm_lib: string | null;
+  compliance_elm_regex: RegExp | null;
+  compliance_elm_regex_msg: string | null;
+  compliance_elm_type: string | null;
+  compliance_elm_value: string | null;
+  compliance_id: number;
+}
+
+export interface ICompliance {
+  compliance_elms: IComplianceData[];
+  resolved: boolean | null;
 }
 
 export interface IApiControl {
@@ -37,6 +55,9 @@ export interface IApiControl {
   control_font_size?: ControlFontSize;
   control_family: string;
   control_regex: RegExp;
+  control_manage_compliance: boolean;
+  control_manage_compliance_lib: string | null;
+  compliance: ICompliance;
 }
 
 export interface IControl {
@@ -54,4 +75,7 @@ export interface IControl {
   fontSize?: ControlFontSize;
   family: string;
   regex: RegExp;
+  manageCompliance: boolean;
+  manageComplianceLib: string | null;
+  compliance?: ICompliance;
 }

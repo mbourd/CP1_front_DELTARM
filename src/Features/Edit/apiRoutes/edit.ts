@@ -35,6 +35,9 @@ export const editValidationHandlerCallback = (response: any) => {
         fontSize: control.control_font_size,
         family: control.control_family,
         regex: control.control_regex,
+        manageCompliance: control.control_manage_compliance,
+        manageComplianceLib: control.control_manage_compliance_lib,
+        compliance: control.compliance,
       };
 
       if (control.control_answer_choices) {
@@ -44,6 +47,7 @@ export const editValidationHandlerCallback = (response: any) => {
             id: '' + answer.choice_id,
             label: answer.choice_lib,
             value: answer.choice_id,
+            isKo: answer.choice_is_ko,
           };
 
           return answer;

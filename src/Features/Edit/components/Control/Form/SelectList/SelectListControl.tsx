@@ -19,6 +19,7 @@ export const SelectListControl: React.FC<IProps> = ({ control, fileId }): React.
 
   const value = storage.getData<string>('edit.control.' + control.id + '.value');
   const selectedValue: Record<string, true> = { [value || control.value || '']: true };
+  console.log(control);
 
   const saveValue = useCallback(
     (value: string) => {
@@ -56,6 +57,10 @@ export const SelectListControl: React.FC<IProps> = ({ control, fileId }): React.
     <Grid item xs={6}>
       <SelectListControlStyled className={'control-container'}>
         <ControlLabel control={control} />
+        {/* add a props like selectedKoChoice or choiceIsKo that we can control here to toggle the show of checkbox */}
+        {/* new specific component which bootstrap a radio component, with his own logic and own api request set_compliance */}
+        {/* in the radio component create a modal one that show the compliance fields */}
+        {/* both modal and checkbox should be re-usable in others control components, simply by adding checkbox below with condition */}
         <Select
           closeOnSelect
           name={'selectList' + control.id}
