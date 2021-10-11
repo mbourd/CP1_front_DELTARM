@@ -27,6 +27,12 @@ export const CommentControl: React.FC<IProps> = ({ control, fileId }): React.Rea
         return;
       }
 
+      if (control.regex && !value.match(control.regex)) {
+        setErrorMessage("Le format attendu n'est pas valide");
+
+        return;
+      }
+
       setErrorMessage(null);
 
       storage.setData('edit.control.' + control.id + '.value', value);
@@ -36,7 +42,7 @@ export const CommentControl: React.FC<IProps> = ({ control, fileId }): React.Rea
         { file_id: fileId, elm_id: control.id, elm_val: value, control_family: control.family },
       );
     },
-    [send, fileId, control.id, currentRoute, control.mandatory, control.family],
+    [send, fileId, control.id, currentRoute, control.mandatory, control.family, control.regex],
   );
 
   useEffect(() => {

@@ -27,6 +27,12 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
         return;
       }
 
+      if (control.regex && !value.match(control.regex)) {
+        setErrorMessage("Le format attendu n'est pas valide");
+
+        return;
+      }
+
       if (control.mandatory) {
         try {
           const v = parseInt(value, 10);
@@ -51,7 +57,7 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
         { file_id: fileId, elm_id: control.id, elm_val: value, control_family: control.family },
       );
     },
-    [send, fileId, control.id, control.mandatory, control.family, currentRoute],
+    [send, fileId, control.id, control.mandatory, control.family, currentRoute, control.regex],
   );
 
   useEffect(() => {

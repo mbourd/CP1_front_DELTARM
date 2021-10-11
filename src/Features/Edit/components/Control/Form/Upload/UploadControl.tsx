@@ -88,7 +88,7 @@ export const UploadControl: React.FC<IProps> = ({ control, fileId }): React.Reac
           document.body.appendChild(link);
           link.click();
         })
-        .catch((error) => {
+        .catch(() => {
           setErrorMessage('Une erreur est survenue lors du téléchargement du fichier');
         });
     },
