@@ -1,43 +1,41 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { UploadControlStyled, DownloadFile } from './UploadControl.style';
+import { UploadComplianceStyled, DownloadFile } from './UploadCompliance.style';
 import { Grid, Fab } from '@material-ui/core';
 import { CloudUpload } from '@material-ui/icons';
-import { IControl } from 'Features/Edit/types';
+import { IComplianceData } from 'Features/Edit/types';
 import { FormError } from 'Shared/components';
 import { getEnv, IUser, security } from 'Services';
-import { ControlLabel } from '../ControlLabel';
-import { ControlFooter } from '../ControlFooter';
+import { ComplianceLabel } from '../ComplianceLabel';
+import { ComplianceFooter } from '../ComplianceFooter';
 import axios from 'axios';
 
 interface IProps {
-  control: IControl;
+  compliance: IComplianceData;
   fileId: string;
+  controlId: string;
 }
 
-export const UploadControl: React.FC<IProps> = ({ control, fileId }): React.ReactElement => {
+export const UploadCompliance: React.FC<IProps> = ({ compliance, fileId, controlId }): React.ReactElement => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentUploadedFile, setCurrentUploadedFile] = useState<File | null>(null);
-  const [previousUploadedFile, setPreviousUploadedFile] = useState<string | null>(control.value);
+  const [previousUploadedFile, setPreviousUploadedFile] = useState<string | null>(compliance.value);
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
 
   const file = previousUploadedFile?.split(';');
 
   const uploadFile = useCallback(() => {
-    if (control.mandatory && !uploadFile) {
-      setErrorMessage('Valeur obligatoire');
-
-      return;
-    }
     if (currentUploadedFile) {
       const formData = new FormData();
       formData.append('file', currentUploadedFile);
       const fileName = currentUploadedFile.name;
       axios
         .post(
-          `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}/control/set_value?file_id=${fileId}&elm_id=${
-            control.id
-          }&elm_val=${fileName}&control_family=${control.family}`,
+          `${getEnv('API_PROTOCOL')}://${getEnv(
+            'API_HOST',
+          )}/control/set_value?file_id=${fileId}&elm_id=${controlId}&elm_val=${fileName}&control_family=${
+            compliance.family
+          }&compliance_id=${compliance.id}`,
           formData,
           {
             headers: {
@@ -51,10 +49,11 @@ export const UploadControl: React.FC<IProps> = ({ control, fileId }): React.Reac
           setPreviousUploadedFile(res.data.data.file_detail);
         })
         .catch((err) => {
-          setErrorMessage(err.response.data.error_msg);
+          // setErrorMessage(err.response.data.error_msg);
+          console.log(err);
         });
     }
-  }, [fileId, control.mandatory, control.family, currentUploadedFile, jwt, control.id]);
+  }, [fileId, compliance.family, currentUploadedFile, jwt, controlId, compliance.id]);
 
   const saveFileToUpload = useCallback(
     (e) => {
@@ -103,13 +102,13 @@ export const UploadControl: React.FC<IProps> = ({ control, fileId }): React.Reac
 
   return (
     <Grid item xs={6}>
-      <UploadControlStyled>
-        <ControlLabel control={control} />
-        <label htmlFor={`compliance-file-upload${control.id}`}>
+      <UploadComplianceStyled>
+        <ComplianceLabel compliance={compliance} />
+        <label htmlFor={`compliance-file-upload${compliance.id}`}>
           <input
             style={{ display: 'none' }}
-            id={`compliance-file-upload${control.id}`}
-            name={`compliance-file-upload${control.id}`}
+            id={`compliance-file-upload${compliance.id}`}
+            name={`compliance-file-upload${compliance.id}`}
             type="file"
             onChange={saveFileToUpload}
           />
@@ -127,8 +126,8 @@ export const UploadControl: React.FC<IProps> = ({ control, fileId }): React.Reac
             <FormError>{errorMessage}</FormError>
           </p>
         ) : null}
-        <ControlFooter control={control} />
-      </UploadControlStyled>
+        <ComplianceFooter compliance={compliance} />
+      </UploadComplianceStyled>
     </Grid>
   );
 };

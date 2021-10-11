@@ -1,5 +1,14 @@
 import { apiRouter } from 'Services';
-import { IAction, IApiData, IChapter, IControl, ICurrentSection, IData, ISection, IState } from '../types';
+import {
+  IAction,
+  IApiData,
+  IChapter, IComplianceData,
+  IControl,
+  ICurrentSection,
+  IData,
+  ISection,
+  IState
+} from '../types';
 import { ISelectData } from 'Shared/components';
 
 export const editValidationHandlerCallback = (response: any) => {
@@ -36,8 +45,6 @@ export const editValidationHandlerCallback = (response: any) => {
         family: control.control_family,
         regex: control.control_regex,
         manageCompliance: control.control_manage_compliance,
-        manageComplianceLib: control.control_manage_compliance_lib,
-        compliance: control.compliance,
       };
 
       if (control.control_answer_choices) {
@@ -53,6 +60,34 @@ export const editValidationHandlerCallback = (response: any) => {
           return answer;
         });
         c.answerChoices = answerChoices;
+      }
+
+      if (control.compliance) {
+        const compliances: IComplianceData[] = [];
+        control.compliance.compliance_elms.map((compliance) => {
+          const com: IComplianceData = {
+            desc1: compliance.compliance_elm_desc_1,
+            desc2: compliance.compliance_elm_desc_2,
+            family: compliance.compliance_elm_family,
+            id: compliance.compliance_id,
+            lib: compliance.compliance_elm_lib,
+            regex: compliance.compliance_elm_regex,
+            regexMsg: compliance.compliance_elm_regex_msg,
+            type: compliance.compliance_elm_type,
+            value: compliance.compliance_elm_value,
+          };
+          compliances.push(com);
+
+          return compliance;
+        });
+        c.compliance = {
+          complianceElms: compliances,
+          resolved: control.compliance.compliance_resolved,
+          complianceUncheckColor: control.compliance.compliance_uncheck_color,
+          complianceCheckColor: control.compliance.compliance_check_color,
+          complianceLib: control.compliance.compliance_lib,
+          complianceCheckboxResolved: control.compliance.compliance_checkbox_resolved,
+        };
       }
 
       controls.push(c);

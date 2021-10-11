@@ -96,6 +96,8 @@ export interface ISelect {
   onChange?: (selectedValues: Record<string, true>, name?: string, data?: ISelectData | undefined) => void;
   onBlur?: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   error?: boolean;
+  choiceIsKo?: boolean;
+  setChoiceIsKo?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface ISelectContext {

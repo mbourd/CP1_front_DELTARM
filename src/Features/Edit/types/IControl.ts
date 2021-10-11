@@ -23,21 +23,47 @@ export interface IApiAnswerChoice {
   choice_is_ko?: boolean;
 }
 
-export interface IComplianceData {
+export interface IApiCompliance {
+  compliance_elms: IApiComplianceData[];
+  compliance_resolved: boolean | null;
+  compliance_uncheck_color: string;
+  compliance_check_color: string;
+  compliance_lib: string;
+  compliance_checkbox_resolved: boolean;
+}
+
+export interface IApiComplianceData {
   compliance_elm_desc_1: string | null;
   compliance_elm_desc_2: string | null;
-  compliance_elm_family: string | null;
-  compliance_elm_lib: string | null;
-  compliance_elm_regex: RegExp | null;
+  compliance_elm_family: string;
+  compliance_elm_lib: string;
+  compliance_elm_regex: RegExp;
   compliance_elm_regex_msg: string | null;
-  compliance_elm_type: string | null;
-  compliance_elm_value: string | null;
-  compliance_id: number;
+  compliance_elm_type: ControlTypeType;
+  compliance_elm_value: string;
+  compliance_id: string;
+}
+
+export interface IComplianceData {
+  desc1: string | null;
+  desc2: string | null;
+  family: string;
+  id: string;
+  lib: string;
+  regex: RegExp;
+  regexMsg: string | null;
+  type: ControlTypeType;
+  value: string;
+  answerChoices?: Record<string, ISelectData>;
 }
 
 export interface ICompliance {
-  compliance_elms: IComplianceData[];
+  complianceElms: IComplianceData[];
   resolved: boolean | null;
+  complianceUncheckColor: string;
+  complianceCheckColor: string;
+  complianceLib: string;
+  complianceCheckboxResolved: boolean;
 }
 
 export interface IApiControl {
@@ -56,8 +82,7 @@ export interface IApiControl {
   control_family: string;
   control_regex: RegExp;
   control_manage_compliance: boolean;
-  control_manage_compliance_lib: string | null;
-  compliance: ICompliance;
+  compliance: IApiCompliance;
 }
 
 export interface IControl {
@@ -76,6 +101,5 @@ export interface IControl {
   family: string;
   regex: RegExp;
   manageCompliance: boolean;
-  manageComplianceLib: string | null;
   compliance?: ICompliance;
 }
