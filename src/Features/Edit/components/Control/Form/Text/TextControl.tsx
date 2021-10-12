@@ -31,7 +31,7 @@ export const TextControl: React.FC<IProps> = ({ control, fileId, regex, regexMes
 
       const regexControl = new RegExp(control.regex, 'i');
       if (control.regex && !value.match(regexControl)) {
-        setErrorMessage("Le format attendu n'est pas valide");
+        setErrorMessage(control.regexMsg);
 
         return;
       }
@@ -52,7 +52,7 @@ export const TextControl: React.FC<IProps> = ({ control, fileId, regex, regexMes
 
       send(currentRoute?.props?.apiSaveControlRouteName, {}, q);
     },
-    [send, fileId, control.id, currentRoute, control.mandatory, regex, regexMessage, control.family, control.regex],
+    [send, fileId, control.id, currentRoute, control.mandatory, regex, regexMessage, control.family, control.regex, control.regexMsg],
   );
 
   useEffect(() => {

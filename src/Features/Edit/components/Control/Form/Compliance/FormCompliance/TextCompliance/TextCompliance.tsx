@@ -18,7 +18,7 @@ export const TextCompliance: React.FC<IProps> = ({ compliance, fileId, controlId
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
 
-  const value = storage.getData<string>('edit.compliance.' + compliance.id + '.value');
+  const value = storage.getData<string>(controlId + '.edit.compliance.' + compliance.id + '.value');
 
   const saveValue = useCallback(
     (value: string) => {
@@ -30,7 +30,7 @@ export const TextCompliance: React.FC<IProps> = ({ compliance, fileId, controlId
       }
 
       setErrorMessage(null);
-      storage.setData('edit.compliance.' + compliance.id + '.value', value);
+      storage.setData(controlId + '.edit.compliance.' + compliance.id + '.value', value);
       const q: Record<string, string> = {
         file_id: fileId,
         elm_id: controlId,

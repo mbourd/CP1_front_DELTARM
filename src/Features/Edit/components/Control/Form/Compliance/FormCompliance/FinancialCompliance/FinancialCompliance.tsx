@@ -19,16 +19,18 @@ export const FinancialCompliance: React.FC<IProps> = ({ compliance, fileId, cont
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
 
+  const value = storage.getData<string>(controlId + '.edit.compliance.' + compliance.id + '.value');
+
   const saveValue = useCallback(
     (value: string) => {
       if (compliance.regex && !value.match(compliance.regex)) {
-        setErrorMessage("Le format attendu n'est pas valide");
+        setErrorMessage(compliance.regexMsg);
 
         return;
       }
 
       setErrorMessage(null);
-      storage.setData('edit.compliance.' + compliance.id + '.value', value);
+      storage.setData(controlId + '.edit.compliance.' + compliance.id + '.value', value);
       send(
         currentRoute?.props?.apiSaveControlRouteName,
         {},
@@ -41,7 +43,7 @@ export const FinancialCompliance: React.FC<IProps> = ({ compliance, fileId, cont
         },
       );
     },
-    [send, fileId, compliance.id, controlId, compliance.family, currentRoute, compliance.regex],
+    [send, fileId, compliance.id, controlId, compliance.family, currentRoute, compliance.regex, compliance.regexMsg],
   );
 
   useEffect(() => {
@@ -58,7 +60,7 @@ export const FinancialCompliance: React.FC<IProps> = ({ compliance, fileId, cont
         <ComplianceLabel compliance={compliance} />
         <InputBase
           placeholder={compliance.lib ? compliance.lib : compliance.value}
-          defaultValue={complianceValue}
+          defaultValue={value || complianceValue}
           icon={<EuroIcon />}
           onBlur={(e) => saveValue(e.currentTarget.value)}
         />

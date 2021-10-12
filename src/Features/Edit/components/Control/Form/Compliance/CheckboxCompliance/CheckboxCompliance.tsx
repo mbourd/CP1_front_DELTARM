@@ -48,8 +48,8 @@ export const CheckboxCompliance: React.FC<ICheckboxComplianceProps> = ({
 
   return (
     <Checkbox
-      checkedColor={'success'}
-      color={'error'}
+      checkedColor={checkedColor}
+      color={uncheckedColor}
       label={label}
       onChange={saveResolvedCompliance}
       checked={checked}

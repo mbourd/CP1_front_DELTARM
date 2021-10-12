@@ -84,6 +84,7 @@ export interface IApiControl {
   control_font_size?: ControlFontSize;
   control_family: string;
   control_regex: RegExp;
+  control_regex_msg: string;
   control_manage_compliance: boolean;
   compliance: IApiCompliance;
 }
@@ -103,6 +104,7 @@ export interface IControl {
   fontSize?: ControlFontSize;
   family: string;
   regex: RegExp;
+  regexMsg: string;
   manageCompliance: boolean;
   compliance?: ICompliance;
 }
