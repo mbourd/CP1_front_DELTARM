@@ -87,6 +87,7 @@ export const editValidationHandlerCallback = (response: any) => {
           complianceCheckColor: control.compliance.compliance_check_color,
           complianceLib: control.compliance.compliance_lib,
           complianceCheckboxResolved: control.compliance.compliance_checkbox_resolved,
+          modaleTitle: control.compliance.compliance_modale_title,
         };
       }
 

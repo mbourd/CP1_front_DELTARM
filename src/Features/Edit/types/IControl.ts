@@ -1,4 +1,5 @@
 import { ISelectData } from 'Shared/components';
+import {IColor} from "../../../Packages/Design";
 
 export type ControlTypeType =
   | 'text'
@@ -26,10 +27,11 @@ export interface IApiAnswerChoice {
 export interface IApiCompliance {
   compliance_elms: IApiComplianceData[];
   compliance_resolved: boolean | null;
-  compliance_uncheck_color: string;
-  compliance_check_color: string;
+  compliance_uncheck_color: keyof IColor;
+  compliance_check_color: keyof IColor;
   compliance_lib: string;
   compliance_checkbox_resolved: boolean;
+  compliance_modale_title: string;
 }
 
 export interface IApiComplianceData {
@@ -60,10 +62,11 @@ export interface IComplianceData {
 export interface ICompliance {
   complianceElms: IComplianceData[];
   resolved: boolean | null;
-  complianceUncheckColor: string;
-  complianceCheckColor: string;
+  complianceUncheckColor: keyof IColor;
+  complianceCheckColor: keyof IColor;
   complianceLib: string;
   complianceCheckboxResolved: boolean;
+  modaleTitle: string;
 }
 
 export interface IApiControl {

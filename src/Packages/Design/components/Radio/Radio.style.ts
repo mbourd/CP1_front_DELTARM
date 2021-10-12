@@ -49,7 +49,7 @@ export const RadioStyled = styled.label<IProps>`
   }
 
   ._CheckboxRadioLabel {
-    color: ${({ theme }) => theme.color.text.main};
+    color: ${({ theme, mainColor }) => theme.color[mainColor].main};
     font-family: ${({ theme }) => theme.font.text.main};
     font-size: ${({ theme }) => theme.sizing.normal};
     margin-left: ${({ theme }) => theme.spacing.small};

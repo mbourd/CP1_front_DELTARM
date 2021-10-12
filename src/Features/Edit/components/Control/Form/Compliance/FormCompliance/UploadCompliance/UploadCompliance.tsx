@@ -49,8 +49,7 @@ export const UploadCompliance: React.FC<IProps> = ({ compliance, fileId, control
           setPreviousUploadedFile(res.data.data.file_detail);
         })
         .catch((err) => {
-          // setErrorMessage(err.response.data.error_msg);
-          console.log(err);
+          setErrorMessage(err.response.data.error_msg);
         });
     }
   }, [fileId, compliance.family, currentUploadedFile, jwt, controlId, compliance.id]);
