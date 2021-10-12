@@ -3,14 +3,15 @@ import { Checkbox } from 'Shared/components';
 import { EditValidationContext } from '../../../../../EditValidationContext';
 import { getEnv, IUser, security } from '../../../../../../../Services';
 import axios from 'axios';
+import { IColor } from '../../../../../../../Packages/Design';
 
 interface ICheckboxComplianceProps {
   label: string;
   checked: boolean;
   controlId: string;
   setIsResolved: React.Dispatch<React.SetStateAction<boolean>>;
-  checkedColor: string;
-  uncheckedColor: string;
+  checkedColor: keyof IColor;
+  uncheckedColor: keyof IColor;
 }
 
 export const CheckboxCompliance: React.FC<ICheckboxComplianceProps> = ({
@@ -45,5 +46,13 @@ export const CheckboxCompliance: React.FC<ICheckboxComplianceProps> = ({
       });
   }, [fileId, controlId, checked, setIsResolved, jwt]);
 
-  return <Checkbox label={label} onChange={saveResolvedCompliance} checked={checked} />;
+  return (
+    <Checkbox
+      checkedColor={'success'}
+      color={'error'}
+      label={label}
+      onChange={saveResolvedCompliance}
+      checked={checked}
+    />
+  );
 };
