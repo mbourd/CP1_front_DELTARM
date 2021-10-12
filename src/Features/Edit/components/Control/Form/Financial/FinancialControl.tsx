@@ -17,7 +17,6 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
-  const value = storage.getData<string>('edit.control.' + control.id + '.value');
 
   const saveValue = useCallback(
     (value: string) => {
@@ -74,7 +73,7 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
     }
   }, [error]);
 
-  const controlValue = parseInt(control.value)?.toLocaleString();
+  const controlValue = control.value ? parseInt(control.value)?.toLocaleString() : control.value;
 
   return (
     <Grid item xs={6}>
@@ -84,7 +83,7 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
           placeholder={control.editable ? control.title : control.value}
           disabled={!control.editable}
           color={control.editable ? 'text' : 'disabled'}
-          defaultValue={value || controlValue}
+          defaultValue={controlValue}
           icon={<EuroIcon />}
           onBlur={(e) => saveValue(e.currentTarget.value)}
         />
