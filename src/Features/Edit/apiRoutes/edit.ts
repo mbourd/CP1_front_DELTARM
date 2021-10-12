@@ -44,6 +44,7 @@ export const editValidationHandlerCallback = (response: any) => {
         fontSize: control.control_font_size,
         family: control.control_family,
         regex: control.control_regex,
+        regexMsg: control.control_regex_msg,
         manageCompliance: control.control_manage_compliance,
       };
 

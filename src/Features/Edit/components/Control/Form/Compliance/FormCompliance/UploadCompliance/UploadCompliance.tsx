@@ -4,7 +4,7 @@ import { Grid, Fab } from '@material-ui/core';
 import { CloudUpload } from '@material-ui/icons';
 import { IComplianceData } from 'Features/Edit/types';
 import { FormError } from 'Shared/components';
-import { getEnv, IUser, security } from 'Services';
+import { getEnv, IUser, security, storage } from 'Services';
 import { ComplianceLabel } from '../ComplianceLabel';
 import { ComplianceFooter } from '../ComplianceFooter';
 import axios from 'axios';
@@ -22,7 +22,8 @@ export const UploadCompliance: React.FC<IProps> = ({ compliance, fileId, control
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
 
-  const file = previousUploadedFile?.split(';');
+  const value = storage.getData<string>(controlId + '.edit.compliance.' + compliance.id + '.value')?.split(';');
+  const file = value ? value : previousUploadedFile?.split(';');
 
   const uploadFile = useCallback(() => {
     if (currentUploadedFile) {
@@ -45,8 +46,9 @@ export const UploadCompliance: React.FC<IProps> = ({ compliance, fileId, control
           },
         )
         .then((res) => {
-          setErrorMessage(null);
           setPreviousUploadedFile(res.data.data.file_detail);
+          setErrorMessage(null);
+          storage.setData(controlId + '.edit.compliance.' + compliance.id + '.value', res.data.data.file_detail);
         })
         .catch((err) => {
           setErrorMessage(err.response.data.error_msg);
@@ -103,11 +105,11 @@ export const UploadCompliance: React.FC<IProps> = ({ compliance, fileId, control
     <Grid item xs={6}>
       <UploadComplianceStyled>
         <ComplianceLabel compliance={compliance} />
-        <label htmlFor={`compliance-file-upload${compliance.id}`}>
+        <label htmlFor={`${controlId}compliance-file-upload${compliance.id}`}>
           <input
             style={{ display: 'none' }}
-            id={`compliance-file-upload${compliance.id}`}
-            name={`compliance-file-upload${compliance.id}`}
+            id={`${controlId}compliance-file-upload${compliance.id}`}
+            name={`${controlId}compliance-file-upload${compliance.id}`}
             type="file"
             onChange={saveFileToUpload}
           />

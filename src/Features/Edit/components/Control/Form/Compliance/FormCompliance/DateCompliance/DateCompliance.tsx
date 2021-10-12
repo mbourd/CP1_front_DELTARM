@@ -18,16 +18,16 @@ export const DateCompliance: React.FC<IProps> = ({ compliance, fileId, controlId
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
 
-  const value = storage.getData<string>('edit.compliance.' + compliance.id + '.value');
+  const value = storage.getData<string>(controlId + '.edit.compliance.' + compliance.id + '.value');
 
   const saveValue = useCallback(
     (value: string) => {
       if (compliance.regex && !value.match(compliance.regex)) {
-        setErrorMessage("Le format attendu n'est pas valide");
+        setErrorMessage(compliance.regexMsg);
 
         return;
       }
-      storage.setData('edit.compliance.' + compliance.id + '.value', value);
+      storage.setData(controlId + '.edit.compliance.' + compliance.id + '.value', value);
       send(
         currentRoute?.props?.apiSaveControlRouteName,
         {},
@@ -40,7 +40,7 @@ export const DateCompliance: React.FC<IProps> = ({ compliance, fileId, controlId
         },
       );
     },
-    [send, fileId, controlId, compliance.family, currentRoute, compliance.regex, compliance.id],
+    [send, fileId, controlId, compliance.family, currentRoute, compliance.regex, compliance.id, compliance.regexMsg],
   );
 
   useEffect(() => {
