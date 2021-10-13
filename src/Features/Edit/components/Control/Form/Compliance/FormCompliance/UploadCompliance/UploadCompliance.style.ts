@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 
-export const UploadControlStyled = styled.div`
+export const UploadComplianceStyled = styled.div`
   position: relative;
   border: 1px solid black;
   border-radius: 5px;

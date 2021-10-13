@@ -17,6 +17,7 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
+
   const value = storage.getData<string>('edit.control.' + control.id + '.value');
 
   const saveValue = useCallback(
@@ -28,7 +29,7 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
       }
 
       if (control.regex && !value.match(control.regex)) {
-        setErrorMessage("Le format attendu n'est pas valide");
+        setErrorMessage(control.regexMsg);
 
         return;
       }
@@ -57,7 +58,7 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
         { file_id: fileId, elm_id: control.id, elm_val: value, control_family: control.family },
       );
     },
-    [send, fileId, control.id, control.mandatory, control.family, currentRoute, control.regex],
+    [send, fileId, control.id, control.mandatory, control.family, currentRoute, control.regex, control.regexMsg],
   );
 
   useEffect(() => {
@@ -74,7 +75,7 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
     }
   }, [error]);
 
-  const controlValue = parseInt(control.value)?.toLocaleString();
+  const controlValue = control.value ? parseInt(control.value)?.toLocaleString() : control.value;
 
   return (
     <Grid item xs={6}>

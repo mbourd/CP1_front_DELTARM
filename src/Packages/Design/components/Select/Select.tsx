@@ -29,6 +29,7 @@ export const Select: React.FC<ISelect> = ({
   onChange,
   closeOnSelect = false,
   error = false,
+  setChoiceIsKo,
 }): React.ReactElement => {
   const sizing = useSizing();
   const [isOpen, setIsOpen] = useState(open);
@@ -88,13 +89,19 @@ export const Select: React.FC<ISelect> = ({
         onChange(selectedVal);
       }
 
+      if (value.isKo && setChoiceIsKo) {
+        setChoiceIsKo(true);
+      } else if (!value.isKo && setChoiceIsKo) {
+        setChoiceIsKo(false);
+      }
+
       setSelected(selectedVal);
 
       if (closeOnSelect) {
         closeSelect();
       }
     },
-    [selected, multiple, onChange, closeOnSelect, closeSelect],
+    [selected, multiple, onChange, closeOnSelect, closeSelect, setChoiceIsKo],
   );
 
   const labels = Object.keys(selected).map((id) => {

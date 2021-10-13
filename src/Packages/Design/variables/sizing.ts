@@ -15,6 +15,6 @@ export const sizing: ISizing = {
   heading: {
     one: '2.8rem',
     two: '2.4rem',
-    three: '2rem',
+    three: '1.5rem',
   },
 };

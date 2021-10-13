@@ -6,6 +6,7 @@ import { storage, useApi, useRouter } from 'Services';
 import { SelectListControlStyled } from './SelectListControl.style';
 import { ControlLabel } from '../ControlLabel';
 import { ControlFooter } from '../ControlFooter';
+import { Compliance } from '../Compliance/Compliance';
 
 interface IProps {
   control: IControl;
@@ -16,14 +17,24 @@ export const SelectListControl: React.FC<IProps> = ({ control, fileId }): React.
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
+  const [choiceIsKo, setChoiceIsKo] = useState(
+    control.compliance?.complianceCheckboxResolved ? control.compliance.complianceCheckboxResolved : false,
+  );
+  const [isResolved, setIsResolved] = useState(control.compliance?.resolved ? control.compliance.resolved : false);
 
   const value = storage.getData<string>('edit.control.' + control.id + '.value');
   const selectedValue: Record<string, true> = { [value || control.value || '']: true };
 
+  useEffect(() => {
+    if (!choiceIsKo) {
+      setIsResolved(false);
+    }
+  }, [choiceIsKo]);
+
   const saveValue = useCallback(
     (value: string) => {
       if (control.regex && !value.match(control.regex)) {
-        setErrorMessage("Le format attendu n'est pas valide");
+        setErrorMessage(control.regexMsg);
 
         return;
       }
@@ -35,7 +46,7 @@ export const SelectListControl: React.FC<IProps> = ({ control, fileId }): React.
         { file_id: fileId, elm_id: control.id, elm_val: value, control_family: control.family },
       );
     },
-    [send, fileId, control.id, control.family, currentRoute, control.regex],
+    [send, fileId, control.id, control.family, currentRoute, control.regex, control.regexMsg],
   );
 
   useEffect(() => {
@@ -70,12 +81,26 @@ export const SelectListControl: React.FC<IProps> = ({ control, fileId }): React.
             saveValue('' + first);
           }}
           error={!!error}
+          choiceIsKo={choiceIsKo}
+          setChoiceIsKo={setChoiceIsKo}
         >
           {'Sélectionner une valeur'}
         </Select>
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ControlFooter control={control} />
       </SelectListControlStyled>
+      {control.compliance && (
+        <Compliance
+          label={control.compliance.complianceLib}
+          checked={isResolved}
+          setIsResolved={setIsResolved}
+          controlId={control.id}
+          fileId={fileId}
+          choiceIsKo={choiceIsKo}
+          control={control}
+          compliance={control.compliance}
+        />
+      )}
     </Grid>
   );
 };
