@@ -60,7 +60,6 @@ export interface IComplianceData {
 }
 
 export interface ICompliance {
-  complianceElms: IComplianceData[];
   resolved: boolean | null;
   complianceUncheckColor: keyof IColor;
   complianceCheckColor: keyof IColor;

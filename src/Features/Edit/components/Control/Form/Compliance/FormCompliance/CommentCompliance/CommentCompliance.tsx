@@ -3,7 +3,7 @@ import { CommentComplianceStyled } from './CommentCompliance.style';
 import { Grid } from '@material-ui/core';
 import { IComplianceData } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
-import { storage, useApi, useRouter } from 'Services';
+import { useApi, useRouter } from 'Services';
 import { ComplianceLabel } from '../ComplianceLabel';
 import { ComplianceFooter } from '../ComplianceFooter';
 
@@ -18,8 +18,6 @@ export const CommentCompliance: React.FC<IProps> = ({ compliance, fileId, contro
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
 
-  const value = storage.getData<string>(controlId + '.edit.compliance.' + compliance.id + '.value');
-
   const saveValue = useCallback(
     (value: string) => {
       if (compliance.regex && !value.match(compliance.regex)) {
@@ -30,7 +28,6 @@ export const CommentCompliance: React.FC<IProps> = ({ compliance, fileId, contro
 
       setErrorMessage(null);
 
-      storage.setData(controlId + '.edit.compliance.' + compliance.id + '.value', value);
       send(
         currentRoute?.props?.apiSaveControlRouteName,
         {},
@@ -60,7 +57,7 @@ export const CommentCompliance: React.FC<IProps> = ({ compliance, fileId, contro
           multiline
           multilineRows={10}
           placeholder={compliance.lib ? compliance.lib : compliance.value}
-          defaultValue={value || compliance.value}
+          defaultValue={compliance.value}
           onBlur={(e) => saveValue(e.currentTarget.value)}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}

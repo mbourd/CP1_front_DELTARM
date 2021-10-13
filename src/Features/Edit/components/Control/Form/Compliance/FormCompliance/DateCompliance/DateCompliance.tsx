@@ -3,7 +3,7 @@ import { DateComplianceStyled } from './DateCompliance.style';
 import { Grid } from '@material-ui/core';
 import { IComplianceData } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
-import { storage, useApi, useRouter } from 'Services';
+import { useApi, useRouter } from 'Services';
 import { ComplianceLabel } from '../ComplianceLabel';
 import { ComplianceFooter } from '../ComplianceFooter';
 
@@ -18,8 +18,6 @@ export const DateCompliance: React.FC<IProps> = ({ compliance, fileId, controlId
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
 
-  const value = storage.getData<string>(controlId + '.edit.compliance.' + compliance.id + '.value');
-
   const saveValue = useCallback(
     (value: string) => {
       if (compliance.regex && !value.match(compliance.regex)) {
@@ -27,7 +25,6 @@ export const DateCompliance: React.FC<IProps> = ({ compliance, fileId, controlId
 
         return;
       }
-      storage.setData(controlId + '.edit.compliance.' + compliance.id + '.value', value);
       send(
         currentRoute?.props?.apiSaveControlRouteName,
         {},
@@ -57,7 +54,7 @@ export const DateCompliance: React.FC<IProps> = ({ compliance, fileId, controlId
           placeholder={compliance.lib ? compliance.lib : compliance.value}
           disabled={!compliance.lib}
           color={compliance.lib ? 'text' : 'disabled'}
-          defaultValue={value || compliance.value}
+          defaultValue={compliance.value}
           onBlur={(e) => saveValue(e.currentTarget.value)}
           type={'date'}
         />

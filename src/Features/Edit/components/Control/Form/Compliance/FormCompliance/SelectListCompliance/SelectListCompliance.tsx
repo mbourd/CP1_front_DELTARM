@@ -18,7 +18,7 @@ export const SelectListCompliance: React.FC<IProps> = ({ compliance, fileId, con
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
 
-  const value = storage.getData<string>(controlId + '.edit.compliance.' + compliance.id + '.value');
+  const value = storage.getData<string>(fileId + controlId + '.edit.compliance.' + compliance.id + '.value');
   const selectedValue: Record<string, true> = { [value || compliance.value || '']: true };
 
   const saveValue = useCallback(
@@ -29,7 +29,7 @@ export const SelectListCompliance: React.FC<IProps> = ({ compliance, fileId, con
         return;
       }
       setErrorMessage(null);
-      storage.setData(controlId + '.edit.compliance.' + compliance.id + '.value', value);
+      storage.setData(fileId + controlId + '.edit.compliance.' + compliance.id + '.value', value);
       send(
         currentRoute?.props?.apiSaveControlRouteName,
         {},

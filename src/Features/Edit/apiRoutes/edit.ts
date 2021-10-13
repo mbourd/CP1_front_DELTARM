@@ -2,7 +2,7 @@ import { apiRouter } from 'Services';
 import {
   IAction,
   IApiData,
-  IChapter, IComplianceData,
+  IChapter,
   IControl,
   ICurrentSection,
   IData,
@@ -64,25 +64,7 @@ export const editValidationHandlerCallback = (response: any) => {
       }
 
       if (control.compliance) {
-        const compliances: IComplianceData[] = [];
-        control.compliance.compliance_elms.map((compliance) => {
-          const com: IComplianceData = {
-            desc1: compliance.compliance_elm_desc_1,
-            desc2: compliance.compliance_elm_desc_2,
-            family: compliance.compliance_elm_family,
-            id: compliance.compliance_id,
-            lib: compliance.compliance_elm_lib,
-            regex: compliance.compliance_elm_regex,
-            regexMsg: compliance.compliance_elm_regex_msg,
-            type: compliance.compliance_elm_type,
-            value: compliance.compliance_elm_value,
-          };
-          compliances.push(com);
-
-          return compliance;
-        });
         c.compliance = {
-          complianceElms: compliances,
           resolved: control.compliance.compliance_resolved,
           complianceUncheckColor: control.compliance.compliance_uncheck_color,
           complianceCheckColor: control.compliance.compliance_check_color,

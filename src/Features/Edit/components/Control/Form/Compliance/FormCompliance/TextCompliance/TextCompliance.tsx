@@ -3,7 +3,7 @@ import { TextComplianceStyled } from './TextCompliance.style';
 import { Grid } from '@material-ui/core';
 import { IComplianceData } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
-import { storage, useApi, useRouter } from 'Services';
+import { useApi, useRouter } from 'Services';
 import { ComplianceLabel } from '../ComplianceLabel';
 import { ComplianceFooter } from '../ComplianceFooter';
 
@@ -18,8 +18,6 @@ export const TextCompliance: React.FC<IProps> = ({ compliance, fileId, controlId
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
 
-  const value = storage.getData<string>(controlId + '.edit.compliance.' + compliance.id + '.value');
-
   const saveValue = useCallback(
     (value: string) => {
       const regexCompliance = new RegExp(compliance.regex, 'i');
@@ -30,7 +28,6 @@ export const TextCompliance: React.FC<IProps> = ({ compliance, fileId, controlId
       }
 
       setErrorMessage(null);
-      storage.setData(controlId + '.edit.compliance.' + compliance.id + '.value', value);
       const q: Record<string, string> = {
         file_id: fileId,
         elm_id: controlId,
@@ -59,7 +56,7 @@ export const TextCompliance: React.FC<IProps> = ({ compliance, fileId, controlId
         <ComplianceLabel compliance={compliance} />
         <InputBase
           placeholder={compliance.lib ? compliance.lib : compliance.value}
-          defaultValue={value || compliance.value}
+          defaultValue={compliance.value}
           onBlur={(e) => saveValue(e.currentTarget.value)}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
