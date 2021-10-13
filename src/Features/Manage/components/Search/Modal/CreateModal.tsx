@@ -28,7 +28,7 @@ export const CreateModal: React.FC<IProps> = ({ onClose, open, dataManualInput }
 
   // Have the current filled queries in object
   let queries: any;
-  dataManualInput?.fields.map((field: IMissingField) => {
+  dataManualInput?.fields.forEach((field: IMissingField) => {
     if (field.value) {
       queries = {
         ...queries,

@@ -30,6 +30,7 @@ export const InputBase: React.FC<IInputBase> = ({
   multilineRows = 2,
 }): React.ReactElement => {
   const theme = useTheme();
+  console.log(theme);
   const c = theme.color[color];
   const classes = useStyles({ fontFamily: theme.font.text.main, fontColor: c ? c.main : theme.color.text.main });
   const { input, ...MUIInputBaseClasse } = classes;
