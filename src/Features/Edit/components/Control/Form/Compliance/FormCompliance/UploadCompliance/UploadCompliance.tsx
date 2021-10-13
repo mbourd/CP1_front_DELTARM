@@ -21,9 +21,7 @@ export const UploadCompliance: React.FC<IProps> = ({ compliance, fileId, control
   const [previousUploadedFile, setPreviousUploadedFile] = useState<string | null>(compliance.value);
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
-
-  const value = storage.getData<string>(controlId + '.edit.compliance.' + compliance.id + '.value')?.split(';');
-  const file = value ? value : previousUploadedFile?.split(';');
+  const file = previousUploadedFile?.split(';');
 
   const uploadFile = useCallback(() => {
     if (currentUploadedFile) {
@@ -48,7 +46,6 @@ export const UploadCompliance: React.FC<IProps> = ({ compliance, fileId, control
         .then((res) => {
           setPreviousUploadedFile(res.data.data.file_detail);
           setErrorMessage(null);
-          storage.setData(controlId + '.edit.compliance.' + compliance.id + '.value', res.data.data.file_detail);
         })
         .catch((err) => {
           setErrorMessage(err.response.data.error_msg);

@@ -4,9 +4,10 @@ import { IComplianceData } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
 import { FinancialComplianceStyled } from './FinancialCompliance.style';
 import { EuroIcon } from 'Styles';
-import { storage, useApi, useRouter } from 'Services';
+import { useApi, useRouter } from 'Services';
 import { ComplianceLabel } from '../ComplianceLabel';
 import { ComplianceFooter } from '../ComplianceFooter';
+import { numberWithSpaces } from '../../../../../../../../Packages/Helpers/src/numberWithSpaces';
 
 interface IProps {
   compliance: IComplianceData;
@@ -19,8 +20,6 @@ export const FinancialCompliance: React.FC<IProps> = ({ compliance, fileId, cont
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
 
-  const value = storage.getData<string>(controlId + '.edit.compliance.' + compliance.id + '.value');
-
   const saveValue = useCallback(
     (value: string) => {
       if (compliance.regex && !value.match(compliance.regex)) {
@@ -30,7 +29,6 @@ export const FinancialCompliance: React.FC<IProps> = ({ compliance, fileId, cont
       }
 
       setErrorMessage(null);
-      storage.setData(controlId + '.edit.compliance.' + compliance.id + '.value', value);
       send(
         currentRoute?.props?.apiSaveControlRouteName,
         {},
@@ -52,7 +50,7 @@ export const FinancialCompliance: React.FC<IProps> = ({ compliance, fileId, cont
     }
   }, [error]);
 
-  const complianceValue = compliance.value ? parseInt(compliance.value)?.toLocaleString() : compliance.value;
+  const complianceValue = compliance.value ? numberWithSpaces(compliance.value) : compliance.value;
 
   return (
     <Grid item xs={6}>
@@ -60,7 +58,7 @@ export const FinancialCompliance: React.FC<IProps> = ({ compliance, fileId, cont
         <ComplianceLabel compliance={compliance} />
         <InputBase
           placeholder={compliance.lib ? compliance.lib : compliance.value}
-          defaultValue={value || complianceValue}
+          defaultValue={complianceValue}
           icon={<EuroIcon />}
           onBlur={(e) => saveValue(e.currentTarget.value)}
         />
