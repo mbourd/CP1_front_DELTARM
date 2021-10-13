@@ -4,7 +4,7 @@ import { Grid, Fab } from '@material-ui/core';
 import { CloudUpload } from '@material-ui/icons';
 import { IComplianceData } from 'Features/Edit/types';
 import { FormError } from 'Shared/components';
-import { getEnv, IUser, security, storage } from 'Services';
+import { getEnv, IUser, security } from 'Services';
 import { ComplianceLabel } from '../ComplianceLabel';
 import { ComplianceFooter } from '../ComplianceFooter';
 import axios from 'axios';
