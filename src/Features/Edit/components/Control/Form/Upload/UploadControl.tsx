@@ -103,8 +103,8 @@ export const UploadControl: React.FC<IProps> = ({ control, fileId }): React.Reac
 
   return (
     <Grid item xs={6}>
+      <ControlLabel control={control} />
       <UploadControlStyled>
-        <ControlLabel control={control} />
         <label htmlFor={`compliance-file-upload${control.id}`}>
           <input
             style={{ display: 'none' }}
@@ -122,13 +122,13 @@ export const UploadControl: React.FC<IProps> = ({ control, fileId }): React.Reac
             {file[0]}
           </DownloadFile>
         )}
-        {errorMessage ? (
-          <p>
-            <FormError>{errorMessage}</FormError>
-          </p>
-        ) : null}
-        <ControlFooter control={control} />
       </UploadControlStyled>
+      {errorMessage ? (
+        <p>
+          <FormError>{errorMessage}</FormError>
+        </p>
+      ) : null}
+      <ControlFooter control={control} />
     </Grid>
   );
 };

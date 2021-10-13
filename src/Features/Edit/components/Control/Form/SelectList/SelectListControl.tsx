@@ -24,7 +24,7 @@ export const SelectListControl: React.FC<IProps> = ({ control, fileId }): React.
 
   const value = storage.getData<string>('edit.control.' + control.id + '.value');
   const selectedValue: Record<string, true> = { [value || control.value || '']: true };
-  
+
   useEffect(() => {
     if (!choiceIsKo) {
       setIsResolved(false);
