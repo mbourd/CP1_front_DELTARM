@@ -22,6 +22,8 @@ export const SwitchControlItem: React.FC<IProps> = ({ control }): React.ReactEle
   switch (control.type) {
     case 'text':
       return <TextControl control={control} fileId={fileId} />;
+    case 'email':
+      return <TextControl control={control} fileId={fileId} />;
     case 'selectlist':
       return <SelectListControl control={control} fileId={fileId} />;
     case 'financial':

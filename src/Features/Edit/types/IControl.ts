@@ -1,5 +1,5 @@
 import { ISelectData } from 'Shared/components';
-import {IColor} from "../../../Packages/Design";
+import { IColor } from "../../../Packages/Design";
 
 export type ControlTypeType =
   | 'text'
@@ -14,7 +14,8 @@ export type ControlTypeType =
   | 'file_upload'
   | 'radio'
   | 'checkbox'
-  | 'auth_num';
+  | 'auth_num'
+  | 'email';
 
 export type ControlFontSize = 'standard' | 'bold';
 
