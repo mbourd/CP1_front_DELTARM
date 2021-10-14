@@ -37,6 +37,15 @@ export const Select: React.FC<ISelect> = ({
     const first = Object.keys(selectedValues)[0];
 
     selectedValues = first ? { [first]: true } : {};
+  } else if (multiple) {
+    const values = Object.keys(selectedValues)[0].split(';');
+    selectedValues = {};
+    if (values.includes('undefined')) {
+      values.splice(values.indexOf('undefined'), 1);
+    }
+    values.map((key, index) => {
+      return (selectedValues = { ...selectedValues, [key]: true });
+    });
   }
   const [selected, setSelected] = useState(selectedValues);
   const [initialValues] = useState(selectedValues);

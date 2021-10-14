@@ -14,8 +14,11 @@ export type ControlTypeType =
   | 'file_upload'
   | 'radio'
   | 'checkbox'
-  | 'auth_num'
-  | 'email';
+  | 'multiple_list'
+  | 'radio'
+  | 'checkbox'
+  | 'email'
+  | 'auth_num';
 
 export type ControlFontSize = 'standard' | 'bold';
 
