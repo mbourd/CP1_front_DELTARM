@@ -25,6 +25,7 @@ export const CheckboxCompliance: React.FC<ICheckboxComplianceProps> = ({
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
   const { fileId } = useContext(EditValidationContext);
+
   const saveResolvedCompliance = useCallback(() => {
     axios
       .post(

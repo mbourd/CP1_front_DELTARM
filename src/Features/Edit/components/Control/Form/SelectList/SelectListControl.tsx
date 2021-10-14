@@ -26,6 +26,12 @@ export const SelectListControl: React.FC<IProps> = ({ control, fileId, multiple 
   const value = storage.getData<string>('edit.control.' + control.id + '.value');
   const selectedValue: Record<string, true> = { [value || control.value || '']: true };
 
+  useEffect(() => {
+    if (!choiceIsKo) {
+      setIsResolved(false);
+    }
+  }, [choiceIsKo]);
+
   const saveValue = useCallback(
     (value: string) => {
       if (control.regex && !value.match(control.regex)) {

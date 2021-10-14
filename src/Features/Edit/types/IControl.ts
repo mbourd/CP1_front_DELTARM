@@ -1,5 +1,5 @@
 import { ISelectData } from 'Shared/components';
-import {IColor} from "../../../Packages/Design";
+import { IColor } from "../../../Packages/Design";
 
 export type ControlTypeType =
   | 'text'

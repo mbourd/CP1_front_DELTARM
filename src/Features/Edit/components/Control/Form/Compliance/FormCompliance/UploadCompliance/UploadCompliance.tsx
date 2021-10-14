@@ -4,7 +4,7 @@ import { Grid, Fab } from '@material-ui/core';
 import { CloudUpload } from '@material-ui/icons';
 import { IComplianceData } from 'Features/Edit/types';
 import { FormError } from 'Shared/components';
-import { getEnv, IUser, security, storage } from 'Services';
+import { getEnv, IUser, security } from 'Services';
 import { ComplianceLabel } from '../ComplianceLabel';
 import { ComplianceFooter } from '../ComplianceFooter';
 import axios from 'axios';
@@ -100,8 +100,8 @@ export const UploadCompliance: React.FC<IProps> = ({ compliance, fileId, control
 
   return (
     <Grid item xs={6}>
+      <ComplianceLabel compliance={compliance} />
       <UploadComplianceStyled>
-        <ComplianceLabel compliance={compliance} />
         <label htmlFor={`${controlId}compliance-file-upload${compliance.id}`}>
           <input
             style={{ display: 'none' }}
@@ -119,13 +119,13 @@ export const UploadCompliance: React.FC<IProps> = ({ compliance, fileId, control
             {file[0]}
           </DownloadFile>
         )}
-        {errorMessage ? (
-          <p>
-            <FormError>{errorMessage}</FormError>
-          </p>
-        ) : null}
-        <ComplianceFooter compliance={compliance} />
       </UploadComplianceStyled>
+      {errorMessage ? (
+        <p>
+          <FormError>{errorMessage}</FormError>
+        </p>
+      ) : null}
+      <ComplianceFooter compliance={compliance} />
     </Grid>
   );
 };
