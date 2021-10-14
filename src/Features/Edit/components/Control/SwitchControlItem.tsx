@@ -24,6 +24,8 @@ export const SwitchControlItem: React.FC<IProps> = ({ control }): React.ReactEle
       return <TextControl control={control} fileId={fileId} />;
     case 'email':
       return <TextControl control={control} fileId={fileId} />;
+    case 'auth_num':
+      return <TextControl control={control} fileId={fileId} />;
     case 'selectlist':
       return <SelectListControl multiple={false} control={control} fileId={fileId} />;
     case 'multiple_list':
@@ -40,15 +42,8 @@ export const SwitchControlItem: React.FC<IProps> = ({ control }): React.ReactEle
       return <PercentControl control={control} fileId={fileId} />;
     case 'file_upload':
       return <UploadControl control={control} fileId={fileId} />;
-    case 'auth_num':
-      return (
-        <TextControl
-          control={control}
-          fileId={fileId}
-          regex={/^AUT[0-9]{6}$/i}
-          regexMessage="Le numéro doit être de la forme AUTxxxxxx"
-        />
-      );
+    case 'info_block':
+      return <TextControl control={control} fileId={fileId} />;
   }
 
   return null;
