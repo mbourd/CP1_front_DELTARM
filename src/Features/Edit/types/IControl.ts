@@ -18,7 +18,8 @@ export type ControlTypeType =
   | 'radio'
   | 'checkbox'
   | 'email'
-  | 'auth_num';
+  | 'auth_num'
+  | 'info_block';
 
 export type ControlFontSize = 'standard' | 'bold';
 
