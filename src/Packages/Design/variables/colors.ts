@@ -67,9 +67,9 @@ export const color: IColor = {
     dark: '#FFA000',
   },
   hover: {
-    light: '#FFA000',
-    main: '#FFA000',
-    dark: '#FFA000',
+    light: '#FFCD00',
+    main: '#FFCD00',
+    dark: '#FFCD00',
   },
   heading: {
     light: '#3C3C3B',
