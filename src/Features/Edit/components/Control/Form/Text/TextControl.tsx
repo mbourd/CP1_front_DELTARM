@@ -12,7 +12,7 @@ interface IProps {
   fileId: string;
 }
 
-export const TextControl: React.FC<IProps> = ({ control, fileId}): React.ReactElement => {
+export const TextControl: React.FC<IProps> = ({ control, fileId }): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
@@ -44,16 +44,7 @@ export const TextControl: React.FC<IProps> = ({ control, fileId}): React.ReactEl
 
       send(currentRoute?.props?.apiSaveControlRouteName, {}, q);
     },
-    [
-      send,
-      fileId,
-      control.id,
-      currentRoute,
-      control.mandatory,
-      control.family,
-      control.regex,
-      control.regexMsg,
-    ],
+    [send, fileId, control.id, currentRoute, control.mandatory, control.family, control.regex, control.regexMsg],
   );
 
   useEffect(() => {

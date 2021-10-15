@@ -9,6 +9,7 @@ import {
   CommentControl,
   PercentControl,
   UploadControl,
+  InfoBlockControl,
 } from './Form';
 import { EditValidationContext } from 'Features/Edit';
 
@@ -43,7 +44,7 @@ export const SwitchControlItem: React.FC<IProps> = ({ control }): React.ReactEle
     case 'file_upload':
       return <UploadControl control={control} fileId={fileId} />;
     case 'info_block':
-      return <TextControl control={control} fileId={fileId} />;
+      return <InfoBlockControl control={control} />;
   }
 
   return null;
