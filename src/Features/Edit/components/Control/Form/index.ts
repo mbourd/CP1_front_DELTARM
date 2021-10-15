@@ -8,3 +8,4 @@ export * from './Comment/CommentControl';
 export * from './SelectList/SelectListControl';
 export * from './Upload/UploadControl';
 export * from './Compliance/CheckboxCompliance/CheckboxCompliance';
+export * from './InfoBlock/InfoBlockControl';
