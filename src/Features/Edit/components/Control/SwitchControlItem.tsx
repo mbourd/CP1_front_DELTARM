@@ -9,6 +9,7 @@ import {
   CommentControl,
   PercentControl,
   UploadControl,
+  InfoBlockControl,
 } from './Form';
 import { EditValidationContext } from 'Features/Edit';
 
@@ -23,6 +24,8 @@ export const SwitchControlItem: React.FC<IProps> = ({ control }): React.ReactEle
     case 'text':
       return <TextControl control={control} fileId={fileId} />;
     case 'email':
+      return <TextControl control={control} fileId={fileId} />;
+    case 'auth_num':
       return <TextControl control={control} fileId={fileId} />;
     case 'selectlist':
       return <SelectListControl multiple={false} control={control} fileId={fileId} />;
@@ -40,15 +43,8 @@ export const SwitchControlItem: React.FC<IProps> = ({ control }): React.ReactEle
       return <PercentControl control={control} fileId={fileId} />;
     case 'file_upload':
       return <UploadControl control={control} fileId={fileId} />;
-    case 'auth_num':
-      return (
-        <TextControl
-          control={control}
-          fileId={fileId}
-          regex={/^AUT[0-9]{6}$/i}
-          regexMessage="Le numéro doit être de la forme AUTxxxxxx"
-        />
-      );
+    case 'info_block':
+      return <InfoBlockControl control={control} />;
   }
 
   return null;

@@ -10,11 +10,9 @@ import { ControlFooter } from '../ControlFooter';
 interface IProps {
   control: IControl;
   fileId: string;
-  regex?: RegExp;
-  regexMessage?: string;
 }
 
-export const TextControl: React.FC<IProps> = ({ control, fileId, regex, regexMessage }): React.ReactElement => {
+export const TextControl: React.FC<IProps> = ({ control, fileId }): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
@@ -36,12 +34,6 @@ export const TextControl: React.FC<IProps> = ({ control, fileId, regex, regexMes
         return;
       }
 
-      if (value && regex && !value.match(regex)) {
-        setErrorMessage(regexMessage || '');
-
-        return;
-      }
-
       setErrorMessage(null);
       storage.setData('edit.control.' + control.id + '.value', value);
       const q: Record<string, string> = { file_id: fileId, elm_id: control.id, control_family: control.family };
@@ -52,18 +44,7 @@ export const TextControl: React.FC<IProps> = ({ control, fileId, regex, regexMes
 
       send(currentRoute?.props?.apiSaveControlRouteName, {}, q);
     },
-    [
-      send,
-      fileId,
-      control.id,
-      currentRoute,
-      control.mandatory,
-      regex,
-      regexMessage,
-      control.family,
-      control.regex,
-      control.regexMsg,
-    ],
+    [send, fileId, control.id, currentRoute, control.mandatory, control.family, control.regex, control.regexMsg],
   );
 
   useEffect(() => {
@@ -73,10 +54,10 @@ export const TextControl: React.FC<IProps> = ({ control, fileId, regex, regexMes
       setErrorMessage('Valeur obligatoire');
     }
 
-    if (control.editable && val && regex && !val.match(new RegExp(regex))) {
-      setErrorMessage(regexMessage || '');
+    if (control.editable && val && control.regex && !val.match(new RegExp(control.regex, 'i'))) {
+      setErrorMessage(control.regexMsg || '');
     }
-  }, [control.id, control.mandatory, control.value, control.editable, regex, regexMessage]);
+  }, [control.id, control.mandatory, control.value, control.editable, control.regex, control.regexMsg]);
 
   useEffect(() => {
     if (error) {
