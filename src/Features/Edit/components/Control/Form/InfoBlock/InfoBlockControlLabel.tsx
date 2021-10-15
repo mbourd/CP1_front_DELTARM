@@ -1,7 +1,7 @@
 import React, { SetStateAction } from 'react';
 import { Grid, makeStyles, Theme } from '@material-ui/core';
 import { BPITooltip, FormLabel } from 'Shared/components';
-import { HelpIcon } from 'Styles';
+import { HelpIcon, theme } from 'Styles';
 import { IControl } from 'Features/Edit/types';
 import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
 
@@ -13,14 +13,14 @@ interface IProps {
 
 const useStyles = makeStyles<Theme>({
   root: () => ({
-    border: '1px solid black',
+    border: `1px solid ${theme.color.heading.main}`,
     padding: '.5em',
     borderRadius: '5px',
     cursor: 'pointer',
     '&:hover': {
-      border: '1px solid #FFCD00',
+      border: `1px solid ${theme.color.hover.main}`,
     },
-    transition: '0.3s',
+    transition: theme.transition.time,
   }),
 });
 
