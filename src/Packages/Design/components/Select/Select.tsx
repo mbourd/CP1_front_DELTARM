@@ -106,7 +106,7 @@ export const Select: React.FC<ISelect> = ({
 
       setSelected(selectedVal);
 
-      if (closeOnSelect) {
+      if (closeOnSelect && !multiple) {
         closeSelect();
       }
     },
