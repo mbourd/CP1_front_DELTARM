@@ -1,3 +1,4 @@
+import './polyfills';
 import React, { Suspense, StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import { ThemeProvider } from 'styled-components/macro';
