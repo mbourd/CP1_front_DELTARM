@@ -37,7 +37,8 @@ export const Select: React.FC<ISelect> = ({
     const first = Object.keys(selectedValues)[0];
 
     selectedValues = first ? { [first]: true } : {};
-  } else if (multiple) {
+  }
+  if (multiple) {
     const values = Object.keys(selectedValues)[0].split(';');
     selectedValues = {};
     if (values.includes('undefined')) {
