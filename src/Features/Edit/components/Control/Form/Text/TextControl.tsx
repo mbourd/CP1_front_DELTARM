@@ -29,6 +29,13 @@ export const TextControl: React.FC<IProps> = ({ control, fileId, regex, regexMes
         return;
       }
 
+      const regexControl = new RegExp(control.regex, 'i');
+      if (control.regex && !value.match(regexControl)) {
+        setErrorMessage(control.regexMsg);
+
+        return;
+      }
+
       if (value && regex && !value.match(regex)) {
         setErrorMessage(regexMessage || '');
 
@@ -37,7 +44,7 @@ export const TextControl: React.FC<IProps> = ({ control, fileId, regex, regexMes
 
       setErrorMessage(null);
       storage.setData('edit.control.' + control.id + '.value', value);
-      const q: Record<string, string> = { file_id: fileId, elm_id: control.id };
+      const q: Record<string, string> = { file_id: fileId, elm_id: control.id, control_family: control.family };
 
       if (value) {
         q['elm_val'] = value;
@@ -45,7 +52,18 @@ export const TextControl: React.FC<IProps> = ({ control, fileId, regex, regexMes
 
       send(currentRoute?.props?.apiSaveControlRouteName, {}, q);
     },
-    [send, fileId, control.id, currentRoute, control.mandatory, regex, regexMessage],
+    [
+      send,
+      fileId,
+      control.id,
+      currentRoute,
+      control.mandatory,
+      regex,
+      regexMessage,
+      control.family,
+      control.regex,
+      control.regexMsg,
+    ],
   );
 
   useEffect(() => {

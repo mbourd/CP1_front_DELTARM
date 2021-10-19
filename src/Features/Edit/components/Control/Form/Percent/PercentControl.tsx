@@ -26,6 +26,11 @@ export const PercentControl: React.FC<IProps> = ({ control, fileId }): React.Rea
 
         return;
       }
+      if (control.regex && !value.match(control.regex)) {
+        setErrorMessage(control.regexMsg);
+
+        return;
+      }
 
       if (control.mandatory) {
         try {
@@ -44,9 +49,13 @@ export const PercentControl: React.FC<IProps> = ({ control, fileId }): React.Rea
 
       setErrorMessage(null);
       storage.setData('edit.control.' + control.id + '.value', value);
-      send(currentRoute?.props?.apiSaveControlRouteName, {}, { file_id: fileId, elm_id: control.id, elm_val: value });
+      send(
+        currentRoute?.props?.apiSaveControlRouteName,
+        {},
+        { file_id: fileId, elm_id: control.id, elm_val: value, control_family: control.family },
+      );
     },
-    [send, fileId, control.id, control.mandatory, currentRoute],
+    [send, fileId, control.id, control.mandatory, control.family, currentRoute, control.regex, control.regexMsg],
   );
 
   useEffect(() => {

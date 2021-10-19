@@ -6,3 +6,5 @@ export * from './Date/DateControl';
 export * from './Percent/PercentControl';
 export * from './Comment/CommentControl';
 export * from './SelectList/SelectListControl';
+export * from './Upload/UploadControl';
+export * from './Compliance/CheckboxCompliance/CheckboxCompliance';

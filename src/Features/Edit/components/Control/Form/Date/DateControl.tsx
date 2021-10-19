@@ -21,10 +21,19 @@ export const DateControl: React.FC<IProps> = ({ control, fileId }): React.ReactE
 
   const saveValue = useCallback(
     (value: string) => {
+      if (control.regex && !value.match(control.regex)) {
+        setErrorMessage(control.regexMsg);
+
+        return;
+      }
       storage.setData('edit.control.' + control.id + '.value', value);
-      send(currentRoute?.props?.apiSaveControlRouteName, {}, { file_id: fileId, elm_id: control.id, elm_val: value });
+      send(
+        currentRoute?.props?.apiSaveControlRouteName,
+        {},
+        { file_id: fileId, elm_id: control.id, elm_val: value, control_family: control.family },
+      );
     },
-    [send, fileId, control.id, currentRoute],
+    [send, fileId, control.id, control.family, currentRoute, control.regex, control.regexMsg],
   );
 
   useEffect(() => {

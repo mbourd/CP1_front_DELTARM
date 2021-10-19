@@ -10,6 +10,7 @@ export type ApiRequestQueriesType = Record<string, string | number>;
 export type ApiRequestBodyType = Record<string, any>;
 export type ApiRequestBearerTokenType = string | null;
 export type ApiRequestBasicAuthType = { login: string; password: string } | null;
+export type ApiRequestFileType = FormData;
 
 export interface IApiRequest {
   abort(): IApiRequest;

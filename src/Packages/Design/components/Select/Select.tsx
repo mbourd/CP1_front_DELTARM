@@ -29,6 +29,7 @@ export const Select: React.FC<ISelect> = ({
   onChange,
   closeOnSelect = false,
   error = false,
+  setChoiceIsKo,
 }): React.ReactElement => {
   const sizing = useSizing();
   const [isOpen, setIsOpen] = useState(open);
@@ -36,6 +37,16 @@ export const Select: React.FC<ISelect> = ({
     const first = Object.keys(selectedValues)[0];
 
     selectedValues = first ? { [first]: true } : {};
+  }
+  if (multiple) {
+    const values = Object.keys(selectedValues)[0].split(';');
+    selectedValues = {};
+    if (values.includes('undefined')) {
+      values.splice(values.indexOf('undefined'), 1);
+    }
+    values.map((key, index) => {
+      return (selectedValues = { ...selectedValues, [key]: true });
+    });
   }
   const [selected, setSelected] = useState(selectedValues);
   const [initialValues] = useState(selectedValues);
@@ -88,13 +99,19 @@ export const Select: React.FC<ISelect> = ({
         onChange(selectedVal);
       }
 
+      if (value.isKo && setChoiceIsKo) {
+        setChoiceIsKo(true);
+      } else if (!value.isKo && setChoiceIsKo) {
+        setChoiceIsKo(false);
+      }
+
       setSelected(selectedVal);
 
-      if (closeOnSelect) {
+      if (closeOnSelect && !multiple) {
         closeSelect();
       }
     },
-    [selected, multiple, onChange, closeOnSelect, closeSelect],
+    [selected, multiple, onChange, closeOnSelect, closeSelect, setChoiceIsKo],
   );
 
   const labels = Object.keys(selected).map((id) => {

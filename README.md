@@ -59,6 +59,14 @@ What it does : Installings dependencies and buildings assets, then deploy.
 
 The SSL certificates are physically on the server. The container is configure to get them on infrastructure for production and preproduction.
 
+### Maintenance mode
+
+The application is configurable in production to enable a maintenance mode. To activate it, check out the feat/maintenance branch from master branch.
+
+Then, change the constant variable `maintenanceMode` to `true` in index.tsx. You can configure which user can still see the app by add their user id in the white list configuration `adminUsers`.
+
+This is a temporary feature, we should have the role admin enables in app and the toggle of maintenance mode should be in a environment configuration.
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).

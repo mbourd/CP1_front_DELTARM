@@ -8,6 +8,7 @@ import {
   DateControl,
   CommentControl,
   PercentControl,
+  UploadControl,
 } from './Form';
 import { EditValidationContext } from 'Features/Edit';
 
@@ -21,8 +22,12 @@ export const SwitchControlItem: React.FC<IProps> = ({ control }): React.ReactEle
   switch (control.type) {
     case 'text':
       return <TextControl control={control} fileId={fileId} />;
+    case 'email':
+      return <TextControl control={control} fileId={fileId} />;
     case 'selectlist':
-      return <SelectListControl control={control} fileId={fileId} />;
+      return <SelectListControl multiple={false} control={control} fileId={fileId} />;
+    case 'multiple_list':
+      return <SelectListControl multiple={true} control={control} fileId={fileId} />;
     case 'financial':
       return <FinancialControl control={control} fileId={fileId} />;
     case 'integer':
@@ -33,6 +38,8 @@ export const SwitchControlItem: React.FC<IProps> = ({ control }): React.ReactEle
       return <CommentControl control={control} fileId={fileId} />;
     case 'percent':
       return <PercentControl control={control} fileId={fileId} />;
+    case 'file_upload':
+      return <UploadControl control={control} fileId={fileId} />;
     case 'auth_num':
       return (
         <TextControl
