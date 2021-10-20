@@ -39,7 +39,6 @@ export const MainNavStyled = styled.div`
       }
 
       &:last-child {
-        border-bottom: none;
 
         .MuiSvgIcon-root,
         .MuiTypography-root {

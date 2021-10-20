@@ -90,7 +90,6 @@ export const MainNav: React.FC = (): React.ReactElement => {
               <FolderIcon />
               <ListItemText>{trans('allFiles')}</ListItemText>
             </ListItem>
-
             <ListItem
               component={Link}
               to={router.generatePath('logout') || '/logout'}
@@ -104,6 +103,11 @@ export const MainNav: React.FC = (): React.ReactElement => {
             </ListItem>
           </List>
         </MainNavStyled>
+        <ListItem>
+          <ListItemText style={{ textAlign: 'right' }}>
+            Version 1.0.0
+          </ListItemText>
+        </ListItem>
       </Popper>
     </>
   );
