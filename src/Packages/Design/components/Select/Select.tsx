@@ -48,6 +48,8 @@ export const Select: React.FC<ISelect> = ({
       if (key) {
         return (selectedValues = { ...selectedValues, [key]: true });
       }
+
+      return selectedValues;
     });
   }
   const [selected, setSelected] = useState(selectedValues);
