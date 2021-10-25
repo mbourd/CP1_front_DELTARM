@@ -38,7 +38,7 @@ export const InfoBlockControlLabel: React.FC<IProps> = ({ control, isOpen, setIs
           onClick={() => setIsOpen(!isOpen)}
           classes={classes}
         >
-          <Grid container component={'span'} xs={12} alignItems={'center'}>
+          <Grid container component={'span'} alignItems={'center'}>
             {control.title}
             {isOpen ? <ArrowUpward /> : <ArrowDownward />}
           </Grid>
