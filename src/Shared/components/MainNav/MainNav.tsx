@@ -104,9 +104,7 @@ export const MainNav: React.FC = (): React.ReactElement => {
           </List>
         </MainNavStyled>
         <ListItem>
-          <ListItemText style={{ textAlign: 'right' }}>
-            Version 1.0.0
-          </ListItemText>
+          <ListItemText style={{ textAlign: 'right' }}>Version 1.0.0</ListItemText>
         </ListItem>
       </Popper>
     </>
