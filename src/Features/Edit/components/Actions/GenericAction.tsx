@@ -36,7 +36,12 @@ export const GenericAction: FC<GenericActionProps> = ({
 
   return (
     <>
-      <Button color={color} type={type} onClick={() => setIsModalOpen(!isModalOpen)} {...props}>
+      <Button
+        color={color}
+        type={type}
+        onClick={() => setIsModalOpen(!isModalOpen)}
+        {...props}
+      >
         {action.label}
       </Button>
       {isModalOpen ? (

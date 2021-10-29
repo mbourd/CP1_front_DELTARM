@@ -7,6 +7,9 @@ interface IProps {
   variant?: keyof IColorVariant;
 }
 
-export const HeadingOne: React.FC<IProps> = ({ variant = 'main', children }): React.ReactElement => {
+export const HeadingOne: React.FC<IProps> = ({
+  variant = 'main',
+  children,
+}): React.ReactElement => {
   return <HeadingOneStyled variant={variant}>{children}</HeadingOneStyled>;
 };

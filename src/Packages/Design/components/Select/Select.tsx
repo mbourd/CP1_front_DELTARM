@@ -135,7 +135,15 @@ export const Select: React.FC<ISelect> = ({
   }, [error, initialValues]);
 
   return (
-    <SelectContext.Provider value={{ data, multiple, name, selectedValues: selected, onChange: onValueChange }}>
+    <SelectContext.Provider
+      value={{
+        data,
+        multiple,
+        name,
+        selectedValues: selected,
+        onChange: onValueChange,
+      }}
+    >
       <SelectStyled className={'_Select'} bdc={bdc} bdr={bdr || sizing.radius}>
         <SelectLabel
           bdc={labelBdc}

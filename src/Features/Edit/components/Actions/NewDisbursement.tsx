@@ -8,7 +8,11 @@ export const NewDisbursement: React.FC = (): React.ReactElement => {
 
   return (
     <>
-      <Button color={'success'} type={'alt'} onClick={() => setIsModalOpen(!isModalOpen)}>
+      <Button
+        color={'success'}
+        type={'alt'}
+        onClick={() => setIsModalOpen(!isModalOpen)}
+      >
         Nouveau décaissement
       </Button>
       {isModalOpen ? (

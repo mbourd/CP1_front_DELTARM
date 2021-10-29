@@ -8,7 +8,11 @@ export const AcceptValidation: React.FC = (): React.ReactElement => {
 
   return (
     <>
-      <Button color={'success'} type={'alt'} onClick={() => setIsModalOpen(!isModalOpen)}>
+      <Button
+        color={'success'}
+        type={'alt'}
+        onClick={() => setIsModalOpen(!isModalOpen)}
+      >
         Valider le dossier
       </Button>
       {isModalOpen ? (
@@ -20,7 +24,9 @@ export const AcceptValidation: React.FC = (): React.ReactElement => {
           successMessage={'Le dossier a été validé'}
           message={'Souhaitez-vous valider ce dossier ?'}
           postRouteName={'actionAcceptValidation'}
-          queries={data?.validationCount ? { valid_num: data?.validationCount } : {}}
+          queries={
+            data?.validationCount ? { valid_num: data?.validationCount } : {}
+          }
           comment
           commentParam="accept_comment"
         />

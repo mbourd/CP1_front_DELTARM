@@ -11,7 +11,10 @@ import {
   FormError,
 } from 'Shared/components';
 import { useApi, SwitchCallState, router, storage } from 'Services';
-import { GenericActionModalStyled, GenericActionCommentModalStyled } from './GenericActionModal.style';
+import {
+  GenericActionModalStyled,
+  GenericActionCommentModalStyled,
+} from './GenericActionModal.style';
 
 interface IProps {
   open: boolean;
@@ -66,7 +69,15 @@ export const GenericActionModal: React.FC<IProps> = ({
     }
 
     send(postRouteName, {}, Object.assign({}, q, queries));
-  }, [fileId, send, postRouteName, comment, commentRequired, commentParam, queries]);
+  }, [
+    fileId,
+    send,
+    postRouteName,
+    comment,
+    commentRequired,
+    commentParam,
+    queries,
+  ]);
 
   const footer: React.ReactNode = (
     <GenericActionModalStyled>
@@ -77,7 +88,12 @@ export const GenericActionModal: React.FC<IProps> = ({
           onClose();
 
           if (callState === 'SUCCESS') {
-            router.redirectTo(redirectRouteName, { id: fileId }, {}, forceRedirect);
+            router.redirectTo(
+              redirectRouteName,
+              { id: fileId },
+              {},
+              forceRedirect,
+            );
 
             return null;
           }
@@ -116,10 +132,22 @@ export const GenericActionModal: React.FC<IProps> = ({
         callState={callState}
         states={{
           IS_LOADING: <StairsLoader size={'md'} />,
-          SERVER_ERROR: <Error500 size={'md'} message={'Le serveur ne répond pas'} />,
-          SUCCESS: <RequestSuccess size={'lg'} message={successMessage} title={'Opération réussie'} />,
+          SERVER_ERROR: (
+            <Error500 size={'md'} message={'Le serveur ne répond pas'} />
+          ),
+          SUCCESS: (
+            <RequestSuccess
+              size={'lg'}
+              message={successMessage}
+              title={'Opération réussie'}
+            />
+          ),
           BAD_REQUEST: (
-            <BadRequest size={'md'} message={error?.response ? error?.response.body.error_msg : ''} title={'Echec !'} />
+            <BadRequest
+              size={'md'}
+              message={error?.response ? error?.response.body.error_msg : ''}
+              title={'Echec !'}
+            />
           ),
         }}
       >
@@ -132,7 +160,10 @@ export const GenericActionModal: React.FC<IProps> = ({
               multilineRows={10}
               placeholder={'Ajouter un commentaire'}
               onChange={(e) => {
-                storage.setData('validation.reject.comments', e.currentTarget.value);
+                storage.setData(
+                  'validation.reject.comments',
+                  e.currentTarget.value,
+                );
                 setCommentError(null);
               }}
             />

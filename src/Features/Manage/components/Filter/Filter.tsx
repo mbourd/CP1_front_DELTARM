@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { Grid } from '@material-ui/core';
 import { FilterStyled, BadgeStyled } from './Filter.style';
 import { FilterIcon, useTheme } from 'Styles';
@@ -18,7 +24,10 @@ export const Filter: React.FC<IProps> = ({
   initRoles = {},
   children,
 }): React.ReactElement => {
-  const { error, isLoading, send, data } = useApi<{ stages: IApiStage[]; states: IApiState[] }>();
+  const { error, isLoading, send, data } = useApi<{
+    stages: IApiStage[];
+    states: IApiState[];
+  }>();
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const anchorRef = useRef<HTMLElement | null>(null);
@@ -28,14 +37,20 @@ export const Filter: React.FC<IProps> = ({
   const initStatesRef = useRef(initStates);
   const initRolesRef = useRef(initRoles);
 
-  const [stateFilters, setStateFilters] = useState<{ state_id: number; state_role: number }[]>([]);
+  const [stateFilters, setStateFilters] = useState<
+    { state_id: number; state_role: number }[]
+  >([]);
 
   const states = useMemo<Record<number, true>>(
-    () => Object.fromEntries(stateFilters.map(({ state_id }) => [state_id, true])),
+    () =>
+      Object.fromEntries(stateFilters.map(({ state_id }) => [state_id, true])),
     [stateFilters],
   );
   const roles = useMemo<Record<number, true>>(
-    () => Object.fromEntries(stateFilters.map(({ state_role }) => [state_role, true])),
+    () =>
+      Object.fromEntries(
+        stateFilters.map(({ state_role }) => [state_role, true]),
+      ),
     [stateFilters],
   );
 
@@ -59,17 +74,27 @@ export const Filter: React.FC<IProps> = ({
     [stages],
   );
 
-  const onChangeState = useCallback((e: React.ChangeEvent<HTMLInputElement>, state_id: number, state_role: number) => {
-    const input = e.currentTarget;
+  const onChangeState = useCallback(
+    (
+      e: React.ChangeEvent<HTMLInputElement>,
+      state_id: number,
+      state_role: number,
+    ) => {
+      const input = e.currentTarget;
 
-    if (input.checked) {
-      setStateFilters((current) => [...current, { state_id, state_role }]);
-    } else {
-      setStateFilters((current) =>
-        current.filter((state) => state.state_id !== state_id || state.state_role !== state_role),
-      );
-    }
-  }, []);
+      if (input.checked) {
+        setStateFilters((current) => [...current, { state_id, state_role }]);
+      } else {
+        setStateFilters((current) =>
+          current.filter(
+            (state) =>
+              state.state_id !== state_id || state.state_role !== state_role,
+          ),
+        );
+      }
+    },
+    [],
+  );
 
   useEffect(() => {
     send('manageFilters');
@@ -80,7 +105,11 @@ export const Filter: React.FC<IProps> = ({
       setStateFilters(
         data.states
           .map(({ state_id, state_role }) => ({ state_id, state_role }))
-          .filter(({ state_id, state_role }) => initStatesRef.current[state_id] && initRolesRef.current[state_role]),
+          .filter(
+            ({ state_id, state_role }) =>
+              initStatesRef.current[state_id] &&
+              initRolesRef.current[state_role],
+          ),
       );
     }
   }, [data]);
@@ -150,10 +179,13 @@ export const Filter: React.FC<IProps> = ({
                         <Checkbox
                           checked={stateFilters.some(
                             ({ state_id, state_role }) =>
-                              state.state_id === state_id && state.state_role === state_role,
+                              state.state_id === state_id &&
+                              state.state_role === state_role,
                           )}
                           label={state.state_name.toLowerCase()}
-                          onChange={(e) => onChangeState(e, state.state_id, state.state_role)}
+                          onChange={(e) =>
+                            onChangeState(e, state.state_id, state.state_role)
+                          }
                         />
                       </div>
                     );

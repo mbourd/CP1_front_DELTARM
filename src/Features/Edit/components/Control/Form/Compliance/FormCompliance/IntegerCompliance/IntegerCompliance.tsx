@@ -13,7 +13,11 @@ interface IProps {
   controlId: string;
 }
 
-export const IntegerCompliance: React.FC<IProps> = ({ compliance, fileId, controlId }): React.ReactElement => {
+export const IntegerCompliance: React.FC<IProps> = ({
+  compliance,
+  fileId,
+  controlId,
+}): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
@@ -39,7 +43,16 @@ export const IntegerCompliance: React.FC<IProps> = ({ compliance, fileId, contro
         },
       );
     },
-    [send, fileId, controlId, compliance.family, currentRoute, compliance.regex, compliance.id, compliance.regexMsg],
+    [
+      send,
+      fileId,
+      controlId,
+      compliance.family,
+      currentRoute,
+      compliance.regex,
+      compliance.id,
+      compliance.regexMsg,
+    ],
   );
 
   useEffect(() => {

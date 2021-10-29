@@ -8,7 +8,10 @@ interface IProps {
   data: IData;
 }
 
-export const SubHeader: React.FC<IProps> = ({ title, data }): React.ReactElement => {
+export const SubHeader: React.FC<IProps> = ({
+  title,
+  data,
+}): React.ReactElement => {
   return (
     <div>
       <p>{title}</p>

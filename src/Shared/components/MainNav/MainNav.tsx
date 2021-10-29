@@ -40,7 +40,11 @@ export const MainNav: React.FC = (): React.ReactElement => {
 
   return (
     <>
-      <MenuIcon fontSize={'default'} onClick={handleClick} className={'menu-icon' + (anchorEl ? ' active' : '')} />
+      <MenuIcon
+        fontSize={'default'}
+        onClick={handleClick}
+        className={'menu-icon' + (anchorEl ? ' active' : '')}
+      />
       <Popper
         element={anchorEl}
         placement={'bottom-end'}
@@ -54,14 +58,17 @@ export const MainNav: React.FC = (): React.ReactElement => {
               <UserIcon />
               {userInfos && (
                 <ListItemText>
-                  {userInfos.data.user_first_name} {userInfos.data.user_last_name}
+                  {userInfos.data.user_first_name}{' '}
+                  {userInfos.data.user_last_name}
                 </ListItemText>
               )}
             </ListItem>
 
             <ListItem
               component={Link}
-              to={router.generatePath('manage', {}, { state_id: 1 }) || '/manage'}
+              to={
+                router.generatePath('manage', {}, { state_id: 1 }) || '/manage'
+              }
               onClick={hideNav}
             >
               <FolderOpenIcon />
@@ -70,7 +77,9 @@ export const MainNav: React.FC = (): React.ReactElement => {
 
             <ListItem
               component={Link}
-              to={router.generatePath('manage', {}, { state_id: 2 }) || '/manage'}
+              to={
+                router.generatePath('manage', {}, { state_id: 2 }) || '/manage'
+              }
               onClick={hideNav}
             >
               <FolderWaitingIcon />
@@ -79,14 +88,20 @@ export const MainNav: React.FC = (): React.ReactElement => {
 
             <ListItem
               component={Link}
-              to={router.generatePath('manage', {}, { state_id: 3 }) || '/manage'}
+              to={
+                router.generatePath('manage', {}, { state_id: 3 }) || '/manage'
+              }
               onClick={hideNav}
             >
               <FolderInfoIcon />
               <ListItemText>{trans('rejectedFiles')}</ListItemText>
             </ListItem>
 
-            <ListItem component={Link} to={router.generatePath('manage') || '/manage'} onClick={hideNav}>
+            <ListItem
+              component={Link}
+              to={router.generatePath('manage') || '/manage'}
+              onClick={hideNav}
+            >
               <FolderIcon />
               <ListItemText>{trans('allFiles')}</ListItemText>
             </ListItem>

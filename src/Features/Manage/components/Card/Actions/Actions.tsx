@@ -15,13 +15,34 @@ export const Actions: React.FC<Pick<ICard, 'id' | 'comments' | 'context'>> = ({
 
   return (
     <ActionsStyled>
-      <BPITooltip title={context === 'EDIT' ? 'Editer le dossier' : 'Accéder à la validation'} placement={'left'}>
-        <Link to={router.generatePath(context === 'EDIT' ? 'edit' : 'validation', { id }) || '/'}>
-          {context === 'EDIT' ? <EditIcon className={'icon'} /> : <UserCheckedIcon className={'icon'} />}
+      <BPITooltip
+        title={
+          context === 'EDIT' ? 'Editer le dossier' : 'Accéder à la validation'
+        }
+        placement={'left'}
+      >
+        <Link
+          to={
+            router.generatePath(context === 'EDIT' ? 'edit' : 'validation', {
+              id,
+            }) || '/'
+          }
+        >
+          {context === 'EDIT' ? (
+            <EditIcon className={'icon'} />
+          ) : (
+            <UserCheckedIcon className={'icon'} />
+          )}
         </Link>
       </BPITooltip>
       <BPITooltip title={trans('readComments')} placement={'left'}>
-        <Link to={(router.generatePath(context === 'EDIT' ? 'edit' : 'validation', { id }) || '/') + '?comments=1'}>
+        <Link
+          to={
+            (router.generatePath(context === 'EDIT' ? 'edit' : 'validation', {
+              id,
+            }) || '/') + '?comments=1'
+          }
+        >
           {comments && comments > 0 ? (
             <span className={'icon'}>
               <BPIBadge content={comments}>

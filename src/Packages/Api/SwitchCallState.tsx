@@ -7,7 +7,11 @@ interface ISwitchCallState {
   states?: Record<string, React.ReactElement>;
 }
 
-export const SwitchCallState: React.FC<ISwitchCallState> = ({ callState, states, children }): React.ReactElement => {
+export const SwitchCallState: React.FC<ISwitchCallState> = ({
+  callState,
+  states,
+  children,
+}): React.ReactElement => {
   if (states && states[callState]) {
     return states[callState];
   }

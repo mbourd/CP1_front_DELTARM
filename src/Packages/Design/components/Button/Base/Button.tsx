@@ -22,15 +22,24 @@ export const Button: React.FC<IButton> = ({
   let endIconCloned = null;
 
   if (React.isValidElement(startIcon)) {
-    startIconCloned = React.cloneElement(startIcon, { className: '_ButtonIcon _ButtonStartIcon' });
+    startIconCloned = React.cloneElement(startIcon, {
+      className: '_ButtonIcon _ButtonStartIcon',
+    });
   }
 
   if (React.isValidElement(endIcon)) {
-    endIconCloned = React.cloneElement(endIcon, { className: '_ButtonIcon _ButtonEndIcon' });
+    endIconCloned = React.cloneElement(endIcon, {
+      className: '_ButtonIcon _ButtonEndIcon',
+    });
   }
 
   return (
-    <ButtonStyled className={'_Button'} colorType={theme.color[color]} type={type} disabled={disabled}>
+    <ButtonStyled
+      className={'_Button'}
+      colorType={theme.color[color]}
+      type={type}
+      disabled={disabled}
+    >
       <MUIButton
         size={size}
         component={component}

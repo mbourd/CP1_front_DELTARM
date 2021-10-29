@@ -8,7 +8,11 @@ export const PostDisbursement: React.FC = (): React.ReactElement => {
 
   return (
     <>
-      <Button color={'success'} type={'alt'} onClick={() => setIsModalOpen(!isModalOpen)}>
+      <Button
+        color={'success'}
+        type={'alt'}
+        onClick={() => setIsModalOpen(!isModalOpen)}
+      >
         Passer en Post-Décaissement
       </Button>
       {isModalOpen ? (

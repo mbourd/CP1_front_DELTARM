@@ -15,7 +15,12 @@ export const CardContext = React.createContext<ICardContext>({
   context: 'EDIT',
 });
 
-export const Card: React.FC<ICard> = ({ header, body, footer, context }): React.ReactElement => {
+export const Card: React.FC<ICard> = ({
+  header,
+  body,
+  footer,
+  context,
+}): React.ReactElement => {
   return (
     <CardContext.Provider value={{ context }}>
       <CardStyled cardColor={header.color}>

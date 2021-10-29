@@ -1,6 +1,14 @@
-import { apiRouter, SwitchCallState, useApi, router } from '../../../../../Services';
+import {
+  apiRouter,
+  SwitchCallState,
+  useApi,
+  router,
+} from '../../../../../Services';
 import { IKSIOPManualInput, IMissingField } from '../../../apiRoutes';
-import { SearchModalBPIContentStyled, SearchModalFooterStyled } from './SearchModal.style';
+import {
+  SearchModalBPIContentStyled,
+  SearchModalFooterStyled,
+} from './SearchModal.style';
 import {
   BadRequest,
   Button,
@@ -21,7 +29,11 @@ interface IProps {
   dataManualInput: IKSIOPManualInput | null;
 }
 
-export const CreateModal: React.FC<IProps> = ({ onClose, open, dataManualInput }): React.ReactElement | null => {
+export const CreateModal: React.FC<IProps> = ({
+  onClose,
+  open,
+  dataManualInput,
+}): React.ReactElement | null => {
   const { handleSubmit, control } = useForm();
   const { error, callState, send, data } = useApi<IKSIOPManualInput | null>();
   const [missingFields, setStateMissingFields] = useState(true);
@@ -58,7 +70,9 @@ export const CreateModal: React.FC<IProps> = ({ onClose, open, dataManualInput }
   const createFile = useCallback(() => {
     apiRouter.changeRouteUrl(
       'searchFileKSIOP',
-      dataManualInput?.buttons[1].action ? dataManualInput?.buttons[1].action : '',
+      dataManualInput?.buttons[1].action
+        ? dataManualInput?.buttons[1].action
+        : '',
     );
     const file_num = dataManualInput?.manualFile.file_num;
     const file_avenant = dataManualInput?.manualFile.file_avenant;
@@ -81,18 +95,23 @@ export const CreateModal: React.FC<IProps> = ({ onClose, open, dataManualInput }
     verifyValidForm();
   }, []);
 
-  const setListMissingField = useCallback((values: Record<string, true>, key) => {
-    const newValue = Object.keys(values).toString();
-    queries = {
-      ...queries,
-      [key]: newValue,
-    };
-    // verify before unlock send buttons, react hook form ?
-    verifyValidForm();
-  }, []);
+  const setListMissingField = useCallback(
+    (values: Record<string, true>, key) => {
+      const newValue = Object.keys(values).toString();
+      queries = {
+        ...queries,
+        [key]: newValue,
+      };
+      // verify before unlock send buttons, react hook form ?
+      verifyValidForm();
+    },
+    [],
+  );
 
   if (callState === 'SUCCESS' && data) {
-    router.redirectTo(data.fileContext === 'VALID' ? 'validation' : 'edit', { id: data.fileId });
+    router.redirectTo(data.fileContext === 'VALID' ? 'validation' : 'edit', {
+      id: data.fileId,
+    });
 
     return null;
   }
@@ -118,7 +137,9 @@ export const CreateModal: React.FC<IProps> = ({ onClose, open, dataManualInput }
         callState={callState}
         states={{
           IS_LOADING: <StairsLoader size={'md'} />,
-          SERVER_ERROR: <Error500 size={'md'} message={'Le serveur ne répond pas'} />,
+          SERVER_ERROR: (
+            <Error500 size={'md'} message={'Le serveur ne répond pas'} />
+          ),
           BAD_REQUEST: (
             <BadRequest
               size={'md'}
@@ -146,7 +167,10 @@ export const CreateModal: React.FC<IProps> = ({ onClose, open, dataManualInput }
                 ) : null;
               })}
             </Grid>
-            <form className={'missing-fields-form'} onSubmit={handleSubmit(createFile)}>
+            <form
+              className={'missing-fields-form'}
+              onSubmit={handleSubmit(createFile)}
+            >
               {dataManualInput.fields.map((field: IMissingField) => {
                 // if you want to return and use the order key : return field.order === index ? (...) : null
                 return (

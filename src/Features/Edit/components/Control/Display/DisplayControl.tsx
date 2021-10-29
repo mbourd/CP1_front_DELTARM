@@ -8,12 +8,14 @@ export interface IProps {
   controls: IControl[];
 }
 
-export const DisplayControl: React.FC<IProps> = ({ controls }): React.ReactElement => {
+export const DisplayControl: React.FC<IProps> = ({
+  controls,
+}): React.ReactElement => {
   // const [formState, setFormState] = useState(controls);
 
   // const formStateWithDisbaled = injectDisabled(formState)
 
-  console.log('RENDER', controls);
+  console.log('CONTROLS', controls);
 
   return (
     <DisplayControlStyled>

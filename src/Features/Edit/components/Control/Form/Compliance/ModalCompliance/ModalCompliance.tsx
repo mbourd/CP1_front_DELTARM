@@ -50,7 +50,13 @@ export const ModalCompliance: React.FC<IProps> = ({
       <DisplayControlStyled>
         <Grid container className={'control-container'}>
           {data?.map((compliance: IComplianceData, index) => {
-            return <SwitchControlCompliance compliance={compliance} controlId={controlId} key={index} />;
+            return (
+              <SwitchControlCompliance
+                compliance={compliance}
+                controlId={controlId}
+                key={index}
+              />
+            );
           })}
         </Grid>
       </DisplayControlStyled>

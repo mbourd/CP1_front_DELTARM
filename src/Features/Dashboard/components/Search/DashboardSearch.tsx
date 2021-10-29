@@ -35,13 +35,25 @@ export const DashboardSearch: React.FC = (): React.ReactElement => {
       <FormError>{errorMessage}</FormError>
       <Paper className={'search-container'} elevation={0}>
         <Search
-          placeholder={searchMode === 'fileNum' ? filePlaceholder : 'Contrepartie emprunteuse ou nom de famille'}
+          placeholder={
+            searchMode === 'fileNum'
+              ? filePlaceholder
+              : 'Contrepartie emprunteuse ou nom de famille'
+          }
         />
       </Paper>
       <div className={'buttons-container'}>
         <div className="search-mode-toggle">
-          <RadioGroup value={searchMode} onChange={(_, value) => setSearchMode(value)} row>
-            <FormControlLabel value="fileNum" control={<Radio size="small" />} label="Rechercher par numéro" />
+          <RadioGroup
+            value={searchMode}
+            onChange={(_, value) => setSearchMode(value)}
+            row
+          >
+            <FormControlLabel
+              value="fileNum"
+              control={<Radio size="small" />}
+              label="Rechercher par numéro"
+            />
             <FormControlLabel
               value="full"
               control={<Radio size="small" />}
@@ -51,8 +63,15 @@ export const DashboardSearch: React.FC = (): React.ReactElement => {
         </div>
         <Button onClick={onSearch}>{trans('searchButtonLabel')}</Button>
       </div>
-      {isModalOpen ? <SearchModal open={isModalOpen} onClose={() => setIsModalOpen(false)} /> : null}
-      {fullSearch && <FullSearchModal search={fullSearch} onClose={() => setFullSearch(undefined)} />}
+      {isModalOpen ? (
+        <SearchModal open={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      ) : null}
+      {fullSearch && (
+        <FullSearchModal
+          search={fullSearch}
+          onClose={() => setFullSearch(undefined)}
+        />
+      )}
     </DashboardSearchStyled>
   );
 };

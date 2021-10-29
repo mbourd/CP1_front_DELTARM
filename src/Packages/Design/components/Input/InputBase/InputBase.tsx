@@ -31,7 +31,10 @@ export const InputBase: React.FC<IInputBase> = ({
 }): React.ReactElement => {
   const theme = useTheme();
   const c = theme.color[color];
-  const classes = useStyles({ fontFamily: theme.font.text.main, fontColor: c ? c.main : theme.color.text.main });
+  const classes = useStyles({
+    fontFamily: theme.font.text.main,
+    fontColor: c ? c.main : theme.color.text.main,
+  });
   const { input, ...MUIInputBaseClasse } = classes;
 
   return (
@@ -40,7 +43,9 @@ export const InputBase: React.FC<IInputBase> = ({
       bgc={bgc}
       fontColor={c ? c.main : theme.color.text.main}
       bdr={bdr || theme.sizing.radius}
-      className={'_Input ' + (className || '') + (status ? ' _Input-' + status : '')}
+      className={
+        '_Input ' + (className || '') + (status ? ' _Input-' + status : '')
+      }
     >
       {icon}
       <MUIInputBase

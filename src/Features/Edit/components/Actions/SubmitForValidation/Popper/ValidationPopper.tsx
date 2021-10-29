@@ -2,7 +2,14 @@ import React, { useCallback, useContext, useEffect } from 'react';
 import { ValidationPopperStyled } from './ValidationPopper.style';
 import { Card } from '@material-ui/core';
 import { IData } from '../apiRoutes';
-import { BadRequest, Button, Error500, RequestSuccess, Select, StairsLoader } from 'Shared/components';
+import {
+  BadRequest,
+  Button,
+  Error500,
+  RequestSuccess,
+  Select,
+  StairsLoader,
+} from 'Shared/components';
 import { router, storage, SwitchCallState, useApi } from 'Services';
 import { EditValidationContext } from 'Features/Edit';
 
@@ -10,7 +17,9 @@ export interface ValidationPopperProps {
   onClose?: () => void;
 }
 
-export const ValidationPopper: React.FC<ValidationPopperProps> = ({ onClose }): React.ReactElement => {
+export const ValidationPopper: React.FC<ValidationPopperProps> = ({
+  onClose,
+}): React.ReactElement => {
   const { request, error, callState, send, data } = useApi<IData>();
   const context = useContext(EditValidationContext);
 
@@ -28,14 +37,25 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({ onClose }): 
   }, [send, context.fileId, request, context.data]);
 
   const handleSubmit = useCallback(() => {
-    const selectedValues = storage.getData<Record<string, true>>('edit.selected.validators');
-    const selectedValue = Object.keys(selectedValues as Record<string, true>)[0];
-    send('askValidation', {}, { file_id: context.fileId, ask_to_user_id: selectedValue });
+    const selectedValues = storage.getData<Record<string, true>>(
+      'edit.selected.validators',
+    );
+    const selectedValue = Object.keys(
+      selectedValues as Record<string, true>,
+    )[0];
+    send(
+      'askValidation',
+      {},
+      { file_id: context.fileId, ask_to_user_id: selectedValue },
+    );
   }, [send, context.fileId]);
 
-  const storeSelectedValues = useCallback((selectedValues: Record<string, true>) => {
-    storage.setData('edit.selected.validators', selectedValues);
-  }, []);
+  const storeSelectedValues = useCallback(
+    (selectedValues: Record<string, true>) => {
+      storage.setData('edit.selected.validators', selectedValues);
+    },
+    [],
+  );
 
   if (callState === 'SUCCESS' && data?.type === 'ASK_VALIDATION') {
     router.redirectTo('manage');
@@ -48,12 +68,16 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({ onClose }): 
           callState={callState}
           states={{
             IS_LOADING: <StairsLoader size={'md'} />,
-            SERVER_ERROR: <Error500 size={'md'} message={'Le serveur ne répond pas'} />,
+            SERVER_ERROR: (
+              <Error500 size={'md'} message={'Le serveur ne répond pas'} />
+            ),
             BAD_REQUEST: (
               <>
                 <BadRequest
                   size={'md'}
-                  message={error?.response ? error?.response.body.error_msg : ''}
+                  message={
+                    error?.response ? error?.response.body.error_msg : ''
+                  }
                   title={'Echec !'}
                 />
                 {onClose && (
@@ -90,7 +114,11 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({ onClose }): 
               </div>
             </>
           ) : (
-            <RequestSuccess size={'md'} message={'La validation a été soumise !'} title={'Opération réussie'} />
+            <RequestSuccess
+              size={'md'}
+              message={'La validation a été soumise !'}
+              title={'Opération réussie'}
+            />
           )}
         </SwitchCallState>
       </Card>

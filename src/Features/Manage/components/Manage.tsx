@@ -1,12 +1,26 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { ManageStyled } from './Manage.style';
 import { BreadCrumb, FormError, HeadingOne } from 'Shared/components';
-import { router, SecurityContext, storage, SwitchCallState, useApi, useSecurity, useTrans } from 'Services';
+import {
+  router,
+  SecurityContext,
+  storage,
+  SwitchCallState,
+  useApi,
+  useSecurity,
+  useTrans,
+} from 'Services';
 import { Search } from './Search/Search';
 import { Card } from './Card/Card';
 import { Filter } from './Filter/Filter';
 import { Button } from 'Shared/components';
-import { Divider, FormControlLabel, Paper, Radio, RadioGroup } from '@material-ui/core';
+import {
+  Divider,
+  FormControlLabel,
+  Paper,
+  Radio,
+  RadioGroup,
+} from '@material-ui/core';
 import { ICard } from './Card/types';
 import { SearchModal } from './Search/Modal/SearchModal';
 import { IsLoading } from './IsLoading';
@@ -57,8 +71,12 @@ export const Manage: React.FC = (): React.ReactElement => {
   }
 
   const applyFilters = useCallback(() => {
-    const stages = storage.getData<Record<string, true>>('manage.filter.stages');
-    const states = storage.getData<Record<string, true>>('manage.filter.states');
+    const stages = storage.getData<Record<string, true>>(
+      'manage.filter.stages',
+    );
+    const states = storage.getData<Record<string, true>>(
+      'manage.filter.states',
+    );
     const roles = storage.getData<Record<string, true>>('manage.filter.roles');
 
     const filters: Record<string, string> = {};
@@ -111,7 +129,11 @@ export const Manage: React.FC = (): React.ReactElement => {
       <BreadCrumb values={['Dashboard', 'Manage']} />
       <SwitchCallState
         callState={callState}
-        states={{ IS_LOADING: <IsLoading />, NOT_INIT: <IsLoading />, NO_DATA: <NoData /> }}
+        states={{
+          IS_LOADING: <IsLoading />,
+          NOT_INIT: <IsLoading />,
+          NO_DATA: <NoData />,
+        }}
       >
         <ManageStyled>
           <HeadingOne>{trans('pageTitle')}</HeadingOne>
@@ -119,11 +141,17 @@ export const Manage: React.FC = (): React.ReactElement => {
           <Paper className={'search-container'} elevation={0}>
             <Search
               placeholder={
-                searchMode === 'fileNum' ? 'N°Dossier / N°Avenant' : 'Contrepartie emprunteuse ou nom de famille'
+                searchMode === 'fileNum'
+                  ? 'N°Dossier / N°Avenant'
+                  : 'Contrepartie emprunteuse ou nom de famille'
               }
             />
             <Divider className={'divider'} orientation="vertical" />
-            <Filter initStages={initStages} initStates={initStates} initRoles={initRoles}>
+            <Filter
+              initStages={initStages}
+              initStates={initStates}
+              initRoles={initRoles}
+            >
               <Button
                 color={'error'}
                 size={'small'}
@@ -141,8 +169,16 @@ export const Manage: React.FC = (): React.ReactElement => {
           </Paper>
           <div className={'buttons-container'}>
             <div className="search-mode-toggle">
-              <RadioGroup value={searchMode} onChange={(_, value) => setSearchMode(value)} row>
-                <FormControlLabel value="fileNum" control={<Radio size="small" />} label="Rechercher par numéro " />
+              <RadioGroup
+                value={searchMode}
+                onChange={(_, value) => setSearchMode(value)}
+                row
+              >
+                <FormControlLabel
+                  value="fileNum"
+                  control={<Radio size="small" />}
+                  label="Rechercher par numéro "
+                />
                 <FormControlLabel
                   value="full"
                   control={<Radio size="small" />}
@@ -165,8 +201,18 @@ export const Manage: React.FC = (): React.ReactElement => {
           {data?.map((card, index) => {
             return <Card {...card} key={index} />;
           })}
-          {isModalOpen ? <SearchModal open={isModalOpen} onClose={() => setIsModalOpen(false)} /> : null}
-          {fullSearch && <FullSearchModal search={fullSearch} onClose={() => setFullSearch(undefined)} />}
+          {isModalOpen ? (
+            <SearchModal
+              open={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+            />
+          ) : null}
+          {fullSearch && (
+            <FullSearchModal
+              search={fullSearch}
+              onClose={() => setFullSearch(undefined)}
+            />
+          )}
         </ManageStyled>
       </SwitchCallState>
     </>
