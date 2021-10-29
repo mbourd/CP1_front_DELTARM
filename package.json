@@ -16,7 +16,8 @@
   },
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "yarn lint && yarn test"
     }
   },
   "eslintConfig": {
@@ -87,7 +88,7 @@
     "react-scripts": "3.4.3",
     "styled-components": "^5.2.0",
     "superagent": "^6.1.0",
-    "typescript": "^4",
+    "typescript": "^4.1.0",
     "yup": "^0.32.9"
   },
   "devDependencies": {
