@@ -45,7 +45,11 @@ export const Select: React.FC<ISelect> = ({
       values.splice(values.indexOf('undefined'), 1);
     }
     values.map((key, index) => {
-      return (selectedValues = { ...selectedValues, [key]: true });
+      if (key) {
+        return (selectedValues = { ...selectedValues, [key]: true });
+      }
+
+      return selectedValues;
     });
   }
   const [selected, setSelected] = useState(selectedValues);
