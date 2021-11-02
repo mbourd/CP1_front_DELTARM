@@ -38,7 +38,7 @@ export class Security implements ISecurity {
   public persistUser(user: IUser): LoginLogoutReturnType {
     try {
       localStorage.setItem(this._sessionKey, JSON.stringify(user));
-    } catch (e: any) {
+    } catch (e) {
       return { title: 'STORAGE_FAILED', message: e.message, error: true };
     }
 
@@ -54,7 +54,7 @@ export class Security implements ISecurity {
     user.setEmail(null).setUsername(User.Roles.ANON).setRoles([User.Roles.ANON]).setJwt(null).setExpireAt(null);
     try {
       localStorage.setItem(this._sessionKey, JSON.stringify(user));
-    } catch (e: any) {
+    } catch (e) {
       return { title: 'STORAGE_FAILED', message: e.message, error: true };
     }
 
