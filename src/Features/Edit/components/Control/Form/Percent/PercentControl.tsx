@@ -3,9 +3,10 @@ import { Grid } from '@material-ui/core';
 import { IControl } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
 import { PercentControlStyled } from './PercentControl.style';
-import { storage, useApi, useRouter } from 'Services';
+import { useApi, useRouter } from 'Services';
 import { ControlLabel } from '../ControlLabel';
 import { ControlFooter } from '../ControlFooter';
+import { checkIfSameValues } from '../../../../../../Packages/Helpers/src/checkIfSameValues';
 
 interface IProps {
   control: IControl;
@@ -15,18 +16,16 @@ interface IProps {
 export const PercentControl: React.FC<IProps> = ({ control, fileId }): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [currentValue, setCurrentValue] = useState(control.value);
   const { currentRoute } = useRouter();
-
-  const value = storage.getData<string>('edit.control.' + control.id + '.value');
 
   const saveValue = useCallback(
     (value: string) => {
-      if (control.mandatory && !/^[0-9]+\.?[0-9]*$/.test(value)) {
-        setErrorMessage('Saisissez un pourcentage');
-
+      if (!checkIfSameValues(value, currentValue)) {
         return;
       }
-      if (control.regex && !value.match(control.regex)) {
+
+      if (control.regex && !value.match(control.regex) && value) {
         setErrorMessage(control.regexMsg);
 
         return;
@@ -48,23 +47,32 @@ export const PercentControl: React.FC<IProps> = ({ control, fileId }): React.Rea
       }
 
       setErrorMessage(null);
-      storage.setData('edit.control.' + control.id + '.value', value);
+      setCurrentValue(value);
       send(
         currentRoute?.props?.apiSaveControlRouteName,
         {},
         { file_id: fileId, elm_id: control.id, elm_val: value, control_family: control.family },
       );
     },
-    [send, fileId, control.id, control.mandatory, control.family, currentRoute, control.regex, control.regexMsg],
+    [
+      send,
+      fileId,
+      control.id,
+      control.mandatory,
+      control.family,
+      currentRoute,
+      control.regex,
+      control.regexMsg,
+      currentValue,
+      setCurrentValue,
+    ],
   );
 
   useEffect(() => {
-    const val = storage.getData<string>('edit.control.' + control.id + '.value');
-
-    if (control.mandatory && control.editable && !val && !control.value) {
+    if (control.mandatory && control.editable && !currentValue && !control.value) {
       setErrorMessage('Saisissez un pourcentage');
     }
-  }, [control.id, control.mandatory, control.value, control.editable]);
+  }, [control.id, control.mandatory, control.value, control.editable, currentValue]);
 
   useEffect(() => {
     if (error) {
@@ -80,7 +88,7 @@ export const PercentControl: React.FC<IProps> = ({ control, fileId }): React.Rea
           placeholder={control.editable ? control.title : control.value}
           disabled={!control.editable}
           color={control.editable ? 'text' : 'disabled'}
-          defaultValue={value || control.value}
+          defaultValue={currentValue || control.value}
           onBlur={(e) => saveValue(e.currentTarget.value)}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}

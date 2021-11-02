@@ -33,11 +33,8 @@ export const TextCompliance: React.FC<IProps> = ({ compliance, fileId, controlId
         elm_id: controlId,
         control_family: compliance.family,
         compliance_id: compliance.id,
+        elm_val: value,
       };
-
-      if (value) {
-        q['elm_val'] = value;
-      }
 
       send(currentRoute?.props?.apiSaveControlRouteName, {}, q);
     },
