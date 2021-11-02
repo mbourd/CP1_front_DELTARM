@@ -1,5 +1,5 @@
 import React from 'react';
-import { BPITheme } from '../src/Packages/Design';
+import { BPITheme, BPIGlobalStyle } from '../src/Packages/Design';
 import { ThemeProvider } from 'styled-components/macro';
 
 export const parameters = {
@@ -12,10 +12,13 @@ export const parameters = {
   },
 };
 
-export const decorators = [
-  (Story) => (
+const withThemeProvider = (Story, context) => {
+  return (
     <ThemeProvider theme={BPITheme}>
-      <Story />
+      <BPIGlobalStyle />
+      <Story {...context} />
     </ThemeProvider>
-  ),
-];
+  );
+};
+
+export const decorators = [withThemeProvider];

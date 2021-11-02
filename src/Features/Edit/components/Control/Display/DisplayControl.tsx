@@ -13,7 +13,7 @@ export const DisplayControl: React.FC<IProps> = ({
 }): React.ReactElement => {
   // const [formState, setFormState] = useState(controls);
 
-  // const formStateWithDisbaled = injectDisabled(formState)
+  // const formStateWithDisabled = injectDisabled(formState)
 
   console.log('CONTROLS', controls);
 

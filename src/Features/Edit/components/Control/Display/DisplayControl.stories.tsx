@@ -9,8 +9,8 @@ export default {
 
 const Template: any = (args: IProps) => <DisplayControl {...args} />;
 
-export const Controls = Template.bind({});
-Controls.args = {
+export const TextControl = Template.bind({});
+TextControl.args = {
   controls: [
     {
       desc1: null,
@@ -30,6 +30,12 @@ Controls.args = {
       type: 'text',
       value: null,
     },
+  ],
+};
+
+export const EmailControl = Template.bind({});
+EmailControl.args = {
+  controls: [
     {
       desc1: null,
       desc2: null,
@@ -37,15 +43,39 @@ Controls.args = {
       family: 'standard',
       fontColor: undefined,
       fontSize: undefined,
-      id: '1747',
+      id: '1746',
       isConditional: false,
       manageCompliance: false,
       mandatory: false,
       previousValue: null,
       regex: '^(i?)aut\\d{6}$',
-      regexMsg: "L'email n'est pas valide",
-      title: 'Email control',
+      regexMsg: "L'email est invalide",
+      title: 'email label control',
       type: 'email',
+      value: null,
+    },
+  ],
+};
+
+export const UploadFileControl = Template.bind({});
+UploadFileControl.args = {
+  controls: [
+    {
+      desc1: null,
+      desc2: null,
+      editable: true,
+      family: 'standard',
+      fontColor: undefined,
+      fontSize: undefined,
+      id: '1746',
+      isConditional: false,
+      manageCompliance: false,
+      mandatory: false,
+      previousValue: null,
+      regex: '^(i?)aut\\d{6}$',
+      regexMsg: "L'upload est impossible",
+      title: 'Upload file control',
+      type: 'file_upload',
       value: null,
     },
   ],
