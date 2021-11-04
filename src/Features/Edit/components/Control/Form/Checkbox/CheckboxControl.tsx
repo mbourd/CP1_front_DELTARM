@@ -86,7 +86,7 @@ export const CheckboxControl: React.FC<IProps> = ({ control, fileId, multiple })
           disabled={!control.editable}
           error={!!error}
         />
-        {errorMessage ? <FormError>{errorMessage}</FormError> : null}
+        {errorMessage ? <FormError style={{ display: 'block' }}>{errorMessage}</FormError> : null}
         <ControlFooter control={control} />
       </CheckboxControlStyled>
       {control.compliance && (
