@@ -22,18 +22,6 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
 
   const saveValue = useCallback(
     (value: string) => {
-      if (!checkIfSameValues(value, currentValue)) {
-        setErrorMessage(null);
-
-        return;
-      }
-
-      if (control.regex && !value.match(control.regex) && value) {
-        setErrorMessage(control.regexMsg);
-
-        return;
-      }
-
       if (control.mandatory) {
         try {
           const v = parseInt(value, 10);
@@ -51,7 +39,27 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
         }
       }
 
+      if (control.regex && !value.match(control.regex) && value) {
+        setErrorMessage(control.regexMsg);
+
+        return;
+      }
+
+      if (!checkIfSameValues(value, currentValue)) {
+        setErrorMessage(null);
+        if (control.mandatory && !value.trim()) {
+          setErrorMessage('Valeur obligatoire');
+        }
+
+        return;
+      }
+
       setErrorMessage(null);
+
+      if (control.mandatory && !value.trim()) {
+        setErrorMessage('Valeur obligatoire');
+      }
+
       setCurrentValue(value);
       send(
         currentRoute?.props?.apiSaveControlRouteName,
@@ -74,10 +82,10 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
   );
 
   useEffect(() => {
-    if (control.mandatory && control.editable && !currentValue && !control.value) {
+    if (control.mandatory && control.editable && !currentValue) {
       setErrorMessage('Valeur obligatoire');
     }
-  }, [control.id, control.mandatory, control.value, control.editable, currentValue]);
+  }, [control.mandatory, control.editable, currentValue]);
 
   useEffect(() => {
     if (error) {

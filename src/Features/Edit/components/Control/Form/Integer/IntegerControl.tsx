@@ -21,19 +21,27 @@ export const IntegerControl: React.FC<IProps> = ({ control, fileId }): React.Rea
 
   const saveValue = useCallback(
     (value: string) => {
-      if (!checkIfSameValues(value, currentValue)) {
-        setErrorMessage(null);
-
-        return;
-      }
-
       if (control.regex && !value.match(control.regex) && value) {
         setErrorMessage(control.regexMsg);
 
         return;
       }
 
+      if (!checkIfSameValues(value, currentValue)) {
+        setErrorMessage(null);
+        if (control.mandatory && !value.trim()) {
+          setErrorMessage('Valeur obligatoire');
+        }
+
+        return;
+      }
+
       setErrorMessage(null);
+
+      if (control.mandatory && !value.trim()) {
+        setErrorMessage('Valeur obligatoire');
+      }
+
       setCurrentValue(value);
       send(
         currentRoute?.props?.apiSaveControlRouteName,
@@ -51,14 +59,15 @@ export const IntegerControl: React.FC<IProps> = ({ control, fileId }): React.Rea
       control.regexMsg,
       currentValue,
       setCurrentValue,
+      control.mandatory,
     ],
   );
 
   useEffect(() => {
-    if (control.mandatory && control.editable && !currentValue && !control.value) {
+    if (control.mandatory && control.editable && !currentValue) {
       setErrorMessage('Valeur obligatoire');
     }
-  }, [control.id, control.mandatory, control.value, control.editable, currentValue]);
+  }, [control.mandatory, control.editable, currentValue]);
 
   useEffect(() => {
     if (error) {
