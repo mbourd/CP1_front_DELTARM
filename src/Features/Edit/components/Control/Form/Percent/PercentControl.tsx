@@ -22,6 +22,8 @@ export const PercentControl: React.FC<IProps> = ({ control, fileId }): React.Rea
   const saveValue = useCallback(
     (value: string) => {
       if (!checkIfSameValues(value, currentValue)) {
+        setErrorMessage(null);
+
         return;
       }
 
@@ -29,21 +31,6 @@ export const PercentControl: React.FC<IProps> = ({ control, fileId }): React.Rea
         setErrorMessage(control.regexMsg);
 
         return;
-      }
-
-      if (control.mandatory) {
-        try {
-          const x = parseFloat(value);
-          if (isNaN(x) || x < 0 || x > 100) {
-            setErrorMessage('Saisissez un pourcentage');
-
-            return;
-          }
-        } catch {
-          setErrorMessage('Saisissez un pourcentage');
-
-          return;
-        }
       }
 
       setErrorMessage(null);
@@ -70,7 +57,7 @@ export const PercentControl: React.FC<IProps> = ({ control, fileId }): React.Rea
 
   useEffect(() => {
     if (control.mandatory && control.editable && !currentValue && !control.value) {
-      setErrorMessage('Saisissez un pourcentage');
+      setErrorMessage('Valeur obligatoire');
     }
   }, [control.id, control.mandatory, control.value, control.editable, currentValue]);
 
@@ -89,6 +76,11 @@ export const PercentControl: React.FC<IProps> = ({ control, fileId }): React.Rea
           disabled={!control.editable}
           color={control.editable ? 'text' : 'disabled'}
           defaultValue={currentValue || control.value}
+          icon={
+            <i style={{ paddingLeft: '5px' }} className="material-icons">
+              %
+            </i>
+          }
           onBlur={(e) => saveValue(e.currentTarget.value)}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}

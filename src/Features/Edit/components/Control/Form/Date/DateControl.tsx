@@ -23,6 +23,8 @@ export const DateControl: React.FC<IProps> = ({ control, fileId }): React.ReactE
   const saveValue = useCallback(
     (value: string) => {
       if (!checkIfSameValues(value, currentValue)) {
+        setErrorMessage(null);
+
         return;
       }
 

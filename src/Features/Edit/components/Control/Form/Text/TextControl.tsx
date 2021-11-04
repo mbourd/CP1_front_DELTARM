@@ -28,6 +28,8 @@ export const TextControl: React.FC<IProps> = ({ control, fileId }): React.ReactE
       }
 
       if (!checkIfSameValues(value, currentValue)) {
+        setErrorMessage(null);
+
         return;
       }
 

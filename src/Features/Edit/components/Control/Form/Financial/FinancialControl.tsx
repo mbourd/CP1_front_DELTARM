@@ -23,6 +23,8 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
   const saveValue = useCallback(
     (value: string) => {
       if (!checkIfSameValues(value, currentValue)) {
+        setErrorMessage(null);
+
         return;
       }
 
@@ -36,13 +38,14 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
         try {
           const v = parseInt(value, 10);
 
+          // specific rules from BPI : API should send args for min/max values
           if (v < 1000) {
             setErrorMessage('Le nombre doit être supérieur ou égal à 1000');
 
             return;
           }
         } catch {
-          setErrorMessage('Saisissez un nombre');
+          setErrorMessage('Valeur obligatoire');
 
           return;
         }

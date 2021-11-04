@@ -22,6 +22,8 @@ export const IntegerControl: React.FC<IProps> = ({ control, fileId }): React.Rea
   const saveValue = useCallback(
     (value: string) => {
       if (!checkIfSameValues(value, currentValue)) {
+        setErrorMessage(null);
+
         return;
       }
 
