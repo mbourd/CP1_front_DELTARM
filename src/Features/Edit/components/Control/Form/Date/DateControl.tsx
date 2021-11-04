@@ -18,6 +18,7 @@ export const DateControl: React.FC<IProps> = ({ control, fileId }): React.ReactE
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.value);
   const { currentRoute } = useRouter();
+  control.mandatory = true;
 
   const saveValue = useCallback(
     (value: string) => {
@@ -31,6 +32,7 @@ export const DateControl: React.FC<IProps> = ({ control, fileId }): React.ReactE
         return;
       }
 
+      setErrorMessage(null);
       setCurrentValue(value);
       send(
         currentRoute?.props?.apiSaveControlRouteName,
@@ -55,7 +57,7 @@ export const DateControl: React.FC<IProps> = ({ control, fileId }): React.ReactE
     if (control.mandatory && control.editable && !currentValue && !control.value) {
       setErrorMessage('Valeur obligatoire');
     }
-  }, [control.id, control.mandatory, control.value, control.editable, currentValue]);
+  }, [control.mandatory, control.value, control.editable, currentValue]);
 
   useEffect(() => {
     if (error) {
