@@ -82,7 +82,8 @@ export const SelectListControl: React.FC<IProps> = ({ control, fileId, multiple 
               Object.keys(selectedValues).length >= 2
                 ? Object.keys(selectedValues).join(';')
                 : Object.keys(selectedValues)[0];
-            saveValue('' + value);
+            const val = value ? value : '';
+            saveValue('' + val);
           }}
           error={!!error}
           choiceIsKo={choiceIsKo}
