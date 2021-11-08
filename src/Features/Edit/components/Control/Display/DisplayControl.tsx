@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { DisplayControlStyled } from './DisplayControl.style';
 import { IControl } from 'Features/Edit/types';
@@ -11,17 +11,21 @@ export interface IProps {
 export const DisplayControl: React.FC<IProps> = ({
   controls,
 }): React.ReactElement => {
-  // const [formState, setFormState] = useState(controls);
-
+  const [formState, setFormState] = useState(controls);
   // const formStateWithDisabled = injectDisabled(formState)
-
-  console.log('CONTROLS', controls);
 
   return (
     <DisplayControlStyled>
       <Grid container className={'control-container'}>
-        {controls.map((control, index) => {
-          return <SwitchControlItem key={index} control={control} />;
+        {formState.map((control, index) => {
+          return (
+            <SwitchControlItem
+              key={index}
+              control={control}
+              formState={formState}
+              setFormState={setFormState}
+            />
+          );
         })}
       </Grid>
     </DisplayControlStyled>
