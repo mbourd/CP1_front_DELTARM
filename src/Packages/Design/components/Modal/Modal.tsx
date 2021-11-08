@@ -1,5 +1,11 @@
 import React from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, IconButton } from '@material-ui/core';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  IconButton,
+} from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { useStyles } from './Modal.style';
 import { IModal } from './types';
@@ -45,7 +51,9 @@ export const Modal: React.FC<IModal> = ({
       <DialogContent dividers={dividers} className={'_ModalContent'}>
         {children}
       </DialogContent>
-      {footer && <DialogActions className={'_ModalFooter'}>{footer}</DialogActions>}
+      {footer && (
+        <DialogActions className={'_ModalFooter'}>{footer}</DialogActions>
+      )}
     </Dialog>
   );
 };

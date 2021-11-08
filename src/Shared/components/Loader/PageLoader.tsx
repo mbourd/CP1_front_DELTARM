@@ -12,7 +12,10 @@ export const PageLoader: React.FC<IProps> = ({ text }): React.ReactElement => {
 
   return (
     <PageLoaderStyled>
-      <StairsLoader barsColor={theme.color.primary.main} ballColor={theme.color.secondary.main} />
+      <StairsLoader
+        barsColor={theme.color.primary.main}
+        ballColor={theme.color.secondary.main}
+      />
       <p className={'text-container'}>
         <TextShineLoader
           text={text}

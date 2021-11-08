@@ -3,7 +3,11 @@ import { useHistory, useLocation } from 'react-router-dom';
 
 import { IDispatchRoute } from './types';
 
-const DispatchRoute: React.FC<IDispatchRoute> = ({ url, router, notFoundComponent }) => {
+const DispatchRoute: React.FC<IDispatchRoute> = ({
+  url,
+  router,
+  notFoundComponent,
+}) => {
   const history = useHistory();
   const location = useLocation();
   router.setHistory(history).setLocation(location);
@@ -42,7 +46,14 @@ const DispatchRoute: React.FC<IDispatchRoute> = ({ url, router, notFoundComponen
 
       const props = route.props ? route.props : {};
 
-      return <Component {...props} currentRoute={route} routeParams={params} routeQueries={queries} />;
+      return (
+        <Component
+          {...props}
+          currentRoute={route}
+          routeParams={params}
+          routeQueries={queries}
+        />
+      );
     }
   }
 

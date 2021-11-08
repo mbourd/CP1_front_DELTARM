@@ -18,6 +18,9 @@ export const TextControl: React.FC<IProps> = ({ control, fileId }): React.ReactE
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.value);
   const { currentRoute } = useRouter();
+  // console.log(control.conditional);
+  // // console.log(control.isConditional);
+  // console.log(control.conditionalInitState);
 
   const saveValue = useCallback(
     (value: string) => {

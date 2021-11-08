@@ -14,17 +14,29 @@ interface IProps {
   multiple: boolean;
 }
 
-export const SelectListControl: React.FC<IProps> = ({ control, fileId, multiple }): React.ReactElement => {
+export const SelectListControl: React.FC<IProps> = ({
+  control,
+  fileId,
+  multiple,
+}): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
   const [choiceIsKo, setChoiceIsKo] = useState(
-    control.compliance?.complianceCheckboxResolved ? control.compliance.complianceCheckboxResolved : false,
+    control.compliance?.complianceCheckboxResolved
+      ? control.compliance.complianceCheckboxResolved
+      : false,
   );
-  const [isResolved, setIsResolved] = useState(control.compliance?.resolved ? control.compliance.resolved : false);
+  const [isResolved, setIsResolved] = useState(
+    control.compliance?.resolved ? control.compliance.resolved : false,
+  );
 
-  const value = storage.getData<string>('edit.control.' + control.id + '.value');
-  const selectedValue: Record<string, true> = { [value || control.value || '']: true };
+  const value = storage.getData<string>(
+    'edit.control.' + control.id + '.value',
+  );
+  const selectedValue: Record<string, true> = {
+    [value || control.value || '']: true,
+  };
 
   useEffect(() => {
     if (!choiceIsKo) {
@@ -44,14 +56,29 @@ export const SelectListControl: React.FC<IProps> = ({ control, fileId, multiple 
       send(
         currentRoute?.props?.apiSaveControlRouteName,
         {},
-        { file_id: fileId, elm_id: control.id, elm_val: value, control_family: control.family },
+        {
+          file_id: fileId,
+          elm_id: control.id,
+          elm_val: value,
+          control_family: control.family,
+        },
       );
     },
-    [send, fileId, control.id, control.family, currentRoute, control.regex, control.regexMsg],
+    [
+      send,
+      fileId,
+      control.id,
+      control.family,
+      currentRoute,
+      control.regex,
+      control.regexMsg,
+    ],
   );
 
   useEffect(() => {
-    const val = storage.getData<string>('edit.control.' + control.id + '.value');
+    const val = storage.getData<string>(
+      'edit.control.' + control.id + '.value',
+    );
 
     if (control.mandatory && control.editable && !val && !control.value) {
       setErrorMessage('Valeur obligatoire');
@@ -60,7 +87,9 @@ export const SelectListControl: React.FC<IProps> = ({ control, fileId, multiple 
 
   useEffect(() => {
     if (error) {
-      setErrorMessage("Une erreur s'est produite, veuillez re-sélectionner une valeur");
+      setErrorMessage(
+        "Une erreur s'est produite, veuillez re-sélectionner une valeur",
+      );
     }
   }, [error]);
 

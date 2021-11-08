@@ -7,7 +7,9 @@ interface IFileCommentBody {
   comments: IFileComment[];
 }
 
-export const FileCommentBody: React.FC<IFileCommentBody> = ({ comments }): React.ReactElement => {
+export const FileCommentBody: React.FC<IFileCommentBody> = ({
+  comments,
+}): React.ReactElement => {
   return (
     <FileCommentBodyStyled>
       {comments.map((comment, index) => {

@@ -21,25 +21,32 @@ export const ButtonStyled = styled.span<IProps>`
     }};
     border: ${({ theme, type, colorType, disabled }) => {
       if (disabled) {
-        return type === 'default' ? 'none' : `1px solid ${theme.color.disabled.main}`;
+        return type === 'default'
+          ? 'none'
+          : `1px solid ${theme.color.disabled.main}`;
       }
 
       return type === 'default' ? 'none' : `1px solid ${colorType.main}`;
     }};
-    color: ${({ type, colorType }) => (type === 'default' ? '#FFF' : colorType.main)};
+    color: ${({ type, colorType }) =>
+      type === 'default' ? '#FFF' : colorType.main};
     font-family: ${({ theme }) => theme.font.medium.main};
     padding: 6px 15px;
     text-transform: none;
     transition: all ${({ theme }) => theme.transition.time};
 
     &:hover {
-      background-color: ${({ type, colorType }) => (type === 'default' ? colorType.dark : 'transparent')};
-      border: ${({ type, colorType }) => (type === 'default' ? 'none' : ` 1px solid ${colorType.light}`)};
-      color: ${({ type, colorType }) => (type === 'default' ? '#FFF' : colorType.light)};
+      background-color: ${({ type, colorType }) =>
+        type === 'default' ? colorType.dark : 'transparent'};
+      border: ${({ type, colorType }) =>
+        type === 'default' ? 'none' : ` 1px solid ${colorType.light}`};
+      color: ${({ type, colorType }) =>
+        type === 'default' ? '#FFF' : colorType.light};
     }
 
     ._ButtonIcon {
-      color: ${({ type, colorType }) => (type === 'default' ? '#FFF' : colorType.main)};
+      color: ${({ type, colorType }) =>
+        type === 'default' ? '#FFF' : colorType.main};
     }
   }
 `;

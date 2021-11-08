@@ -14,10 +14,17 @@ interface IProps {
   fileId: string;
 }
 
-export const UploadControl: React.FC<IProps> = ({ control, fileId }): React.ReactElement => {
+export const UploadControl: React.FC<IProps> = ({
+  control,
+  fileId,
+}): React.ReactElement => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [currentUploadedFile, setCurrentUploadedFile] = useState<File | null>(null);
-  const [previousUploadedFile, setPreviousUploadedFile] = useState<string | null>(control.value);
+  const [currentUploadedFile, setCurrentUploadedFile] = useState<File | null>(
+    null,
+  );
+  const [previousUploadedFile, setPreviousUploadedFile] = useState<
+    string | null
+  >(control.value);
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
 
@@ -35,7 +42,9 @@ export const UploadControl: React.FC<IProps> = ({ control, fileId }): React.Reac
       const fileName = currentUploadedFile.name;
       axios
         .post(
-          `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}/control/set_value?file_id=${fileId}&elm_id=${
+          `${getEnv('API_PROTOCOL')}://${getEnv(
+            'API_HOST',
+          )}/control/set_value?file_id=${fileId}&elm_id=${
             control.id
           }&elm_val=${fileName}&control_family=${control.family}`,
           formData,
@@ -54,7 +63,14 @@ export const UploadControl: React.FC<IProps> = ({ control, fileId }): React.Reac
           setErrorMessage(err.response.data.error_msg);
         });
     }
-  }, [fileId, control.mandatory, control.family, currentUploadedFile, jwt, control.id]);
+  }, [
+    fileId,
+    control.mandatory,
+    control.family,
+    currentUploadedFile,
+    jwt,
+    control.id,
+  ]);
 
   const saveFileToUpload = useCallback(
     (e) => {
@@ -70,9 +86,9 @@ export const UploadControl: React.FC<IProps> = ({ control, fileId }): React.Reac
       }
       axios
         .get(
-          `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}/control/get_upfile?file_id=${file[1]}&file_name=${
-            file[0]
-          }`,
+          `${getEnv('API_PROTOCOL')}://${getEnv(
+            'API_HOST',
+          )}/control/get_upfile?file_id=${file[1]}&file_name=${file[0]}`,
           {
             headers: {
               Authorization: jwt,
@@ -89,7 +105,9 @@ export const UploadControl: React.FC<IProps> = ({ control, fileId }): React.Reac
           link.click();
         })
         .catch(() => {
-          setErrorMessage('Une erreur est survenue lors du téléchargement du fichier');
+          setErrorMessage(
+            'Une erreur est survenue lors du téléchargement du fichier',
+          );
         });
     },
     [file, jwt],
@@ -113,7 +131,12 @@ export const UploadControl: React.FC<IProps> = ({ control, fileId }): React.Reac
             type="file"
             onChange={saveFileToUpload}
           />
-          <Fab color="secondary" size="small" component="span" aria-label="upload">
+          <Fab
+            color="secondary"
+            size="small"
+            component="span"
+            aria-label="upload"
+          >
             <CloudUpload color={'action'} />
           </Fab>
         </label>

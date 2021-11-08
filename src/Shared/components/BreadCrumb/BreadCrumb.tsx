@@ -1,7 +1,13 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
 import { BreadCrumbStyled } from './BreadCrumb.style';
-import { ArrowRightAltIcon, FolderIcon, HomeIcon, PenIcon, UserCheckedIcon } from 'Styles';
+import {
+  ArrowRightAltIcon,
+  FolderIcon,
+  HomeIcon,
+  PenIcon,
+  UserCheckedIcon,
+} from 'Styles';
 import { Link } from 'react-router-dom';
 import { router } from '../../../Packages/Router';
 
@@ -11,7 +17,9 @@ interface IBreadCrumb {
   values: BreadCrumbType[];
 }
 
-export const BreadCrumb: React.FC<IBreadCrumb> = ({ values }): React.ReactElement => {
+export const BreadCrumb: React.FC<IBreadCrumb> = ({
+  values,
+}): React.ReactElement => {
   const queries = router.getQueries();
   const { id } = router.getParams();
   const isComment = queries.comments === '1';
@@ -28,7 +36,9 @@ export const BreadCrumb: React.FC<IBreadCrumb> = ({ values }): React.ReactElemen
                   {index === values.length - 1 ? (
                     <span>Tableau de bord</span>
                   ) : (
-                    <Link to={router.generatePath('dashboard') || '/'}>Tableau de bord</Link>
+                    <Link to={router.generatePath('dashboard') || '/'}>
+                      Tableau de bord
+                    </Link>
                   )}
                 </Grid>
               );
@@ -43,7 +53,9 @@ export const BreadCrumb: React.FC<IBreadCrumb> = ({ values }): React.ReactElemen
                     {index === values.length - 1 ? (
                       <span>Gestion</span>
                     ) : (
-                      <Link to={router.generatePath('manage') || '/'}>Gestion</Link>
+                      <Link to={router.generatePath('manage') || '/'}>
+                        Gestion
+                      </Link>
                     )}
                   </Grid>
                 </React.Fragment>
@@ -57,7 +69,9 @@ export const BreadCrumb: React.FC<IBreadCrumb> = ({ values }): React.ReactElemen
                   <Grid item>
                     <PenIcon fontSize={'small'} />
                     {id && isComment ? (
-                      <a href={router.generatePath('edit', { id }) || '/'}>Edition</a>
+                      <a href={router.generatePath('edit', { id }) || '/'}>
+                        Edition
+                      </a>
                     ) : (
                       <span>Edition</span>
                     )}
@@ -73,7 +87,9 @@ export const BreadCrumb: React.FC<IBreadCrumb> = ({ values }): React.ReactElemen
                   <Grid item>
                     <UserCheckedIcon fontSize={'small'} />
                     {id && isComment ? (
-                      <a href={router.generatePath('edit', { id }) || '/'}>Validation</a>
+                      <a href={router.generatePath('edit', { id }) || '/'}>
+                        Validation
+                      </a>
                     ) : (
                       <span>Validation</span>
                     )}

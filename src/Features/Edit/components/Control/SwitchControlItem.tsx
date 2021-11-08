@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { SetStateAction, useContext } from 'react';
 import { IControl } from 'Features/Edit/types';
 import {
   TextControl,
@@ -16,11 +16,15 @@ import { EditValidationContext } from 'Features/Edit';
 
 interface IProps {
   control: IControl;
+  formState: IControl[];
+  setFormState: React.Dispatch<SetStateAction<IControl[]>>;
 }
 
-export const SwitchControlItem: React.FC<IProps> = ({ control }): React.ReactElement | null => {
+export const SwitchControlItem: React.FC<IProps> = ({
+  control,
+  formState,
+}): React.ReactElement | null => {
   const { fileId } = useContext(EditValidationContext);
-
   switch (control.type) {
     case 'text':
       return <TextControl control={control} fileId={fileId} />;

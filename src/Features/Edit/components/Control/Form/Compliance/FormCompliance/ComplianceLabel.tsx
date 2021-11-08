@@ -8,11 +8,18 @@ interface IProps {
   compliance: IComplianceData;
 }
 
-export const ComplianceLabel: React.FC<IProps> = ({ compliance }): React.ReactElement => {
+export const ComplianceLabel: React.FC<IProps> = ({
+  compliance,
+}): React.ReactElement => {
   return (
     <>
       <FormLabel>
-        <Grid container component={'span'} alignItems={'center'} wrap={'nowrap'}>
+        <Grid
+          container
+          component={'span'}
+          alignItems={'center'}
+          wrap={'nowrap'}
+        >
           <Grid item component={'span'} xs={12}>
             {compliance.lib}
           </Grid>

@@ -16,7 +16,13 @@ export const Tooltip: React.FC<ITooltip> = ({
   const classes = useStyles({ color, bgc, fontFamily, fontSize });
 
   return (
-    <MUITooltip className={'_Tooltip'} classes={classes} arrow={true} placement={placement} title={title}>
+    <MUITooltip
+      className={'_Tooltip'}
+      classes={classes}
+      arrow={true}
+      placement={placement}
+      title={title}
+    >
       {children}
     </MUITooltip>
   );
