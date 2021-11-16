@@ -8,7 +8,11 @@ export const RejectValidation: React.FC = (): React.ReactElement => {
 
   return (
     <>
-      <Button color={'error'} type={'alt'} onClick={() => setIsModalOpen(!isModalOpen)}>
+      <Button
+        color={'error'}
+        type={'alt'}
+        onClick={() => setIsModalOpen(!isModalOpen)}
+      >
         Refuser la validation
       </Button>
       {isModalOpen ? (
@@ -23,7 +27,9 @@ export const RejectValidation: React.FC = (): React.ReactElement => {
           comment
           commentRequired
           commentParam="reject_comment"
-          queries={data?.validationCount ? { valid_num: data?.validationCount } : {}}
+          queries={
+            data?.validationCount ? { valid_num: data?.validationCount } : {}
+          }
         />
       ) : null}
     </>

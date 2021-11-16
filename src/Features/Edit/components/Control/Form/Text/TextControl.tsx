@@ -18,19 +18,12 @@ export const TextControl: React.FC<IProps> = ({ control, fileId }): React.ReactE
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.value);
   const { currentRoute } = useRouter();
+  // console.log(control.conditional);
+  // // console.log(control.isConditional);
+  // console.log(control.conditionalInitState);
 
   const saveValue = useCallback(
     (value: string) => {
-      if (control.mandatory && !value.trim()) {
-        setErrorMessage('Valeur obligatoire');
-
-        return;
-      }
-
-      if (!checkIfSameValues(value, currentValue)) {
-        return;
-      }
-
       const regexControl = new RegExp(control.regex, 'i');
       if (control.regex && !value.match(regexControl) && value) {
         setErrorMessage(control.regexMsg);
@@ -38,7 +31,21 @@ export const TextControl: React.FC<IProps> = ({ control, fileId }): React.ReactE
         return;
       }
 
+      if (!checkIfSameValues(value, currentValue)) {
+        setErrorMessage(null);
+        if (control.mandatory && !value.trim()) {
+          setErrorMessage('Valeur obligatoire');
+        }
+
+        return;
+      }
+
       setErrorMessage(null);
+
+      if (control.mandatory && !value.trim()) {
+        setErrorMessage('Valeur obligatoire');
+      }
+
       setCurrentValue(value);
       const q: Record<string, string> = {
         file_id: fileId,
@@ -54,24 +61,21 @@ export const TextControl: React.FC<IProps> = ({ control, fileId }): React.ReactE
       fileId,
       control.id,
       currentRoute,
-      control.mandatory,
       control.family,
       control.regex,
       control.regexMsg,
       currentValue,
       setCurrentValue,
+      control.mandatory,
     ],
   );
 
   useEffect(() => {
     if (control.mandatory && control.editable && !currentValue) {
       setErrorMessage('Valeur obligatoire');
+      // Todo instead of set a error message put a star in side of label
     }
-
-    if (control.editable && currentValue && control.regex && !currentValue.match(new RegExp(control.regex, 'i'))) {
-      setErrorMessage(control.regexMsg || '');
-    }
-  }, [control.id, control.mandatory, control.value, control.editable, control.regex, control.regexMsg, currentValue]);
+  }, [control.mandatory, control.editable, currentValue]);
 
   useEffect(() => {
     if (error) {

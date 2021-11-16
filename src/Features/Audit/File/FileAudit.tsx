@@ -28,7 +28,10 @@ export const FileAudit: React.FC = (): React.ReactElement => {
       <BPIBadge content={data?.length}>
         <AuditIcon
           fontSize={'large'}
-          className={'audit-icon open-audits-icon' + (iconRef.current || anchorEl ? ' active' : '')}
+          className={
+            'audit-icon open-audits-icon' +
+            (iconRef.current || anchorEl ? ' active' : '')
+          }
           onClick={(e) => {
             iconRef.current = null;
             setAnchorEl(anchorEl ? null : e.currentTarget);

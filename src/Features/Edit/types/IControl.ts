@@ -1,5 +1,5 @@
 import { ISelectData } from 'Shared/components';
-import { IColor } from "../../../Packages/Design";
+import { IColor } from '../../../Packages/Design';
 
 export type ControlTypeType =
   | 'text'
@@ -39,6 +39,13 @@ export interface IApiCompliance {
   compliance_modale_title: string;
 }
 
+export interface IApiConditional {
+  conditional_by_field_id: number;
+  conditional_display_type: string;
+  conditional_formula: string;
+  conditional_init_state: boolean;
+}
+
 export interface IApiComplianceData {
   compliance_elm_desc_1: string | null;
   compliance_elm_desc_2: string | null;
@@ -73,6 +80,13 @@ export interface ICompliance {
   modaleTitle: string;
 }
 
+export interface IConditional {
+  byField: number;
+  displayType: string;
+  formula: string;
+  conditionalInitState: boolean;
+}
+
 export interface IApiControl {
   control_desc_1: string | null;
   control_desc_2: string | null;
@@ -90,6 +104,8 @@ export interface IApiControl {
   control_regex: RegExp;
   control_regex_msg: string;
   control_manage_compliance: boolean;
+  control_conditional: boolean;
+  conditional: IApiConditional;
   compliance: IApiCompliance;
 }
 
@@ -97,6 +113,7 @@ export interface IControl {
   desc1: string | null;
   desc2: string | null;
   editable: boolean;
+  isConditional: boolean;
   id: string;
   mandatory: boolean;
   previousValue: string | null;
@@ -111,4 +128,5 @@ export interface IControl {
   regexMsg: string;
   manageCompliance: boolean;
   compliance?: ICompliance;
+  conditional?: IConditional;
 }

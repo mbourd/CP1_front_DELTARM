@@ -8,7 +8,11 @@ export const Close: React.FC = (): React.ReactElement => {
 
   return (
     <>
-      <Button color={'error'} type={'alt'} onClick={() => setIsModalOpen(!isModalOpen)}>
+      <Button
+        color={'error'}
+        type={'alt'}
+        onClick={() => setIsModalOpen(!isModalOpen)}
+      >
         Clôturer le dossier
       </Button>
       {isModalOpen ? (

@@ -11,10 +11,21 @@ export const Classify: React.FC = (): React.ReactElement => {
 
   return (
     <>
-      <Button color={'error'} type={'alt'} startIcon={<StopIcon />} onClick={() => setIsModalOpen(!isModalOpen)}>
+      <Button
+        color={'error'}
+        type={'alt'}
+        startIcon={<StopIcon />}
+        onClick={() => setIsModalOpen(!isModalOpen)}
+      >
         {trans('classifyWithoutContinuation')}
       </Button>
-      {isModalOpen ? <ClassifyModal open={isModalOpen} onClose={() => setIsModalOpen(false)} fileId={fileId} /> : null}
+      {isModalOpen ? (
+        <ClassifyModal
+          open={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          fileId={fileId}
+        />
+      ) : null}
     </>
   );
 };

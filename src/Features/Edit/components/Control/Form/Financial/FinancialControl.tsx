@@ -22,8 +22,21 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
 
   const saveValue = useCallback(
     (value: string) => {
-      if (!checkIfSameValues(value, currentValue)) {
-        return;
+      if (control.mandatory) {
+        try {
+          const v = parseInt(value, 10);
+
+          // specific rules from BPI : API should send args for min/max values
+          if (v < 1000) {
+            setErrorMessage('Le nombre doit être supérieur ou égal à 1000');
+
+            return;
+          }
+        } catch {
+          setErrorMessage('Valeur obligatoire');
+
+          return;
+        }
       }
 
       if (control.regex && !value.match(control.regex) && value) {
@@ -32,23 +45,21 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
         return;
       }
 
-      if (control.mandatory) {
-        try {
-          const v = parseInt(value, 10);
-
-          if (v < 1000) {
-            setErrorMessage('Le nombre doit être supérieur ou égal à 1000');
-
-            return;
-          }
-        } catch {
-          setErrorMessage('Saisissez un nombre');
-
-          return;
+      if (!checkIfSameValues(value, currentValue)) {
+        setErrorMessage(null);
+        if (control.mandatory && !value.trim()) {
+          setErrorMessage('Valeur obligatoire');
         }
+
+        return;
       }
 
       setErrorMessage(null);
+
+      if (control.mandatory && !value.trim()) {
+        setErrorMessage('Valeur obligatoire');
+      }
+
       setCurrentValue(value);
       send(
         currentRoute?.props?.apiSaveControlRouteName,
@@ -71,10 +82,10 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
   );
 
   useEffect(() => {
-    if (control.mandatory && control.editable && !currentValue && !control.value) {
+    if (control.mandatory && control.editable && !currentValue) {
       setErrorMessage('Valeur obligatoire');
     }
-  }, [control.id, control.mandatory, control.value, control.editable, currentValue]);
+  }, [control.mandatory, control.editable, currentValue]);
 
   useEffect(() => {
     if (error) {

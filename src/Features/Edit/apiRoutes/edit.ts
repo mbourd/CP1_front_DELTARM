@@ -1,14 +1,5 @@
 import { apiRouter } from 'Services';
-import {
-  IAction,
-  IApiData,
-  IChapter,
-  IControl,
-  ICurrentSection,
-  IData,
-  ISection,
-  IState
-} from '../types';
+import { IAction, IApiData, IChapter, IControl, ICurrentSection, IData, ISection, IState } from '../types';
 import { ISelectData } from 'Shared/components';
 
 export const editValidationHandlerCallback = (response: any) => {
@@ -46,6 +37,7 @@ export const editValidationHandlerCallback = (response: any) => {
         regex: control.control_regex,
         regexMsg: control.control_regex_msg,
         manageCompliance: control.control_manage_compliance,
+        isConditional: control.control_conditional,
       };
 
       if (control.control_answer_choices) {
@@ -71,6 +63,15 @@ export const editValidationHandlerCallback = (response: any) => {
           complianceLib: control.compliance.compliance_lib,
           complianceCheckboxResolved: control.compliance.compliance_checkbox_resolved,
           modaleTitle: control.compliance.compliance_modale_title,
+        };
+      }
+
+      if (control.conditional) {
+        c.conditional = {
+          displayType: control.conditional.conditional_display_type,
+          formula: control.conditional.conditional_formula,
+          byField: control.conditional.conditional_by_field_id,
+          conditionalInitState: control.conditional.conditional_init_state,
         };
       }
 

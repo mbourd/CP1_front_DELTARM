@@ -1,7 +1,6 @@
 import { createGlobalStyle } from 'styled-components/macro';
 
 import './reset.css';
-import './fonts/deltarm.scss';
 import { theme } from './themes';
 
 export const GlobalStyle = createGlobalStyle`

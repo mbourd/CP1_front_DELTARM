@@ -15,7 +15,11 @@ interface IProps {
   controlId: string;
 }
 
-export const FinancialCompliance: React.FC<IProps> = ({ compliance, fileId, controlId }): React.ReactElement => {
+export const FinancialCompliance: React.FC<IProps> = ({
+  compliance,
+  fileId,
+  controlId,
+}): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
@@ -41,7 +45,16 @@ export const FinancialCompliance: React.FC<IProps> = ({ compliance, fileId, cont
         },
       );
     },
-    [send, fileId, compliance.id, controlId, compliance.family, currentRoute, compliance.regex, compliance.regexMsg],
+    [
+      send,
+      fileId,
+      compliance.id,
+      controlId,
+      compliance.family,
+      currentRoute,
+      compliance.regex,
+      compliance.regexMsg,
+    ],
   );
 
   useEffect(() => {
@@ -50,7 +63,9 @@ export const FinancialCompliance: React.FC<IProps> = ({ compliance, fileId, cont
     }
   }, [error]);
 
-  const complianceValue = compliance.value ? numberWithSpaces(compliance.value) : compliance.value;
+  const complianceValue = compliance.value
+    ? numberWithSpaces(compliance.value)
+    : compliance.value;
 
   return (
     <Grid item xs={6}>

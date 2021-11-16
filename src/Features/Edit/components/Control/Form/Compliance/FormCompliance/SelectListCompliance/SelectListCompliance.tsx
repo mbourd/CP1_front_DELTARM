@@ -13,13 +13,21 @@ interface IProps {
   controlId: string;
 }
 
-export const SelectListCompliance: React.FC<IProps> = ({ compliance, fileId, controlId }): React.ReactElement => {
+export const SelectListCompliance: React.FC<IProps> = ({
+  compliance,
+  fileId,
+  controlId,
+}): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
 
-  const value = storage.getData<string>(fileId + controlId + '.edit.compliance.' + compliance.id + '.value');
-  const selectedValue: Record<string, true> = { [value || compliance.value || '']: true };
+  const value = storage.getData<string>(
+    fileId + controlId + '.edit.compliance.' + compliance.id + '.value',
+  );
+  const selectedValue: Record<string, true> = {
+    [value || compliance.value || '']: true,
+  };
 
   const saveValue = useCallback(
     (value: string) => {
@@ -29,7 +37,10 @@ export const SelectListCompliance: React.FC<IProps> = ({ compliance, fileId, con
         return;
       }
       setErrorMessage(null);
-      storage.setData(fileId + controlId + '.edit.compliance.' + compliance.id + '.value', value);
+      storage.setData(
+        fileId + controlId + '.edit.compliance.' + compliance.id + '.value',
+        value,
+      );
       send(
         currentRoute?.props?.apiSaveControlRouteName,
         {},
@@ -42,12 +53,23 @@ export const SelectListCompliance: React.FC<IProps> = ({ compliance, fileId, con
         },
       );
     },
-    [send, fileId, controlId, compliance.family, currentRoute, compliance.regex, compliance.id, compliance.regexMsg],
+    [
+      send,
+      fileId,
+      controlId,
+      compliance.family,
+      currentRoute,
+      compliance.regex,
+      compliance.id,
+      compliance.regexMsg,
+    ],
   );
 
   useEffect(() => {
     if (error) {
-      setErrorMessage("Une erreur s'est produite, veuillez re-sélectionner une valeur");
+      setErrorMessage(
+        "Une erreur s'est produite, veuillez re-sélectionner une valeur",
+      );
     }
   }, [error]);
 

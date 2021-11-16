@@ -53,7 +53,12 @@ export const GenerateFieldManual: React.FC<IProps> = ({
             <div className={'missing-fields'} key={field.id}>
               <FormLabel>{field.label}</FormLabel>
               <div className={'missing-field'}>
-                <Input name={field.key} type={'number'} onChange={handleLeaveField} placeholder={field.label} />
+                <Input
+                  name={field.key}
+                  type={'number'}
+                  onChange={handleLeaveField}
+                  placeholder={field.label}
+                />
               </div>
             </div>
           )}
@@ -73,7 +78,12 @@ export const GenerateFieldManual: React.FC<IProps> = ({
             <div className={'missing-fields'} key={field.id}>
               <FormLabel>{field.label}</FormLabel>
               <div className={'missing-field'}>
-                <Input name={field.key} type={'text'} onChange={handleLeaveField} placeholder={field.label} />
+                <Input
+                  name={field.key}
+                  type={'text'}
+                  onChange={handleLeaveField}
+                  placeholder={field.label}
+                />
               </div>
             </div>
           )}

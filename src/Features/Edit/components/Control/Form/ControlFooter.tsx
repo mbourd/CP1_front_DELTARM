@@ -8,14 +8,24 @@ interface IProps {
   control: IControl;
 }
 
-export const ControlFooter: React.FC<IProps> = ({ control }): React.ReactElement => {
+export const ControlFooter: React.FC<IProps> = ({
+  control,
+}): React.ReactElement => {
   const prev =
     control.previousValue &&
-    (control.type === 'date' ? new Date(control.previousValue).toLocaleDateString() : control.previousValue);
+    (control.type === 'date'
+      ? new Date(control.previousValue).toLocaleDateString()
+      : control.previousValue);
 
   return (
     <Box position="relative">
-      <Grid className={'control-footer'} container component={'span'} alignItems={'center'} wrap={'nowrap'}>
+      <Grid
+        className={'control-footer'}
+        container
+        component={'span'}
+        alignItems={'center'}
+        wrap={'nowrap'}
+      >
         <Grid item component={'span'}>
           {prev ? (
             <BPITooltip title={prev}>

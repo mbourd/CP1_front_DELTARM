@@ -11,7 +11,11 @@ interface INavItem {
   onClick?: (id: string) => void;
 }
 
-export const NavItem: React.FC<INavItem> = ({ item, onClick, active = false }): React.ReactElement => {
+export const NavItem: React.FC<INavItem> = ({
+  item,
+  onClick,
+  active = false,
+}): React.ReactElement => {
   let content = (
     <NavItemStyled className={'item'} locked={item.locked} active={active}>
       {item.locked ? <LockedIcon /> : null}
@@ -28,7 +32,10 @@ export const NavItem: React.FC<INavItem> = ({ item, onClick, active = false }): 
   }
 
   return (
-    <ListItem disableGutters onClick={onClick && !active ? () => onClick(item.id) : undefined}>
+    <ListItem
+      disableGutters
+      onClick={onClick && !active ? () => onClick(item.id) : undefined}
+    >
       {content}
     </ListItem>
   );

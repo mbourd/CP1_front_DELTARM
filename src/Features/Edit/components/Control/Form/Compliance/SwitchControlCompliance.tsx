@@ -15,26 +15,77 @@ interface IProps {
   controlId: string;
 }
 
-export const SwitchControlCompliance: React.FC<IProps> = ({ compliance, controlId }): React.ReactElement | null => {
+export const SwitchControlCompliance: React.FC<IProps> = ({
+  compliance,
+  controlId,
+}): React.ReactElement | null => {
   const { fileId } = useContext(EditValidationContext);
 
   switch (compliance.type) {
     case 'text':
-      return <TextCompliance compliance={compliance} fileId={fileId} controlId={controlId} />;
+      return (
+        <TextCompliance
+          compliance={compliance}
+          fileId={fileId}
+          controlId={controlId}
+        />
+      );
     case 'selectlist':
-      return <SelectListCompliance compliance={compliance} fileId={fileId} controlId={controlId} />;
+      return (
+        <SelectListCompliance
+          compliance={compliance}
+          fileId={fileId}
+          controlId={controlId}
+        />
+      );
     case 'financial':
-      return <FinancialCompliance compliance={compliance} fileId={fileId} controlId={controlId} />;
+      return (
+        <FinancialCompliance
+          compliance={compliance}
+          fileId={fileId}
+          controlId={controlId}
+        />
+      );
     case 'integer':
-      return <IntegerCompliance compliance={compliance} fileId={fileId} controlId={controlId} />;
+      return (
+        <IntegerCompliance
+          compliance={compliance}
+          fileId={fileId}
+          controlId={controlId}
+        />
+      );
     case 'date':
-      return <DateCompliance compliance={compliance} fileId={fileId} controlId={controlId} />;
+      return (
+        <DateCompliance
+          compliance={compliance}
+          fileId={fileId}
+          controlId={controlId}
+        />
+      );
     case 'comment':
-      return <CommentCompliance compliance={compliance} fileId={fileId} controlId={controlId} />;
+      return (
+        <CommentCompliance
+          compliance={compliance}
+          fileId={fileId}
+          controlId={controlId}
+        />
+      );
     case 'percent':
-      return <PercentCompliance compliance={compliance} fileId={fileId} controlId={controlId} />;
+      return (
+        <PercentCompliance
+          compliance={compliance}
+          fileId={fileId}
+          controlId={controlId}
+        />
+      );
     case 'file_upload':
-      return <UploadCompliance compliance={compliance} fileId={fileId} controlId={controlId} />;
+      return (
+        <UploadCompliance
+          compliance={compliance}
+          fileId={fileId}
+          controlId={controlId}
+        />
+      );
   }
 
   return null;

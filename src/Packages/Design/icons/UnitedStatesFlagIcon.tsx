@@ -4,7 +4,10 @@ import { SvgIcon, SvgIconProps } from '@material-ui/core';
 export const UnitedStatesFlagIcon: React.FC<SvgIconProps> = (props) => {
   return (
     <SvgIcon viewBox={'0 0 48 48'} {...props}>
-      <path fill="#B41F30" d="M48,8c0-1.105-0.895-2-2-2H20v20H0v14c0,1.105,0.895,2,2,2h44c1.105,0,2-0.895,2-2V8z" />
+      <path
+        fill="#B41F30"
+        d="M48,8c0-1.105-0.895-2-2-2H20v20H0v14c0,1.105,0.895,2,2,2h44c1.105,0,2-0.895,2-2V8z"
+      />
       <rect x="20" y="10" fill="#E6E6E6" width="28" height="4" />{' '}
       <rect x="20" y="18" fill="#E6E6E6" width="28" height="4" />
       <polygon fill="#E6E6E6" points="0,26 0,30 48,30 48,26 20,26 " />

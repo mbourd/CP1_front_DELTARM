@@ -79,14 +79,15 @@ export const CheckboxControl: React.FC<IProps> = ({ control, fileId, multiple })
               Object.keys(selectedValues).length >= 2
                 ? Object.keys(selectedValues).join(';')
                 : Object.keys(selectedValues)[0];
-            saveValue('' + value);
+            const val = value ? value : '';
+            saveValue('' + val);
           }}
           choiceIsKo={choiceIsKo}
           setChoiceIsKo={setChoiceIsKo}
           disabled={!control.editable}
           error={!!error}
         />
-        {errorMessage ? <FormError>{errorMessage}</FormError> : null}
+        {errorMessage ? <FormError style={{ display: 'block' }}>{errorMessage}</FormError> : null}
         <ControlFooter control={control} />
       </CheckboxControlStyled>
       {control.compliance && (

@@ -9,13 +9,19 @@ interface IProps {
   control: IControl;
 }
 
-export const InfoBlockControl: React.FC<IProps> = ({ control }): React.ReactElement => {
+export const InfoBlockControl: React.FC<IProps> = ({
+  control,
+}): React.ReactElement => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
     <Grid item xs={12}>
       <InfoBlockControlStyled>
-        <InfoBlockControlLabel control={control} setIsOpen={setIsOpen} isOpen={isOpen} />
+        <InfoBlockControlLabel
+          control={control}
+          setIsOpen={setIsOpen}
+          isOpen={isOpen}
+        />
         {isOpen && (
           <>
             <div dangerouslySetInnerHTML={{ __html: control.value }} />

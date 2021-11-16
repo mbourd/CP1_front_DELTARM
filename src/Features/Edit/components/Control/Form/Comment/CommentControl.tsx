@@ -21,16 +21,6 @@ export const CommentControl: React.FC<IProps> = ({ control, fileId }): React.Rea
 
   const saveValue = useCallback(
     (value: string) => {
-      if (control.mandatory && !value.trim()) {
-        setErrorMessage('Valeur obligatoire');
-
-        return;
-      }
-
-      if (!checkIfSameValues(value, currentValue)) {
-        return;
-      }
-
       const regexControl = new RegExp(control.regex, 'i');
       if (control.regex && !value.match(regexControl) && value) {
         setErrorMessage(control.regexMsg);
@@ -38,7 +28,21 @@ export const CommentControl: React.FC<IProps> = ({ control, fileId }): React.Rea
         return;
       }
 
+      if (!checkIfSameValues(value, currentValue)) {
+        setErrorMessage(null);
+        if (control.mandatory && !value.trim()) {
+          setErrorMessage('Valeur obligatoire');
+        }
+
+        return;
+      }
+
       setErrorMessage(null);
+
+      if (control.mandatory && !value.trim()) {
+        setErrorMessage('Valeur obligatoire');
+      }
+
       setCurrentValue(value);
       send(
         currentRoute?.props?.apiSaveControlRouteName,
@@ -51,20 +55,20 @@ export const CommentControl: React.FC<IProps> = ({ control, fileId }): React.Rea
       fileId,
       control.id,
       currentRoute,
-      control.mandatory,
       control.family,
       control.regex,
       control.regexMsg,
       currentValue,
       setCurrentValue,
+      control.mandatory,
     ],
   );
 
   useEffect(() => {
-    if (control.mandatory && control.editable && !currentValue && !control.value) {
+    if (control.mandatory && control.editable && !currentValue) {
       setErrorMessage('Valeur obligatoire');
     }
-  }, [control.id, control.mandatory, control.value, control.editable, currentValue]);
+  }, [control.mandatory, control.editable, currentValue]);
 
   useEffect(() => {
     if (error) {

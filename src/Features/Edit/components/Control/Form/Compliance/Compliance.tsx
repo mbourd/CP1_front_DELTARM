@@ -25,7 +25,9 @@ export const Compliance: React.FC<IComplianceProps> = ({
   compliance,
   label,
 }): React.ReactElement | null => {
-  const [showComplianceFields, setShowComplianceFields] = useState<boolean>(false);
+  const [showComplianceFields, setShowComplianceFields] = useState<boolean>(
+    false,
+  );
   const handleClickDetailsCompliance = useCallback(() => {
     setShowComplianceFields(!showComplianceFields);
   }, [setShowComplianceFields, showComplianceFields]);
@@ -44,7 +46,10 @@ export const Compliance: React.FC<IComplianceProps> = ({
           />
         ) : null}
         {choiceIsKo && checked ? (
-          <span onClick={handleClickDetailsCompliance} className={'resolved-compliance'}>
+          <span
+            onClick={handleClickDetailsCompliance}
+            className={'resolved-compliance'}
+          >
             <InsertDriveFile />
           </span>
         ) : null}

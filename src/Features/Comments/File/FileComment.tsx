@@ -6,11 +6,16 @@ import { router, useApi } from 'Services';
 import { EditValidationContext } from 'Features/Edit';
 import { IFileComment } from '../types';
 import { FileCommentBody } from './Body/FileCommentBody';
-import { FileCommentStyled, FileCommentHeaderStyled } from './FileComment.style';
+import {
+  FileCommentStyled,
+  FileCommentHeaderStyled,
+} from './FileComment.style';
 import { FileCommentFooter } from './Footer/FileCommentFooter';
 
 export const FileComment: React.FC = (): React.ReactElement => {
-  const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | Element | null>(null);
+  const [anchorEl, setAnchorEl] = React.useState<
+    SVGSVGElement | Element | null
+  >(null);
   const { request, send, data } = useApi<IFileComment[]>();
   const context = useContext(EditValidationContext);
 
@@ -42,7 +47,9 @@ export const FileComment: React.FC = (): React.ReactElement => {
       <BPIBadge content={data?.length}>
         <CommentIcon
           fontSize={'large'}
-          className={'comment-icon open-comments-icon' + (anchorEl ? ' active' : '')}
+          className={
+            'comment-icon open-comments-icon' + (anchorEl ? ' active' : '')
+          }
           onClick={(e) => {
             setAnchorEl(anchorEl ? null : e.currentTarget);
             router.setQueries({});
@@ -59,7 +66,9 @@ export const FileComment: React.FC = (): React.ReactElement => {
       >
         <FileCommentStyled>
           <Card>
-            <FileCommentHeaderStyled>Commentaires liés au dossier</FileCommentHeaderStyled>
+            <FileCommentHeaderStyled>
+              Commentaires liés au dossier
+            </FileCommentHeaderStyled>
             {data ? <FileCommentBody comments={data} /> : null}
             <FileCommentFooter addComment={addComment} />
           </Card>

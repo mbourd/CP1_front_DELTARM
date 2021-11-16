@@ -1,7 +1,19 @@
 import React, { useCallback, useEffect } from 'react';
 import { Grid } from '@material-ui/core';
-import { Button, Modal, StairsLoader, Error500, BadRequest, FormLabel, FormText, Select } from 'Shared/components';
-import { SearchModalBPIContentStyled, SearchModalFooterStyled } from './SearchModal.style';
+import {
+  Button,
+  Modal,
+  StairsLoader,
+  Error500,
+  BadRequest,
+  FormLabel,
+  FormText,
+  Select,
+} from 'Shared/components';
+import {
+  SearchModalBPIContentStyled,
+  SearchModalFooterStyled,
+} from './SearchModal.style';
 import { apiRouter, router, storage, SwitchCallState, useApi } from 'Services';
 import { IFileSearchApiReturn, IKSIOPManualInput } from 'Features/Manage';
 import { CreateModal } from './CreateModal';
@@ -11,8 +23,18 @@ interface IProps {
   onClose: () => void;
 }
 
-export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactElement | null => {
-  const { request, error, callState, route, send, data } = useApi<IFileSearchApiReturn | null>();
+export const SearchModal: React.FC<IProps> = ({
+  onClose,
+  open,
+}): React.ReactElement | null => {
+  const {
+    request,
+    error,
+    callState,
+    route,
+    send,
+    data,
+  } = useApi<IFileSearchApiReturn | null>();
   const {
     send: sendManualInput,
     data: dataManualInput,
@@ -20,7 +42,9 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
     route: routeManualInput,
   } = useApi<IKSIOPManualInput | null>();
 
-  const file = (storage.getData('shared.component.search.value') as string).split(/ *\/ */);
+  const file = (storage.getData(
+    'shared.component.search.value',
+  ) as string).split(/ *\/ */);
   const file_num = file[0];
   const file_avenant = file[1];
 
@@ -30,9 +54,15 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
 
   const createFile = useCallback(() => {
     const prod_id = Object.keys(
-      storage.getData<Record<string, true>>('edit.selected.product') as Record<string, true>,
+      storage.getData<Record<string, true>>('edit.selected.product') as Record<
+        string,
+        true
+      >,
     )[0];
-    const queries = { ...storage.getData<Record<string, any>>('edit.create.queries'), prod_id };
+    const queries = {
+      ...storage.getData<Record<string, any>>('edit.create.queries'),
+      prod_id,
+    };
     send('createFile', {}, queries);
   }, [send]);
 
@@ -44,8 +74,14 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
     };
   }, [send, file_num, file_avenant, request]);
 
-  if (callState === 'SUCCESS' && data && (route?.type === 'DRM' || route?.type === 'DRM_CREATE')) {
-    router.redirectTo(data.fileContext === 'VALID' ? 'validation' : 'edit', { id: data.fileId });
+  if (
+    callState === 'SUCCESS' &&
+    data &&
+    (route?.type === 'DRM' || route?.type === 'DRM_CREATE')
+  ) {
+    router.redirectTo(data.fileContext === 'VALID' ? 'validation' : 'edit', {
+      id: data.fileId,
+    });
 
     return null;
   }
@@ -66,7 +102,10 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
   if (callState === 'BAD_REQUEST' && route?.type === 'DRM') {
     // case we don't find the file from search/file, we change the create url by client, ksiop is only for BPI
     if (error?.response?.body.data.btn[1]?.route.url) {
-      apiRouter.changeRouteUrl('searchFileKSIOP', error?.response?.body.data.btn[1].route.url);
+      apiRouter.changeRouteUrl(
+        'searchFileKSIOP',
+        error?.response?.body.data.btn[1].route.url,
+      );
     }
     footer = (
       <SearchModalFooterStyled>
@@ -76,7 +115,12 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
           </Button>
         )}
         {error?.response?.body.data.btn[1] !== undefined ? (
-          <Button color={'success'} onClick={() => send('searchFileKSIOP', {}, { file_num, file_avenant })}>
+          <Button
+            color={'success'}
+            onClick={() =>
+              send('searchFileKSIOP', {}, { file_num, file_avenant })
+            }
+          >
             {error?.response?.body.data.btn[1].label}
           </Button>
         ) : null}
@@ -84,7 +128,10 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
     );
   }
 
-  if ((callState === 'SERVER_ERROR' || callState === 'BAD_REQUEST') && route?.type === 'KSIOP') {
+  if (
+    (callState === 'SERVER_ERROR' || callState === 'BAD_REQUEST') &&
+    route?.type === 'KSIOP'
+  ) {
     footer = (
       <SearchModalFooterStyled>
         <Button color={'error'} onClick={onClose}>
@@ -97,7 +144,10 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
   // Handle 503 from KSIOP, missing fields
   if (callState === 'BAD_REQUEST' && error?.status === 503) {
     if (error?.response?.body.data.btn[1]?.action) {
-      apiRouter.changeRouteUrl('KSIOPManualInput', error?.response?.body.data.btn[1].action);
+      apiRouter.changeRouteUrl(
+        'KSIOPManualInput',
+        error?.response?.body.data.btn[1].action,
+      );
     }
     const params = error?.response?.body.data.btn[1].params;
 
@@ -153,7 +203,13 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
     routeManualInput.name === 'KSIOPManualInput'
   ) {
     // TODO split all cases like this ?
-    return <CreateModal open={open} onClose={onClose} dataManualInput={dataManualInput} />;
+    return (
+      <CreateModal
+        open={open}
+        onClose={onClose}
+        dataManualInput={dataManualInput}
+      />
+    );
   }
 
   return (
@@ -162,7 +218,9 @@ export const SearchModal: React.FC<IProps> = ({ onClose, open }): React.ReactEle
         callState={callState}
         states={{
           IS_LOADING: <StairsLoader size={'md'} />,
-          SERVER_ERROR: <Error500 size={'md'} message={'Le serveur ne répond pas'} />,
+          SERVER_ERROR: (
+            <Error500 size={'md'} message={'Le serveur ne répond pas'} />
+          ),
           BAD_REQUEST:
             route?.type === 'KSIOP' ? (
               <BadRequest
