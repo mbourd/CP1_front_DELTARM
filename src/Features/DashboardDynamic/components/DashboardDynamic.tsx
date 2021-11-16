@@ -1,5 +1,5 @@
 import React, { Suspense, useCallback, useContext, useEffect } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, LinearProgress } from '@material-ui/core';
 
 import {
   useApi,
@@ -7,8 +7,8 @@ import {
   useSecurity,
   SecurityContext,
 } from 'Services';
-import { BreadCrumb, Heading } from 'Shared/components';
-import { DashboardStyled } from './Dashboard.style';
+import { BPITooltip, BreadCrumb, Heading } from 'Shared/components';
+import { DashboardStyled, MetricsContainerStyled } from './Dashboard.style';
 import { ButtonContainerStyled } from './Dashboard.style';
 import { Card } from './Card/Card';
 import { ICard } from './Card/types';
@@ -17,6 +17,12 @@ import { NoData } from './NoData';
 import { SearchBar } from './Search/SearchBar';
 import { IDashboard } from './types';
 import { Button } from 'Shared/components';
+import { Metric } from './Metrics/Metric';
+import {
+  HelpIcon,
+  UserCheckedIcon,
+  WarningIcon,
+} from '../../../Packages/Design';
 
 const DashboardDynamic: React.FC = (): React.ReactElement => {
   const { send, data: response } = useApi<IDashboard>();
@@ -85,6 +91,42 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
               );
             })}
           </ButtonContainerStyled>
+          <MetricsContainerStyled>
+            {response?.data.metrics.bars.map((bar, index) => {
+              return (
+                <Grid
+                  container
+                  component={'span'}
+                  alignItems={'center'}
+                  wrap={'nowrap'}
+                  key={index}
+                >
+                  <Grid item component={'span'} xs={12}>
+                    <Metric
+                      key={index}
+                      variant={'determinate'}
+                      value={bar.value}
+                      hint={bar.hint}
+                      style={{
+                        color: bar.bar_color,
+                        backgroundColor: bar.bar_bg_color,
+                      }}
+                    />
+                  </Grid>
+                  <p>
+                    {bar.lib} {bar.value}%
+                  </p>
+                  <Grid item component={'span'}>
+                    <BPITooltip title={bar.info}>
+                      <span>
+                        <HelpIcon fontSize={'small'} />
+                      </span>
+                    </BPITooltip>
+                  </Grid>
+                </Grid>
+              );
+            })}
+          </MetricsContainerStyled>
           {/*<Grid container>*/}
           {/*  {data?.cards.map((card, index) => {*/}
           {/*    return (*/}

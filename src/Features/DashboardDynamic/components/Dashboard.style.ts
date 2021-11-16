@@ -12,3 +12,10 @@ export const ButtonContainerStyled = styled.div`
   display: flex;
   gap: 15px;
 `;
+
+export const MetricsContainerStyled = styled.div`
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+`;

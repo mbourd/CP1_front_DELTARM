@@ -291,9 +291,9 @@ interface ICard {
 }
 
 interface IBar {
-  bar_bg_color: string | null;
-  bar_color: string | null;
-  hint: string | null;
+  bar_bg_color: string;
+  bar_color: string;
+  hint: string;
   info: string;
   lib: string;
   value: number;
