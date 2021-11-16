@@ -5,7 +5,13 @@ import { Body } from './Body/Body';
 import { Actions } from './Actions/Actions';
 import { ICard } from './types';
 
-export const Card: React.FC<ICard> = ({ id, color, comments, data, context }): React.ReactElement => {
+export const Card: React.FC<ICard> = ({
+  id,
+  color,
+  comments,
+  data,
+  context,
+}): React.ReactElement => {
   return (
     <CardStyled color={color}>
       <MUICard elevation={0}>

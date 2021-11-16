@@ -92,7 +92,14 @@ export const CheckboxWrapper: React.FC<ICheckboxWrapper> = ({
     >
       <Button
         disabled={disabled}
-        style={{ backgroundColor: 'transparent', textTransform: 'none' }}
+        style={{
+          backgroundColor: 'transparent',
+          textTransform: 'none',
+          border: '1px solid black',
+          display: 'block',
+          width: '100%',
+          padding: '0.3em',
+        }}
         disableRipple
         disableTouchRipple
         disableElevation

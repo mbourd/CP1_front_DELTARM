@@ -8,7 +8,11 @@ export const CancelDisbursement: React.FC = (): React.ReactElement => {
 
   return (
     <>
-      <Button color={'error'} type={'alt'} onClick={() => setIsModalOpen(!isModalOpen)}>
+      <Button
+        color={'error'}
+        type={'alt'}
+        onClick={() => setIsModalOpen(!isModalOpen)}
+      >
         Annuler le décaissement
       </Button>
       {isModalOpen ? (

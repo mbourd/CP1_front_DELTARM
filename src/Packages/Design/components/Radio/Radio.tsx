@@ -14,7 +14,12 @@ export const Radio: React.FC<IRadio> = ({
   onChange,
 }) => {
   return (
-    <RadioStyled className={'_CheckboxRadio'} mainColor={color} checkedColor={checkedColor} inputType={type}>
+    <RadioStyled
+      className={'_CheckboxRadio'}
+      mainColor={color}
+      checkedColor={checkedColor}
+      inputType={type}
+    >
       <input
         type={type}
         className={'_CheckboxRadioInput'}
@@ -24,7 +29,9 @@ export const Radio: React.FC<IRadio> = ({
         onChange={onChange}
       />
       <span className={'_CheckboxRadioCheckmark'} />
-      {label || children ? <span className={'_CheckboxRadioLabel'}>{label || children}</span> : null}
+      {label || children ? (
+        <span className={'_CheckboxRadioLabel'}>{label || children}</span>
+      ) : null}
     </RadioStyled>
   );
 };

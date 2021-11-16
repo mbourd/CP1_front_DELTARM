@@ -13,7 +13,11 @@ interface IProps {
   controlId: string;
 }
 
-export const CommentCompliance: React.FC<IProps> = ({ compliance, fileId, controlId }): React.ReactElement => {
+export const CommentCompliance: React.FC<IProps> = ({
+  compliance,
+  fileId,
+  controlId,
+}): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
@@ -40,7 +44,16 @@ export const CommentCompliance: React.FC<IProps> = ({ compliance, fileId, contro
         },
       );
     },
-    [send, fileId, currentRoute, compliance.family, compliance.regex, compliance.id, controlId, compliance.regexMsg],
+    [
+      send,
+      fileId,
+      currentRoute,
+      compliance.family,
+      compliance.regex,
+      compliance.id,
+      controlId,
+      compliance.regexMsg,
+    ],
   );
 
   useEffect(() => {

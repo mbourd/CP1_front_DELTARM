@@ -8,7 +8,9 @@ interface IProps {
   addComment: () => void;
 }
 
-export const FileCommentFooter: React.FC<IProps> = ({ addComment }): React.ReactElement => {
+export const FileCommentFooter: React.FC<IProps> = ({
+  addComment,
+}): React.ReactElement => {
   const addCommentApi = useApi({ promise: true });
   const context = useContext(EditValidationContext);
   const { fileId } = context;
@@ -28,7 +30,11 @@ export const FileCommentFooter: React.FC<IProps> = ({ addComment }): React.React
           return;
         }
 
-        const promise = addCommentApi.send('addComment', {}, { file_id: fileId, comment: val });
+        const promise = addCommentApi.send(
+          'addComment',
+          {},
+          { file_id: fileId, comment: val },
+        );
 
         if (promise) {
           promise.then(() => {

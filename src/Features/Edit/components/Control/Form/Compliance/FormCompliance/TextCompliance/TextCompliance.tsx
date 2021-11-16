@@ -13,7 +13,11 @@ interface IProps {
   controlId: string;
 }
 
-export const TextCompliance: React.FC<IProps> = ({ compliance, fileId, controlId }): React.ReactElement => {
+export const TextCompliance: React.FC<IProps> = ({
+  compliance,
+  fileId,
+  controlId,
+}): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
@@ -33,15 +37,21 @@ export const TextCompliance: React.FC<IProps> = ({ compliance, fileId, controlId
         elm_id: controlId,
         control_family: compliance.family,
         compliance_id: compliance.id,
+        elm_val: value,
       };
-
-      if (value) {
-        q['elm_val'] = value;
-      }
 
       send(currentRoute?.props?.apiSaveControlRouteName, {}, q);
     },
-    [send, fileId, controlId, currentRoute, compliance.family, compliance.regex, compliance.id, compliance.regexMsg],
+    [
+      send,
+      fileId,
+      controlId,
+      currentRoute,
+      compliance.family,
+      compliance.regex,
+      compliance.id,
+      compliance.regexMsg,
+    ],
   );
 
   useEffect(() => {

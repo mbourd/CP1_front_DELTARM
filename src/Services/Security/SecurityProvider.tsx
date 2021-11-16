@@ -40,17 +40,26 @@ export interface ISecurityProviderProps {
   security: ISecurity;
 }
 
-export const SecurityProvider: React.FC<ISecurityProviderProps> = ({ security, children }): React.ReactElement => {
+export const SecurityProvider: React.FC<ISecurityProviderProps> = ({
+  security,
+  children,
+}): React.ReactElement => {
   const [user, setUser] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
 
   const { send, request } = useApi<void>({ promise: true });
-  const { send: getClientInfos, data: clientInfos } = useApi<any>({ waitForAuthenticated: true });
+  const { send: getClientInfos, data: clientInfos } = useApi<any>({
+    waitForAuthenticated: true,
+  });
   request.setBearerToken(jwt);
 
   const login = useCallback(
     async (token: string) => {
-      const { body } = await send('login', {}, { token, front_version: '1.0.0' });
+      const { body } = await send(
+        'login',
+        {},
+        { token, front_version: '1.0.0' },
+      );
       const user = new User();
       user.fromJwt(body.data.jwt);
       security.persistUser(user);
@@ -71,7 +80,9 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({ security, c
     () => ({
       user,
       jwt,
-      data: (jwt ? security.decodeJwtToken<JwtData>(jwt) : {}) as Partial<JwtData>,
+      data: (jwt ? security.decodeJwtToken<JwtData>(jwt) : {}) as Partial<
+        JwtData
+      >,
       login,
       logout,
     }),

@@ -8,20 +8,33 @@ interface IProps {
   control: IControl;
 }
 
-const useStyles = makeStyles<Theme, { fontColor?: string; fontSize?: ControlFontSize }>({
+const useStyles = makeStyles<
+  Theme,
+  { fontColor?: string; fontSize?: ControlFontSize }
+>({
   root: ({ fontColor, fontSize }) => ({
     color: fontColor,
     fontWeight: fontSize === 'bold' ? 'bold' : 'inherit',
   }),
 });
 
-export const ControlLabel: React.FC<IProps> = ({ control }): React.ReactElement => {
-  const classes = useStyles({ fontSize: control.fontSize, fontColor: control.fontColor });
+export const ControlLabel: React.FC<IProps> = ({
+  control,
+}): React.ReactElement => {
+  const classes = useStyles({
+    fontSize: control.fontSize,
+    fontColor: control.fontColor,
+  });
 
   return (
     <>
       <FormLabel>
-        <Grid container component={'span'} alignItems={'center'} wrap={'nowrap'}>
+        <Grid
+          container
+          component={'span'}
+          alignItems={'center'}
+          wrap={'nowrap'}
+        >
           <Grid item component={'span'} xs={12} classes={classes}>
             {control.title}
           </Grid>

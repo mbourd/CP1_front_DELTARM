@@ -2,7 +2,14 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Box, Grid, List } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { EditHeaderStyled, EditStyled } from './Edit.style';
-import { router, SecurityContext, storage, SwitchCallState, useApi, useSecurity } from 'Services';
+import {
+  router,
+  SecurityContext,
+  storage,
+  SwitchCallState,
+  useApi,
+  useSecurity,
+} from 'Services';
 import { HeadingOne, PreWrapStyled } from 'Shared/components';
 import { NavItem } from './NavItem/NavItem';
 import { IData } from '../types';
@@ -17,7 +24,10 @@ interface IProps {
   apiRouteName: string;
 }
 
-export const EditValidation: React.FC<IProps> = ({ title, apiRouteName }): React.ReactElement => {
+export const EditValidation: React.FC<IProps> = ({
+  title,
+  apiRouteName,
+}): React.ReactElement => {
   const { request, callState, send, data } = useApi<IData>();
   const [currentSection, setCurrentSection] = useState<string | null>(null);
   const { user } = useSecurity();
@@ -87,9 +97,15 @@ export const EditValidation: React.FC<IProps> = ({ title, apiRouteName }): React
                     <Alert
                       variant="outlined"
                       icon={false}
-                      severity={data.sectionHeader.type === 'alert' ? 'error' : 'success'}
+                      severity={
+                        data.sectionHeader.type === 'alert'
+                          ? 'error'
+                          : 'success'
+                      }
                     >
-                      <PreWrapStyled>{data.sectionHeader.message}</PreWrapStyled>
+                      <PreWrapStyled>
+                        {data.sectionHeader.message}
+                      </PreWrapStyled>
                     </Alert>
                   </Box>
                 )}
@@ -97,7 +113,9 @@ export const EditValidation: React.FC<IProps> = ({ title, apiRouteName }): React
                 {data.sectionFooter && (
                   <Box paddingY={5}>
                     <Alert variant="outlined" severity="info">
-                      <PreWrapStyled>{data.sectionFooter.message}</PreWrapStyled>
+                      <PreWrapStyled>
+                        {data.sectionFooter.message}
+                      </PreWrapStyled>
                     </Alert>
                   </Box>
                 )}

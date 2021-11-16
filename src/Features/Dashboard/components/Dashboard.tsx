@@ -1,7 +1,13 @@
 import React, { useContext, useEffect } from 'react';
 import { Grid } from '@material-ui/core';
 
-import { useTrans, useApi, SwitchCallState, useSecurity, SecurityContext } from 'Services';
+import {
+  useTrans,
+  useApi,
+  SwitchCallState,
+  useSecurity,
+  SecurityContext,
+} from 'Services';
 import { BreadCrumb, HeadingOne } from 'Shared/components';
 import { DashboardStyled } from './Dashboard.style';
 import { Card } from './Card/Card';
@@ -30,7 +36,11 @@ const Dashboard: React.FC = (): React.ReactElement => {
       <BreadCrumb values={['Dashboard']} />
       <SwitchCallState
         callState={callState}
-        states={{ IS_LOADING: <IsLoading />, NO_DATA: <NoData />, SERVER_ERROR: <NoData /> }}
+        states={{
+          IS_LOADING: <IsLoading />,
+          NO_DATA: <NoData />,
+          SERVER_ERROR: <NoData />,
+        }}
       >
         <DashboardStyled>
           <HeadingOne>{trans('pageTitle')}</HeadingOne>

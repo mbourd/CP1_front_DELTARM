@@ -8,7 +8,11 @@ export const Cancel: React.FC = (): React.ReactElement => {
 
   return (
     <>
-      <Button color={'error'} type={'alt'} onClick={() => setIsModalOpen(!isModalOpen)}>
+      <Button
+        color={'error'}
+        type={'alt'}
+        onClick={() => setIsModalOpen(!isModalOpen)}
+      >
         Annuler le dossier
       </Button>
       {isModalOpen ? (

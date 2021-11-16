@@ -7,7 +7,9 @@ interface IFileAuditBody {
   audits: IFileAudit[];
 }
 
-export const FileAuditBody: React.FC<IFileAuditBody> = ({ audits }): React.ReactElement => {
+export const FileAuditBody: React.FC<IFileAuditBody> = ({
+  audits,
+}): React.ReactElement => {
   return (
     <FileAuditBodyStyled>
       {audits.map((audit, index) => {

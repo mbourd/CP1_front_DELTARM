@@ -15,10 +15,18 @@ interface IProps {
   controlId: string;
 }
 
-export const UploadCompliance: React.FC<IProps> = ({ compliance, fileId, controlId }): React.ReactElement => {
+export const UploadCompliance: React.FC<IProps> = ({
+  compliance,
+  fileId,
+  controlId,
+}): React.ReactElement => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [currentUploadedFile, setCurrentUploadedFile] = useState<File | null>(null);
-  const [previousUploadedFile, setPreviousUploadedFile] = useState<string | null>(compliance.value);
+  const [currentUploadedFile, setCurrentUploadedFile] = useState<File | null>(
+    null,
+  );
+  const [previousUploadedFile, setPreviousUploadedFile] = useState<
+    string | null
+  >(compliance.value);
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
   const file = previousUploadedFile?.split(';');
@@ -51,7 +59,14 @@ export const UploadCompliance: React.FC<IProps> = ({ compliance, fileId, control
           setErrorMessage(err.response.data.error_msg);
         });
     }
-  }, [fileId, compliance.family, currentUploadedFile, jwt, controlId, compliance.id]);
+  }, [
+    fileId,
+    compliance.family,
+    currentUploadedFile,
+    jwt,
+    controlId,
+    compliance.id,
+  ]);
 
   const saveFileToUpload = useCallback(
     (e) => {
@@ -67,9 +82,9 @@ export const UploadCompliance: React.FC<IProps> = ({ compliance, fileId, control
       }
       axios
         .get(
-          `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}/control/get_upfile?file_id=${file[1]}&file_name=${
-            file[0]
-          }`,
+          `${getEnv('API_PROTOCOL')}://${getEnv(
+            'API_HOST',
+          )}/control/get_upfile?file_id=${file[1]}&file_name=${file[0]}`,
           {
             headers: {
               Authorization: jwt,
@@ -86,7 +101,9 @@ export const UploadCompliance: React.FC<IProps> = ({ compliance, fileId, control
           link.click();
         })
         .catch(() => {
-          setErrorMessage('Une erreur est survenue lors du téléchargement du fichier');
+          setErrorMessage(
+            'Une erreur est survenue lors du téléchargement du fichier',
+          );
         });
     },
     [file, jwt],
@@ -110,7 +127,12 @@ export const UploadCompliance: React.FC<IProps> = ({ compliance, fileId, control
             type="file"
             onChange={saveFileToUpload}
           />
-          <Fab color="secondary" size="small" component="span" aria-label="upload">
+          <Fab
+            color="secondary"
+            size="small"
+            component="span"
+            aria-label="upload"
+          >
             <CloudUpload color={'action'} />
           </Fab>
         </label>

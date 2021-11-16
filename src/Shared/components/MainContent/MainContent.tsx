@@ -10,7 +10,11 @@ export const MainContent: React.FC = (): React.ReactElement => {
       <Route
         path={'*'}
         render={({ match: { url } }) => (
-          <DispatchRoute url={url} router={router} notFoundComponent={NotFoundComponent} />
+          <DispatchRoute
+            url={url}
+            router={router}
+            notFoundComponent={NotFoundComponent}
+          />
         )}
       />
     </MainContentStyled>

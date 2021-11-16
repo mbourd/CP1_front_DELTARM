@@ -14,7 +14,12 @@ export const Badge: React.FC<IBadge> = ({
   const classes = useStyles({ color, bgc, fontFamily });
 
   return (
-    <MUIBadge className={'_Badge'} classes={classes} badgeContent={content} showZero={showZero}>
+    <MUIBadge
+      className={'_Badge'}
+      classes={classes}
+      badgeContent={content}
+      showZero={showZero}
+    >
       {children}
     </MUIBadge>
   );

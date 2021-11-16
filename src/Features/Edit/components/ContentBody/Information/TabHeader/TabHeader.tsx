@@ -9,7 +9,11 @@ interface ITabHeader {
   chapters: IChapter[];
 }
 
-export const TabHeader: React.FC<ITabHeader> = ({ chapters, index, setCurrentContent }): React.ReactElement => {
+export const TabHeader: React.FC<ITabHeader> = ({
+  chapters,
+  index,
+  setCurrentContent,
+}): React.ReactElement => {
   return (
     <TabHeaderStyled>
       <Grid container alignItems={'center'} wrap={'nowrap'}>

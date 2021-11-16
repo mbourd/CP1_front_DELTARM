@@ -7,7 +7,11 @@ interface IProps {
   fileId: string;
 }
 
-export const ClassifyModal: React.FC<IProps> = ({ open, onClose, fileId }): React.ReactElement | null => {
+export const ClassifyModal: React.FC<IProps> = ({
+  open,
+  onClose,
+  fileId,
+}): React.ReactElement | null => {
   return (
     <GenericActionModal
       open={open}

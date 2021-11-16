@@ -8,7 +8,9 @@ export interface SearchProps {
   placeholder?: string;
 }
 
-export const Search: React.FC<SearchProps> = ({ placeholder }): React.ReactElement => {
+export const Search: React.FC<SearchProps> = ({
+  placeholder,
+}): React.ReactElement => {
   const theme = useTheme();
   const [trans] = useTrans('Manage');
 
