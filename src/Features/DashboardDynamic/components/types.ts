@@ -1,6 +1,6 @@
 interface IButtons {
-  btn_color: string | null;
-  btn_hover_color: string | null;
+  btn_color: string;
+  btn_hover_color: string;
   btn_lib: string;
   route: string;
 }

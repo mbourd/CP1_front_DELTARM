@@ -5,3 +5,10 @@ export const DashboardStyled = styled.div`
     padding: ${({ theme }) => theme.sizing.xxLarge};
   }
 `;
+
+export const ButtonContainerStyled = styled.div`
+  width: 960px;
+  margin: auto;
+  display: flex;
+  gap: 15px;
+`;

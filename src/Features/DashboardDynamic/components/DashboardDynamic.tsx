@@ -1,4 +1,4 @@
-import React, { Suspense, useContext, useEffect } from 'react';
+import React, { Suspense, useCallback, useContext, useEffect } from 'react';
 import { Grid } from '@material-ui/core';
 
 import {
@@ -9,18 +9,20 @@ import {
 } from 'Services';
 import { BreadCrumb, Heading } from 'Shared/components';
 import { DashboardStyled } from './Dashboard.style';
+import { ButtonContainerStyled } from './Dashboard.style';
 import { Card } from './Card/Card';
 import { ICard } from './Card/types';
 import { IsLoading } from './IsLoading';
 import { NoData } from './NoData';
 import { SearchBar } from './Search/SearchBar';
 import { IDashboard } from './types';
+import { Button } from 'Shared/components';
 
 const DashboardDynamic: React.FC = (): React.ReactElement => {
   const { send, data: response } = useApi<IDashboard>();
 
   const { user } = useSecurity();
-  const { logout, source_caller } = useContext(SecurityContext);
+  const { logout } = useContext(SecurityContext);
 
   if (!user.isLogged()) {
     logout();
@@ -29,6 +31,10 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
   useEffect(() => {
     send('dashboardControlPermanent');
   }, [send]);
+
+  const onClickCustomButtons = useCallback((route: string) => {
+    console.log('ROUTE TO CALL: ' + route);
+  }, []);
 
   console.log(response);
 
@@ -66,6 +72,19 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
               options={response.data.search_bar.options}
             />
           )}
+          <ButtonContainerStyled>
+            {response?.data.btns.map((btn, index) => {
+              return (
+                <Button
+                  key={index}
+                  onClick={() => onClickCustomButtons(btn.route)}
+                  style={{ backgroundColor: btn.btn_color }}
+                >
+                  {btn.btn_lib}
+                </Button>
+              );
+            })}
+          </ButtonContainerStyled>
           {/*<Grid container>*/}
           {/*  {data?.cards.map((card, index) => {*/}
           {/*    return (*/}
