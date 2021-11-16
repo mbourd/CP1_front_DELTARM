@@ -6,11 +6,23 @@ import './translations';
 import { LoginStyled } from './Login.style';
 import { HeadingOne, PageLoader } from 'Shared/components';
 import { useTrans, SecurityContext, useSecurity, router } from 'Services';
+import { DashboardDynamic } from '../../DashboardDynamic';
 
 const Login: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Login');
-  const { login } = useContext(SecurityContext);
+  const { login, source_caller } = useContext(SecurityContext);
   const { user } = useSecurity();
+
+  if (source_caller === 'contr_perm') {
+    router.registerRoute({
+      name: 'dashboard',
+      path: '/',
+      component: DashboardDynamic,
+      exact: true,
+      strict: false,
+      sensitive: false,
+    });
+  }
 
   const location = useLocation();
 

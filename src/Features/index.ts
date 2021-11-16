@@ -1,6 +1,7 @@
 export * from './Logout';
 export * from './Login';
 export * from './Dashboard';
+export * from './DashboardDynamic';
 export * from './Manage';
 export * from './Edit';
 export * from './Validation';

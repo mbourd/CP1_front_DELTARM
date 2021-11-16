@@ -46,10 +46,14 @@
     ]
   },
   "dependencies": {
+    "@emotion/core": "^11.0.0",
+    "@emotion/react": "^11.6.0",
+    "@emotion/styled": "^11.6.0",
     "@hookform/resolvers": "^2.8.0",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.57",
+    "@mui/material": "^5.1.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -101,16 +105,20 @@
     "@storybook/preset-create-react-app": "^3.2.0",
     "@storybook/react": "^6.3.12",
     "@storybook/testing-react": "^0.0.22",
+    "@testing-library/react-hooks": "^7.0.2",
     "@types/faker": "^5.1.4",
     "@typescript-eslint/eslint-plugin": "^4.4.1",
     "@typescript-eslint/parser": "^4.4.1",
     "babel-loader": "8.1.0",
     "babel-plugin-macros": "^2.8.0",
+    "cross-fetch": "^3.1.4",
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.21.4",
     "faker": "^5.1.0",
     "husky": "^4.3.0",
+    "msw": "^0.35.0",
+    "msw-storybook-addon": "^1.4.1",
     "prettier": "^2.1.2",
     "stylelint": "^13.7.2",
     "stylelint-config-prettier": "^8.0.2",
@@ -120,5 +128,8 @@
     "stylelint-prettier": "^1.1.2",
     "stylelint-processor-styled-components": "^1.10.0",
     "webpack": "4.42.0"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }
