@@ -51,6 +51,7 @@ export const SearchBar: React.FC<IProps> = ({
       <FormError>{errorMessage}</FormError>
       <Paper className={'search-container'} elevation={0}>
         <Search placeholder={currentOption.placeholder} />
+        {btn_lib && <Button onClick={onSearch}>{btn_lib}</Button>}
       </Paper>
       <div className={'buttons-container'}>
         <div className="search-mode-toggle">
@@ -71,7 +72,6 @@ export const SearchBar: React.FC<IProps> = ({
             })}
           </RadioGroup>
         </div>
-        {btn_lib && <Button onClick={onSearch}>{btn_lib}</Button>}
       </div>
       {isModalOpen ? (
         <SearchModal open={isModalOpen} onClose={() => setIsModalOpen(false)} />
