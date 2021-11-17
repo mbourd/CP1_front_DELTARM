@@ -1,6 +1,6 @@
 import React from 'react';
 
-export interface IMetric {
+export interface ILinearMetric {
   variant: 'determinate' | 'indeterminate' | 'buffer' | 'query' | undefined;
   value: number;
   hint: string;

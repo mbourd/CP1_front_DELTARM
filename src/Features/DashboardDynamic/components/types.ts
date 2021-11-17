@@ -290,13 +290,14 @@ interface ICard {
   };
 }
 
-interface IBar {
+export interface IIndicator {
   bar_bg_color: string;
   bar_color: string;
   hint: string;
   info: string;
   lib: string;
   value: number;
+  style: 'linear' | 'circular';
 }
 
 export interface ISearchBarOptions {
@@ -329,7 +330,7 @@ export interface IDashboard {
       visible: boolean;
     };
     metrics: {
-      bars: IBar[];
+      indicator: IIndicator[];
       visible: boolean;
     };
     search_bar: {

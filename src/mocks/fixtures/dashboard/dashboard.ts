@@ -617,7 +617,7 @@ export default {
     visible: true,
   },
   metrics: {
-    bars: [
+    indicator: [
       {
         bar_bg_color: '#012345',
         bar_color: '#ABCDEF',
@@ -626,6 +626,7 @@ export default {
           'Le taux de Complétude est calculé selon les éléments bla bla bla',
         lib: 'Taux de Complétude',
         value: 54,
+        style: 'linear',
       },
       {
         bar_bg_color: '#ABCDEF',
@@ -636,6 +637,7 @@ export default {
           'Le taux de Conformité est calculé selon les éléments bla bla bla',
         lib: 'Taux de Conformité',
         value: 95,
+        style: 'linear',
       },
       {
         bar_bg_color: '#FEDCBA',
@@ -646,6 +648,40 @@ export default {
           'Le taux de Correction est calculé selon les éléments bla bla bla',
         lib: 'Taux de Correction',
         value: 32,
+        style: 'linear',
+      },
+      {
+        bar_bg_color: '#FEDCBA',
+        bar_color: '#543210',
+        hint:
+          'Taux de Correction : 4 dossiers corrigés / 18 non-conformes = 32%',
+        info:
+          'Le taux de Correction est calculé selon les éléments bla bla bla',
+        lib: 'Taux de Correction',
+        value: 32,
+        style: 'circular',
+      },
+      {
+        bar_bg_color: '#FEDCBA',
+        bar_color: '#543210',
+        hint:
+          'Taux de Correction : 4 dossiers corrigés / 18 non-conformes = 32%',
+        info:
+          'Le taux de Correction est calculé selon les éléments bla bla bla',
+        lib: 'Taux de Correction',
+        value: 32,
+        style: 'linear',
+      },
+      {
+        bar_bg_color: '#FEDCBA',
+        bar_color: '#543210',
+        hint:
+          'Taux de Correction : 4 dossiers corrigés / 18 non-conformes = 32%',
+        info:
+          'Le taux de Correction est calculé selon les éléments bla bla bla',
+        lib: 'Taux de Correction',
+        value: 32,
+        style: 'circular',
       },
     ],
     visible: true,

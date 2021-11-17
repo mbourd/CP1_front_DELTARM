@@ -8,7 +8,7 @@ export const DashboardStyled = styled.div`
 
 export const ButtonContainerStyled = styled.div`
   width: 960px;
-  margin: auto;
+  margin: 2em auto;
   display: flex;
   gap: 15px;
 `;
@@ -17,5 +17,9 @@ export const MetricsContainerStyled = styled.div`
   max-width: 1000px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin: auto;
+  & > span > span {
+    flex-grow: 1;
+  }
 `;
