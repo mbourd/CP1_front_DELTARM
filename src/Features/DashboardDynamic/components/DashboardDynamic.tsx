@@ -1,13 +1,8 @@
 import React, { Suspense, useCallback, useContext, useEffect } from 'react';
-import { Grid, LinearProgress } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
-import {
-  useApi,
-  SwitchCallState,
-  useSecurity,
-  SecurityContext,
-} from 'Services';
-import { BPITooltip, BreadCrumb, Heading } from 'Shared/components';
+import { useApi, useSecurity, SecurityContext } from 'Services';
+import { BreadCrumb, Heading } from 'Shared/components';
 import { DashboardStyled, MetricsContainerStyled } from './Dashboard.style';
 import { ButtonContainerStyled } from './Dashboard.style';
 import { Card } from './Card/Card';
@@ -17,12 +12,7 @@ import { NoData } from './NoData';
 import { SearchBar } from './Search/SearchBar';
 import { IDashboard } from './types';
 import { Button } from 'Shared/components';
-import { Metric } from './Metrics/Metric';
-import {
-  HelpIcon,
-  UserCheckedIcon,
-  WarningIcon,
-} from '../../../Packages/Design';
+import { SwitchMetric } from './Metrics/SwitchMetric';
 
 const DashboardDynamic: React.FC = (): React.ReactElement => {
   const { send, data: response } = useApi<IDashboard>();
@@ -43,9 +33,6 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
   }, []);
 
   console.log(response);
-
-  // lazy imports for suspense
-  // https://fr.reactjs.org/docs/concurrent-mode-suspense.html
 
   return (
     <>
@@ -92,40 +79,13 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
             })}
           </ButtonContainerStyled>
           <MetricsContainerStyled>
-            {response?.data.metrics.bars.map((bar, index) => {
-              return (
-                <Grid
-                  container
-                  component={'span'}
-                  alignItems={'center'}
-                  wrap={'nowrap'}
-                  key={index}
-                >
-                  <Grid item component={'span'} xs={12}>
-                    <Metric
-                      key={index}
-                      variant={'determinate'}
-                      value={bar.value}
-                      hint={bar.hint}
-                      style={{
-                        color: bar.bar_color,
-                        backgroundColor: bar.bar_bg_color,
-                      }}
-                    />
-                  </Grid>
-                  <p>
-                    {bar.lib} {bar.value}%
-                  </p>
-                  <Grid item component={'span'}>
-                    <BPITooltip title={bar.info}>
-                      <span>
-                        <HelpIcon fontSize={'small'} />
-                      </span>
-                    </BPITooltip>
-                  </Grid>
-                </Grid>
-              );
-            })}
+            <Grid container component={'span'} alignItems={'center'}>
+              {response?.data.metrics.visible
+                ? response.data.metrics.indicator.map((indicator, index) => (
+                    <SwitchMetric indicator={indicator} key={index} />
+                  ))
+                : null}
+            </Grid>
           </MetricsContainerStyled>
           {/*<Grid container>*/}
           {/*  {data?.cards.map((card, index) => {*/}
