@@ -17,34 +17,29 @@ export default {
     card: [
       {
         cols: {
-          definition: [
+          header_visible: true,
+          values: [
             {
               border_right: true,
               header: 'Contrôle',
-              type: 'text',
             },
             {
               border_right: false,
               header: 'Etat',
-              type: 'icon',
             },
             {
               border_right: false,
               header: '+',
-              type: 'icon',
             },
             {
               border_right: true,
               header: 'BI',
-              type: 'icon',
             },
             {
               border_right: false,
               header: 'Fini',
-              type: 'icon',
             },
           ],
-          header_visible: true,
         },
         lines: {
           border_bottom: true,
@@ -55,64 +50,59 @@ export default {
                 {
                   action: null,
                   content:
-                    'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - Site A - M1',
+                    'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site A - M1</p>',
                   hint: 'none',
+                  icon: '',
                 },
                 {
                   action: null,
-                  content: 'https://path_to_smiley',
+                  content: null,
                   hint: 'Smiley 1',
+                  icon: {
+                    color: 'red',
+                    ref: 'SentimentVeryDissatisfied',
+                    size: 12,
+                  },
                 },
                 {
                   action: {
-                    params: [
-                      {
-                        key: 'control_id',
-                        value: 1,
-                      },
-                      {
-                        key: 'period_id',
-                        value: 'M1',
-                      },
-                    ],
-                    route: '/file/add_new_file',
+                    route: '/file/add_new_fil?&control_id=1&period_id=M1',
+                    target: 'modal',
                   },
-                  content: 'https://path_to_icon',
+                  content: null,
                   hint: 'Ajouter un dossier contrôlé',
+                  icon: {
+                    color: '#3248a8',
+                    ref: 'CreateNewFolder',
+                    size: 12,
+                  },
                 },
                 {
                   action: {
-                    params: [
-                      {
-                        key: 'control_id',
-                        value: 1,
-                      },
-                      {
-                        key: 'period_id',
-                        value: 'M1',
-                      },
-                    ],
-                    route: '/file/aiv-v5/url_aiv',
+                    route: '/file/aiv-v5/url_aiv?control_id=1&period_id=M1',
+                    target: 'blank',
                   },
-                  content: 'https://path_to_icon_aiv',
+                  content: null,
                   hint: 'Ouvrir Reporting',
+                  icon: {
+                    color: '#333333',
+                    ref: 'Assessment',
+                    size: 12,
+                  },
                 },
                 {
                   action: {
-                    params: [
-                      {
-                        key: 'control_id',
-                        value: 1,
-                      },
-                      {
-                        key: 'period_id',
-                        value: 'M1',
-                      },
-                    ],
-                    route: '/control/end_period_control',
+                    route:
+                      '/control/end_period_control?control_id=1&period_id=M1',
+                    target: 'modal',
                   },
-                  content: 'https://path_to_img_cloture',
+                  content: null,
                   hint: 'Clôturer la période de déclaration de ce contrôle',
+                  icon: {
+                    color: '#f5c0b5',
+                    ref: 'HighlightOff',
+                    size: 12,
+                  },
                 },
               ],
             },
@@ -122,64 +112,59 @@ export default {
                 {
                   action: null,
                   content:
-                    'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - Site B - M1',
+                    'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - M1</p>',
                   hint: 'none',
+                  icon: null,
                 },
                 {
                   action: null,
-                  content: 'https://path_to_smiley',
+                  content: null,
                   hint: 'Smiley 2',
+                  icon: {
+                    color: 'orange',
+                    ref: 'SentimentDissatisfied',
+                    size: 12,
+                  },
                 },
                 {
                   action: {
-                    params: [
-                      {
-                        key: 'control_id',
-                        value: 2,
-                      },
-                      {
-                        key: 'period_id',
-                        value: 'M1',
-                      },
-                    ],
-                    route: '/file/add_new_file',
+                    route: '/file/add_new_file?control_id=2&period_id=M1',
+                    target: 'modal',
                   },
-                  content: 'https://path_to_icon',
+                  content: null,
                   hint: 'Ajouter un dossier contrôlé',
+                  icon: {
+                    color: '#3248a8',
+                    ref: 'CreateNewFolder',
+                    size: 12,
+                  },
                 },
                 {
                   action: {
-                    params: [
-                      {
-                        key: 'control_id',
-                        value: 2,
-                      },
-                      {
-                        key: 'period_id',
-                        value: 'M1',
-                      },
-                    ],
-                    route: '/file/aiv-v5/url_aiv',
+                    route: '/file/aiv-v5/url_aiv?control_id=2&period_id=M1',
+                    target: 'blank',
                   },
-                  content: 'https://path_to_icon_aiv',
+                  content: null,
                   hint: 'Ouvrir Reporting',
+                  icon: {
+                    color: '#333333',
+                    ref: 'Assessment',
+                    size: 12,
+                  },
                 },
                 {
                   action: {
-                    params: [
-                      {
-                        key: 'control_id',
-                        value: 2,
-                      },
-                      {
-                        key: 'period_id',
-                        value: 'M1',
-                      },
-                    ],
-                    route: '/control/end_period_control',
+                    route:
+                      '/control/end_period_control?control_id=2&period_id=M1',
+                    target: 'modal',
                   },
-                  content: 'https://path_to_img_cloture',
+                  content: null,
                   hint: 'Clôturer la période de déclaration de ce contrôle',
+                  icon: {
+                    color: '#f5c0b5',
+                    ref: 'HighlightOff',
+                    size: 12,
+                  },
                 },
               ],
             },
@@ -189,64 +174,59 @@ export default {
                 {
                   action: null,
                   content:
-                    'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - Site A - T3',
+                    'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site A - T3</p>',
                   hint: 'none',
+                  icon: null,
                 },
                 {
                   action: null,
-                  content: 'https://path_to_smiley',
+                  content: null,
                   hint: 'Smiley 3',
+                  icon: {
+                    color: 'green',
+                    ref: 'Mood',
+                    size: 12,
+                  },
                 },
                 {
                   action: {
-                    params: [
-                      {
-                        key: 'control_id',
-                        value: 3,
-                      },
-                      {
-                        key: 'period_id',
-                        value: 'T3',
-                      },
-                    ],
-                    route: '/file/add_new_file',
+                    route: '/file/add_new_file?control_id=3&period_id=T3',
+                    target: 'modal',
                   },
-                  content: 'https://path_to_icon',
+                  content: null,
                   hint: 'Ajouter un dossier contrôlé',
+                  icon: {
+                    color: '#3248a8',
+                    ref: 'CreateNewFolder',
+                    size: 12,
+                  },
                 },
                 {
                   action: {
-                    params: [
-                      {
-                        key: 'control_id',
-                        value: 3,
-                      },
-                      {
-                        key: 'period_id',
-                        value: 'T3',
-                      },
-                    ],
-                    route: '/file/aiv-v5/url_aiv',
+                    route: '/file/aiv-v5/url_aiv?control_id=3&period_id=T3',
+                    target: 'blank',
                   },
-                  content: 'https://path_to_icon_aiv',
+                  content: null,
                   hint: 'Ouvrir Reporting',
+                  icon: {
+                    color: '#333333',
+                    ref: 'Assessment',
+                    size: 12,
+                  },
                 },
                 {
                   action: {
-                    params: [
-                      {
-                        key: 'control_id',
-                        value: 3,
-                      },
-                      {
-                        key: 'period_id',
-                        value: 'T3',
-                      },
-                    ],
-                    route: '/control/end_period_control',
+                    route:
+                      '/control/end_period_control?control_id=3&period_id=T3',
+                    target: 'modal',
                   },
-                  content: 'https://path_to_img_cloture',
+                  content: null,
                   hint: 'Clôturer la période de déclaration de ce contrôle',
+                  icon: {
+                    color: '#f5c0b5',
+                    ref: 'HighlightOff',
+                    size: 12,
+                  },
                 },
               ],
             },
@@ -256,64 +236,59 @@ export default {
                 {
                   action: null,
                   content:
-                    'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - Site B - T4',
+                    'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - T4</p>',
                   hint: 'none',
+                  icon: null,
                 },
                 {
                   action: null,
-                  content: 'https://path_to_smiley',
+                  content: null,
                   hint: 'Smiley 4',
+                  icon: {
+                    color: 'orange',
+                    ref: 'SentimentDissatisfied',
+                    size: 12,
+                  },
                 },
                 {
                   action: {
-                    params: [
-                      {
-                        key: 'control_id',
-                        value: 4,
-                      },
-                      {
-                        key: 'period_id',
-                        value: 'T4',
-                      },
-                    ],
-                    route: '/file/add_new_file',
+                    route: '/file/add_new_file?control_id=4&period_id=T4',
+                    target: 'modal',
                   },
-                  content: 'https://path_to_icon',
+                  content: null,
                   hint: 'Ajouter un dossier contrôlé',
+                  icon: {
+                    color: '#3248a8',
+                    ref: 'CreateNewFolder',
+                    size: 12,
+                  },
                 },
                 {
                   action: {
-                    params: [
-                      {
-                        key: 'control_id',
-                        value: 4,
-                      },
-                      {
-                        key: 'period_id',
-                        value: 'T4',
-                      },
-                    ],
-                    route: '/file/aiv-v5/url_aiv',
+                    route: '/file/aiv-v5/url_aiv?control_id=4&period_id=T4',
+                    target: 'blank',
                   },
-                  content: 'https://path_to_icon_aiv',
+                  content: null,
                   hint: 'Ouvrir Reporting',
+                  icon: {
+                    color: '#333333',
+                    ref: 'Assessment',
+                    size: 12,
+                  },
                 },
                 {
                   action: {
-                    params: [
-                      {
-                        key: 'control_id',
-                        value: 4,
-                      },
-                      {
-                        key: 'period_id',
-                        value: 'T4',
-                      },
-                    ],
-                    route: '/control/end_period_control',
+                    route:
+                      '/control/end_period_control?control_id=4&period_id=T4',
+                    target: 'modal',
                   },
-                  content: 'https://path_to_img_cloture',
+                  content: null,
                   hint: 'Clôturer la période de déclaration de ce contrôle',
+                  icon: {
+                    color: '#f5c0b5',
+                    ref: 'HighlightOff',
+                    size: 12,
+                  },
                 },
               ],
             },
@@ -327,24 +302,21 @@ export default {
       },
       {
         cols: {
-          definition: [
+          header_visible: false,
+          values: [
             {
               border_right: false,
               header: 'Contrôle',
-              type: 'text',
             },
             {
               border_right: true,
               header: 'Liste',
-              type: 'icon',
             },
             {
               border_right: false,
               header: 'Fini',
-              type: 'icon',
             },
           ],
-          header_visible: false,
         },
         lines: {
           border_bottom: false,
@@ -355,42 +327,37 @@ export default {
                 {
                   action: null,
                   content:
-                    'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - Site A - M1',
+                    'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site A - M1</p>',
                   hint: 'none',
+                  icon: null,
                 },
                 {
                   action: {
-                    params: [
-                      {
-                        key: 'control_id',
-                        value: 10,
-                      },
-                      {
-                        key: 'period_id',
-                        value: 'M1',
-                      },
-                    ],
-                    route: '/control/display_file_ko',
+                    route:
+                      '/control/display_file_ko?control_id=10&period_id=M1',
+                    target: 'modal',
                   },
-                  content: 'https://path_to_img_list',
+                  content: null,
                   hint: 'Affiche la liste des dossiers avec Contrôles KO',
+                  icon: {
+                    color: '#bf6f8a',
+                    ref: 'Toc',
+                    size: 12,
+                  },
                 },
                 {
                   action: {
-                    params: [
-                      {
-                        key: 'control_id',
-                        value: 10,
-                      },
-                      {
-                        key: 'period_id',
-                        value: 'M1',
-                      },
-                    ],
-                    route: '/control/end_period_control',
+                    route:
+                      '/control/end_period_control?control_id=10&period_id=M1',
+                    target: 'modal',
                   },
-                  content: 'https://path_to_img_cloture',
+                  content: null,
                   hint: 'Clôturer la période de déclaration de ce contrôle',
+                  icon: {
+                    color: '#f5c0b5',
+                    ref: 'HighlightOff',
+                    size: 12,
+                  },
                 },
               ],
             },
@@ -400,42 +367,37 @@ export default {
                 {
                   action: null,
                   content:
-                    'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - Site A - M2',
+                    'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site A - M2</p>',
                   hint: 'none',
+                  icon: null,
                 },
                 {
                   action: {
-                    params: [
-                      {
-                        key: 'control_id',
-                        value: 10,
-                      },
-                      {
-                        key: 'period_id',
-                        value: 'M2',
-                      },
-                    ],
-                    route: '/control/display_file_ko',
+                    route:
+                      '/control/display_file_ko?control_id=11&period_id=M2',
+                    target: 'modal',
                   },
-                  content: 'https://path_to_img_list',
+                  content: null,
                   hint: 'Affiche la liste des dossiers avec Contrôles KO',
+                  icon: {
+                    color: '#bf6f8a',
+                    ref: 'Toc',
+                    size: 12,
+                  },
                 },
                 {
                   action: {
-                    params: [
-                      {
-                        key: 'control_id',
-                        value: 10,
-                      },
-                      {
-                        key: 'period_id',
-                        value: 'M2',
-                      },
-                    ],
-                    route: '/control/end_period_control',
+                    route:
+                      '/control/end_period_control?control_id=11&period_id=M2',
+                    target: 'modal',
                   },
-                  content: 'https://path_to_img_cloture',
+                  content: null,
                   hint: 'Clôturer la période de déclaration de ce contrôle',
+                  icon: {
+                    color: '#f5c0b5',
+                    ref: 'HighlightOff',
+                    size: 12,
+                  },
                 },
               ],
             },
@@ -445,42 +407,37 @@ export default {
                 {
                   action: null,
                   content:
-                    'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - Site A - M3',
+                    'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site A - M3</p>',
                   hint: 'none',
+                  icon: null,
                 },
                 {
                   action: {
-                    params: [
-                      {
-                        key: 'control_id',
-                        value: 10,
-                      },
-                      {
-                        key: 'period_id',
-                        value: 'M3',
-                      },
-                    ],
-                    route: '/control/display_file_ko',
+                    route:
+                      '/control/display_file_ko?control_id=12&period_id=M3',
+                    target: 'modal',
                   },
-                  content: 'https://path_to_img_list',
+                  content: null,
                   hint: 'Affiche la liste des dossiers avec Contrôles KO',
+                  icon: {
+                    color: '#bf6f8a',
+                    ref: 'Toc',
+                    size: 12,
+                  },
                 },
                 {
                   action: {
-                    params: [
-                      {
-                        key: 'control_id',
-                        value: 10,
-                      },
-                      {
-                        key: 'period_id',
-                        value: 'M3',
-                      },
-                    ],
-                    route: '/control/end_period_control',
+                    route:
+                      '/control/end_period_control?control_id=12&period_id=M3',
+                    target: 'modal',
                   },
-                  content: 'https://path_to_img_cloture',
+                  content: null,
                   hint: 'Clôturer la période de déclaration de ce contrôle',
+                  icon: {
+                    color: '#f5c0b5',
+                    ref: 'HighlightOff',
+                    size: 12,
+                  },
                 },
               ],
             },
@@ -494,24 +451,21 @@ export default {
       },
       {
         cols: {
-          definition: [
+          header_visible: false,
+          values: [
             {
               border_right: false,
               header: 'Contrôle',
-              type: 'text',
             },
             {
               border_right: true,
               header: 'Liste',
-              type: 'icon',
             },
             {
               border_right: false,
               header: 'Fini',
-              type: 'icon',
             },
           ],
-          header_visible: false,
         },
         lines: {
           border_bottom: false,
@@ -521,43 +475,39 @@ export default {
               item: [
                 {
                   action: null,
-                  content: 'Contrôler la conformité statutaire - Site V1 - M6',
+                  content:
+                    'Contrôler la conformité statutaire - <p style="color:red; font-weight:bold;">Site V1 - M6</p>',
                   hint: 'none',
+                  icon: null,
                 },
                 {
                   action: {
-                    params: [
-                      {
-                        key: 'control_id',
-                        value: 20,
-                      },
-                      {
-                        key: 'period_id',
-                        value: 'M6',
-                      },
-                    ],
-                    route: '/control/validate_control',
+                    route:
+                      '/control/validate_control?control_id=20&period_id=M6',
+                    target: 'modal',
                   },
-                  content: 'https://path_to_img_list',
+                  content: null,
                   hint:
                     'Affiche la liste des dossiers avec Contrôles à Valider',
+                  icon: {
+                    color: '#94c26e',
+                    ref: 'PlaylistAddCheck',
+                    size: 12,
+                  },
                 },
                 {
                   action: {
-                    params: [
-                      {
-                        key: 'control_id',
-                        value: 20,
-                      },
-                      {
-                        key: 'period_id',
-                        value: 'M6',
-                      },
-                    ],
-                    route: '/control/end_period_control',
+                    route:
+                      '/control/end_period_control?control_id=20&period_id=M6',
+                    target: 'modal',
                   },
-                  content: 'https://path_to_img_cloture',
+                  content: null,
                   hint: 'Clôturer la période de déclaration de ce contrôle',
+                  icon: {
+                    color: '#f5c0b5',
+                    ref: 'HighlightOff',
+                    size: 12,
+                  },
                 },
               ],
             },
@@ -566,42 +516,219 @@ export default {
               item: [
                 {
                   action: null,
-                  content: 'Contrôler la conformité statutaire - Site V2 - M12',
+                  content:
+                    'Contrôler la conformité statutaire - <p style="color:red; font-weight:bold;">Site V2 - M12</p>',
                   hint: 'none',
+                  icon: null,
                 },
                 {
                   action: {
-                    params: [
-                      {
-                        key: 'control_id',
-                        value: 21,
-                      },
-                      {
-                        key: 'period_id',
-                        value: 'M12',
-                      },
-                    ],
-                    route: '/control/validate_control',
+                    route:
+                      '/control/validate_control?control_id=21&period_id=M12',
+                    target: 'modal',
                   },
-                  content: 'https://path_to_img_list',
-                  hint: 'Affiche la liste des dossiers avec Contrôles KO',
+                  content: null,
+                  hint:
+                    'Affiche la liste des dossiers avec Contrôles à Valider',
+                  icon: {
+                    color: '#94c26e',
+                    ref: 'PlaylistAddCheck',
+                    size: 12,
+                  },
                 },
                 {
                   action: {
-                    params: [
-                      {
-                        key: 'control_id',
-                        value: 21,
-                      },
-                      {
-                        key: 'period_id',
-                        value: 'M12',
-                      },
-                    ],
-                    route: '/control/end_period_control',
+                    route:
+                      '/control/end_period_control?control_id=21&period_id=M12',
+                    target: 'modal',
                   },
-                  content: 'https://path_to_img_cloture',
+                  content: null,
                   hint: 'Clôturer la période de déclaration de ce contrôle',
+                  icon: {
+                    color: '#f5c0b5',
+                    ref: 'HighlightOff',
+                    size: 12,
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        title: {
+          bg_color: '#FF0000',
+          font_color: '#FFFFFFF',
+          lib: '2 Contrôles à Valider',
+        },
+      },
+      {
+        cols: {
+          header_visible: false,
+          values: [
+            {
+              border_right: false,
+              header: 'Contrôle',
+            },
+            {
+              border_right: true,
+              header: 'Liste',
+            },
+            {
+              border_right: false,
+              header: 'Fini',
+            },
+          ],
+        },
+        lines: {
+          border_bottom: false,
+          values: [
+            {
+              id: 30,
+              item: [
+                {
+                  action: null,
+                  content:
+                    'Contrôler la conformité statutaire - <p style="color:red; font-weight:bold;">Site Rej1 - M4</p>',
+                  hint: 'none',
+                  icon: null,
+                },
+                {
+                  action: {
+                    route:
+                      '/control/validate_control?control_id=30&period_id=M4',
+                    target: 'modal',
+                  },
+                  content: null,
+                  hint: 'Affiche la liste des dossiers avec Contrôles Rejetés',
+                  icon: {
+                    color: '#bfa06d',
+                    ref: 'ListAlt',
+                    size: 12,
+                  },
+                },
+                {
+                  action: {
+                    route:
+                      '/control/end_period_control?control_id=30&period_id=M4',
+                    target: 'modal',
+                  },
+                  content: null,
+                  hint: 'Clôturer la période de déclaration de ce contrôle',
+                  icon: {
+                    color: '#f5c0b5',
+                    ref: 'HighlightOff',
+                    size: 12,
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        title: {
+          bg_color: '#FF0000',
+          font_color: '#FFFFFFF',
+          lib: '1 Contrôle Rejetés',
+        },
+      },
+      {
+        cols: {
+          header_visible: false,
+          values: [
+            {
+              border_right: false,
+              header: 'Contrôle',
+            },
+            {
+              border_right: true,
+              header: 'Liste',
+            },
+            {
+              border_right: false,
+              header: 'Fini',
+            },
+          ],
+        },
+        lines: {
+          border_bottom: false,
+          values: [
+            {
+              id: 20,
+              item: [
+                {
+                  action: null,
+                  content:
+                    'Contrôler la conformité statutaire - <p style="color:red; font-weight:bold;">Site V1 - M6</p>',
+                  hint: 'none',
+                  icon: null,
+                },
+                {
+                  action: {
+                    route:
+                      '/control/validate_control?control_id=20&period_id=M6',
+                    target: 'modal',
+                  },
+                  content: null,
+                  hint:
+                    'Affiche la liste des dossiers avec Contrôles à Valider',
+                  icon: {
+                    color: '#94c26e',
+                    ref: 'PlaylistAddCheck',
+                    size: 12,
+                  },
+                },
+                {
+                  action: {
+                    route:
+                      '/control/end_period_control?control_id=20&period_id=M6',
+                    target: 'modal',
+                  },
+                  content: null,
+                  hint: 'Clôturer la période de déclaration de ce contrôle',
+                  icon: {
+                    color: '#f5c0b5',
+                    ref: 'HighlightOff',
+                    size: 12,
+                  },
+                },
+              ],
+            },
+            {
+              id: 21,
+              item: [
+                {
+                  action: null,
+                  content:
+                    'Contrôler la conformité statutaire - <p style="color:red; font-weight:bold;">Site V2 - M12</p>',
+                  hint: 'none',
+                  icon: null,
+                },
+                {
+                  action: {
+                    route:
+                      '/control/validate_control?control_id=21&period_id=M12',
+                    target: 'modal',
+                  },
+                  content: null,
+                  hint:
+                    'Affiche la liste des dossiers avec Contrôles à Valider',
+                  icon: {
+                    color: '#94c26e',
+                    ref: 'PlaylistAddCheck',
+                    size: 12,
+                  },
+                },
+                {
+                  action: {
+                    route:
+                      '/control/end_period_control?control_id=21&period_id=M12',
+                    target: 'modal',
+                  },
+                  content: null,
+                  hint: 'Clôturer la période de déclaration de ce contrôle',
+                  icon: {
+                    color: '#f5c0b5',
+                    ref: 'HighlightOff',
+                    size: 12,
+                  },
                 },
               ],
             },
@@ -619,69 +746,36 @@ export default {
   metrics: {
     indicator: [
       {
-        bar_bg_color: '#012345',
-        bar_color: '#ABCDEF',
-        hint: 'Taux de Complétude : 54 dossiers / 100 prévus au plan = 54%',
+        bg_color: '#F1CBF7',
+        color: '#5B0E69',
+        hint: 'Taux de Complétude : 65 dossiers contrôlés / 89 prévus = 73%',
         info:
-          'Le taux de Complétude est calculé selon les éléments bla bla bla',
+          'Le taux de complétude est calculé selon les élément bla bla bla...',
         lib: 'Taux de Complétude',
-        value: 54,
         style: 'linear',
+        value: 73,
       },
       {
-        bar_bg_color: '#ABCDEF',
-        bar_color: '#012345',
+        bg_color: null,
+        color: '#5B0E69',
         hint:
-          'Taux de Conformité : 95 dossiers conformes / 100 contrôlés = 95%',
+          'Taux de Conformité : 65 dossiers conformes / 125 contrôles = 52%',
         info:
-          'Le taux de Conformité est calculé selon les éléments bla bla bla',
+          'Le taux de conformité est calculé selon les élément bla bla bla...',
         lib: 'Taux de Conformité',
-        value: 95,
         style: 'linear',
+        value: 52,
       },
       {
-        bar_bg_color: '#FEDCBA',
-        bar_color: '#543210',
+        bg_color: '#F1CBF7',
+        color: '#5B0E69',
         hint:
-          'Taux de Correction : 4 dossiers corrigés / 18 non-conformes = 32%',
+          'Taux de Correction : 10 dossiers corrigés / 85 non-conformes = 12%',
         info:
-          'Le taux de Correction est calculé selon les éléments bla bla bla',
+          'Le taux de correction est calculé selon les élément bla bla bla...',
         lib: 'Taux de Correction',
-        value: 32,
         style: 'linear',
-      },
-      {
-        bar_bg_color: '#FEDCBA',
-        bar_color: '#543210',
-        hint:
-          'Taux de Correction : 4 dossiers corrigés / 18 non-conformes = 32%',
-        info:
-          'Le taux de Correction est calculé selon les éléments bla bla bla',
-        lib: 'Taux de Correction',
-        value: 32,
-        style: 'circular',
-      },
-      {
-        bar_bg_color: '#FEDCBA',
-        bar_color: '#543210',
-        hint:
-          'Taux de Correction : 4 dossiers corrigés / 18 non-conformes = 32%',
-        info:
-          'Le taux de Correction est calculé selon les éléments bla bla bla',
-        lib: 'Taux de Correction',
-        value: 32,
-        style: 'linear',
-      },
-      {
-        bar_bg_color: '#FEDCBA',
-        bar_color: '#543210',
-        hint:
-          'Taux de Correction : 4 dossiers corrigés / 18 non-conformes = 32%',
-        info:
-          'Le taux de Correction est calculé selon les éléments bla bla bla',
-        lib: 'Taux de Correction',
-        value: 32,
-        style: 'circular',
+        value: 12,
       },
     ],
     visible: true,
@@ -690,40 +784,33 @@ export default {
     btn_lib: 'Lancer la recherche',
     options: [
       {
-        lib: 'Rechercher par numéro',
-        placeholder: 'Numéro de Dossier / Avenant',
+        lib: 'Rechercher un Dossier Klesia',
+        placeholder: 'Numéro de Dossier / Avenant - Klesia',
         regex: '[0-9A-Za-z]\\/[0-9A-Za-z]',
         regex_msg:
           'La recherche doit respecter le format : N° de Dossier / Avenant',
-        route: '/file/search',
+        route: '/file/search_dossier',
       },
       {
-        lib: "Rechercher par nom d'utilisateur",
-        placeholder: "Nom de l'utilisateur",
+        lib: 'Rechercher un Utilisateur Klesia',
+        placeholder: "Nom de l'utilisateur - Klesia",
         regex: null,
         regex_msg: null,
-        route: '/file/search_name',
-      },
-      {
-        lib: 'Recherche Globale',
-        placeholder: 'Chaîne de caractère à rechercher',
-        regex: null,
-        regex_msg: null,
-        route: '/file/search_global',
+        route: '/file/search_user',
       },
     ],
     search_bar: true,
   },
   subtitle: {
-    font_color: '#3018a8',
-    font_size: '20px',
-    lib: 'Sous-Titre du Dashboard',
+    font_color: '#ED9532',
+    font_size: '24px',
+    lib: "Assureur d'Intérêt Général",
     visible: true,
   },
   title: {
-    font_color: '#a232a8',
-    font_size: '26px',
-    lib: 'Titre du Dashboard',
+    font_color: '#4E3F43',
+    font_size: '48px',
+    lib: 'Klesia',
     visible: true,
   },
 };

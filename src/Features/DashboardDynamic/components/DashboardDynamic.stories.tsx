@@ -25,16 +25,5 @@ const Template: any = (args: any) => {
 
 export const Dashboard = Template.bind({});
 Dashboard.args = {
-  title: {
-    lib: 'Titre du dashboard',
-    font_size: '46px',
-    font_color: '#a232a8',
-    visible: true,
-  },
-  subtitle: {
-    lib: 'Sous-titre du dashboard',
-    font_size: '24px',
-    font_color: '#3018a8',
-    visible: true,
-  },
+  // all the data comes from ths msw mock
 };
