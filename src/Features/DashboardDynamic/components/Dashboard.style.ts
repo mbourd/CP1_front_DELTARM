@@ -1,6 +1,7 @@
 import styled from 'styled-components/macro';
 
 export const DashboardStyled = styled.div`
+  padding: 2.6rem;
   .MuiGrid-item {
     padding: ${({ theme }) => theme.sizing.xxLarge};
   }
@@ -8,7 +9,7 @@ export const DashboardStyled = styled.div`
 
 export const ButtonContainerStyled = styled.div`
   width: 960px;
-  margin: 2em auto;
+  margin: 1em auto;
   display: flex;
   gap: 15px;
 `;
