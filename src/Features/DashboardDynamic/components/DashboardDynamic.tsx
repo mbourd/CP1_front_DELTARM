@@ -6,7 +6,6 @@ import { BreadCrumb, Heading } from 'Shared/components';
 import { DashboardStyled, MetricsContainerStyled } from './Dashboard.style';
 import { ButtonContainerStyled } from './Dashboard.style';
 import { Card } from './Card/Card';
-import { ICard } from './Card/types';
 import { IsLoading } from './IsLoading';
 import { NoData } from './NoData';
 import { SearchBar } from './Search/SearchBar';
@@ -87,15 +86,19 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
                 : null}
             </Grid>
           </MetricsContainerStyled>
-          {/*<Grid container>*/}
-          {/*  {data?.cards.map((card, index) => {*/}
-          {/*    return (*/}
-          {/*      <Grid item xs={12} md={6} key={index}>*/}
-          {/*        <Card {...card} />*/}
-          {/*      </Grid>*/}
-          {/*    );*/}
-          {/*  })}*/}
-          {/*</Grid>*/}
+          <Grid container>
+            {response?.data.cards.visible ? (
+              response.data.cards.card.map((card, index) => (
+                <Grid item xs={12} md={6} key={index}>
+                  <Card card={card} key={index} />
+                </Grid>
+              ))
+            ) : (
+              <Grid item xs={12}>
+                <NoData />
+              </Grid>
+            )}
+          </Grid>
         </DashboardStyled>
       </Suspense>
     </>
