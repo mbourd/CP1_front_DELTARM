@@ -10,6 +10,6 @@ export const HeadingStyled = styled.h1<IProps>`
   font-family: ${({ theme }) => theme.font.heading.main};
   font-size: ${({ theme }) => theme.sizing.heading.one};
   line-height: 40px;
-  margin: 3rem;
+  margin: 1rem;
   text-align: center;
 `;
