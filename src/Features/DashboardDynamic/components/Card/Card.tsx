@@ -19,7 +19,8 @@ interface ICardC {
 }
 export const Card: React.FC<ICardC> = ({ card }): React.ReactElement => {
   const generateMaterialIcon = useCallback(
-    (iconName: SvgIconComponent, color, size) => {
+    (iconName: SvgIconComponent, color, size, action) => {
+      console.log(action);
       // @ts-ignore
       return createElement(icons[iconName], { style: { color, size } });
     },
@@ -84,6 +85,7 @@ export const Card: React.FC<ICardC> = ({ card }): React.ReactElement => {
                             cell.icon.ref,
                             cell.icon.color,
                             cell.icon.size,
+                            cell.action,
                           )
                         : null}
                     </StyledTableCell>
