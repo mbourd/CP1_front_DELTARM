@@ -1,7 +1,7 @@
 import React, { createElement, useCallback } from 'react';
 import { TableHead } from '@material-ui/core';
 import { CardStyled, StyledTableCell } from './Card.style';
-import { ICard } from '../types';
+import { ICard, ICardValueItemParams } from '../types';
 import {
   Paper,
   Table,
@@ -16,15 +16,21 @@ import { SvgIconComponent } from '@material-ui/icons';
 
 interface ICardC {
   card: ICard;
+  actionIcons: (action: ICardValueItemParams | null) => void;
 }
-export const Card: React.FC<ICardC> = ({ card }): React.ReactElement => {
+export const Card: React.FC<ICardC> = ({
+  card,
+  actionIcons,
+}): React.ReactElement => {
   const generateMaterialIcon = useCallback(
     (iconName: SvgIconComponent, color, size, action) => {
-      console.log(action);
       // @ts-ignore
-      return createElement(icons[iconName], { style: { color, size } });
+      return createElement(icons[iconName], {
+        style: { color, size },
+        onClick: () => actionIcons(action),
+      });
     },
-    [],
+    [actionIcons],
   );
 
   return (

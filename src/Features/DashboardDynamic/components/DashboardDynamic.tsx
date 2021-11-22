@@ -1,7 +1,7 @@
 import React, { Suspense, useCallback, useContext, useEffect } from 'react';
 import { Grid } from '@material-ui/core';
 
-import { useApi, useSecurity, SecurityContext } from 'Services';
+import { useApi, useSecurity, SecurityContext, router } from 'Services';
 import { BreadCrumb, Heading } from 'Shared/components';
 import { DashboardStyled, MetricsContainerStyled } from './Dashboard.style';
 import { ButtonContainerStyled } from './Dashboard.style';
@@ -9,7 +9,7 @@ import { Card } from './Card/Card';
 import { IsLoading } from './IsLoading';
 import { NoData } from './NoData';
 import { SearchBar } from './Search/SearchBar';
-import { IDashboard } from './types';
+import { ICardValueItemParams, IDashboard } from './types';
 import { Button } from 'Shared/components';
 import { SwitchMetric } from './Metrics/SwitchMetric';
 
@@ -27,11 +27,25 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
     send('dashboardControlPermanent');
   }, [send]);
 
-  const onClickCustomButtons = useCallback((route: string) => {
-    console.log('ROUTE TO CALL: ' + route);
-  }, []);
+  const handleClickCardIcons = useCallback(
+    (action: ICardValueItemParams | null) => {
+      // click on icon's card
+      switch (action?.target) {
+        case 'blank':
+          return window.open(action.route, '_blank');
+        case 'modal':
+          return console.log(action);
+        case 'self':
+          return router.redirectToUrl(action.route);
+      }
+    },
+    [],
+  );
 
-  console.log(response);
+  const onClickCustomButtons = useCallback((route: string) => {
+    // click on custom buttons
+    console.log('CUSTOM BUTTON ROUTE TO CALL: ' + route);
+  }, []);
 
   return (
     <>
@@ -87,17 +101,16 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
             </Grid>
           </MetricsContainerStyled>
           <Grid container>
-            {response?.data.cards.visible ? (
+            {response?.data.cards.visible &&
               response.data.cards.card.map((card, index) => (
                 <Grid item xs={12} md={6} key={index}>
-                  <Card card={card} key={index} />
+                  <Card
+                    card={card}
+                    key={index}
+                    actionIcons={handleClickCardIcons}
+                  />
                 </Grid>
-              ))
-            ) : (
-              <Grid item xs={12}>
-                <NoData />
-              </Grid>
-            )}
+              ))}
           </Grid>
         </DashboardStyled>
       </Suspense>
