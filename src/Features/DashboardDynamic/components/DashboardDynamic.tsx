@@ -1,4 +1,10 @@
-import React, { Suspense, useCallback, useContext, useEffect } from 'react';
+import React, {
+  Suspense,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { Grid } from '@material-ui/core';
 
 import { useApi, useSecurity, SecurityContext, router } from 'Services';
@@ -12,9 +18,12 @@ import { SearchBar } from './Search/SearchBar';
 import { ICardValueItemParams, IDashboard } from './types';
 import { Button } from 'Shared/components';
 import { SwitchMetric } from './Metrics/SwitchMetric';
+import { DashboardModal } from './Search/Modal/DashboardModal';
 
 const DashboardDynamic: React.FC = (): React.ReactElement => {
   const { send, data: response } = useApi<IDashboard>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentModalRoute, setCurrentModalRoute] = useState<string>('');
 
   const { user } = useSecurity();
   const { logout } = useContext(SecurityContext);
@@ -29,12 +38,14 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
 
   const handleClickCardIcons = useCallback(
     (action: ICardValueItemParams | null) => {
-      // click on icon's card
       switch (action?.target) {
         case 'blank':
           return window.open(action.route, '_blank');
         case 'modal':
-          return console.log(action);
+          setIsModalOpen(true);
+          setCurrentModalRoute(action.route);
+
+          return;
         case 'self':
           return router.redirectToUrl(action.route);
       }
@@ -112,6 +123,13 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
                 </Grid>
               ))}
           </Grid>
+          {isModalOpen ? (
+            <DashboardModal
+              open={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              route={currentModalRoute}
+            />
+          ) : null}
         </DashboardStyled>
       </Suspense>
     </>

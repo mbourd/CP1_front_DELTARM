@@ -36,11 +36,8 @@ export const Card: React.FC<ICardC> = ({
   return (
     <CardStyled cardColor={card.title.bg_color}>
       <Header color={card.title.bg_color}>{card.title.lib}</Header>
-      <TableContainer
-        component={Paper}
-        style={{ width: '100%', overflow: 'hidden' }}
-      >
-        <Table aria-label="customized table">
+      <TableContainer component={Paper} style={{ maxHeight: '450px' }}>
+        <Table stickyHeader>
           <TableHead>
             <TableRow>
               {card.cols.header_visible
@@ -56,6 +53,9 @@ export const Card: React.FC<ICardC> = ({
                         borderRight: column.border_right
                           ? `1px solid ${card.title.bg_color}`
                           : 'none',
+                        top: 0,
+                        position: 'sticky',
+                        backgroundColor: '#fff',
                       }}
                     >
                       {column.header}
