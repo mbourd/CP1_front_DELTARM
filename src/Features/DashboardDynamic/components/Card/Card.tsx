@@ -22,6 +22,7 @@ export const Card: React.FC<ICardC> = ({
   card,
   actionIcons,
 }): React.ReactElement => {
+  const indexCellColumnBorderRight: number[] = [];
   const generateMaterialIcon = useCallback(
     (iconName: SvgIconComponent, color, size, action) => {
       // @ts-ignore
@@ -41,62 +42,74 @@ export const Card: React.FC<ICardC> = ({
           <TableHead>
             <TableRow>
               {card.cols.header_visible
-                ? card.cols.values.map((column, index) => (
-                    <StyledTableCell
-                      scope="row"
-                      key={index}
-                      style={{
-                        textAlign: 'center',
-                        borderBottom: card.lines.border_bottom
-                          ? `1px solid ${card.title.bg_color}`
-                          : 'none',
-                        borderRight: column.border_right
-                          ? `1px solid ${card.title.bg_color}`
-                          : 'none',
-                        top: 0,
-                        position: 'sticky',
-                        backgroundColor: '#fff',
-                      }}
-                    >
-                      {column.header}
-                    </StyledTableCell>
-                  ))
+                ? card.cols.values.map((column, index) => {
+                    if (column.border_right) {
+                      indexCellColumnBorderRight.push(index);
+                    }
+
+                    return (
+                      <StyledTableCell
+                        scope="row"
+                        key={index}
+                        style={{
+                          textAlign: 'center',
+                          borderBottom: card.lines.border_bottom
+                            ? `1px solid ${card.title.bg_color}`
+                            : 'none',
+                          borderRight: column.border_right
+                            ? `1px solid ${card.title.bg_color}`
+                            : 'none',
+                          top: 0,
+                          position: 'sticky',
+                          backgroundColor: '#fff',
+                        }}
+                      >
+                        {column.header}
+                      </StyledTableCell>
+                    );
+                  })
                 : null}
             </TableRow>
           </TableHead>
           <TableBody>
-            {card.lines.values.map((row) => (
-              <TableRow key={row.id}>
-                {row.item.map((cell, index) => (
-                  <BPITooltip title={cell.hint} key={index}>
-                    <StyledTableCell
-                      scope="row"
-                      key={index}
-                      style={{
-                        borderBottom: card.lines.border_bottom
-                          ? `1px solid ${card.title.bg_color}`
-                          : 'none',
-                        borderRight: cell.border_right
-                          ? `1px solid ${card.title.bg_color}`
-                          : 'none',
-                      }}
-                    >
-                      {cell.content ? (
-                        <span
-                          dangerouslySetInnerHTML={{ __html: cell.content }}
-                        />
-                      ) : null}
-                      {cell.icon
-                        ? generateMaterialIcon(
-                            cell.icon.ref,
-                            cell.icon.color,
-                            cell.icon.size,
-                            cell.action,
-                          )
-                        : null}
-                    </StyledTableCell>
-                  </BPITooltip>
-                ))}
+            {card.lines.values.map((row, index) => (
+              <TableRow key={index}>
+                {row.item.map((cell, index) => {
+                  if (indexCellColumnBorderRight.includes(index)) {
+                    cell.border_right = true;
+                  }
+
+                  return (
+                    <BPITooltip title={cell.hint} key={index}>
+                      <StyledTableCell
+                        scope="row"
+                        key={index}
+                        style={{
+                          borderBottom: card.lines.border_bottom
+                            ? `1px solid ${card.title.bg_color}`
+                            : 'none',
+                          borderRight: cell.border_right
+                            ? `1px solid ${card.title.bg_color}`
+                            : 'none',
+                        }}
+                      >
+                        {cell.content ? (
+                          <span
+                            dangerouslySetInnerHTML={{ __html: cell.content }}
+                          />
+                        ) : null}
+                        {cell.icon
+                          ? generateMaterialIcon(
+                              cell.icon.ref,
+                              cell.icon.color,
+                              cell.icon.size,
+                              cell.action,
+                            )
+                          : null}
+                      </StyledTableCell>
+                    </BPITooltip>
+                  );
+                })}
               </TableRow>
             ))}
           </TableBody>
