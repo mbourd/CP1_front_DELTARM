@@ -49,7 +49,7 @@ CardDashboard.args = {
               action: null,
               content:
                 'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site A - M1</p>',
-              hint: 'none',
+              hint: 'TOOOOOOO',
               icon: '',
             },
             {
@@ -415,7 +415,7 @@ CardDashboard.args = {
               action: null,
               content:
                 'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - T4</p>',
-              hint: 'none',
+              hint: 'Totot la ifffff',
               icon: null,
             },
             {
