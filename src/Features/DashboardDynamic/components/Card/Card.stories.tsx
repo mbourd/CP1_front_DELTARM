@@ -55,7 +55,7 @@ CardDashboard.args = {
             {
               action: null,
               content: null,
-              hint: 'none',
+              hint: null,
               icon: {
                 color: 'red',
                 ref: 'SentimentVeryDissatisfied',
@@ -110,13 +110,13 @@ CardDashboard.args = {
               action: null,
               content:
                 'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - M1</p>',
-              hint: 'none',
+              hint: null,
               icon: null,
             },
             {
               action: null,
               content: null,
-              hint: 'Smiley 2',
+              hint: null,
               icon: {
                 color: 'orange',
                 ref: 'SentimentDissatisfied',
@@ -171,7 +171,7 @@ CardDashboard.args = {
               action: null,
               content:
                 'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site A - T3</p>',
-              hint: 'none',
+              hint: null,
               icon: null,
             },
             {
@@ -232,7 +232,7 @@ CardDashboard.args = {
               action: null,
               content:
                 'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - T4</p>',
-              hint: 'none',
+              hint: null,
               icon: null,
             },
             {
@@ -293,7 +293,7 @@ CardDashboard.args = {
               action: null,
               content:
                 'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - T4</p>',
-              hint: 'none',
+              hint: null,
               icon: null,
             },
             {
@@ -354,7 +354,7 @@ CardDashboard.args = {
               action: null,
               content:
                 'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - T4</p>',
-              hint: 'none',
+              hint: null,
               icon: null,
             },
             {
@@ -476,7 +476,7 @@ CardDashboard.args = {
               action: null,
               content:
                 'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - T4</p>',
-              hint: 'none',
+              hint: null,
               icon: null,
             },
             {
@@ -537,7 +537,7 @@ CardDashboard.args = {
               action: null,
               content:
                 'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - T4</p>',
-              hint: 'none',
+              hint: null,
               icon: null,
             },
             {
@@ -598,7 +598,7 @@ CardDashboard.args = {
               action: null,
               content:
                 'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - T4</p>',
-              hint: 'none',
+              hint: null,
               icon: null,
             },
             {
@@ -659,7 +659,7 @@ CardDashboard.args = {
               action: null,
               content:
                 'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - T4</p>',
-              hint: 'none',
+              hint: null,
               icon: null,
             },
             {
@@ -720,7 +720,7 @@ CardDashboard.args = {
               action: null,
               content:
                 'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - T4</p>',
-              hint: 'none',
+              hint: null,
               icon: null,
             },
             {
@@ -781,7 +781,7 @@ CardDashboard.args = {
               action: null,
               content:
                 'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - T4</p>',
-              hint: 'none',
+              hint: null,
               icon: null,
             },
             {
@@ -842,7 +842,7 @@ CardDashboard.args = {
               action: null,
               content:
                 'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - T4</p>',
-              hint: 'none',
+              hint: null,
               icon: null,
             },
             {
@@ -903,7 +903,7 @@ CardDashboard.args = {
               action: null,
               content:
                 'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - T4</p>',
-              hint: 'none',
+              hint: null,
               icon: null,
             },
             {
@@ -964,7 +964,7 @@ CardDashboard.args = {
               action: null,
               content:
                 'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - T4</p>',
-              hint: 'none',
+              hint: null,
               icon: null,
             },
             {
@@ -1025,7 +1025,7 @@ CardDashboard.args = {
               action: null,
               content:
                 'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - T4</p>',
-              hint: 'none',
+              hint: null,
               icon: null,
             },
             {
@@ -1086,7 +1086,7 @@ CardDashboard.args = {
               action: null,
               content:
                 'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - T4</p>',
-              hint: 'none',
+              hint: null,
               icon: null,
             },
             {
@@ -1147,7 +1147,7 @@ CardDashboard.args = {
               action: null,
               content:
                 'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - T4</p>',
-              hint: 'none',
+              hint: null,
               icon: null,
             },
             {
@@ -1208,7 +1208,7 @@ CardDashboard.args = {
               action: null,
               content:
                 'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - T4</p>',
-              hint: 'none',
+              hint: null,
               icon: null,
             },
             {
@@ -1269,7 +1269,7 @@ CardDashboard.args = {
               action: null,
               content:
                 'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - T4</p>',
-              hint: 'none',
+              hint: null,
               icon: null,
             },
             {
@@ -1330,7 +1330,7 @@ CardDashboard.args = {
               action: null,
               content:
                 'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - T4</p>',
-              hint: 'none',
+              hint: null,
               icon: null,
             },
             {
@@ -1391,7 +1391,7 @@ CardDashboard.args = {
               action: null,
               content:
                 'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - T4</p>',
-              hint: 'none',
+              hint: null,
               icon: null,
             },
             {
@@ -1452,7 +1452,7 @@ CardDashboard.args = {
               action: null,
               content:
                 'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - T4</p>',
-              hint: 'none',
+              hint: null,
               icon: null,
             },
             {
