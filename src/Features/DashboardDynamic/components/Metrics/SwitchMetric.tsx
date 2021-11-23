@@ -24,6 +24,7 @@ export const SwitchMetric: React.FC<ISwitchMetric> = ({
               hint={indicator.hint}
               style={{
                 color: indicator.bar_color,
+                height: 13,
               }}
             />
             <p>

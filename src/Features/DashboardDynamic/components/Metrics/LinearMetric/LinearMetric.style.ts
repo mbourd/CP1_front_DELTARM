@@ -3,7 +3,6 @@ import { LinearProgress } from '@material-ui/core';
 import { linearProgressClasses } from '@mui/material';
 
 export const CustomLinearProgress = styled(LinearProgress)((style: any) => ({
-  height: 12,
   borderRadius: 10,
   marginBottom: 10,
   [`&.${linearProgressClasses.colorPrimary}`]: {
