@@ -25,8 +25,8 @@ export const Card: React.FC<ICardC> = ({
   const indexCellColumnBorderRight: number[] = [];
   const generateMaterialIcon = useCallback(
     (iconName: SvgIconComponent, color, size, action, hint) => {
-      // @ts-ignore
       if (hint === 'none') {
+        // @ts-ignore
         return createElement(icons[iconName], {
           style: { color, size },
           onClick: () => actionIcons(action),
@@ -36,10 +36,13 @@ export const Card: React.FC<ICardC> = ({
       if (hint !== 'none') {
         return (
           <BPITooltip title={hint}>
-            {createElement(icons[iconName], {
-              style: { color, size },
-              onClick: () => actionIcons(action),
-            })}
+            {
+              // @ts-ignore
+              createElement(icons[iconName], {
+                style: { color, size },
+                onClick: () => actionIcons(action),
+              })
+            }
           </BPITooltip>
         );
       }
