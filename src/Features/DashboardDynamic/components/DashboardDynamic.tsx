@@ -1,7 +1,13 @@
-import React, { Suspense, useCallback, useContext, useEffect } from 'react';
+import React, {
+  Suspense,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { Grid } from '@material-ui/core';
 
-import { useApi, useSecurity, SecurityContext } from 'Services';
+import { useApi, useSecurity, SecurityContext, router } from 'Services';
 import { BreadCrumb, Heading } from 'Shared/components';
 import { DashboardStyled, MetricsContainerStyled } from './Dashboard.style';
 import { ButtonContainerStyled } from './Dashboard.style';
@@ -9,12 +15,15 @@ import { Card } from './Card/Card';
 import { IsLoading } from './IsLoading';
 import { NoData } from './NoData';
 import { SearchBar } from './Search/SearchBar';
-import { IDashboard } from './types';
+import { ICardValueItemParams, IDashboard } from './types';
 import { Button } from 'Shared/components';
 import { SwitchMetric } from './Metrics/SwitchMetric';
+import { DashboardModal } from './Search/Modal/DashboardModal';
 
 const DashboardDynamic: React.FC = (): React.ReactElement => {
   const { send, data: response } = useApi<IDashboard>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentModalRoute, setCurrentModalRoute] = useState<string>('');
 
   const { user } = useSecurity();
   const { logout } = useContext(SecurityContext);
@@ -27,11 +36,27 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
     send('dashboardControlPermanent');
   }, [send]);
 
-  const onClickCustomButtons = useCallback((route: string) => {
-    console.log('ROUTE TO CALL: ' + route);
-  }, []);
+  const handleClickCardIcons = useCallback(
+    (action: ICardValueItemParams | null) => {
+      switch (action?.target) {
+        case 'blank':
+          return window.open(action.route, '_blank');
+        case 'modal':
+          setIsModalOpen(true);
+          setCurrentModalRoute(action.route);
 
-  console.log(response);
+          return;
+        case 'self':
+          return router.redirectToUrl(action.route);
+      }
+    },
+    [],
+  );
+
+  const onClickCustomButtons = useCallback((route: string) => {
+    // click on custom buttons
+    console.log('CUSTOM BUTTON ROUTE TO CALL: ' + route);
+  }, []);
 
   return (
     <>
@@ -87,18 +112,24 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
             </Grid>
           </MetricsContainerStyled>
           <Grid container>
-            {response?.data.cards.visible ? (
+            {response?.data.cards.visible &&
               response.data.cards.card.map((card, index) => (
                 <Grid item xs={12} md={6} key={index}>
-                  <Card card={card} key={index} />
+                  <Card
+                    card={card}
+                    key={index}
+                    actionIcons={handleClickCardIcons}
+                  />
                 </Grid>
-              ))
-            ) : (
-              <Grid item xs={12}>
-                <NoData />
-              </Grid>
-            )}
+              ))}
           </Grid>
+          {isModalOpen ? (
+            <DashboardModal
+              open={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              route={currentModalRoute}
+            />
+          ) : null}
         </DashboardStyled>
       </Suspense>
     </>

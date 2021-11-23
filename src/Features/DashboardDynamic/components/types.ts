@@ -11,7 +11,7 @@ interface ICardCol {
   header: string;
 }
 
-interface ICardValueItemParams {
+export interface ICardValueItemParams {
   route: string;
   target: 'blank' | 'self' | 'modal';
 }

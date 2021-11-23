@@ -4,7 +4,7 @@ import {
   useApi,
   router,
 } from '../../../../../Services';
-import { IKSIOPManualInput, IMissingField } from '../../../../Manage/apiRoutes';
+import { IKSIOPManualInput, IMissingField } from '../../../../Manage';
 import {
   SearchModalBPIContentStyled,
   SearchModalFooterStyled,

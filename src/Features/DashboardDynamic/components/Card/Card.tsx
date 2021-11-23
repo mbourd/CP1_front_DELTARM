@@ -1,7 +1,7 @@
 import React, { createElement, useCallback } from 'react';
 import { TableHead } from '@material-ui/core';
 import { CardStyled, StyledTableCell } from './Card.style';
-import { ICard } from '../types';
+import { ICard, ICardValueItemParams } from '../types';
 import {
   Paper,
   Table,
@@ -16,24 +16,28 @@ import { SvgIconComponent } from '@material-ui/icons';
 
 interface ICardC {
   card: ICard;
+  actionIcons: (action: ICardValueItemParams | null) => void;
 }
-export const Card: React.FC<ICardC> = ({ card }): React.ReactElement => {
+export const Card: React.FC<ICardC> = ({
+  card,
+  actionIcons,
+}): React.ReactElement => {
   const generateMaterialIcon = useCallback(
-    (iconName: SvgIconComponent, color, size) => {
+    (iconName: SvgIconComponent, color, size, action) => {
       // @ts-ignore
-      return createElement(icons[iconName], { style: { color, size } });
+      return createElement(icons[iconName], {
+        style: { color, size },
+        onClick: () => actionIcons(action),
+      });
     },
-    [],
+    [actionIcons],
   );
 
   return (
     <CardStyled cardColor={card.title.bg_color}>
       <Header color={card.title.bg_color}>{card.title.lib}</Header>
-      <TableContainer
-        component={Paper}
-        style={{ width: '100%', overflow: 'hidden' }}
-      >
-        <Table aria-label="customized table">
+      <TableContainer component={Paper} style={{ maxHeight: '450px' }}>
+        <Table stickyHeader>
           <TableHead>
             <TableRow>
               {card.cols.header_visible
@@ -49,6 +53,9 @@ export const Card: React.FC<ICardC> = ({ card }): React.ReactElement => {
                         borderRight: column.border_right
                           ? `1px solid ${card.title.bg_color}`
                           : 'none',
+                        top: 0,
+                        position: 'sticky',
+                        backgroundColor: '#fff',
                       }}
                     >
                       {column.header}
@@ -84,6 +91,7 @@ export const Card: React.FC<ICardC> = ({ card }): React.ReactElement => {
                             cell.icon.ref,
                             cell.icon.color,
                             cell.icon.size,
+                            cell.action,
                           )
                         : null}
                     </StyledTableCell>
