@@ -30,15 +30,7 @@ export const Card: React.FC<ICardC> = ({
   });
   const generateMaterialIcon = useCallback(
     (iconName: SvgIconComponent, color, size, action, hint) => {
-      if (hint === 'none') {
-        // @ts-ignore
-        return createElement(icons[iconName], {
-          style: { color, size, cursor: 'default' },
-          onClick: () => actionIcons(action),
-        });
-      }
-
-      if (hint !== 'none') {
+      if (hint) {
         return (
           <BPITooltip title={hint}>
             {
@@ -51,6 +43,12 @@ export const Card: React.FC<ICardC> = ({
           </BPITooltip>
         );
       }
+
+      // @ts-ignore
+      return createElement(icons[iconName], {
+        style: { color, size, cursor: 'default' },
+        onClick: () => actionIcons(action),
+      });
     },
     [actionIcons],
   );
@@ -111,18 +109,18 @@ export const Card: React.FC<ICardC> = ({
                       }}
                     >
                       {cell.content ? (
-                        cell.hint === 'none' ? (
-                          <p
-                            dangerouslySetInnerHTML={{ __html: cell.content }}
-                            style={{ cursor: 'default' }}
-                          />
-                        ) : (
+                        cell.hint ? (
                           <BPITooltip title={cell.hint}>
                             <p
                               dangerouslySetInnerHTML={{ __html: cell.content }}
                               style={{ cursor: 'pointer' }}
                             />
                           </BPITooltip>
+                        ) : (
+                          <p
+                            dangerouslySetInnerHTML={{ __html: cell.content }}
+                            style={{ cursor: 'default' }}
+                          />
                         )
                       ) : null}
                       {cell.icon

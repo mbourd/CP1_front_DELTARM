@@ -24,7 +24,7 @@ interface ICardIcon {
 interface ICardValueItem {
   action: ICardValueItemParams | null;
   content: string | null;
-  hint: string;
+  hint: string | null;
   icon: ICardIcon | null;
   border_right?: boolean;
 }
