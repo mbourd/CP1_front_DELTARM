@@ -24,12 +24,25 @@ export const Card: React.FC<ICardC> = ({
 }): React.ReactElement => {
   const indexCellColumnBorderRight: number[] = [];
   const generateMaterialIcon = useCallback(
-    (iconName: SvgIconComponent, color, size, action) => {
+    (iconName: SvgIconComponent, color, size, action, hint) => {
       // @ts-ignore
-      return createElement(icons[iconName], {
-        style: { color, size },
-        onClick: () => actionIcons(action),
-      });
+      if (hint === 'none') {
+        return createElement(icons[iconName], {
+          style: { color, size },
+          onClick: () => actionIcons(action),
+        });
+      }
+
+      if (hint !== 'none') {
+        return (
+          <BPITooltip title={hint}>
+            {createElement(icons[iconName], {
+              style: { color, size },
+              onClick: () => actionIcons(action),
+            })}
+          </BPITooltip>
+        );
+      }
     },
     [actionIcons],
   );
@@ -80,34 +93,33 @@ export const Card: React.FC<ICardC> = ({
                   }
 
                   return (
-                    <BPITooltip title={cell.hint} key={index}>
-                      <StyledTableCell
-                        scope="row"
-                        key={index}
-                        style={{
-                          borderBottom: card.lines.border_bottom
-                            ? `1px solid ${card.title.bg_color}`
-                            : 'none',
-                          borderRight: cell.border_right
-                            ? `1px solid ${card.title.bg_color}`
-                            : 'none',
-                        }}
-                      >
-                        {cell.content ? (
-                          <span
-                            dangerouslySetInnerHTML={{ __html: cell.content }}
-                          />
-                        ) : null}
-                        {cell.icon
-                          ? generateMaterialIcon(
-                              cell.icon.ref,
-                              cell.icon.color,
-                              cell.icon.size,
-                              cell.action,
-                            )
-                          : null}
-                      </StyledTableCell>
-                    </BPITooltip>
+                    <StyledTableCell
+                      scope="row"
+                      key={index}
+                      style={{
+                        borderBottom: card.lines.border_bottom
+                          ? `1px solid ${card.title.bg_color}`
+                          : 'none',
+                        borderRight: cell.border_right
+                          ? `1px solid ${card.title.bg_color}`
+                          : 'none',
+                      }}
+                    >
+                      {cell.content ? (
+                        <span
+                          dangerouslySetInnerHTML={{ __html: cell.content }}
+                        />
+                      ) : null}
+                      {cell.icon
+                        ? generateMaterialIcon(
+                            cell.icon.ref,
+                            cell.icon.color,
+                            cell.icon.size,
+                            cell.action,
+                            cell.hint,
+                          )
+                        : null}
+                    </StyledTableCell>
                   );
                 })}
               </TableRow>
