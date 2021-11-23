@@ -8,8 +8,8 @@ interface IProps {
 
 export const CardStyled = styled.section<IProps>`
   display: block;
-  max-width: 500px;
   margin: 0 auto;
+  border-radius: 4px;
   .MuiCard-root {
     border: ${({ cardColor }) => cardColor};
     position: relative;

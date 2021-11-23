@@ -22,13 +22,27 @@ export const Card: React.FC<ICardC> = ({
   card,
   actionIcons,
 }): React.ReactElement => {
+  const indexCellColumnBorderRight: number[] = [];
   const generateMaterialIcon = useCallback(
-    (iconName: SvgIconComponent, color, size, action) => {
+    (iconName: SvgIconComponent, color, size, action, hint) => {
       // @ts-ignore
-      return createElement(icons[iconName], {
-        style: { color, size },
-        onClick: () => actionIcons(action),
-      });
+      if (hint === 'none') {
+        return createElement(icons[iconName], {
+          style: { color, size },
+          onClick: () => actionIcons(action),
+        });
+      }
+
+      if (hint !== 'none') {
+        return (
+          <BPITooltip title={hint}>
+            {createElement(icons[iconName], {
+              style: { color, size },
+              onClick: () => actionIcons(action),
+            })}
+          </BPITooltip>
+        );
+      }
     },
     [actionIcons],
   );
@@ -41,34 +55,44 @@ export const Card: React.FC<ICardC> = ({
           <TableHead>
             <TableRow>
               {card.cols.header_visible
-                ? card.cols.values.map((column, index) => (
-                    <StyledTableCell
-                      scope="row"
-                      key={index}
-                      style={{
-                        textAlign: 'center',
-                        borderBottom: card.lines.border_bottom
-                          ? `1px solid ${card.title.bg_color}`
-                          : 'none',
-                        borderRight: column.border_right
-                          ? `1px solid ${card.title.bg_color}`
-                          : 'none',
-                        top: 0,
-                        position: 'sticky',
-                        backgroundColor: '#fff',
-                      }}
-                    >
-                      {column.header}
-                    </StyledTableCell>
-                  ))
+                ? card.cols.values.map((column, index) => {
+                    if (column.border_right) {
+                      indexCellColumnBorderRight.push(index);
+                    }
+
+                    return (
+                      <StyledTableCell
+                        scope="row"
+                        key={index}
+                        style={{
+                          textAlign: 'center',
+                          borderBottom: card.lines.border_bottom
+                            ? `1px solid ${card.title.bg_color}`
+                            : 'none',
+                          borderRight: column.border_right
+                            ? `1px solid ${card.title.bg_color}`
+                            : 'none',
+                          top: 0,
+                          position: 'sticky',
+                          backgroundColor: '#fff',
+                        }}
+                      >
+                        {column.header}
+                      </StyledTableCell>
+                    );
+                  })
                 : null}
             </TableRow>
           </TableHead>
           <TableBody>
-            {card.lines.values.map((row) => (
-              <TableRow key={row.id}>
-                {row.item.map((cell, index) => (
-                  <BPITooltip title={cell.hint} key={index}>
+            {card.lines.values.map((row, index) => (
+              <TableRow key={index}>
+                {row.item.map((cell, index) => {
+                  if (indexCellColumnBorderRight.includes(index)) {
+                    cell.border_right = true;
+                  }
+
+                  return (
                     <StyledTableCell
                       scope="row"
                       key={index}
@@ -79,6 +103,7 @@ export const Card: React.FC<ICardC> = ({
                         borderRight: cell.border_right
                           ? `1px solid ${card.title.bg_color}`
                           : 'none',
+                        padding: '10px',
                       }}
                     >
                       {cell.content ? (
@@ -92,11 +117,12 @@ export const Card: React.FC<ICardC> = ({
                             cell.icon.color,
                             cell.icon.size,
                             cell.action,
+                            cell.hint,
                           )
                         : null}
                     </StyledTableCell>
-                  </BPITooltip>
-                ))}
+                  );
+                })}
               </TableRow>
             ))}
           </TableBody>

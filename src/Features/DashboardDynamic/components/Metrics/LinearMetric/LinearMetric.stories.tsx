@@ -21,5 +21,6 @@ LinearIndicator.args = {
   style: {
     color: 'blue',
     backgroundColor: 'grey',
+    height: 13,
   },
 };

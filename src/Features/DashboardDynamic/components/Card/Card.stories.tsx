@@ -55,7 +55,7 @@ CardDashboard.args = {
             {
               action: null,
               content: null,
-              hint: 'Smiley 1',
+              hint: 'none',
               icon: {
                 color: 'red',
                 ref: 'SentimentVeryDissatisfied',
