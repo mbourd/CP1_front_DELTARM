@@ -51,7 +51,7 @@ export default {
                   action: null,
                   content:
                     'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site A - M1</p>',
-                  hint: 'none',
+                  hint: null,
                   icon: '',
                 },
                 {
@@ -113,7 +113,7 @@ export default {
                   action: null,
                   content:
                     'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - M1</p>',
-                  hint: 'none',
+                  hint: null,
                   icon: null,
                 },
                 {
@@ -175,7 +175,7 @@ export default {
                   action: null,
                   content:
                     'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site A - T3</p>',
-                  hint: 'none',
+                  hint: null,
                   icon: null,
                 },
                 {
@@ -237,7 +237,7 @@ export default {
                   action: null,
                   content:
                     'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - T4</p>',
-                  hint: 'none',
+                  hint: null,
                   icon: null,
                 },
                 {
@@ -328,7 +328,7 @@ export default {
                   action: null,
                   content:
                     'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site A - M1</p>',
-                  hint: 'none',
+                  hint: null,
                   icon: null,
                 },
                 {
@@ -368,7 +368,7 @@ export default {
                   action: null,
                   content:
                     'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site A - M2</p>',
-                  hint: 'none',
+                  hint: null,
                   icon: null,
                 },
                 {
@@ -408,7 +408,7 @@ export default {
                   action: null,
                   content:
                     'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site A - M3</p>',
-                  hint: 'none',
+                  hint: null,
                   icon: null,
                 },
                 {
@@ -477,7 +477,7 @@ export default {
                   action: null,
                   content:
                     'Contrôler la conformité statutaire - <p style="color:red; font-weight:bold;">Site V1 - M6</p>',
-                  hint: 'none',
+                  hint: null,
                   icon: null,
                 },
                 {
@@ -518,7 +518,7 @@ export default {
                   action: null,
                   content:
                     'Contrôler la conformité statutaire - <p style="color:red; font-weight:bold;">Site V2 - M12</p>',
-                  hint: 'none',
+                  hint: null,
                   icon: null,
                 },
                 {
@@ -588,7 +588,7 @@ export default {
                   action: null,
                   content:
                     'Contrôler la conformité statutaire - <p style="color:red; font-weight:bold;">Site Rej1 - M4</p>',
-                  hint: 'none',
+                  hint: null,
                   icon: null,
                 },
                 {
@@ -657,7 +657,7 @@ export default {
                   action: null,
                   content:
                     'Contrôler la conformité statutaire - <p style="color:red; font-weight:bold;">Site V1 - M6</p>',
-                  hint: 'none',
+                  hint: null,
                   icon: null,
                 },
                 {
@@ -698,7 +698,7 @@ export default {
                   action: null,
                   content:
                     'Contrôler la conformité statutaire - <p style="color:red; font-weight:bold;">Site V2 - M12</p>',
-                  hint: 'none',
+                  hint: null,
                   icon: null,
                 },
                 {

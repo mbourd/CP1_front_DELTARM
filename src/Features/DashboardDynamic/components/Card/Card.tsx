@@ -13,6 +13,7 @@ import { BPITooltip } from '../../../../Shared/components';
 import { Header } from '../../../Dashboard/components/Card/Header/Header';
 import * as icons from '@material-ui/icons';
 import { SvgIconComponent } from '@material-ui/icons';
+import { useTheme } from '../../../../Packages/Design';
 
 interface ICardC {
   card: ICard;
@@ -22,6 +23,7 @@ export const Card: React.FC<ICardC> = ({
   card,
   actionIcons,
 }): React.ReactElement => {
+  const theme = useTheme();
   const indexCellColumnBorderRight: number[] = [];
   card.cols.values.forEach((column, index) => {
     if (column.border_right) {
@@ -77,6 +79,7 @@ export const Card: React.FC<ICardC> = ({
                           top: 0,
                           position: 'sticky',
                           backgroundColor: '#fff',
+                          fontFamily: `${theme.font.text.main}`,
                         }}
                       >
                         {column.header}
@@ -106,6 +109,7 @@ export const Card: React.FC<ICardC> = ({
                           ? `1px solid ${card.title.bg_color}`
                           : 'none',
                         padding: '10px',
+                        fontFamily: `${theme.font.text.main}`,
                       }}
                     >
                       {cell.content ? (
