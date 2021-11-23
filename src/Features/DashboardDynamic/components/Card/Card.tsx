@@ -23,12 +23,17 @@ export const Card: React.FC<ICardC> = ({
   actionIcons,
 }): React.ReactElement => {
   const indexCellColumnBorderRight: number[] = [];
+  card.cols.values.forEach((column, index) => {
+    if (column.border_right) {
+      indexCellColumnBorderRight.push(index);
+    }
+  });
   const generateMaterialIcon = useCallback(
     (iconName: SvgIconComponent, color, size, action, hint) => {
       if (hint === 'none') {
         // @ts-ignore
         return createElement(icons[iconName], {
-          style: { color, size },
+          style: { color, size, cursor: 'default' },
           onClick: () => actionIcons(action),
         });
       }
@@ -59,10 +64,6 @@ export const Card: React.FC<ICardC> = ({
             <TableRow>
               {card.cols.header_visible
                 ? card.cols.values.map((column, index) => {
-                    if (column.border_right) {
-                      indexCellColumnBorderRight.push(index);
-                    }
-
                     return (
                       <StyledTableCell
                         scope="row"
@@ -110,9 +111,19 @@ export const Card: React.FC<ICardC> = ({
                       }}
                     >
                       {cell.content ? (
-                        <span
-                          dangerouslySetInnerHTML={{ __html: cell.content }}
-                        />
+                        cell.hint === 'none' ? (
+                          <p
+                            dangerouslySetInnerHTML={{ __html: cell.content }}
+                            style={{ cursor: 'default' }}
+                          />
+                        ) : (
+                          <BPITooltip title={cell.hint}>
+                            <p
+                              dangerouslySetInnerHTML={{ __html: cell.content }}
+                              style={{ cursor: 'pointer' }}
+                            />
+                          </BPITooltip>
+                        )
                       ) : null}
                       {cell.icon
                         ? generateMaterialIcon(
