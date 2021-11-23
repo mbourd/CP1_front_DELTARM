@@ -103,6 +103,7 @@ export const Card: React.FC<ICardC> = ({
                         borderRight: cell.border_right
                           ? `1px solid ${card.title.bg_color}`
                           : 'none',
+                        padding: '10px',
                       }}
                     >
                       {cell.content ? (
