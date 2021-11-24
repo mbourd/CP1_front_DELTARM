@@ -8,7 +8,6 @@ export interface ISecurityProviderContext {
   user: IUser;
   jwt: string | null;
   data: any;
-  source_caller: string;
   login: (token: string) => void;
   logout: () => void;
 }
@@ -25,7 +24,6 @@ export const SecurityContext = React.createContext<ISecurityProviderContext>({
   user: new User(),
   jwt: null,
   data: {},
-  source_caller: 'contr_perm',
   login: () => undefined,
   logout: () => undefined,
 });
@@ -78,7 +76,6 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({
     window.location.href = getEnv('LOGOUT_REDIRECT');
   }, [security, user, setUser]);
 
-  const source_caller = 'contr_perm';
   const context = useMemo(
     () => ({
       user,
@@ -88,7 +85,6 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({
       >,
       login,
       logout,
-      source_caller,
     }),
     [security, user, jwt, login, logout],
   );
