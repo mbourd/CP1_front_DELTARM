@@ -1,4 +1,4 @@
-import { SvgIconComponent } from '@material-ui/icons';
+import { SvgIconComponent } from '@mui/icons-material';
 
 interface IButtons {
   btn_color: string;
