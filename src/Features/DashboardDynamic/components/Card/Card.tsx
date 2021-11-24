@@ -60,7 +60,7 @@ export const Card: React.FC<ICardC> = ({
   return (
     <CardStyled cardColor={card.title.bg_color}>
       <Header color={card.title.bg_color}>{card.title.lib}</Header>
-      <TableContainer component={Paper} style={{ maxHeight: '350px' }}>
+      <TableContainer component={Paper} style={{ maxHeight: '300px' }}>
         <Table stickyHeader>
           <TableHead>
             <TableRow>
