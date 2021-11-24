@@ -11,8 +11,8 @@ import {
 } from '@mui/material';
 import { BPITooltip } from '../../../../Shared/components';
 import { Header } from '../../../Dashboard/components/Card/Header/Header';
-import * as icons from '@material-ui/icons';
-import { SvgIconComponent } from '@material-ui/icons';
+import * as icons from '@mui/icons-material';
+import { SvgIconComponent } from '@mui/icons-material';
 import { useTheme } from '../../../../Packages/Design';
 
 interface ICardC {
@@ -31,26 +31,28 @@ export const Card: React.FC<ICardC> = ({
     }
   });
   const generateMaterialIcon = useCallback(
-    (iconName: SvgIconComponent, color, size, action, hint) => {
+    (
+      iconName: SvgIconComponent,
+      color,
+      size,
+      action,
+      hint,
+    ): React.ReactElement | null => {
+      // @ts-ignore
+      const icon = icons[iconName];
+      if (!icon) {
+        return null;
+      }
+      const dynamicIconElementByAPI = createElement(icon, {
+        style: { color, size },
+        onClick: () => actionIcons(action),
+      });
       if (hint) {
-        return (
-          <BPITooltip title={hint}>
-            {
-              // @ts-ignore
-              createElement(icons[iconName], {
-                style: { color, size },
-                onClick: () => actionIcons(action),
-              })
-            }
-          </BPITooltip>
-        );
+        return <BPITooltip title={hint}>{dynamicIconElementByAPI}</BPITooltip>;
       }
 
       // @ts-ignore
-      return createElement(icons[iconName], {
-        style: { color, size, cursor: 'default' },
-        onClick: () => actionIcons(action),
-      });
+      return dynamicIconElementByAPI;
     },
     [actionIcons],
   );
@@ -58,7 +60,7 @@ export const Card: React.FC<ICardC> = ({
   return (
     <CardStyled cardColor={card.title.bg_color}>
       <Header color={card.title.bg_color}>{card.title.lib}</Header>
-      <TableContainer component={Paper} style={{ maxHeight: '450px' }}>
+      <TableContainer component={Paper} style={{ maxHeight: '350px' }}>
         <Table stickyHeader>
           <TableHead>
             <TableRow>

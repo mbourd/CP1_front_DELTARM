@@ -24,9 +24,5 @@ describe('Card Dashboard', () => {
       const { getByText } = render(<CardDashboard />);
       expect(getByText('Site A - M1')).toBeInTheDocument();
     });
-    test('Should target a new window when click on icon with target blank', async () => {
-      const { getByText } = render(<CardDashboard />);
-      expect(getByText('Site A - M1')).toBeInTheDocument();
-    });
   });
 });
