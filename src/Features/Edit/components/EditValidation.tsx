@@ -48,7 +48,6 @@ export const EditValidation: React.FC<IProps> = ({
 
     if (currentSection) {
       queries.section_id = currentSection;
-      router.setQueries({});
     }
 
     send(apiRouteName, {}, queries);
