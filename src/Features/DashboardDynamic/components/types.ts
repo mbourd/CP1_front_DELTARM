@@ -14,6 +14,7 @@ interface ICardCol {
 export interface ICardValueItemParams {
   route: string;
   target: 'blank' | 'self' | 'modal';
+  params?: { key: string; value: string }[];
 }
 interface ICardIcon {
   color: string;

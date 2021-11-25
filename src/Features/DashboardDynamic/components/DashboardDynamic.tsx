@@ -13,7 +13,6 @@ import { DashboardStyled, MetricsContainerStyled } from './Dashboard.style';
 import { ButtonContainerStyled } from './Dashboard.style';
 import { Card } from './Card/Card';
 import { IsLoading } from './IsLoading';
-import { NoData } from './NoData';
 import { SearchBar } from './Search/SearchBar';
 import { ICardValueItemParams, IDashboard } from './types';
 import { Button } from 'Shared/components';
@@ -47,7 +46,7 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
 
           return;
         case 'self':
-          return router.redirectToUrl(action.route);
+          return router.redirectToUrl(action.route, action?.params);
       }
     },
     [],
