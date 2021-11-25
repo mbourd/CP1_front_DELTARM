@@ -55,13 +55,21 @@ export default {
                   icon: '',
                 },
                 {
-                  action: null,
                   content: null,
-                  hint: 'Smiley 1',
                   icon: {
-                    color: 'red',
-                    ref: 'SentimentVeryDissatisfied',
+                    ref: 'CreateNewFolder',
+                    color: '#3248A8',
                     size: 12,
+                  },
+                  hint: "Saisie d'un nouveau contrôle",
+                  action: {
+                    target: 'self',
+                    route: '/file/edit',
+                    params: [
+                      { key: 'type', value: 'control' },
+                      { key: 'ctrl_id', value: 'toto' },
+                      { key: 'period_code', value: 'toto' },
+                    ],
                   },
                 },
                 {
