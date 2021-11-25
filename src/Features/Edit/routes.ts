@@ -4,7 +4,7 @@ import { IApiComplianceData, IComplianceData } from './types';
 
 router.registerRoute({
   name: 'edit',
-  path: '/file/edit/:id',
+  path: '/file/edit/:id?',
   component: Edit,
   exact: true,
   strict: false,

@@ -2,7 +2,12 @@ import { diffWords } from 'diff';
 import { History, Location } from 'history';
 import { generatePath, matchPath, RouteProps } from 'react-router-dom';
 
-import { IRouteDef, IRouter, RouterParamsType, RouterQueriesType } from './types';
+import {
+  IRouteDef,
+  IRouter,
+  RouterParamsType,
+  RouterQueriesType,
+} from './types';
 
 export class Router implements IRouter {
   private _queries: Record<string, string> = {};
@@ -105,7 +110,11 @@ export class Router implements IRouter {
     return this._currentRoute;
   }
 
-  public generatePath(name: string, params?: RouterParamsType, queries?: RouterQueriesType): string | null {
+  public generatePath(
+    name: string,
+    params?: RouterParamsType,
+    queries?: RouterQueriesType,
+  ): string | null {
     const route = this.get(name);
 
     if (!route) {
@@ -115,13 +124,19 @@ export class Router implements IRouter {
     return this.generateUrl(route.path, params, queries);
   }
 
-  public generateUrl(url: string, params?: RouterParamsType, queries?: RouterQueriesType): string | null {
+  public generateUrl(
+    url: string,
+    params?: RouterParamsType,
+    queries?: RouterQueriesType,
+  ): string | null {
     if (queries) {
       url +=
         '?' +
         Object.keys(queries)
           .map((key) => {
-            return encodeURIComponent(key) + '=' + encodeURIComponent(queries[key]);
+            return (
+              encodeURIComponent(key) + '=' + encodeURIComponent(queries[key])
+            );
           })
           .join('&');
     }
@@ -156,7 +171,9 @@ export class Router implements IRouter {
         return change;
       }
 
-      params[paramsKeys[i]] = change.value.replace(/\//g, '').replace(/\?.+/, '');
+      params[paramsKeys[i]] = change.value
+        .replace(/\//g, '')
+        .replace(/\?.+/, '');
       i++;
 
       return change;
@@ -177,11 +194,14 @@ export class Router implements IRouter {
 
   public parseQueries(search: string): Record<string, string> {
     const queries: Record<string, string> = {};
-    search.replace(/(\w+)=(\w+)/g, (match, key, value) => {
-      queries[key] = value;
+    search.replace(
+      /([a-zA-Z\d\-_.,\s]+)=([a-zA-Z\d\-_.,\s]+)/g,
+      (match, key, value) => {
+        queries[key] = value;
 
-      return match;
-    });
+        return match;
+      },
+    );
 
     return queries;
   }
@@ -189,7 +209,12 @@ export class Router implements IRouter {
   /**
    * Redirect to route using its name.
    */
-  public redirectTo(name: string, params?: RouterParamsType, queries?: RouterQueriesType, force?: boolean): this {
+  public redirectTo(
+    name: string,
+    params?: RouterParamsType,
+    queries?: RouterQueriesType,
+    force?: boolean,
+  ): this {
     if (!this._history) {
       return this;
     }
@@ -209,7 +234,11 @@ export class Router implements IRouter {
     return this;
   }
 
-  public redirectToUrl(url: string, queries?: RouterQueriesType, params?: RouterParamsType): this {
+  public redirectToUrl(
+    url: string,
+    queries?: RouterQueriesType,
+    params?: RouterParamsType,
+  ): this {
     if (!this._history) {
       return this;
     }
