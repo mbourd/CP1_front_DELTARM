@@ -32,11 +32,12 @@ export interface IData {
   sections: ISection[];
   state: IState;
   file: IFileItem[];
-  number: string;
-  contrepartie: string;
+  number: string | null;
+  contrepartie: string | null;
   productType: string;
   countComments: number;
   validationCount?: string;
   sectionHeader?: ISectionHeader;
   sectionFooter?: ISectionFooter;
+  title: string | null;
 }
