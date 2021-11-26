@@ -19,7 +19,7 @@ import {
   StairsLoader,
 } from '../../../../../Packages/Design/components';
 import { Grid } from '@material-ui/core';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { GenerateFieldManual } from './GenerateFieldManual';
 
@@ -37,26 +37,29 @@ export const CreateModal: React.FC<IProps> = ({
   const { handleSubmit, control } = useForm();
   const { error, callState, send, data } = useApi<IKSIOPManualInput | null>();
   const [missingFields, setStateMissingFields] = useState(true);
+  const queries = useRef<any>({});
 
   // Have the current filled queries in object
-  let queries: any;
-  dataManualInput?.fields.forEach((field: IMissingField) => {
-    if (field.value) {
-      queries = {
-        ...queries,
-        [field.key]: field.value,
-      };
-    } else {
-      queries = {
-        ...queries,
-        [field.key]: '',
-      };
-    }
-  });
+  useEffect(() => {
+    dataManualInput?.fields.forEach((field: IMissingField) => {
+      if (field.value) {
+        queries.current = {
+          ...queries.current,
+          [field.key]: field.value,
+        };
+      } else {
+        queries.current = {
+          ...queries.current,
+          [field.key]: '',
+        };
+      }
+    });
+  }, [dataManualInput]);
+
   const verifyValidForm = useCallback(() => {
     let errors = 0;
-    Object.keys(queries).forEach((key: any) => {
-      if (queries[key] === '') {
+    Object.keys(queries.current).forEach((key: any) => {
+      if (queries.current[key] === '') {
         errors += 1;
       }
     });
@@ -65,7 +68,7 @@ export const CreateModal: React.FC<IProps> = ({
     } else {
       setStateMissingFields(true);
     }
-  }, [queries]);
+  }, []);
 
   const createFile = useCallback(() => {
     apiRouter.changeRouteUrl(
@@ -77,37 +80,39 @@ export const CreateModal: React.FC<IProps> = ({
     const file_num = dataManualInput?.manualFile.file_num;
     const file_avenant = dataManualInput?.manualFile.file_avenant;
     const typedossier = dataManualInput?.manualFile.typedossier;
-    queries = {
-      ...queries,
+    queries.current = {
+      ...queries.current,
       file_num,
       file_avenant,
       typedossier,
     };
-    send('createFile', {}, queries);
+    send('createFile', {}, queries.current);
   }, [send, dataManualInput]);
 
-  const handleLeaveField = useCallback((event: any) => {
-    queries = {
-      ...queries,
-      [event.currentTarget.name]: event.currentTarget.value,
-    };
-    // verify before unlock send buttons, react hook form ?
-    verifyValidForm();
-  }, []);
+  const handleLeaveField = useCallback(
+    (event: any) => {
+      queries.current = {
+        ...queries.current,
+        [event.currentTarget.name]: event.currentTarget.value,
+      };
+      // verify before unlock send buttons, react hook form ?
+      verifyValidForm();
+    },
+    [verifyValidForm],
+  );
 
   const setListMissingField = useCallback(
     (values: Record<string, true>, key) => {
       const newValue = Object.keys(values).toString();
-      queries = {
-        ...queries,
+      queries.current = {
+        ...queries.current,
         [key]: newValue,
       };
       // verify before unlock send buttons, react hook form ?
       verifyValidForm();
     },
-    [],
+    [verifyValidForm],
   );
-
   if (callState === 'SUCCESS' && data) {
     router.redirectTo(data.fileContext === 'VALID' ? 'validation' : 'edit', {
       id: data.fileId,
