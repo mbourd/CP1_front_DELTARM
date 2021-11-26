@@ -33,6 +33,7 @@ export const EditValidation: React.FC<IProps> = ({
   const [currentSection, setCurrentSection] = useState<string | null>(null);
   const { user } = useSecurity();
   const { logout } = useContext(SecurityContext);
+  // To avoid (bpi specific)
   const { id } = router.getParams();
   const frontRouterQueries = router.getQueries();
 
@@ -41,7 +42,10 @@ export const EditValidation: React.FC<IProps> = ({
   }
 
   useEffect(() => {
+    // To avoid (bpi specific)
     let queries: Record<string, any> = { file_id: id };
+
+    // NEW WAY FOR DYNAMIC PARAMETERS, THE GOAL IS TO HAVE DYNAMIC PARAMETERS FOR ALL CLIENTS
     if (!isEmpty(frontRouterQueries)) {
       queries = frontRouterQueries;
     }
@@ -74,7 +78,9 @@ export const EditValidation: React.FC<IProps> = ({
             </HeadingOne>
           </EditHeaderStyled>
 
-          <EditValidationContext.Provider value={{ data, fileId: id }}>
+          <EditValidationContext.Provider
+            value={{ data, fileId: id ? id : frontRouterQueries.file_id }}
+          >
             <Grid container wrap={'nowrap'}>
               <Grid item className={'nav'}>
                 <List>
