@@ -1,6 +1,7 @@
 export interface IApiFileInfo {
-  contrepartie: string;
-  file_avenant: string;
-  file_num: string;
+  contrepartie: string | null;
+  file_avenant: string | null;
+  file_num: string | null;
   product_type: string;
+  title: string | null;
 }

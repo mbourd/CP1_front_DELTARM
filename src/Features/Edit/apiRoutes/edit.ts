@@ -1,5 +1,14 @@
 import { apiRouter } from 'Services';
-import { IAction, IApiData, IChapter, IControl, ICurrentSection, IData, ISection, IState } from '../types';
+import {
+  IAction,
+  IApiData,
+  IChapter,
+  IControl,
+  ICurrentSection,
+  IData,
+  ISection,
+  IState,
+} from '../types';
 import { ISelectData } from 'Shared/components';
 
 export const editValidationHandlerCallback = (response: any) => {
@@ -61,7 +70,8 @@ export const editValidationHandlerCallback = (response: any) => {
           complianceUncheckColor: control.compliance.compliance_uncheck_color,
           complianceCheckColor: control.compliance.compliance_check_color,
           complianceLib: control.compliance.compliance_lib,
-          complianceCheckboxResolved: control.compliance.compliance_checkbox_resolved,
+          complianceCheckboxResolved:
+            control.compliance.compliance_checkbox_resolved,
           modaleTitle: control.compliance.compliance_modale_title,
         };
       }
@@ -127,8 +137,12 @@ export const editValidationHandlerCallback = (response: any) => {
     productType: apiData.file_info.product_type,
     countComments: apiData.nb_comment,
     validationCount: apiData.valid_num,
-    sectionHeader: header_message && header_type ? { message: header_message, type: header_type } : undefined,
+    sectionHeader:
+      header_message && header_type
+        ? { message: header_message, type: header_type }
+        : undefined,
     sectionFooter: footer_message ? { message: footer_message } : undefined,
+    title: apiData.file_info.title,
   };
 
   return data;
