@@ -88,19 +88,21 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
               options={response.data.search_bar.options}
             />
           )}
-          <ButtonContainerStyled>
-            {response?.data.btns.map((btn, index) => {
-              return (
-                <Button
-                  key={index}
-                  onClick={() => onClickCustomButtons(btn.route)}
-                  style={{ backgroundColor: btn.btn_color }}
-                >
-                  {btn.btn_lib}
-                </Button>
-              );
-            })}
-          </ButtonContainerStyled>
+          {response && response.data.btns.length > 0 ? (
+            <ButtonContainerStyled>
+              {response?.data.btns.map((btn, index) => {
+                return (
+                  <Button
+                    key={index}
+                    onClick={() => onClickCustomButtons(btn.route)}
+                    style={{ backgroundColor: btn.btn_color }}
+                  >
+                    {btn.btn_lib}
+                  </Button>
+                );
+              })}
+            </ButtonContainerStyled>
+          ) : null}
           <MetricsContainerStyled>
             <Grid container component={'span'} alignItems={'center'}>
               {response?.data.metrics.visible
