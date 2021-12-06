@@ -16,7 +16,7 @@ export const editValidationHandlerCallback = (response: any) => {
   const actions: IAction[] = [];
   const chapters: IChapter[] = [];
 
-  apiData.actions.map((datum) => {
+  apiData.data.actions.map((datum) => {
     actions.push({
       id: '' + datum.id_action,
       label: datum.action_lib,
@@ -27,7 +27,7 @@ export const editValidationHandlerCallback = (response: any) => {
     return datum;
   });
 
-  apiData.current_section.chapters.map((chapter) => {
+  apiData.data.current_section.chapters.map((chapter) => {
     const controls: IControl[] = [];
     chapter.controls.map((control) => {
       const c: IControl = {
@@ -100,12 +100,12 @@ export const editValidationHandlerCallback = (response: any) => {
 
   const currentSection: ICurrentSection = {
     chapters,
-    id: '' + apiData.current_section.section_id,
+    id: '' + apiData.data.current_section.section_id,
   };
 
   const sections: ISection[] = [];
 
-  apiData.sections.map((section) => {
+  apiData.data.sections.map((section) => {
     sections.push({
       id: '' + section.section_id,
       code: '' + section.stage_code,
@@ -118,31 +118,34 @@ export const editValidationHandlerCallback = (response: any) => {
   });
 
   const state: IState = {
-    color: apiData.state.state_color,
-    id: '' + apiData.state.state_id,
-    name: apiData.state.state_name,
+    color: apiData.data.state.state_color,
+    id: '' + apiData.data.state.state_id,
+    name: apiData.data.state.state_name,
   };
 
-  const { header_message, header_type } = apiData.section_header || {};
-  const { footer_message } = apiData.section_footer || {};
+  const { header_message, header_type } = apiData.data.section_header || {};
+  const { footer_message } = apiData.data.section_footer || {};
 
   const data: IData = {
     actions,
     currentSection,
     sections,
     state,
-    file: apiData.file,
-    number: apiData.file_info.file_num + '/' + apiData.file_info.file_avenant,
-    contrepartie: apiData.file_info.contrepartie,
-    productType: apiData.file_info.product_type,
-    countComments: apiData.nb_comment,
-    validationCount: apiData.valid_num,
+    file: apiData.data.file,
+    number:
+      apiData.data.file_info.file_num +
+      '/' +
+      apiData.data.file_info.file_avenant,
+    contrepartie: apiData.data.file_info.contrepartie,
+    productType: apiData.data.file_info.product_type,
+    countComments: apiData.data.nb_comment,
+    validationCount: apiData.data.valid_num,
     sectionHeader:
       header_message && header_type
         ? { message: header_message, type: header_type }
         : undefined,
     sectionFooter: footer_message ? { message: footer_message } : undefined,
-    title: apiData.file_info.title,
+    title: apiData.data.file_info.title,
   };
 
   return data;
