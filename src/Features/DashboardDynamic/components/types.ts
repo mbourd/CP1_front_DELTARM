@@ -12,8 +12,8 @@ interface ICardCol {
 }
 
 export interface ICardValueItemParams {
-  route: string;
-  target: 'blank' | 'self' | 'modal';
+  method: 'GET' | 'POST' | 'DELETE' | 'PUT';
+  endpoint: string | null;
   params?: Record<string, string>;
 }
 interface ICardIcon {
@@ -84,6 +84,8 @@ interface ITitle {
 }
 
 export interface IDashboard {
+  target: string;
+  route_front: string;
   data: {
     btns: IButtons[];
     cards: {
