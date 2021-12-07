@@ -1,5 +1,5 @@
 import React from 'react';
-import { ClickAwayListener, Popper as MUIPopper } from '@material-ui/core';
+import { ClickAwayListener, Popper as MUIPopper } from '@mui/material';
 import { PopperStyled } from './Popper.style';
 import { IPopper } from './types';
 
