@@ -30,11 +30,13 @@ export const SearchModalBPIContentStyled = styled.div`
   }
 
   .product-list {
-    margin: ${({ theme }) => theme.spacing.large} ${({ theme }) => theme.spacing.normal};
+    margin: ${({ theme }) => theme.spacing.large}
+      ${({ theme }) => theme.spacing.normal};
   }
 
   .missing-fields {
-    margin: ${({ theme }) => theme.spacing.large} ${({ theme }) => theme.spacing.normal};
+    margin: ${({ theme }) => theme.spacing.large}
+      ${({ theme }) => theme.spacing.normal};
     .missing-field {
       margin: ${({ theme }) => theme.spacing.normal};
       display: inline-block;

@@ -26,7 +26,9 @@ describe('mergeObject', () => {
   });
 
   it('should be exist', () => {
-    expect((result.key2 as ObjectLiteralType).key2).toStrictEqual('key2-value2');
+    expect((result.key2 as ObjectLiteralType).key2).toStrictEqual(
+      'key2-value2',
+    );
   });
 
   it('should be an object', () => {

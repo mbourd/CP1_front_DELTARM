@@ -1,6 +1,9 @@
 import { isHtmlElement } from './isHtmlElement';
 
-export const isChildOf = (child: Node | HTMLElement | null, parent: HTMLElement): boolean => {
+export const isChildOf = (
+  child: Node | HTMLElement | null,
+  parent: HTMLElement,
+): boolean => {
   if (!isHtmlElement(child) || !isHtmlElement(parent)) {
     return false;
   }

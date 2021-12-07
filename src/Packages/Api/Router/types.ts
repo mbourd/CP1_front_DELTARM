@@ -1,4 +1,9 @@
-import { ApiRequestBodyType, ApiRequestMethodType, ApiRequestParamsType, ApiRequestQueriesType } from '../Request';
+import {
+  ApiRequestBodyType,
+  ApiRequestMethodType,
+  ApiRequestParamsType,
+  ApiRequestQueriesType,
+} from '../Request';
 import { UseApiCallStateType } from '../types';
 
 export interface IApiRouter {
@@ -9,8 +14,16 @@ export interface IApiRouter {
   getRoute: (name: string) => IApiRouteDef | null;
   getRoutes: () => Record<string, IApiRouteDef>;
   clearRoutes: () => IApiRouter;
-  generateUrl: (name: string, params?: ApiRequestParamsType, queries?: ApiRequestQueriesType) => string | null;
-  generatePath: (name: string, params?: ApiRequestParamsType, queries?: ApiRequestQueriesType) => string | null;
+  generateUrl: (
+    name: string,
+    params?: ApiRequestParamsType,
+    queries?: ApiRequestQueriesType,
+  ) => string | null;
+  generatePath: (
+    name: string,
+    params?: ApiRequestParamsType,
+    queries?: ApiRequestQueriesType,
+  ) => string | null;
 }
 
 export interface IApiRouteDef {
@@ -53,5 +66,9 @@ export interface IApiRouteDef {
   /**
    * Use this callback to return new call state.
    */
-  callState?: (body: any, error: any, currentState: UseApiCallStateType) => UseApiCallStateType;
+  callState?: (
+    body: any,
+    error: any,
+    currentState: UseApiCallStateType,
+  ) => UseApiCallStateType;
 }

@@ -35,7 +35,12 @@ apiRouter.registerRoute({
         let value = apiFileData.value;
         if (apiFileData.type === 'date') {
           const date = new Date(value);
-          value = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+          value =
+            date.getDate() +
+            '/' +
+            (date.getMonth() + 1) +
+            '/' +
+            date.getFullYear();
         }
 
         fileData.push({

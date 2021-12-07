@@ -14,13 +14,16 @@ export const SelectLabelStyled = styled.div<IProps>`
   ._SelectLabelButton {
     background-color: ${({ theme, bgc }) => theme.color[bgc].main};
     border: 1px solid
-      ${({ theme, bdc, isOpen, containerBdc }) => (isOpen ? theme.color[containerBdc].main : theme.color[bdc].main)};
+      ${({ theme, bdc, isOpen, containerBdc }) =>
+        isOpen ? theme.color[containerBdc].main : theme.color[bdc].main};
     border-bottom: 1px solid ${({ theme, bdc }) => theme.color[bdc].main};
-    border-radius: ${({ bdr, isOpen }) => (isOpen ? bdr + ' ' + bdr + ' 0 0' : bdr)};
+    border-radius: ${({ bdr, isOpen }) =>
+      isOpen ? bdr + ' ' + bdr + ' 0 0' : bdr};
     color: ${({ theme, labelColor }) => theme.color[labelColor].main};
     cursor: pointer;
     display: block;
-    font-family: ${({ theme, isOpen }) => theme.font[isOpen ? 'medium' : 'text'].main};
+    font-family: ${({ theme, isOpen }) =>
+      theme.font[isOpen ? 'medium' : 'text'].main};
     font-size: ${({ theme }) => theme.sizing.normal};
     height: 38px;
     line-height: 29px;
@@ -48,7 +51,8 @@ export const SelectLabelStyled = styled.div<IProps>`
     }
 
     .MuiSvgIcon-root {
-      color: ${({ theme, bdc, isOpen }) => theme.color[isOpen ? 'active' : bdc].main};
+      color: ${({ theme, bdc, isOpen }) =>
+        theme.color[isOpen ? 'active' : bdc].main};
     }
     &:hover {
       background-color: transparent;

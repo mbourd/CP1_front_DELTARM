@@ -5,7 +5,12 @@ export type SupportedLanguagesType = false | string[];
 export type FallbackNamespaceType = false | string | string[];
 export type MissingKeyHandlerType =
   | false
-  | ((languages: string[], namespace: string, key: string, fallbackValue: string) => void);
+  | ((
+      languages: string[],
+      namespace: string,
+      key: string,
+      fallbackValue: string,
+    ) => void);
 
 export type InitOptionsType = {
   lng: string;
@@ -59,7 +64,11 @@ export interface ITranslation {
   /**
    * Adds multiple resources once.
    */
-  addBatchResource: (resources: BatchResourceType, deep?: boolean, overwrite?: boolean) => ITranslation;
+  addBatchResource: (
+    resources: BatchResourceType,
+    deep?: boolean,
+    overwrite?: boolean,
+  ) => ITranslation;
   /**
    * Adds a complete resource.
    * Setting deep param to true will extend existing translations in that file.

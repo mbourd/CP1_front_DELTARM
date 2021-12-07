@@ -2,7 +2,11 @@ import { isObject } from './';
 
 type ObjectType = Record<string, any>;
 
-export const setByKey = (object: ObjectType, key: string, value: unknown): ObjectType => {
+export const setByKey = (
+  object: ObjectType,
+  key: string,
+  value: unknown,
+): ObjectType => {
   if ('' === key) {
     return object;
   }
@@ -22,7 +26,11 @@ export const setByKey = (object: ObjectType, key: string, value: unknown): Objec
     object[keys[0]] = {};
   }
 
-  object[keys[0]] = setByKey(object[keys[0]] as ObjectType, keys.slice(1).join('.'), value);
+  object[keys[0]] = setByKey(
+    object[keys[0]] as ObjectType,
+    keys.slice(1).join('.'),
+    value,
+  );
 
   return object;
 };

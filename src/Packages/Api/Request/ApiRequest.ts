@@ -25,7 +25,10 @@ export class ApiRequest implements IApiRequest {
   private _basicAuth: ApiRequestBasicAuthType = null;
   private _agent: SuperAgentRequest | null = null;
 
-  constructor(host: ApiRequestHostType, protocol: ApiRequestProtocolType = 'https') {
+  constructor(
+    host: ApiRequestHostType,
+    protocol: ApiRequestProtocolType = 'https',
+  ) {
     this._protocol = protocol;
     this._host = host;
     this.addHeader('Accept', 'application/json, application/ld+json').addHeader(
@@ -162,37 +165,61 @@ export class ApiRequest implements IApiRequest {
     return this._bearerToken;
   }
 
-  get(url: string, queries: ApiRequestQueriesType = {}, body: ApiRequestBodyType = {}): Promise<any> {
+  get(
+    url: string,
+    queries: ApiRequestQueriesType = {},
+    body: ApiRequestBodyType = {},
+  ): Promise<any> {
     this.setUrl(url).setMethod('get').setQueries(queries).setBody(body);
 
     return this.send();
   }
 
-  head(url: string, queries: ApiRequestQueriesType = {}, body: ApiRequestBodyType = {}): Promise<any> {
+  head(
+    url: string,
+    queries: ApiRequestQueriesType = {},
+    body: ApiRequestBodyType = {},
+  ): Promise<any> {
     this.setUrl(url).setMethod('head').setQueries(queries).setBody(body);
 
     return this.send();
   }
 
-  post(url: string, body: ApiRequestBodyType = {}, queries: ApiRequestQueriesType = {}): Promise<any> {
+  post(
+    url: string,
+    body: ApiRequestBodyType = {},
+    queries: ApiRequestQueriesType = {},
+  ): Promise<any> {
     this.setUrl(url).setMethod('post').setBody(body).setQueries(queries);
 
     return this.send();
   }
 
-  put(url: string, body: ApiRequestBodyType = {}, queries: ApiRequestQueriesType = {}): Promise<any> {
+  put(
+    url: string,
+    body: ApiRequestBodyType = {},
+    queries: ApiRequestQueriesType = {},
+  ): Promise<any> {
     this.setUrl(url).setMethod('put').setBody(body).setQueries(queries);
 
     return this.send();
   }
 
-  patch(url: string, body: ApiRequestBodyType = {}, queries: ApiRequestQueriesType = {}): Promise<any> {
+  patch(
+    url: string,
+    body: ApiRequestBodyType = {},
+    queries: ApiRequestQueriesType = {},
+  ): Promise<any> {
     this.setUrl(url).setMethod('patch').setBody(body).setQueries(queries);
 
     return this.send();
   }
 
-  delete(url: string, body: ApiRequestBodyType = {}, queries: ApiRequestQueriesType = {}): Promise<any> {
+  delete(
+    url: string,
+    body: ApiRequestBodyType = {},
+    queries: ApiRequestQueriesType = {},
+  ): Promise<any> {
     this.setUrl(url).setMethod('delete').setBody(body).setQueries(queries);
 
     return this.send();
@@ -200,7 +227,9 @@ export class ApiRequest implements IApiRequest {
 
   send(): Promise<any> {
     return new Promise((resolve, reject) => {
-      const agent = request[this._method](`${this._protocol}://${this._host}${this._url}`);
+      const agent = request[this._method](
+        `${this._protocol}://${this._host}${this._url}`,
+      );
 
       this._agent = agent;
 

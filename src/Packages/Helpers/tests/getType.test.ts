@@ -26,7 +26,9 @@ describe('getType', () => {
   });
 
   it('should be a html element', () => {
-    expect(getType(document.createElement('div'))).toMatch(/^html[a-z]*element$/i);
+    expect(getType(document.createElement('div'))).toMatch(
+      /^html[a-z]*element$/i,
+    );
   });
 
   it('should be an object', () => {

@@ -13,7 +13,10 @@ interface IProps {
   fileId: string;
 }
 
-export const TextControl: React.FC<IProps> = ({ control, fileId }): React.ReactElement => {
+export const TextControl: React.FC<IProps> = ({
+  control,
+  fileId,
+}): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.value);

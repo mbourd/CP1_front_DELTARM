@@ -53,17 +53,29 @@ class ApiRouter implements IApiRouter {
     return this;
   }
 
-  public generatePath(name: string, params?: ApiRequestParamsType, queries?: ApiRequestQueriesType): string | null {
+  public generatePath(
+    name: string,
+    params?: ApiRequestParamsType,
+    queries?: ApiRequestQueriesType,
+  ): string | null {
     const route = this.getRoute(name);
 
     if (!route) {
       return null;
     }
 
-    return this.generateUrl(route.path, params || route.params || {}, queries || route.queries || {});
+    return this.generateUrl(
+      route.path,
+      params || route.params || {},
+      queries || route.queries || {},
+    );
   }
 
-  public generateUrl(url: string, params?: ApiRequestParamsType, queries?: ApiRequestQueriesType): string | null {
+  public generateUrl(
+    url: string,
+    params?: ApiRequestParamsType,
+    queries?: ApiRequestQueriesType,
+  ): string | null {
     if (!params) {
       return url;
     }

@@ -7,18 +7,31 @@ import { CheckboxContext } from '../CheckboxContext';
 // eslint-disable-next-line react/display-name
 export const CheckboxContainer = React.forwardRef<HTMLDivElement>(
   (props, ref): React.ReactElement => {
-    const { data, selectedValues, multiple, name, onChange, disabled } = useContext(CheckboxContext);
+    const {
+      data,
+      selectedValues,
+      multiple,
+      name,
+      onChange,
+      disabled,
+    } = useContext(CheckboxContext);
 
     return (
       <div ref={ref}>
         <CheckboxContainerStyled>
           {Object.values(data).map((datum) => {
             return (
-              <ListItem className={'_CheckboxItem'} disableGutters key={datum.id}>
+              <ListItem
+                className={'_CheckboxItem'}
+                disableGutters
+                key={datum.id}
+              >
                 <Radio
                   color={disabled ? 'disabled' : 'text'}
                   value={datum.value}
-                  checked={(selectedValues && selectedValues[datum.id]) || false}
+                  checked={
+                    (selectedValues && selectedValues[datum.id]) || false
+                  }
                   type={multiple ? 'checkbox' : 'radio'}
                   name={name}
                   onChange={(e) => {
