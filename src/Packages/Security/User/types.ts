@@ -37,4 +37,5 @@ export type JwtData = {
   iat: number;
   cli_id: number;
   user_id: number;
+  context: string;
 };

@@ -23,6 +23,7 @@ variables:
 
 stages:
   - dependencies
+  - tests
   - build and deploy
 
 install dependencies:
@@ -30,6 +31,15 @@ install dependencies:
   stage: dependencies
   script:
     - docker run --rm -w="/app" -v $PWD:/app node:12-alpine sh -c "yarn install"
+
+jest-tests:
+  stage: tests
+  image: node:lts
+  script:
+    - yarn test --watchAll=false
+  only:
+    refs:
+      - merge_requests
 
 deploy preprod:
   stage: build and deploy

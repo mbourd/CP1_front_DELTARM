@@ -15,21 +15,29 @@ import { ICard } from './Card/types';
 import { IsLoading } from './IsLoading';
 import { NoData } from './NoData';
 import { DashboardSearch } from './Search/DashboardSearch';
+import { DashboardDynamic } from '../../DashboardDynamic';
 
 const Dashboard: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Dashboard');
   const { callState, send, data } = useApi<ICard[]>();
-
+  const { data: dataSecurity, logout } = useContext(SecurityContext);
   const { user } = useSecurity();
-  const { logout } = useContext(SecurityContext);
+  useEffect(() => {
+    // Temporary if statements behavior
+    if (dataSecurity.context === 'contr_perm') {
+      return;
+    }
+    send('dashboard');
+  }, [send, dataSecurity.context]);
+
+  // Temporary if statements behavior
+  if (dataSecurity.context === 'contr_perm') {
+    return <DashboardDynamic />;
+  }
 
   if (!user.isLogged()) {
     logout();
   }
-
-  useEffect(() => {
-    send('dashboard');
-  }, [send]);
 
   return (
     <>
