@@ -26,7 +26,9 @@ const App = (): React.ReactElement => {
   return (
     <Route
       path={'*'}
-      render={({ match: { url } }) => <DispatchRoute url={url} router={router} notFoundComponent={null} />}
+      render={({ match: { url } }) => (
+        <DispatchRoute url={url} router={router} notFoundComponent={null} />
+      )}
     />
   );
 };
@@ -59,6 +61,7 @@ router.registerRoute(MyRoute);
 ```
 
 If `path` key matches with browser url, `MyComponent` will render with following props:
+
 - `currentRoute`: this route definition
 - `routeParams`: route params found
 - `routeQueries`: route queries found

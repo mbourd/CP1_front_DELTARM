@@ -29,8 +29,16 @@ export interface IRouter {
   find: (url: string) => IRouteDef | null;
   setCurrentRoute: (route: IRouteDef | null) => IRouter;
   getCurrentRoute: () => IRouteDef | null;
-  generatePath: (name: string, params?: RouterParamsType, queries?: RouterQueriesType) => string | null;
-  generateUrl: (url: string, params?: RouterParamsType, queries?: RouterQueriesType) => string | null;
+  generatePath: (
+    name: string,
+    params?: RouterParamsType,
+    queries?: RouterQueriesType,
+  ) => string | null;
+  generateUrl: (
+    url: string,
+    params?: RouterParamsType,
+    queries?: RouterQueriesType,
+  ) => string | null;
   getParams: () => Record<string, string>;
   setParams: (params: Record<string, string>) => IRouter;
   parseParams: (pattern: string, url: string) => Record<string, string>;
@@ -40,8 +48,17 @@ export interface IRouter {
   /**
    * Redirect to route using its name.
    */
-  redirectTo: (name: string, params?: RouterParamsType, queries?: RouterQueriesType, force?: boolean) => IRouter;
-  redirectToUrl: (url: string, queries?: RouterQueriesType, params?: RouterParamsType) => IRouter;
+  redirectTo: (
+    name: string,
+    params?: RouterParamsType,
+    queries?: RouterQueriesType,
+    force?: boolean,
+  ) => IRouter;
+  redirectToUrl: (
+    url: string,
+    queries?: RouterQueriesType,
+    params?: RouterParamsType,
+  ) => IRouter;
 }
 
 export interface IRouteDef {

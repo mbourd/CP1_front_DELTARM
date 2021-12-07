@@ -48,11 +48,18 @@ export class Storage implements IStorage {
     return this;
   }
 
-  public set<T>(key: string, value: T, callback?: (error: Error, value: T) => void): this {
+  public set<T>(
+    key: string,
+    value: T,
+    callback?: (error: Error, value: T) => void,
+  ): this {
     this.buildResponse(
       localforage.setItem<T>(key, value, (error, value) => {
         if (!error) {
-          const hasProperty = Object.prototype.hasOwnProperty.call(this._createEventCallbacks, key);
+          const hasProperty = Object.prototype.hasOwnProperty.call(
+            this._createEventCallbacks,
+            key,
+          );
           if (hasProperty) {
             this._createEventCallbacks[key](key, value);
           }
@@ -67,7 +74,10 @@ export class Storage implements IStorage {
     return this;
   }
 
-  public onSet(keys: string | string[], callback: createEventCallbackType): this {
+  public onSet(
+    keys: string | string[],
+    callback: createEventCallbackType,
+  ): this {
     if (!Array.isArray(keys)) {
       keys = [keys];
     }
@@ -81,7 +91,10 @@ export class Storage implements IStorage {
     return this;
   }
 
-  public get<T>(key: string, callback?: (error: Error, value: T | null) => void): this {
+  public get<T>(
+    key: string,
+    callback?: (error: Error, value: T | null) => void,
+  ): this {
     this.buildResponse(localforage.getItem<T>(key, callback));
 
     return this;
@@ -91,7 +104,10 @@ export class Storage implements IStorage {
     this.buildResponse(
       localforage.removeItem(key, (error: Error) => {
         if (!error) {
-          const hasProperty = Object.prototype.hasOwnProperty.call(this._removeEventCallbacks, key);
+          const hasProperty = Object.prototype.hasOwnProperty.call(
+            this._removeEventCallbacks,
+            key,
+          );
           if (hasProperty) {
             this._removeEventCallbacks[key](key);
           }
@@ -106,7 +122,10 @@ export class Storage implements IStorage {
     return this;
   }
 
-  public onRemove(keys: string | string[], callback: removeEventCallbackType): this {
+  public onRemove(
+    keys: string | string[],
+    callback: removeEventCallbackType,
+  ): this {
     if (!Array.isArray(keys)) {
       keys = [keys];
     }

@@ -2,7 +2,9 @@ import styled from 'styled-components/macro';
 import { ITextShineLoader } from '../types';
 
 /* stylelint-disable */
-export const TextShineLoaderStyled = styled.span<Required<Omit<ITextShineLoader, 'text'>>>`
+export const TextShineLoaderStyled = styled.span<
+  Required<Omit<ITextShineLoader, 'text'>>
+>`
   background: ${({ colors }) => {
     const step = 100 / colors.length;
     colors = colors.map((color, k) => `${color} ${step * k}%`);

@@ -39,7 +39,6 @@ export const MainNavStyled = styled.div`
       }
 
       &:last-child {
-
         .MuiSvgIcon-root,
         .MuiTypography-root {
           color: #e11d74;

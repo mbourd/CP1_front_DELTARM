@@ -1,10 +1,16 @@
 import { isObject } from './';
 import { ObjectLiteralType } from './';
 
-export const mergeObject = (first: ObjectLiteralType, second: ObjectLiteralType): ObjectLiteralType => {
+export const mergeObject = (
+  first: ObjectLiteralType,
+  second: ObjectLiteralType,
+): ObjectLiteralType => {
   Object.keys(second).map((key) => {
     if (isObject(first[key]) && isObject(second[key])) {
-      first[key] = mergeObject(first[key] as ObjectLiteralType, second[key] as ObjectLiteralType);
+      first[key] = mergeObject(
+        first[key] as ObjectLiteralType,
+        second[key] as ObjectLiteralType,
+      );
 
       return key;
     }

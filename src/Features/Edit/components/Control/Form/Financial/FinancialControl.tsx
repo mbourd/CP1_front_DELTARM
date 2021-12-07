@@ -14,7 +14,10 @@ interface IProps {
   fileId: string;
 }
 
-export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.ReactElement => {
+export const FinancialControl: React.FC<IProps> = ({
+  control,
+  fileId,
+}): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.value);
@@ -64,7 +67,12 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
       send(
         currentRoute?.props?.apiSaveControlRouteName,
         {},
-        { file_id: fileId, elm_id: control.id, elm_val: value, control_family: control.family },
+        {
+          file_id: fileId,
+          elm_id: control.id,
+          elm_val: value,
+          control_family: control.family,
+        },
       );
     },
     [
@@ -93,7 +101,9 @@ export const FinancialControl: React.FC<IProps> = ({ control, fileId }): React.R
     }
   }, [error]);
 
-  const controlValue = control.value ? parseInt(control.value)?.toLocaleString() : control.value;
+  const controlValue = control.value
+    ? parseInt(control.value)?.toLocaleString()
+    : control.value;
 
   return (
     <Grid item xs={6}>

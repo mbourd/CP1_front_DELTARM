@@ -13,7 +13,10 @@ interface IProps {
   fileId: string;
 }
 
-export const CommentControl: React.FC<IProps> = ({ control, fileId }): React.ReactElement => {
+export const CommentControl: React.FC<IProps> = ({
+  control,
+  fileId,
+}): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.value);
@@ -47,7 +50,12 @@ export const CommentControl: React.FC<IProps> = ({ control, fileId }): React.Rea
       send(
         currentRoute?.props?.apiSaveControlRouteName,
         {},
-        { file_id: fileId, elm_id: control.id, elm_val: value, control_family: control.family },
+        {
+          file_id: fileId,
+          elm_id: control.id,
+          elm_val: value,
+          control_family: control.family,
+        },
       );
     },
     [
