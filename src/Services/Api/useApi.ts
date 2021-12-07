@@ -6,13 +6,19 @@ export interface UseApiOptions {
   waitForAuthenticated?: boolean;
 }
 
-export const useApi = <T>({ promise = false, waitForAuthenticated = false }: UseApiOptions = {}): UseApiReturnType<
-  T
-> => {
+export const useApi = <T>({
+  promise = false,
+  waitForAuthenticated = false,
+}: UseApiOptions = {}): UseApiReturnType<T> => {
   const { user } = useSecurity();
   const jwt = user.getJwt();
 
-  const { request, ...api } = DRMUseApi<T>(getEnv('API_HOST'), getEnv('API_PROTOCOL'), apiRouter, promise);
+  const { request, ...api } = DRMUseApi<T>(
+    getEnv('API_HOST'),
+    getEnv('API_PROTOCOL'),
+    apiRouter,
+    promise,
+  );
   request.setBearerToken(jwt);
 
   if (waitForAuthenticated && !request.getBearerToken()) {

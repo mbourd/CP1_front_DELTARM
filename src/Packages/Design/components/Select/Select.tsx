@@ -44,7 +44,7 @@ export const Select: React.FC<ISelect> = ({
     if (values.includes('undefined')) {
       values.splice(values.indexOf('undefined'), 1);
     }
-    values.map((key, index) => {
+    values.map((key) => {
       if (key) {
         return (selectedValues = { ...selectedValues, [key]: true });
       }

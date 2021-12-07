@@ -1,4 +1,7 @@
-export const insertAfter = (element: HTMLElement, afterElement: HTMLElement): boolean => {
+export const insertAfter = (
+  element: HTMLElement,
+  afterElement: HTMLElement,
+): boolean => {
   let parent: Node | boolean | null;
   try {
     parent = afterElement.parentNode;

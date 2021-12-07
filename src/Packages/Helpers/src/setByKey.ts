@@ -1,7 +1,11 @@
 import { isObject } from './';
 import { ObjectLiteralType } from './';
 
-export const setByKey = (object: ObjectLiteralType, key: string, value: unknown): ObjectLiteralType => {
+export const setByKey = (
+  object: ObjectLiteralType,
+  key: string,
+  value: unknown,
+): ObjectLiteralType => {
   if ('' === key) {
     return object;
   }
@@ -21,7 +25,11 @@ export const setByKey = (object: ObjectLiteralType, key: string, value: unknown)
     object[keys[0]] = {};
   }
 
-  object[keys[0]] = setByKey(object[keys[0]] as ObjectLiteralType, keys.slice(1).join('.'), value);
+  object[keys[0]] = setByKey(
+    object[keys[0]] as ObjectLiteralType,
+    keys.slice(1).join('.'),
+    value,
+  );
 
   return object;
 };

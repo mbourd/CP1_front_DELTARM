@@ -23,11 +23,24 @@ export type UseStorageReturnType = {
 export interface IStorage {
   onSuccess: (callback: onSuccessParamType) => IStorage;
   onError: (callback: onErrorParamType) => IStorage;
-  set: <T>(key: string, value: T, callback?: (error: Error, value: T) => void) => IStorage;
-  onSet: (keys: string | string[], callback: createEventCallbackType) => IStorage;
-  get: <T>(key: string, callback?: (error: Error, value: T | null) => void) => IStorage;
+  set: <T>(
+    key: string,
+    value: T,
+    callback?: (error: Error, value: T) => void,
+  ) => IStorage;
+  onSet: (
+    keys: string | string[],
+    callback: createEventCallbackType,
+  ) => IStorage;
+  get: <T>(
+    key: string,
+    callback?: (error: Error, value: T | null) => void,
+  ) => IStorage;
   remove: (key: string, callback?: removeCallbackType) => IStorage;
-  onRemove: (keys: string | string[], callback: removeEventCallbackType) => IStorage;
+  onRemove: (
+    keys: string | string[],
+    callback: removeEventCallbackType,
+  ) => IStorage;
   clear: (callback?: clearCallbackType) => IStorage;
   length: (callback?: lengthCallbackType) => IStorage;
   keys: (callback?: keysCallbackType) => IStorage;

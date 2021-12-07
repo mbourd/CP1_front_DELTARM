@@ -12,8 +12,6 @@ export const DashboardModal: FC<IDashboardModalProps> = ({
   onClose,
   route,
 }): React.ReactElement => {
-  console.log(route);
-
   const footer = (
     <SearchModalFooterStyled>
       <Button color={'error'} onClick={onClose}>

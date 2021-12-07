@@ -1,6 +1,12 @@
 import { ApiResponseBodyType } from '../Response';
 
-export type ApiRequestMethodType = 'get' | 'post' | 'put' | 'patch' | 'delete' | 'head';
+export type ApiRequestMethodType =
+  | 'get'
+  | 'post'
+  | 'put'
+  | 'patch'
+  | 'delete'
+  | 'head';
 export type ApiRequestProtocolType = string | null;
 export type ApiRequestHostType = string | null;
 export type ApiRequestUrlType = string | null;
@@ -9,7 +15,10 @@ export type ApiRequestParamsType = Record<string, string | number>;
 export type ApiRequestQueriesType = Record<string, string | number>;
 export type ApiRequestBodyType = Record<string, any>;
 export type ApiRequestBearerTokenType = string | null;
-export type ApiRequestBasicAuthType = { login: string; password: string } | null;
+export type ApiRequestBasicAuthType = {
+  login: string;
+  password: string;
+} | null;
 export type ApiRequestFileType = FormData;
 
 export interface IApiRequest {
@@ -37,11 +46,35 @@ export interface IApiRequest {
   removeHeader(name: string): IApiRequest;
   setBearerToken(token: ApiRequestBearerTokenType): IApiRequest;
   getBearerToken(): ApiRequestBearerTokenType;
-  get(url: string, queries: ApiRequestQueriesType, body: ApiRequestBodyType): Promise<ApiResponseBodyType>;
-  head(url: string, queries: ApiRequestQueriesType, body: ApiRequestBodyType): Promise<ApiResponseBodyType>;
-  post(url: string, body: ApiRequestBodyType, queries: ApiRequestQueriesType): Promise<ApiResponseBodyType>;
-  put(url: string, body: ApiRequestBodyType, queries: ApiRequestQueriesType): Promise<ApiResponseBodyType>;
-  patch(url: string, body: ApiRequestBodyType, queries: ApiRequestQueriesType): Promise<ApiResponseBodyType>;
-  delete(url: string, body: ApiRequestBodyType, queries: ApiRequestQueriesType): Promise<ApiResponseBodyType>;
+  get(
+    url: string,
+    queries: ApiRequestQueriesType,
+    body: ApiRequestBodyType,
+  ): Promise<ApiResponseBodyType>;
+  head(
+    url: string,
+    queries: ApiRequestQueriesType,
+    body: ApiRequestBodyType,
+  ): Promise<ApiResponseBodyType>;
+  post(
+    url: string,
+    body: ApiRequestBodyType,
+    queries: ApiRequestQueriesType,
+  ): Promise<ApiResponseBodyType>;
+  put(
+    url: string,
+    body: ApiRequestBodyType,
+    queries: ApiRequestQueriesType,
+  ): Promise<ApiResponseBodyType>;
+  patch(
+    url: string,
+    body: ApiRequestBodyType,
+    queries: ApiRequestQueriesType,
+  ): Promise<ApiResponseBodyType>;
+  delete(
+    url: string,
+    body: ApiRequestBodyType,
+    queries: ApiRequestQueriesType,
+  ): Promise<ApiResponseBodyType>;
   send(): Promise<ApiResponseBodyType>;
 }
