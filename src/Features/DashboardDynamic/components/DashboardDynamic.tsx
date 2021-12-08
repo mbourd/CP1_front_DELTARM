@@ -1,30 +1,27 @@
-import React, {
-  Suspense,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import React, { Suspense, useContext, useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 
-import { useApi, useSecurity, SecurityContext, router } from 'Services';
+import { useApi, useSecurity, SecurityContext } from 'Services';
 import { BreadCrumb, Heading } from 'Shared/components';
 import { DashboardStyled, MetricsContainerStyled } from './Dashboard.style';
 import { ButtonContainerStyled } from './Dashboard.style';
 import { Card } from './Card/Card';
 import { IsLoading } from './IsLoading';
 import { SearchBar } from './Search/SearchBar';
-import { ICardValueItemParams, IDashboard } from './types';
+import { IDashboard } from './types';
 import { Button } from 'Shared/components';
 import { SwitchMetric } from './Metrics/SwitchMetric';
 import { DashboardModal } from './Search/Modal/DashboardModal';
+import { useActionButton } from '../../../Packages/Helpers/src/useActionButton';
 
 const DashboardDynamic: React.FC = (): React.ReactElement => {
   const { send, data: response } = useApi<IDashboard>();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentModalRoute, setCurrentModalRoute] = useState<string>('');
-
   const { user } = useSecurity();
+  const jwt = user.getJwt();
+  const { actionButton } = useActionButton(jwt);
+
   const { logout } = useContext(SecurityContext);
 
   if (!user.isLogged()) {
@@ -35,34 +32,6 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
     send('dashboardControlPermanent');
   }, [send]);
 
-  const handleClickCardIcons = useCallback(
-    (action: ICardValueItemParams | null) => {
-      console.log(action);
-      // switch (action?.target) {
-      //   case 'blank':
-      //     return window.open(action.route, '_blank');
-      //   case 'modal':
-      //     setIsModalOpen(true);
-      //     setCurrentModalRoute(action.route);
-      //
-      //     return;
-      //   case 'self':
-      //     return router.redirectToUrl(action.route, action?.params);
-      // }
-    },
-    [],
-  );
-
-  // implémenter un moyen de passer des datas en props au composant a l'appel de react router (dans le redirect to url ou autre chose)
-  // implémenter l'appel au click sur les cards icons
-  // le retour de cet appel, trigger un des use cases, blank, modal, main
-  // pour main et modal on veut pouvoir passer des datas en meme temps qu'on appele la route ou qu'on appele le composant modale
-
-  const onClickCustomButtons = useCallback((route: string) => {
-    // click on custom buttons
-    console.log('CUSTOM BUTTON ROUTE TO CALL: ' + route);
-  }, []);
-  console.log(response);
   return (
     <>
       <Suspense fallback={<IsLoading />}>
@@ -100,8 +69,8 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
                 return (
                   <Button
                     key={index}
-                    onClick={() => onClickCustomButtons(btn.route)}
-                    style={{ backgroundColor: btn.btn_color }}
+                    onClick={() => actionButton(btn.action)}
+                    style={{ backgroundColor: btn.bg_color }}
                   >
                     {btn.btn_lib}
                   </Button>
@@ -122,11 +91,7 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
             {response?.data.cards.visible &&
               response?.data.cards.card.map((card, index) => (
                 <Grid item xs={12} md={6} key={index}>
-                  <Card
-                    card={card}
-                    key={index}
-                    actionIcons={handleClickCardIcons}
-                  />
+                  <Card card={card} key={index} actionIcons={actionButton} />
                 </Grid>
               ))}
           </Grid>

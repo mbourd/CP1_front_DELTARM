@@ -90,6 +90,7 @@
     "react-idle-timer": "^4.5.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "recoil": "^0.5.2",
     "storybook": "6.1",
     "styled-components": "^5.2.0",
     "superagent": "^6.1.0",

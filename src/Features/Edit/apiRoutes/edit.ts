@@ -1,7 +1,7 @@
 import { apiRouter } from 'Services';
 import {
   IAction,
-  IApiData,
+  IApiDataEdit,
   IChapter,
   IControl,
   ICurrentSection,
@@ -11,12 +11,11 @@ import {
 } from '../types';
 import { ISelectData } from 'Shared/components';
 
-export const editValidationHandlerCallback = (response: any) => {
-  const apiData: IApiData = response.data;
+export const editValidationHandlerCallback = (apiData: IApiDataEdit) => {
   const actions: IAction[] = [];
   const chapters: IChapter[] = [];
 
-  apiData.data.actions.map((datum) => {
+  apiData.actions.map((datum) => {
     actions.push({
       id: '' + datum.id_action,
       label: datum.action_lib,
@@ -27,7 +26,7 @@ export const editValidationHandlerCallback = (response: any) => {
     return datum;
   });
 
-  apiData.data.current_section.chapters.map((chapter) => {
+  apiData.current_section.chapters.map((chapter) => {
     const controls: IControl[] = [];
     chapter.controls.map((control) => {
       const c: IControl = {
@@ -100,12 +99,12 @@ export const editValidationHandlerCallback = (response: any) => {
 
   const currentSection: ICurrentSection = {
     chapters,
-    id: '' + apiData.data.current_section.section_id,
+    id: '' + apiData.current_section.section_id,
   };
 
   const sections: ISection[] = [];
 
-  apiData.data.sections.map((section) => {
+  apiData.sections.map((section) => {
     sections.push({
       id: '' + section.section_id,
       code: '' + section.stage_code,
@@ -118,34 +117,31 @@ export const editValidationHandlerCallback = (response: any) => {
   });
 
   const state: IState = {
-    color: apiData.data.state.state_color,
-    id: '' + apiData.data.state.state_id,
-    name: apiData.data.state.state_name,
+    color: apiData.state.state_color,
+    id: '' + apiData.state.state_id,
+    name: apiData.state.state_name,
   };
 
-  const { header_message, header_type } = apiData.data.section_header || {};
-  const { footer_message } = apiData.data.section_footer || {};
+  const { header_message, header_type } = apiData.section_header || {};
+  const { footer_message } = apiData.section_footer || {};
 
   const data: IData = {
     actions,
     currentSection,
     sections,
     state,
-    file: apiData.data.file,
-    number:
-      apiData.data.file_info.file_num +
-      '/' +
-      apiData.data.file_info.file_avenant,
-    contrepartie: apiData.data.file_info.contrepartie,
-    productType: apiData.data.file_info.product_type,
-    countComments: apiData.data.nb_comment,
-    validationCount: apiData.data.valid_num,
+    file: apiData.file,
+    number: apiData.file_info.file_num + '/' + apiData.file_info.file_avenant,
+    contrepartie: apiData.file_info.contrepartie,
+    productType: apiData.file_info.product_type,
+    countComments: apiData.nb_comment,
+    validationCount: apiData.valid_num,
     sectionHeader:
       header_message && header_type
         ? { message: header_message, type: header_type }
         : undefined,
     sectionFooter: footer_message ? { message: footer_message } : undefined,
-    title: apiData.data.file_info.title,
+    title: apiData.file_info.title,
   };
 
   return data;
@@ -157,7 +153,7 @@ apiRouter.registerRoute({
   method: 'get',
   handler: (response: any) => {
     try {
-      return editValidationHandlerCallback(response);
+      return editValidationHandlerCallback(response.data);
     } catch (e) {
       return null;
     }

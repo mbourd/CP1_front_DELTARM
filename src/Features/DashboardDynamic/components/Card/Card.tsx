@@ -1,7 +1,7 @@
 import React, { createElement, useCallback } from 'react';
 import { TableHead } from '@material-ui/core';
 import { CardStyled, StyledTableCell } from './Card.style';
-import { ICard, ICardValueItemParams } from '../types';
+import { ICard, IActionButton } from '../types';
 import {
   Paper,
   Table,
@@ -17,7 +17,7 @@ import { useTheme } from '../../../../Packages/Design';
 
 interface ICardC {
   card: ICard;
-  actionIcons: (action: ICardValueItemParams | null) => void;
+  actionIcons: (action: IActionButton | null) => void;
 }
 export const Card: React.FC<ICardC> = ({
   card,
