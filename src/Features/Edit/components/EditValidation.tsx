@@ -37,8 +37,8 @@ export const EditValidation: React.FC<IProps> = ({
   const { user } = useSecurity();
   const jwt = user.getJwt();
   const { logout } = useContext(SecurityContext);
-  const { pageData } = useActionButton(jwt);
-  const fetchedData: IApiData | null = useRecoilValue<any>(pageData);
+  const { data: recoilData } = useActionButton(jwt);
+  const fetchedData: IApiData | null = useRecoilValue<any>(recoilData);
   let data: IData | null = refreshedData;
 
   // To avoid (bpi specific)

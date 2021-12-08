@@ -6,11 +6,11 @@ import { useSetRecoilState, atom } from 'recoil';
 import { router } from '../../Router';
 
 export const useActionButton = (jwt: string | null) => {
-  const pageData = atom({
+  const data = atom({
     key: 'pageData',
     default: null,
   });
-  const setPageData = useSetRecoilState(pageData);
+  const setPageData = useSetRecoilState(data);
 
   const dispatchActionButton = (data: any) => {
     switch (data?.target) {
@@ -175,5 +175,5 @@ export const useActionButton = (jwt: string | null) => {
     }
   }, []);
 
-  return { actionButton, pageData };
+  return { actionButton, data };
 };
