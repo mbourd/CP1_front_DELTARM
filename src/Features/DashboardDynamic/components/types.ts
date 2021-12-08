@@ -1,20 +1,21 @@
 import { SvgIconComponent } from '@mui/icons-material';
 
 interface IButtons {
-  btn_color: string;
-  btn_hover_color: string;
+  bg_color: string;
+  font_color: string;
+  hover_color: string;
   btn_lib: string;
-  route: string;
+  action: IActionButton;
 }
 interface ICardCol {
   border_right: boolean;
   header: string;
 }
 
-export interface ICardValueItemParams {
-  method: 'GET' | 'POST' | 'DELETE' | 'PUT';
-  endpoint: string | null;
-  params?: Record<string, string>;
+export interface IActionButton {
+  method: 'GET' | 'POST' | 'DELETE' | 'PUT' | 'CANCEL';
+  endpoint: string;
+  params: Record<string, string> | null;
 }
 interface ICardIcon {
   color: string;
@@ -23,7 +24,7 @@ interface ICardIcon {
 }
 
 interface ICardValueItem {
-  action: ICardValueItemParams | null;
+  action: IActionButton | null;
   content: string | null;
   hint: string | null;
   icon: ICardIcon | null;

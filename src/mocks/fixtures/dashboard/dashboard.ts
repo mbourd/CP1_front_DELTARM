@@ -1,4 +1,4 @@
-export default {
+export const data = {
   target: 'main',
   route_front: 'dashboard/contr_perm',
   data: {
