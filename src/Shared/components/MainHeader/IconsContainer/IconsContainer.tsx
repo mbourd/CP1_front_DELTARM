@@ -13,7 +13,6 @@ export const IconsContainer: React.FC = (): React.ReactElement => {
   }, [send]);
 
   const interfaceButtons = data?.data.interface_btn;
-  console.log(interfaceButtons);
 
   return (
     <IconsContainerStyled>
