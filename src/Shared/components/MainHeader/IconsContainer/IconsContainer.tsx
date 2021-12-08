@@ -9,25 +9,36 @@ export const IconsContainer: React.FC = (): React.ReactElement => {
   const { send, data } = useApi<any>({ waitForAuthenticated: true });
 
   useEffect(() => {
-    send('AIVUrl');
+    send('interfaceButtons');
   }, [send]);
 
-  const aivUrl = data?.data.full_url;
+  const interfaceButtons = data?.data.interface_btn;
+  console.log(interfaceButtons);
 
   return (
     <IconsContainerStyled>
-      {aivUrl && (
+      {interfaceButtons?.aiv.visible && (
         <BPITooltip title={trans('reports')}>
-          <a href={aivUrl} target={'_blank'} rel={'noopener noreferrer'}>
+          <a
+            href={interfaceButtons.aiv.url}
+            target={'_blank'}
+            rel={'noopener noreferrer'}
+          >
             <FileIcon fontSize={'large'} />
           </a>
         </BPITooltip>
       )}
-      <BPITooltip title={trans('F.A.Q')}>
-        <a target="__blank" href="https://cp1.stonly.com/kb/fr">
-          <PlayerIcon fontSize={'large'} />
-        </a>
-      </BPITooltip>
+      {interfaceButtons?.faq.visible && (
+        <BPITooltip title={trans('F.A.Q')}>
+          <a
+            href={interfaceButtons.faq.url}
+            target={'_blank'}
+            rel={'noopener noreferrer'}
+          >
+            <PlayerIcon fontSize={'large'} />
+          </a>
+        </BPITooltip>
+      )}
     </IconsContainerStyled>
   );
 };
