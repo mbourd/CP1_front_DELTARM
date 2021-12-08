@@ -4,12 +4,12 @@ import axios from 'axios';
 import { getEnv } from './getEnv';
 import { useSetRecoilState, atom } from 'recoil';
 import { router } from '../../Router';
+const data = atom({
+  key: 'pageData',
+  default: null,
+});
 
 export const useActionButton = (jwt: string | null) => {
-  const data = atom({
-    key: 'pageData',
-    default: null,
-  });
   const setPageData = useSetRecoilState(data);
 
   const dispatchActionButton = (data: any) => {
