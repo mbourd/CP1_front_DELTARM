@@ -17,9 +17,15 @@ import {
 } from '../Actions';
 
 import { EditValidationContext, FileComment, FileAudit } from 'Features';
+import { Button } from 'Shared/components';
+import { useActionButton } from '../../../../Packages/Helpers/src/useActionButton';
+import { useSecurity } from '../../../../Packages/Security';
 
 export const ContentHeader: React.FC = (): React.ReactElement => {
   const { data } = useContext(EditValidationContext);
+  const { user } = useSecurity();
+  const jwt = user.getJwt();
+  const { actionButton } = useActionButton(jwt);
 
   return (
     <ContentHeaderStyled>
@@ -31,7 +37,22 @@ export const ContentHeader: React.FC = (): React.ReactElement => {
           <FileAudit />
         </Grid>
         <Grid item className={'right'}>
-          {data?.actions.map((action, index) => {
+          {data?.actions_contr_perm?.map((button, index) => {
+            return (
+              <Button
+                key={index}
+                onClick={() => actionButton(button.action)}
+                style={{
+                  backgroundColor: button.bg_color,
+                  color: button.font_color,
+                }}
+              >
+                {button.btn_lib}
+                toto
+              </Button>
+            );
+          })}
+          {data?.actions?.map((action, index) => {
             switch (action.code) {
               case 'CANCEL':
                 return <Cancel key={index} />;

@@ -10,12 +10,14 @@ import {
   IState,
 } from '../types';
 import { ISelectData } from 'Shared/components';
+import { IButtons } from '../../DashboardDynamic/components/types';
 
 export const editValidationHandlerCallback = (apiData: IApiDataEdit) => {
   const actions: IAction[] = [];
+  const actions_contr_perm: IButtons[] | undefined = apiData.actions_contr_perm;
   const chapters: IChapter[] = [];
 
-  apiData.actions.map((datum) => {
+  apiData.actions?.map((datum) => {
     actions.push({
       id: '' + datum.id_action,
       label: datum.action_lib,
@@ -126,6 +128,7 @@ export const editValidationHandlerCallback = (apiData: IApiDataEdit) => {
   const { footer_message } = apiData.section_footer || {};
 
   const data: IData = {
+    actions_contr_perm,
     actions,
     currentSection,
     sections,

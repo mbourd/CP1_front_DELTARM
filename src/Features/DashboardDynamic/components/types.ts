@@ -1,6 +1,6 @@
 import { SvgIconComponent } from '@mui/icons-material';
 
-interface IButtons {
+export interface IButtons {
   bg_color: string;
   font_color: string;
   hover_color: string;
