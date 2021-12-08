@@ -12,6 +12,7 @@ import {
   ISectionFooter,
 } from './ISection';
 import { IApiState, IState } from './IState';
+import { IButtons } from '../../DashboardDynamic/components/types';
 
 export interface IApiData {
   route_front: string;
@@ -20,7 +21,8 @@ export interface IApiData {
 }
 
 export interface IApiDataEdit {
-  actions: IApiAction[];
+  actions?: IApiAction[];
+  actions_contr_perm?: IButtons[];
   current_section: IApiCurrentSection;
   sections: IApiSection[];
   state: IApiState;
@@ -33,7 +35,8 @@ export interface IApiDataEdit {
 }
 
 export interface IData {
-  actions: IAction[];
+  actions?: IAction[];
+  actions_contr_perm?: IButtons[];
   currentSection: ICurrentSection;
   sections: ISection[];
   state: IState;

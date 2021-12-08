@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, Suspense } from 'react';
 import { Box, Grid, List } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { EditHeaderStyled, EditStyled } from './Edit.style';
@@ -39,7 +39,7 @@ export const EditValidation: React.FC<IProps> = ({
   const { logout } = useContext(SecurityContext);
   const { data: recoilData } = useActionButton(jwt);
   const fetchedData: IApiData | null = useRecoilValue<any>(recoilData);
-  let data: IData | null = refreshedData;
+  const [data, setData] = useState<IData | null>(refreshedData);
 
   // To avoid (bpi specific)
   const { id } = router.getParams();
@@ -51,7 +51,13 @@ export const EditValidation: React.FC<IProps> = ({
 
   useEffect(() => {
     if (fetchedData) {
-      data = editValidationHandlerCallback(fetchedData.data);
+      setData(editValidationHandlerCallback(fetchedData.data));
+
+      return;
+    }
+
+    if (refreshedData) {
+      setData(refreshedData);
 
       return;
     }
@@ -72,10 +78,16 @@ export const EditValidation: React.FC<IProps> = ({
     return () => {
       request.abort();
     };
-  }, [send, id, currentSection, request, apiRouteName, frontRouterQueries]);
-  if (fetchedData) {
-    data = editValidationHandlerCallback(fetchedData.data);
-  }
+  }, [
+    send,
+    id,
+    currentSection,
+    request,
+    apiRouteName,
+    frontRouterQueries,
+    fetchedData?.data,
+    refreshedData,
+  ]);
 
   return (
     <SwitchCallState
@@ -86,73 +98,75 @@ export const EditValidation: React.FC<IProps> = ({
         BAD_REQUEST: <NotFound title={title} />,
       }}
     >
-      {data ? (
-        <EditStyled>
-          <EditHeaderStyled>
-            <HeadingOne>
-              <SubHeader title={title} data={data} />
-            </HeadingOne>
-          </EditHeaderStyled>
+      <Suspense fallback={<IsLoading title={title} />}>
+        {data ? (
+          <EditStyled>
+            <EditHeaderStyled>
+              <HeadingOne>
+                <SubHeader title={title} data={data} />
+              </HeadingOne>
+            </EditHeaderStyled>
 
-          <EditValidationContext.Provider
-            value={{ data, fileId: id ? id : frontRouterQueries.file_id }}
-          >
-            <Grid container wrap={'nowrap'}>
-              <Grid item className={'nav'}>
-                <List>
-                  {data?.sections.map((section, index) => {
-                    const current = currentSection || data?.currentSection.id;
+            <EditValidationContext.Provider
+              value={{ data, fileId: id ? id : frontRouterQueries.file_id }}
+            >
+              <Grid container wrap={'nowrap'}>
+                <Grid item className={'nav'}>
+                  <List>
+                    {data?.sections.map((section, index) => {
+                      const current = currentSection || data?.currentSection.id;
 
-                    if (section.id === current) {
-                      storage.setData('edit.section.active', section.code);
-                    }
-
-                    return (
-                      <NavItem
-                        key={index}
-                        item={section}
-                        active={section.id === current}
-                        onClick={(id: string) => setCurrentSection(id)}
-                      />
-                    );
-                  })}
-                </List>
-              </Grid>
-              <Grid item className={'content'}>
-                {data.sectionHeader && (
-                  <Box paddingBottom={5}>
-                    <Alert
-                      variant="outlined"
-                      icon={false}
-                      severity={
-                        data.sectionHeader.type === 'alert'
-                          ? 'error'
-                          : 'success'
+                      if (section.id === current) {
+                        storage.setData('edit.section.active', section.code);
                       }
-                    >
-                      <PreWrapStyled>
-                        {data.sectionHeader.message}
-                      </PreWrapStyled>
-                    </Alert>
-                  </Box>
-                )}
-                <SwitchContentBody />
-                {data.sectionFooter && (
-                  <Box paddingY={5}>
-                    <Alert variant="outlined" severity="info">
-                      <PreWrapStyled>
-                        {data.sectionFooter.message}
-                      </PreWrapStyled>
-                    </Alert>
-                  </Box>
-                )}
+
+                      return (
+                        <NavItem
+                          key={index}
+                          item={section}
+                          active={section.id === current}
+                          onClick={(id: string) => setCurrentSection(id)}
+                        />
+                      );
+                    })}
+                  </List>
+                </Grid>
+                <Grid item className={'content'}>
+                  {data.sectionHeader && (
+                    <Box paddingBottom={5}>
+                      <Alert
+                        variant="outlined"
+                        icon={false}
+                        severity={
+                          data.sectionHeader.type === 'alert'
+                            ? 'error'
+                            : 'success'
+                        }
+                      >
+                        <PreWrapStyled>
+                          {data.sectionHeader.message}
+                        </PreWrapStyled>
+                      </Alert>
+                    </Box>
+                  )}
+                  <SwitchContentBody />
+                  {data.sectionFooter && (
+                    <Box paddingY={5}>
+                      <Alert variant="outlined" severity="info">
+                        <PreWrapStyled>
+                          {data.sectionFooter.message}
+                        </PreWrapStyled>
+                      </Alert>
+                    </Box>
+                  )}
+                </Grid>
               </Grid>
-            </Grid>
-          </EditValidationContext.Provider>
-        </EditStyled>
-      ) : (
-        <NotFound title={title} />
-      )}
+            </EditValidationContext.Provider>
+          </EditStyled>
+        ) : (
+          <NotFound title={title} />
+        )}
+      </Suspense>
     </SwitchCallState>
   );
 };
