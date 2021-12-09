@@ -74,7 +74,7 @@ export const useActionButton = (jwt: string | null) => {
             .post(
               `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}${
                 action?.endpoint
-              }`,
+              }${queryString}`,
               action?.params,
               {
                 headers: {
