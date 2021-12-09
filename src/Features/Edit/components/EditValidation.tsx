@@ -38,7 +38,7 @@ export const EditValidation: React.FC<IProps> = ({
   const jwt = user.getJwt();
   const { logout } = useContext(SecurityContext);
   const { data: recoilData } = useActionButton(jwt);
-  const fetchedData: IApiData | null = useRecoilValue<any>(recoilData);
+  const fetchedData: IApiData = useRecoilValue<any>(recoilData);
   const [data, setData] = useState<IData | null>(refreshedData);
 
   // To avoid (bpi specific)
@@ -85,8 +85,8 @@ export const EditValidation: React.FC<IProps> = ({
     request,
     apiRouteName,
     frontRouterQueries,
-    fetchedData?.data,
     refreshedData,
+    fetchedData,
   ]);
 
   return (

@@ -25,155 +25,158 @@ export const useActionButton = (jwt: string | null) => {
     }
   };
 
-  const actionButton = useCallback((action: IActionButton | null) => {
-    let queryString = '';
-    if (action?.params) {
-      queryString = Object.keys(action.params)
-        .map((key) => {
-          if (action?.params) {
-            return (
-              encodeURIComponent(key) +
-              '=' +
-              encodeURIComponent(action.params[key])
-            );
-          }
+  const actionButton = useCallback(
+    (action: IActionButton | null) => {
+      let queryString = '';
+      if (action?.params) {
+        queryString = Object.keys(action.params)
+          .map((key) => {
+            if (action?.params) {
+              return (
+                encodeURIComponent(key) +
+                '=' +
+                encodeURIComponent(action.params[key])
+              );
+            }
+
+            return;
+          })
+          .join('&');
+      }
+      switch (action?.method) {
+        case 'GET':
+          axios
+            .get(
+              `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}${
+                action?.endpoint
+              }?${queryString}`,
+              {
+                headers: {
+                  Authorization: jwt,
+                  'Content-type': 'multipart/form-data',
+                },
+              },
+            )
+            .then(function (response) {
+              dispatchActionButton(response.data);
+              setPageData(response.data);
+            })
+            .catch(function (error) {
+              // handle error
+              console.log(error);
+            });
 
           return;
-        })
-        .join('&');
-    }
-    switch (action?.method) {
-      case 'GET':
-        axios
-          .get(
-            `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}${
-              action?.endpoint
-            }?${queryString}`,
-            {
-              headers: {
-                Authorization: jwt,
-                'Content-type': 'multipart/form-data',
+        case 'POST':
+          axios
+            .post(
+              `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}${
+                action?.endpoint
+              }`,
+              action?.params,
+              {
+                headers: {
+                  Authorization: jwt,
+                  'Content-type': 'multipart/form-data',
+                },
               },
-            },
-          )
-          .then(function (response) {
-            dispatchActionButton(response.data);
-            setPageData(response.data);
-          })
-          .catch(function (error) {
-            // handle error
-            console.log(error);
-          });
+            )
+            .then(function (response) {
+              dispatchActionButton(response.data);
+              setPageData(response.data.data);
+            })
+            .catch(function (error) {
+              // handle error
+              console.log(error);
+            })
+            .then(function () {
+              // always executed
+            });
 
-        return;
-      case 'POST':
-        axios
-          .post(
-            `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}${
-              action?.endpoint
-            }`,
-            action?.params,
-            {
-              headers: {
-                Authorization: jwt,
-                'Content-type': 'multipart/form-data',
+          return;
+        case 'DELETE':
+          axios
+            .delete(
+              `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}${
+                action?.endpoint
+              }`,
+              {
+                headers: {
+                  Authorization: jwt,
+                  'Content-type': 'multipart/form-data',
+                },
               },
-            },
-          )
-          .then(function (response) {
-            dispatchActionButton(response.data);
-            setPageData(response.data.data);
-          })
-          .catch(function (error) {
-            // handle error
-            console.log(error);
-          })
-          .then(function () {
-            // always executed
-          });
+            )
+            .then(function (response) {
+              dispatchActionButton(response.data);
+              setPageData(response.data.data);
+            })
+            .catch(function (error) {
+              // handle error
+              console.log(error);
+            })
+            .then(function () {
+              // always executed
+            });
 
-        return;
-      case 'DELETE':
-        axios
-          .delete(
-            `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}${
-              action?.endpoint
-            }`,
-            {
-              headers: {
-                Authorization: jwt,
-                'Content-type': 'multipart/form-data',
+          return;
+        case 'CANCEL':
+          axios
+            .delete(
+              `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}${
+                action?.endpoint
+              }`,
+              {
+                headers: {
+                  Authorization: jwt,
+                  'Content-type': 'multipart/form-data',
+                },
               },
-            },
-          )
-          .then(function (response) {
-            dispatchActionButton(response.data);
-            setPageData(response.data.data);
-          })
-          .catch(function (error) {
-            // handle error
-            console.log(error);
-          })
-          .then(function () {
-            // always executed
-          });
+            )
+            .then(function (response) {
+              dispatchActionButton(response.data);
+              setPageData(response.data.data);
+            })
+            .catch(function (error) {
+              // handle error
+              console.log(error);
+            })
+            .then(function () {
+              // always executed
+            });
 
-        return;
-      case 'CANCEL':
-        axios
-          .delete(
-            `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}${
-              action?.endpoint
-            }`,
-            {
-              headers: {
-                Authorization: jwt,
-                'Content-type': 'multipart/form-data',
+          return;
+        case 'PUT':
+          axios
+            .put(
+              `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}${
+                action?.endpoint
+              }`,
+              action?.params,
+              {
+                headers: {
+                  Authorization: jwt,
+                  'Content-type': 'multipart/form-data',
+                },
               },
-            },
-          )
-          .then(function (response) {
-            dispatchActionButton(response.data);
-            setPageData(response.data.data);
-          })
-          .catch(function (error) {
-            // handle error
-            console.log(error);
-          })
-          .then(function () {
-            // always executed
-          });
+            )
+            .then(function (response) {
+              dispatchActionButton(response.data);
+              setPageData(response.data.data);
+            })
+            .catch(function (error) {
+              // handle error
+              console.log(error);
+            })
+            .then(function () {
+              // always executed
+            });
 
-        return;
-      case 'PUT':
-        axios
-          .put(
-            `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}${
-              action?.endpoint
-            }`,
-            action?.params,
-            {
-              headers: {
-                Authorization: jwt,
-                'Content-type': 'multipart/form-data',
-              },
-            },
-          )
-          .then(function (response) {
-            dispatchActionButton(response.data);
-            setPageData(response.data.data);
-          })
-          .catch(function (error) {
-            // handle error
-            console.log(error);
-          })
-          .then(function () {
-            // always executed
-          });
-
-        return;
-    }
-  }, []);
+          return;
+      }
+    },
+    [jwt, setPageData],
+  );
 
   return { actionButton, data };
 };
