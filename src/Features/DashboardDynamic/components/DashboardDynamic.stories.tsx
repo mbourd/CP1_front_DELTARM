@@ -2,7 +2,7 @@ import React from 'react';
 import { DashboardDynamic } from './DashboardDynamic';
 import { worker } from '../../../mocks/server';
 import { rest } from 'msw';
-import { data } from '../../../mocks/fixtures/dashboard/dashboard';
+import data from '../../../mocks/fixtures/dashboard/dashboard';
 
 export default {
   title: 'DashboardDynamic',
@@ -15,7 +15,7 @@ const Template: any = (args: any) => {
     rest.get(
       'https://controle-api-dev.deltarm.com:8082/dashboard/contr_perm',
       (req, res, ctx) => {
-        return res(ctx.status(200), ctx.json({ data }));
+        return res(ctx.status(200), ctx.json(data));
       },
     ),
   );

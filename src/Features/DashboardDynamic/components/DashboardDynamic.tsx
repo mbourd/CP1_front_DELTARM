@@ -11,16 +11,21 @@ import { SearchBar } from './Search/SearchBar';
 import { IDashboard } from './types';
 import { Button } from 'Shared/components';
 import { SwitchMetric } from './Metrics/SwitchMetric';
-import { DashboardModal } from './Search/Modal/DashboardModal';
+import { ModalDynamic } from '../../ModalDynamic/components/ModalDynamic';
 import { useActionButton } from '../../../Packages/Helpers/src/useActionButton';
+import { useRecoilValue } from 'recoil';
+import { IDataModal } from '../../ModalDynamic/components/types';
 
 const DashboardDynamic: React.FC = (): React.ReactElement => {
   const { send, data: response } = useApi<IDashboard>();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentModalRoute, setCurrentModalRoute] = useState<string>('');
   const { user } = useSecurity();
   const jwt = user.getJwt();
-  const { actionButton } = useActionButton(jwt);
+  const { modalData: recoilData, actionButton } = useActionButton(
+    jwt,
+    setIsModalOpen,
+  );
+  const modal: IDataModal = useRecoilValue<any>(recoilData);
 
   const { logout } = useContext(SecurityContext);
 
@@ -95,11 +100,11 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
                 </Grid>
               ))}
           </Grid>
-          {isModalOpen ? (
-            <DashboardModal
+          {isModalOpen && modal ? (
+            <ModalDynamic
               open={isModalOpen}
               onClose={() => setIsModalOpen(false)}
-              route={currentModalRoute}
+              data={modal}
             />
           ) : null}
         </DashboardStyled>

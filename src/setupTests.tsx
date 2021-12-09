@@ -3,12 +3,15 @@ import { BPITheme } from 'Packages/Design';
 import { render, RenderOptions } from '@testing-library/react';
 import React, { FC, ReactElement, Suspense } from 'react';
 import '@testing-library/jest-dom/extend-expect';
+import { RecoilRoot } from 'recoil';
 
 const AllTheProviders: FC = ({ children }) => {
   return (
-    <ThemeProvider theme={BPITheme}>
-      <Suspense fallback={'Loading tests'}>{children}</Suspense>
-    </ThemeProvider>
+    <RecoilRoot>
+      <ThemeProvider theme={BPITheme}>
+        <Suspense fallback={'Loading tests'}>{children}</Suspense>
+      </ThemeProvider>
+    </RecoilRoot>
   );
 };
 
