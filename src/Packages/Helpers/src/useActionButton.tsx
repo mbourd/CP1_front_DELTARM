@@ -57,9 +57,9 @@ export const useActionButton = (jwt: string | null) => {
                 },
               },
             )
-            .then(function (response) {
+            .then(async function (response) {
+              await setPageData(response.data);
               dispatchActionButton(response.data);
-              setPageData(response.data);
             })
             .catch(function (error) {
               // handle error
@@ -81,9 +81,9 @@ export const useActionButton = (jwt: string | null) => {
                 },
               },
             )
-            .then(function (response) {
+            .then(async function (response) {
+              await setPageData(response.data.data);
               dispatchActionButton(response.data);
-              setPageData(response.data.data);
             })
             .catch(function (error) {
               // handle error
@@ -107,9 +107,9 @@ export const useActionButton = (jwt: string | null) => {
                 },
               },
             )
-            .then(function (response) {
+            .then(async function (response) {
+              await setPageData(response.data.data);
               dispatchActionButton(response.data);
-              setPageData(response.data.data);
             })
             .catch(function (error) {
               // handle error
@@ -133,9 +133,9 @@ export const useActionButton = (jwt: string | null) => {
                 },
               },
             )
-            .then(function (response) {
+            .then(async function (response) {
+              await setPageData(response.data.data);
               dispatchActionButton(response.data);
-              setPageData(response.data.data);
             })
             .catch(function (error) {
               // handle error
@@ -160,9 +160,9 @@ export const useActionButton = (jwt: string | null) => {
                 },
               },
             )
-            .then(function (response) {
+            .then(async function (response) {
+              await setPageData(response.data.data);
               dispatchActionButton(response.data);
-              setPageData(response.data.data);
             })
             .catch(function (error) {
               // handle error
