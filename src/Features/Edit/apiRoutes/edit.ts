@@ -17,16 +17,18 @@ export const editValidationHandlerCallback = (apiData: IApiDataEdit) => {
   const actions_contr_perm: IButtons[] | undefined = apiData.actions_contr_perm;
   const chapters: IChapter[] = [];
 
-  apiData.actions?.map((datum) => {
-    actions.push({
-      id: '' + datum.id_action,
-      label: datum.action_lib,
-      url: datum.route,
-      code: datum.action_code,
-    });
+  if (apiData.actions) {
+    apiData.actions?.map((datum) => {
+      actions.push({
+        id: '' + datum.id_action,
+        label: datum.action_lib,
+        url: datum.route,
+        code: datum.action_code,
+      });
 
-    return datum;
-  });
+      return datum;
+    });
+  }
 
   apiData.current_section.chapters.map((chapter) => {
     const controls: IControl[] = [];
