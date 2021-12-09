@@ -29,19 +29,21 @@ export const useActionButton = (jwt: string | null) => {
     (action: IActionButton | null) => {
       let queryString = '';
       if (action?.params) {
-        queryString = Object.keys(action.params)
-          .map((key) => {
-            if (action?.params) {
-              return (
-                encodeURIComponent(key) +
-                '=' +
-                encodeURIComponent(action.params[key])
-              );
-            }
+        queryString =
+          '?' +
+          Object.keys(action.params)
+            .map((key) => {
+              if (action?.params) {
+                return (
+                  encodeURIComponent(key) +
+                  '=' +
+                  encodeURIComponent(action.params[key])
+                );
+              }
 
-            return;
-          })
-          .join('&');
+              return;
+            })
+            .join('&');
       }
       switch (action?.method) {
         case 'GET':
@@ -49,7 +51,7 @@ export const useActionButton = (jwt: string | null) => {
             .get(
               `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}${
                 action?.endpoint
-              }?${queryString}`,
+              }${queryString}`,
               {
                 headers: {
                   Authorization: jwt,
