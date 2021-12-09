@@ -48,7 +48,6 @@ export const ContentHeader: React.FC = (): React.ReactElement => {
                 }}
               >
                 {button.btn_lib}
-                toto
               </Button>
             );
           })}
