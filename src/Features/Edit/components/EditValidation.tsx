@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, Suspense } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Box, Grid, List } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { EditHeaderStyled, EditStyled } from './Edit.style';
@@ -98,75 +98,73 @@ export const EditValidation: React.FC<IProps> = ({
         BAD_REQUEST: <NotFound title={title} />,
       }}
     >
-      <Suspense fallback={<IsLoading title={title} />}>
-        {data ? (
-          <EditStyled>
-            <EditHeaderStyled>
-              <HeadingOne>
-                <SubHeader title={title} data={data} />
-              </HeadingOne>
-            </EditHeaderStyled>
+      {data ? (
+        <EditStyled>
+          <EditHeaderStyled>
+            <HeadingOne>
+              <SubHeader title={title} data={data} />
+            </HeadingOne>
+          </EditHeaderStyled>
 
-            <EditValidationContext.Provider
-              value={{ data, fileId: id ? id : frontRouterQueries.file_id }}
-            >
-              <Grid container wrap={'nowrap'}>
-                <Grid item className={'nav'}>
-                  <List>
-                    {data?.sections.map((section, index) => {
-                      const current = currentSection || data?.currentSection.id;
+          <EditValidationContext.Provider
+            value={{ data, fileId: id ? id : frontRouterQueries.file_id }}
+          >
+            <Grid container wrap={'nowrap'}>
+              <Grid item className={'nav'}>
+                <List>
+                  {data?.sections.map((section, index) => {
+                    const current = currentSection || data?.currentSection.id;
 
-                      if (section.id === current) {
-                        storage.setData('edit.section.active', section.code);
-                      }
+                    if (section.id === current) {
+                      storage.setData('edit.section.active', section.code);
+                    }
 
-                      return (
-                        <NavItem
-                          key={index}
-                          item={section}
-                          active={section.id === current}
-                          onClick={(id: string) => setCurrentSection(id)}
-                        />
-                      );
-                    })}
-                  </List>
-                </Grid>
-                <Grid item className={'content'}>
-                  {data.sectionHeader && (
-                    <Box paddingBottom={5}>
-                      <Alert
-                        variant="outlined"
-                        icon={false}
-                        severity={
-                          data.sectionHeader.type === 'alert'
-                            ? 'error'
-                            : 'success'
-                        }
-                      >
-                        <PreWrapStyled>
-                          {data.sectionHeader.message}
-                        </PreWrapStyled>
-                      </Alert>
-                    </Box>
-                  )}
-                  <SwitchContentBody />
-                  {data.sectionFooter && (
-                    <Box paddingY={5}>
-                      <Alert variant="outlined" severity="info">
-                        <PreWrapStyled>
-                          {data.sectionFooter.message}
-                        </PreWrapStyled>
-                      </Alert>
-                    </Box>
-                  )}
-                </Grid>
+                    return (
+                      <NavItem
+                        key={index}
+                        item={section}
+                        active={section.id === current}
+                        onClick={(id: string) => setCurrentSection(id)}
+                      />
+                    );
+                  })}
+                </List>
               </Grid>
-            </EditValidationContext.Provider>
-          </EditStyled>
-        ) : (
-          <NotFound title={title} />
-        )}
-      </Suspense>
+              <Grid item className={'content'}>
+                {data.sectionHeader && (
+                  <Box paddingBottom={5}>
+                    <Alert
+                      variant="outlined"
+                      icon={false}
+                      severity={
+                        data.sectionHeader.type === 'alert'
+                          ? 'error'
+                          : 'success'
+                      }
+                    >
+                      <PreWrapStyled>
+                        {data.sectionHeader.message}
+                      </PreWrapStyled>
+                    </Alert>
+                  </Box>
+                )}
+                <SwitchContentBody />
+                {data.sectionFooter && (
+                  <Box paddingY={5}>
+                    <Alert variant="outlined" severity="info">
+                      <PreWrapStyled>
+                        {data.sectionFooter.message}
+                      </PreWrapStyled>
+                    </Alert>
+                  </Box>
+                )}
+              </Grid>
+            </Grid>
+          </EditValidationContext.Provider>
+        </EditStyled>
+      ) : (
+        <NotFound title={title} />
+      )}
     </SwitchCallState>
   );
 };

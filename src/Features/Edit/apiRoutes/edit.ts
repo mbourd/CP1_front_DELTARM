@@ -14,7 +14,7 @@ import { IButtons } from '../../DashboardDynamic/components/types';
 
 export const editValidationHandlerCallback = (apiData: IApiDataEdit) => {
   const actions: IAction[] = [];
-  const actions_contr_perm: IButtons[] | undefined = apiData.actions_contr_perm;
+  const actions_contr_perm: IButtons[] = [];
   const chapters: IChapter[] = [];
 
   if (apiData.actions) {
@@ -27,6 +27,20 @@ export const editValidationHandlerCallback = (apiData: IApiDataEdit) => {
       });
 
       return datum;
+    });
+  }
+
+  if (apiData.actions_contr_perm) {
+    apiData.actions_contr_perm?.map((action) => {
+      actions_contr_perm.push({
+        bg_color: action.bg_color,
+        font_color: action.font_color,
+        hover_color: action.hover_color,
+        btn_lib: action.btn_lib,
+        action: action.action,
+      });
+
+      return action;
     });
   }
 
