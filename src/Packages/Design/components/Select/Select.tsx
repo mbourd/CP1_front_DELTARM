@@ -20,7 +20,7 @@ export const Select: React.FC<ISelect> = ({
   bdr,
   children,
   data,
-  multiple = true,
+  multiple = false,
   name,
   selectedValues = {},
   onInit,

@@ -1,5 +1,12 @@
 import React, { FC, useCallback, useRef } from 'react';
-import { Button, HeadingTwo, InputBase, Modal } from 'Shared/components';
+import {
+  Button,
+  Heading,
+  HeadingTwo,
+  InputBase,
+  Modal,
+  Select,
+} from 'Shared/components';
 import { ModalDynamicFooterStyled } from './ModalDynamic.style';
 import { IDataModalProps } from './types';
 import { useActionButton } from '../../../Packages/Helpers/src/useActionButton';
@@ -14,6 +21,7 @@ export const ModalDynamic: FC<IDataModalProps> = ({
   const { user } = useSecurity();
   const jwt = user.getJwt();
   const { actionButton } = useActionButton(jwt);
+  const buttons = useRef<any>(data?.btn);
 
   const handleChangeValue = useCallback((e) => {
     console.log(e.currentTarget.id); // key
@@ -38,23 +46,61 @@ export const ModalDynamic: FC<IDataModalProps> = ({
   );
 
   return (
-    <Modal open={open} onClose={onClose} header={data?.title} footer={footer}>
+    <Modal open={open} onClose={onClose} footer={footer} height={'610px'}>
+      <Heading>{data?.title}</Heading>
       <HeadingTwo>{data?.subtitle}</HeadingTwo>
-      <Grid container>
+      <Grid container spacing={1}>
         {data?.content?.map((element, index) => {
           switch (element.element) {
             case 'p':
-              return <p>{element.value}</p>;
+              return (
+                <Grid key={index} item xs={12}>
+                  <p>{element.value}</p>
+                </Grid>
+              );
             case 'input':
               return (
-                <InputBase
-                  type={element.attribute?.type}
-                  placeholder={element.attribute?.placeholder}
-                  id={element.attribute?.id}
-                  required={element.attribute?.mandatory}
-                  value={element.attribute?.value}
-                  onChange={(e) => handleChangeValue(e)}
-                />
+                <Grid key={index} item xs={8}>
+                  <InputBase
+                    key={index}
+                    type={element.attribute?.type}
+                    placeholder={element.attribute?.placeholder}
+                    id={element.attribute?.id}
+                    multiline={element.attribute?.multiline}
+                    multilineRows={
+                      element.attribute?.multilineRows
+                        ? element.attribute.multilineRows
+                        : undefined
+                    }
+                    required={element.attribute?.mandatory}
+                    value={element?.value || undefined}
+                    onChange={(e) => handleChangeValue(e)}
+                  />
+                </Grid>
+              );
+            case 'select':
+              const selectedValue: Record<string, true> = {
+                [element?.value || '']: true,
+              };
+
+              return (
+                <Grid key={index} item xs={8}>
+                  <Select
+                    closeOnSelect
+                    name={'selectList' + element.attribute?.id}
+                    data={element.attribute?.option || {}}
+                    selectedValues={selectedValue}
+                    onChange={(selectedValues) => {
+                      const value =
+                        Object.keys(selectedValues).length >= 2
+                          ? Object.keys(selectedValues).join(';')
+                          : Object.keys(selectedValues)[0];
+                      const val = value ? value : '';
+                    }}
+                  >
+                    {'Sélectionner une valeur'}
+                  </Select>
+                </Grid>
               );
           }
         })}

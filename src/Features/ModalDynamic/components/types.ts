@@ -1,4 +1,5 @@
 import { IButtons } from '../../DashboardDynamic/components/types';
+import { ISelectData } from '../../../Packages/Design/components';
 
 export interface IDataModalProps {
   onClose: () => void;
@@ -16,15 +17,16 @@ export interface IDataModal {
 }
 
 interface IElementModal {
-  element: 'p' | 'input';
+  element: 'p' | 'input' | 'select';
   attribute: {
     type: string;
     id: string;
     placeholder: string;
     mandatory: boolean;
-    value: string;
+    multiline: boolean;
+    multilineRows: number | null;
+    option?: Record<string, ISelectData>;
   } | null;
   value: string | null;
 }
-interface ISelectModal {}
 interface ITableModale {}

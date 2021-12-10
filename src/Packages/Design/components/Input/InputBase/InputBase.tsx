@@ -35,6 +35,8 @@ export const InputBase: React.FC<IInputBase> = ({
     fontFamily: theme.font.text.main,
     fontColor: c ? c.main : theme.color.text.main,
   });
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { input, ...MUIInputBaseClasse } = classes;
 
   return (
