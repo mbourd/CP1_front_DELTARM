@@ -16,11 +16,13 @@ export interface IDataModal {
 }
 
 interface IElementModal {
-  element: 'string';
+  element: 'p' | 'input';
   attribute: {
-    type: string | null;
+    type: string;
     id: string;
     placeholder: string;
+    mandatory: boolean;
+    value: string;
   } | null;
   value: string | null;
 }

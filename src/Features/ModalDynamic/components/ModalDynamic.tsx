@@ -1,9 +1,10 @@
-import React, { FC } from 'react';
-import { Button, Modal } from 'Shared/components';
+import React, { FC, useCallback, useRef } from 'react';
+import { Button, HeadingTwo, InputBase, Modal } from 'Shared/components';
 import { ModalDynamicFooterStyled } from './ModalDynamic.style';
 import { IDataModalProps } from './types';
 import { useActionButton } from '../../../Packages/Helpers/src/useActionButton';
 import { useSecurity } from '../../../Packages/Security';
+import { Grid } from '@mui/material';
 
 export const ModalDynamic: FC<IDataModalProps> = ({
   open,
@@ -13,6 +14,13 @@ export const ModalDynamic: FC<IDataModalProps> = ({
   const { user } = useSecurity();
   const jwt = user.getJwt();
   const { actionButton } = useActionButton(jwt);
+
+  const handleChangeValue = useCallback((e) => {
+    console.log(e.currentTarget.id); // key
+    console.log(e.currentTarget.value); // value
+    // on veut mapper ça dans les actions
+  }, []);
+
   const footer = (
     <ModalDynamicFooterStyled>
       {data?.btn?.map((btn, index) => {
@@ -31,12 +39,26 @@ export const ModalDynamic: FC<IDataModalProps> = ({
 
   return (
     <Modal open={open} onClose={onClose} header={data?.title} footer={footer}>
-      <p>{data?.subtitle}</p>
-      {data?.content?.map((element, index) => {
-        const CustomTag = `${element.element}` as keyof JSX.IntrinsicElements;
-
-        return <CustomTag key={index}>{element.value}</CustomTag>;
-      })}
+      <HeadingTwo>{data?.subtitle}</HeadingTwo>
+      <Grid container>
+        {data?.content?.map((element, index) => {
+          switch (element.element) {
+            case 'p':
+              return <p>{element.value}</p>;
+            case 'input':
+              return (
+                <InputBase
+                  type={element.attribute?.type}
+                  placeholder={element.attribute?.placeholder}
+                  id={element.attribute?.id}
+                  required={element.attribute?.mandatory}
+                  value={element.attribute?.value}
+                  onChange={(e) => handleChangeValue(e)}
+                />
+              );
+          }
+        })}
+      </Grid>
     </Modal>
   );
 };
