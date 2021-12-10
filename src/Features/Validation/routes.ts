@@ -3,7 +3,7 @@ import { Validation } from 'Features/Validation';
 
 router.registerRoute({
   name: 'validation',
-  path: '/file/validation/:id',
+  path: '/file/validation/:id?',
   component: Validation,
   exact: true,
   strict: false,
