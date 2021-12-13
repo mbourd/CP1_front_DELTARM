@@ -21,7 +21,6 @@ export const useActionButton = (
 ) => {
   const setPageData = useSetRecoilState(data);
   const setModalData = useSetRecoilState(modalData);
-
   const actionButton = useCallback(
     (action: IActionButton | null) => {
       const dispatchActionButton = (data: any) => {
