@@ -13,12 +13,12 @@ export interface IDataModal {
   title: string;
   subtitle: string | null;
   img: string | null;
-  content: IElementModal[];
+  content: IElementModal[] | IElementPModal[];
   btn: IButtons[];
 }
 
-interface IElementModal {
-  element: 'p' | 'input' | 'select';
+interface IElementPModal {
+  element: 'p';
   attribute: {
     type: string;
     id: string;
@@ -28,6 +28,20 @@ interface IElementModal {
     multilineRows: number | null;
     option?: ISelectData[];
   } | null;
+  value: string | null;
+}
+
+interface IElementModal {
+  element: 'input' | 'select';
+  attribute: {
+    type: string;
+    id: string;
+    placeholder: string;
+    mandatory: boolean;
+    multiline: boolean;
+    multilineRows: number | null;
+    option?: ISelectData[];
+  };
   value: string | null;
 }
 interface ITableModale {}
