@@ -26,7 +26,7 @@ interface IElementModal {
     mandatory: boolean;
     multiline: boolean;
     multilineRows: number | null;
-    option?: Record<string, ISelectData>;
+    option?: ISelectData[];
   } | null;
   value: string | null;
 }

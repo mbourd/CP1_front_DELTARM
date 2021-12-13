@@ -4,6 +4,7 @@ import {
   Heading,
   HeadingTwo,
   InputBase,
+  ISelectData,
   Modal,
   Select,
 } from 'Shared/components';
@@ -27,6 +28,11 @@ export const ModalDynamic: FC<IDataModalProps> = ({
     console.log(e.currentTarget.id); // key
     console.log(e.currentTarget.value); // value
     // on veut mapper ça dans les actions
+  }, []);
+
+  const handleCLickActionsBeforeSendToActionButtons = useCallback(() => {
+    // taitement des données avec réconciliations des parametres
+    // envoie au trigger
   }, []);
 
   const footer = (
@@ -88,12 +94,23 @@ export const ModalDynamic: FC<IDataModalProps> = ({
                 [element?.value || '']: true,
               };
 
+              const options: Record<string, ISelectData> = {};
+              element.attribute?.option?.map((option) => {
+                options[option.id] = {
+                  id: '' + option.id,
+                  label: option.label,
+                  value: option.value,
+                };
+
+                return option;
+              });
+
               return (
                 <Grid key={index} item xs={8}>
                   <Select
                     closeOnSelect
                     name={'selectList' + element.attribute?.id}
-                    data={element.attribute?.option || {}}
+                    data={options || {}}
                     selectedValues={selectedValue}
                     onChange={(selectedValues) => {
                       const value =
