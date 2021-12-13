@@ -17,7 +17,7 @@ const modalData = atom({
 
 export const useActionButton = (
   jwt: string | null,
-  setIsModalOpen?: React.Dispatch<SetStateAction<boolean>>,
+  setOpenCloseModal?: React.Dispatch<SetStateAction<boolean>>,
 ) => {
   const setPageData = useSetRecoilState(data);
   const setModalData = useSetRecoilState(modalData);
@@ -33,14 +33,8 @@ export const useActionButton = (
             return router.redirectToUrl(data.route_front);
           case 'modal':
             setModalData(data);
-            if (setIsModalOpen) {
-              setIsModalOpen(true);
-            }
-
-            return;
-          case 'cancel':
-            if (setIsModalOpen) {
-              setIsModalOpen(false);
+            if (setOpenCloseModal) {
+              setOpenCloseModal(true);
             }
 
             return;
@@ -155,35 +149,6 @@ export const useActionButton = (
             });
 
           return;
-        case 'CANCEL':
-          axios
-            .delete(
-              `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}${
-                action?.endpoint
-              }`,
-              {
-                headers: {
-                  Authorization: jwt,
-                  'Content-type': 'multipart/form-data',
-                },
-              },
-            )
-            .then(async function (response) {
-              await setPageData(response.data.data);
-              dispatchActionButton(response.data);
-            })
-            .catch((error) => {
-              if (error.response) {
-                if (error.response.status === 500) {
-                  console.log('only case: show generic modal error');
-
-                  return;
-                }
-                dispatchActionButton(error.response.data);
-              }
-            });
-
-          return;
         case 'PUT':
           axios
             .put(
@@ -214,9 +179,15 @@ export const useActionButton = (
             });
 
           return;
+        case 'CANCEL':
+          if (setOpenCloseModal) {
+            setOpenCloseModal(false);
+          }
+
+          return;
       }
     },
-    [jwt, setPageData, setModalData, setIsModalOpen],
+    [jwt, setPageData, setModalData, setOpenCloseModal],
   );
 
   return { actionButton, data, modalData };
