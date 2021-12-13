@@ -30,17 +30,15 @@ export const useActionButton = (
           case 'blank':
             return window.open(data.route_front, '_blank');
           case 'main':
+            if (setIsModalOpen) {
+              setIsModalOpen(false);
+            }
+
             return router.redirectToUrl(data.route_front);
           case 'modal':
             setModalData(data);
             if (setIsModalOpen) {
               setIsModalOpen(true);
-            }
-
-            return;
-          case 'cancel':
-            if (setIsModalOpen) {
-              setIsModalOpen(false);
             }
 
             return;
@@ -155,35 +153,6 @@ export const useActionButton = (
             });
 
           return;
-        case 'CANCEL':
-          axios
-            .delete(
-              `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}${
-                action?.endpoint
-              }`,
-              {
-                headers: {
-                  Authorization: jwt,
-                  'Content-type': 'multipart/form-data',
-                },
-              },
-            )
-            .then(async function (response) {
-              await setPageData(response.data.data);
-              dispatchActionButton(response.data);
-            })
-            .catch((error) => {
-              if (error.response) {
-                if (error.response.status === 500) {
-                  console.log('only case: show generic modal error');
-
-                  return;
-                }
-                dispatchActionButton(error.response.data);
-              }
-            });
-
-          return;
         case 'PUT':
           axios
             .put(
@@ -212,6 +181,12 @@ export const useActionButton = (
                 dispatchActionButton(error.response.data);
               }
             });
+
+          return;
+        case 'CANCEL':
+          if (setIsModalOpen) {
+            setIsModalOpen(false);
+          }
 
           return;
       }

@@ -1,8 +1,9 @@
 import { IButtons } from '../../DashboardDynamic/components/types';
 import { ISelectData } from '../../../Packages/Design/components';
+import React, { SetStateAction } from 'react';
 
 export interface IDataModalProps {
-  onClose: () => void;
+  setIsModalOpen: React.Dispatch<SetStateAction<boolean>>;
   open: boolean;
   data?: IDataModal;
 }

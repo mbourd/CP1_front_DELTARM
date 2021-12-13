@@ -15,12 +15,12 @@ import { Grid } from '@mui/material';
 
 export const ModalDynamic: FC<IDataModalProps> = ({
   open,
-  onClose,
+  setIsModalOpen,
   data,
 }): React.ReactElement => {
   const { user } = useSecurity();
   const jwt = user.getJwt();
-  const { actionButton } = useActionButton(jwt);
+  const { actionButton } = useActionButton(jwt, setIsModalOpen);
   const buttons = useRef<any>(data?.btn);
 
   const handleChangeValue = useCallback((e) => {
@@ -46,7 +46,12 @@ export const ModalDynamic: FC<IDataModalProps> = ({
   );
 
   return (
-    <Modal open={open} onClose={onClose} footer={footer} height={'610px'}>
+    <Modal
+      open={open}
+      onClose={() => setIsModalOpen(false)}
+      footer={footer}
+      height={'610px'}
+    >
       <Heading>{data?.title}</Heading>
       <HeadingTwo>{data?.subtitle}</HeadingTwo>
       <Grid container spacing={1}>

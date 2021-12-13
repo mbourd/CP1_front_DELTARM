@@ -22,8 +22,6 @@ import { SubHeader } from './SubHeader';
 import { useRecoilValue } from 'recoil';
 import { useActionButton } from '../../../Packages/Helpers/src/useActionButton';
 import { editValidationHandlerCallback } from '../apiRoutes';
-import { ModalDynamic } from '../../ModalDynamic/components/ModalDynamic';
-import { IDataModal } from '../../ModalDynamic/components/types';
 
 interface IProps {
   title: string;
