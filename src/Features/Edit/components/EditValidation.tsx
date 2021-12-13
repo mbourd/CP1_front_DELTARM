@@ -39,10 +39,8 @@ export const EditValidation: React.FC<IProps> = ({
   const { user } = useSecurity();
   const jwt = user.getJwt();
   const { logout } = useContext(SecurityContext);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const { data: recoilData, modalData } = useActionButton(jwt, setIsModalOpen);
+  const { data: recoilData } = useActionButton(jwt);
   const fetchedData: IApiData = useRecoilValue<any>(recoilData);
-  const modal: IDataModal = useRecoilValue<any>(modalData);
   const [data, setData] = useState<IData | null>(refreshedData);
 
   // To avoid (bpi specific)
@@ -169,13 +167,6 @@ export const EditValidation: React.FC<IProps> = ({
       ) : (
         <NotFound title={title} />
       )}
-      {isModalOpen && modal ? (
-        <ModalDynamic
-          open={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          data={modal}
-        />
-      ) : null}
     </SwitchCallState>
   );
 };

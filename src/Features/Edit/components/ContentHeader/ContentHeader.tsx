@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { ContentHeaderStyled } from './ContentHeader.style';
 
@@ -20,12 +20,17 @@ import { EditValidationContext, FileComment, FileAudit } from 'Features';
 import { Button } from 'Shared/components';
 import { useActionButton } from '../../../../Packages/Helpers/src/useActionButton';
 import { useSecurity } from '../../../../Packages/Security';
+import { ModalDynamic } from '../../../ModalDynamic/components/ModalDynamic';
+import { IDataModal } from '../../../ModalDynamic/components/types';
+import { useRecoilValue } from 'recoil';
 
 export const ContentHeader: React.FC = (): React.ReactElement => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { data } = useContext(EditValidationContext);
   const { user } = useSecurity();
   const jwt = user.getJwt();
-  const { actionButton } = useActionButton(jwt);
+  const { actionButton, modalData } = useActionButton(jwt, setIsModalOpen);
+  const modal: IDataModal = useRecoilValue<any>(modalData);
 
   return (
     <ContentHeaderStyled>
@@ -107,6 +112,13 @@ export const ContentHeader: React.FC = (): React.ReactElement => {
           })}
         </Grid>
       </Grid>
+      {isModalOpen && modal ? (
+        <ModalDynamic
+          open={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          data={modal}
+        />
+      ) : null}
     </ContentHeaderStyled>
   );
 };
