@@ -17,7 +17,7 @@ const modalData = atom({
 
 export const useActionButton = (
   jwt: string | null,
-  setOpenCloseModal?: React.Dispatch<SetStateAction<boolean>>,
+  setIsModalOpen?: React.Dispatch<SetStateAction<boolean>>,
 ) => {
   const setPageData = useSetRecoilState(data);
   const setModalData = useSetRecoilState(modalData);
@@ -30,11 +30,15 @@ export const useActionButton = (
           case 'blank':
             return window.open(data.route_front, '_blank');
           case 'main':
+            if (setIsModalOpen) {
+              setIsModalOpen(false);
+            }
+
             return router.redirectToUrl(data.route_front);
           case 'modal':
             setModalData(data);
-            if (setOpenCloseModal) {
-              setOpenCloseModal(true);
+            if (setIsModalOpen) {
+              setIsModalOpen(true);
             }
 
             return;
@@ -180,14 +184,14 @@ export const useActionButton = (
 
           return;
         case 'CANCEL':
-          if (setOpenCloseModal) {
-            setOpenCloseModal(false);
+          if (setIsModalOpen) {
+            setIsModalOpen(false);
           }
 
           return;
       }
     },
-    [jwt, setPageData, setModalData, setOpenCloseModal],
+    [jwt, setPageData, setModalData, setIsModalOpen],
   );
 
   return { actionButton, data, modalData };

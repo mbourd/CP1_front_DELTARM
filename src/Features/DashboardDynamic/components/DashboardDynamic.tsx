@@ -103,7 +103,7 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
           {isModalOpen && modal ? (
             <ModalDynamic
               open={isModalOpen}
-              setOpenCloseModal={setIsModalOpen}
+              setIsModalOpen={setIsModalOpen}
               data={modal}
             />
           ) : null}
