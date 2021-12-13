@@ -1,4 +1,7 @@
 {
+  "plugins": [
+    "react-hooks"
+  ],
   "parser": "@typescript-eslint/parser",
   "extends": [
     "plugin:react/recommended",
@@ -21,7 +24,9 @@
     "no-eval": ["error"],
     "react/prop-types": ["off"],
     "@typescript-eslint/no-explicit-any": ["off"],
-    "@typescript-eslint/ban-ts-comment": ["off"]
+    "@typescript-eslint/ban-ts-comment": ["off"],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   },
   "settings": {
     "react": {

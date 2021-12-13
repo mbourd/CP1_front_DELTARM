@@ -13,12 +13,17 @@ import {
 } from 'Services';
 import { HeadingOne, PreWrapStyled } from 'Shared/components';
 import { NavItem } from './NavItem/NavItem';
-import { IData } from '../types';
+import { IApiData, IData } from '../types';
 import { EditValidationContext } from '../EditValidationContext';
 import { IsLoading } from './IsLoading/IsLoading';
 import { SwitchContentBody } from './ContentBody/SwitchContentBody';
 import { NotFound } from './NotFound/NotFound';
 import { SubHeader } from './SubHeader';
+import { useRecoilValue } from 'recoil';
+import { useActionButton } from '../../../Packages/Helpers/src/useActionButton';
+import { editValidationHandlerCallback } from '../apiRoutes';
+import { ModalDynamic } from '../../ModalDynamic/components/ModalDynamic';
+import { IDataModal } from '../../ModalDynamic/components/types';
 
 interface IProps {
   title: string;
@@ -29,10 +34,15 @@ export const EditValidation: React.FC<IProps> = ({
   title,
   apiRouteName,
 }): React.ReactElement => {
-  const { request, callState, send, data } = useApi<IData>();
+  const { request, callState, send, data: refreshedData } = useApi<IData>();
   const [currentSection, setCurrentSection] = useState<string | null>(null);
   const { user } = useSecurity();
+  const jwt = user.getJwt();
   const { logout } = useContext(SecurityContext);
+  const { data: recoilData } = useActionButton(jwt);
+  const fetchedData: IApiData = useRecoilValue<any>(recoilData);
+  const [data, setData] = useState<IData | null>(refreshedData);
+
   // To avoid (bpi specific)
   const { id } = router.getParams();
   const frontRouterQueries = router.getQueries();
@@ -42,6 +52,17 @@ export const EditValidation: React.FC<IProps> = ({
   }
 
   useEffect(() => {
+    if (fetchedData) {
+      setData(editValidationHandlerCallback(fetchedData.data));
+
+      return;
+    }
+
+    if (refreshedData) {
+      setData(refreshedData);
+
+      return;
+    }
     // To avoid (bpi specific)
     let queries: Record<string, any> = { file_id: id };
 
@@ -59,7 +80,16 @@ export const EditValidation: React.FC<IProps> = ({
     return () => {
       request.abort();
     };
-  }, [send, id, currentSection, request, apiRouteName, frontRouterQueries]);
+  }, [
+    send,
+    id,
+    currentSection,
+    request,
+    apiRouteName,
+    frontRouterQueries,
+    refreshedData,
+    fetchedData,
+  ]);
 
   return (
     <SwitchCallState

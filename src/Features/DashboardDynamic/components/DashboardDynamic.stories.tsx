@@ -15,7 +15,7 @@ const Template: any = (args: any) => {
     rest.get(
       'https://controle-api-dev.deltarm.com:8082/dashboard/contr_perm',
       (req, res, ctx) => {
-        return res(ctx.status(200), ctx.json({ data: data }));
+        return res(ctx.status(200), ctx.json(data));
       },
     ),
   );
