@@ -56,7 +56,7 @@ export const ModalDynamic: FC<IDataModalProps> = ({
       open={open}
       onClose={() => setIsModalOpen(false)}
       footer={footer}
-      height={'610px'}
+      maxHeight={'610px'}
     >
       <Heading>{data?.title}</Heading>
       <HeadingTwo>{data?.subtitle}</HeadingTwo>
