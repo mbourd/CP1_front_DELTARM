@@ -29,6 +29,7 @@ export const useActionButton = (
           case 'blank':
             return window.open(data.route_front, '_blank');
           case 'main':
+            setPageData(data);
             if (setIsModalOpen) {
               setIsModalOpen(false);
             }
@@ -80,7 +81,6 @@ export const useActionButton = (
               },
             )
             .then(async (response) => {
-              await setPageData(response.data);
               dispatchActionButton(response.data);
             })
             .catch((error) => {
@@ -110,8 +110,6 @@ export const useActionButton = (
               },
             )
             .then(async (response) => {
-              console.log('success');
-              await setPageData(response.data.data);
               dispatchActionButton(response.data);
             })
             .catch(async (error) => {
@@ -140,7 +138,6 @@ export const useActionButton = (
               },
             )
             .then(async (response) => {
-              await setPageData(response.data.data);
               dispatchActionButton(response.data);
             })
             .catch(async (error) => {
@@ -170,7 +167,6 @@ export const useActionButton = (
               },
             )
             .then(async (response) => {
-              await setPageData(response.data.data);
               dispatchActionButton(response.data);
             })
             .catch((error) => {
