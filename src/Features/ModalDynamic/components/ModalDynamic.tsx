@@ -1,7 +1,6 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
 import {
   Button,
-  FormError,
   Heading,
   HeadingTwo,
   InputBase,
@@ -24,45 +23,18 @@ export const ModalDynamic: FC<IDataModalProps> = ({
 }): React.ReactElement => {
   const { user } = useSecurity();
   const jwt = user.getJwt();
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { actionButton } = useActionButton(jwt, setIsModalOpen);
-  const { register, getValues, setValue, control } = useForm();
-
-  const handleChangeValue = useCallback(
-    (e) => {
-      const name = e.currentTarget.id;
-      const value = e.currentTarget.value;
-      setValue(name, value);
-    },
-    [setValue],
-  );
-
-  const handleCLickActionsBeforeSendToActionButtons = useCallback(
-    (action: IActionButton) => {
-      if (action.params) {
-        const keys = Object.keys(action.params);
-        const params = getValues(keys);
-        const modifiedAction: IActionButton = {
-          ...action,
-          params,
-        };
-        actionButton(modifiedAction);
-
-        return;
-      }
-
-      actionButton(action);
-
-      // mapper les valeurs qui ont une valeur par défaut
-      // champs mandatory
-      // don't forget the values of select list
-    },
-    [getValues, actionButton],
-  );
+  const queries = useMemo<Record<string, string>>(() => {
+    return {};
+  }, []);
 
   const footer = (
     <ModalDynamicFooterStyled>
       {data?.btn?.map((btn, index) => {
+        if (btn.action.params) {
+          Object.assign(queries, btn.action.params);
+        }
+
         return (
           <Button
             key={index}
@@ -76,6 +48,39 @@ export const ModalDynamic: FC<IDataModalProps> = ({
         );
       })}
     </ModalDynamicFooterStyled>
+  );
+
+  const { register, getValues, setValue, control } = useForm({
+    defaultValues: queries,
+  });
+
+  const handleChangeValue = useCallback(
+    (e) => {
+      const name = e.currentTarget.id;
+      const value = e.currentTarget.value;
+      setValue(name, value);
+    },
+    [setValue],
+  );
+
+  const handleCLickActionsBeforeSendToActionButtons = useCallback(
+    (action: IActionButton) => {
+      if (action.params) {
+        // The default values are for the moment unchanging
+        const keys = Object.keys(action.params);
+        const params = { ...getValues(keys), ...queries };
+        const modifiedAction: IActionButton = {
+          ...action,
+          params,
+        };
+        actionButton(modifiedAction);
+
+        return;
+      }
+
+      actionButton(action);
+    },
+    [getValues, actionButton, queries],
   );
 
   return (
@@ -105,6 +110,7 @@ export const ModalDynamic: FC<IDataModalProps> = ({
                     name={element.attribute.id}
                     render={() => (
                       <InputBase
+                        autofocus
                         key={index}
                         type={element.attribute?.type}
                         placeholder={element.attribute?.placeholder}
@@ -125,7 +131,6 @@ export const ModalDynamic: FC<IDataModalProps> = ({
                       />
                     )}
                   />
-                  {errorMessage ? <FormError>{errorMessage}</FormError> : null}
                 </Grid>
               );
             case 'select':
