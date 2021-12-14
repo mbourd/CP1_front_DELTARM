@@ -115,7 +115,7 @@ export const ContentHeader: React.FC = (): React.ReactElement => {
       {isModalOpen && modal ? (
         <ModalDynamic
           open={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
+          setIsModalOpen={setIsModalOpen}
           data={modal}
         />
       ) : null}

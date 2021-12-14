@@ -1,8 +1,9 @@
 import { IButtons } from '../../DashboardDynamic/components/types';
 import { ISelectData } from '../../../Packages/Design/components';
+import React, { SetStateAction } from 'react';
 
 export interface IDataModalProps {
-  onClose: () => void;
+  setIsModalOpen: React.Dispatch<SetStateAction<boolean>>;
   open: boolean;
   data?: IDataModal;
 }
@@ -12,12 +13,12 @@ export interface IDataModal {
   title: string;
   subtitle: string | null;
   img: string | null;
-  content: IElementModal[];
+  content: IElementModal[] | IElementPModal[];
   btn: IButtons[];
 }
 
-interface IElementModal {
-  element: 'p' | 'input' | 'select';
+interface IElementPModal {
+  element: 'p';
   attribute: {
     type: string;
     id: string;
@@ -25,8 +26,22 @@ interface IElementModal {
     mandatory: boolean;
     multiline: boolean;
     multilineRows: number | null;
-    option?: Record<string, ISelectData>;
+    option?: ISelectData[];
   } | null;
+  value: string | null;
+}
+
+interface IElementModal {
+  element: 'input' | 'select';
+  attribute: {
+    type: string;
+    id: string;
+    placeholder: string;
+    mandatory: boolean;
+    multiline: boolean;
+    multilineRows: number | null;
+    option?: ISelectData[];
+  };
   value: string | null;
 }
 interface ITableModale {}
