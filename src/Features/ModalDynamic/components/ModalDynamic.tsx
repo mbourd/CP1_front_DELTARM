@@ -12,7 +12,7 @@ import { ModalDynamicFooterStyled } from './ModalDynamic.style';
 import { IDataModalProps } from './types';
 import { useActionButton } from '../../../Packages/Helpers/src/useActionButton';
 import { useSecurity } from '../../../Packages/Security';
-import { Grid } from '@mui/material';
+import { Container, Grid } from '@mui/material';
 import { IActionButton } from '../../DashboardDynamic/components/types';
 import { useForm, Controller } from 'react-hook-form';
 
@@ -92,6 +92,11 @@ export const ModalDynamic: FC<IDataModalProps> = ({
     >
       <Heading>{data?.title}</Heading>
       <HeadingTwo>{data?.subtitle}</HeadingTwo>
+      {data?.img && (
+        <Container style={{ display: 'flex', justifyContent: 'center' }}>
+          <img src={data.img} alt={'modal-image'} />
+        </Container>
+      )}
       <Grid container spacing={1}>
         {data?.content?.map((element, index) => {
           switch (element.element) {
