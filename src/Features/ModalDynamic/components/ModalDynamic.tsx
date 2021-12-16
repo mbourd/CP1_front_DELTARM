@@ -12,9 +12,17 @@ import { ModalDynamicFooterStyled } from './ModalDynamic.style';
 import { IDataModalProps } from './types';
 import { useActionButton } from '../../../Packages/Helpers/src/useActionButton';
 import { useSecurity } from '../../../Packages/Security';
-import { Container, Grid } from '@mui/material';
+import {
+  Container,
+  Grid,
+  Table,
+  TableBody,
+  TableContainer,
+  TableRow,
+} from '@mui/material';
 import { IActionButton } from '../../DashboardDynamic/components/types';
 import { useForm, Controller } from 'react-hook-form';
+import { StyledTableCell } from '../../DashboardDynamic/components/Card/Card.style';
 
 export const ModalDynamic: FC<IDataModalProps> = ({
   open,
@@ -174,6 +182,44 @@ export const ModalDynamic: FC<IDataModalProps> = ({
                   >
                     {'Sélectionner une valeur'}
                   </Select>
+                </Grid>
+              );
+            case 'table':
+              return (
+                <Grid key={index} item xs={12}>
+                  <TableContainer style={{ maxHeight: '300px' }}>
+                    <Table>
+                      <TableBody>
+                        {element.value.row.value.map((row, index) => (
+                          <TableRow key={index}>
+                            {row.cell.value.map((cell, index) => {
+                              switch (cell.type) {
+                                case 'btn':
+                                  return (
+                                    <StyledTableCell scope="row" key={index}>
+                                      <Button
+                                        key={index}
+                                        onClick={() =>
+                                          actionButton(cell.action)
+                                        }
+                                      >
+                                        {cell.value}
+                                      </Button>
+                                    </StyledTableCell>
+                                  );
+                                case 'text':
+                                  return (
+                                    <StyledTableCell scope="row" key={index}>
+                                      {cell.value}
+                                    </StyledTableCell>
+                                  );
+                              }
+                            })}
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
                 </Grid>
               );
           }

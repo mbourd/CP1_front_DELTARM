@@ -38,10 +38,12 @@ describe('ModalDynamic', () => {
       const button = screen.getByText('Annuler');
       expect(button).toBeInTheDocument();
     });
-    // test('Should render the table component', async () => {
-    //   render(<Modal />);
-    //   const table = screen.getByText('DELCOURT FERROVIAIRE');
-    //   expect(table).toBeInTheDocument();
-    // });
+    test('Should render the table component', async () => {
+      render(<Modal />);
+      const table = screen.getByText('DELCOURT FERROVIAIRE');
+      const text = screen.getByText('CTR019/00');
+      expect(table).toBeInTheDocument();
+      expect(text).toBeInTheDocument();
+    });
   });
 });

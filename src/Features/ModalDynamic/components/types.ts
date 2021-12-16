@@ -1,4 +1,7 @@
-import { IButtons } from '../../DashboardDynamic/components/types';
+import {
+  IActionButton,
+  IButtons,
+} from '../../DashboardDynamic/components/types';
 import { ISelectData } from '../../../Packages/Design/components';
 import React, { SetStateAction } from 'react';
 
@@ -13,7 +16,7 @@ export interface IDataModal {
   title: string;
   subtitle: string | null;
   img: string | null;
-  content: IElementModal[] | IElementPModal[];
+  content: IElementModal[] | IElementPModal[] | IElementTableModal[];
   btn: IButtons[];
 }
 
@@ -44,4 +47,36 @@ interface IElementModal {
   };
   value: string | null;
 }
-interface ITableModale {}
+
+interface IElementTextValueModal {
+  cell: {
+    value: [
+      {
+        type: 'text';
+        value?: string;
+      },
+    ];
+  };
+}
+
+interface IElementButtonValueModal {
+  cell: {
+    value: [
+      {
+        type: 'btn';
+        value?: string;
+        action: IActionButton | null;
+      },
+    ];
+  };
+}
+
+interface IElementTableModal {
+  element: 'table';
+  attribute: null;
+  value: {
+    row: {
+      value: IElementButtonValueModal[] | IElementTextValueModal[];
+    };
+  };
+}
