@@ -64,6 +64,7 @@ export const editValidationHandlerCallback = (apiData: IApiDataEdit) => {
         regexMsg: control.control_regex_msg,
         manageCompliance: control.control_manage_compliance,
         isConditional: control.control_conditional,
+        isCalculated: control.field_is_formula,
       };
 
       if (control.control_answer_choices) {

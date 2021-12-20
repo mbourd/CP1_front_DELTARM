@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
 import { TextControlStyled } from './TextControl.style';
 import { Grid } from '@material-ui/core';
 import { IControl } from 'Features/Edit/types';
@@ -7,23 +7,31 @@ import { useApi, useRouter } from 'Services';
 import { ControlLabel } from '../ControlLabel';
 import { ControlFooter } from '../ControlFooter';
 import { checkIfSameValues } from '../../../../../../Packages/Helpers/src/checkIfSameValues';
+import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
 
 interface IProps {
   control: IControl;
   fileId: string;
+  formState: IControl[];
+  setFormState: React.Dispatch<SetStateAction<IControl[]>>;
 }
 
 export const TextControl: React.FC<IProps> = ({
   control,
   fileId,
+  formState,
+  setFormState,
 }): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.value);
   const { currentRoute } = useRouter();
   // console.log(control.conditional);
-  // // console.log(control.isConditional);
-  // console.log(control.conditionalInitState);
+  // console.log(control.isConditional);
+
+  useEffect(() => {
+    updateFormState(formState, control.id, currentValue, setFormState);
+  }, [formState, control.id, currentValue, setFormState]);
 
   const saveValue = useCallback(
     (value: string) => {
@@ -76,7 +84,6 @@ export const TextControl: React.FC<IProps> = ({
   useEffect(() => {
     if (control.mandatory && control.editable && !currentValue) {
       setErrorMessage('Valeur obligatoire');
-      // Todo instead of set a error message put a star in side of label
     }
   }, [control.mandatory, control.editable, currentValue]);
 

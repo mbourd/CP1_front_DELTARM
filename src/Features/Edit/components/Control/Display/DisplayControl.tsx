@@ -12,7 +12,9 @@ export const DisplayControl: React.FC<IProps> = ({
   controls,
 }): React.ReactElement => {
   const [formState, setFormState] = useState(controls);
+  // console.log(formState);
   // const formStateWithDisabled = injectDisabled(formState)
+  // const formStateWithCalculated = injectCalculated(formStateWithDisabled)
 
   useEffect(() => {
     if (controls) {
