@@ -3,7 +3,7 @@ import { Button, Modal } from '../../../../../../../Packages/Design/components';
 import { ICompliance, IComplianceData } from '../../../../../types';
 import { SwitchControlCompliance } from '../SwitchControlCompliance';
 import { Grid } from '@material-ui/core';
-import { DisplayControlStyled } from '../../../Display/DisplayControl.style';
+import { FormControlStyled } from '../../../Display/FormControl.style';
 import { SearchModalFooterStyled } from '../../../../../../Manage/components/Search/Modal/SearchModal.style';
 import { HeadingTwo } from '../../../../../../../Shared/components';
 import { useApi } from '../../../../../../../Services';
@@ -47,7 +47,7 @@ export const ModalCompliance: React.FC<IProps> = ({
   return (
     <Modal open={open} height={'618px'} onClose={onClose} footer={footer}>
       <HeadingTwo>{compliance.modaleTitle}</HeadingTwo>
-      <DisplayControlStyled>
+      <FormControlStyled>
         <Grid container className={'control-container'}>
           {data?.map((compliance: IComplianceData, index) => {
             return (
@@ -59,7 +59,7 @@ export const ModalCompliance: React.FC<IProps> = ({
             );
           })}
         </Grid>
-      </DisplayControlStyled>
+      </FormControlStyled>
     </Modal>
   );
 };

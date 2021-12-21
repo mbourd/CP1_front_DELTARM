@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { InformationStyled } from './Information.style';
 import { EditValidationContext } from 'Features';
 import { ContentHeader } from '../../ContentHeader/ContentHeader';
-import { DisplayControl } from '../../Control';
+import { FormControls } from '../../Control';
 import { ContentTitle } from '../../ContentTitle/ContentTitle';
 
 export const Information: React.FC = (): React.ReactElement | null => {
@@ -19,7 +19,7 @@ export const Information: React.FC = (): React.ReactElement | null => {
         return (
           <React.Fragment key={index}>
             <ContentTitle>{chapter.label}</ContentTitle>
-            <DisplayControl controls={chapter.controls} />
+            <FormControls controls={chapter.controls} />
           </React.Fragment>
         );
       })}

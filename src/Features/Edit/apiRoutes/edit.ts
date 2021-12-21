@@ -96,9 +96,8 @@ export const editValidationHandlerCallback = (apiData: IApiDataEdit) => {
 
       if (control.conditional) {
         c.conditional = {
-          displayType: control.conditional.conditional_display_type,
           formula: control.conditional.conditional_formula,
-          byField: control.conditional.conditional_by_field_id,
+          byField: '' + control.conditional.conditional_by_field_id,
           conditionalInitState: control.conditional.conditional_init_state,
         };
       }

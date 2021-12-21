@@ -41,7 +41,6 @@ export interface IApiCompliance {
 
 export interface IApiConditional {
   conditional_by_field_id: number;
-  conditional_display_type: string;
   conditional_formula: string;
   conditional_init_state: boolean;
 }
@@ -81,17 +80,15 @@ export interface ICompliance {
 }
 
 export interface IConditional {
-  byField: number;
-  displayType: string;
+  byField: string;
   formula: string;
   conditionalInitState: boolean;
 }
 
 export interface ICalculated {
-  byField: number;
+  byField: number[];
   displayType: string;
   formula: string;
-  conditionalInitState: boolean;
 }
 
 export interface IApiControl {

@@ -26,8 +26,6 @@ export const TextControl: React.FC<IProps> = ({
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.value);
   const { currentRoute } = useRouter();
-  // console.log(control.conditional);
-  // console.log(control.isConditional);
 
   useEffect(() => {
     updateFormState(formState, control.id, currentValue, setFormState);
