@@ -56,7 +56,7 @@ export const EditValidation: React.FC<IProps> = ({
   }, [refreshedData]);
 
   useEffect(() => {
-    if (fetchedData) {
+    if (fetchedData && !currentSection) {
       setData(editValidationHandlerCallback(fetchedData.data));
 
       return;
