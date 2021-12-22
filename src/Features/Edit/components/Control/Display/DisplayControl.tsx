@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { DisplayControlStyled } from './DisplayControl.style';
 import { IControl } from 'Features/Edit/types';
@@ -13,6 +13,12 @@ export const DisplayControl: React.FC<IProps> = ({
 }): React.ReactElement => {
   const [formState, setFormState] = useState(controls);
   // const formStateWithDisabled = injectDisabled(formState)
+
+  useEffect(() => {
+    if (controls) {
+      setFormState(controls);
+    }
+  }, [controls]);
 
   return (
     <DisplayControlStyled>
