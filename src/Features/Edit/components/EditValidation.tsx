@@ -50,14 +50,14 @@ export const EditValidation: React.FC<IProps> = ({
   }
 
   useEffect(() => {
-    if (fetchedData) {
-      setData(editValidationHandlerCallback(fetchedData.data));
-
-      return;
-    }
-
     if (refreshedData) {
       setData(refreshedData);
+    }
+  }, [refreshedData]);
+
+  useEffect(() => {
+    if (fetchedData) {
+      setData(editValidationHandlerCallback(fetchedData.data));
 
       return;
     }
@@ -85,7 +85,6 @@ export const EditValidation: React.FC<IProps> = ({
     request,
     apiRouteName,
     frontRouterQueries,
-    refreshedData,
     fetchedData,
   ]);
 

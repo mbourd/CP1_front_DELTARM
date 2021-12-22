@@ -3,11 +3,18 @@ import { DashboardDynamic } from './DashboardDynamic';
 import { worker } from '../../../mocks/server';
 import { rest } from 'msw';
 import data from '../../../mocks/fixtures/dashboard/dashboard';
+import { RecoilRoot } from 'recoil';
 
 export default {
   title: 'DashboardDynamic',
   component: DashboardDynamic,
-  decorators: [(story: any) => <div className="p-6">{story()}</div>],
+  decorators: [
+    (story: any) => (
+      <RecoilRoot>
+        <div className="p-6">{story()}</div>
+      </RecoilRoot>
+    ),
+  ],
 };
 
 const Template: any = (args: any) => {
