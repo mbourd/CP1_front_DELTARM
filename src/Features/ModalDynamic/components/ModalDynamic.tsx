@@ -1,6 +1,7 @@
-import React, { FC, useCallback, useMemo } from 'react';
+import React, { FC, useCallback, useMemo, useState } from 'react';
 import {
   Button,
+  FormError,
   Heading,
   HeadingTwo,
   InputBase,
@@ -32,17 +33,17 @@ export const ModalDynamic: FC<IDataModalProps> = ({
   const { user } = useSecurity();
   const jwt = user.getJwt();
   const { actionButton } = useActionButton(jwt, setIsModalOpen);
-  const queries = useMemo<Record<string, string>>(() => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const defaultQueries = useMemo<Record<string, string>>(() => {
     return {};
   }, []);
 
   const footer = (
     <ModalDynamicFooterStyled>
+      {errorMessage ? (
+        <FormError className={'_Message'}>{errorMessage}</FormError>
+      ) : null}
       {data?.btn?.map((btn, index) => {
-        if (btn.action.params) {
-          Object.assign(queries, btn.action.params);
-        }
-
         return (
           <Button
             key={index}
@@ -59,7 +60,7 @@ export const ModalDynamic: FC<IDataModalProps> = ({
   );
 
   const { register, getValues, setValue, control } = useForm({
-    defaultValues: queries,
+    defaultValues: defaultQueries,
   });
 
   const handleChangeValue = useCallback(
@@ -74,9 +75,15 @@ export const ModalDynamic: FC<IDataModalProps> = ({
   const handleCLickActionsBeforeSendToActionButtons = useCallback(
     (action: IActionButton) => {
       if (action.params) {
-        // The default values are for the moment unchanging
         const keys = Object.keys(action.params);
-        const params = { ...getValues(keys), ...queries };
+        const params = { ...getValues(keys) };
+        const values = Object.values(params);
+        if (values.includes('')) {
+          setErrorMessage('Champs obligatoire manquant');
+
+          return;
+        }
+
         const modifiedAction: IActionButton = {
           ...action,
           params,
@@ -88,7 +95,7 @@ export const ModalDynamic: FC<IDataModalProps> = ({
 
       actionButton(action);
     },
-    [getValues, actionButton, queries],
+    [getValues, actionButton],
   );
 
   return (
@@ -115,6 +122,12 @@ export const ModalDynamic: FC<IDataModalProps> = ({
                 </Grid>
               );
             case 'input':
+              // have the defaults value
+              const keyField: Record<string, string> = {
+                [element.attribute.id]: element?.value ? element.value : '',
+              };
+              Object.assign(defaultQueries, keyField);
+
               return (
                 <Grid key={index} item xs={8}>
                   <Controller
