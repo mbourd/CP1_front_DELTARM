@@ -9,6 +9,10 @@ export const ModalDynamicStyled = styled.div`
 export const ModalDynamicFooterStyled = styled.div`
   margin: ${({ theme }) => theme.spacing.normal};
 
+  ._Message {
+    margin-right: ${({ theme }) => theme.spacing.medium};
+  }
+
   ._Button {
     margin-right: ${({ theme }) => theme.spacing.medium};
   }
