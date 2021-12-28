@@ -53,8 +53,8 @@ export interface ICard {
 }
 
 export interface IIndicator {
-  bar_bg_color: string;
-  bar_color: string;
+  bg_color: string;
+  color: string;
   hint: string;
   info: string;
   lib: string;

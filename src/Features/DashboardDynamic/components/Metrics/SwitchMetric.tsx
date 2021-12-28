@@ -23,7 +23,8 @@ export const SwitchMetric: React.FC<ISwitchMetric> = ({
               value={indicator.value}
               hint={indicator.hint}
               style={{
-                color: indicator.bar_color,
+                color: indicator.color,
+                backgroundColor: indicator.bg_color,
                 height: 13,
               }}
             />
@@ -49,7 +50,7 @@ export const SwitchMetric: React.FC<ISwitchMetric> = ({
               value={indicator.value}
               hint={indicator.hint}
               style={{
-                color: indicator.bar_color,
+                color: indicator.color,
                 cursor: 'pointer',
               }}
             />
