@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { IControl } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
@@ -8,20 +8,29 @@ import { useApi, useRouter } from 'Services';
 import { ControlLabel } from '../ControlLabel';
 import { ControlFooter } from '../ControlFooter';
 import { checkIfSameValues } from '../../../../../../Packages/Helpers/src/checkIfSameValues';
+import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
 
 interface IProps {
   control: IControl;
   fileId: string;
+  formState: IControl[];
+  setFormState: React.Dispatch<SetStateAction<IControl[]>>;
 }
 
 export const FinancialControl: React.FC<IProps> = ({
   control,
   fileId,
+  formState,
+  setFormState,
 }): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.value);
   const { currentRoute } = useRouter();
+
+  useEffect(() => {
+    updateFormState(formState, control.id, currentValue, setFormState);
+  }, [formState, control.id, currentValue, setFormState]);
 
   const saveValue = useCallback(
     (value: string) => {

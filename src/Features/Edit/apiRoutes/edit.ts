@@ -64,6 +64,7 @@ export const editValidationHandlerCallback = (apiData: IApiDataEdit) => {
         regexMsg: control.control_regex_msg,
         manageCompliance: control.control_manage_compliance,
         isConditional: control.control_conditional,
+        isCalculated: control.field_is_formula,
       };
 
       if (control.control_answer_choices) {
@@ -95,9 +96,8 @@ export const editValidationHandlerCallback = (apiData: IApiDataEdit) => {
 
       if (control.conditional) {
         c.conditional = {
-          displayType: control.conditional.conditional_display_type,
           formula: control.conditional.conditional_formula,
-          byField: control.conditional.conditional_by_field_id,
+          byField: '' + control.conditional.conditional_by_field_id,
           conditionalInitState: control.conditional.conditional_init_state,
         };
       }

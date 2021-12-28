@@ -41,7 +41,6 @@ export interface IApiCompliance {
 
 export interface IApiConditional {
   conditional_by_field_id: number;
-  conditional_display_type: string;
   conditional_formula: string;
   conditional_init_state: boolean;
 }
@@ -81,10 +80,15 @@ export interface ICompliance {
 }
 
 export interface IConditional {
-  byField: number;
-  displayType: string;
+  byField: string;
   formula: string;
   conditionalInitState: boolean;
+}
+
+export interface ICalculated {
+  byField: number[];
+  displayType: string;
+  formula: string;
 }
 
 export interface IApiControl {
@@ -105,6 +109,7 @@ export interface IApiControl {
   control_regex_msg: string;
   control_manage_compliance: boolean;
   control_conditional: boolean;
+  field_is_formula: boolean;
   conditional: IApiConditional;
   compliance: IApiCompliance;
 }
@@ -114,6 +119,7 @@ export interface IControl {
   desc2: string | null;
   editable: boolean;
   isConditional: boolean;
+  isCalculated: boolean;
   id: string;
   mandatory: boolean;
   previousValue: string | null;
@@ -129,4 +135,5 @@ export interface IControl {
   manageCompliance: boolean;
   compliance?: ICompliance;
   conditional?: IConditional;
+  calculated?: ICalculated;
 }

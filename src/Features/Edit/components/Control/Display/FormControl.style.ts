@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 
-export const DisplayControlStyled = styled.div`
+export const FormControlStyled = styled.div`
   .control-container {
     position: relative;
   }
