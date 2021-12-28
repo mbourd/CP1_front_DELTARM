@@ -108,7 +108,14 @@ export const ModalDynamic: FC<IDataModalProps> = ({
       <Heading>{data?.title}</Heading>
       <HeadingTwo>{data?.subtitle}</HeadingTwo>
       {data?.img && (
-        <Container style={{ display: 'flex', justifyContent: 'center' }}>
+        <Container
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            height: '150px',
+            marginBottom: '15px',
+          }}
+        >
           <img src={data.img} alt={'modal-image'} />
         </Container>
       )}
@@ -136,6 +143,7 @@ export const ModalDynamic: FC<IDataModalProps> = ({
                     name={element.attribute.id}
                     render={() => (
                       <InputBase
+                        border={element.attribute.type === 'hidden' ? 0 : 1}
                         autofocus
                         key={index}
                         type={element.attribute?.type}
