@@ -23,41 +23,122 @@ interface IProps {
 export const SwitchControlItem: React.FC<IProps> = ({
   control,
   formState,
+  setFormState,
 }): React.ReactElement | null => {
   const { fileId } = useContext(EditValidationContext);
   switch (control.type) {
     case 'text':
-      return <TextControl control={control} fileId={fileId} />;
+      return (
+        <TextControl
+          control={control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
+      );
     case 'email':
-      return <TextControl control={control} fileId={fileId} />;
+      return (
+        <TextControl
+          control={control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
+      );
     case 'auth_num':
-      return <TextControl control={control} fileId={fileId} />;
+      return (
+        <TextControl
+          control={control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
+      );
     case 'selectlist':
       return (
-        <SelectListControl multiple={false} control={control} fileId={fileId} />
+        <SelectListControl
+          multiple={false}
+          control={control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
       );
     case 'multiple_list':
       return (
-        <SelectListControl multiple={true} control={control} fileId={fileId} />
+        <SelectListControl
+          multiple={true}
+          control={control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
       );
     case 'radio':
       return (
-        <CheckboxControl multiple={false} control={control} fileId={fileId} />
+        <CheckboxControl
+          multiple={false}
+          control={control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
       );
     case 'checkbox':
       return (
-        <CheckboxControl multiple={true} control={control} fileId={fileId} />
+        <CheckboxControl
+          multiple={true}
+          control={control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
       );
     case 'financial':
-      return <FinancialControl control={control} fileId={fileId} />;
+      return (
+        <FinancialControl
+          control={control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
+      );
     case 'integer':
-      return <IntegerControl control={control} fileId={fileId} />;
+      return (
+        <IntegerControl
+          control={control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
+      );
     case 'date':
-      return <DateControl control={control} fileId={fileId} />;
+      return (
+        <DateControl
+          control={control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
+      );
     case 'comment':
-      return <CommentControl control={control} fileId={fileId} />;
+      return (
+        <CommentControl
+          control={control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
+      );
     case 'percent':
-      return <PercentControl control={control} fileId={fileId} />;
+      return (
+        <PercentControl
+          control={control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
+      );
     case 'file_upload':
       return <UploadControl control={control} fileId={fileId} />;
     case 'info_block':
