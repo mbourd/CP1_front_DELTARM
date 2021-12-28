@@ -10,6 +10,7 @@ export const CardStyled = styled.section<IProps>`
   display: block;
   margin: 0 auto;
   border-radius: 4px;
+  max-width: ${({ theme }) => theme.breakpoint.md};
   font-family: ${({ theme }) => theme.font.text.main};
   .MuiCard-root {
     border: ${({ cardColor }) => cardColor};
