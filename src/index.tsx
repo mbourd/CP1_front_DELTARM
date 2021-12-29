@@ -19,7 +19,7 @@ if (process.env.REACT_APP_ENV !== 'staging') {
     tracesSampleRate: 1.0,
   });
 }
-console.log(process.env.REACT_APP_ENV);
+
 ReactDOM.render(
   <StrictMode>
     <RecoilRoot>
