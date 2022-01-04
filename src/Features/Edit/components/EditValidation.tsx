@@ -32,14 +32,14 @@ export const EditValidation: React.FC<IProps> = ({
   title,
   apiRouteName,
 }): React.ReactElement => {
-  const { request, callState, send, data: refreshedData } = useApi<IData>();
+  const { request, callState, send, data } = useApi<IData>();
   const [currentSection, setCurrentSection] = useState<string | null>(null);
   const { user } = useSecurity();
   const jwt = user.getJwt();
   const { logout } = useContext(SecurityContext);
   const { data: recoilData } = useActionButton(jwt);
   const fetchedData: IApiData = useRecoilValue<any>(recoilData);
-  const [data, setData] = useState<IData | null>(refreshedData);
+  // const [data, setData] = useState<IData | null>(refreshedData);
 
   // To avoid (bpi specific)
   const { id } = router.getParams();
@@ -49,18 +49,18 @@ export const EditValidation: React.FC<IProps> = ({
     logout();
   }
 
-  useEffect(() => {
-    if (refreshedData) {
-      setData(refreshedData);
-    }
-  }, [refreshedData]);
+  // useEffect(() => {
+  //   if (refreshedData) {
+  //     setData(refreshedData);
+  //   }
+  // }, [refreshedData]);
 
   useEffect(() => {
-    if (fetchedData && !currentSection) {
-      setData(editValidationHandlerCallback(fetchedData.data));
-
-      return;
-    }
+    // if (fetchedData && !currentSection) {
+    //   setData(editValidationHandlerCallback(fetchedData.data));
+    //
+    //   return;
+    // }
     // To avoid (bpi specific)
     let queries: Record<string, any> = { file_id: id };
 
