@@ -95,45 +95,23 @@ export interface IApiControl {
   control_desc_1: string | null;
   control_desc_2: string | null;
   control_editable: boolean;
+  control_conditional: boolean;
+  field_is_formula: boolean;
   control_id: string;
   control_mandatory: boolean;
   control_previous_value: string | null;
   control_title: string;
   control_type: ControlTypeType;
-  control_value: string;
+  control_value: string | null;
   control_answer_choices?: IApiAnswerChoice[];
+  answerChoices?: Record<string, ISelectData>;
   control_font_color?: string;
   control_font_size?: ControlFontSize;
   control_family: string;
   control_regex: RegExp;
   control_regex_msg: string;
   control_manage_compliance: boolean;
-  control_conditional: boolean;
-  field_is_formula: boolean;
   conditional: IApiConditional;
   compliance: IApiCompliance;
-}
-
-export interface IControl {
-  desc1: string | null;
-  desc2: string | null;
-  editable: boolean;
-  isConditional: boolean;
-  isCalculated: boolean;
-  id: string;
-  mandatory: boolean;
-  previousValue: string | null;
-  title: string;
-  type: ControlTypeType;
-  value: string;
-  answerChoices?: Record<string, ISelectData>;
-  fontColor?: string;
-  fontSize?: ControlFontSize;
-  family: string;
-  regex: RegExp;
-  regexMsg: string;
-  manageCompliance: boolean;
-  compliance?: ICompliance;
-  conditional?: IConditional;
-  calculated?: ICalculated;
+  useCompliance?: ICompliance;
 }

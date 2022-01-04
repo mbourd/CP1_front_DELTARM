@@ -1,9 +1,9 @@
 import { apiRouter } from 'Services';
 import {
   IAction,
+  IApiControl,
   IApiDataEdit,
   IChapter,
-  IControl,
   ICurrentSection,
   IData,
   ISection,
@@ -12,7 +12,8 @@ import {
 import { ISelectData } from 'Shared/components';
 import { IButtons } from '../../DashboardDynamic/components/types';
 
-export const editValidationHandlerCallback = (apiData: IApiDataEdit) => {
+export const editValidationHandlerCallback = (response: any) => {
+  const apiData: IApiDataEdit = response.data;
   const actions: IAction[] = [];
   const actions_contr_perm: IButtons[] = [];
   const chapters: IChapter[] = [];
@@ -45,28 +46,8 @@ export const editValidationHandlerCallback = (apiData: IApiDataEdit) => {
   }
 
   apiData.current_section.chapters.map((chapter) => {
-    const controls: IControl[] = [];
+    const controls: IApiControl[] = [];
     chapter.controls.map((control) => {
-      const c: IControl = {
-        desc1: control.control_desc_1,
-        desc2: control.control_desc_2,
-        editable: control.control_editable,
-        id: '' + control.control_id,
-        mandatory: control.control_mandatory,
-        previousValue: control.control_previous_value,
-        title: control.control_title,
-        type: control.control_type,
-        value: control.control_value,
-        fontColor: control.control_font_color,
-        fontSize: control.control_font_size,
-        family: control.control_family,
-        regex: control.control_regex,
-        regexMsg: control.control_regex_msg,
-        manageCompliance: control.control_manage_compliance,
-        isConditional: control.control_conditional,
-        isCalculated: control.field_is_formula,
-      };
-
       if (control.control_answer_choices) {
         const answerChoices: Record<string, ISelectData> = {};
         control.control_answer_choices.map((answer) => {
@@ -79,11 +60,11 @@ export const editValidationHandlerCallback = (apiData: IApiDataEdit) => {
 
           return answer;
         });
-        c.answerChoices = answerChoices;
+        control.answerChoices = answerChoices;
       }
 
       if (control.compliance) {
-        c.compliance = {
+        control.useCompliance = {
           resolved: control.compliance.compliance_resolved,
           complianceUncheckColor: control.compliance.compliance_uncheck_color,
           complianceCheckColor: control.compliance.compliance_check_color,
@@ -93,16 +74,7 @@ export const editValidationHandlerCallback = (apiData: IApiDataEdit) => {
           modaleTitle: control.compliance.compliance_modale_title,
         };
       }
-
-      if (control.conditional) {
-        c.conditional = {
-          formula: control.conditional.conditional_formula,
-          byField: '' + control.conditional.conditional_by_field_id,
-          conditionalInitState: control.conditional.conditional_init_state,
-        };
-      }
-
-      controls.push(c);
+      controls.push(control);
 
       return control;
     });
@@ -172,7 +144,7 @@ apiRouter.registerRoute({
   method: 'get',
   handler: (response: any) => {
     try {
-      return editValidationHandlerCallback(response.data);
+      return editValidationHandlerCallback(response);
     } catch (e) {
       return null;
     }

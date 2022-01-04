@@ -1,37 +1,44 @@
-import { IControl } from '../../../Features/Edit/types';
+import { IApiControl } from '../../../Features/Edit/types';
 
-export const injectDisabledFields = (formState: IControl[]): IControl[] => {
-  formState.map((field: IControl) => {
-    if (field.isConditional) {
-      if (field.conditional?.conditionalInitState) {
-        field.editable = true;
+export const injectDisabledFields = (
+  formState: IApiControl[],
+): IApiControl[] => {
+  formState.map((field: IApiControl) => {
+    if (field.field_is_formula) {
+      if (field.conditional?.conditional_init_state) {
+        field.control_editable = true;
       }
 
-      if (!field.conditional?.conditionalInitState) {
-        field.editable = false;
+      if (!field.conditional?.conditional_init_state) {
+        field.field_is_formula = false;
       }
 
       // Find the listened field
       const fieldToTest = formState.find(
-        (fieldToFind) => fieldToFind.id === field.conditional?.byField,
+        (fieldToFind) =>
+          fieldToFind.control_id ===
+          field.conditional?.conditional_by_field_id + '',
       );
 
-      let condition = field.conditional?.formula;
+      let condition = field.conditional?.conditional_formula;
       if (fieldToTest) {
-        if (fieldToTest.value) {
-          condition = condition?.replaceAll('$', `'${fieldToTest.value}'`);
+        if (fieldToTest.control_value) {
+          condition = condition?.replaceAll(
+            '$',
+            `'${fieldToTest.control_value}'`,
+          );
         }
-        if (!fieldToTest.value) {
+        if (!fieldToTest.control_value) {
           condition = condition?.replaceAll('$', `null`);
         }
         if (condition) {
           // eslint-disable-next-line no-eval
           if (eval(condition)) {
-            field.editable = true;
+            field.control_editable = true;
           }
           // eslint-disable-next-line no-eval
           if (!eval(condition)) {
-            field.editable = false;
+            field.control_editable = false;
           }
         }
       }

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { UploadControlStyled, DownloadFile } from './UploadControl.style';
 import { Grid, Fab } from '@material-ui/core';
 import { CloudUpload } from '@material-ui/icons';
-import { IControl } from 'Features/Edit/types';
+import { IApiControl } from 'Features/Edit/types';
 import { FormError } from 'Shared/components';
 import { getEnv, IUser, security } from 'Services';
 import { ControlLabel } from '../ControlLabel';
@@ -10,7 +10,7 @@ import { ControlFooter } from '../ControlFooter';
 import axios from 'axios';
 
 interface IProps {
-  control: IControl;
+  control: IApiControl;
   fileId: string;
 }
 
@@ -24,14 +24,14 @@ export const UploadControl: React.FC<IProps> = ({
   );
   const [previousUploadedFile, setPreviousUploadedFile] = useState<
     string | null
-  >(control.value);
+  >(control.control_value);
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
 
   const file = previousUploadedFile?.split(';');
 
   const uploadFile = useCallback(() => {
-    if (control.mandatory && !uploadFile) {
+    if (control.control_mandatory && !uploadFile) {
       setErrorMessage('Valeur obligatoire');
 
       return;
@@ -45,8 +45,8 @@ export const UploadControl: React.FC<IProps> = ({
           `${getEnv('API_PROTOCOL')}://${getEnv(
             'API_HOST',
           )}/control/set_value?file_id=${fileId}&elm_id=${
-            control.id
-          }&elm_val=${fileName}&control_family=${control.family}`,
+            control.control_id
+          }&elm_val=${fileName}&control_family=${control.control_family}`,
           formData,
           {
             headers: {
@@ -65,11 +65,11 @@ export const UploadControl: React.FC<IProps> = ({
     }
   }, [
     fileId,
-    control.mandatory,
-    control.family,
+    control.control_mandatory,
+    control.control_family,
     currentUploadedFile,
     jwt,
-    control.id,
+    control.control_id,
   ]);
 
   const saveFileToUpload = useCallback(
@@ -123,11 +123,11 @@ export const UploadControl: React.FC<IProps> = ({
     <Grid item xs={6}>
       <ControlLabel control={control} />
       <UploadControlStyled>
-        <label htmlFor={`compliance-file-upload${control.id}`}>
+        <label htmlFor={`compliance-file-upload${control.control_id}`}>
           <input
             style={{ display: 'none' }}
-            id={`compliance-file-upload${control.id}`}
-            name={`compliance-file-upload${control.id}`}
+            id={`compliance-file-upload${control.control_id}`}
+            name={`compliance-file-upload${control.control_id}`}
             type="file"
             onChange={saveFileToUpload}
           />

@@ -7,7 +7,7 @@ apiRouter.registerRoute({
   method: 'get',
   handler: (response: any) => {
     try {
-      return editValidationHandlerCallback(response.data);
+      return editValidationHandlerCallback(response);
     } catch (e) {
       return null;
     }
