@@ -1,4 +1,4 @@
-import { IApiControl, IControl } from './IControl';
+import { IApiControl } from './IControl';
 
 export interface IApiChapter {
   chap_lib: string;
@@ -9,5 +9,5 @@ export interface IApiChapter {
 export interface IChapter {
   label: string;
   id: string;
-  controls: IControl[];
+  controls: IApiControl[];
 }

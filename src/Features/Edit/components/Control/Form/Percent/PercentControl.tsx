@@ -1,6 +1,6 @@
 import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
-import { IControl } from 'Features/Edit/types';
+import { IApiControl } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
 import { PercentControlStyled } from './PercentControl.style';
 import { useApi, useRouter } from 'Services';
@@ -10,10 +10,10 @@ import { checkIfSameValues } from '../../../../../../Packages/Helpers/src/checkI
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
 
 interface IProps {
-  control: IControl;
+  control: IApiControl;
   fileId: string;
-  formState: IControl[];
-  setFormState: React.Dispatch<SetStateAction<IControl[]>>;
+  formState: IApiControl[];
+  setFormState: React.Dispatch<SetStateAction<IApiControl[]>>;
 }
 
 export const PercentControl: React.FC<IProps> = ({
@@ -24,24 +24,28 @@ export const PercentControl: React.FC<IProps> = ({
 }): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [currentValue, setCurrentValue] = useState(control.value);
+  const [currentValue, setCurrentValue] = useState(control.control_value);
   const { currentRoute } = useRouter();
 
   useEffect(() => {
-    updateFormState(formState, control.id, currentValue, setFormState);
-  }, [formState, control.id, currentValue, setFormState]);
+    updateFormState(formState, control.control_id, currentValue, setFormState);
+  }, [formState, control.control_id, currentValue, setFormState]);
 
   const saveValue = useCallback(
     (value: string) => {
-      if (control.regex && !value.match(control.regex) && value) {
-        setErrorMessage(control.regexMsg);
+      if (
+        control.control_regex &&
+        !value.match(control.control_regex) &&
+        value
+      ) {
+        setErrorMessage(control.control_regex_msg);
 
         return;
       }
 
       if (!checkIfSameValues(value, currentValue)) {
         setErrorMessage(null);
-        if (control.mandatory && !value.trim()) {
+        if (control.control_mandatory && !value.trim()) {
           setErrorMessage('Valeur obligatoire');
         }
 
@@ -50,7 +54,7 @@ export const PercentControl: React.FC<IProps> = ({
 
       setErrorMessage(null);
 
-      if (control.mandatory && !value.trim()) {
+      if (control.control_mandatory && !value.trim()) {
         setErrorMessage('Valeur obligatoire');
       }
 
@@ -60,31 +64,35 @@ export const PercentControl: React.FC<IProps> = ({
         {},
         {
           file_id: fileId,
-          elm_id: control.id,
+          elm_id: control.control_id,
           elm_val: value,
-          control_family: control.family,
+          control_family: control.control_family,
         },
       );
     },
     [
       send,
       fileId,
-      control.id,
-      control.family,
+      control.control_id,
+      control.control_family,
       currentRoute,
-      control.regex,
-      control.regexMsg,
+      control.control_regex,
+      control.control_regex_msg,
       currentValue,
       setCurrentValue,
-      control.mandatory,
+      control.control_mandatory,
     ],
   );
 
   useEffect(() => {
-    if (control.mandatory && control.editable && !currentValue) {
+    if (
+      control.control_mandatory &&
+      control.control_editable &&
+      !currentValue
+    ) {
       setErrorMessage('Valeur obligatoire');
     }
-  }, [control.mandatory, control.editable, currentValue]);
+  }, [control.control_mandatory, control.control_editable, currentValue]);
 
   useEffect(() => {
     if (error) {
@@ -97,16 +105,22 @@ export const PercentControl: React.FC<IProps> = ({
       <PercentControlStyled>
         <ControlLabel control={control} />
         <InputBase
-          placeholder={control.editable ? control.title : control.value}
-          disabled={!control.editable}
-          color={control.editable ? 'text' : 'disabled'}
-          defaultValue={currentValue || control.value}
+          placeholder={
+            control.control_editable
+              ? control.control_title
+              : control.control_value
+              ? control.control_value
+              : ''
+          }
+          disabled={!control.control_editable}
+          color={control.control_editable ? 'text' : 'disabled'}
+          defaultValue={currentValue ? currentValue : ''}
+          onBlur={(e) => saveValue(e.currentTarget.value)}
           icon={
             <i style={{ paddingLeft: '5px' }} className="material-icons">
               %
             </i>
           }
-          onBlur={(e) => saveValue(e.currentTarget.value)}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ControlFooter control={control} />

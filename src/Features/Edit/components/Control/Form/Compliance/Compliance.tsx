@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { ICompliance, IControl } from '../../../../types';
+import { ICompliance } from '../../../../types';
 import { CheckboxCompliance } from './CheckboxCompliance/CheckboxCompliance';
 import { ModalCompliance } from './ModalCompliance/ModalCompliance';
 import { InsertDriveFile } from '@material-ui/icons';
@@ -12,7 +12,6 @@ interface IComplianceProps {
   fileId: string;
   setIsResolved: React.Dispatch<React.SetStateAction<boolean>>;
   choiceIsKo: boolean;
-  control: IControl;
   compliance: ICompliance;
 }
 

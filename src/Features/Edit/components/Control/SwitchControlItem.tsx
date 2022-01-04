@@ -1,5 +1,5 @@
 import React, { SetStateAction, useContext } from 'react';
-import { IControl } from 'Features/Edit/types';
+import { IApiControl } from 'Features/Edit/types';
 import {
   TextControl,
   SelectListControl,
@@ -15,9 +15,9 @@ import {
 import { EditValidationContext } from 'Features/Edit';
 
 interface IProps {
-  control: IControl;
-  formState: IControl[];
-  setFormState: React.Dispatch<SetStateAction<IControl[]>>;
+  control: IApiControl;
+  formState: IApiControl[];
+  setFormState: React.Dispatch<SetStateAction<IApiControl[]>>;
 }
 
 export const SwitchControlItem: React.FC<IProps> = ({
@@ -26,7 +26,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
   setFormState,
 }): React.ReactElement | null => {
   const { fileId } = useContext(EditValidationContext);
-  switch (control.type) {
+  switch (control.control_type) {
     case 'text':
       return (
         <TextControl
