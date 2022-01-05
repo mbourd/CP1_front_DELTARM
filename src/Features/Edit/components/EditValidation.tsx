@@ -13,15 +13,12 @@ import {
 } from 'Services';
 import { HeadingOne, PreWrapStyled } from 'Shared/components';
 import { NavItem } from './NavItem/NavItem';
-import { IApiData, IData } from '../types';
+import { IData } from '../types';
 import { EditValidationContext } from '../EditValidationContext';
 import { IsLoading } from './IsLoading/IsLoading';
 import { SwitchContentBody } from './ContentBody/SwitchContentBody';
 import { NotFound } from './NotFound/NotFound';
 import { SubHeader } from './SubHeader';
-import { useRecoilValue } from 'recoil';
-import { useActionButton } from '../../../Packages/Helpers/src/useActionButton';
-import { editValidationHandlerCallback } from '../apiRoutes';
 
 interface IProps {
   title: string;
@@ -35,11 +32,7 @@ export const EditValidation: React.FC<IProps> = ({
   const { request, callState, send, data } = useApi<IData>();
   const [currentSection, setCurrentSection] = useState<string | null>(null);
   const { user } = useSecurity();
-  const jwt = user.getJwt();
   const { logout } = useContext(SecurityContext);
-  const { data: recoilData } = useActionButton(jwt);
-  const fetchedData: IApiData = useRecoilValue<any>(recoilData);
-  // const [data, setData] = useState<IData | null>(refreshedData);
 
   // To avoid (bpi specific)
   const { id } = router.getParams();
@@ -49,18 +42,7 @@ export const EditValidation: React.FC<IProps> = ({
     logout();
   }
 
-  // useEffect(() => {
-  //   if (refreshedData) {
-  //     setData(refreshedData);
-  //   }
-  // }, [refreshedData]);
-
   useEffect(() => {
-    // if (fetchedData && !currentSection) {
-    //   setData(editValidationHandlerCallback(fetchedData.data));
-    //
-    //   return;
-    // }
     // To avoid (bpi specific)
     let queries: Record<string, any> = { file_id: id };
 
@@ -78,15 +60,7 @@ export const EditValidation: React.FC<IProps> = ({
     return () => {
       request.abort();
     };
-  }, [
-    send,
-    id,
-    currentSection,
-    request,
-    apiRouteName,
-    frontRouterQueries,
-    fetchedData,
-  ]);
+  }, [send, id, currentSection, request, apiRouteName, frontRouterQueries]);
 
   return (
     <SwitchCallState
