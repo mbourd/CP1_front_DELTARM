@@ -18,33 +18,6 @@ export const editValidationHandlerCallback = (response: any) => {
   const actions_contr_perm: IButtons[] = [];
   const chapters: IChapter[] = [];
 
-  if (apiData.actions) {
-    apiData.actions?.map((datum) => {
-      actions.push({
-        id: '' + datum.id_action,
-        label: datum.action_lib,
-        url: datum.route,
-        code: datum.action_code,
-      });
-
-      return datum;
-    });
-  }
-
-  if (apiData.actions_contr_perm) {
-    apiData.actions_contr_perm?.map((action) => {
-      actions_contr_perm.push({
-        bg_color: action.bg_color,
-        font_color: action.font_color,
-        hover_color: action.hover_color,
-        btn_lib: action.btn_lib,
-        action: action.action,
-      });
-
-      return action;
-    });
-  }
-
   apiData.current_section.chapters.map((chapter) => {
     const controls: IApiControl[] = [];
     chapter.controls.map((control) => {
@@ -86,6 +59,31 @@ export const editValidationHandlerCallback = (response: any) => {
 
     return chapter;
   });
+  if (apiData.actions) {
+    apiData.actions?.map((datum) => {
+      actions.push({
+        id: '' + datum.id_action,
+        label: datum.action_lib,
+        url: datum.route,
+        code: datum.action_code,
+      });
+
+      return datum;
+    });
+  }
+  if (apiData.actions_contr_perm) {
+    apiData.actions_contr_perm?.map((action) => {
+      actions_contr_perm.push({
+        bg_color: action.bg_color,
+        font_color: action.font_color,
+        hover_color: action.hover_color,
+        btn_lib: action.btn_lib,
+        action: action.action,
+      });
+
+      return action;
+    });
+  }
 
   const currentSection: ICurrentSection = {
     chapters,
