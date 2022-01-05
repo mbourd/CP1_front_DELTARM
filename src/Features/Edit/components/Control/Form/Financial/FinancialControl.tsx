@@ -118,9 +118,9 @@ export const FinancialControl: React.FC<IProps> = ({
     }
   }, [error]);
 
-  const controlValue = control.control_value
-    ? parseInt(control.control_value)?.toLocaleString()
-    : control.control_value;
+  const controlValue = currentValue
+    ? parseInt(currentValue)?.toLocaleString()
+    : currentValue;
 
   return (
     <Grid item xs={6}>
@@ -136,7 +136,7 @@ export const FinancialControl: React.FC<IProps> = ({
           }
           disabled={!control.control_editable}
           color={control.control_editable ? 'text' : 'disabled'}
-          defaultValue={currentValue ? currentValue : ''}
+          defaultValue={controlValue ? controlValue : ''}
           icon={<EuroIcon />}
           onBlur={(e) => saveValue(e.currentTarget.value)}
         />

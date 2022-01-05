@@ -3,7 +3,7 @@ import { IActionButton } from '../../../Features/DashboardDynamic/components/typ
 import axios from 'axios';
 import { getEnv } from './getEnv';
 import { useSetRecoilState, atom } from 'recoil';
-import { router, useRouter } from '../../Router';
+import { router } from '../../Router';
 
 const data = atom({
   key: 'pageData',
@@ -21,7 +21,6 @@ export const useActionButton = (
 ) => {
   const setPageData = useSetRecoilState(data);
   const setModalData = useSetRecoilState(modalData);
-  const { currentRoute } = useRouter();
   const actionButton = useCallback(
     (action: IActionButton | null) => {
       const dispatchActionButton = (data: any) => {
@@ -34,14 +33,9 @@ export const useActionButton = (
             if (setIsModalOpen) {
               setIsModalOpen(false);
             }
+
             if (data.route_front === '/') {
-              return window.open(data.route_front, '_self');
-            }
-            if (
-              currentRoute?.path.startsWith('/file/edit') &&
-              data.route_front.startsWith('/file/edit')
-            ) {
-              return window.open(data.route_front, '_self');
+              window.open(data.route_front, '_self');
             }
 
             return router.redirectToUrl(data.route_front);
@@ -196,7 +190,7 @@ export const useActionButton = (
           return;
       }
     },
-    [jwt, setPageData, setModalData, setIsModalOpen, currentRoute?.path],
+    [jwt, setPageData, setModalData, setIsModalOpen],
   );
 
   return { actionButton, data, modalData };
