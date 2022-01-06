@@ -3,9 +3,8 @@ import * as stories from './FormControl.stories';
 import { composeStories } from '@storybook/testing-react';
 import { render } from 'setupTests';
 // import userEvent from '@testing-library/user-event';
-const { TextControl, UploadFileControl, EmailControl } = composeStories(
-  stories,
-);
+const { TextControl, UploadFileControl, EmailControl } =
+  composeStories(stories);
 
 describe('Form Control', () => {
   describe('Form Controls Fields', () => {

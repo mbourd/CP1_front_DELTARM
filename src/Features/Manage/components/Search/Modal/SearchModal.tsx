@@ -27,14 +27,8 @@ export const SearchModal: React.FC<IProps> = ({
   onClose,
   open,
 }): React.ReactElement | null => {
-  const {
-    request,
-    error,
-    callState,
-    route,
-    send,
-    data,
-  } = useApi<IFileSearchApiReturn | null>();
+  const { request, error, callState, route, send, data } =
+    useApi<IFileSearchApiReturn | null>();
   const {
     send: sendManualInput,
     data: dataManualInput,
@@ -42,9 +36,9 @@ export const SearchModal: React.FC<IProps> = ({
     route: routeManualInput,
   } = useApi<IKSIOPManualInput | null>();
 
-  const file = (storage.getData(
-    'shared.component.search.value',
-  ) as string).split(/ *\/ */);
+  const file = (
+    storage.getData('shared.component.search.value') as string
+  ).split(/ *\/ */);
   const file_num = file[0];
   const file_avenant = file[1];
 

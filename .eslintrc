@@ -32,5 +32,8 @@
     "react": {
       "version": "detect"
     }
-  }
+  },
+  "ignorePatterns": [
+    "src/**/*.test.tsx"
+  ]
 }

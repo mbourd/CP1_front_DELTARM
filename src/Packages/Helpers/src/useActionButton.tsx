@@ -87,7 +87,7 @@ export const useActionButton = (
             .catch((error) => {
               if (error.response) {
                 if (error.response.status === 500) {
-                  console.log('only case: show generic modal error');
+                  // @TODO generic modal error
 
                   return;
                 }
@@ -116,7 +116,7 @@ export const useActionButton = (
             .catch(async (error) => {
               if (error.response) {
                 if (error.response.status === 500) {
-                  console.log('only case: show generic modal error');
+                  // @TODO generic modal error
 
                   return;
                 }
@@ -144,7 +144,7 @@ export const useActionButton = (
             .catch(async (error) => {
               if (error.response) {
                 if (error.response.status === 500) {
-                  console.log('only case: show generic modal error');
+                  // @TODO generic modal error
 
                   return;
                 }
@@ -173,7 +173,7 @@ export const useActionButton = (
             .catch((error) => {
               if (error.response) {
                 if (error.response.status === 500) {
-                  console.log('only case: show generic modal error');
+                  // @TODO generic modal error
 
                   return;
                 }
