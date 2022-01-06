@@ -1,7 +1,7 @@
 import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
 import { TextControlStyled } from './TextControl.style';
 import { Grid } from '@material-ui/core';
-import { IControl } from 'Features/Edit/types';
+import { IApiControl } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
 import { useApi, useRouter } from 'Services';
 import { ControlLabel } from '../ControlLabel';
@@ -10,10 +10,10 @@ import { checkIfSameValues } from '../../../../../../Packages/Helpers/src/checkI
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
 
 interface IProps {
-  control: IControl;
+  control: IApiControl;
   fileId: string;
-  formState: IControl[];
-  setFormState: React.Dispatch<SetStateAction<IControl[]>>;
+  formState: IApiControl[];
+  setFormState: React.Dispatch<SetStateAction<IApiControl[]>>;
 }
 
 export const TextControl: React.FC<IProps> = ({
@@ -24,25 +24,25 @@ export const TextControl: React.FC<IProps> = ({
 }): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [currentValue, setCurrentValue] = useState(control.value);
+  const [currentValue, setCurrentValue] = useState(control.control_value);
   const { currentRoute } = useRouter();
 
   useEffect(() => {
-    updateFormState(formState, control.id, currentValue, setFormState);
-  }, [formState, control.id, currentValue, setFormState]);
+    updateFormState(formState, control.control_id, currentValue, setFormState);
+  }, [formState, control.control_id, currentValue, setFormState]);
 
   const saveValue = useCallback(
     (value: string) => {
-      const regexControl = new RegExp(control.regex, 'i');
-      if (control.regex && !value.match(regexControl) && value) {
-        setErrorMessage(control.regexMsg);
+      const regexControl = new RegExp(control.control_regex, 'i');
+      if (control.control_regex && !value.match(regexControl) && value) {
+        setErrorMessage(control.control_regex_msg);
 
         return;
       }
 
       if (!checkIfSameValues(value, currentValue)) {
         setErrorMessage(null);
-        if (control.mandatory && !value.trim()) {
+        if (control.control_mandatory && !value.trim()) {
           setErrorMessage('Valeur obligatoire');
         }
 
@@ -51,15 +51,15 @@ export const TextControl: React.FC<IProps> = ({
 
       setErrorMessage(null);
 
-      if (control.mandatory && !value.trim()) {
+      if (control.control_mandatory && !value.trim()) {
         setErrorMessage('Valeur obligatoire');
       }
 
       setCurrentValue(value);
       const q: Record<string, string> = {
         file_id: fileId,
-        elm_id: control.id,
-        control_family: control.family,
+        elm_id: control.control_id,
+        control_family: control.control_family,
         elm_val: value,
       };
 
@@ -68,22 +68,26 @@ export const TextControl: React.FC<IProps> = ({
     [
       send,
       fileId,
-      control.id,
+      control.control_id,
       currentRoute,
-      control.family,
-      control.regex,
-      control.regexMsg,
+      control.control_family,
+      control.control_regex,
+      control.control_regex_msg,
       currentValue,
       setCurrentValue,
-      control.mandatory,
+      control.control_mandatory,
     ],
   );
 
   useEffect(() => {
-    if (control.mandatory && control.editable && !currentValue) {
+    if (
+      control.control_mandatory &&
+      control.control_editable &&
+      !currentValue
+    ) {
       setErrorMessage('Valeur obligatoire');
     }
-  }, [control.mandatory, control.editable, currentValue]);
+  }, [control.control_mandatory, control.control_editable, currentValue]);
 
   useEffect(() => {
     if (error) {
@@ -96,10 +100,16 @@ export const TextControl: React.FC<IProps> = ({
       <TextControlStyled>
         <ControlLabel control={control} />
         <InputBase
-          placeholder={control.editable ? control.title : control.value}
-          disabled={!control.editable}
-          color={control.editable ? 'text' : 'disabled'}
-          defaultValue={currentValue || control.value}
+          placeholder={
+            control.control_editable
+              ? control.control_title
+              : control.control_value
+              ? control.control_value
+              : ''
+          }
+          disabled={!control.control_editable}
+          color={control.control_editable ? 'text' : 'disabled'}
+          defaultValue={currentValue ? currentValue : ''}
           onBlur={(e) => saveValue(e.currentTarget.value)}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}

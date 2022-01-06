@@ -1,6 +1,6 @@
 import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
-import { IControl } from 'Features/Edit/types';
+import { IApiControl } from 'Features/Edit/types';
 import { FormError, Select } from 'Shared/components';
 import { useApi, useRouter } from 'Services';
 import { SelectListControlStyled } from './SelectListControl.style';
@@ -10,11 +10,11 @@ import { Compliance } from '../Compliance/Compliance';
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
 
 interface IProps {
-  control: IControl;
+  control: IApiControl;
   fileId: string;
+  formState: IApiControl[];
   multiple: boolean;
-  formState: IControl[];
-  setFormState: React.Dispatch<SetStateAction<IControl[]>>;
+  setFormState: React.Dispatch<SetStateAction<IApiControl[]>>;
 }
 
 export const SelectListControl: React.FC<IProps> = ({
@@ -26,24 +26,26 @@ export const SelectListControl: React.FC<IProps> = ({
 }): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [currentValue, setCurrentValue] = useState(control.value);
+  const [currentValue, setCurrentValue] = useState(control.control_value);
   const { currentRoute } = useRouter();
   const [choiceIsKo, setChoiceIsKo] = useState(
-    control.compliance?.complianceCheckboxResolved
-      ? control.compliance.complianceCheckboxResolved
+    control.compliance?.compliance_checkbox_resolved
+      ? control.compliance.compliance_checkbox_resolved
       : false,
   );
   const [isResolved, setIsResolved] = useState(
-    control.compliance?.resolved ? control.compliance.resolved : false,
+    control.compliance?.compliance_resolved
+      ? control.compliance.compliance_resolved
+      : false,
   );
 
   const selectedValue: Record<string, true> = {
-    [currentValue || control.value || '']: true,
+    [currentValue || control.control_value || '']: true,
   };
 
   useEffect(() => {
-    updateFormState(formState, control.id, currentValue, setFormState);
-  }, [formState, control.id, currentValue, setFormState]);
+    updateFormState(formState, control.control_id, currentValue, setFormState);
+  }, [formState, control.control_id, currentValue, setFormState]);
 
   useEffect(() => {
     if (!choiceIsKo) {
@@ -53,8 +55,8 @@ export const SelectListControl: React.FC<IProps> = ({
 
   const saveValue = useCallback(
     (value: string) => {
-      if (control.regex && !value.match(control.regex)) {
-        setErrorMessage(control.regexMsg);
+      if (control.control_regex && !value.match(control.control_regex)) {
+        setErrorMessage(control.control_regex_msg);
 
         return;
       }
@@ -65,28 +67,37 @@ export const SelectListControl: React.FC<IProps> = ({
         {},
         {
           file_id: fileId,
-          elm_id: control.id,
+          elm_id: control.control_id,
           elm_val: value,
-          control_family: control.family,
+          control_family: control.control_family,
         },
       );
     },
     [
       send,
       fileId,
-      control.id,
-      control.family,
+      control.control_id,
+      control.control_family,
       currentRoute,
-      control.regex,
-      control.regexMsg,
+      control.control_regex,
+      control.control_regex_msg,
     ],
   );
 
   useEffect(() => {
-    if (control.mandatory && control.editable && !currentValue) {
+    if (
+      control.control_mandatory &&
+      control.control_editable &&
+      !currentValue
+    ) {
       setErrorMessage('Valeur obligatoire');
     }
-  }, [control.id, control.mandatory, currentValue, control.editable]);
+  }, [
+    control.control_id,
+    control.control_mandatory,
+    currentValue,
+    control.control_editable,
+  ]);
 
   useEffect(() => {
     if (error) {
@@ -102,13 +113,13 @@ export const SelectListControl: React.FC<IProps> = ({
         <ControlLabel control={control} />
         <Select
           closeOnSelect
-          name={'selectList' + control.id}
+          name={'selectList' + control.control_id}
           data={control.answerChoices || {}}
           selectedValues={selectedValue}
-          labelColor={control.editable ? 'text' : 'disabled'}
-          labelBdc={control.editable ? 'text' : 'disabled'}
+          labelColor={control.control_editable ? 'text' : 'disabled'}
+          labelBdc={control.control_editable ? 'text' : 'disabled'}
           multiple={multiple}
-          disabled={!control.editable}
+          disabled={!control.control_editable}
           onChange={(selectedValues) => {
             const value =
               Object.keys(selectedValues).length >= 2
@@ -126,16 +137,15 @@ export const SelectListControl: React.FC<IProps> = ({
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ControlFooter control={control} />
       </SelectListControlStyled>
-      {control.compliance && (
+      {control.useCompliance && control.compliance && (
         <Compliance
-          label={control.compliance.complianceLib}
+          label={control.compliance.compliance_lib}
           checked={isResolved}
           setIsResolved={setIsResolved}
-          controlId={control.id}
+          controlId={control.control_id}
           fileId={fileId}
           choiceIsKo={choiceIsKo}
-          control={control}
-          compliance={control.compliance}
+          compliance={control.useCompliance}
         />
       )}
     </Grid>

@@ -2,20 +2,20 @@ import React from 'react';
 import { Box, Grid } from '@material-ui/core';
 import { BPITooltip } from 'Shared/components';
 import { UserCheckedIcon, WarningIcon } from 'Styles';
-import { IControl } from 'Features/Edit/types';
+import { IApiControl } from 'Features/Edit/types';
 
 interface IProps {
-  control: IControl;
+  control: IApiControl;
 }
 
 export const ControlFooter: React.FC<IProps> = ({
   control,
 }): React.ReactElement => {
   const prev =
-    control.previousValue &&
-    (control.type === 'date'
-      ? new Date(control.previousValue).toLocaleDateString()
-      : control.previousValue);
+    control.control_previous_value &&
+    (control.control_type === 'date'
+      ? new Date(control.control_previous_value).toLocaleDateString()
+      : control.control_previous_value);
 
   return (
     <Box position="relative">
@@ -36,8 +36,8 @@ export const ControlFooter: React.FC<IProps> = ({
           ) : null}
         </Grid>
         <Grid item component={'span'}>
-          {control.desc2 ? (
-            <BPITooltip title={control.desc2}>
+          {control.control_desc_2 ? (
+            <BPITooltip title={control.control_desc_2}>
               <span>
                 <WarningIcon fontSize={'small'} />
               </span>

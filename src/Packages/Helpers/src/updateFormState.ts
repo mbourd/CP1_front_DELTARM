@@ -1,18 +1,18 @@
-import { IControl } from '../../../Features/Edit/types';
+import { IApiControl } from '../../../Features/Edit/types';
 import React, { SetStateAction } from 'react';
 
 export const updateFormState = (
-  formState: IControl[],
+  formState: IApiControl[],
   controlId: string,
-  currentValue: string,
-  setFormState: React.Dispatch<SetStateAction<IControl[]>>,
+  currentValue: string | null,
+  setFormState: React.Dispatch<SetStateAction<IApiControl[]>>,
 ) => {
   let change = false;
   const newControlState = formState.map((stateControl) => {
-    if (controlId === stateControl.id) {
-      if (stateControl.value !== currentValue) {
+    if (controlId === stateControl.control_id) {
+      if (stateControl.control_value !== currentValue) {
         change = true;
-        stateControl.value = currentValue;
+        stateControl.control_value = currentValue;
       }
     }
 

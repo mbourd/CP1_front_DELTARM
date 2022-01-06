@@ -1,6 +1,6 @@
 import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
-import { IControl } from 'Features/Edit/types';
+import { IApiControl } from 'Features/Edit/types';
 import { FormError } from 'Shared/components';
 import { useApi, useRouter } from 'Services';
 import { CheckboxControlStyled } from './CheckboxControl.style';
@@ -11,11 +11,11 @@ import { CheckboxWrapper } from '../../../../../../Packages/Design/components/Ch
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
 
 interface IProps {
-  control: IControl;
+  control: IApiControl;
   fileId: string;
+  formState: IApiControl[];
   multiple: boolean;
-  formState: IControl[];
-  setFormState: React.Dispatch<SetStateAction<IControl[]>>;
+  setFormState: React.Dispatch<SetStateAction<IApiControl[]>>;
 }
 
 export const CheckboxControl: React.FC<IProps> = ({
@@ -27,23 +27,25 @@ export const CheckboxControl: React.FC<IProps> = ({
 }): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [currentValue, setCurrentValue] = useState(control.value);
+  const [currentValue, setCurrentValue] = useState(control.control_value);
   const { currentRoute } = useRouter();
   const [choiceIsKo, setChoiceIsKo] = useState(
-    control.compliance?.complianceCheckboxResolved
-      ? control.compliance.complianceCheckboxResolved
+    control.compliance?.compliance_checkbox_resolved
+      ? control.compliance.compliance_checkbox_resolved
       : false,
   );
   const [isResolved, setIsResolved] = useState(
-    control.compliance?.resolved ? control.compliance.resolved : false,
+    control.compliance?.compliance_resolved
+      ? control.compliance.compliance_resolved
+      : false,
   );
   const selectedValue: Record<string, true> = {
-    [currentValue || control.value || '']: true,
+    [currentValue || control.control_value || '']: true,
   };
 
   useEffect(() => {
-    updateFormState(formState, control.id, currentValue, setFormState);
-  }, [formState, control.id, currentValue, setFormState]);
+    updateFormState(formState, control.control_id, currentValue, setFormState);
+  }, [formState, control.control_id, currentValue, setFormState]);
 
   useEffect(() => {
     if (!choiceIsKo) {
@@ -53,7 +55,7 @@ export const CheckboxControl: React.FC<IProps> = ({
 
   const saveValue = useCallback(
     (value: string) => {
-      if (control.regex && !value.match(control.regex)) {
+      if (control.control_regex && !value.match(control.control_regex)) {
         setErrorMessage("Le format attendu n'est pas valide");
 
         return;
@@ -65,20 +67,36 @@ export const CheckboxControl: React.FC<IProps> = ({
         {},
         {
           file_id: fileId,
-          elm_id: control.id,
+          elm_id: control.control_id,
           elm_val: value,
-          control_family: control.family,
+          control_family: control.control_family,
         },
       );
     },
-    [send, fileId, control.id, control.family, currentRoute, control.regex],
+    [
+      send,
+      fileId,
+      control.control_id,
+      control.control_family,
+      currentRoute,
+      control.control_regex,
+    ],
   );
 
   useEffect(() => {
-    if (control.mandatory && control.editable && !currentValue) {
+    if (
+      control.control_mandatory &&
+      control.control_editable &&
+      !currentValue
+    ) {
       setErrorMessage('Valeur obligatoire');
     }
-  }, [control.id, control.mandatory, currentValue, control.editable]);
+  }, [
+    control.control_id,
+    control.control_mandatory,
+    currentValue,
+    control.control_editable,
+  ]);
 
   useEffect(() => {
     if (error) {
@@ -93,7 +111,7 @@ export const CheckboxControl: React.FC<IProps> = ({
       <CheckboxControlStyled className={'control-container'}>
         <ControlLabel control={control} />
         <CheckboxWrapper
-          name={'checkbox' + control.id}
+          name={'checkbox' + control.control_id}
           data={control.answerChoices || {}}
           selectedValues={selectedValue}
           multiple={multiple}
@@ -107,7 +125,7 @@ export const CheckboxControl: React.FC<IProps> = ({
           }}
           choiceIsKo={choiceIsKo}
           setChoiceIsKo={setChoiceIsKo}
-          disabled={!control.editable}
+          disabled={!control.control_editable}
           error={!!error}
         />
         {errorMessage ? (
@@ -115,16 +133,15 @@ export const CheckboxControl: React.FC<IProps> = ({
         ) : null}
         <ControlFooter control={control} />
       </CheckboxControlStyled>
-      {control.compliance && (
+      {control.useCompliance && control.compliance && (
         <Compliance
-          label={control.compliance.complianceLib}
+          label={control.compliance.compliance_lib}
           checked={isResolved}
           setIsResolved={setIsResolved}
-          controlId={control.id}
+          controlId={control.control_id}
           fileId={fileId}
           choiceIsKo={choiceIsKo}
-          control={control}
-          compliance={control.compliance}
+          compliance={control.useCompliance}
         />
       )}
     </Grid>
