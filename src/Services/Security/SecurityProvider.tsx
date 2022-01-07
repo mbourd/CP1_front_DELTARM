@@ -80,9 +80,9 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({
     () => ({
       user,
       jwt,
-      data: (jwt ? security.decodeJwtToken<JwtData>(jwt) : {}) as Partial<
-        JwtData
-      >,
+      data: (jwt
+        ? security.decodeJwtToken<JwtData>(jwt)
+        : {}) as Partial<JwtData>,
       login,
       logout,
     }),

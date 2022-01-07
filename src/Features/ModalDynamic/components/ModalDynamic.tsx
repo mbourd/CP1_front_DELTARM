@@ -22,7 +22,7 @@ import {
   TableRow,
 } from '@mui/material';
 import { IActionButton } from '../../DashboardDynamic/components/types';
-import { useForm, Controller } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { StyledTableCell } from '../../DashboardDynamic/components/Card/Card.style';
 
 export const ModalDynamic: FC<IDataModalProps> = ({
@@ -195,7 +195,8 @@ export const ModalDynamic: FC<IDataModalProps> = ({
                         Object.keys(selectedValues).length >= 2
                           ? Object.keys(selectedValues).join(';')
                           : Object.keys(selectedValues)[0];
-                      const val = value ? value : '';
+
+                      return value ? value : '';
                     }}
                     {...register(`${element.attribute?.id}`, {
                       required: element.attribute?.mandatory,

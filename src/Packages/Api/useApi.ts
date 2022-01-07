@@ -28,10 +28,10 @@ export const useApi = <T>(
   const data = useRef<T | null>(null);
   const error = useRef<IUseApiError | null>(null);
   const callState = useRef<UseApiCallStateType>('NOT_INIT');
-  const request = useMemo(() => new ApiRequest(host, protocol), [
-    host,
-    protocol,
-  ]);
+  const request = useMemo(
+    () => new ApiRequest(host, protocol),
+    [host, protocol],
+  );
 
   const send = useCallback(
     (

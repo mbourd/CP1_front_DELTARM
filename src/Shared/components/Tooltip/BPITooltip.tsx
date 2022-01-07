@@ -2,10 +2,9 @@ import React from 'react';
 import { ITooltip, Tooltip } from 'Shared/components';
 import { useTheme } from 'Styles';
 
-export const BPITooltip: React.FC<Pick<
-  ITooltip,
-  'title' | 'placement' | 'children'
->> = ({ title, placement, children }): React.ReactElement => {
+export const BPITooltip: React.FC<
+  Pick<ITooltip, 'title' | 'placement' | 'children'>
+> = ({ title, placement, children }): React.ReactElement => {
   const theme = useTheme();
 
   return (
