@@ -47,7 +47,6 @@ deploy preprod:
     - preprod
   variables:
     APP_IMAGE_TAG_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
-    REACT_APP_ENV: preprod
   before_script:
     - apk update && apk add openssh rsync curl
     - curl ifconfig.io
@@ -78,7 +77,6 @@ deploy staging:
     - staging
   variables:
     APP_IMAGE_TAG_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
-    REACT_APP_ENV: staging
   before_script:
     - apk update && apk add openssh rsync curl
     - curl ifconfig.io
@@ -109,7 +107,6 @@ deploy prod:
     - master
   variables:
     APP_IMAGE_TAG_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
-    REACT_APP_ENV: prod
   before_script:
     - apk update && apk add openssh rsync curl
     - curl ifconfig.io
