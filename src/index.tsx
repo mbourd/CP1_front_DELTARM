@@ -11,7 +11,7 @@ import { Integrations } from '@sentry/tracing';
 
 import { BPIGlobalStyle, BPITheme } from 'Styles';
 
-if (process.env.REACT_APP_ENV !== 'local') {
+if (process.env.REACT_APP_ENV !== 'staging') {
   Sentry.init({
     dsn: process.env.REACT_APP_SENTRY_DSN,
     environment: process.env.REACT_APP_ENV,
