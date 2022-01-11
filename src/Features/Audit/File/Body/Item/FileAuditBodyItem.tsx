@@ -12,10 +12,10 @@ export const FileAuditBodyItem: React.FC<IFileAuditBodyItem> = ({
   audit,
 }): React.ReactElement => {
   return (
-    <FileAuditBodyItemStyled bgc={randomColor()}>
+    <FileAuditBodyItemStyled>
       <Grid container alignItems={'center'} wrap={'nowrap'}>
         <Grid item>
-          <Avatar></Avatar>
+          <Avatar style={{ backgroundColor: randomColor() }} />
         </Grid>
         <Grid item>
           <p className={'author'}>
