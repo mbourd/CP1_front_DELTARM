@@ -4,19 +4,19 @@ export const injectDisabledFields = (
   formState: IApiControl[],
 ): IApiControl[] => {
   formState.map((field: IApiControl) => {
-    if (field.field_is_formula) {
+    if (field.control_conditional) {
       if (field.conditional?.conditional_init_state) {
         field.control_editable = true;
       }
 
       if (!field.conditional?.conditional_init_state) {
-        field.field_is_formula = false;
+        field.control_editable = false;
       }
 
       // Find the listened field
       const fieldToTest = formState.find(
         (fieldToFind) =>
-          fieldToFind.control_id ===
+          fieldToFind.control_id ==
           field.conditional?.conditional_by_field_id + '',
       );
 
