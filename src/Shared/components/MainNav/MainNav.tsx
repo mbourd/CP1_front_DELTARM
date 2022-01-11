@@ -41,7 +41,7 @@ export const MainNav: React.FC = (): React.ReactElement => {
   return (
     <>
       <MenuIcon
-        fontSize={'default'}
+        fontSize={'medium'}
         onClick={handleClick}
         className={'menu-icon' + (anchorEl ? ' active' : '')}
       />

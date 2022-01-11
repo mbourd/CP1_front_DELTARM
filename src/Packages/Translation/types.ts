@@ -45,7 +45,7 @@ export interface ITranslation {
     TResult extends TFunctionResult = string,
     TKeys extends TFunctionKeys = string,
     // eslint-disable-next-line @typescript-eslint/ban-types
-    TInterpolationMap extends object = StringMap
+    TInterpolationMap extends object = StringMap,
   >(
     key: TKeys | TKeys[],
     options?: TOptions<TInterpolationMap> | string,

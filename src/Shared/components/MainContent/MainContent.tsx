@@ -9,6 +9,7 @@ export const MainContent: React.FC = (): React.ReactElement => {
     <MainContentStyled id={'main-content'}>
       <Route
         path={'*'}
+        // @ts-ignore
         render={({ match: { url } }) => (
           <DispatchRoute
             url={url}

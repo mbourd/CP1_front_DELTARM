@@ -501,8 +501,7 @@ export default {
                       method: 'POST',
                     },
                     content: null,
-                    hint:
-                      'Affiche la liste des dossiers avec Contrôles à Valider',
+                    hint: 'Affiche la liste des dossiers avec Contrôles à Valider',
                     icon: {
                       color: '#94c26e',
                       ref: 'PlaylistAddCheck',
@@ -542,8 +541,7 @@ export default {
                       method: 'POST',
                     },
                     content: null,
-                    hint:
-                      'Affiche la liste des dossiers avec Contrôles à Valider',
+                    hint: 'Affiche la liste des dossiers avec Contrôles à Valider',
                     icon: {
                       color: '#94c26e',
                       ref: 'PlaylistAddCheck',
@@ -612,8 +610,7 @@ export default {
                       method: 'POST',
                     },
                     content: null,
-                    hint:
-                      'Affiche la liste des dossiers avec Contrôles Rejetés',
+                    hint: 'Affiche la liste des dossiers avec Contrôles Rejetés',
                     icon: {
                       color: '#bfa06d',
                       ref: 'ListAlt',
@@ -682,8 +679,7 @@ export default {
                       method: 'POST',
                     },
                     content: null,
-                    hint:
-                      'Affiche la liste des dossiers avec Contrôles à Valider',
+                    hint: 'Affiche la liste des dossiers avec Contrôles à Valider',
                     icon: {
                       color: '#94c26e',
                       ref: 'PlaylistAddCheck',
@@ -723,8 +719,7 @@ export default {
                       method: 'POST',
                     },
                     content: null,
-                    hint:
-                      'Affiche la liste des dossiers avec Contrôles à Valider',
+                    hint: 'Affiche la liste des dossiers avec Contrôles à Valider',
                     icon: {
                       color: '#94c26e',
                       ref: 'PlaylistAddCheck',
@@ -764,8 +759,7 @@ export default {
           bg_color: '#F1CBF7',
           color: '#5B0E69',
           hint: 'Taux de Complétude : 65 dossiers contrôlés / 89 prévus = 73%',
-          info:
-            'Le taux de complétude est calculé selon les élément bla bla bla...',
+          info: 'Le taux de complétude est calculé selon les élément bla bla bla...',
           lib: 'Taux de Complétude',
           style: 'linear',
           value: 73,
@@ -773,10 +767,8 @@ export default {
         {
           bg_color: null,
           color: '#5B0E69',
-          hint:
-            'Taux de Conformité : 65 dossiers conformes / 125 contrôles = 52%',
-          info:
-            'Le taux de conformité est calculé selon les élément bla bla bla...',
+          hint: 'Taux de Conformité : 65 dossiers conformes / 125 contrôles = 52%',
+          info: 'Le taux de conformité est calculé selon les élément bla bla bla...',
           lib: 'Taux de Conformité',
           style: 'linear',
           value: 52,
@@ -784,10 +776,8 @@ export default {
         {
           bg_color: '#F1CBF7',
           color: '#5B0E69',
-          hint:
-            'Taux de Correction : 10 dossiers corrigés / 85 non-conformes = 12%',
-          info:
-            'Le taux de correction est calculé selon les élément bla bla bla...',
+          hint: 'Taux de Correction : 10 dossiers corrigés / 85 non-conformes = 12%',
+          info: 'Le taux de correction est calculé selon les élément bla bla bla...',
           lib: 'Taux de Correction',
           style: 'linear',
           value: 12,

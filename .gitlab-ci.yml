@@ -30,11 +30,11 @@ install dependencies:
   <<: *only-default
   stage: dependencies
   script:
-    - docker run --rm -w="/app" -v $PWD:/app node:12-alpine sh -c "yarn install"
+    - docker run --rm -w="/app" -v $PWD:/app node:16.13.1-alpine sh -c "yarn install"
 
 jest-tests:
   stage: tests
-  image: node:lts
+  image: node:16.13.1-alpine
   script:
     - yarn test --watchAll=false
   only:
@@ -47,6 +47,7 @@ deploy preprod:
     - preprod
   variables:
     APP_IMAGE_TAG_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+    REACT_APP_ENV: preprod
   before_script:
     - apk update && apk add openssh rsync curl
     - curl ifconfig.io
@@ -60,7 +61,7 @@ deploy preprod:
     - docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN
   script:
     - cp .env.preprod .env.production
-    - docker run --rm -w="/app" -v $PWD:/app node:12-alpine sh -c "yarn run build --profile"
+    - docker run --rm -w="/app" -v $PWD:/app node:16.13.1-alpine sh -c "yarn run build --profile"
     - cp ci/preprod/Dockerfile Dockerfile
     - cp ci/preprod/nginx.conf nginx.conf
     - docker build -t $APP_IMAGE_TAG_NAME .
@@ -77,6 +78,7 @@ deploy staging:
     - staging
   variables:
     APP_IMAGE_TAG_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+    REACT_APP_ENV: staging
   before_script:
     - apk update && apk add openssh rsync curl
     - curl ifconfig.io
@@ -90,7 +92,7 @@ deploy staging:
     - docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN
   script:
     - cp .env .env.production
-    - docker run --rm -w="/app" -v $PWD:/app node:12-alpine sh -c "yarn run build --profile"
+    - docker run --rm -w="/app" -v $PWD:/app node:16.13.1-alpine sh -c "yarn run build --profile"
     - cp ci/staging/Dockerfile Dockerfile
     - cp ci/staging/nginx.conf nginx.conf
     - docker build -t $APP_IMAGE_TAG_NAME .
@@ -107,7 +109,7 @@ deploy prod:
     - master
   variables:
     APP_IMAGE_TAG_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
-
+    REACT_APP_ENV: prod
   before_script:
     - apk update && apk add openssh rsync curl
     - curl ifconfig.io
@@ -119,7 +121,7 @@ deploy prod:
     - chmod 644 ~/.ssh/known_hosts
     - docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN
   script:
-    - docker run --rm -w="/app" -v $PWD:/app node:12-alpine sh -c "yarn run build --profile"
+    - docker run --rm -w="/app" -v $PWD:/app node:16.13.1-alpine sh -c "yarn run build --profile"
     - cp ci/Dockerfile Dockerfile
     - cp ci/nginx.conf nginx.conf
     - docker build -t $APP_IMAGE_TAG_NAME .

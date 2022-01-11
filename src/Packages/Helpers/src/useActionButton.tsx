@@ -4,6 +4,7 @@ import axios from 'axios';
 import { getEnv } from './getEnv';
 import { useSetRecoilState, atom } from 'recoil';
 import { router } from '../../Router';
+import { genericErrorsData } from '../../../Features/ModalDynamic/generic';
 
 const data = atom({
   key: 'pageData',
@@ -86,12 +87,12 @@ export const useActionButton = (
             })
             .catch((error) => {
               if (error.response) {
-                if (error.response.status === 500) {
-                  console.log('only case: show generic modal error');
-
-                  return;
-                }
                 dispatchActionButton(error.response.data);
+
+                return;
+              }
+              if (error) {
+                dispatchActionButton(genericErrorsData);
               }
             });
 
@@ -115,12 +116,12 @@ export const useActionButton = (
             })
             .catch(async (error) => {
               if (error.response) {
-                if (error.response.status === 500) {
-                  console.log('only case: show generic modal error');
-
-                  return;
-                }
                 dispatchActionButton(error.response.data);
+
+                return;
+              }
+              if (error) {
+                dispatchActionButton(genericErrorsData);
               }
             });
 
@@ -143,12 +144,12 @@ export const useActionButton = (
             })
             .catch(async (error) => {
               if (error.response) {
-                if (error.response.status === 500) {
-                  console.log('only case: show generic modal error');
-
-                  return;
-                }
                 dispatchActionButton(error.response.data);
+
+                return;
+              }
+              if (error) {
+                dispatchActionButton(genericErrorsData);
               }
             });
 
@@ -172,12 +173,12 @@ export const useActionButton = (
             })
             .catch((error) => {
               if (error.response) {
-                if (error.response.status === 500) {
-                  console.log('only case: show generic modal error');
-
-                  return;
-                }
                 dispatchActionButton(error.response.data);
+
+                return;
+              }
+              if (error) {
+                dispatchActionButton(genericErrorsData);
               }
             });
 

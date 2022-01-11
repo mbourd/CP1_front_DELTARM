@@ -24,9 +24,8 @@ export const Compliance: React.FC<IComplianceProps> = ({
   compliance,
   label,
 }): React.ReactElement | null => {
-  const [showComplianceFields, setShowComplianceFields] = useState<boolean>(
-    false,
-  );
+  const [showComplianceFields, setShowComplianceFields] =
+    useState<boolean>(false);
   const handleClickDetailsCompliance = useCallback(() => {
     setShowComplianceFields(!showComplianceFields);
   }, [setShowComplianceFields, showComplianceFields]);

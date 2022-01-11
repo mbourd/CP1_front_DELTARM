@@ -7,14 +7,8 @@ import { CheckboxContext } from '../CheckboxContext';
 // eslint-disable-next-line react/display-name
 export const CheckboxContainer = React.forwardRef<HTMLDivElement>(
   (props, ref): React.ReactElement => {
-    const {
-      data,
-      selectedValues,
-      multiple,
-      name,
-      onChange,
-      disabled,
-    } = useContext(CheckboxContext);
+    const { data, selectedValues, multiple, name, onChange, disabled } =
+      useContext(CheckboxContext);
 
     return (
       <div ref={ref}>

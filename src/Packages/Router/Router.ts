@@ -90,6 +90,7 @@ export class Router implements IRouter {
     const routes: IRouteDef[] = Object.values(this._routes);
 
     for (let i = 0; i < routes.length; i++) {
+      // @ts-ignore
       const route = matchPath(url, routes[i] as RouteProps);
 
       if (route) {
