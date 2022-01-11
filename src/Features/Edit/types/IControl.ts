@@ -111,7 +111,7 @@ export interface IApiControl {
   control_regex: RegExp;
   control_regex_msg: string;
   control_manage_compliance: boolean;
-  conditional: IApiConditional;
-  compliance: IApiCompliance;
+  conditional?: IApiConditional;
+  compliance?: IApiCompliance;
   useCompliance?: ICompliance;
 }
