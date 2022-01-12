@@ -19,7 +19,8 @@ export type ControlTypeType =
   | 'checkbox'
   | 'email'
   | 'auth_num'
-  | 'info_block';
+  | 'info_block'
+  | 'formula';
 
 export type ControlFontSize = 'standard' | 'bold';
 
@@ -85,10 +86,16 @@ export interface IConditional {
   conditionalInitState: boolean;
 }
 
-export interface ICalculated {
-  byField: number[];
-  displayType: string;
+export interface IFormula {
+  map: ITranslationFormula[] | null;
   formula: string;
+}
+
+export interface ITranslationFormula {
+  min: number;
+  max: number;
+  color: string | null;
+  lib: string;
 }
 
 export interface IApiControl {
@@ -96,7 +103,6 @@ export interface IApiControl {
   control_desc_2: string | null;
   control_editable: boolean;
   control_conditional: boolean;
-  field_is_formula: boolean;
   control_id: string;
   control_mandatory: boolean;
   control_previous_value: string | null;
@@ -113,5 +119,6 @@ export interface IApiControl {
   control_manage_compliance: boolean;
   conditional?: IApiConditional;
   compliance?: IApiCompliance;
+  formula?: IFormula;
   useCompliance?: ICompliance;
 }
