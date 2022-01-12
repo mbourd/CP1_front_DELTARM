@@ -4,8 +4,9 @@ export const injectCalculatedFields = (
   formState: IApiControl[],
 ): IApiControl[] => {
   formState.map((field: IApiControl) => {
-    if (field.field_is_formula) {
+    if (field.formula) {
       // @TODO
+      console.log(field);
     }
   });
 

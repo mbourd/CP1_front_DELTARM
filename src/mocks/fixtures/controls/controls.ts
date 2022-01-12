@@ -16,7 +16,6 @@ export const controls: IApiControl[] = [
     control_regex_msg: '',
     control_manage_compliance: false,
     control_conditional: false,
-    field_is_formula: false,
     answerChoices: {
       '1': {
         id: '1',
@@ -53,7 +52,6 @@ export const controls: IApiControl[] = [
     control_regex_msg: "La valeur saisie n'est pas une valeur entière",
     control_manage_compliance: false,
     control_conditional: true,
-    field_is_formula: false,
     conditional: {
       conditional_formula: '$==1',
       conditional_by_field_id: 1928,
@@ -76,7 +74,6 @@ export const controls: IApiControl[] = [
     control_regex_msg: '',
     control_manage_compliance: false,
     control_conditional: true,
-    field_is_formula: false,
     conditional: {
       conditional_formula: '$==3',
       conditional_by_field_id: 1928,
@@ -98,7 +95,6 @@ export const controls: IApiControl[] = [
     control_regex_msg: '',
     control_manage_compliance: false,
     control_conditional: false,
-    field_is_formula: false,
   },
   {
     control_desc_1: null,
@@ -115,7 +111,6 @@ export const controls: IApiControl[] = [
     control_regex_msg: '',
     control_manage_compliance: false,
     control_conditional: true,
-    field_is_formula: false,
     conditional: {
       conditional_formula: '$ != null',
       conditional_by_field_id: 1931,
@@ -138,7 +133,6 @@ export const controls: IApiControl[] = [
     control_regex_msg: '',
     control_manage_compliance: false,
     control_conditional: true,
-    field_is_formula: false,
     conditional: {
       conditional_formula: '$ == null',
       conditional_by_field_id: 1931,
@@ -160,7 +154,6 @@ export const controls: IApiControl[] = [
     control_regex_msg: "La valeur saisie n'est pas une valeur entière",
     control_manage_compliance: false,
     control_conditional: false,
-    field_is_formula: false,
   },
   {
     control_desc_1: null,
@@ -178,7 +171,6 @@ export const controls: IApiControl[] = [
     control_regex_msg: '',
     control_manage_compliance: false,
     control_conditional: true,
-    field_is_formula: false,
     conditional: {
       conditional_formula:
         '($>20 && $<=40) || ($>=60 && $<80) || ($%10==0 && $!=100)',
