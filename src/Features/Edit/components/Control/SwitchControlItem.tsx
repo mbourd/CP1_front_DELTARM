@@ -11,6 +11,7 @@ import {
   UploadControl,
   CheckboxControl,
   InfoBlockControl,
+  DecimalControl,
 } from './Form';
 import { EditValidationContext } from 'Features/Edit';
 
@@ -106,6 +107,15 @@ export const SwitchControlItem: React.FC<IProps> = ({
     case 'integer':
       return (
         <IntegerControl
+          control={control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
+      );
+    case 'decimal':
+      return (
+        <DecimalControl
           control={control}
           fileId={fileId}
           formState={formState}
