@@ -25,10 +25,10 @@ export type ControlTypeType =
 export type ControlFontSize = 'standard' | 'bold';
 
 export interface IApiAnswerChoice {
-  choice_id: string;
+  choice_id: number;
   choice_lib: string;
   choice_is_ko?: boolean;
-  choice_value?: number | null;
+  choice_value: number | null;
 }
 
 export interface IApiCompliance {
