@@ -4,7 +4,7 @@ export const genericErrorsData: IDataModal = {
   target: 'modal',
   title: 'Une erreur est intervenue.',
   subtitle: 'Veuillez réessayer.',
-  img: 'https://s3-drm-cp1.s3.eu-west-3.amazonaws.com/ressources/images/server.svg',
+  img: 'https://s3-drm-cp1.s3.eu-west-3.amazonaws.com/ressources/images/undraw_bug_fixing.svg',
   content: [
     // {
     //   element: 'p',
