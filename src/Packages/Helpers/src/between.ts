@@ -7,5 +7,5 @@ export const between = (
     x = 0;
   }
 
-  return x >= min && x <= max;
+  return x >= min && x < max;
 };
