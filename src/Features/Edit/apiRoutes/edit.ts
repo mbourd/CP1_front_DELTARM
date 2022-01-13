@@ -27,7 +27,7 @@ export const editValidationHandlerCallback = (response: any) => {
           answerChoices[answer.choice_id] = {
             id: '' + answer.choice_id,
             label: answer.choice_lib,
-            value: answer.choice_id,
+            value: '' + answer.choice_id,
             isKo: answer.choice_is_ko,
           };
 

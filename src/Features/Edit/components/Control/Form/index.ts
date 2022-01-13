@@ -11,3 +11,4 @@ export * from './Upload/UploadControl';
 export * from './Compliance/CheckboxCompliance/CheckboxCompliance';
 export * from './InfoBlock/InfoBlockControl';
 export * from './Decimal/DecimalControl';
+export * from './Formula/FormulaControl';

@@ -1,5 +1,5 @@
 import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
-import { TextControlStyled } from './TextControl.style';
+import { FormulaControlStyled } from './FormulaControl.style';
 import { Grid } from '@material-ui/core';
 import { IApiControl } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
@@ -16,7 +16,7 @@ interface IProps {
   setFormState: React.Dispatch<SetStateAction<IApiControl[]>>;
 }
 
-export const TextControl: React.FC<IProps> = ({
+export const FormulaControl: React.FC<IProps> = ({
   control,
   fileId,
   formState,
@@ -102,7 +102,7 @@ export const TextControl: React.FC<IProps> = ({
 
   return (
     <Grid item xs={6}>
-      <TextControlStyled>
+      <FormulaControlStyled>
         <ControlLabel control={control} />
         <InputBase
           placeholder={
@@ -114,12 +114,12 @@ export const TextControl: React.FC<IProps> = ({
           }
           disabled={!control.control_editable}
           color={control.control_editable ? 'text' : 'disabled'}
-          defaultValue={currentValue ? currentValue : ''}
+          value={currentValue ? currentValue : ''}
           onBlur={(e) => saveValue(e.currentTarget.value)}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ControlFooter control={control} />
-      </TextControlStyled>
+      </FormulaControlStyled>
     </Grid>
   );
 };
