@@ -28,6 +28,10 @@ export const DecimalControl: React.FC<IProps> = ({
   const { currentRoute } = useRouter();
 
   useEffect(() => {
+    setCurrentValue(control.control_value);
+  }, [control.control_value]);
+
+  useEffect(() => {
     updateFormState(formState, control.control_id, currentValue, setFormState);
   }, [formState, control.control_id, currentValue, setFormState]);
 
@@ -108,8 +112,8 @@ export const DecimalControl: React.FC<IProps> = ({
           placeholder={
             control.control_editable
               ? control.control_title
-              : control.control_value
-              ? control.control_value
+              : currentValue
+              ? currentValue
               : ''
           }
           disabled={!control.control_editable}
