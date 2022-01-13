@@ -5,8 +5,24 @@ export const injectCalculatedFields = (
 ): IApiControl[] => {
   formState.map((field: IApiControl) => {
     if (field.formula) {
-      // @TODO
-      console.log(field);
+      const regex = new RegExp(/#\d+/g);
+      const fieldsToReplaceInFormula = field.formula.formula.match(regex);
+      let formula = field.formula.formula;
+
+      fieldsToReplaceInFormula?.map((fieldToReplace) => {
+        const valueToReplace = formState.find(
+          (fieldToFind) => '#' + fieldToFind.control_id === fieldToReplace,
+        );
+        if (valueToReplace) {
+          formula = formula.replaceAll(
+            fieldToReplace,
+            `${valueToReplace.control_value}`,
+          );
+        }
+      });
+
+      // eslint-disable-next-line no-eval
+      field.control_value = eval(`${formula}`).toString();
     }
   });
 
