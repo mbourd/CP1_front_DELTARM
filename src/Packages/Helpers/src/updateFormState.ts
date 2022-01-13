@@ -8,15 +8,15 @@ export const updateFormState = (
   setFormState: React.Dispatch<SetStateAction<IApiControl[]>>,
 ) => {
   let change = false;
-  const newControlState = formState.map((stateControl) => {
-    if (controlId === stateControl.control_id) {
-      if (stateControl.control_value !== currentValue) {
+  const newControlState = formState.map((control) => {
+    if (controlId === control.control_id) {
+      if (control.control_value !== currentValue) {
         change = true;
-        stateControl.control_value = currentValue;
+        control.control_value = currentValue;
       }
     }
 
-    return stateControl;
+    return control;
   });
 
   if (change) {
