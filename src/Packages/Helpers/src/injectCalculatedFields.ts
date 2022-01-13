@@ -16,10 +16,15 @@ export const injectCalculatedFields = (
         );
 
         if (foundedField && !foundedField?.control_answer_choices) {
-          formula = formula.replaceAll(
-            fieldToReplace,
-            `${foundedField.control_value}`,
-          );
+          if (foundedField.control_value) {
+            formula = formula.replaceAll(
+              fieldToReplace,
+              `${foundedField.control_value}`,
+            );
+          }
+          if (!foundedField.control_value) {
+            formula = formula.replaceAll(fieldToReplace, '0');
+          }
         }
 
         if (foundedField?.control_answer_choices) {
@@ -33,7 +38,14 @@ export const injectCalculatedFields = (
         }
       });
       // eslint-disable-next-line no-eval
-      field.control_value = eval(`${formula}`).toString();
+      const calculatedValue = eval(`${formula}`).toString();
+      if (
+        calculatedValue &&
+        !isNaN(calculatedValue) &&
+        isFinite(calculatedValue)
+      ) {
+        field.control_value = calculatedValue;
+      }
     }
     if (field.formula?.map) {
       field.formula.map.map((map) => {
