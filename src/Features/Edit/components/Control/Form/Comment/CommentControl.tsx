@@ -28,16 +28,22 @@ export const CommentControl: React.FC<IProps> = ({
   const { currentRoute } = useRouter();
 
   useEffect(() => {
+    setCurrentValue(control.control_value);
+  }, [control.control_value]);
+
+  useEffect(() => {
     updateFormState(formState, control.control_id, currentValue, setFormState);
   }, [formState, control.control_id, currentValue, setFormState]);
 
   const saveValue = useCallback(
     (value: string) => {
-      const regexControl = new RegExp(control.control_regex, 'i');
-      if (control.control_regex && !value.match(regexControl) && value) {
-        setErrorMessage(control.control_regex_msg);
+      if (control.control_regex && value) {
+        const regexControl = new RegExp(control.control_regex, 'i');
+        if (!value.match(regexControl)) {
+          setErrorMessage(control.control_regex_msg);
 
-        return;
+          return;
+        }
       }
 
       if (!checkIfSameValues(value, currentValue)) {
