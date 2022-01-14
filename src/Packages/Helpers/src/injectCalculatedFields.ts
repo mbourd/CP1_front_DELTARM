@@ -9,6 +9,7 @@ export const injectCalculatedFields = (
       const regex = new RegExp(/#\d+/g);
       const fieldsToReplaceInFormula = field.formula.formula.match(regex);
       let formula = field.formula.formula;
+      let oneOfValueIsMissing = false;
 
       fieldsToReplaceInFormula?.map((fieldToReplace) => {
         const foundedField = formState.find(
@@ -23,7 +24,7 @@ export const injectCalculatedFields = (
             );
           }
           if (!foundedField.control_value) {
-            formula = formula.replaceAll(fieldToReplace, '0');
+            oneOfValueIsMissing = true;
           }
         }
 
@@ -37,14 +38,20 @@ export const injectCalculatedFields = (
           );
         }
       });
-      // eslint-disable-next-line no-eval
-      const calculatedValue = eval(`${formula}`).toString();
-      if (
-        calculatedValue &&
-        !isNaN(calculatedValue) &&
-        isFinite(calculatedValue)
-      ) {
-        field.control_value = calculatedValue;
+
+      if (!oneOfValueIsMissing) {
+        // eslint-disable-next-line no-eval
+        const calculatedValue = eval(`${formula}`).toString();
+        if (
+          calculatedValue &&
+          !isNaN(calculatedValue) &&
+          isFinite(calculatedValue)
+        ) {
+          field.control_value = calculatedValue;
+        }
+      }
+      if (oneOfValueIsMissing) {
+        field.control_value = '';
       }
     }
     if (field.formula?.map) {

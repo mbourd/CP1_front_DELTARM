@@ -4,7 +4,7 @@ export const between = (
   max: string | number,
 ) => {
   if (!x) {
-    x = 0;
+    return false;
   }
 
   return x >= min && x < max;
