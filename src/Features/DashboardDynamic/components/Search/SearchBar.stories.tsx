@@ -2,7 +2,7 @@ import React from 'react';
 import { SearchBar } from './SearchBar';
 import { worker } from '../../../../mocks/server';
 import { rest } from 'msw';
-import data from '../../../../mocks/fixtures/modal/modal';
+import MODAL from '../../../../mocks/fixtures/modal/modal';
 import { RecoilRoot } from 'recoil';
 
 export default {
@@ -22,7 +22,7 @@ const Template: any = (args: any) => {
     rest.get(
       'https://controle-api-dev.deltarm.com:8082/contr_perm/get_search_test?value=',
       (req, res, ctx) => {
-        return res(ctx.status(200), ctx.json(data));
+        return res(ctx.status(200), ctx.json(MODAL));
       },
     ),
   );
