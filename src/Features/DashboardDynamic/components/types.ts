@@ -67,7 +67,7 @@ export interface ISearchBarOptions {
   placeholder: string;
   regex: string | null;
   regex_msg: string | null;
-  route: string;
+  action: IActionButton;
 }
 
 interface ISubtitle {
