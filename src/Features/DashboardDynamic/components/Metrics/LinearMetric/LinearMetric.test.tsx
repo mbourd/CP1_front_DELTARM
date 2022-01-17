@@ -2,12 +2,12 @@ import React from 'react';
 import * as stories from './LinearMetric.stories';
 import { composeStories } from '@storybook/testing-react';
 import { render } from '../../../../../setupTests';
-const { LinearIndicator } = composeStories(stories);
+const { Primary: Linear } = composeStories(stories);
 
 describe('Linear Metric', () => {
   describe('metric', () => {
     test('Should render the linear metric', async () => {
-      const { getByRole } = render(<LinearIndicator />);
+      const { getByRole } = render(<Linear />);
       expect(getByRole('progressbar')).toBeInTheDocument();
       expect(getByRole('progressbar')).toHaveAttribute('role', 'progressbar');
       expect(getByRole('progressbar')).toHaveAttribute(

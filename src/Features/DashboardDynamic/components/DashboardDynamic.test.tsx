@@ -2,8 +2,6 @@ import React from 'react';
 import * as stories from './DashboardDynamic.stories';
 import { composeStories } from '@storybook/testing-react';
 import { render, screen, fireEvent } from 'setupTests';
-import data from '../../../mocks/fixtures/dashboard/dashboard';
-import { rest } from 'msw';
 import { server } from '../../../mocks/server';
 const { Dashboard } = composeStories(stories);
 
@@ -23,13 +21,12 @@ describe('DashboardDynamic', () => {
     });
     test('Should call the msw api to get dashboard data', async () => {
       render(<Dashboard />);
-      screen.debug();
+      // screen.debug();
       // verify here that we have the correct informations in the dom
     });
-    test('Should call the msw api to get modal data from search bar', async () => {
-      const { getByText } = render(<Dashboard />);
-      fireEvent.click(getByText('Lancer la recherche'));
-      console.log(screen.debug());
-    });
+    // test('Should call the msw api to get modal data from search bar', async () => {
+    //   const { getByText } = render(<Dashboard />);
+    //   fireEvent.click(getByText('Lancer la recherche'));
+    // });
   });
 });
