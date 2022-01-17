@@ -15,6 +15,7 @@ export default {
       </RecoilRoot>
     ),
   ],
+  argTypes: { onClick: { action: 'clicked' } },
 };
 
 const Template: any = (args: any) => {
