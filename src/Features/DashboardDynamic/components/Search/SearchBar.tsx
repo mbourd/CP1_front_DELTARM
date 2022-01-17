@@ -5,22 +5,27 @@ import { Button, FormError } from 'Shared/components';
 import { Search } from 'Features/Manage/components/Search/Search';
 import { ISearchBarOptions } from '../types';
 import { storage } from '../../../../Packages/Storage';
-import { SearchModal } from './Modal/SearchModal';
+import { useActionButton } from '../../../../Packages/Helpers/src/useActionButton';
+import { useSecurity } from '../../../../Packages/Security';
 
 interface IProps {
   btn_lib: string;
   options: ISearchBarOptions[];
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const SearchBar: React.FC<IProps> = ({
   btn_lib,
   options,
+  setIsModalOpen,
 }): React.ReactElement => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentOption, setCurrentOption] = useState<ISearchBarOptions>(
     options[0],
   );
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const { user } = useSecurity();
+  const jwt = user.getJwt();
+  const { actionButton } = useActionButton(jwt, setIsModalOpen);
 
   const handleChangeOption = useCallback(
     (value: string) => {
@@ -43,8 +48,13 @@ export const SearchBar: React.FC<IProps> = ({
         return;
       }
     }
-    setIsModalOpen(true);
-  }, [currentOption]);
+    const action = currentOption.action;
+    action['endpoint'] = currentOption.action.endpoint.replace(
+      'value=',
+      `value=${value}`,
+    );
+    actionButton(action);
+  }, [currentOption, actionButton]);
 
   return (
     <SearchBarStyled>
@@ -73,9 +83,6 @@ export const SearchBar: React.FC<IProps> = ({
         <Search placeholder={currentOption.placeholder} />
         {btn_lib && <Button onClick={onSearch}>{btn_lib}</Button>}
       </Paper>
-      {isModalOpen ? (
-        <SearchModal open={isModalOpen} onClose={() => setIsModalOpen(false)} />
-      ) : null}
     </SearchBarStyled>
   );
 };

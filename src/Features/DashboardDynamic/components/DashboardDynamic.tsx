@@ -68,6 +68,7 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
               <SearchBar
                 btn_lib={response?.data.search_bar.btn_lib}
                 options={response?.data.search_bar.options}
+                setIsModalOpen={setIsModalOpen}
               />
             )}
             {response && response?.data.btns.length > 0 ? (
