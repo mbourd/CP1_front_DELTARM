@@ -794,14 +794,22 @@ export default {
           regex: '[0-9A-Za-z]\\/[0-9A-Za-z]',
           regex_msg:
             'La recherche doit respecter le format : N° de Dossier / Avenant',
-          route: '/file/search_dossier',
+          action: {
+            endpoint: '/contr_perm/get_search_test?value=',
+            method: 'GET',
+            params: null,
+          },
         },
         {
           lib: 'Rechercher un Utilisateur Klesia',
           placeholder: "Nom de l'utilisateur - Klesia",
           regex: null,
           regex_msg: null,
-          route: '/file/search_user',
+          action: {
+            endpoint: '/contr_perm/get_search_test?value=',
+            method: 'GET',
+            params: null,
+          },
         },
       ],
       search_bar: true,
