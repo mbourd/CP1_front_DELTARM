@@ -1,18 +1,10 @@
 import React from 'react';
 import * as stories from './DashboardDynamic.stories';
 import { composeStories } from '@storybook/testing-react';
-import { render, screen, fireEvent } from 'setupTests';
-import { server } from '../../../mocks/server';
+import { render, screen, fireEvent, waitFor } from 'setupTests';
 const { Dashboard } = composeStories(stories);
-
-// Establish API mocking before all tests.
-beforeAll(() => server?.listen({ onUnhandledRequest: 'warn' }));
-
-// Reset any request handlers that we may add during the tests,
-afterEach(() => server?.resetHandlers());
-
-// Clean up after the tests are finished.
-afterAll(() => server?.close());
+import DASHBOARD from '../../../mocks/fixtures/dashboard/dashboard';
+import { rest } from 'msw';
 
 describe('DashboardDynamic', () => {
   describe('DashboardDynamic', () => {
@@ -20,9 +12,15 @@ describe('DashboardDynamic', () => {
       render(<Dashboard />);
     });
     test('Should call the msw api to get dashboard data', async () => {
-      render(<Dashboard />);
+      const { queryByText } = render(<Dashboard />);
+      // expect(screen.getByText('Aucun contrôle disponible')).toBeInTheDocument();
+      // await waitFor(() => {
+      //   expect(
+      //     queryByText('Aucun contrôle disponible'),
+      //   ).not.toBeInTheDocument();
+      // });
       // screen.debug();
-      // verify here that we have the correct informations in the dom
+      // why msw storybook are not imported in test ?
     });
     // test('Should call the msw api to get modal data from search bar', async () => {
     //   const { getByText } = render(<Dashboard />);

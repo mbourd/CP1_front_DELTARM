@@ -21,8 +21,10 @@ export default {
 const Template: any = (args: any) => {
   worker?.use(
     rest.get(
-      'https://controle-api-dev.deltarm.com:8082/contr_perm/get_search_test?value=',
+      'https://controle-api-dev.deltarm.com:8082/contr_perm/get_search_test',
       (req, res, ctx) => {
+        req.url.searchParams.get('value');
+
         return res(ctx.status(200), ctx.json(MODAL));
       },
     ),
