@@ -15,3 +15,4 @@ function setup() {
   return { worker, server };
 }
 export const { worker, server } = setup();
+export const mock = (worker ?? server)!.use;
