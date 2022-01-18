@@ -1,8 +1,9 @@
 import React from 'react';
 import { DashboardDynamic } from './DashboardDynamic';
-import { worker } from '../../../mocks/server';
+import { mock } from '../../../mocks/server';
 import { rest } from 'msw';
-import data from '../../../mocks/fixtures/dashboard/dashboard';
+import DASHBOARD from '../../../mocks/fixtures/dashboard/dashboard';
+import MODAL from '../../../mocks/fixtures/modal/modal';
 import { RecoilRoot } from 'recoil';
 
 export default {
@@ -18,19 +19,31 @@ export default {
 };
 
 const Template: any = (args: any) => {
-  worker?.use(
-    rest.get(
-      'https://controle-api-dev.deltarm.com:8082/dashboard/contr_perm',
-      (req, res, ctx) => {
-        return res(ctx.status(200), ctx.json(data));
-      },
-    ),
-  );
-
   return <DashboardDynamic {...args} />;
 };
 
 export const Dashboard = Template.bind({});
-Dashboard.args = {
-  // all the data comes from ths msw mock
-};
+Dashboard.decorators = [
+  (story: any) => {
+    mock(
+      rest.get(
+        'https://controle-api-dev.deltarm.com:8082/dashboard/contr_perm',
+        (req, res, ctx) => {
+          ctx.delay('infinite');
+
+          return res(ctx.status(200), ctx.json(DASHBOARD));
+        },
+      ),
+      rest.get(
+        'https://controle-api-dev.deltarm.com:8082/contr_perm/get_search_test',
+        (req, res, ctx) => {
+          req.url.searchParams.get('value');
+
+          return res(ctx.status(200), ctx.json(MODAL));
+        },
+      ),
+    );
+
+    return story();
+  },
+];

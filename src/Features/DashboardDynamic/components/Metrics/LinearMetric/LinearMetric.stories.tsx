@@ -11,8 +11,8 @@ const Template: any = (args: any) => {
   return <LinearMetric {...args} />;
 };
 
-export const LinearIndicator = Template.bind({});
-LinearIndicator.args = {
+export const Primary = Template.bind({});
+Primary.args = {
   variant: 'determinate',
   lib: 'Taux de Complétude',
   value: 54,
@@ -21,6 +21,16 @@ LinearIndicator.args = {
   style: {
     color: 'blue',
     backgroundColor: 'grey',
+    height: 13,
+  },
+};
+
+export const Secondary = Template.bind({});
+Secondary.args = {
+  ...Primary.args,
+  style: {
+    color: 'red',
+    backgroundColor: 'black',
     height: 13,
   },
 };

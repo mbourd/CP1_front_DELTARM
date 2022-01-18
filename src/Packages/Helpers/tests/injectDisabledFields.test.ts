@@ -16,7 +16,6 @@ const controls: IApiControl[] = [
     control_regex_msg: "La valeur saisie n'est pas une valeur entière",
     control_manage_compliance: false,
     control_conditional: true,
-    field_is_formula: false,
     conditional: {
       conditional_formula: '$==1',
       conditional_by_field_id: 1928,
@@ -39,7 +38,6 @@ const controls: IApiControl[] = [
     control_regex_msg: '',
     control_manage_compliance: false,
     control_conditional: true,
-    field_is_formula: false,
     conditional: {
       conditional_formula: '$==3',
       conditional_by_field_id: 1930,
@@ -62,7 +60,6 @@ const controls: IApiControl[] = [
     control_regex_msg: '',
     control_manage_compliance: false,
     control_conditional: true,
-    field_is_formula: false,
   },
 ];
 
@@ -87,7 +84,6 @@ describe('Inject disabled fields into the form', () => {
         control_regex_msg: "La valeur saisie n'est pas une valeur entière",
         control_manage_compliance: false,
         control_conditional: true,
-        field_is_formula: false,
         conditional: {
           conditional_formula: '$==1',
           conditional_by_field_id: 1928,
@@ -110,7 +106,6 @@ describe('Inject disabled fields into the form', () => {
         control_regex_msg: '',
         control_manage_compliance: false,
         control_conditional: true,
-        field_is_formula: false,
         conditional: {
           conditional_formula: '$==3',
           conditional_by_field_id: 1930,
@@ -133,7 +128,6 @@ describe('Inject disabled fields into the form', () => {
         control_regex_msg: '',
         control_manage_compliance: false,
         control_conditional: true,
-        field_is_formula: false,
       },
     ]);
   });

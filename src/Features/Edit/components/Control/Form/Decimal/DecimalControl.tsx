@@ -1,8 +1,8 @@
 import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
-import { TextControlStyled } from './TextControl.style';
 import { Grid } from '@material-ui/core';
 import { IApiControl } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
+import { DecimalControlStyled } from './DecimalControl.style';
 import { useApi, useRouter } from 'Services';
 import { ControlLabel } from '../ControlLabel';
 import { ControlFooter } from '../ControlFooter';
@@ -16,7 +16,7 @@ interface IProps {
   setFormState: React.Dispatch<SetStateAction<IApiControl[]>>;
 }
 
-export const TextControl: React.FC<IProps> = ({
+export const DecimalControl: React.FC<IProps> = ({
   control,
   fileId,
   formState,
@@ -26,6 +26,7 @@ export const TextControl: React.FC<IProps> = ({
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);
   const { currentRoute } = useRouter();
+
   useEffect(() => {
     setCurrentValue(control.control_value);
   }, [control.control_value]);
@@ -36,13 +37,14 @@ export const TextControl: React.FC<IProps> = ({
 
   const saveValue = useCallback(
     (value: string) => {
-      if (control.control_regex && value) {
-        const regexControl = new RegExp(control.control_regex, 'i');
-        if (!value.match(regexControl)) {
-          setErrorMessage(control.control_regex_msg);
+      if (
+        control.control_regex &&
+        !value.match(control.control_regex) &&
+        value
+      ) {
+        setErrorMessage(control.control_regex_msg);
 
-          return;
-        }
+        return;
       }
 
       if (!checkIfSameValues(value, currentValue)) {
@@ -61,21 +63,23 @@ export const TextControl: React.FC<IProps> = ({
       }
 
       setCurrentValue(value);
-      const q: Record<string, string> = {
-        file_id: fileId,
-        elm_id: control.control_id,
-        control_family: control.control_family,
-        elm_val: value,
-      };
-
-      send(currentRoute?.props?.apiSaveControlRouteName, {}, q);
+      send(
+        currentRoute?.props?.apiSaveControlRouteName,
+        {},
+        {
+          file_id: fileId,
+          elm_id: control.control_id,
+          elm_val: value,
+          control_family: control.control_family,
+        },
+      );
     },
     [
       send,
       fileId,
       control.control_id,
-      currentRoute,
       control.control_family,
+      currentRoute,
       control.control_regex,
       control.control_regex_msg,
       currentValue,
@@ -102,7 +106,7 @@ export const TextControl: React.FC<IProps> = ({
 
   return (
     <Grid item xs={6}>
-      <TextControlStyled>
+      <DecimalControlStyled>
         <ControlLabel control={control} />
         <InputBase
           placeholder={
@@ -119,7 +123,7 @@ export const TextControl: React.FC<IProps> = ({
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ControlFooter control={control} />
-      </TextControlStyled>
+      </DecimalControlStyled>
     </Grid>
   );
 };

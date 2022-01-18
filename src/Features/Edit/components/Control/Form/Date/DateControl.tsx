@@ -28,6 +28,10 @@ export const DateControl: React.FC<IProps> = ({
   const { currentRoute } = useRouter();
 
   useEffect(() => {
+    setCurrentValue(control.control_value);
+  }, [control.control_value]);
+
+  useEffect(() => {
     updateFormState(formState, control.control_id, currentValue, setFormState);
   }, [formState, control.control_id, currentValue, setFormState]);
 

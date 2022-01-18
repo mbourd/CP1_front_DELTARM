@@ -3,6 +3,11 @@ import { BPITheme } from 'Packages/Design';
 import { render, RenderOptions } from '@testing-library/react';
 import React, { FC, ReactElement, Suspense } from 'react';
 import '@testing-library/jest-dom/extend-expect';
+import { server } from './mocks/server';
+
+beforeAll(() => server?.listen({ onUnhandledRequest: 'warn' }));
+afterEach(() => server?.resetHandlers());
+afterAll(() => server?.close());
 
 const AllTheProviders: FC = ({ children }) => {
   return (
