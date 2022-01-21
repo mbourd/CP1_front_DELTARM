@@ -209,7 +209,7 @@ export const ModalDynamic: FC<IDataModalProps> = ({
             case 'table':
               return (
                 <Grid key={index} item xs={12}>
-                  <TableContainer style={{ maxHeight: '300px' }}>
+                  <TableContainer>
                     <Table>
                       <TableBody>
                         {element.value.row.value.map((row, index) => (
