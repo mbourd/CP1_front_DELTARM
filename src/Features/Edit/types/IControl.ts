@@ -96,7 +96,6 @@ export interface ISlider {
   max: number;
   step: number;
   marks: boolean;
-  disable_swap: boolean;
   color?: string;
   disabled?: boolean;
 }

@@ -95,7 +95,7 @@ export const SliderControl: React.FC<IProps> = ({
           valueLabelDisplay="auto"
           onChangeCommitted={saveValue}
           onChange={(_, newValue) => handleChange(newValue.toString())}
-          disableSwap={control.slider?.disable_swap}
+          disableSwap
           style={{
             color: control.slider?.color,
           }}
