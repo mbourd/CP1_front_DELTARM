@@ -15,6 +15,7 @@ import {
   FormulaControl,
 } from './Form';
 import { EditValidationContext } from 'Features/Edit';
+import { SliderControl } from './Form/Slider/SliderControl';
 
 interface IProps {
   control: IApiControl;
@@ -153,6 +154,15 @@ export const SwitchControlItem: React.FC<IProps> = ({
     case 'percent':
       return (
         <PercentControl
+          control={control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
+      );
+    case 'slider':
+      return (
+        <SliderControl
           control={control}
           fileId={fileId}
           formState={formState}
