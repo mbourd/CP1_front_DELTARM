@@ -15,12 +15,11 @@ export type ControlTypeType =
   | 'radio'
   | 'checkbox'
   | 'multiple_list'
-  | 'radio'
-  | 'checkbox'
   | 'email'
   | 'auth_num'
   | 'info_block'
-  | 'formula';
+  | 'formula'
+  | 'slider';
 
 export type ControlFontSize = 'standard' | 'bold';
 
@@ -92,6 +91,16 @@ export interface IFormula {
   formula: string;
 }
 
+export interface ISlider {
+  min: number;
+  max: number;
+  step: number;
+  marks: boolean;
+  disable_swap: boolean;
+  color?: string;
+  disabled?: boolean;
+}
+
 export interface ITranslationFormula {
   min: number;
   max: number;
@@ -123,4 +132,5 @@ export interface IApiControl {
   compliance?: IApiCompliance;
   formula?: IFormula;
   useCompliance?: ICompliance;
+  slider?: ISlider;
 }
