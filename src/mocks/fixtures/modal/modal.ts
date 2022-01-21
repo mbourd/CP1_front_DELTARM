@@ -76,6 +76,231 @@ export default {
                 value: [
                   {
                     type: 'text',
+                    value: 'CTR019/00',
+                  },
+                  {
+                    type: 'text',
+                    value: 'DELCOURT FERROVIAIIIIIRE',
+                  },
+                  {
+                    type: 'btn',
+                    action: {
+                      method: 'GET',
+                      endpoint: '/edit',
+                      params: {
+                        file_id: 'uuid',
+                      },
+                    },
+                    value: 'key value is the label button',
+                  },
+                ],
+              },
+            },
+            {
+              cell: {
+                value: [
+                  {
+                    type: 'text',
+                    value: 'CTR019/00',
+                  },
+                  {
+                    type: 'text',
+                    value: 'DELCOURT FERROVIAIIIIIRE',
+                  },
+                  {
+                    type: 'btn',
+                    action: {
+                      method: 'GET',
+                      endpoint: '/edit',
+                      params: {
+                        file_id: 'uuid',
+                      },
+                    },
+                    value: 'key value is the label button',
+                  },
+                ],
+              },
+            },
+            {
+              cell: {
+                value: [
+                  {
+                    type: 'text',
+                    value: 'CTR019/00',
+                  },
+                  {
+                    type: 'text',
+                    value: 'DELCOURT FERROVIAIIIIIRE',
+                  },
+                  {
+                    type: 'btn',
+                    action: {
+                      method: 'GET',
+                      endpoint: '/edit',
+                      params: {
+                        file_id: 'uuid',
+                      },
+                    },
+                    value: 'key value is the label button',
+                  },
+                ],
+              },
+            },
+            {
+              cell: {
+                value: [
+                  {
+                    type: 'text',
+                    value: 'CTR019/00',
+                  },
+                  {
+                    type: 'text',
+                    value: 'DELCOURT FERROVIAIIIIIRE',
+                  },
+                  {
+                    type: 'btn',
+                    action: {
+                      method: 'GET',
+                      endpoint: '/edit',
+                      params: {
+                        file_id: 'uuid',
+                      },
+                    },
+                    value: 'key value is the label button',
+                  },
+                ],
+              },
+            },
+            {
+              cell: {
+                value: [
+                  {
+                    type: 'text',
+                    value: 'CTR019/00',
+                  },
+                  {
+                    type: 'text',
+                    value: 'DELCOURT FERROVIAIIIIIRE',
+                  },
+                  {
+                    type: 'btn',
+                    action: {
+                      method: 'GET',
+                      endpoint: '/edit',
+                      params: {
+                        file_id: 'uuid',
+                      },
+                    },
+                    value: 'key value is the label button',
+                  },
+                ],
+              },
+            },
+            {
+              cell: {
+                value: [
+                  {
+                    type: 'text',
+                    value: 'CTR019/00',
+                  },
+                  {
+                    type: 'text',
+                    value: 'DELCOURT FERROVIAIIIIIRE',
+                  },
+                  {
+                    type: 'btn',
+                    action: {
+                      method: 'GET',
+                      endpoint: '/edit',
+                      params: {
+                        file_id: 'uuid',
+                      },
+                    },
+                    value: 'key value is the label button',
+                  },
+                ],
+              },
+            },
+            {
+              cell: {
+                value: [
+                  {
+                    type: 'text',
+                    value: 'CTR019/00',
+                  },
+                  {
+                    type: 'text',
+                    value: 'DELCOURT FERROVIAIIIIIRE',
+                  },
+                  {
+                    type: 'btn',
+                    action: {
+                      method: 'GET',
+                      endpoint: '/edit',
+                      params: {
+                        file_id: 'uuid',
+                      },
+                    },
+                    value: 'key value is the label button',
+                  },
+                ],
+              },
+            },
+            {
+              cell: {
+                value: [
+                  {
+                    type: 'text',
+                    value: 'CTR019/00',
+                  },
+                  {
+                    type: 'text',
+                    value: 'DELCOURT FERROVIAIIIIIRE',
+                  },
+                  {
+                    type: 'btn',
+                    action: {
+                      method: 'GET',
+                      endpoint: '/edit',
+                      params: {
+                        file_id: 'uuid',
+                      },
+                    },
+                    value: 'key value is the label button',
+                  },
+                ],
+              },
+            },
+            {
+              cell: {
+                value: [
+                  {
+                    type: 'text',
+                    value: 'CTR019/00',
+                  },
+                  {
+                    type: 'text',
+                    value: 'DELCOURT FERROVIAIIIIIRE',
+                  },
+                  {
+                    type: 'btn',
+                    action: {
+                      method: 'GET',
+                      endpoint: '/edit',
+                      params: {
+                        file_id: 'uuid',
+                      },
+                    },
+                    value: 'key value is the label button',
+                  },
+                ],
+              },
+            },
+            {
+              cell: {
+                value: [
+                  {
+                    type: 'text',
                     value: 'CTR019/01',
                   },
                   {
