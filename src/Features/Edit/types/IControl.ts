@@ -172,3 +172,7 @@ export interface IApiControl {
   useCompliance?: ICompliance;
   control_options: IControlOptions | null;
 }
+
+// decimal, financial : min, max, precision, unit
+// percent; min, max, precision
+// date, timestamp : min, max
