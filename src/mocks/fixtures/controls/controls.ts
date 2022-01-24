@@ -16,6 +16,7 @@ export const controls: IApiControl[] = [
     control_regex_msg: '',
     control_manage_compliance: false,
     control_conditional: false,
+    control_options: null,
     answerChoices: {
       '1': {
         id: '1',
@@ -52,6 +53,7 @@ export const controls: IApiControl[] = [
     control_regex_msg: "La valeur saisie n'est pas une valeur entière",
     control_manage_compliance: false,
     control_conditional: true,
+    control_options: null,
     conditional: {
       conditional_formula: '$==1',
       conditional_by_field_id: 1928,
@@ -74,6 +76,7 @@ export const controls: IApiControl[] = [
     control_regex_msg: '',
     control_manage_compliance: false,
     control_conditional: true,
+    control_options: null,
     conditional: {
       conditional_formula: '$==3',
       conditional_by_field_id: 1928,
@@ -94,6 +97,7 @@ export const controls: IApiControl[] = [
     control_regex: new RegExp(''),
     control_regex_msg: '',
     control_manage_compliance: false,
+    control_options: null,
     control_conditional: false,
   },
   {
@@ -111,6 +115,7 @@ export const controls: IApiControl[] = [
     control_regex_msg: '',
     control_manage_compliance: false,
     control_conditional: true,
+    control_options: null,
     conditional: {
       conditional_formula: '$ != null',
       conditional_by_field_id: 1931,
@@ -133,6 +138,7 @@ export const controls: IApiControl[] = [
     control_regex_msg: '',
     control_manage_compliance: false,
     control_conditional: true,
+    control_options: null,
     conditional: {
       conditional_formula: '$ == null',
       conditional_by_field_id: 1931,
@@ -150,6 +156,7 @@ export const controls: IApiControl[] = [
     control_type: 'integer',
     control_value: '',
     control_family: 'standard',
+    control_options: null,
     control_regex: new RegExp('^-?[1-9]\\d*$'),
     control_regex_msg: "La valeur saisie n'est pas une valeur entière",
     control_manage_compliance: false,
@@ -171,6 +178,7 @@ export const controls: IApiControl[] = [
     control_regex_msg: '',
     control_manage_compliance: false,
     control_conditional: true,
+    control_options: null,
     conditional: {
       conditional_formula:
         '($>20 && $<=40) || ($>=60 && $<80) || ($%10==0 && $!=100)',
