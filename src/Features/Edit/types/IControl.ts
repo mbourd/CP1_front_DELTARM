@@ -91,7 +91,7 @@ export interface IFormula {
   formula: string;
 }
 
-export interface ISlider {
+export interface ISliderOptions {
   min: number;
   max: number;
   step: number;
@@ -100,12 +100,51 @@ export interface ISlider {
   disabled?: boolean;
 }
 
+export interface IDateTimestampOptions {
+  min: number;
+  max: number;
+}
+
+export interface IPercentOptions {
+  min: number;
+  max: number;
+  precision: number | null;
+}
+
+export interface IDecimalOptions {
+  min: number;
+  max: number;
+  precision: number | null;
+  unit: string | null;
+}
+
+export interface IFinancialOptions {
+  min: number;
+  max: number;
+  precision: number | null;
+  unit: string | null;
+}
+
+export interface IIntegerOptions {
+  min: number;
+  max: number;
+  unit: string | null;
+}
+
 export interface ITranslationFormula {
   min: number;
   max: number;
   color: string | null;
   lib: string;
 }
+
+interface IControlOptions
+  extends IFinancialOptions,
+    IIntegerOptions,
+    IDateTimestampOptions,
+    ISliderOptions,
+    IDecimalOptions,
+    IPercentOptions {}
 
 export interface IApiControl {
   control_desc_1: string | null;
@@ -131,5 +170,5 @@ export interface IApiControl {
   compliance?: IApiCompliance;
   formula?: IFormula;
   useCompliance?: ICompliance;
-  slider?: ISlider;
+  control_options: IControlOptions | null;
 }

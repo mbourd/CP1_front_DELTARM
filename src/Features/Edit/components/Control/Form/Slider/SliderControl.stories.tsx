@@ -29,7 +29,7 @@ Slider.args = {
     control_title: 'Slider control',
     control_type: 'slider',
     control_value: 50,
-    slider: {
+    control_options: {
       min: 0,
       max: 100,
       step: 10,
@@ -57,7 +57,7 @@ Slider.args = {
       control_title: 'Slider control',
       control_type: 'slider',
       control_value: 50,
-      slider: {
+      control_options: {
         min: 0,
         max: 100,
         step: 10,
@@ -82,7 +82,7 @@ Slider.args = {
       control_title: 'Slider control',
       control_type: 'slider',
       control_value: 50,
-      slider: {
+      control_options: {
         min: 0,
         max: 10,
         step: 1,
