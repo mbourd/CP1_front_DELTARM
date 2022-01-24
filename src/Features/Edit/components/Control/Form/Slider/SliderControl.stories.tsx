@@ -11,8 +11,8 @@ const Template: any = (args: any) => {
   return <SliderControl {...args} />;
 };
 
-export const Slider = Template.bind({});
-Slider.args = {
+export const ControlSlider = Template.bind({});
+ControlSlider.args = {
   control: {
     control_desc1: null,
     control_desc2: null,

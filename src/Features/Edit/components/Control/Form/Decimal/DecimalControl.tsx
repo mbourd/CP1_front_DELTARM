@@ -120,6 +120,7 @@ export const DecimalControl: React.FC<IProps> = ({
           color={control.control_editable ? 'text' : 'disabled'}
           defaultValue={currentValue ? currentValue : ''}
           onBlur={(e) => saveValue(e.currentTarget.value)}
+          unit={control.control_options?.unit}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ControlFooter control={control} />

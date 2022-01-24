@@ -143,6 +143,7 @@ export const FinancialControl: React.FC<IProps> = ({
           defaultValue={controlValue ? controlValue : ''}
           icon={<EuroIcon />}
           onBlur={(e) => saveValue(e.currentTarget.value)}
+          unit={control.control_options?.unit}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ControlFooter control={control} />
