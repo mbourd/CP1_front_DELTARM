@@ -106,7 +106,7 @@ export const SliderControl: React.FC<IProps> = ({
             color: control.control_options?.color,
           }}
           sx={{
-            '.css-1kz0hui-MuiSlider-valueLabel.MuiSlider-valueLabelOpen': {
+            '.MuiSlider-valueLabel.MuiSlider-valueLabelOpen': {
               top: 4,
               transform: 'rotate(-180deg)',
               '& span': {
