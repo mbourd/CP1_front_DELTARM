@@ -105,6 +105,15 @@ export const SliderControl: React.FC<IProps> = ({
           style={{
             color: control.control_options?.color,
           }}
+          sx={{
+            '& .MuiSlider-valueLabel': {
+              top: 4,
+              transform: 'rotate(-180deg)',
+              '& span': {
+                transform: 'rotate(-180deg)',
+              },
+            },
+          }}
         />
         <ControlFooter control={control} />
       </SliderControlStyled>
