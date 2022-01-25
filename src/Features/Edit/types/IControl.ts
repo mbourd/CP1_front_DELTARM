@@ -98,6 +98,12 @@ export interface ISliderOptions {
   marks: boolean;
   color?: string;
   disabled?: boolean;
+  boundaries:
+    | {
+        value: number;
+        label: string;
+      }[]
+    | null;
 }
 
 export interface IDateTimestampOptions {
