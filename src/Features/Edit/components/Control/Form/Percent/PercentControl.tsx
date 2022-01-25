@@ -104,6 +104,14 @@ export const PercentControl: React.FC<IProps> = ({
     }
   }, [error]);
 
+  const controlValue = currentValue
+    ? parseFloat(currentValue)?.toFixed(
+        control.control_options?.precision
+          ? control.control_options?.precision
+          : 2,
+      )
+    : currentValue;
+
   return (
     <Grid item xs={6}>
       <PercentControlStyled>
@@ -118,7 +126,7 @@ export const PercentControl: React.FC<IProps> = ({
           }
           disabled={!control.control_editable}
           color={control.control_editable ? 'text' : 'disabled'}
-          defaultValue={currentValue ? currentValue : ''}
+          defaultValue={controlValue ? controlValue : ''}
           onBlur={(e) => saveValue(e.currentTarget.value)}
           icon={
             <i style={{ paddingLeft: '5px' }} className="material-icons">

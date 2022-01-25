@@ -123,7 +123,11 @@ export const FinancialControl: React.FC<IProps> = ({
   }, [error]);
 
   const controlValue = currentValue
-    ? parseInt(currentValue)?.toLocaleString()
+    ? parseFloat(currentValue)?.toFixed(
+        control.control_options?.precision
+          ? control.control_options?.precision
+          : 2,
+      )
     : currentValue;
 
   return (
