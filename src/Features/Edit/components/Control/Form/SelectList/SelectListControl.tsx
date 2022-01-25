@@ -120,10 +120,10 @@ export const SelectListControl: React.FC<IProps> = ({
           name={'selectList' + control.control_id}
           data={control.answerChoices || {}}
           selectedValues={selectedValue}
-          labelColor={control.control_editable ? 'text' : 'disabled'}
-          labelBdc={control.control_editable ? 'text' : 'disabled'}
+          labelColor={control.editable ? 'text' : 'disabled'}
+          labelBdc={control.editable ? 'text' : 'disabled'}
           multiple={multiple}
-          disabled={!control.control_editable}
+          disabled={!control.editable}
           onChange={(selectedValues) => {
             const value =
               Object.keys(selectedValues).length >= 2

@@ -57,7 +57,6 @@ export const controls: IApiControl[] = [
     conditional: {
       conditional_formula: '$==1',
       conditional_by_field_id: 1928,
-      conditional_init_state: true,
     },
   },
   {
@@ -80,7 +79,6 @@ export const controls: IApiControl[] = [
     conditional: {
       conditional_formula: '$==3',
       conditional_by_field_id: 1928,
-      conditional_init_state: false,
     },
   },
   {
@@ -119,7 +117,6 @@ export const controls: IApiControl[] = [
     conditional: {
       conditional_formula: '$ != null',
       conditional_by_field_id: 1931,
-      conditional_init_state: false,
     },
   },
   {
@@ -142,7 +139,6 @@ export const controls: IApiControl[] = [
     conditional: {
       conditional_formula: '$ == null',
       conditional_by_field_id: 1931,
-      conditional_init_state: false,
     },
   },
   {
@@ -183,7 +179,6 @@ export const controls: IApiControl[] = [
       conditional_formula:
         '($>20 && $<=40) || ($>=60 && $<80) || ($%10==0 && $!=100)',
       conditional_by_field_id: 1934,
-      conditional_init_state: false,
     },
   },
 ];

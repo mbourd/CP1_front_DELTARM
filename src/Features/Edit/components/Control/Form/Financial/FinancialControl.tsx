@@ -136,14 +136,14 @@ export const FinancialControl: React.FC<IProps> = ({
         <ControlLabel control={control} />
         <InputBase
           placeholder={
-            control.control_editable
+            control.editable
               ? control.control_title
               : currentValue
               ? currentValue
               : ''
           }
-          disabled={!control.control_editable}
-          color={control.control_editable ? 'text' : 'disabled'}
+          disabled={!control.editable}
+          color={control.editable ? 'text' : 'disabled'}
           defaultValue={controlValue ? controlValue : ''}
           icon={<EuroIcon />}
           onBlur={(e) => saveValue(e.currentTarget.value)}

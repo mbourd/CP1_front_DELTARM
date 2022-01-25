@@ -21,6 +21,7 @@ export const editValidationHandlerCallback = (response: any) => {
   apiData.current_section.chapters.map((chapter) => {
     const controls: IApiControl[] = [];
     chapter.controls.map((control) => {
+      control.editable = control.control_editable;
       if (control.control_answer_choices) {
         const answerChoices: Record<string, ISelectData> = {};
         control.control_answer_choices.map((answer) => {

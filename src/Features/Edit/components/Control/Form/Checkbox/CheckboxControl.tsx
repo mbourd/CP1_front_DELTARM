@@ -129,7 +129,7 @@ export const CheckboxControl: React.FC<IProps> = ({
           }}
           choiceIsKo={choiceIsKo}
           setChoiceIsKo={setChoiceIsKo}
-          disabled={!control.control_editable}
+          disabled={!control.editable}
           error={!!error}
         />
         {errorMessage ? (
