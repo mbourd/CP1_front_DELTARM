@@ -90,11 +90,15 @@ export const SliderControl: React.FC<IProps> = ({
             currentValue ? parseInt(currentValue) : control.control_options?.min
           }
           step={control.control_options?.step}
-          marks={control.control_options?.marks}
+          marks={
+            control.control_options?.boundaries
+              ? control.control_options?.boundaries
+              : control.control_options?.marks
+          }
           min={control.control_options?.min}
           max={control.control_options?.max}
           disabled={control.control_options?.disabled}
-          valueLabelDisplay="auto"
+          valueLabelDisplay="on"
           onChangeCommitted={saveValue}
           onChange={(_, newValue) => handleChange(newValue.toString())}
           disableSwap
