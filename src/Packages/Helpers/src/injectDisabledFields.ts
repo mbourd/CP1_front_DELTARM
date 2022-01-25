@@ -5,14 +5,6 @@ export const injectDisabledFields = (
 ): IApiControl[] => {
   formState.map((field: IApiControl) => {
     if (field.control_conditional) {
-      if (field.conditional?.conditional_init_state) {
-        field.control_editable = true;
-      }
-
-      if (!field.conditional?.conditional_init_state) {
-        field.control_editable = false;
-      }
-
       // Find the listened field
       const fieldToTest = formState.find(
         (fieldToFind) =>
@@ -34,11 +26,15 @@ export const injectDisabledFields = (
         if (condition) {
           // eslint-disable-next-line no-eval
           if (eval(condition)) {
-            field.control_editable = true;
+            field.editable = true;
           }
           // eslint-disable-next-line no-eval
           if (!eval(condition)) {
-            field.control_editable = false;
+            field.editable = false;
+          }
+          // 2 props : editable is for switch state and control_editable to know if the behavior is authorized (iow : is it switchable ?)
+          if (!field.control_editable) {
+            field.editable = false;
           }
         }
       }

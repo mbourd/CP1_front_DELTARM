@@ -43,7 +43,6 @@ export interface IApiCompliance {
 export interface IApiConditional {
   conditional_by_field_id: number;
   conditional_formula: string;
-  conditional_init_state: boolean;
 }
 
 export interface IApiComplianceData {
@@ -156,6 +155,7 @@ export interface IApiControl {
   control_desc_1: string | null;
   control_desc_2: string | null;
   control_editable: boolean;
+  editable?: boolean;
   control_conditional: boolean;
   control_id: string;
   control_mandatory: boolean;
