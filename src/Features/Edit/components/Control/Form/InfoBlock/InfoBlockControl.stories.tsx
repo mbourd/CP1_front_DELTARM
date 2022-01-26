@@ -1,14 +1,14 @@
 import React from 'react';
-import { PercentControl } from './PercentControl';
+import { InfoBlockControl } from './InfoBlockControl';
 
 export default {
-  title: 'PercentControl',
-  component: PercentControl,
+  title: 'InfoBlockControl',
+  component: InfoBlockControl,
   decorators: [(story: any) => <div className="p-6">{story()}</div>],
 };
 
 const Template: any = (args: any) => {
-  return <PercentControl {...args} />;
+  return <InfoBlockControl {...args} />;
 };
 
 const control = {
@@ -17,7 +17,7 @@ const control = {
   control_editable: true,
   editable: true,
   control_family: 'standard',
-  control_id: '1931',
+  control_id: '1987',
   isConditional: false,
   isCalculated: false,
   manageCompliance: false,
@@ -25,19 +25,13 @@ const control = {
   control_previous_value: null,
   control_regex: null,
   control_regex_msg: null,
-  control_title: 'Percent control',
-  control_type: 'percent',
-  control_value: 29.2312343,
-  control_options: {
-    min: 0,
-    max: 100,
-    unit: null,
-    precision: 2,
-  },
+  control_title: 'Info block control can have a long title like this',
+  control_type: 'info_block',
+  control_value: 'toto is the new info block control value',
 };
 
-export const Percent = Template.bind({});
-Percent.args = {
+export const InfoBlock = Template.bind({});
+InfoBlock.args = {
   control,
   fileId: 1233,
   formState: [control],

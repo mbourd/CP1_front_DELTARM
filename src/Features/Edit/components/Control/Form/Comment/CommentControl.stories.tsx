@@ -1,16 +1,15 @@
 import React from 'react';
-import { PercentControl } from './PercentControl';
+import { CommentControl } from './CommentControl';
 
 export default {
-  title: 'PercentControl',
-  component: PercentControl,
+  title: 'CommentControl',
+  component: CommentControl,
   decorators: [(story: any) => <div className="p-6">{story()}</div>],
 };
 
 const Template: any = (args: any) => {
-  return <PercentControl {...args} />;
+  return <CommentControl {...args} />;
 };
-
 const control = {
   control_desc1: null,
   control_desc2: null,
@@ -25,19 +24,12 @@ const control = {
   control_previous_value: null,
   control_regex: null,
   control_regex_msg: null,
-  control_title: 'Percent control',
-  control_type: 'percent',
-  control_value: 29.2312343,
-  control_options: {
-    min: 0,
-    max: 100,
-    unit: null,
-    precision: 2,
-  },
+  control_title: 'Comment control',
+  control_type: 'comment',
+  control_value: 'A long comment',
 };
-
-export const Percent = Template.bind({});
-Percent.args = {
+export const Comment = Template.bind({});
+Comment.args = {
   control,
   fileId: 1233,
   formState: [control],

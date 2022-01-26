@@ -2,7 +2,7 @@ import React from 'react';
 import { CircularMetric } from './CircularMetric';
 
 export default {
-  title: 'Circular',
+  title: 'CircularMetric',
   component: CircularMetric,
   decorators: [(story: any) => <div className="p-6">{story()}</div>],
 };
@@ -11,8 +11,8 @@ const Template: any = (args: any) => {
   return <CircularMetric {...args} />;
 };
 
-export const CircularIndicator = Template.bind({});
-CircularIndicator.args = {
+export const Circular = Template.bind({});
+Circular.args = {
   variant: 'determinate',
   lib: 'Taux de Complétude',
   value: 74,
