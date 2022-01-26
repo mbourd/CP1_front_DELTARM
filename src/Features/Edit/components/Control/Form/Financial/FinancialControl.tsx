@@ -129,6 +129,7 @@ export const FinancialControl: React.FC<IProps> = ({
       control.control_regex_msg,
       currentValue,
       setCurrentValue,
+      control.control_options,
     ],
   );
 

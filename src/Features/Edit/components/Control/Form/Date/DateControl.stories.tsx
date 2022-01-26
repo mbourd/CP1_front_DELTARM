@@ -29,9 +29,9 @@ const control = {
   control_type: 'date',
   control_value: '2022-12-31',
   control_options: {
-    min: 0,
-    max: 100,
-    unit: 'metres',
+    min: '2021-12-31',
+    max: '2023-06-06',
+    unit: null,
   },
 };
 

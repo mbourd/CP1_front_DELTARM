@@ -8,6 +8,7 @@ import { ControlLabel } from '../ControlLabel';
 import { ControlFooter } from '../ControlFooter';
 import { checkIfSameValues } from '../../../../../../Packages/Helpers/src/checkIfSameValues';
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
+import { between } from '../../../../../../Packages/Helpers/src/between';
 
 interface IProps {
   control: IApiControl;
@@ -45,6 +46,31 @@ export const DateControl: React.FC<IProps> = ({
         setErrorMessage(control.control_regex_msg);
 
         return;
+      }
+
+      if (control.control_options) {
+        if (
+          between(
+            value,
+            control.control_options.min,
+            control.control_options.max,
+          )
+        ) {
+          setErrorMessage(null);
+        }
+        if (
+          !between(
+            value,
+            control.control_options.min,
+            control.control_options.max,
+          )
+        ) {
+          setErrorMessage(
+            'La valeur saisie ne respecte pas les contraintes définies',
+          );
+
+          return;
+        }
       }
 
       if (!checkIfSameValues(value, currentValue)) {
@@ -85,6 +111,7 @@ export const DateControl: React.FC<IProps> = ({
       currentValue,
       setCurrentValue,
       control.control_mandatory,
+      control.control_options,
     ],
   );
 
