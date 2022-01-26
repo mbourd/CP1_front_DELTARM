@@ -9,7 +9,7 @@ import { ControlLabel } from '../ControlLabel';
 import { ControlFooter } from '../ControlFooter';
 import { checkIfSameValues } from '../../../../../../Packages/Helpers/src/checkIfSameValues';
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
-import { between } from '../../../../../../Packages/Helpers/src/between';
+import { minMax } from '../../../../../../Packages/Helpers/src/minMax';
 
 interface IProps {
   control: IApiControl;
@@ -68,7 +68,7 @@ export const FinancialControl: React.FC<IProps> = ({
 
       if (control.control_options) {
         if (
-          between(
+          minMax(
             value,
             control.control_options.min,
             control.control_options.max,
@@ -77,7 +77,7 @@ export const FinancialControl: React.FC<IProps> = ({
           setErrorMessage(null);
         }
         if (
-          !between(
+          !minMax(
             value,
             control.control_options.min,
             control.control_options.max,
