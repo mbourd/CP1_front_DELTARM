@@ -87,23 +87,33 @@ export const SliderControl: React.FC<IProps> = ({
         <Slider
           key={`slider-${control.control_id}`}
           value={currentValue ? parseInt(currentValue) : 0}
-          step={control.control_options?.step}
+          step={
+            control.control_options?.step ? control.control_options?.step : 1
+          }
           marks={
             control.control_options?.boundaries
               ? control.control_options?.boundaries
               : control.control_options?.marks
+              ? control.control_options.marks
+              : false
           }
           min={control.control_options?.min ? control.control_options?.min : 0}
           max={
             control.control_options?.max ? control.control_options?.max : 100
           }
-          disabled={control.control_options?.disabled}
+          disabled={
+            control.control_options?.disabled
+              ? control.control_options?.disabled
+              : false
+          }
           valueLabelDisplay="on"
           onChangeCommitted={saveValue}
           onChange={(_, newValue) => handleChange(newValue.toString())}
           disableSwap
           style={{
-            color: control.control_options?.color,
+            color: control.control_options?.color
+              ? control.control_options?.color
+              : 'default',
           }}
           sx={{
             '.MuiSlider-valueLabel.MuiSlider-valueLabelOpen': {
