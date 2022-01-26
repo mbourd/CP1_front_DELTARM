@@ -1,14 +1,14 @@
 import React from 'react';
-import { PercentControl } from './PercentControl';
+import { DateControl } from './DateControl';
 
 export default {
-  title: 'PercentControl',
-  component: PercentControl,
+  title: 'DateControl',
+  component: DateControl,
   decorators: [(story: any) => <div className="p-6">{story()}</div>],
 };
 
 const Template: any = (args: any) => {
-  return <PercentControl {...args} />;
+  return <DateControl {...args} />;
 };
 
 const control = {
@@ -17,7 +17,7 @@ const control = {
   control_editable: true,
   editable: true,
   control_family: 'standard',
-  control_id: '1931',
+  control_id: '1987',
   isConditional: false,
   isCalculated: false,
   manageCompliance: false,
@@ -25,19 +25,18 @@ const control = {
   control_previous_value: null,
   control_regex: null,
   control_regex_msg: null,
-  control_title: 'Percent control',
-  control_type: 'percent',
-  control_value: 29.2312343,
+  control_title: 'Date control',
+  control_type: 'date',
+  control_value: '2022-12-31',
   control_options: {
     min: 0,
     max: 100,
-    unit: null,
-    precision: 2,
+    unit: 'metres',
   },
 };
 
-export const Percent = Template.bind({});
-Percent.args = {
+export const Date = Template.bind({});
+Date.args = {
   control,
   fileId: 1233,
   formState: [control],
