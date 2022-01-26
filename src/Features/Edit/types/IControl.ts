@@ -91,8 +91,8 @@ export interface IFormula {
 }
 
 export interface ISliderOptions {
-  min: number;
-  max: number;
+  min: number | null;
+  max: number | null;
   step: number;
   marks: boolean;
   color?: string;
@@ -106,33 +106,33 @@ export interface ISliderOptions {
 }
 
 export interface IDateTimestampOptions {
-  min: number;
-  max: number;
+  min: number | null;
+  max: number | null;
 }
 
 export interface IPercentOptions {
-  min: number;
-  max: number;
+  min: number | null;
+  max: number | null;
   precision: number | null;
 }
 
 export interface IDecimalOptions {
-  min: number;
-  max: number;
+  min: number | null;
+  max: number | null;
   precision: number | null;
   unit: string | null;
 }
 
 export interface IFinancialOptions {
-  min: number;
-  max: number;
+  min: number | null;
+  max: number | null;
   precision: number | null;
   unit: string | null;
 }
 
 export interface IIntegerOptions {
-  min: number;
-  max: number;
+  min: number | null;
+  max: number | null;
   unit: string | null;
 }
 

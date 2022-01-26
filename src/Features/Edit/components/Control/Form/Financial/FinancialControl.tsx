@@ -41,23 +41,6 @@ export const FinancialControl: React.FC<IProps> = ({
 
   const saveValue = useCallback(
     (value: string) => {
-      if (control.control_mandatory) {
-        try {
-          const v = parseInt(value, 10);
-
-          // specific rules from BPI : API should send args for min/max values
-          if (v < 1000) {
-            setErrorMessage('Le nombre doit être supérieur ou égal à 1000');
-
-            return;
-          }
-        } catch {
-          setErrorMessage('Valeur obligatoire');
-
-          return;
-        }
-      }
-
       if (
         control.control_regex &&
         !value.match(control.control_regex) &&

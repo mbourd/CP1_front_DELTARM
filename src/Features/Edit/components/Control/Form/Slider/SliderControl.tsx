@@ -86,17 +86,17 @@ export const SliderControl: React.FC<IProps> = ({
         <ControlLabel control={control} />
         <Slider
           key={`slider-${control.control_id}`}
-          value={
-            currentValue ? parseInt(currentValue) : control.control_options?.min
-          }
+          value={currentValue ? parseInt(currentValue) : 0}
           step={control.control_options?.step}
           marks={
             control.control_options?.boundaries
               ? control.control_options?.boundaries
               : control.control_options?.marks
           }
-          min={control.control_options?.min}
-          max={control.control_options?.max}
+          min={control.control_options?.min ? control.control_options?.min : 0}
+          max={
+            control.control_options?.max ? control.control_options?.max : 100
+          }
           disabled={control.control_options?.disabled}
           valueLabelDisplay="on"
           onChangeCommitted={saveValue}
