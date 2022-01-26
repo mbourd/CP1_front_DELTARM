@@ -143,7 +143,7 @@ export interface ITranslationFormula {
   lib: string;
 }
 
-interface IControlOptions
+export interface IControlOptions
   extends IFinancialOptions,
     IIntegerOptions,
     IDateTimestampOptions,
