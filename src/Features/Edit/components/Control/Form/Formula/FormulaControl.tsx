@@ -100,6 +100,14 @@ export const FormulaControl: React.FC<IProps> = ({
     }
   }, [error]);
 
+  const controlValue = currentValue
+    ? parseFloat(currentValue)?.toFixed(
+        control.control_options?.precision
+          ? control.control_options?.precision
+          : 2,
+      )
+    : currentValue;
+
   return (
     <Grid item xs={6}>
       <FormulaControlStyled>
@@ -114,7 +122,7 @@ export const FormulaControl: React.FC<IProps> = ({
           }
           disabled={!control.editable}
           color={control.editable ? 'text' : 'disabled'}
-          value={currentValue ? currentValue : ''}
+          value={controlValue ? controlValue : ''}
           onBlur={(e) => saveValue(e.currentTarget.value)}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
