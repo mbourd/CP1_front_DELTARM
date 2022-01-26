@@ -111,6 +111,7 @@ export const PercentControl: React.FC<IProps> = ({
       currentValue,
       setCurrentValue,
       control.control_mandatory,
+      control.control_options,
     ],
   );
 
