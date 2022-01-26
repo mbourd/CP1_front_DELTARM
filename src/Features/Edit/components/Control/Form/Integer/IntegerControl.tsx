@@ -48,7 +48,7 @@ export const IntegerControl: React.FC<IProps> = ({
         return;
       }
 
-      if (control.control_options) {
+      if (control.control_options && value.trim()) {
         if (
           minMax(
             value,
