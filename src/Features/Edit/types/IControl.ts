@@ -93,10 +93,10 @@ export interface IFormula {
 export interface ISliderOptions {
   min: number | null;
   max: number | null;
-  step: number;
-  marks: boolean;
-  color?: string;
-  disabled?: boolean;
+  step: number | null;
+  marks: boolean | null;
+  color?: string | null;
+  disabled?: boolean | null;
   boundaries:
     | {
         value: number;
