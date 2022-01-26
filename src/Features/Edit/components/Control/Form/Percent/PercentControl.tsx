@@ -9,6 +9,7 @@ import { ControlFooter } from '../ControlFooter';
 import { checkIfSameValues } from '../../../../../../Packages/Helpers/src/checkIfSameValues';
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
 import { minMax } from '../../../../../../Packages/Helpers/src/minMax';
+import useFocus from '../../../../../../Packages/Helpers/src/useFocus';
 
 interface IProps {
   control: IApiControl;
@@ -26,6 +27,7 @@ export const PercentControl: React.FC<IProps> = ({
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);
+  const [inputRef, setInputFocus] = useFocus();
   const { currentRoute } = useRouter();
 
   useEffect(() => {
@@ -65,6 +67,7 @@ export const PercentControl: React.FC<IProps> = ({
             control.control_options.max,
           )
         ) {
+          setInputFocus();
           setErrorMessage(
             'La valeur saisie ne respecte pas les contraintes définies',
           );
@@ -112,6 +115,7 @@ export const PercentControl: React.FC<IProps> = ({
       setCurrentValue,
       control.control_mandatory,
       control.control_options,
+      setInputFocus,
     ],
   );
 
@@ -144,6 +148,7 @@ export const PercentControl: React.FC<IProps> = ({
       <PercentControlStyled>
         <ControlLabel control={control} />
         <InputBase
+          inputRef={inputRef}
           placeholder={
             control.editable
               ? control.control_title

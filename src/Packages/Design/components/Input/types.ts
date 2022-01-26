@@ -99,4 +99,9 @@ export interface IInputBase {
    * Additional classes.
    */
   unit?: string | null;
+
+  /**
+   * Input ref.
+   */
+  inputRef?: any;
 }

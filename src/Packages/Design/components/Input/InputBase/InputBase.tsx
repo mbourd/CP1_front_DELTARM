@@ -29,6 +29,7 @@ export const InputBase: React.FC<IInputBase> = ({
   multiline = false,
   multilineRows = 2,
   unit,
+  inputRef,
 }): React.ReactElement => {
   const theme = useTheme();
   const c = theme.color[color];
@@ -52,6 +53,7 @@ export const InputBase: React.FC<IInputBase> = ({
     >
       {icon}
       <MUIInputBase
+        inputRef={inputRef}
         classes={MUIInputBaseClasse}
         name={name}
         autoFocus={autoFocus}
