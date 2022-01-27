@@ -31,10 +31,13 @@ export const UploadControl: React.FC<IProps> = ({
   const file = previousUploadedFile?.split(';');
 
   const uploadFile = useCallback(() => {
-    if (control.control_mandatory && !uploadFile) {
+    if (control.mandatory && !uploadFile) {
       setErrorMessage('Valeur obligatoire');
 
       return;
+    }
+    if (!control.mandatory) {
+      setErrorMessage(null);
     }
     if (currentUploadedFile) {
       const formData = new FormData();
@@ -65,7 +68,7 @@ export const UploadControl: React.FC<IProps> = ({
     }
   }, [
     fileId,
-    control.control_mandatory,
+    control.mandatory,
     control.control_family,
     currentUploadedFile,
     jwt,

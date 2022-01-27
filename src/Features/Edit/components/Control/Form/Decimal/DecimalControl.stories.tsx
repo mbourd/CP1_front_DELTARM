@@ -22,6 +22,7 @@ const control = {
   isCalculated: false,
   manageCompliance: false,
   control_mandatory: true,
+  mandatory: true,
   control_previous_value: null,
   control_regex: null,
   control_regex_msg: null,

@@ -15,6 +15,7 @@ export default {
         type: 'text',
         id: 'id',
         placeholder: "Merci d'indiquer ....",
+        mandatory: true,
       },
       value: null,
     },

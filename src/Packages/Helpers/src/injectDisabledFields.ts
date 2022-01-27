@@ -27,12 +27,18 @@ export const injectDisabledFields = (
           // eslint-disable-next-line no-eval
           if (eval(condition)) {
             field.editable = true;
+            if (field.control_mandatory) {
+              field.mandatory = true;
+            }
           }
           // eslint-disable-next-line no-eval
           if (!eval(condition)) {
             field.editable = false;
+            if (field.control_mandatory) {
+              field.mandatory = false;
+            }
           }
-          // 2 props : editable is for switch state and control_editable to know if the behavior is authorized (iow : is it switchable ?)
+          // 2 props : editable is use in component and control_editable is the initial api state
           if (!field.control_editable) {
             field.editable = false;
           }

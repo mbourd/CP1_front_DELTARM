@@ -36,7 +36,7 @@ export const SliderControl: React.FC<IProps> = ({
   }, []);
 
   const saveValue = useCallback(() => {
-    if (!currentValue && control.control_mandatory) {
+    if (!currentValue && control.mandatory) {
       setErrorMessage('Valeur obligatoire');
 
       return;
@@ -61,18 +61,17 @@ export const SliderControl: React.FC<IProps> = ({
     currentRoute,
     control.control_family,
     currentValue,
-    control.control_mandatory,
+    control.mandatory,
   ]);
 
   useEffect(() => {
-    if (
-      control.control_mandatory &&
-      control.control_editable &&
-      !currentValue
-    ) {
+    if (control.mandatory && control.editable && !currentValue) {
       setErrorMessage('Valeur obligatoire');
     }
-  }, [control.control_mandatory, control.control_editable, currentValue]);
+    if (!control.mandatory) {
+      setErrorMessage(null);
+    }
+  }, [control.mandatory, control.editable, currentValue]);
 
   useEffect(() => {
     if (error) {

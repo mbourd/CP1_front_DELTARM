@@ -79,7 +79,7 @@ export const FinancialControl: React.FC<IProps> = ({
 
       if (!checkIfSameValues(value, currentValue)) {
         setErrorMessage(null);
-        if (control.control_mandatory && !value.trim()) {
+        if (control.mandatory && !value.trim()) {
           setErrorMessage('Valeur obligatoire');
         }
 
@@ -88,7 +88,7 @@ export const FinancialControl: React.FC<IProps> = ({
 
       setErrorMessage(null);
 
-      if (control.control_mandatory && !value.trim()) {
+      if (control.mandatory && !value.trim()) {
         setErrorMessage('Valeur obligatoire');
       }
 
@@ -108,7 +108,7 @@ export const FinancialControl: React.FC<IProps> = ({
       send,
       fileId,
       control.control_id,
-      control.control_mandatory,
+      control.mandatory,
       control.control_family,
       currentRoute,
       control.control_regex,
@@ -121,14 +121,13 @@ export const FinancialControl: React.FC<IProps> = ({
   );
 
   useEffect(() => {
-    if (
-      control.control_mandatory &&
-      control.control_editable &&
-      !currentValue
-    ) {
+    if (control.mandatory && control.editable && !currentValue) {
       setErrorMessage('Valeur obligatoire');
     }
-  }, [control.control_mandatory, control.control_editable, currentValue]);
+    if (!control.mandatory) {
+      setErrorMessage(null);
+    }
+  }, [control.mandatory, control.editable, currentValue]);
 
   useEffect(() => {
     if (error) {
