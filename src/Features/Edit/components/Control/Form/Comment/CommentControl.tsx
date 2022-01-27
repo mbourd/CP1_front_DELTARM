@@ -88,13 +88,13 @@ export const CommentControl: React.FC<IProps> = ({
   );
 
   useEffect(() => {
-    if (control.mandatory && control.control_editable && !currentValue) {
+    if (control.mandatory && control.editable && !currentValue) {
       setErrorMessage('Valeur obligatoire');
     }
     if (!control.mandatory) {
       setErrorMessage(null);
     }
-  }, [control.mandatory, control.control_editable, currentValue]);
+  }, [control.mandatory, control.editable, currentValue]);
 
   useEffect(() => {
     if (error) {
