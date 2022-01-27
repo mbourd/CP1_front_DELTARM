@@ -22,6 +22,7 @@ export const editValidationHandlerCallback = (response: any) => {
     const controls: IApiControl[] = [];
     chapter.controls.map((control) => {
       control.editable = control.control_editable;
+      control.mandatory = control.control_mandatory;
       if (control.control_answer_choices) {
         const answerChoices: Record<string, ISelectData> = {};
         control.control_answer_choices.map((answer) => {

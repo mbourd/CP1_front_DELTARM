@@ -78,7 +78,7 @@ export const DecimalControl: React.FC<IProps> = ({
 
       if (!checkIfSameValues(value, currentValue)) {
         setErrorMessage(null);
-        if (control.control_mandatory && !value.trim()) {
+        if (control.mandatory && !value.trim()) {
           setErrorMessage('Valeur obligatoire');
         }
 
@@ -87,7 +87,7 @@ export const DecimalControl: React.FC<IProps> = ({
 
       setErrorMessage(null);
 
-      if (control.control_mandatory && !value.trim()) {
+      if (control.mandatory && !value.trim()) {
         setErrorMessage('Valeur obligatoire');
       }
 
@@ -113,21 +113,20 @@ export const DecimalControl: React.FC<IProps> = ({
       control.control_regex_msg,
       currentValue,
       setCurrentValue,
-      control.control_mandatory,
+      control.mandatory,
       control.control_options,
       setInputFocus,
     ],
   );
 
   useEffect(() => {
-    if (
-      control.control_mandatory &&
-      control.control_editable &&
-      !currentValue
-    ) {
+    if (control.mandatory && control.control_editable && !currentValue) {
       setErrorMessage('Valeur obligatoire');
     }
-  }, [control.control_mandatory, control.control_editable, currentValue]);
+    if (!control.mandatory) {
+      setErrorMessage(null);
+    }
+  }, [control.mandatory, control.control_editable, currentValue]);
 
   useEffect(() => {
     if (error) {

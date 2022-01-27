@@ -89,16 +89,15 @@ export const SelectListControl: React.FC<IProps> = ({
   );
 
   useEffect(() => {
-    if (
-      control.control_mandatory &&
-      control.control_editable &&
-      !currentValue
-    ) {
+    if (control.mandatory && control.control_editable && !currentValue) {
       setErrorMessage('Valeur obligatoire');
+    }
+    if (!control.mandatory) {
+      setErrorMessage(null);
     }
   }, [
     control.control_id,
-    control.control_mandatory,
+    control.mandatory,
     currentValue,
     control.control_editable,
   ]);

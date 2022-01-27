@@ -159,6 +159,7 @@ export interface IApiControl {
   control_conditional: boolean;
   control_id: string;
   control_mandatory: boolean;
+  mandatory: boolean;
   control_previous_value: string | null;
   control_title: string;
   control_type: ControlTypeType;

@@ -17,6 +17,7 @@ const control = {
   editable: true,
   control_id: '1928',
   control_mandatory: true,
+  mandatory: true,
   control_previous_value: null,
   control_title: 'Select list',
   control_type: 'checkbox',
