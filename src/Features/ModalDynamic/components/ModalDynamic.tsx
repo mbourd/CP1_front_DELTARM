@@ -142,27 +142,32 @@ export const ModalDynamic: FC<IDataModalProps> = ({
                     control={control}
                     name={element.attribute.id}
                     render={() => (
-                      <InputBase
-                        border={element.attribute.type === 'hidden' ? 0 : 1}
-                        autofocus
-                        key={index}
-                        type={element.attribute?.type}
-                        placeholder={element.attribute?.placeholder}
-                        id={element.attribute?.id}
-                        name={element.attribute?.id}
-                        multiline={element.attribute?.multiline}
-                        multilineRows={
-                          element.attribute?.multilineRows
-                            ? element.attribute.multilineRows
-                            : undefined
-                        }
-                        required={element.attribute?.mandatory}
-                        defaultValue={element?.value || undefined}
-                        onChange={(e) => handleChangeValue(e)}
-                        {...register(`${element.attribute?.id}`, {
-                          required: element.attribute?.mandatory,
-                        })}
-                      />
+                      <>
+                        <InputBase
+                          border={element.attribute.type === 'hidden' ? 0 : 1}
+                          autofocus
+                          key={index}
+                          type={element.attribute?.type}
+                          placeholder={element.attribute?.placeholder}
+                          id={element.attribute?.id}
+                          name={element.attribute?.id}
+                          multiline={element.attribute?.multiline}
+                          multilineRows={
+                            element.attribute?.multilineRows
+                              ? element.attribute.multilineRows
+                              : undefined
+                          }
+                          required={element.attribute?.mandatory}
+                          defaultValue={element?.value || undefined}
+                          onChange={(e) => handleChangeValue(e)}
+                          {...register(`${element.attribute?.id}`, {
+                            required: element.attribute?.mandatory,
+                          })}
+                        />
+                        {element.attribute.mandatory ? (
+                          <FormError>{'Valeur obligatoire'}</FormError>
+                        ) : null}
+                      </>
                     )}
                   />
                 </Grid>
