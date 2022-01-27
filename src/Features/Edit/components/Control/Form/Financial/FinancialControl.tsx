@@ -9,6 +9,8 @@ import { ControlLabel } from '../ControlLabel';
 import { ControlFooter } from '../ControlFooter';
 import { checkIfSameValues } from '../../../../../../Packages/Helpers/src/checkIfSameValues';
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
+import { minMax } from '../../../../../../Packages/Helpers/src/minMax';
+import useFocus from '../../../../../../Packages/Helpers/src/useFocus';
 
 interface IProps {
   control: IApiControl;
@@ -26,6 +28,7 @@ export const FinancialControl: React.FC<IProps> = ({
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);
+  const [inputRef, setInputFocus] = useFocus();
   const { currentRoute } = useRouter();
 
   useEffect(() => {
@@ -38,23 +41,6 @@ export const FinancialControl: React.FC<IProps> = ({
 
   const saveValue = useCallback(
     (value: string) => {
-      if (control.control_mandatory) {
-        try {
-          const v = parseInt(value, 10);
-
-          // specific rules from BPI : API should send args for min/max values
-          if (v < 1000) {
-            setErrorMessage('Le nombre doit être supérieur ou égal à 1000');
-
-            return;
-          }
-        } catch {
-          setErrorMessage('Valeur obligatoire');
-
-          return;
-        }
-      }
-
       if (
         control.control_regex &&
         !value.match(control.control_regex) &&
@@ -65,9 +51,35 @@ export const FinancialControl: React.FC<IProps> = ({
         return;
       }
 
+      if (control.control_options && value.trim()) {
+        if (
+          minMax(
+            value,
+            control.control_options.min,
+            control.control_options.max,
+          )
+        ) {
+          setErrorMessage(null);
+        }
+        if (
+          !minMax(
+            value,
+            control.control_options.min,
+            control.control_options.max,
+          )
+        ) {
+          setInputFocus();
+          setErrorMessage(
+            'La valeur saisie ne respecte pas les contraintes définies',
+          );
+
+          return;
+        }
+      }
+
       if (!checkIfSameValues(value, currentValue)) {
         setErrorMessage(null);
-        if (control.control_mandatory && !value.trim()) {
+        if (control.mandatory && !value.trim()) {
           setErrorMessage('Valeur obligatoire');
         }
 
@@ -76,7 +88,7 @@ export const FinancialControl: React.FC<IProps> = ({
 
       setErrorMessage(null);
 
-      if (control.control_mandatory && !value.trim()) {
+      if (control.mandatory && !value.trim()) {
         setErrorMessage('Valeur obligatoire');
       }
 
@@ -96,25 +108,26 @@ export const FinancialControl: React.FC<IProps> = ({
       send,
       fileId,
       control.control_id,
-      control.control_mandatory,
+      control.mandatory,
       control.control_family,
       currentRoute,
       control.control_regex,
       control.control_regex_msg,
       currentValue,
       setCurrentValue,
+      control.control_options,
+      setInputFocus,
     ],
   );
 
   useEffect(() => {
-    if (
-      control.control_mandatory &&
-      control.control_editable &&
-      !currentValue
-    ) {
+    if (control.mandatory && control.editable && !currentValue) {
       setErrorMessage('Valeur obligatoire');
     }
-  }, [control.control_mandatory, control.control_editable, currentValue]);
+    if (!control.mandatory) {
+      setErrorMessage(null);
+    }
+  }, [control.mandatory, control.editable, currentValue]);
 
   useEffect(() => {
     if (error) {
@@ -123,7 +136,11 @@ export const FinancialControl: React.FC<IProps> = ({
   }, [error]);
 
   const controlValue = currentValue
-    ? parseInt(currentValue)?.toLocaleString()
+    ? parseFloat(currentValue)?.toFixed(
+        control.control_options?.precision
+          ? control.control_options?.precision
+          : 2,
+      )
     : currentValue;
 
   return (
@@ -131,18 +148,20 @@ export const FinancialControl: React.FC<IProps> = ({
       <FinancialControlStyled>
         <ControlLabel control={control} />
         <InputBase
+          inputRef={inputRef}
           placeholder={
-            control.control_editable
+            control.editable
               ? control.control_title
               : currentValue
               ? currentValue
               : ''
           }
-          disabled={!control.control_editable}
-          color={control.control_editable ? 'text' : 'disabled'}
+          disabled={!control.editable}
+          color={control.editable ? 'text' : 'disabled'}
           defaultValue={controlValue ? controlValue : ''}
           icon={<EuroIcon />}
           onBlur={(e) => saveValue(e.currentTarget.value)}
+          unit={control.control_options?.unit}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ControlFooter control={control} />

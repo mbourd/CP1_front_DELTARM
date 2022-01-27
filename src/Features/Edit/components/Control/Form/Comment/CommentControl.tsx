@@ -48,7 +48,7 @@ export const CommentControl: React.FC<IProps> = ({
 
       if (!checkIfSameValues(value, currentValue)) {
         setErrorMessage(null);
-        if (control.control_mandatory && !value.trim()) {
+        if (control.mandatory && !value.trim()) {
           setErrorMessage('Valeur obligatoire');
         }
 
@@ -57,7 +57,7 @@ export const CommentControl: React.FC<IProps> = ({
 
       setErrorMessage(null);
 
-      if (control.control_mandatory && !value.trim()) {
+      if (control.mandatory && !value.trim()) {
         setErrorMessage('Valeur obligatoire');
       }
 
@@ -83,19 +83,18 @@ export const CommentControl: React.FC<IProps> = ({
       control.control_regex_msg,
       currentValue,
       setCurrentValue,
-      control.control_mandatory,
+      control.mandatory,
     ],
   );
 
   useEffect(() => {
-    if (
-      control.control_mandatory &&
-      control.control_editable &&
-      !currentValue
-    ) {
+    if (control.mandatory && control.editable && !currentValue) {
       setErrorMessage('Valeur obligatoire');
     }
-  }, [control.control_mandatory, control.control_editable, currentValue]);
+    if (!control.mandatory) {
+      setErrorMessage(null);
+    }
+  }, [control.mandatory, control.editable, currentValue]);
 
   useEffect(() => {
     if (error) {
@@ -111,14 +110,14 @@ export const CommentControl: React.FC<IProps> = ({
           multiline
           multilineRows={10}
           placeholder={
-            control.control_editable
+            control.editable
               ? control.control_title
               : control.control_value
               ? control.control_value
               : ''
           }
-          disabled={!control.control_editable}
-          color={control.control_editable ? 'text' : 'disabled'}
+          disabled={!control.editable}
+          color={control.editable ? 'text' : 'disabled'}
           defaultValue={currentValue ? currentValue : ''}
           onBlur={(e) => saveValue(e.currentTarget.value)}
         />

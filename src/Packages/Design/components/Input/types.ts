@@ -94,4 +94,14 @@ export interface IInputBase {
    * Additional classes.
    */
   className?: string;
+
+  /**
+   * Additional classes.
+   */
+  unit?: string | null;
+
+  /**
+   * Input ref.
+   */
+  inputRef?: any;
 }

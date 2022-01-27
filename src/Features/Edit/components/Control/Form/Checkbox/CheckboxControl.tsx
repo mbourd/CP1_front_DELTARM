@@ -88,19 +88,13 @@ export const CheckboxControl: React.FC<IProps> = ({
   );
 
   useEffect(() => {
-    if (
-      control.control_mandatory &&
-      control.control_editable &&
-      !currentValue
-    ) {
+    if (control.mandatory && control.editable && !currentValue) {
       setErrorMessage('Valeur obligatoire');
     }
-  }, [
-    control.control_id,
-    control.control_mandatory,
-    currentValue,
-    control.control_editable,
-  ]);
+    if (!control.mandatory) {
+      setErrorMessage(null);
+    }
+  }, [control.control_id, control.mandatory, currentValue, control.editable]);
 
   useEffect(() => {
     if (error) {
@@ -129,7 +123,7 @@ export const CheckboxControl: React.FC<IProps> = ({
           }}
           choiceIsKo={choiceIsKo}
           setChoiceIsKo={setChoiceIsKo}
-          disabled={!control.control_editable}
+          disabled={!control.editable}
           error={!!error}
         />
         {errorMessage ? (

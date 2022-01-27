@@ -8,6 +8,8 @@ import { ControlLabel } from '../ControlLabel';
 import { ControlFooter } from '../ControlFooter';
 import { checkIfSameValues } from '../../../../../../Packages/Helpers/src/checkIfSameValues';
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
+import { minMax } from '../../../../../../Packages/Helpers/src/minMax';
+import useFocus from '../../../../../../Packages/Helpers/src/useFocus';
 
 interface IProps {
   control: IApiControl;
@@ -25,6 +27,7 @@ export const PercentControl: React.FC<IProps> = ({
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);
+  const [inputRef, setInputFocus] = useFocus();
   const { currentRoute } = useRouter();
 
   useEffect(() => {
@@ -47,9 +50,35 @@ export const PercentControl: React.FC<IProps> = ({
         return;
       }
 
+      if (control.control_options && value.trim()) {
+        if (
+          minMax(
+            value,
+            control.control_options.min,
+            control.control_options.max,
+          )
+        ) {
+          setErrorMessage(null);
+        }
+        if (
+          !minMax(
+            value,
+            control.control_options.min,
+            control.control_options.max,
+          )
+        ) {
+          setInputFocus();
+          setErrorMessage(
+            'La valeur saisie ne respecte pas les contraintes définies',
+          );
+
+          return;
+        }
+      }
+
       if (!checkIfSameValues(value, currentValue)) {
         setErrorMessage(null);
-        if (control.control_mandatory && !value.trim()) {
+        if (control.mandatory && !value.trim()) {
           setErrorMessage('Valeur obligatoire');
         }
 
@@ -58,7 +87,7 @@ export const PercentControl: React.FC<IProps> = ({
 
       setErrorMessage(null);
 
-      if (control.control_mandatory && !value.trim()) {
+      if (control.mandatory && !value.trim()) {
         setErrorMessage('Valeur obligatoire');
       }
 
@@ -84,19 +113,20 @@ export const PercentControl: React.FC<IProps> = ({
       control.control_regex_msg,
       currentValue,
       setCurrentValue,
-      control.control_mandatory,
+      control.mandatory,
+      control.control_options,
+      setInputFocus,
     ],
   );
 
   useEffect(() => {
-    if (
-      control.control_mandatory &&
-      control.control_editable &&
-      !currentValue
-    ) {
+    if (control.mandatory && control.editable && !currentValue) {
       setErrorMessage('Valeur obligatoire');
     }
-  }, [control.control_mandatory, control.control_editable, currentValue]);
+    if (!control.mandatory) {
+      setErrorMessage(null);
+    }
+  }, [control.mandatory, control.editable, currentValue]);
 
   useEffect(() => {
     if (error) {
@@ -104,21 +134,30 @@ export const PercentControl: React.FC<IProps> = ({
     }
   }, [error]);
 
+  const controlValue = currentValue
+    ? parseFloat(currentValue)?.toFixed(
+        control.control_options?.precision
+          ? control.control_options?.precision
+          : 2,
+      )
+    : currentValue;
+
   return (
     <Grid item xs={6}>
       <PercentControlStyled>
         <ControlLabel control={control} />
         <InputBase
+          inputRef={inputRef}
           placeholder={
-            control.control_editable
+            control.editable
               ? control.control_title
               : currentValue
               ? currentValue
               : ''
           }
-          disabled={!control.control_editable}
-          color={control.control_editable ? 'text' : 'disabled'}
-          defaultValue={currentValue ? currentValue : ''}
+          disabled={!control.editable}
+          color={control.editable ? 'text' : 'disabled'}
+          defaultValue={controlValue ? controlValue : ''}
           onBlur={(e) => saveValue(e.currentTarget.value)}
           icon={
             <i style={{ paddingLeft: '5px' }} className="material-icons">

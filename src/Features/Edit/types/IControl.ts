@@ -15,12 +15,11 @@ export type ControlTypeType =
   | 'radio'
   | 'checkbox'
   | 'multiple_list'
-  | 'radio'
-  | 'checkbox'
   | 'email'
   | 'auth_num'
   | 'info_block'
-  | 'formula';
+  | 'formula'
+  | 'slider';
 
 export type ControlFontSize = 'standard' | 'bold';
 
@@ -44,7 +43,6 @@ export interface IApiCompliance {
 export interface IApiConditional {
   conditional_by_field_id: number;
   conditional_formula: string;
-  conditional_init_state: boolean;
 }
 
 export interface IApiComplianceData {
@@ -92,6 +90,52 @@ export interface IFormula {
   formula: string;
 }
 
+export interface ISliderOptions {
+  min: number | null;
+  max: number | null;
+  step: number | null;
+  marks: boolean | null;
+  color?: string | null;
+  disabled?: boolean | null;
+  boundaries:
+    | {
+        value: number;
+        label: string;
+      }[]
+    | null;
+}
+
+export interface IDateTimestampOptions {
+  min: number | null;
+  max: number | null;
+}
+
+export interface IPercentOptions {
+  min: number | null;
+  max: number | null;
+  precision: number | null;
+}
+
+export interface IDecimalOptions {
+  min: number | null;
+  max: number | null;
+  precision: number | null;
+  unit: string | null;
+}
+
+export interface IFinancialOptions {
+  min: number | null;
+  max: number | null;
+  precision: number | null;
+  unit: string | null;
+}
+
+export interface IIntegerOptions {
+  min: number | null;
+  max: number | null;
+  unit: string | null;
+}
+
 export interface ITranslationFormula {
   min: number;
   max: number;
@@ -99,13 +143,23 @@ export interface ITranslationFormula {
   lib: string;
 }
 
+export interface IControlOptions
+  extends IFinancialOptions,
+    IIntegerOptions,
+    IDateTimestampOptions,
+    ISliderOptions,
+    IDecimalOptions,
+    IPercentOptions {}
+
 export interface IApiControl {
   control_desc_1: string | null;
   control_desc_2: string | null;
   control_editable: boolean;
+  editable?: boolean;
   control_conditional: boolean;
   control_id: string;
   control_mandatory: boolean;
+  mandatory: boolean;
   control_previous_value: string | null;
   control_title: string;
   control_type: ControlTypeType;
@@ -123,4 +177,5 @@ export interface IApiControl {
   compliance?: IApiCompliance;
   formula?: IFormula;
   useCompliance?: ICompliance;
+  control_options: IControlOptions | null;
 }

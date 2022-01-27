@@ -115,8 +115,7 @@ export const MainNav: React.FC = (): React.ReactElement => {
             <ListItem
               component={Link}
               to={router.generatePath('logout') || '/logout'}
-              onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                e.preventDefault();
+              onClick={() => {
                 logout();
               }}
             >

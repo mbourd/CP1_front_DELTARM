@@ -47,7 +47,7 @@ export const FormulaControl: React.FC<IProps> = ({
 
       if (!checkIfSameValues(value, currentValue)) {
         setErrorMessage(null);
-        if (control.control_mandatory && !value.trim()) {
+        if (control.mandatory && !value.trim()) {
           setErrorMessage('Valeur obligatoire');
         }
 
@@ -56,7 +56,7 @@ export const FormulaControl: React.FC<IProps> = ({
 
       setErrorMessage(null);
 
-      if (control.control_mandatory && !value.trim()) {
+      if (control.mandatory && !value.trim()) {
         setErrorMessage('Valeur obligatoire');
       }
 
@@ -80,19 +80,18 @@ export const FormulaControl: React.FC<IProps> = ({
       control.control_regex_msg,
       currentValue,
       setCurrentValue,
-      control.control_mandatory,
+      control.mandatory,
     ],
   );
 
   useEffect(() => {
-    if (
-      control.control_mandatory &&
-      control.control_editable &&
-      !currentValue
-    ) {
+    if (control.mandatory && control.editable && !currentValue) {
       setErrorMessage('Valeur obligatoire');
     }
-  }, [control.control_mandatory, control.control_editable, currentValue]);
+    if (!control.mandatory) {
+      setErrorMessage(null);
+    }
+  }, [control.mandatory, control.editable, currentValue]);
 
   useEffect(() => {
     if (error) {
@@ -100,21 +99,29 @@ export const FormulaControl: React.FC<IProps> = ({
     }
   }, [error]);
 
+  const controlValue = currentValue
+    ? parseFloat(currentValue)?.toFixed(
+        control.control_options?.precision
+          ? control.control_options?.precision
+          : 2,
+      )
+    : currentValue;
+
   return (
     <Grid item xs={6}>
       <FormulaControlStyled>
         <ControlLabel control={control} />
         <InputBase
           placeholder={
-            control.control_editable
+            control.editable
               ? control.control_title
               : currentValue
               ? currentValue
               : ''
           }
-          disabled={!control.control_editable}
-          color={control.control_editable ? 'text' : 'disabled'}
-          value={currentValue ? currentValue : ''}
+          disabled={!control.editable}
+          color={control.editable ? 'text' : 'disabled'}
+          value={controlValue ? controlValue : ''}
           onBlur={(e) => saveValue(e.currentTarget.value)}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}

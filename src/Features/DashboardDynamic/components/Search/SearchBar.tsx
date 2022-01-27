@@ -49,7 +49,9 @@ export const SearchBar: React.FC<IProps> = ({
       }
     }
     const action = { ...currentOption.action };
-    action['endpoint'] = action.endpoint.replace('value=', `value=${value}`);
+    if (action.endpoint) {
+      action['endpoint'] = action.endpoint.replace('value=', `value=${value}`);
+    }
     actionButton(action);
   }, [currentOption, actionButton]);
 

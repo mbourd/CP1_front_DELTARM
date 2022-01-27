@@ -89,19 +89,13 @@ export const SelectListControl: React.FC<IProps> = ({
   );
 
   useEffect(() => {
-    if (
-      control.control_mandatory &&
-      control.control_editable &&
-      !currentValue
-    ) {
+    if (control.mandatory && control.editable && !currentValue) {
       setErrorMessage('Valeur obligatoire');
     }
-  }, [
-    control.control_id,
-    control.control_mandatory,
-    currentValue,
-    control.control_editable,
-  ]);
+    if (!control.mandatory) {
+      setErrorMessage(null);
+    }
+  }, [control.control_id, control.mandatory, currentValue, control.editable]);
 
   useEffect(() => {
     if (error) {
@@ -120,10 +114,10 @@ export const SelectListControl: React.FC<IProps> = ({
           name={'selectList' + control.control_id}
           data={control.answerChoices || {}}
           selectedValues={selectedValue}
-          labelColor={control.control_editable ? 'text' : 'disabled'}
-          labelBdc={control.control_editable ? 'text' : 'disabled'}
+          labelColor={control.editable ? 'text' : 'disabled'}
+          labelBdc={control.editable ? 'text' : 'disabled'}
           multiple={multiple}
-          disabled={!control.control_editable}
+          disabled={!control.editable}
           onChange={(selectedValues) => {
             const value =
               Object.keys(selectedValues).length >= 2

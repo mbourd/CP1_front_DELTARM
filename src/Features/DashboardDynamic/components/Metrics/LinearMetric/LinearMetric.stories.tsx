@@ -2,7 +2,7 @@ import React from 'react';
 import { LinearMetric } from './LinearMetric';
 
 export default {
-  title: 'Linear',
+  title: 'LinearMetric',
   component: LinearMetric,
   decorators: [(story: any) => <div className="p-6">{story()}</div>],
 };

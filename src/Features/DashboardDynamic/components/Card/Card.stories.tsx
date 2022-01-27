@@ -2,7 +2,7 @@ import React from 'react';
 import { Card } from './Card';
 
 export default {
-  title: 'CardDashboard',
+  title: 'Card',
   component: Card,
   decorators: [(story: any) => <div className="p-6">{story()}</div>],
 };

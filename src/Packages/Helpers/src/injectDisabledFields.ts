@@ -5,14 +5,6 @@ export const injectDisabledFields = (
 ): IApiControl[] => {
   formState.map((field: IApiControl) => {
     if (field.control_conditional) {
-      if (field.conditional?.conditional_init_state) {
-        field.control_editable = true;
-      }
-
-      if (!field.conditional?.conditional_init_state) {
-        field.control_editable = false;
-      }
-
       // Find the listened field
       const fieldToTest = formState.find(
         (fieldToFind) =>
@@ -34,11 +26,21 @@ export const injectDisabledFields = (
         if (condition) {
           // eslint-disable-next-line no-eval
           if (eval(condition)) {
-            field.control_editable = true;
+            field.editable = true;
+            if (field.control_mandatory) {
+              field.mandatory = true;
+            }
           }
           // eslint-disable-next-line no-eval
           if (!eval(condition)) {
-            field.control_editable = false;
+            field.editable = false;
+            if (field.control_mandatory) {
+              field.mandatory = false;
+            }
+          }
+          // 2 props : editable is use in component and control_editable is the initial api state
+          if (!field.control_editable) {
+            field.editable = false;
           }
         }
       }
