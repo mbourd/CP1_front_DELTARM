@@ -46,6 +46,8 @@ export const SliderControl: React.FC<IProps> = ({
       return;
     }
 
+    setErrorMessage(null);
+
     const q: Record<string, string> = {
       file_id: fileId,
       elm_id: control.control_id,
