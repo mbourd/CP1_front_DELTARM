@@ -1,5 +1,5 @@
 import React, { SetStateAction, useContext } from 'react';
-import { IApiControl } from 'Features/Edit/types';
+import { IApiControl, IChapter } from 'Features/Edit/types';
 import {
   TextControl,
   SelectListControl,
@@ -19,8 +19,8 @@ import { SliderControl } from './Form/Slider/SliderControl';
 
 interface IProps {
   control: IApiControl;
-  formState: IApiControl[];
-  setFormState: React.Dispatch<SetStateAction<IApiControl[]>>;
+  formState: IChapter[];
+  setFormState: React.Dispatch<SetStateAction<IChapter[]>>;
 }
 
 export const SwitchControlItem: React.FC<IProps> = ({

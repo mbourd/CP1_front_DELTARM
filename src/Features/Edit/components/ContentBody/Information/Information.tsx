@@ -3,7 +3,6 @@ import { InformationStyled } from './Information.style';
 import { EditValidationContext } from 'Features';
 import { ContentHeader } from '../../ContentHeader/ContentHeader';
 import { FormControls } from '../../Control';
-import { ContentTitle } from '../../ContentTitle/ContentTitle';
 
 export const Information: React.FC = (): React.ReactElement | null => {
   const { data } = useContext(EditValidationContext);
@@ -15,14 +14,7 @@ export const Information: React.FC = (): React.ReactElement | null => {
   return (
     <InformationStyled>
       <ContentHeader />
-      {data.currentSection.chapters.map((chapter, index) => {
-        return (
-          <React.Fragment key={index}>
-            <ContentTitle>{chapter.label}</ContentTitle>
-            <FormControls controls={chapter.controls} />
-          </React.Fragment>
-        );
-      })}
+      <FormControls chapters={data?.currentSection.chapters} />
     </InformationStyled>
   );
 };

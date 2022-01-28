@@ -62,7 +62,7 @@ export const Slider = Template.bind({});
 Slider.args = {
   control,
   fileId: 1230,
-  formState: [control],
+  formState: [{ controls: [control] }],
   setFormState: () => {
     return undefined;
   },

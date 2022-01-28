@@ -33,7 +33,7 @@ export const Upload = Template.bind({});
 Upload.args = {
   control,
   fileId: 1233,
-  formState: [control],
+  formState: [{ controls: [control] }],
   setFormState: () => {
     return undefined;
   },
