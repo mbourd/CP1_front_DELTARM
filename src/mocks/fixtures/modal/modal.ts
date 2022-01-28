@@ -1,4 +1,4 @@
-export default {
+export const data = {
   target: 'modal',
   title: 'le titre',
   subtitle: 'subtitle',
@@ -325,6 +325,48 @@ export default {
           ],
         },
       },
+    },
+  ],
+  btn: [
+    {
+      bg_color: 'red',
+      font_color: 'white',
+      hover_color: '#123456',
+      btn_lib: 'Annuler',
+      action: { method: 'cancel', endpoint: null, params: null },
+    },
+  ],
+};
+
+export const dataPeriodClose = {
+  target: 'modal',
+  subtitle: 'Cloture manuelle de periode de declaration',
+  img: 'https://picsum.photos/200/300',
+  content: [
+    {
+      element: 'p',
+      attribute: null,
+      value:
+        'Vous avez demandé la clôture du contrôle: "Contrôle des contraintes de gestion actions" pour la période "T1 - 2022". ' +
+        'Vous avez demandé la clôture du contrôle: "Contrôle des contraintes de gestion actions" pour la période "T1 - 2022".' +
+        'Vous avez demandé la clôture du contrôle: "Contrôle des contraintes de gestion actions" pour la période "T1 - 2022".',
+    },
+    {
+      element: 'p',
+      attribute: null,
+      value:
+        'Merci de compléter le commentaire ci-dessous pour indiquer la raison de cette clôture :',
+    },
+    {
+      element: 'input',
+      attribute: {
+        multiline: true,
+        multilineRows: 10,
+        mandatory: true,
+        id: 'id',
+        placeholder: "Merci d'indiquer ....",
+      },
+      value: 'totot',
     },
   ],
   btn: [
