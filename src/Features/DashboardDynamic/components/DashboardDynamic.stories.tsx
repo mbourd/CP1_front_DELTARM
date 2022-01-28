@@ -3,7 +3,7 @@ import { DashboardDynamic } from './DashboardDynamic';
 import { mock } from '../../../mocks/server';
 import { rest } from 'msw';
 import DASHBOARD from '../../../mocks/fixtures/dashboard/dashboard';
-import MODAL from '../../../mocks/fixtures/modal/modal';
+import { data as MODAL } from '../../../mocks/fixtures/modal/modal';
 import { RecoilRoot } from 'recoil';
 
 export default {
