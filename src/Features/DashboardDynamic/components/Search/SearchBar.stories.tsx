@@ -2,7 +2,7 @@ import React from 'react';
 import { SearchBar } from './SearchBar';
 import { worker } from '../../../../mocks/server';
 import { rest } from 'msw';
-import MODAL from '../../../../mocks/fixtures/modal/modal';
+import { data as MODAL } from '../../../../mocks/fixtures/modal/modal';
 import { RecoilRoot } from 'recoil';
 
 export default {

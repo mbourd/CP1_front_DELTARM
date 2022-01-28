@@ -50,7 +50,10 @@ export const DecimalControl: React.FC<IProps> = ({
         return;
       }
 
-      if (control.control_options && value.trim()) {
+      if (
+        (control.control_options?.min || control.control_options?.max) &&
+        value.trim()
+      ) {
         if (
           minMax(
             value,

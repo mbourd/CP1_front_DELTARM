@@ -99,13 +99,14 @@ export const FormulaControl: React.FC<IProps> = ({
     }
   }, [error]);
 
-  const controlValue = currentValue
-    ? parseFloat(currentValue)?.toFixed(
-        control.control_options?.precision
-          ? control.control_options?.precision
-          : 2,
-      )
-    : currentValue;
+  const controlValue =
+    currentValue && !isNaN(Number(currentValue))
+      ? parseFloat(currentValue)?.toFixed(
+          control.control_options?.precision
+            ? control.control_options?.precision
+            : 2,
+        )
+      : currentValue;
 
   return (
     <Grid item xs={6}>
