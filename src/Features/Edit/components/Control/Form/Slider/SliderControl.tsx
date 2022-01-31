@@ -1,7 +1,7 @@
 import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
 import { SliderControlStyled } from './SliderControl.style';
 import { Grid } from '@material-ui/core';
-import { IApiControl } from 'Features/Edit/types';
+import { IApiControl, IChapter } from 'Features/Edit/types';
 import { FormError } from 'Shared/components';
 import { useApi, useRouter } from 'Services';
 import { ControlLabel } from '../ControlLabel';
@@ -12,8 +12,8 @@ import { Slider } from '@mui/material';
 interface IProps {
   control: IApiControl;
   fileId: string;
-  formState: IApiControl[];
-  setFormState: React.Dispatch<SetStateAction<IApiControl[]>>;
+  formState: IChapter[];
+  setFormState: React.Dispatch<SetStateAction<IChapter[]>>;
 }
 
 export const SliderControl: React.FC<IProps> = ({

@@ -1,6 +1,6 @@
 import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
-import { IApiControl } from 'Features/Edit/types';
+import { IApiControl, IChapter } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
 import { FinancialControlStyled } from './FinancialControl.style';
 import { EuroIcon } from 'Styles';
@@ -15,8 +15,8 @@ import useFocus from '../../../../../../Packages/Helpers/src/useFocus';
 interface IProps {
   control: IApiControl;
   fileId: string;
-  formState: IApiControl[];
-  setFormState: React.Dispatch<SetStateAction<IApiControl[]>>;
+  formState: IChapter[];
+  setFormState: React.Dispatch<SetStateAction<IChapter[]>>;
 }
 
 export const FinancialControl: React.FC<IProps> = ({

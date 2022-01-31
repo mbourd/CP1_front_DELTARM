@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { EditValidationContext } from 'Features';
-import { ContentTitle } from '../../ContentTitle/ContentTitle';
 import { ContentHeader } from '../../ContentHeader/ContentHeader';
 import { FormControls } from '../../Control';
 
@@ -14,14 +13,7 @@ export const SettingUp: React.FC = (): React.ReactElement | null => {
   return (
     <>
       <ContentHeader />
-      {data.currentSection.chapters.map((chapter, index) => {
-        return (
-          <React.Fragment key={index}>
-            <ContentTitle>{chapter.label}</ContentTitle>
-            <FormControls controls={chapter.controls} />
-          </React.Fragment>
-        );
-      })}
+      <FormControls chapters={data?.currentSection.chapters} />
     </>
   );
 };
