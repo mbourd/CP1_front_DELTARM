@@ -151,6 +151,11 @@ export interface IControlOptions
     IDecimalOptions,
     IPercentOptions {}
 
+export interface IUploadDetails {
+  id: string;
+  name: string;
+}
+
 export interface IApiControl {
   control_desc_1: string | null;
   control_desc_2: string | null;
@@ -178,4 +183,5 @@ export interface IApiControl {
   formula?: IFormula;
   useCompliance?: ICompliance;
   control_options: IControlOptions | null;
+  upload_details: IUploadDetails[] | null;
 }

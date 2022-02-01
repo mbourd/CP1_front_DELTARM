@@ -1,6 +1,6 @@
 import React from 'react';
 import { DashboardDynamic } from './DashboardDynamic';
-import { mock } from '../../../mocks/server';
+import { worker } from '../../../mocks/server';
 import { rest } from 'msw';
 import DASHBOARD from '../../../mocks/fixtures/dashboard/dashboard';
 import { data as MODAL } from '../../../mocks/fixtures/modal/modal';
@@ -25,17 +25,14 @@ const Template: any = (args: any) => {
 export const Dashboard = Template.bind({});
 Dashboard.decorators = [
   (story: any) => {
-    mock(
-      rest.get(
-        'https://controle-api-dev.deltarm.com:8082/dashboard/contr_perm',
-        (req, res, ctx) => {
-          ctx.delay('infinite');
+    worker?.use(
+      rest.get('https://undefined/dashboard/contr_perm', (req, res, ctx) => {
+        ctx.delay('infinite');
 
-          return res(ctx.status(200), ctx.json(DASHBOARD));
-        },
-      ),
+        return res(ctx.status(200), ctx.json(DASHBOARD));
+      }),
       rest.get(
-        'https://controle-api-dev.deltarm.com:8082/contr_perm/get_search_test',
+        'https://undefined/contr_perm/get_search_test',
         (req, res, ctx) => {
           req.url.searchParams.get('value');
 
