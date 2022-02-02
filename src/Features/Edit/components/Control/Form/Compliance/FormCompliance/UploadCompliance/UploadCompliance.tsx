@@ -1,13 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { UploadComplianceStyled, DownloadFile } from './UploadCompliance.style';
+import { UploadComplianceStyled } from './UploadCompliance.style';
 import { Grid, Fab } from '@material-ui/core';
 import { CloudUpload } from '@material-ui/icons';
-import { IComplianceData } from 'Features/Edit/types';
+import { IComplianceData, IUploadDetail } from 'Features/Edit/types';
 import { FormError } from 'Shared/components';
-import { getEnv, IUser, security } from 'Services';
+import { IUser, security } from 'Services';
 import { ComplianceLabel } from '../ComplianceLabel';
 import { ComplianceFooter } from '../ComplianceFooter';
-import axios from 'axios';
+import { useDropzone } from 'react-dropzone';
+import { uploadComplianceFile } from './apiRoutes/uploadComplianceFile';
+import { Container } from '@mui/material';
+import { UploadList } from '../../../../../../../../Shared/components/UploadList/UploadList';
+import { deleteFile } from '../../../../../../../../Shared/components/UploadList/apiRoutes/deleteFile';
+import { downloadFile } from '../../../../../../../../Shared/components/UploadList/apiRoutes/downloadFile';
 
 interface IProps {
   compliance: IComplianceData;
@@ -21,126 +26,112 @@ export const UploadCompliance: React.FC<IProps> = ({
   controlId,
 }): React.ReactElement => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [currentUploadedFile, setCurrentUploadedFile] = useState<File | null>(
-    null,
-  );
-  const [previousUploadedFile, setPreviousUploadedFile] = useState<
-    string | null
-  >(compliance.value);
+  const [newUploadFile, setNewUploadFile] = useState<File | null>(null);
+  const [currentUploadFile, setCurrentUploadFile] = useState<
+    IUploadDetail[] | null
+  >(compliance.uploadDetail);
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
-  const file = previousUploadedFile?.split(';');
-
-  const uploadFile = useCallback(() => {
-    if (currentUploadedFile) {
-      const formData = new FormData();
-      formData.append('file', currentUploadedFile);
-      const fileName = currentUploadedFile.name;
-      axios
-        .post(
-          `${getEnv('API_PROTOCOL')}://${getEnv(
-            'API_HOST',
-          )}/control/set_value?file_id=${fileId}&elm_id=${controlId}&elm_val=${fileName}&control_family=${
-            compliance.family
-          }&compliance_id=${compliance.id}`,
-          formData,
-          {
-            headers: {
-              Authorization: jwt,
-              'Content-type': 'multipart/form-data',
-            },
-          },
-        )
-        .then((res) => {
-          setPreviousUploadedFile(res.data.data.file_detail);
-          setErrorMessage(null);
-        })
-        .catch((err) => {
-          setErrorMessage(err.response.data.error_msg);
-        });
-    }
-  }, [
-    fileId,
-    compliance.family,
-    currentUploadedFile,
-    jwt,
-    controlId,
-    compliance.id,
-  ]);
 
   const saveFileToUpload = useCallback(
     (e) => {
-      setCurrentUploadedFile(e.target.files[0]);
+      setNewUploadFile(e.target.files[0]);
     },
-    [setCurrentUploadedFile],
+    [setNewUploadFile],
   );
-  const downloadFile = useCallback(
-    (e) => {
+
+  const onDrop = useCallback((acceptedFiles) => {
+    acceptedFiles.forEach((file: File) => {
+      setNewUploadFile(file);
+    });
+  }, []);
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+  const handleUploadFile = useCallback(() => {
+    if (newUploadFile) {
+      uploadComplianceFile(
+        fileId,
+        controlId,
+        compliance,
+        newUploadFile,
+        jwt,
+        setCurrentUploadFile,
+        setErrorMessage,
+      );
+    }
+  }, [fileId, compliance, newUploadFile, jwt, controlId]);
+
+  const handleDeleteFile = useCallback(
+    (e, name) => {
       e.preventDefault();
-      if (!file) {
-        return;
-      }
-      axios
-        .get(
-          `${getEnv('API_PROTOCOL')}://${getEnv(
-            'API_HOST',
-          )}/control/get_upfile?file_id=${file[1]}&file_name=${file[0]}`,
-          {
-            headers: {
-              Authorization: jwt,
-            },
-            responseType: 'blob',
-          },
-        )
-        .then((response) => {
-          const url = window.URL.createObjectURL(new Blob([response.data]));
-          const link = document.createElement('a');
-          link.href = url;
-          link.setAttribute('download', file[0]); //or any other extension
-          document.body.appendChild(link);
-          link.click();
-        })
-        .catch(() => {
-          setErrorMessage(
-            'Une erreur est survenue lors du téléchargement du fichier',
-          );
-        });
+      deleteFile(
+        fileId,
+        controlId,
+        name,
+        jwt,
+        setErrorMessage,
+        setCurrentUploadFile,
+      );
     },
-    [file, jwt],
+    [jwt, controlId, fileId],
+  );
+
+  const handleDownloadFile = useCallback(
+    (e, name) => {
+      e.preventDefault();
+      downloadFile(fileId, name, jwt, setErrorMessage);
+    },
+    [fileId, jwt],
   );
 
   useEffect(() => {
-    if (currentUploadedFile) {
-      uploadFile();
+    if (newUploadFile) {
+      handleUploadFile();
     }
-  }, [currentUploadedFile, uploadFile]);
+  }, [newUploadFile, handleUploadFile]);
 
   return (
     <Grid item xs={6}>
       <ComplianceLabel compliance={compliance} />
       <UploadComplianceStyled>
-        <label htmlFor={`${controlId}compliance-file-upload${compliance.id}`}>
-          <input
-            style={{ display: 'none' }}
-            id={`${controlId}compliance-file-upload${compliance.id}`}
-            name={`${controlId}compliance-file-upload${compliance.id}`}
-            type="file"
-            onChange={saveFileToUpload}
-          />
-          <Fab
-            color="secondary"
-            size="small"
-            component="span"
-            aria-label="upload"
-          >
-            <CloudUpload color={'action'} />
-          </Fab>
-        </label>
-        {file && (
-          <DownloadFile href={file[1]} onClick={downloadFile}>
-            {file[0]}
-          </DownloadFile>
-        )}
+        <Container
+          style={{
+            padding: '5px',
+            border: '1px solid grey',
+            borderRadius: '5px',
+            backgroundColor: `${isDragActive ? 'white' : '#f0f0f0'}`,
+            transition: '.1s ease-in-out',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            maxHeight: '100px',
+          }}
+          {...getRootProps({ onClick: (event) => event.stopPropagation() })}
+        >
+          <label htmlFor={`compliance-file-upload${controlId}`}>
+            <input
+              style={{ display: 'none' }}
+              id={`compliance-file-upload${controlId}`}
+              name={`compliance-file-upload${controlId}`}
+              type="file"
+              onChange={saveFileToUpload}
+              {...getInputProps()}
+            />
+            <Fab
+              color="secondary"
+              size="small"
+              component="span"
+              aria-label="upload"
+            >
+              <CloudUpload color={'action'} />
+            </Fab>
+          </label>
+        </Container>
+        <UploadList
+          currentUploadFile={currentUploadFile}
+          handleDeleteFile={handleDeleteFile}
+          handleDownloadFile={handleDownloadFile}
+        />
       </UploadComplianceStyled>
       {errorMessage ? (
         <p>

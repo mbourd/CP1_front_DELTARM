@@ -55,6 +55,7 @@ export interface IApiComplianceData {
   compliance_elm_type: ControlTypeType;
   compliance_elm_value: string;
   compliance_id: string;
+  compliance_upload_detail: IUploadDetail[] | null;
 }
 
 export interface IComplianceData {
@@ -68,6 +69,7 @@ export interface IComplianceData {
   type: ControlTypeType;
   value: string;
   answerChoices?: Record<string, ISelectData>;
+  uploadDetail: IUploadDetail[] | null;
 }
 
 export interface ICompliance {
@@ -151,6 +153,11 @@ export interface IControlOptions
     IDecimalOptions,
     IPercentOptions {}
 
+export interface IUploadDetail {
+  file_id: string;
+  file_name: string;
+}
+
 export interface IApiControl {
   control_desc_1: string | null;
   control_desc_2: string | null;
@@ -178,4 +185,5 @@ export interface IApiControl {
   formula?: IFormula;
   useCompliance?: ICompliance;
   control_options: IControlOptions | null;
+  upload_detail: IUploadDetail[] | null;
 }

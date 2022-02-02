@@ -41,6 +41,7 @@ apiRouter.registerRoute({
         regexMsg: compliance.compliance_elm_regex_msg,
         type: compliance.compliance_elm_type,
         value: compliance.compliance_elm_value,
+        uploadDetail: compliance.compliance_upload_detail,
       };
       complianceElms.push(com);
 

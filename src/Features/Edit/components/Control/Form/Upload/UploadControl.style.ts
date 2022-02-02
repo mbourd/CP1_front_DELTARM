@@ -13,5 +13,5 @@ export const UploadControlStyled = styled.div`
 `;
 
 export const DownloadFile = styled.a`
-  margin-left: 5px;
+  margin: 5px;
 `;
