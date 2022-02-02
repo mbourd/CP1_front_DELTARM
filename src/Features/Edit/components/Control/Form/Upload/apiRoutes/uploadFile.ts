@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getEnv } from '../../../../../../../Packages/Helpers';
-import { IApiControl, IUploadDetails } from '../../../../../types';
+import { IApiControl, IUploadDetail } from '../../../../../types';
 import React, { SetStateAction } from 'react';
 
 export const uploadFile = (
@@ -8,7 +8,7 @@ export const uploadFile = (
   control: IApiControl,
   newUploadFile: File,
   jwt: string | null,
-  setCurrentUploadFile: React.Dispatch<SetStateAction<IUploadDetails[] | null>>,
+  setCurrentUploadFile: React.Dispatch<SetStateAction<IUploadDetail[] | null>>,
   setErrorMessage: React.Dispatch<SetStateAction<string | null>>,
 ) => {
   const formData = new FormData();
@@ -31,7 +31,6 @@ export const uploadFile = (
     )
     .then((res) => {
       setErrorMessage(null);
-      // renvoyer liste de tous les fichiers
 
       return setCurrentUploadFile(res.data.data.file_detail);
     })

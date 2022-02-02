@@ -19,7 +19,7 @@ export const controls: IApiControl[] = [
     control_manage_compliance: false,
     control_conditional: false,
     control_options: null,
-    upload_details: null,
+    upload_detail: null,
     answerChoices: {
       '1': {
         id: '1',
@@ -59,7 +59,7 @@ export const controls: IApiControl[] = [
     control_manage_compliance: false,
     control_conditional: true,
     control_options: null,
-    upload_details: null,
+    upload_detail: null,
     conditional: {
       conditional_formula: '$==1',
       conditional_by_field_id: 1928,
@@ -84,7 +84,7 @@ export const controls: IApiControl[] = [
     control_manage_compliance: false,
     control_conditional: true,
     control_options: null,
-    upload_details: null,
+    upload_detail: null,
     conditional: {
       conditional_formula: '$==3',
       conditional_by_field_id: 1928,
@@ -107,7 +107,7 @@ export const controls: IApiControl[] = [
     control_regex_msg: '',
     control_manage_compliance: false,
     control_options: null,
-    upload_details: null,
+    upload_detail: null,
     control_conditional: false,
   },
   {
@@ -128,7 +128,7 @@ export const controls: IApiControl[] = [
     control_manage_compliance: false,
     control_conditional: true,
     control_options: null,
-    upload_details: null,
+    upload_detail: null,
     conditional: {
       conditional_formula: '$ != null',
       conditional_by_field_id: 1931,
@@ -153,7 +153,7 @@ export const controls: IApiControl[] = [
     control_manage_compliance: false,
     control_conditional: true,
     control_options: null,
-    upload_details: null,
+    upload_detail: null,
     conditional: {
       conditional_formula: '$ == null',
       conditional_by_field_id: 1931,
@@ -177,7 +177,7 @@ export const controls: IApiControl[] = [
     control_regex_msg: "La valeur saisie n'est pas une valeur entière",
     control_manage_compliance: false,
     control_conditional: false,
-    upload_details: null,
+    upload_detail: null,
   },
   {
     control_desc_1: null,
@@ -198,7 +198,7 @@ export const controls: IApiControl[] = [
     control_manage_compliance: false,
     control_conditional: true,
     control_options: null,
-    upload_details: null,
+    upload_detail: null,
     conditional: {
       conditional_formula:
         '($>20 && $<=40) || ($>=60 && $<80) || ($%10==0 && $!=100)',

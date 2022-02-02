@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { UploadControlStyled, DownloadFile } from './UploadControl.style';
 import { Grid, Fab } from '@material-ui/core';
 import { CloudUpload } from '@material-ui/icons';
-import { IApiControl, IUploadDetails } from 'Features/Edit/types';
+import { IApiControl, IUploadDetail } from 'Features/Edit/types';
 import { FormError } from 'Shared/components';
 import { IUser, security } from 'Services';
 import { ControlLabel } from '../ControlLabel';
@@ -26,8 +26,8 @@ export const UploadControl: React.FC<IProps> = ({
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [newUploadFile, setNewUploadFile] = useState<File | null>(null);
   const [currentUploadFile, setCurrentUploadFile] = useState<
-    IUploadDetails[] | null
-  >(control.upload_details);
+    IUploadDetail[] | null
+  >(control.upload_detail);
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
 
@@ -73,7 +73,7 @@ export const UploadControl: React.FC<IProps> = ({
   }, [fileId, control, newUploadFile, jwt]);
 
   const handleDeleteFile = useCallback(
-    (e, id, name) => {
+    (e, name) => {
       e.preventDefault();
       deleteFile(fileId, control, name, jwt, setErrorMessage);
     },
@@ -81,11 +81,11 @@ export const UploadControl: React.FC<IProps> = ({
   );
 
   const handleDownloadFile = useCallback(
-    (e, id, name) => {
+    (e, name) => {
       e.preventDefault();
-      downloadFile(id, name, jwt, setErrorMessage);
+      downloadFile(fileId, name, jwt, setErrorMessage);
     },
-    [jwt],
+    [fileId, jwt],
   );
 
   useEffect(() => {
@@ -137,10 +137,9 @@ export const UploadControl: React.FC<IProps> = ({
           {currentUploadFile?.map((file) => {
             return (
               <Container
-                key={file.id}
+                key={file.file_id}
                 style={{
-                  display: 'flex',
-                  margin: '5px 0',
+                  margin: '10px 0',
                   padding: '0',
                   alignItems: 'center',
                   overflow: 'hidden',
@@ -148,18 +147,22 @@ export const UploadControl: React.FC<IProps> = ({
                 }}
               >
                 <DownloadFile
-                  key={file.id}
-                  href={file.id}
-                  onClick={(e) => handleDownloadFile(e, file.name, file.id)}
+                  href={file.file_id}
+                  onClick={(e) => handleDownloadFile(e, file.file_name)}
+                  style={{
+                    margin: '5px',
+                    marginRight: '0',
+                  }}
                 >
-                  <span>{file.name}</span>
+                  <span>{file.file_name}</span>
                 </DownloadFile>
                 <HighlightOff
-                  onClick={(e) => handleDeleteFile(e, file.name, file.id)}
+                  onClick={(e) => handleDeleteFile(e, file.file_name)}
                   style={{
                     color: '#f50057',
                     cursor: 'pointer',
                     fontSize: '15px',
+                    marginLeft: '2px',
                   }}
                 />
               </Container>

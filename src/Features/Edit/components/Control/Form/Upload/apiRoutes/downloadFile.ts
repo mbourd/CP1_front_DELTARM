@@ -8,6 +8,8 @@ export const downloadFile = (
   jwt: string | null,
   setErrorMessage: React.Dispatch<SetStateAction<string | null>>,
 ) => {
+  console.log(fileId);
+  console.log(name);
   axios
     .get(
       `${getEnv('API_PROTOCOL')}://${getEnv(

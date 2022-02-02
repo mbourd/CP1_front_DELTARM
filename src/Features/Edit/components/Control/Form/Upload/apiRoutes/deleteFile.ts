@@ -14,9 +14,9 @@ export const deleteFile = (
     .post(
       `${getEnv('API_PROTOCOL')}://${getEnv(
         'API_HOST',
-      )}/control/delete_value?file_id=${fileId}&elm_id=${
+      )}/control/delete_upfile?file_id=${fileId}&control_id=${
         control.control_id
-      }&elm_val=${name}&control_family=${control.control_family}`,
+      }&file_name=${name}`,
       {
         headers: {
           Authorization: jwt,
