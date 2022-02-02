@@ -7,7 +7,7 @@ import { DownloadFile } from './UploadList.style';
 interface IProps {
   currentUploadFile: IUploadDetail[] | null;
   handleDeleteFile: (e: any, name: any) => void;
-  handleDownloadFile: (e: any, name: any) => void;
+  handleDownloadFile: (e: any, id: string, name: any) => void;
 }
 
 export const UploadList: React.FC<IProps> = ({
@@ -31,7 +31,9 @@ export const UploadList: React.FC<IProps> = ({
           >
             <DownloadFile
               href={file.file_id}
-              onClick={(e) => handleDownloadFile(e, file.file_name)}
+              onClick={(e) =>
+                handleDownloadFile(e, file.file_id, file.file_name)
+              }
               style={{
                 margin: '5px',
                 marginRight: '0',

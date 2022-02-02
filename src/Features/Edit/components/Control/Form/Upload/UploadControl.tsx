@@ -87,11 +87,11 @@ export const UploadControl: React.FC<IProps> = ({
   );
 
   const handleDownloadFile = useCallback(
-    (e, name) => {
+    (e, id, name) => {
       e.preventDefault();
-      downloadFile(fileId, name, jwt, setErrorMessage);
+      downloadFile(id, name, jwt, setErrorMessage);
     },
-    [fileId, jwt],
+    [jwt],
   );
 
   useEffect(() => {
