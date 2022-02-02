@@ -35,7 +35,7 @@ const control = {
   control_title: 'Upload control',
   control_type: 'upload',
   control_value: null,
-  upload_details: initialList,
+  upload_detail: initialList,
 };
 export const Upload = Template.bind({});
 Upload.args = {
@@ -86,9 +86,9 @@ const controlDisabled = {
   control_title: 'Upload control disabled',
   control_type: 'upload',
   control_value: null,
-  upload_details: [
-    { id: '183', name: 'disabled.png' },
-    { id: '167', name: 'disabled2.png' },
+  upload_detail: [
+    { file_id: '183', file_name: 'disabled.png' },
+    { file_id: '167', file_name: 'disabled2.png' },
   ],
 };
 export const UploadDisabled = Template.bind({});

@@ -55,6 +55,7 @@ export interface IApiComplianceData {
   compliance_elm_type: ControlTypeType;
   compliance_elm_value: string;
   compliance_id: string;
+  compliance_upload_detail: IUploadDetail[] | null;
 }
 
 export interface IComplianceData {
@@ -68,6 +69,7 @@ export interface IComplianceData {
   type: ControlTypeType;
   value: string;
   answerChoices?: Record<string, ISelectData>;
+  uploadDetail: IUploadDetail[] | null;
 }
 
 export interface ICompliance {

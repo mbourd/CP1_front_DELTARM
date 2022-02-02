@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { getEnv } from '../../../../../../../Packages/Helpers';
 import React, { SetStateAction } from 'react';
+import { getEnv } from '../../../../Packages/Helpers';
 
 export const downloadFile = (
   fileId: string,
@@ -8,8 +8,6 @@ export const downloadFile = (
   jwt: string | null,
   setErrorMessage: React.Dispatch<SetStateAction<string | null>>,
 ) => {
-  console.log(fileId);
-  console.log(name);
   axios
     .get(
       `${getEnv('API_PROTOCOL')}://${getEnv(
@@ -23,13 +21,12 @@ export const downloadFile = (
       },
     )
     .then((response) => {
-      console.log(response);
-      // const url = window.URL.createObjectURL(new Blob([response.data]));
-      // const link = document.createElement('a');
-      // link.href = url;
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
       // link.setAttribute('download', file[0]); //or any other extension
-      // document.body.appendChild(link);
-      // link.click();
+      document.body.appendChild(link);
+      link.click();
     })
     .catch(() => {
       return setErrorMessage(
