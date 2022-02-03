@@ -104,6 +104,7 @@ export const UploadControl: React.FC<IProps> = ({
       <UploadControlStyled>
         <Button
           disabled={!control.editable}
+          id={'disabled-button'}
           style={{
             display: 'block',
             width: '100%',
