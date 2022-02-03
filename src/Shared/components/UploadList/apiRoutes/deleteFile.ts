@@ -21,7 +21,7 @@ export const deleteFile = (
         headers: {
           Authorization: jwt,
         },
-        responseType: 'blob',
+        responseType: 'json',
       },
     )
     .then((res) => {
