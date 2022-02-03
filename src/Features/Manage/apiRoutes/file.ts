@@ -81,7 +81,7 @@ apiRouter.registerRoute({
   handler: (data): IKSIOPManualInput => {
     const fields: IMissingField[] = data.data.fields.map(
       (field: IMissingField) => {
-        if (field.type === 'selectList') {
+        if (field.type === 'select_list') {
           const newOptions: ISelectData[] = [];
           field.option?.map((option: any) => {
             newOptions[option.id] = {

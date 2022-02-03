@@ -12,3 +12,4 @@ export * from './Compliance/CheckboxCompliance/CheckboxCompliance';
 export * from './InfoBlock/InfoBlockControl';
 export * from './Decimal/DecimalControl';
 export * from './Formula/FormulaControl';
+export * from './LongText/LongTextControl';

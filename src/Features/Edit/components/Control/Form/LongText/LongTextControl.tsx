@@ -1,5 +1,5 @@
 import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
-import { DateControlStyled } from './DateControl.style';
+import { LongTextControlStyled } from './LongTextControl.style';
 import { Grid } from '@material-ui/core';
 import { IApiControl, IChapter } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
@@ -8,8 +8,6 @@ import { ControlLabel } from '../ControlLabel';
 import { ControlFooter } from '../ControlFooter';
 import { checkIfSameValues } from '../../../../../../Packages/Helpers/src/checkIfSameValues';
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
-import { minMax } from '../../../../../../Packages/Helpers/src/minMax';
-import useFocus from '../../../../../../Packages/Helpers/src/useFocus';
 
 interface IProps {
   control: IApiControl;
@@ -18,7 +16,7 @@ interface IProps {
   setFormState: React.Dispatch<SetStateAction<IChapter[]>>;
 }
 
-export const DateControl: React.FC<IProps> = ({
+export const LongTextControl: React.FC<IProps> = ({
   control,
   fileId,
   formState,
@@ -27,7 +25,6 @@ export const DateControl: React.FC<IProps> = ({
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);
-  const [inputRef, setInputFocus] = useFocus();
   const { currentRoute } = useRouter();
 
   useEffect(() => {
@@ -40,40 +37,10 @@ export const DateControl: React.FC<IProps> = ({
 
   const saveValue = useCallback(
     (value: string) => {
-      if (
-        control.control_regex &&
-        !value.match(control.control_regex) &&
-        value
-      ) {
-        setErrorMessage(control.control_regex_msg);
-
-        return;
-      }
-
-      if (
-        (control.control_options?.min || control.control_options?.max) &&
-        value.trim()
-      ) {
-        if (
-          minMax(
-            value,
-            control.control_options.min,
-            control.control_options.max,
-          )
-        ) {
-          setErrorMessage(null);
-        }
-        if (
-          !minMax(
-            value,
-            control.control_options.min,
-            control.control_options.max,
-          )
-        ) {
-          setInputFocus();
-          setErrorMessage(
-            'La valeur saisie ne respecte pas les contraintes définies',
-          );
+      if (control.control_regex && value) {
+        const regexControl = new RegExp(control.control_regex, 'i');
+        if (!value.match(regexControl)) {
+          setErrorMessage(control.control_regex_msg);
 
           return;
         }
@@ -110,15 +77,13 @@ export const DateControl: React.FC<IProps> = ({
       send,
       fileId,
       control.control_id,
-      control.control_family,
       currentRoute,
+      control.control_family,
       control.control_regex,
       control.control_regex_msg,
       currentValue,
       setCurrentValue,
       control.mandatory,
-      control.control_options,
-      setInputFocus,
     ],
   );
 
@@ -139,10 +104,11 @@ export const DateControl: React.FC<IProps> = ({
 
   return (
     <Grid item xs={6}>
-      <DateControlStyled>
+      <LongTextControlStyled>
         <ControlLabel control={control} />
         <InputBase
-          inputRef={inputRef}
+          multiline
+          multilineRows={3}
           placeholder={
             control.editable
               ? control.control_title
@@ -154,11 +120,10 @@ export const DateControl: React.FC<IProps> = ({
           color={control.editable ? 'text' : 'disabled'}
           defaultValue={currentValue ? currentValue : ''}
           onBlur={(e) => saveValue(e.currentTarget.value)}
-          type={'date'}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ControlFooter control={control} />
-      </DateControlStyled>
+      </LongTextControlStyled>
     </Grid>
   );
 };

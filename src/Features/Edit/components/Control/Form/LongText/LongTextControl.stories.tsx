@@ -1,23 +1,22 @@
 import React from 'react';
-import { IntegerControl } from './IntegerControl';
+import { LongTextControl } from './LongTextControl';
 
 export default {
-  title: 'IntegerControl',
-  component: IntegerControl,
+  title: 'LongTextControl',
+  component: LongTextControl,
   decorators: [(story: any) => <div className="p-6">{story()}</div>],
 };
 
 const Template: any = (args: any) => {
-  return <IntegerControl {...args} />;
+  return <LongTextControl {...args} />;
 };
-
 const control = {
   control_desc1: null,
   control_desc2: null,
   control_editable: true,
-  editable: true,
+  editable: false,
   control_family: 'standard',
-  control_id: '1987',
+  control_id: '23891',
   isConditional: false,
   isCalculated: false,
   manageCompliance: false,
@@ -26,18 +25,12 @@ const control = {
   control_previous_value: null,
   control_regex: null,
   control_regex_msg: null,
-  control_title: 'Integer control',
-  control_type: 'integer',
-  control_value: 50,
-  control_options: {
-    min: 0,
-    max: 100,
-    unit: 'metres',
-  },
+  control_title: 'Long text control',
+  control_type: 'long_text',
+  control_value: 'A long text',
 };
-
-export const Integer = Template.bind({});
-Integer.args = {
+export const LongText = Template.bind({});
+LongText.args = {
   control,
   fileId: 1233,
   formState: [{ controls: [control] }],

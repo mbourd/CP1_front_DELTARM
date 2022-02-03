@@ -40,7 +40,7 @@ export const Date = Template.bind({});
 Date.args = {
   control,
   fileId: 1233,
-  formState: [control],
+  formState: [{ controls: [control] }],
   setFormState: () => {
     return undefined;
   },

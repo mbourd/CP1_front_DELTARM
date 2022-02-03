@@ -16,7 +16,7 @@ export const GenerateFieldManual: React.FC<IProps> = ({
   control,
 }): React.ReactElement | null => {
   switch (field.type) {
-    case 'selectList':
+    case 'select_list':
       return (
         <Controller
           render={() => (

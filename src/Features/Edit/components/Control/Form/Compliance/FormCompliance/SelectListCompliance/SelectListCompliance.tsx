@@ -79,7 +79,7 @@ export const SelectListCompliance: React.FC<IProps> = ({
         <ComplianceLabel compliance={compliance} />
         <Select
           closeOnSelect
-          name={'selectList' + compliance.id}
+          name={'select_list' + compliance.id}
           data={compliance.answerChoices || {}}
           selectedValues={selectedValue}
           multiple={false}

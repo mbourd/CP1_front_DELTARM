@@ -15,7 +15,7 @@ export const Disbursement: React.FC = (): React.ReactElement | null => {
     <>
       <ContentHeader />
       <ContentTitle>Décaissement</ContentTitle>
-      <FormControls controls={data.currentSection.chapters[0].controls} />
+      <FormControls chapters={data?.currentSection.chapters} />
     </>
   );
 };

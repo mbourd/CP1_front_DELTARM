@@ -1,5 +1,5 @@
 import React, { SetStateAction, useContext } from 'react';
-import { IApiControl } from 'Features/Edit/types';
+import { IApiControl, IChapter } from 'Features/Edit/types';
 import {
   TextControl,
   SelectListControl,
@@ -13,14 +13,15 @@ import {
   InfoBlockControl,
   DecimalControl,
   FormulaControl,
+  LongTextControl,
 } from './Form';
 import { EditValidationContext } from 'Features/Edit';
 import { SliderControl } from './Form/Slider/SliderControl';
 
 interface IProps {
   control: IApiControl;
-  formState: IApiControl[];
-  setFormState: React.Dispatch<SetStateAction<IApiControl[]>>;
+  formState: IChapter[];
+  setFormState: React.Dispatch<SetStateAction<IChapter[]>>;
 }
 
 export const SwitchControlItem: React.FC<IProps> = ({
@@ -66,7 +67,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           setFormState={setFormState}
         />
       );
-    case 'selectlist':
+    case 'select_list':
       return (
         <SelectListControl
           multiple={false}
@@ -145,6 +146,15 @@ export const SwitchControlItem: React.FC<IProps> = ({
     case 'comment':
       return (
         <CommentControl
+          control={control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
+      );
+    case 'long_text':
+      return (
+        <LongTextControl
           control={control}
           fileId={fileId}
           formState={formState}
