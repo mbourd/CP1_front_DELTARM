@@ -19,6 +19,7 @@ export type ControlTypeType =
   | 'auth_num'
   | 'info_block'
   | 'formula'
+  | 'long_text'
   | 'slider';
 
 export type ControlFontSize = 'standard' | 'bold';

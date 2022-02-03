@@ -13,6 +13,7 @@ import {
   InfoBlockControl,
   DecimalControl,
   FormulaControl,
+  LongTextControl,
 } from './Form';
 import { EditValidationContext } from 'Features/Edit';
 import { SliderControl } from './Form/Slider/SliderControl';
@@ -145,6 +146,15 @@ export const SwitchControlItem: React.FC<IProps> = ({
     case 'comment':
       return (
         <CommentControl
+          control={control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
+      );
+    case 'long_text':
+      return (
+        <LongTextControl
           control={control}
           fileId={fileId}
           formState={formState}
