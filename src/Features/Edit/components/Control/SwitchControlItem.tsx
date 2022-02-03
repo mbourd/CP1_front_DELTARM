@@ -67,7 +67,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           setFormState={setFormState}
         />
       );
-    case 'selectlist':
+    case 'select_list':
       return (
         <SelectListControl
           multiple={false}

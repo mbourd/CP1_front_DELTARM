@@ -20,7 +20,7 @@ const control = {
   mandatory: true,
   control_previous_value: null,
   control_title: 'Checkbox',
-  control_type: 'selectlist',
+  control_type: 'select_list',
   control_value: '1',
   control_family: 'standard',
   control_regex: new RegExp(''),

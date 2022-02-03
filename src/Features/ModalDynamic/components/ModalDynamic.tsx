@@ -192,7 +192,7 @@ export const ModalDynamic: FC<IDataModalProps> = ({
                 <Grid key={index} item xs={8}>
                   <Select
                     closeOnSelect
-                    name={'selectList' + element.attribute?.id}
+                    name={'select_list' + element.attribute?.id}
                     data={options || {}}
                     selectedValues={selectedValue}
                     onChange={(selectedValues) => {
