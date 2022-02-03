@@ -8,12 +8,14 @@ interface IProps {
   currentUploadFile: IUploadDetail[] | null;
   handleDeleteFile: (e: any, name: any) => void;
   handleDownloadFile: (e: any, id: string, name: any) => void;
+  disabled?: boolean;
 }
 
 export const UploadList: React.FC<IProps> = ({
   currentUploadFile,
   handleDeleteFile,
   handleDownloadFile,
+  disabled = false,
 }): React.ReactElement => {
   return (
     <Container style={{ padding: '0', overflow: 'hidden' }}>
@@ -45,15 +47,17 @@ export const UploadList: React.FC<IProps> = ({
                 <span>{file.file_name}</span>
               )}
             </DownloadFile>
-            <HighlightOff
-              onClick={(e) => handleDeleteFile(e, file.file_name)}
-              style={{
-                color: '#f50057',
-                cursor: 'pointer',
-                fontSize: '15px',
-                marginLeft: '2px',
-              }}
-            />
+            {!disabled && (
+              <HighlightOff
+                onClick={(e) => handleDeleteFile(e, file.file_name)}
+                style={{
+                  color: '#f50057',
+                  cursor: 'pointer',
+                  fontSize: '15px',
+                  marginLeft: '2px',
+                }}
+              />
+            )}
           </Container>
         );
       })}
