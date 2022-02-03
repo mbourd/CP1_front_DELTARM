@@ -140,7 +140,7 @@
               "control_mandatory": true,
               "control_previous_value": null,
               "control_title": "Montage du financement",
-              "control_type": "selectlist",
+              "control_type": "select_list",
               "control_value": null
             },
             {
@@ -216,7 +216,7 @@
               "control_mandatory": true,
               "control_previous_value": null,
               "control_title": "Intervention Bpifrance Garantie",
-              "control_type": "selectlist",
+              "control_type": "select_list",
               "control_value": null
             }
           ]

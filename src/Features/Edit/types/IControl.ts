@@ -9,7 +9,7 @@ export type ControlTypeType =
   | 'percent'
   | 'date'
   | 'timestamp'
-  | 'selectlist'
+  | 'select_list'
   | 'comment'
   | 'file_upload'
   | 'radio'

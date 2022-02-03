@@ -111,7 +111,7 @@ export const SelectListControl: React.FC<IProps> = ({
         <ControlLabel control={control} />
         <Select
           closeOnSelect
-          name={'selectList' + control.control_id}
+          name={'select_list' + control.control_id}
           data={control.answerChoices || {}}
           selectedValues={selectedValue}
           labelColor={control.editable ? 'text' : 'disabled'}

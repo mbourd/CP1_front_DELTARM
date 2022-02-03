@@ -23,6 +23,7 @@ const chapters: IChapter[] = [
         control_manage_compliance: false,
         control_conditional: true,
         control_options: null,
+        upload_detail: null,
         conditional: {
           conditional_formula: '$==1',
           conditional_by_field_id: 1928,
@@ -52,6 +53,7 @@ const chapters: IChapter[] = [
         control_manage_compliance: false,
         control_conditional: true,
         control_options: null,
+        upload_detail: null,
         conditional: {
           conditional_formula: '$==3',
           conditional_by_field_id: 1930,
@@ -81,6 +83,7 @@ const chapters: IChapter[] = [
         control_manage_compliance: false,
         control_conditional: true,
         control_options: null,
+        upload_detail: null,
       },
     ],
   },
@@ -113,6 +116,7 @@ describe('Inject disabled fields into the form', () => {
             control_manage_compliance: false,
             control_conditional: true,
             control_options: null,
+            upload_detail: null,
             conditional: {
               conditional_formula: '$==1',
               conditional_by_field_id: 1928,
@@ -142,6 +146,7 @@ describe('Inject disabled fields into the form', () => {
             control_manage_compliance: false,
             control_conditional: true,
             control_options: null,
+            upload_detail: null,
             conditional: {
               conditional_formula: '$==3',
               conditional_by_field_id: 1930,
@@ -171,6 +176,7 @@ describe('Inject disabled fields into the form', () => {
             control_manage_compliance: false,
             control_conditional: true,
             control_options: null,
+            upload_detail: null,
           },
         ],
       },

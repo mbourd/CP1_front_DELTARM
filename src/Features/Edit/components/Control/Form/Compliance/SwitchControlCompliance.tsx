@@ -30,7 +30,7 @@ export const SwitchControlCompliance: React.FC<IProps> = ({
           controlId={controlId}
         />
       );
-    case 'selectlist':
+    case 'select_list':
       return (
         <SelectListCompliance
           compliance={compliance}
