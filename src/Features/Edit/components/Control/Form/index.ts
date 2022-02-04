@@ -15,3 +15,4 @@ export * from './Formula/FormulaControl';
 export * from './LongText/LongTextControl';
 export * from './Time/TimeControl';
 export * from './DateTime/DateTimeControl';
+export * from './Boolean/BooleanControl';

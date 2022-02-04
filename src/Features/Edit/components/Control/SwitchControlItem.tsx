@@ -16,6 +16,7 @@ import {
   LongTextControl,
   TimeControl,
   DateTimeControl,
+  BooleanControl,
 } from './Form';
 import { EditValidationContext } from 'Features/Edit';
 import { SliderControl } from './Form/Slider/SliderControl';
@@ -193,6 +194,15 @@ export const SwitchControlItem: React.FC<IProps> = ({
     case 'slider':
       return (
         <SliderControl
+          control={control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
+      );
+    case 'boolean':
+      return (
+        <BooleanControl
           control={control}
           fileId={fileId}
           formState={formState}
