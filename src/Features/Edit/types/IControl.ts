@@ -20,6 +20,9 @@ export type ControlTypeType =
   | 'info_block'
   | 'formula'
   | 'long_text'
+  | 'time'
+  | 'rich_text'
+  | 'boolean'
   | 'slider';
 
 export type ControlFontSize = 'standard' | 'bold';

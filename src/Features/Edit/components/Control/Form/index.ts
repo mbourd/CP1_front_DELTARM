@@ -13,3 +13,4 @@ export * from './InfoBlock/InfoBlockControl';
 export * from './Decimal/DecimalControl';
 export * from './Formula/FormulaControl';
 export * from './LongText/LongTextControl';
+export * from './Time/TimeControl';

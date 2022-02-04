@@ -14,6 +14,7 @@ import {
   DecimalControl,
   FormulaControl,
   LongTextControl,
+  TimeControl,
 } from './Form';
 import { EditValidationContext } from 'Features/Edit';
 import { SliderControl } from './Form/Slider/SliderControl';
@@ -137,6 +138,15 @@ export const SwitchControlItem: React.FC<IProps> = ({
     case 'date':
       return (
         <DateControl
+          control={control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
+      );
+    case 'time':
+      return (
+        <TimeControl
           control={control}
           fileId={fileId}
           formState={formState}
