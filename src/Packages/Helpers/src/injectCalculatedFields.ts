@@ -45,14 +45,13 @@ export const injectCalculatedFields = (formState: IChapter[]): IChapter[] => {
         });
 
         if (!oneOfValueIsMissing) {
-          // eslint-disable-next-line no-eval
-          const calculatedValue = eval(`${formula}`).toString();
+          const calculatedValue = Function('return ' + formula);
           if (
             calculatedValue &&
-            !isNaN(calculatedValue) &&
-            isFinite(calculatedValue)
+            !isNaN(calculatedValue()) &&
+            isFinite(calculatedValue())
           ) {
-            field.control_value = calculatedValue;
+            field.control_value = calculatedValue().toString();
           }
         }
         if (oneOfValueIsMissing) {
