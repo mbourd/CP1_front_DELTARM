@@ -14,6 +14,9 @@ import {
   DecimalControl,
   FormulaControl,
   LongTextControl,
+  TimeControl,
+  DateTimeControl,
+  BooleanControl,
 } from './Form';
 import { EditValidationContext } from 'Features/Edit';
 import { SliderControl } from './Form/Slider/SliderControl';
@@ -143,6 +146,24 @@ export const SwitchControlItem: React.FC<IProps> = ({
           setFormState={setFormState}
         />
       );
+    case 'time':
+      return (
+        <TimeControl
+          control={control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
+      );
+    case 'timestamp':
+      return (
+        <DateTimeControl
+          control={control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
+      );
     case 'comment':
       return (
         <CommentControl
@@ -173,6 +194,15 @@ export const SwitchControlItem: React.FC<IProps> = ({
     case 'slider':
       return (
         <SliderControl
+          control={control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
+      );
+    case 'boolean':
+      return (
+        <BooleanControl
           control={control}
           fileId={fileId}
           formState={formState}
