@@ -25,21 +25,20 @@ export const injectDisabledFields = (formState: IChapter[]): IChapter[] => {
                 condition = condition?.replaceAll('$', `null`);
               }
               if (condition) {
-                // eslint-disable-next-line no-eval
-                if (eval(condition)) {
+                const executeCondition = Function('return ' + condition);
+                if (executeCondition()) {
                   field.editable = true;
                   if (field.control_mandatory) {
                     field.mandatory = true;
                   }
                 }
-                // eslint-disable-next-line no-eval
-                if (!eval(condition)) {
+                if (!executeCondition()) {
                   field.editable = false;
                   if (field.control_mandatory) {
                     field.mandatory = false;
                   }
                 }
-                // 2 props : editable is use in component and control_editable is the initial api state
+                // 2 keys in control object : editable is use in component and control_editable is the initial api state
                 if (!field.control_editable) {
                   field.editable = false;
                 }
