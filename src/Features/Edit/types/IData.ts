@@ -12,9 +12,17 @@ import {
   ISectionFooter,
 } from './ISection';
 import { IApiState, IState } from './IState';
+import { IButtons } from '../../DashboardDynamic/components/types';
 
 export interface IApiData {
-  actions: IApiAction[];
+  route_front: string;
+  target: 'main';
+  data: IApiDataEdit;
+}
+
+export interface IApiDataEdit {
+  actions?: IApiAction[];
+  actions_contr_perm?: IButtons[];
   current_section: IApiCurrentSection;
   sections: IApiSection[];
   state: IApiState;
@@ -27,16 +35,18 @@ export interface IApiData {
 }
 
 export interface IData {
-  actions: IAction[];
+  actions?: IAction[];
+  actions_contr_perm?: IButtons[];
   currentSection: ICurrentSection;
   sections: ISection[];
   state: IState;
   file: IFileItem[];
-  number: string;
-  contrepartie: string;
+  number: string | null;
+  contrepartie: string | null;
   productType: string;
   countComments: number;
   validationCount?: string;
   sectionHeader?: ISectionHeader;
   sectionFooter?: ISectionFooter;
+  title: string | null;
 }

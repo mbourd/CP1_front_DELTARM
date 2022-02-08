@@ -1,7 +1,10 @@
 import { makeStyles, Theme } from '@material-ui/core';
 import { ITooltip } from './types';
 
-export const useStyles = makeStyles<Theme, Omit<ITooltip, 'children' | 'placement' | 'title'>>({
+export const useStyles = makeStyles<
+  Theme,
+  Omit<ITooltip, 'children' | 'placement' | 'title'>
+>({
   arrow: {
     color: ({ color }) => color,
     fontSize: ({ fontSize }) => fontSize,

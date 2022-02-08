@@ -9,4 +9,5 @@ export const HeaderStyled = styled.header<Omit<ICardHeader, 'children'>>`
   line-height: ${headerHeight}px;
   text-align: center;
   text-transform: uppercase;
+  border-radius: 4px;
 `;

@@ -1,31 +1,55 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
-import { IControl } from 'Features/Edit/types';
+import { IApiControl, IChapter } from 'Features/Edit/types';
 import { FormError } from 'Shared/components';
-import { storage, useApi, useRouter } from 'Services';
+import { useApi, useRouter } from 'Services';
 import { CheckboxControlStyled } from './CheckboxControl.style';
 import { ControlLabel } from '../ControlLabel';
 import { ControlFooter } from '../ControlFooter';
 import { Compliance } from '../Compliance/Compliance';
 import { CheckboxWrapper } from '../../../../../../Packages/Design/components/Checkbox/CheckboxWrapper';
+import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
 
 interface IProps {
-  control: IControl;
+  control: IApiControl;
   fileId: string;
   multiple: boolean;
+  formState: IChapter[];
+  setFormState: React.Dispatch<SetStateAction<IChapter[]>>;
 }
 
-export const CheckboxControl: React.FC<IProps> = ({ control, fileId, multiple }): React.ReactElement => {
+export const CheckboxControl: React.FC<IProps> = ({
+  control,
+  fileId,
+  multiple,
+  formState,
+  setFormState,
+}): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [currentValue, setCurrentValue] = useState(control.control_value);
   const { currentRoute } = useRouter();
   const [choiceIsKo, setChoiceIsKo] = useState(
-    control.compliance?.complianceCheckboxResolved ? control.compliance.complianceCheckboxResolved : false,
+    control.compliance?.compliance_checkbox_resolved
+      ? control.compliance.compliance_checkbox_resolved
+      : false,
   );
-  const [isResolved, setIsResolved] = useState(control.compliance?.resolved ? control.compliance.resolved : false);
+  const [isResolved, setIsResolved] = useState(
+    control.compliance?.compliance_resolved
+      ? control.compliance.compliance_resolved
+      : false,
+  );
+  const selectedValue: Record<string, true> = {
+    [currentValue || control.control_value || '']: true,
+  };
 
-  const value = storage.getData<string>('edit.control.' + control.id + '.value');
-  const selectedValue: Record<string, true> = { [value || control.value || '']: true };
+  useEffect(() => {
+    setCurrentValue(control.control_value);
+  }, [control.control_value]);
+
+  useEffect(() => {
+    updateFormState(formState, control.control_id, currentValue, setFormState);
+  }, [formState, control.control_id, currentValue, setFormState]);
 
   useEffect(() => {
     if (!choiceIsKo) {
@@ -35,33 +59,48 @@ export const CheckboxControl: React.FC<IProps> = ({ control, fileId, multiple })
 
   const saveValue = useCallback(
     (value: string) => {
-      if (control.regex && !value.match(control.regex)) {
+      if (control.control_regex && !value.match(control.control_regex)) {
         setErrorMessage("Le format attendu n'est pas valide");
 
         return;
       }
       setErrorMessage(null);
-      storage.setData('edit.control.' + control.id + '.value', value);
+      setCurrentValue(value);
       send(
         currentRoute?.props?.apiSaveControlRouteName,
         {},
-        { file_id: fileId, elm_id: control.id, elm_val: value, control_family: control.family },
+        {
+          file_id: fileId,
+          elm_id: control.control_id,
+          elm_val: value,
+          control_family: control.control_family,
+        },
       );
     },
-    [send, fileId, control.id, control.family, currentRoute, control.regex],
+    [
+      send,
+      fileId,
+      control.control_id,
+      control.control_family,
+      currentRoute,
+      control.control_regex,
+    ],
   );
 
   useEffect(() => {
-    const val = storage.getData<string>('edit.control.' + control.id + '.value');
-
-    if (control.mandatory && control.editable && !val && !control.value) {
+    if (control.mandatory && control.editable && !currentValue) {
       setErrorMessage('Valeur obligatoire');
     }
-  }, [control.id, control.mandatory, control.value, control.editable]);
+    if (!control.mandatory) {
+      setErrorMessage(null);
+    }
+  }, [control.control_id, control.mandatory, currentValue, control.editable]);
 
   useEffect(() => {
     if (error) {
-      setErrorMessage("Une erreur s'est produite, veuillez re-sélectionner une valeur");
+      setErrorMessage(
+        "Une erreur s'est produite, veuillez re-sélectionner une valeur",
+      );
     }
   }, [error]);
 
@@ -70,7 +109,7 @@ export const CheckboxControl: React.FC<IProps> = ({ control, fileId, multiple })
       <CheckboxControlStyled className={'control-container'}>
         <ControlLabel control={control} />
         <CheckboxWrapper
-          name={'checkbox' + control.id}
+          name={'checkbox' + control.control_id}
           data={control.answerChoices || {}}
           selectedValues={selectedValue}
           multiple={multiple}
@@ -87,19 +126,20 @@ export const CheckboxControl: React.FC<IProps> = ({ control, fileId, multiple })
           disabled={!control.editable}
           error={!!error}
         />
-        {errorMessage ? <FormError style={{ display: 'block' }}>{errorMessage}</FormError> : null}
+        {errorMessage ? (
+          <FormError style={{ display: 'block' }}>{errorMessage}</FormError>
+        ) : null}
         <ControlFooter control={control} />
       </CheckboxControlStyled>
-      {control.compliance && (
+      {control.useCompliance && control.compliance && (
         <Compliance
-          label={control.compliance.complianceLib}
+          label={control.compliance.compliance_lib}
           checked={isResolved}
           setIsResolved={setIsResolved}
-          controlId={control.id}
+          controlId={control.control_id}
           fileId={fileId}
           choiceIsKo={choiceIsKo}
-          control={control}
-          compliance={control.compliance}
+          compliance={control.useCompliance}
         />
       )}
     </Grid>

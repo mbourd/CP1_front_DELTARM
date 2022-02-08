@@ -1,6 +1,11 @@
 import React from 'react';
-import { BPITheme, BPIGlobalStyle } from '../src/Packages/Design';
-import { ThemeProvider } from 'styled-components/macro';
+import { addDecorator } from '@storybook/react';
+import ThemeDecorator from './themeDecorator';
+import { worker } from '../src/mocks/server';
+import { initialize, mswDecorator } from 'msw-storybook-addon';
+
+initialize();
+addDecorator(mswDecorator);
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -12,13 +17,8 @@ export const parameters = {
   },
 };
 
-const withThemeProvider = (Story, context) => {
-  return (
-    <ThemeProvider theme={BPITheme}>
-      <BPIGlobalStyle />
-      <Story {...context} />
-    </ThemeProvider>
-  );
-};
+if (process.env.NODE_ENV === 'development') {
+  worker.start();
+}
 
-export const decorators = [withThemeProvider];
+addDecorator(ThemeDecorator);

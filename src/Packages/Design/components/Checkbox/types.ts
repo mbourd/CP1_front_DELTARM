@@ -10,10 +10,26 @@ export interface ICheckboxWrapper {
   error?: boolean;
   choiceIsKo?: boolean;
   setChoiceIsKo?: React.Dispatch<React.SetStateAction<boolean>>;
-  onChange?: (selectedValues: Record<string, true>, name?: string, data?: ISelectData | undefined) => void;
-  onInit?: (selectedValues: Record<string, true>, name?: string, data?: ISelectData | undefined) => void;
-  onOpen?: (selectedValues: Record<string, true>, name?: string, data?: ISelectData | undefined) => void;
-  onClose?: (selectedValues: Record<string, true>, name?: string, data?: ISelectData | undefined) => void;
+  onChange?: (
+    selectedValues: Record<string, true>,
+    name?: string,
+    data?: ISelectData | undefined,
+  ) => void;
+  onInit?: (
+    selectedValues: Record<string, true>,
+    name?: string,
+    data?: ISelectData | undefined,
+  ) => void;
+  onOpen?: (
+    selectedValues: Record<string, true>,
+    name?: string,
+    data?: ISelectData | undefined,
+  ) => void;
+  onClose?: (
+    selectedValues: Record<string, true>,
+    name?: string,
+    data?: ISelectData | undefined,
+  ) => void;
   onBlur?: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   disabled?: boolean;
 }

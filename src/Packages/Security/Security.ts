@@ -42,23 +42,40 @@ export class Security implements ISecurity {
       return { title: 'STORAGE_FAILED', message: e.message, error: true };
     }
 
-    return { title: 'SUCCESS', message: `'${user.getUsername}' has been successfully saved.`, error: false };
+    return {
+      title: 'SUCCESS',
+      message: `'${user.getUsername}' has been successfully saved.`,
+      error: false,
+    };
   }
 
   public logout(user: IUser): LoginLogoutReturnType {
     if (!user.isLogged()) {
-      return { title: 'NOT_LOGGED', message: `User is not logged.`, error: true };
+      return {
+        title: 'NOT_LOGGED',
+        message: `User is not logged.`,
+        error: true,
+      };
     }
 
     const username = user.getUsername();
-    user.setEmail(null).setUsername(User.Roles.ANON).setRoles([User.Roles.ANON]).setJwt(null).setExpireAt(null);
+    user
+      .setEmail(null)
+      .setUsername(User.Roles.ANON)
+      .setRoles([User.Roles.ANON])
+      .setJwt(null)
+      .setExpireAt(null);
     try {
       localStorage.setItem(this._sessionKey, JSON.stringify(user));
     } catch (e: any) {
       return { title: 'STORAGE_FAILED', message: e.message, error: true };
     }
 
-    return { title: 'SUCCESS', message: `'${username}' has been successfully logged out.`, error: false };
+    return {
+      title: 'SUCCESS',
+      message: `'${username}' has been successfully logged out.`,
+      error: false,
+    };
   }
 
   public getUser(): IUser {

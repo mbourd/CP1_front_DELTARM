@@ -1,34 +1,48 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
 import { TextControlStyled } from './TextControl.style';
 import { Grid } from '@material-ui/core';
-import { IControl } from 'Features/Edit/types';
+import { IApiControl, IChapter } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
 import { useApi, useRouter } from 'Services';
 import { ControlLabel } from '../ControlLabel';
 import { ControlFooter } from '../ControlFooter';
 import { checkIfSameValues } from '../../../../../../Packages/Helpers/src/checkIfSameValues';
+import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
 
 interface IProps {
-  control: IControl;
+  control: IApiControl;
   fileId: string;
+  formState: IChapter[];
+  setFormState: React.Dispatch<SetStateAction<IChapter[]>>;
 }
 
-export const TextControl: React.FC<IProps> = ({ control, fileId }): React.ReactElement => {
+export const TextControl: React.FC<IProps> = ({
+  control,
+  fileId,
+  formState,
+  setFormState,
+}): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [currentValue, setCurrentValue] = useState(control.value);
+  const [currentValue, setCurrentValue] = useState(control.control_value);
   const { currentRoute } = useRouter();
-  // console.log(control.conditional);
-  // // console.log(control.isConditional);
-  // console.log(control.conditionalInitState);
+  useEffect(() => {
+    setCurrentValue(control.control_value);
+  }, [control.control_value]);
+
+  useEffect(() => {
+    updateFormState(formState, control.control_id, currentValue, setFormState);
+  }, [formState, control.control_id, currentValue, setFormState]);
 
   const saveValue = useCallback(
     (value: string) => {
-      const regexControl = new RegExp(control.regex, 'i');
-      if (control.regex && !value.match(regexControl) && value) {
-        setErrorMessage(control.regexMsg);
+      if (control.control_regex && value) {
+        const regexControl = new RegExp(control.control_regex, 'i');
+        if (!value.match(regexControl)) {
+          setErrorMessage(control.control_regex_msg);
 
-        return;
+          return;
+        }
       }
 
       if (!checkIfSameValues(value, currentValue)) {
@@ -49,8 +63,8 @@ export const TextControl: React.FC<IProps> = ({ control, fileId }): React.ReactE
       setCurrentValue(value);
       const q: Record<string, string> = {
         file_id: fileId,
-        elm_id: control.id,
-        control_family: control.family,
+        elm_id: control.control_id,
+        control_family: control.control_family,
         elm_val: value,
       };
 
@@ -59,11 +73,11 @@ export const TextControl: React.FC<IProps> = ({ control, fileId }): React.ReactE
     [
       send,
       fileId,
-      control.id,
+      control.control_id,
       currentRoute,
-      control.family,
-      control.regex,
-      control.regexMsg,
+      control.control_family,
+      control.control_regex,
+      control.control_regex_msg,
       currentValue,
       setCurrentValue,
       control.mandatory,
@@ -73,7 +87,9 @@ export const TextControl: React.FC<IProps> = ({ control, fileId }): React.ReactE
   useEffect(() => {
     if (control.mandatory && control.editable && !currentValue) {
       setErrorMessage('Valeur obligatoire');
-      // Todo instead of set a error message put a star in side of label
+    }
+    if (!control.mandatory) {
+      setErrorMessage(null);
     }
   }, [control.mandatory, control.editable, currentValue]);
 
@@ -88,10 +104,16 @@ export const TextControl: React.FC<IProps> = ({ control, fileId }): React.ReactE
       <TextControlStyled>
         <ControlLabel control={control} />
         <InputBase
-          placeholder={control.editable ? control.title : control.value}
+          placeholder={
+            control.editable
+              ? control.control_title
+              : currentValue
+              ? currentValue
+              : ''
+          }
           disabled={!control.editable}
           color={control.editable ? 'text' : 'disabled'}
-          defaultValue={currentValue || control.value}
+          defaultValue={currentValue ? currentValue : ''}
           onBlur={(e) => saveValue(e.currentTarget.value)}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}

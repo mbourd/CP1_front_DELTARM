@@ -6,7 +6,8 @@ export interface IEditValidationContext {
   fileId: string;
 }
 
-export const EditValidationContext = React.createContext<IEditValidationContext>({
-  data: null,
-  fileId: '',
-});
+export const EditValidationContext =
+  React.createContext<IEditValidationContext>({
+    data: null,
+    fileId: '',
+  });

@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { ICompliance, IControl } from '../../../../types';
+import { ICompliance } from '../../../../types';
 import { CheckboxCompliance } from './CheckboxCompliance/CheckboxCompliance';
 import { ModalCompliance } from './ModalCompliance/ModalCompliance';
 import { InsertDriveFile } from '@material-ui/icons';
@@ -12,7 +12,6 @@ interface IComplianceProps {
   fileId: string;
   setIsResolved: React.Dispatch<React.SetStateAction<boolean>>;
   choiceIsKo: boolean;
-  control: IControl;
   compliance: ICompliance;
 }
 
@@ -25,9 +24,8 @@ export const Compliance: React.FC<IComplianceProps> = ({
   compliance,
   label,
 }): React.ReactElement | null => {
-  const [showComplianceFields, setShowComplianceFields] = useState<boolean>(
-    false,
-  );
+  const [showComplianceFields, setShowComplianceFields] =
+    useState<boolean>(false);
   const handleClickDetailsCompliance = useCallback(() => {
     setShowComplianceFields(!showComplianceFields);
   }, [setShowComplianceFields, showComplianceFields]);

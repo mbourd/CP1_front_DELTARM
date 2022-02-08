@@ -5,9 +5,8 @@ import { Radio } from '../../Radio';
 import { SelectContext } from '../SelectContext';
 
 export const SelectBody: React.FC = (): React.ReactElement => {
-  const { data, selectedValues, multiple, name, onChange } = useContext(
-    SelectContext,
-  );
+  const { data, selectedValues, multiple, name, onChange } =
+    useContext(SelectContext);
 
   return (
     <SelectBodyStyled className={'_SelectBody'}>

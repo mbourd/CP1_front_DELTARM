@@ -3,6 +3,7 @@ import { Box, Grid, List } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { EditHeaderStyled, EditStyled } from './Edit.style';
 import {
+  isEmpty,
   router,
   SecurityContext,
   storage,
@@ -32,17 +33,26 @@ export const EditValidation: React.FC<IProps> = ({
   const [currentSection, setCurrentSection] = useState<string | null>(null);
   const { user } = useSecurity();
   const { logout } = useContext(SecurityContext);
+
+  // To avoid (bpi specific)
   const { id } = router.getParams();
+  const frontRouterQueries = router.getQueries();
 
   if (!user.isLogged()) {
     logout();
   }
 
   useEffect(() => {
-    const queries: Record<string, any> = { file_id: id };
+    // To avoid (bpi specific)
+    let queries: Record<string, any> = { file_id: id };
+
+    // NEW WAY FOR DYNAMIC PARAMETERS, THE GOAL IS TO HAVE DYNAMIC PARAMETERS FOR ALL CLIENTS
+    if (!isEmpty(frontRouterQueries)) {
+      queries = frontRouterQueries;
+    }
+
     if (currentSection) {
       queries.section_id = currentSection;
-      router.setQueries({});
     }
 
     send(apiRouteName, {}, queries);
@@ -50,7 +60,7 @@ export const EditValidation: React.FC<IProps> = ({
     return () => {
       request.abort();
     };
-  }, [send, id, currentSection, request, apiRouteName]);
+  }, [send, id, currentSection, request, apiRouteName, frontRouterQueries]);
 
   return (
     <SwitchCallState
@@ -69,7 +79,9 @@ export const EditValidation: React.FC<IProps> = ({
             </HeadingOne>
           </EditHeaderStyled>
 
-          <EditValidationContext.Provider value={{ data, fileId: id }}>
+          <EditValidationContext.Provider
+            value={{ data, fileId: id ? id : frontRouterQueries.file_id }}
+          >
             <Grid container wrap={'nowrap'}>
               <Grid item className={'nav'}>
                 <List>

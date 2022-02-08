@@ -9,6 +9,7 @@ interface IProps {
 
 export const ButtonStyled = styled.span<IProps>`
   display: inline-block;
+  white-space: nowrap;
 
   .MuiButtonBase-root,
   .MuiButton-root {

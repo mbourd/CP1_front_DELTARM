@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { ClickAwayListener } from '@material-ui/core';
+import { ClickAwayListener } from '@mui/material';
 import { SelectStyled } from './Select.style';
 import { ISelect, ISelectData } from './types';
 import { SelectLabel } from './Label/SelectLabel';
@@ -20,7 +20,7 @@ export const Select: React.FC<ISelect> = ({
   bdr,
   children,
   data,
-  multiple = true,
+  multiple = false,
   name,
   selectedValues = {},
   onInit,
@@ -44,7 +44,7 @@ export const Select: React.FC<ISelect> = ({
     if (values.includes('undefined')) {
       values.splice(values.indexOf('undefined'), 1);
     }
-    values.map((key, index) => {
+    values.map((key) => {
       if (key) {
         return (selectedValues = { ...selectedValues, [key]: true });
       }

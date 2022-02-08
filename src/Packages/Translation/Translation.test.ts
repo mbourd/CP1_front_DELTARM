@@ -10,7 +10,9 @@ describe('Translation', () => {
     });
 
     expect(translation.getAllResources()).toStrictEqual({
-      en: { common: { connexion: 'Connexion message', remove: 'Remove message' } },
+      en: {
+        common: { connexion: 'Connexion message', remove: 'Remove message' },
+      },
     });
   });
 

@@ -18,13 +18,15 @@ describe('Router', () => {
   });
 
   it('should generate path without queries', () => {
-    expect(router.generatePath('ShowUser', { id: 42 })).toStrictEqual('/user/42/show');
+    expect(router.generatePath('ShowUser', { id: 42 })).toStrictEqual(
+      '/user/42/show',
+    );
   });
 
   it('should generate path with  queries', () => {
-    expect(router.generatePath('ShowUser', { id: 42 }, { name: 'john', count: 42 })).toStrictEqual(
-      '/user/42/show?name=john&count=42',
-    );
+    expect(
+      router.generatePath('ShowUser', { id: 42 }, { name: 'john', count: 42 }),
+    ).toStrictEqual('/user/42/show?name=john&count=42');
   });
 
   it('should return null if route is not defined', () => {

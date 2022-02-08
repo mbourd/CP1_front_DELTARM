@@ -2,11 +2,11 @@ import React, { SetStateAction } from 'react';
 import { Grid, makeStyles, Theme } from '@material-ui/core';
 import { BPITooltip, FormLabel } from 'Shared/components';
 import { HelpIcon, theme } from 'Styles';
-import { IControl } from 'Features/Edit/types';
+import { IApiControl } from 'Features/Edit/types';
 import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
 
 interface IProps {
-  control: IControl;
+  control: IApiControl;
   isOpen: boolean;
   setIsOpen: React.Dispatch<SetStateAction<boolean>>;
 }
@@ -43,12 +43,12 @@ export const InfoBlockControlLabel: React.FC<IProps> = ({
           classes={classes}
         >
           <Grid container component={'span'} alignItems={'center'}>
-            {control.title}
+            {control.control_title}
             {isOpen ? <ArrowUpward /> : <ArrowDownward />}
           </Grid>
           <Grid item component={'span'}>
-            {control.desc1 ? (
-              <BPITooltip title={control.desc1}>
+            {control.control_desc_1 ? (
+              <BPITooltip title={control.control_desc_1}>
                 <span>
                   <HelpIcon fontSize={'small'} />
                 </span>

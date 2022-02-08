@@ -1,7 +1,9 @@
 import { useMemo, useState, useRef, useCallback } from 'react';
 
 import {
-  ApiRequestBodyType, ApiRequestFileType, ApiRequestHeadersType,
+  ApiRequestBodyType,
+  ApiRequestFileType,
+  ApiRequestHeadersType,
   ApiRequestHostType,
   ApiRequestParamsType,
   ApiRequestProtocolType,
@@ -26,7 +28,10 @@ export const useApi = <T>(
   const data = useRef<T | null>(null);
   const error = useRef<IUseApiError | null>(null);
   const callState = useRef<UseApiCallStateType>('NOT_INIT');
-  const request = useMemo(() => new ApiRequest(host, protocol), [host, protocol]);
+  const request = useMemo(
+    () => new ApiRequest(host, protocol),
+    [host, protocol],
+  );
 
   const send = useCallback(
     (
@@ -77,7 +82,11 @@ export const useApi = <T>(
       currentRoute.current = route;
       const mergeBody = Object.assign({}, route.body || {}, body);
       const mergeQueries = Object.assign({}, route.queries || {}, queries);
-      request.setUrl(url).setMethod(route.method).setQueries(mergeQueries).setBody(mergeBody);
+      request
+        .setUrl(url)
+        .setMethod(route.method)
+        .setQueries(mergeQueries)
+        .setBody(mergeBody);
       if (file) {
         request.setBody(file);
       }
@@ -116,7 +125,11 @@ export const useApi = <T>(
         }
         callState.current = 'SUCCESS';
         if (currentRoute.current && currentRoute.current.callState) {
-          callState.current = currentRoute.current.callState(res.body, null, callState.current);
+          callState.current = currentRoute.current.callState(
+            res.body,
+            null,
+            callState.current,
+          );
         }
         data.current = res.body;
         error.current = null;
@@ -142,7 +155,11 @@ export const useApi = <T>(
         }
         data.current = null;
         if (currentRoute.current && currentRoute.current.callState) {
-          callState.current = currentRoute.current.callState(null, err, callState.current);
+          callState.current = currentRoute.current.callState(
+            null,
+            err,
+            callState.current,
+          );
         }
         setIsLoading(false);
       });
@@ -150,7 +167,11 @@ export const useApi = <T>(
     [request, router, promise],
   );
 
-  if (error.current && error.current.status >= 400 && error.current.status <= 499) {
+  if (
+    error.current &&
+    error.current.status >= 400 &&
+    error.current.status <= 499
+  ) {
     callState.current = error.current?.response ? 'BAD_REQUEST' : 'NOT_FOUND';
   }
 

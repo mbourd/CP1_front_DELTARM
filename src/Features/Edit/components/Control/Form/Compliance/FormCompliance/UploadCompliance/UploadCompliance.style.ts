@@ -11,7 +11,3 @@ export const UploadComplianceStyled = styled.div`
     cursor: inherit;
   }
 `;
-
-export const DownloadFile = styled.a`
-  margin-left: 5px;
-`;

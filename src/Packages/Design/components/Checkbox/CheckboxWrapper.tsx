@@ -27,7 +27,7 @@ export const CheckboxWrapper: React.FC<ICheckboxWrapper> = ({
     if (values.includes('undefined')) {
       values.splice(values.indexOf('undefined'), 1);
     }
-    values.map((key, index) => {
+    values.map((key) => {
       if (key) {
         return (selectedValues = { ...selectedValues, [key]: true });
       }
@@ -88,7 +88,14 @@ export const CheckboxWrapper: React.FC<ICheckboxWrapper> = ({
 
   return (
     <CheckboxContext.Provider
-      value={{ data, multiple, name, selectedValues: selected, onChange: onValueChange, disabled }}
+      value={{
+        data,
+        multiple,
+        name,
+        selectedValues: selected,
+        onChange: onValueChange,
+        disabled,
+      }}
     >
       <Button
         disabled={disabled}

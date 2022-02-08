@@ -2,10 +2,10 @@ import React from 'react';
 import { Grid, makeStyles, Theme } from '@material-ui/core';
 import { BPITooltip, FormLabel } from 'Shared/components';
 import { HelpIcon } from 'Styles';
-import { ControlFontSize, IControl } from 'Features/Edit/types';
+import { ControlFontSize, IApiControl } from 'Features/Edit/types';
 
 interface IProps {
-  control: IControl;
+  control: IApiControl;
 }
 
 const useStyles = makeStyles<
@@ -22,8 +22,8 @@ export const ControlLabel: React.FC<IProps> = ({
   control,
 }): React.ReactElement => {
   const classes = useStyles({
-    fontSize: control.fontSize,
-    fontColor: control.fontColor,
+    fontSize: control.control_font_size,
+    fontColor: control.control_font_color,
   });
 
   return (
@@ -36,11 +36,11 @@ export const ControlLabel: React.FC<IProps> = ({
           wrap={'nowrap'}
         >
           <Grid item component={'span'} xs={12} classes={classes}>
-            {control.title}
+            {control.control_title}
           </Grid>
           <Grid item component={'span'}>
-            {control.desc1 ? (
-              <BPITooltip title={control.desc1}>
+            {control.control_desc_1 ? (
+              <BPITooltip title={control.control_desc_1}>
                 <span>
                   <HelpIcon fontSize={'small'} />
                 </span>

@@ -19,7 +19,7 @@ export const MainNav: React.FC = (): React.ReactElement => {
   const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(null);
   const theme = useTheme();
   const [trans] = useTrans('Default');
-  const { logout } = useContext(SecurityContext);
+  const { data: dataSecurity, logout } = useContext(SecurityContext);
 
   const handleClick = useCallback(
     (event: React.MouseEvent<SVGSVGElement>) => {
@@ -41,7 +41,7 @@ export const MainNav: React.FC = (): React.ReactElement => {
   return (
     <>
       <MenuIcon
-        fontSize={'default'}
+        fontSize={'medium'}
         onClick={handleClick}
         className={'menu-icon' + (anchorEl ? ' active' : '')}
       />
@@ -64,52 +64,58 @@ export const MainNav: React.FC = (): React.ReactElement => {
               )}
             </ListItem>
 
-            <ListItem
-              component={Link}
-              to={
-                router.generatePath('manage', {}, { state_id: 1 }) || '/manage'
-              }
-              onClick={hideNav}
-            >
-              <FolderOpenIcon />
-              <ListItemText>{trans('filesToBeProcessed')}</ListItemText>
-            </ListItem>
+            {dataSecurity.context !== 'contr_perm' && (
+              <>
+                <ListItem
+                  component={Link}
+                  to={
+                    router.generatePath('manage', {}, { state_id: 1 }) ||
+                    '/manage'
+                  }
+                  onClick={hideNav}
+                >
+                  <FolderOpenIcon />
+                  <ListItemText>{trans('filesToBeProcessed')}</ListItemText>
+                </ListItem>
 
-            <ListItem
-              component={Link}
-              to={
-                router.generatePath('manage', {}, { state_id: 2 }) || '/manage'
-              }
-              onClick={hideNav}
-            >
-              <FolderWaitingIcon />
-              <ListItemText>{trans('filesInValidation')}</ListItemText>
-            </ListItem>
+                <ListItem
+                  component={Link}
+                  to={
+                    router.generatePath('manage', {}, { state_id: 2 }) ||
+                    '/manage'
+                  }
+                  onClick={hideNav}
+                >
+                  <FolderWaitingIcon />
+                  <ListItemText>{trans('filesInValidation')}</ListItemText>
+                </ListItem>
 
-            <ListItem
-              component={Link}
-              to={
-                router.generatePath('manage', {}, { state_id: 3 }) || '/manage'
-              }
-              onClick={hideNav}
-            >
-              <FolderInfoIcon />
-              <ListItemText>{trans('rejectedFiles')}</ListItemText>
-            </ListItem>
+                <ListItem
+                  component={Link}
+                  to={
+                    router.generatePath('manage', {}, { state_id: 3 }) ||
+                    '/manage'
+                  }
+                  onClick={hideNav}
+                >
+                  <FolderInfoIcon />
+                  <ListItemText>{trans('rejectedFiles')}</ListItemText>
+                </ListItem>
 
-            <ListItem
-              component={Link}
-              to={router.generatePath('manage') || '/manage'}
-              onClick={hideNav}
-            >
-              <FolderIcon />
-              <ListItemText>{trans('allFiles')}</ListItemText>
-            </ListItem>
+                <ListItem
+                  component={Link}
+                  to={router.generatePath('manage') || '/manage'}
+                  onClick={hideNav}
+                >
+                  <FolderIcon />
+                  <ListItemText>{trans('allFiles')}</ListItemText>
+                </ListItem>
+              </>
+            )}
             <ListItem
               component={Link}
               to={router.generatePath('logout') || '/logout'}
-              onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                e.preventDefault();
+              onClick={() => {
                 logout();
               }}
             >
@@ -119,7 +125,9 @@ export const MainNav: React.FC = (): React.ReactElement => {
           </List>
         </MainNavStyled>
         <ListItem>
-          <ListItemText style={{ textAlign: 'right' }}>Version 1.0.0</ListItemText>
+          <ListItemText style={{ textAlign: 'right' }}>
+            Version 1.0.0
+          </ListItemText>
         </ListItem>
       </Popper>
     </>
