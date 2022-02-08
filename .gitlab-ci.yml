@@ -116,7 +116,6 @@ deploy test:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - ssh-keyscan $SERVER_HOST_TEST >> ~/.ssh/known_hosts
-    - ssh-keyscan -H $SERVER_HOST_TEST >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
     - docker login $CI_REGISTRY_IMAGE -u $GITLAB_CI_USERNAME -p $GITLAB_CI_TOKEN
   script:
