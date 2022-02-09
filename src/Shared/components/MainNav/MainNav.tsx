@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import version from '../../../build-version.json';
 import { List, ListItem, ListItemText } from '@material-ui/core';
 import {
   FolderIcon,
@@ -126,7 +127,7 @@ export const MainNav: React.FC = (): React.ReactElement => {
         </MainNavStyled>
         <ListItem>
           <ListItemText style={{ textAlign: 'right' }}>
-            Version 1.0.0
+            {`Version ${version.buildMajor}.${version.buildMinor}.${version.buildRevision}`}
           </ListItemText>
         </ListItem>
       </Popper>
