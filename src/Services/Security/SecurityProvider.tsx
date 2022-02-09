@@ -3,6 +3,7 @@ import IdleTimer from 'react-idle-timer';
 import { ISecurity, IUser, JwtData, User } from 'Packages/Security';
 import { useApi } from 'Services/Api';
 import { getEnv } from 'Services/Helpers';
+import version from '../../build-version.json';
 
 export interface ISecurityProviderContext {
   user: IUser;
@@ -58,7 +59,10 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({
       const { body } = await send(
         'login',
         {},
-        { token, front_version: '1.0.0' },
+        {
+          token,
+          front_version: `${version.buildMajor}.${version.buildMinor}.${version.buildRevision}`,
+        },
       );
       const user = new User();
       user.fromJwt(body.data.jwt);
