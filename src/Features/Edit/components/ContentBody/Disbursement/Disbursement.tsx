@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { EditValidationContext } from 'Features';
-import { ContentTitle } from '../../ContentTitle/ContentTitle';
 import { ContentHeader } from '../../ContentHeader/ContentHeader';
 import { FormControls } from '../../Control';
 
@@ -14,7 +13,6 @@ export const Disbursement: React.FC = (): React.ReactElement | null => {
   return (
     <>
       <ContentHeader />
-      <ContentTitle>Décaissement</ContentTitle>
       <FormControls chapters={data?.currentSection.chapters} />
     </>
   );
