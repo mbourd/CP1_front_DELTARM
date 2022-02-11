@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
 import { EditValidationContext } from 'Features';
-import { ContentTitle } from '../../ContentTitle/ContentTitle';
 import { ContentHeader } from '../../ContentHeader/ContentHeader';
-import { DisplayControl } from '../../Control';
+import { FormControls } from '../../Control';
 
 export const Disbursement: React.FC = (): React.ReactElement | null => {
   const { data } = useContext(EditValidationContext);
@@ -14,8 +13,7 @@ export const Disbursement: React.FC = (): React.ReactElement | null => {
   return (
     <>
       <ContentHeader />
-      <ContentTitle>Décaissement</ContentTitle>
-      <DisplayControl controls={data.currentSection.chapters[0].controls} />
+      <FormControls chapters={data?.currentSection.chapters} />
     </>
   );
 };

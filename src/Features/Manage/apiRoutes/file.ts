@@ -79,21 +79,23 @@ apiRouter.registerRoute({
   method: 'post',
   type: 'KSIOP',
   handler: (data): IKSIOPManualInput => {
-    const fields: IMissingField[] = data.data.fields.map((field: IMissingField) => {
-      if (field.type === 'selectList') {
-        const newOptions: ISelectData[] = [];
-        field.option?.map((option: any) => {
-          newOptions[option.id] = {
-            id: option.id,
-            label: option.label,
-            value: option.value,
-          };
-          field.option = newOptions;
-        });
-      }
+    const fields: IMissingField[] = data.data.fields.map(
+      (field: IMissingField) => {
+        if (field.type === 'select_list') {
+          const newOptions: ISelectData[] = [];
+          field.option?.map((option: any) => {
+            newOptions[option.id] = {
+              id: option.id,
+              label: option.label,
+              value: option.value,
+            };
+            field.option = newOptions;
+          });
+        }
 
-      return field;
-    });
+        return field;
+      },
+    );
 
     return {
       buttons: data.data.btn,

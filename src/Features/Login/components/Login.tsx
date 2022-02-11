@@ -29,7 +29,7 @@ const Login: React.FC = (): React.ReactElement => {
     if (token) {
       logUser(token)
         .then(() => {
-          if (user.isLogged()) {
+          if (user.isLogged() && user.hasJwt()) {
             // We need the updated state immediately available
             window.location.href = '/';
           }

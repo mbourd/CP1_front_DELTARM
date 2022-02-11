@@ -11,4 +11,5 @@ export interface IButton {
   href?: string;
   disabled?: boolean;
   onClick?: (e: React.MouseEvent) => void;
+  style?: React.CSSProperties;
 }

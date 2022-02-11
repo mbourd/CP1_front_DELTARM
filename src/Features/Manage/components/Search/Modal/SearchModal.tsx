@@ -27,14 +27,8 @@ export const SearchModal: React.FC<IProps> = ({
   onClose,
   open,
 }): React.ReactElement | null => {
-  const {
-    request,
-    error,
-    callState,
-    route,
-    send,
-    data,
-  } = useApi<IFileSearchApiReturn | null>();
+  const { request, error, callState, route, send, data } =
+    useApi<IFileSearchApiReturn | null>();
   const {
     send: sendManualInput,
     data: dataManualInput,
@@ -42,9 +36,9 @@ export const SearchModal: React.FC<IProps> = ({
     route: routeManualInput,
   } = useApi<IKSIOPManualInput | null>();
 
-  const file = (storage.getData(
-    'shared.component.search.value',
-  ) as string).split(/ *\/ */);
+  const file = (
+    storage.getData('shared.component.search.value') as string
+  ).split(/ *\/ */);
   const file_num = file[0];
   const file_avenant = file[1];
 
@@ -100,12 +94,13 @@ export const SearchModal: React.FC<IProps> = ({
   // we don't have the time and bpi wants specific handling for each call state
   let footer = null;
   if (callState === 'BAD_REQUEST' && route?.type === 'DRM') {
-    // case we don't find the file from search/file, we change the create url by client, ksiop is only for BPI
-    if (error?.response?.body.data.btn[1]?.route.url) {
-      apiRouter.changeRouteUrl(
-        'searchFileKSIOP',
-        error?.response?.body.data.btn[1].route.url,
-      );
+    if (error?.response?.body.data.btn) {
+      error.response.body.data.btn.map((btn: any) => {
+        // case we don't find the file from search/file, we change the create url by client, ksiop is only for BPI
+        if (btn.route.url) {
+          apiRouter.changeRouteUrl('searchFileKSIOP', btn.route.url);
+        }
+      });
     }
     footer = (
       <SearchModalFooterStyled>

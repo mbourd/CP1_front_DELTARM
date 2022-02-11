@@ -90,10 +90,26 @@ export interface ISelect {
    */
   bdr?: string;
 
-  onInit?: (selectedValues: Record<string, true>, name?: string, data?: ISelectData | undefined) => void;
-  onOpen?: (selectedValues: Record<string, true>, name?: string, data?: ISelectData | undefined) => void;
-  onClose?: (selectedValues: Record<string, true>, name?: string, data?: ISelectData | undefined) => void;
-  onChange?: (selectedValues: Record<string, true>, name?: string, data?: ISelectData | undefined) => void;
+  onInit?: (
+    selectedValues: Record<string, true>,
+    name?: string,
+    data?: ISelectData | undefined,
+  ) => void;
+  onOpen?: (
+    selectedValues: Record<string, true>,
+    name?: string,
+    data?: ISelectData | undefined,
+  ) => void;
+  onClose?: (
+    selectedValues: Record<string, true>,
+    name?: string,
+    data?: ISelectData | undefined,
+  ) => void;
+  onChange?: (
+    selectedValues: Record<string, true>,
+    name?: string,
+    data?: ISelectData | undefined,
+  ) => void;
   onBlur?: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   error?: boolean;
   choiceIsKo?: boolean;

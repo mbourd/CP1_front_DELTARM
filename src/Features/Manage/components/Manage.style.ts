@@ -9,7 +9,8 @@ export const ManageStyled = styled.div`
     border-radius: ${({ theme }) => theme.sizing.radius};
     display: flex;
     margin-bottom: ${({ theme }) => theme.spacing.normal};
-    padding: ${({ theme }) => '0 ' + theme.spacing.normal + ' 0 ' + theme.spacing.small};
+    padding: ${({ theme }) =>
+      '0 ' + theme.spacing.normal + ' 0 ' + theme.spacing.small};
 
     .divider {
       height: 28px;

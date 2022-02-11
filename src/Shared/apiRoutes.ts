@@ -7,6 +7,12 @@ apiRouter.registerRoute({
 });
 
 apiRouter.registerRoute({
+  name: 'interfaceButtons',
+  path: '/interface/nav_btn',
+  method: 'get',
+});
+
+apiRouter.registerRoute({
   name: 'userInfo',
   path: '/user/info',
   method: 'get',

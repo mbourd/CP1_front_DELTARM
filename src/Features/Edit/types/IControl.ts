@@ -9,24 +9,29 @@ export type ControlTypeType =
   | 'percent'
   | 'date'
   | 'timestamp'
-  | 'selectlist'
+  | 'select_list'
   | 'comment'
   | 'file_upload'
   | 'radio'
   | 'checkbox'
   | 'multiple_list'
-  | 'radio'
-  | 'checkbox'
   | 'email'
   | 'auth_num'
-  | 'info_block';
+  | 'info_block'
+  | 'formula'
+  | 'long_text'
+  | 'time'
+  | 'rich_text'
+  | 'boolean'
+  | 'slider';
 
 export type ControlFontSize = 'standard' | 'bold';
 
 export interface IApiAnswerChoice {
-  choice_id: string;
+  choice_id: number;
   choice_lib: string;
   choice_is_ko?: boolean;
+  choice_value: number | null;
 }
 
 export interface IApiCompliance {
@@ -41,9 +46,7 @@ export interface IApiCompliance {
 
 export interface IApiConditional {
   conditional_by_field_id: number;
-  conditional_display_type: string;
   conditional_formula: string;
-  conditional_init_state: boolean;
 }
 
 export interface IApiComplianceData {
@@ -56,6 +59,7 @@ export interface IApiComplianceData {
   compliance_elm_type: ControlTypeType;
   compliance_elm_value: string;
   compliance_id: string;
+  compliance_upload_detail: IUploadDetail[] | null;
 }
 
 export interface IComplianceData {
@@ -69,6 +73,7 @@ export interface IComplianceData {
   type: ControlTypeType;
   value: string;
   answerChoices?: Record<string, ISelectData>;
+  uploadDetail: IUploadDetail[] | null;
 }
 
 export interface ICompliance {
@@ -81,52 +86,108 @@ export interface ICompliance {
 }
 
 export interface IConditional {
-  byField: number;
-  displayType: string;
+  byField: string;
   formula: string;
   conditionalInitState: boolean;
+}
+
+export interface IFormula {
+  map: ITranslationFormula[] | null;
+  formula: string;
+}
+
+export interface ISliderOptions {
+  min: number | null;
+  max: number | null;
+  step: number | null;
+  marks: boolean | null;
+  color?: string | null;
+  disabled?: boolean | null;
+  boundaries:
+    | {
+        value: number;
+        label: string;
+      }[]
+    | null;
+}
+
+export interface IDateTimestampOptions {
+  min: number | null;
+  max: number | null;
+}
+
+export interface IPercentOptions {
+  min: number | null;
+  max: number | null;
+  precision: number | null;
+}
+
+export interface IDecimalOptions {
+  min: number | null;
+  max: number | null;
+  precision: number | null;
+  unit: string | null;
+}
+
+export interface IFinancialOptions {
+  min: number | null;
+  max: number | null;
+  precision: number | null;
+  unit: string | null;
+}
+
+export interface IIntegerOptions {
+  min: number | null;
+  max: number | null;
+  unit: string | null;
+}
+
+export interface ITranslationFormula {
+  min: number;
+  max: number;
+  color: string | null;
+  lib: string;
+}
+
+export interface IControlOptions
+  extends IFinancialOptions,
+    IIntegerOptions,
+    IDateTimestampOptions,
+    ISliderOptions,
+    IDecimalOptions,
+    IPercentOptions {}
+
+export interface IUploadDetail {
+  file_id: string;
+  file_name: string;
 }
 
 export interface IApiControl {
   control_desc_1: string | null;
   control_desc_2: string | null;
   control_editable: boolean;
+  editable?: boolean;
+  control_conditional: boolean;
   control_id: string;
   control_mandatory: boolean;
+  mandatory: boolean;
   control_previous_value: string | null;
   control_title: string;
   control_type: ControlTypeType;
-  control_value: string;
+  control_value: string | null;
   control_answer_choices?: IApiAnswerChoice[];
+  answerChoices?: Record<string, ISelectData>;
   control_font_color?: string;
   control_font_size?: ControlFontSize;
   control_family: string;
-  control_regex: RegExp;
-  control_regex_msg: string;
+  control_regex: RegExp | null;
+  control_regex_msg: string | null;
   control_manage_compliance: boolean;
-  control_conditional: boolean;
-  conditional: IApiConditional;
-  compliance: IApiCompliance;
-}
-
-export interface IControl {
-  desc1: string | null;
-  desc2: string | null;
-  editable: boolean;
-  isConditional: boolean;
-  id: string;
-  mandatory: boolean;
-  previousValue: string | null;
-  title: string;
-  type: ControlTypeType;
-  value: string;
-  answerChoices?: Record<string, ISelectData>;
-  fontColor?: string;
-  fontSize?: ControlFontSize;
-  family: string;
-  regex: RegExp;
-  regexMsg: string;
-  manageCompliance: boolean;
-  compliance?: ICompliance;
-  conditional?: IConditional;
+  control_pg_base_type?: string | null;
+  conditional?: IApiConditional;
+  compliance?: IApiCompliance;
+  formula?: IFormula;
+  useCompliance?: ICompliance;
+  control_options: IControlOptions | null;
+  upload_detail: IUploadDetail[] | null;
 }

@@ -1,5 +1,12 @@
 import { ITheme } from '../../types';
-import { BPIBreakpoint, BPIColor, BPISpacing, BPIFont, BPIData, BPISizing } from './variables';
+import {
+  BPIBreakpoint,
+  BPIColor,
+  BPISpacing,
+  BPIFont,
+  BPIData,
+  BPISizing,
+} from './variables';
 
 export const BPITheme: ITheme = {
   color: BPIColor,

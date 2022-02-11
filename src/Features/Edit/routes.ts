@@ -1,10 +1,10 @@
 import { apiRouter, router } from 'Services';
 import { Edit } from 'Features/Edit';
-import {IApiComplianceData, IComplianceData} from "./types";
+import { IApiComplianceData, IComplianceData } from './types';
 
 router.registerRoute({
   name: 'edit',
-  path: '/file/:id/edit',
+  path: '/file/edit/:id?',
   component: Edit,
   exact: true,
   strict: false,
@@ -41,6 +41,7 @@ apiRouter.registerRoute({
         regexMsg: compliance.compliance_elm_regex_msg,
         type: compliance.compliance_elm_type,
         value: compliance.compliance_elm_value,
+        uploadDetail: compliance.compliance_upload_detail,
       };
       complianceElms.push(com);
 

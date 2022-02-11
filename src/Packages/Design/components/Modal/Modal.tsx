@@ -19,6 +19,7 @@ export const Modal: React.FC<IModal> = ({
   header,
   width = 'md',
   height,
+  maxHeight,
   dividers = false,
   onClose,
 }) => {
@@ -33,7 +34,7 @@ export const Modal: React.FC<IModal> = ({
       fullWidth={true}
       PaperProps={{
         elevation: 0,
-        style: { height: height },
+        style: { height: height, maxHeight: maxHeight },
       }}
     >
       <DialogTitle disableTypography={true} className={'_ModalTitle'}>

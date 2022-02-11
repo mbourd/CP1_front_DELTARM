@@ -13,7 +13,7 @@ export const Edit: React.FC<IProps> = (props): React.ReactElement => {
 
   return (
     <>
-      <BreadCrumb values={['Dashboard', 'Manage', 'Edit']} />
+      <BreadCrumb values={['Dashboard', 'Edit']} />
       <EditValidation {...props} />
     </>
   );

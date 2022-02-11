@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Grid } from '@material-ui/core';
-import { IControl } from 'Features/Edit/types';
+import { IApiControl } from 'Features/Edit/types';
 import { InfoBlockControlStyled } from './InfoBlockControl.style';
 import { InfoBlockControlLabel } from './InfoBlockControlLabel';
 import { ControlFooter } from '../ControlFooter';
 
 interface IProps {
-  control: IControl;
+  control: IApiControl;
 }
 
 export const InfoBlockControl: React.FC<IProps> = ({
@@ -24,7 +24,11 @@ export const InfoBlockControl: React.FC<IProps> = ({
         />
         {isOpen && (
           <>
-            <div dangerouslySetInnerHTML={{ __html: control.value }} />
+            <div
+              dangerouslySetInnerHTML={{
+                __html: control.control_value ? control.control_value : '',
+              }}
+            />
             <ControlFooter control={control} />
           </>
         )}

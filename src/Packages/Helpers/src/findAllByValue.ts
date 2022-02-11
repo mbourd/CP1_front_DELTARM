@@ -1,6 +1,10 @@
 import { getByKey, ObjectLiteralType } from './';
 
-export const findAllByValue = (elements: unknown[], key: string, value: unknown): unknown[] => {
+export const findAllByValue = (
+  elements: unknown[],
+  key: string,
+  value: unknown,
+): unknown[] => {
   const length = elements.length;
   const values = [];
 

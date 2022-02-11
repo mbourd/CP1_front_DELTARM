@@ -1,4 +1,7 @@
 {
+  "plugins": [
+    "react-hooks"
+  ],
   "parser": "@typescript-eslint/parser",
   "extends": [
     "plugin:react/recommended",
@@ -16,16 +19,21 @@
   },
   "rules": {
     "@typescript-eslint/explicit-module-boundary-types": ["off"],
-    "newline-before-return": ["error"],
-    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "newline-before-return": ["warn"],
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
     "no-eval": ["error"],
     "react/prop-types": ["off"],
     "@typescript-eslint/no-explicit-any": ["off"],
-    "@typescript-eslint/ban-ts-comment": ["off"]
+    "@typescript-eslint/ban-ts-comment": ["off"],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   },
   "settings": {
     "react": {
       "version": "detect"
     }
-  }
+  },
+  "ignorePatterns": [
+    "src/**/*.test.tsx"
+  ]
 }

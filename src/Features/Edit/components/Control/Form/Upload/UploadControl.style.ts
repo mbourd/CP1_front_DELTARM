@@ -2,7 +2,7 @@ import styled from 'styled-components/macro';
 
 export const UploadControlStyled = styled.div`
   position: relative;
-  border: 1px solid black;
+  border: 1px solid #e0dddc;
   border-radius: 5px;
   padding: 0.3em;
 
@@ -13,5 +13,5 @@ export const UploadControlStyled = styled.div`
 `;
 
 export const DownloadFile = styled.a`
-  margin-left: 5px;
+  margin: 5px;
 `;

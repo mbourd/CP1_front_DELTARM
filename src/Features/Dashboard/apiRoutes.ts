@@ -1,5 +1,10 @@
 import { apiRouter } from 'Services';
-import { ICard, ICardBodyRow, ICardFooter, ICardHeader } from './components/Card/types';
+import {
+  ICard,
+  ICardBodyRow,
+  ICardFooter,
+  ICardHeader,
+} from './components/Card/types';
 import { AppActionContextType } from 'Shared/types';
 
 interface IApiStage {

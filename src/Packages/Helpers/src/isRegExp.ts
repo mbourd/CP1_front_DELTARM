@@ -1,3 +1,4 @@
 import { getType } from './';
 
-export const isRegExp = (object: unknown): boolean => 'RegExp' === getType(object);
+export const isRegExp = (object: unknown): boolean =>
+  'RegExp' === getType(object);

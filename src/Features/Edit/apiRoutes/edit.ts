@@ -1,81 +1,55 @@
 import { apiRouter } from 'Services';
-import { IAction, IApiData, IChapter, IControl, ICurrentSection, IData, ISection, IState } from '../types';
+import {
+  IAction,
+  IApiControl,
+  IApiDataEdit,
+  IChapter,
+  ICurrentSection,
+  IData,
+  ISection,
+  IState,
+} from '../types';
 import { ISelectData } from 'Shared/components';
+import { IButtons } from '../../DashboardDynamic/components/types';
 
 export const editValidationHandlerCallback = (response: any) => {
-  const apiData: IApiData = response.data;
+  const apiData: IApiDataEdit = response.data;
   const actions: IAction[] = [];
+  const actions_contr_perm: IButtons[] = [];
   const chapters: IChapter[] = [];
 
-  apiData.actions.map((datum) => {
-    actions.push({
-      id: '' + datum.id_action,
-      label: datum.action_lib,
-      url: datum.route,
-      code: datum.action_code,
-    });
-
-    return datum;
-  });
-
   apiData.current_section.chapters.map((chapter) => {
-    const controls: IControl[] = [];
+    const controls: IApiControl[] = [];
     chapter.controls.map((control) => {
-      const c: IControl = {
-        desc1: control.control_desc_1,
-        desc2: control.control_desc_2,
-        editable: control.control_editable,
-        id: '' + control.control_id,
-        mandatory: control.control_mandatory,
-        previousValue: control.control_previous_value,
-        title: control.control_title,
-        type: control.control_type,
-        value: control.control_value,
-        fontColor: control.control_font_color,
-        fontSize: control.control_font_size,
-        family: control.control_family,
-        regex: control.control_regex,
-        regexMsg: control.control_regex_msg,
-        manageCompliance: control.control_manage_compliance,
-        isConditional: control.control_conditional,
-      };
-
+      control.editable = control.control_editable;
+      control.mandatory = control.control_mandatory;
       if (control.control_answer_choices) {
         const answerChoices: Record<string, ISelectData> = {};
         control.control_answer_choices.map((answer) => {
           answerChoices[answer.choice_id] = {
             id: '' + answer.choice_id,
             label: answer.choice_lib,
-            value: answer.choice_id,
+            value: '' + answer.choice_id,
             isKo: answer.choice_is_ko,
           };
 
           return answer;
         });
-        c.answerChoices = answerChoices;
+        control.answerChoices = answerChoices;
       }
 
       if (control.compliance) {
-        c.compliance = {
+        control.useCompliance = {
           resolved: control.compliance.compliance_resolved,
           complianceUncheckColor: control.compliance.compliance_uncheck_color,
           complianceCheckColor: control.compliance.compliance_check_color,
           complianceLib: control.compliance.compliance_lib,
-          complianceCheckboxResolved: control.compliance.compliance_checkbox_resolved,
+          complianceCheckboxResolved:
+            control.compliance.compliance_checkbox_resolved,
           modaleTitle: control.compliance.compliance_modale_title,
         };
       }
-
-      if (control.conditional) {
-        c.conditional = {
-          displayType: control.conditional.conditional_display_type,
-          formula: control.conditional.conditional_formula,
-          byField: control.conditional.conditional_by_field_id,
-          conditionalInitState: control.conditional.conditional_init_state,
-        };
-      }
-
-      controls.push(c);
+      controls.push(control);
 
       return control;
     });
@@ -87,6 +61,31 @@ export const editValidationHandlerCallback = (response: any) => {
 
     return chapter;
   });
+  if (apiData.actions) {
+    apiData.actions?.map((datum) => {
+      actions.push({
+        id: '' + datum.id_action,
+        label: datum.action_lib,
+        url: datum.route,
+        code: datum.action_code,
+      });
+
+      return datum;
+    });
+  }
+  if (apiData.actions_contr_perm) {
+    apiData.actions_contr_perm?.map((action) => {
+      actions_contr_perm.push({
+        bg_color: action.bg_color,
+        font_color: action.font_color,
+        hover_color: action.hover_color,
+        btn_lib: action.btn_lib,
+        action: action.action,
+      });
+
+      return action;
+    });
+  }
 
   const currentSection: ICurrentSection = {
     chapters,
@@ -117,6 +116,7 @@ export const editValidationHandlerCallback = (response: any) => {
   const { footer_message } = apiData.section_footer || {};
 
   const data: IData = {
+    actions_contr_perm,
     actions,
     currentSection,
     sections,
@@ -127,8 +127,12 @@ export const editValidationHandlerCallback = (response: any) => {
     productType: apiData.file_info.product_type,
     countComments: apiData.nb_comment,
     validationCount: apiData.valid_num,
-    sectionHeader: header_message && header_type ? { message: header_message, type: header_type } : undefined,
+    sectionHeader:
+      header_message && header_type
+        ? { message: header_message, type: header_type }
+        : undefined,
     sectionFooter: footer_message ? { message: footer_message } : undefined,
+    title: apiData.file_info.title,
   };
 
   return data;

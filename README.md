@@ -28,6 +28,15 @@ You will also see any lint errors in the console.
 
 Launches the test runner in the interactive watch mode.<br />
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+We use react-testing library for assertions. You can download the testing playground extension available for chrome https://chrome.google.com/webstore/detail/testing-playground/hejbmebodbijjdhflfknehhcgaklhano
+which allows you to use `screen.logTestingPlaygroundURL()` in your test. It gives an interactive environment for testing assertions and write tests.
+
+### `yarn storybook`
+
+Launches the storybook's project locally on port 3000.
+Storybook gives us a specific environment to develop, isolate and test our components.
+
+In unit tests, we should only import stories instead of components directly.
 
 ### `yarn build`
 

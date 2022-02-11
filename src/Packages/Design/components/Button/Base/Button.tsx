@@ -15,6 +15,7 @@ export const Button: React.FC<IButton> = ({
   href,
   disabled,
   onClick,
+  style,
 }): React.ReactElement => {
   const theme = useTheme();
 
@@ -48,6 +49,7 @@ export const Button: React.FC<IButton> = ({
         href={href}
         startIcon={startIconCloned}
         endIcon={endIconCloned}
+        style={style}
       >
         {children}
       </MUIButton>

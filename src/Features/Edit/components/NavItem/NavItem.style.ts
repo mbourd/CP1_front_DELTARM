@@ -7,7 +7,8 @@ interface IProps {
 
 export const NavItemStyled = styled.span<IProps>`
   align-items: center;
-  background-color: ${({ theme, active }) => (active ? theme.color.white.main : 'transparent')};
+  background-color: ${({ theme, active }) =>
+    active ? theme.color.white.main : 'transparent'};
   border-bottom-width: 1px;
   border-color: ${({ theme }) => theme.color.primary.main};
   border-style: dotted;

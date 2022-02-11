@@ -1,4 +1,9 @@
-import i18n, { StringMap, TFunctionKeys, TFunctionResult, TOptions } from 'i18next';
+import i18n, {
+  StringMap,
+  TFunctionKeys,
+  TFunctionResult,
+  TOptions,
+} from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
@@ -42,8 +47,11 @@ export class Translation implements ITranslation {
     TResult extends TFunctionResult = string,
     TKeys extends TFunctionKeys = string,
     // eslint-disable-next-line @typescript-eslint/ban-types
-    TInterpolationMap extends object = StringMap
-  >(key: TKeys | TKeys[], options?: TOptions<TInterpolationMap> | string): TResult {
+    TInterpolationMap extends object = StringMap,
+  >(
+    key: TKeys | TKeys[],
+    options?: TOptions<TInterpolationMap> | string,
+  ): TResult {
     return i18n.t<TResult, TKeys, TInterpolationMap>(key, options);
   }
 
@@ -66,7 +74,12 @@ export class Translation implements ITranslation {
       keys.map((key) => {
         const languages = Object.keys(resources[namespace][key]);
         languages.map((language) => {
-          i18n.addResource(language, namespace, key, resources[namespace][key][language]);
+          i18n.addResource(
+            language,
+            namespace,
+            key,
+            resources[namespace][key][language],
+          );
 
           return language;
         });
@@ -80,7 +93,13 @@ export class Translation implements ITranslation {
     return this;
   }
 
-  public addResource(language: string, namespace: string, resources: any, deep?: boolean, overwrite?: boolean): this {
+  public addResource(
+    language: string,
+    namespace: string,
+    resources: any,
+    deep?: boolean,
+    overwrite?: boolean,
+  ): this {
     i18n.addResourceBundle(language, namespace, resources, deep, overwrite);
 
     return this;
