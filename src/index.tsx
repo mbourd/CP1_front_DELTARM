@@ -11,7 +11,7 @@ import { Integrations } from '@sentry/tracing';
 import { BPIGlobalStyle, BPITheme } from 'Styles';
 import { AppMaintenance } from './AppMaintenance';
 
-const maintenanceMode = true;
+const maintenanceMode = false;
 
 if (process.env.REACT_APP_ENV !== 'staging') {
   Sentry.init({
