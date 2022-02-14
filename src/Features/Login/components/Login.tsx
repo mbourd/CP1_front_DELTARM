@@ -14,7 +14,7 @@ const Login: React.FC = (): React.ReactElement => {
 
   const location = useLocation();
 
-  const { token } = useMemo<{ token?: string }>(() => {
+  const { token: v2Token } = useMemo<{ token?: string }>(() => {
     return parse(location.search, { ignoreQueryPrefix: true });
   }, [location.search]);
 
@@ -26,21 +26,20 @@ const Login: React.FC = (): React.ReactElement => {
   );
 
   useEffect(() => {
-    if (token) {
-      logUser(token)
+    if (v2Token) {
+      logUser(v2Token)
         .then(() => {
-          if (user.isLogged() && user.hasJwt()) {
-            // We need the updated state immediately available
+          if (user.isLogged() && !user.isJwtExpired()) {
             window.location.href = '/';
           }
         })
         .catch(() => {
           router.redirectTo('loginError');
         });
-    } else if (!token) {
+    } else if (!v2Token) {
       router.redirectTo('dashboard');
     }
-  }, [login, token, logUser, user]);
+  }, [login, v2Token, logUser, user]);
 
   return (
     <LoginStyled>

@@ -49,10 +49,15 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({
   const jwt = user.getJwt();
 
   const { send, request } = useApi<void>({ promise: true });
-  const { send: getClientInfos, data: clientInfos } = useApi<any>({
+  const {
+    send: clientInfos,
+    data: dataClientInfos,
+    request: requestClientInfos,
+  } = useApi<any>({
     waitForAuthenticated: true,
   });
   request.setBearerToken(jwt);
+  requestClientInfos.setBearerToken(jwt);
 
   const login = useCallback(
     async (token: string) => {
@@ -94,21 +99,13 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({
   );
 
   useEffect(() => {
-    if (context.data.cli_id) {
-      getClientInfos('clientInfo', {}, { cli_id: context.data.cli_id });
+    if (user.isJwtExpired()) {
+      return;
     }
-  }, [context.data.cli_id, getClientInfos]);
-
-  const appContext = useMemo(
-    () => ({
-      logoUrl: clientInfos?.data[0].cli_logo_url,
-      appName: clientInfos?.data[0].cli_app_name,
-      filePlaceholder: clientInfos?.data[0].file_search_placeholder,
-      fileRegex: clientInfos?.data[0].cli_file_name_regex,
-      titleName: clientInfos?.data[0].cli_name,
-    }),
-    [clientInfos],
-  );
+    if (context.data.cli_id) {
+      clientInfos('clientInfo', {}, { cli_id: context.data.cli_id });
+    }
+  }, [context.data.cli_id, clientInfos, user]);
 
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout> = setTimeout(() => '', 1000);
@@ -130,6 +127,17 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({
       }
     };
   }, [send, jwt, context.data, setUser]);
+
+  const appContext = useMemo(
+    () => ({
+      logoUrl: dataClientInfos?.data[0].cli_logo_url,
+      appName: dataClientInfos?.data[0].cli_app_name,
+      filePlaceholder: dataClientInfos?.data[0].file_search_placeholder,
+      fileRegex: dataClientInfos?.data[0].cli_file_name_regex,
+      titleName: dataClientInfos?.data[0].cli_name,
+    }),
+    [dataClientInfos],
+  );
 
   const idleTimeout = parseInt(getEnv('IDLE_TIMEOUT')) * 1000;
 
