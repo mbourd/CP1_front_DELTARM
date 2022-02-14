@@ -1,10 +1,10 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { DashboardSearchStyled } from './DashboardSearch.style';
 import { FormControlLabel, Paper, Radio, RadioGroup } from '@material-ui/core';
 import { Button, FormError } from 'Shared/components';
 import { Search } from 'Features/Manage/components/Search/Search';
 import { SearchModal } from 'Features/Manage/components/Search/Modal/SearchModal';
-import { AppContext, storage, useTrans } from 'Services';
+import { SecurityContext, storage, useApi, useTrans } from 'Services';
 import { FullSearchModal } from 'Features/Manage/components/Search/Modal/FullSearchModal';
 
 export const DashboardSearch: React.FC = (): React.ReactElement => {
@@ -13,13 +13,26 @@ export const DashboardSearch: React.FC = (): React.ReactElement => {
   const [searchMode, setSearchMode] = useState('fileNum');
   const [fullSearch, setFullSearch] = useState<string>();
   const [trans] = useTrans('Manage');
-  const { fileRegex, filePlaceholder } = useContext(AppContext);
+  const { data: context } = useContext(SecurityContext);
+  const { send: clientInfos, data: dataClientInfos } = useApi<any>({
+    waitForAuthenticated: true,
+  });
+
+  useEffect(() => {
+    if (context.cli_id) {
+      clientInfos('clientInfo', {}, { cli_id: context.cli_id });
+    }
+  }, [context.cli_id, clientInfos]);
 
   const onSearch = useCallback(() => {
     const value = storage.getData<string>('shared.component.search.value');
 
     if (searchMode === 'fileNum') {
-      if (!value || (fileRegex && !new RegExp(fileRegex).test(value))) {
+      if (
+        !value ||
+        (dataClientInfos?.data[0].cli_file_name_regex &&
+          !new RegExp(dataClientInfos?.data[0].cli_file_name_regex).test(value))
+      ) {
         setErrorMessage(trans('searchError'));
 
         return;
@@ -28,7 +41,7 @@ export const DashboardSearch: React.FC = (): React.ReactElement => {
     } else {
       setFullSearch(value);
     }
-  }, [trans, searchMode, fileRegex]);
+  }, [trans, searchMode, dataClientInfos]);
 
   return (
     <DashboardSearchStyled>
@@ -37,7 +50,7 @@ export const DashboardSearch: React.FC = (): React.ReactElement => {
         <Search
           placeholder={
             searchMode === 'fileNum'
-              ? filePlaceholder
+              ? dataClientInfos?.data[0].file_search_placeholder
               : 'Contrepartie emprunteuse ou nom de famille'
           }
         />
