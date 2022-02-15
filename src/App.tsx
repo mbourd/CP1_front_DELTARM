@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import 'Services';
 import 'Features';
@@ -7,12 +7,14 @@ import 'Services/Api/registerCallState';
 
 import { MainHeader } from 'Shared/components';
 import { MainContent } from 'Shared/components';
-import { security, SecurityProvider } from 'Services';
+import { IUser, security, SecurityProvider } from 'Services';
 
 const App = (): React.ReactElement => {
+  const [user] = useState<IUser>(security.getUser());
+
   return (
     <SecurityProvider security={security}>
-      <MainHeader />
+      {!user.isJwtExpired() && <MainHeader />}
       <MainContent />
     </SecurityProvider>
   );
