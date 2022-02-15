@@ -5,12 +5,11 @@ import { useLocation } from 'react-router-dom';
 import './translations';
 import { LoginStyled } from './Login.style';
 import { HeadingOne, PageLoader } from 'Shared/components';
-import { useTrans, SecurityContext, useSecurity, router } from 'Services';
+import { useTrans, SecurityContext, router } from 'Services';
 
 const Login: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Login');
   const { login } = useContext(SecurityContext);
-  const { user } = useSecurity();
 
   const location = useLocation();
 
@@ -29,9 +28,7 @@ const Login: React.FC = (): React.ReactElement => {
     if (v2Token) {
       logUser(v2Token)
         .then(() => {
-          if (user.isLogged() && !user.isJwtExpired()) {
-            window.location.href = '/';
-          }
+          window.location.href = '/';
         })
         .catch(() => {
           router.redirectTo('loginError');
@@ -39,7 +36,7 @@ const Login: React.FC = (): React.ReactElement => {
     } else if (!v2Token) {
       router.redirectTo('dashboard');
     }
-  }, [login, v2Token, logUser, user]);
+  }, [login, v2Token, logUser]);
 
   return (
     <LoginStyled>
