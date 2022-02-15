@@ -5,16 +5,15 @@ import { useLocation } from 'react-router-dom';
 import './translations';
 import { LoginStyled } from './Login.style';
 import { HeadingOne, PageLoader } from 'Shared/components';
-import { useTrans, SecurityContext, useSecurity, router } from 'Services';
+import { useTrans, SecurityContext, router } from 'Services';
 
 const Login: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Login');
   const { login } = useContext(SecurityContext);
-  const { user } = useSecurity();
 
   const location = useLocation();
 
-  const { token } = useMemo<{ token?: string }>(() => {
+  const { token: v2Token } = useMemo<{ token?: string }>(() => {
     return parse(location.search, { ignoreQueryPrefix: true });
   }, [location.search]);
 
@@ -26,21 +25,18 @@ const Login: React.FC = (): React.ReactElement => {
   );
 
   useEffect(() => {
-    if (token) {
-      logUser(token)
+    if (v2Token) {
+      logUser(v2Token)
         .then(() => {
-          if (user.isLogged() && user.hasJwt()) {
-            // We need the updated state immediately available
-            window.location.href = '/';
-          }
+          window.location.href = '/';
         })
         .catch(() => {
           router.redirectTo('loginError');
         });
-    } else if (!token) {
+    } else if (!v2Token) {
       router.redirectTo('dashboard');
     }
-  }, [login, token, logUser, user]);
+  }, [login, v2Token, logUser]);
 
   return (
     <LoginStyled>
