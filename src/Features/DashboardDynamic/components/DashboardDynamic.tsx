@@ -110,7 +110,7 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
             {response?.data.cards.visible &&
               response?.data.cards.card.map((card, index) => (
                 <Grid item xs={12} md={6} key={index}>
-                  <Card card={card} key={index} actionIcons={actionButton} />
+                  <Card card={card} key={index} triggerAction={actionButton} />
                 </Grid>
               ))}
           </Grid>
