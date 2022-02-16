@@ -1,5 +1,6 @@
 import { ISelectData } from 'Shared/components';
 import { IColor } from '../../../Packages/Design';
+import { RawDraftContentState } from 'draft-js';
 
 export type ControlTypeType =
   | 'text'
@@ -190,4 +191,5 @@ export interface IApiControl {
   useCompliance?: ICompliance;
   control_options: IControlOptions | null;
   upload_detail: IUploadDetail[] | null;
+  rich_text_detail: RawDraftContentState | null;
 }
