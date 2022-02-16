@@ -14,6 +14,7 @@ import { Header } from '../../../Dashboard/components/Card/Header/Header';
 import * as icons from '@mui/icons-material';
 import { SvgIconComponent } from '@mui/icons-material';
 import { useTheme } from '../../../../Packages/Design';
+import DOMPurify from 'dompurify';
 
 interface ICardC {
   card: ICard;
@@ -118,16 +119,20 @@ export const Card: React.FC<ICardC> = ({
                         cell.hint ? (
                           <BPITooltip title={cell.hint}>
                             <p
-                              dangerouslySetInnerHTML={{ __html: cell.content }}
+                              dangerouslySetInnerHTML={{
+                                __html: DOMPurify.sanitize(cell.content),
+                              }}
                               style={{ cursor: 'pointer' }}
                               onClick={() => triggerAction(cell.action)}
                             />
                           </BPITooltip>
                         ) : (
                           <p
-                            dangerouslySetInnerHTML={{ __html: cell.content }}
+                            dangerouslySetInnerHTML={{
+                              __html: DOMPurify.sanitize(cell.content),
+                            }}
                             style={{
-                              cursor: `${cell.action} ? 'pointer' : 'default'`,
+                              cursor: cell.action ? 'pointer' : 'initial',
                             }}
                             onClick={() => triggerAction(cell.action)}
                           />
