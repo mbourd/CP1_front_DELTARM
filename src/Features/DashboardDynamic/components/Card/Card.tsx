@@ -17,11 +17,11 @@ import { useTheme } from '../../../../Packages/Design';
 
 interface ICardC {
   card: ICard;
-  actionIcons: (action: IActionButton | null) => void;
+  triggerAction: (action: IActionButton | null) => void;
 }
 export const Card: React.FC<ICardC> = ({
   card,
-  actionIcons,
+  triggerAction,
 }): React.ReactElement => {
   const theme = useTheme();
   const indexCellColumnBorderRight: number[] = [];
@@ -45,7 +45,7 @@ export const Card: React.FC<ICardC> = ({
       }
       const dynamicIconElementByAPI = createElement(icon, {
         style: { color, size },
-        onClick: () => actionIcons(action),
+        onClick: () => triggerAction(action),
       });
       if (hint) {
         return <BPITooltip title={hint}>{dynamicIconElementByAPI}</BPITooltip>;
@@ -54,7 +54,7 @@ export const Card: React.FC<ICardC> = ({
       // @ts-ignore
       return dynamicIconElementByAPI;
     },
-    [actionIcons],
+    [triggerAction],
   );
 
   return (
@@ -120,12 +120,16 @@ export const Card: React.FC<ICardC> = ({
                             <p
                               dangerouslySetInnerHTML={{ __html: cell.content }}
                               style={{ cursor: 'pointer' }}
+                              onClick={() => triggerAction(cell.action)}
                             />
                           </BPITooltip>
                         ) : (
                           <p
                             dangerouslySetInnerHTML={{ __html: cell.content }}
-                            style={{ cursor: 'default' }}
+                            style={{
+                              cursor: `${cell.action} ? 'pointer' : 'default'`,
+                            }}
+                            onClick={() => triggerAction(cell.action)}
                           />
                         )
                       ) : null}
