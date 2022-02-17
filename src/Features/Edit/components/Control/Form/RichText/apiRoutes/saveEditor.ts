@@ -17,12 +17,12 @@ export const saveEditor = (
         'API_HOST',
       )}/control/set_value?file_id=${fileId}&elm_id=${
         control.control_id
-      }&control_family=${control.control_family}`,
+      }&control_family=${control.control_family}&elm_val=`,
       editorContent,
       {
         headers: {
           Authorization: jwt,
-          'Content-type': 'multipart/form-data',
+          'Content-type': 'application/json',
         },
       },
     )
@@ -30,6 +30,8 @@ export const saveEditor = (
       return setMessage(res.data.success_msg);
     })
     .catch((err) => {
-      return setMessage(err.response.data.data.error_msg);
+      if (err?.response?.data?.data?.error_msg) {
+        return setMessage(err.response.data.data.error_msg);
+      }
     });
 };

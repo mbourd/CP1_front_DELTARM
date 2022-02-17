@@ -19,31 +19,25 @@ export const RichTextControl: React.FC<IProps> = ({ control, fileId }) => {
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
   const [message, setMessage] = useState<string | null>(null);
-  const [editorState, setEditorState] = useState(() =>
+  const [editorState, setEditorState] = useState<EditorState>(() =>
     control.rich_text_detail
       ? EditorState.createWithContent(convertFromRaw(control.rich_text_detail))
       : EditorState.createEmpty(),
   );
 
-  const handleEditorChange = useCallback(
-    (state: any) => {
-      setEditorState(state);
-      const editorContentConvertedToRaws = convertToRaw(
-        editorState.getCurrentContent(),
-      );
-      saveEditor(
-        fileId,
-        control,
-        editorContentConvertedToRaws,
-        jwt,
-        setMessage,
-      );
-    },
-    [control, editorState, jwt, fileId],
-  );
+  const handleEditorChange = useCallback((state: EditorState) => {
+    setEditorState(state);
+  }, []);
+
+  const handleSaveEditor = useCallback(() => {
+    const editorContentConvertedToRaws = convertToRaw(
+      editorState.getCurrentContent(),
+    );
+    saveEditor(fileId, control, editorContentConvertedToRaws, jwt, setMessage);
+  }, [control, jwt, fileId, editorState]);
 
   return (
-    <Grid item xs={6}>
+    <Grid item xs={12}>
       <RichTextControlStyled>
         <ControlLabel control={control} />
         <Button
@@ -56,7 +50,6 @@ export const RichTextControl: React.FC<IProps> = ({ control, fileId }) => {
               display: 'flex',
               flexDirection: 'column',
               width: '100%',
-              padding: '10px',
               margin: '0',
               opacity: `${control.editable ? '1' : '0.5'}`,
               fontSize: 'initial',
@@ -74,6 +67,7 @@ export const RichTextControl: React.FC<IProps> = ({ control, fileId }) => {
           <Editor
             editorState={editorState}
             onEditorStateChange={handleEditorChange}
+            onBlur={handleSaveEditor}
           />
           {message ? (
             <p>
