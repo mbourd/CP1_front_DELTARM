@@ -8,8 +8,11 @@ import {
   SwitchCallState,
 } from 'Services';
 import { BreadCrumb, Heading } from 'Shared/components';
-import { DashboardStyled, MetricsContainerStyled } from './Dashboard.style';
-import { ButtonContainerStyled } from './Dashboard.style';
+import {
+  DashboardDynamicStyled,
+  MetricsContainerStyled,
+} from './DashboardDynamic.style';
+import { ButtonContainerStyled } from './DashboardDynamic.style';
 import { Card } from './Card/Card';
 import { IsLoading } from './IsLoading';
 import { SearchBar } from './Search/SearchBar';
@@ -54,7 +57,7 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
         }}
       >
         <BreadCrumb values={['Dashboard']} />
-        <DashboardStyled>
+        <DashboardDynamicStyled>
           {response?.data.title.visible && (
             <Heading
               style={{
@@ -121,7 +124,7 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
               data={modal}
             />
           ) : null}
-        </DashboardStyled>
+        </DashboardDynamicStyled>
       </SwitchCallState>
     </>
   );
