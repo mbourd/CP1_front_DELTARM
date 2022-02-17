@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 
-export const DashboardStyled = styled.div`
+export const DashboardDynamicStyled = styled.div`
   padding-top: 2.6rem;
   .MuiGrid-item {
     padding: ${({ theme }) => theme.sizing.xxLarge};
