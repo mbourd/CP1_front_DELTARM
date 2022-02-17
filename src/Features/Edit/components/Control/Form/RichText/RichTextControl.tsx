@@ -5,7 +5,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { IApiControl } from '../../../../types';
 import { RichTextControlStyled } from './RichTextControl.style';
 import { ControlLabel } from '../ControlLabel';
-import { Button, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import { saveEditor } from './apiRoutes/saveEditor';
 import { IUser, security } from '../../../../../../Packages/Security';
 import { FormError } from '../../../../../../Packages/Design/components';
@@ -40,41 +40,26 @@ export const RichTextControl: React.FC<IProps> = ({ control, fileId }) => {
     <Grid item xs={12}>
       <RichTextControlStyled>
         <ControlLabel control={control} />
-        <Button
-          disableRipple
-          disableTouchRipple
-          disableFocusRipple
-          sx={{
-            '&.MuiButtonBase-root': {
-              backgroundColor: 'white',
-              display: 'flex',
-              flexDirection: 'column',
-              width: '100%',
-              margin: '0',
-              opacity: `${control.editable ? '1' : '0.5'}`,
-              fontSize: 'initial',
-              textTransform: 'initial',
-              color: 'initial',
-              cursor: 'initial',
-            },
-            '&.MuiButtonBase-root:hover': {
-              backgroundColor: 'white',
-            },
+        <Editor
+          toolbarHidden={!control.editable}
+          editorState={editorState}
+          defaultEditorState={editorState}
+          onEditorStateChange={handleEditorChange}
+          onBlur={handleSaveEditor}
+          wrapperStyle={{
+            border: `1px solid black`,
+            padding: '.5em',
+            borderRadius: '5px',
+            opacity: !control.editable ? '0.5' : '1',
           }}
-          disabled={!control.editable}
-          id={`mask-id${control.control_id}`}
-        >
-          <Editor
-            editorState={editorState}
-            onEditorStateChange={handleEditorChange}
-            onBlur={handleSaveEditor}
-          />
-          {message ? (
-            <p>
-              <FormError>{message}</FormError>
-            </p>
-          ) : null}
-        </Button>
+          readOnly={!control.editable}
+          placeholder={control.control_title}
+        />
+        {message ? (
+          <p>
+            <FormError>{message}</FormError>
+          </p>
+        ) : null}
       </RichTextControlStyled>
     </Grid>
   );
