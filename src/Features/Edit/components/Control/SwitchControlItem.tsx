@@ -21,6 +21,7 @@ import {
 } from './Form';
 import { EditValidationContext } from 'Features/Edit';
 import { SliderControl } from './Form/Slider/SliderControl';
+import { Box } from '@mui/material';
 
 interface IProps {
   control: IApiControl;
@@ -216,6 +217,8 @@ export const SwitchControlItem: React.FC<IProps> = ({
       return <UploadControl control={control} fileId={fileId} />;
     case 'info_block':
       return <InfoBlockControl control={control} />;
+    case 'line_break':
+      return <Box width="100%" />;
   }
 
   return null;

@@ -24,6 +24,7 @@ export type ControlTypeType =
   | 'time'
   | 'rich_text'
   | 'boolean'
+  | 'line_break'
   | 'slider';
 
 export type ControlFontSize = 'standard' | 'bold';

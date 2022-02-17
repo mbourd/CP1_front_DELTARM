@@ -7,6 +7,7 @@ import { storage } from 'Services';
 
 export const SwitchContentBody: React.FC = (): React.ReactElement | null => {
   switch (storage.getData('edit.section.active')) {
+    // @Todo remove this part: only one component = 1 dynamic form => they all render the same thing
     case 'INFO':
       return <Information />;
     case 'MEP':
