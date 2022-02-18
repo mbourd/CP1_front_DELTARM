@@ -18,6 +18,7 @@ interface IProps {
 export const RichTextControl: React.FC<IProps> = ({ control, fileId }) => {
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
+
   const [message, setMessage] = useState<string | null>(null);
   const [editorState, setEditorState] = useState<EditorState>(() =>
     control.rich_text_detail
@@ -50,6 +51,7 @@ export const RichTextControl: React.FC<IProps> = ({ control, fileId }) => {
       <RichTextControlStyled>
         <ControlLabel control={control} />
         <Editor
+          locale={user.getLang()}
           toolbarHidden={!control.editable}
           editorState={editorState}
           defaultEditorState={editorState}
