@@ -7,10 +7,10 @@ const { RichText, RichTextDisabled } = composeStories(stories);
 describe('Rich Text Control', () => {
   test('Should render options rich text control', async () => {
     const { getByTitle, getByRole } = render(<RichText />);
-    expect(getByTitle('Bold')).toBeInTheDocument();
-    expect(getByTitle('Strikethrough')).toBeInTheDocument();
-    expect(getByTitle('Italic')).toBeInTheDocument();
-    expect(getByTitle('Underline')).toBeInTheDocument();
+    expect(getByTitle('Gras')).toBeInTheDocument();
+    expect(getByTitle('Italique')).toBeInTheDocument();
+    expect(getByTitle('Souligner')).toBeInTheDocument();
+    expect(getByTitle('Barrer')).toBeInTheDocument();
     expect(getByRole('textbox')).toHaveAttribute('contenteditable', 'true');
     // Todo enhanced test with actions and screen.logTestingPlaygroundURL()
   });

@@ -3,6 +3,8 @@ export interface IUser {
   getEmail: () => string | null;
   setUsername: (username: string) => IUser;
   getUsername: () => string;
+  setLang: (lang: string) => IUser;
+  getLang: () => string;
   setRoles: (roles: string[]) => IUser;
   getRoles: () => string[];
   addRole: (role: string) => IUser;
@@ -30,6 +32,7 @@ export type FromJwtUserType = {
   email: string;
   username: string;
   exp: number;
+  lang: string;
 };
 
 export type JwtData = {
@@ -38,4 +41,5 @@ export type JwtData = {
   cli_id: number;
   user_id: number;
   context: string;
+  lang: string;
 };
