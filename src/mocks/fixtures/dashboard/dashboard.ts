@@ -51,11 +51,19 @@ export default {
                 id: 1,
                 item: [
                   {
-                    action: null,
                     content:
                       'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site A - M1</p>',
                     hint: null,
                     icon: '',
+                    action: {
+                      method: 'GET',
+                      route: '/edit',
+                      params: [
+                        { key: 'type', value: 'control' },
+                        { key: 'ctrl_id', value: 'toto' },
+                        { key: 'period_code', value: 'toto' },
+                      ],
+                    },
                   },
                   {
                     content: null,
@@ -121,7 +129,15 @@ export default {
                 id: 2,
                 item: [
                   {
-                    action: null,
+                    action: {
+                      method: 'GET',
+                      route: '/edit',
+                      params: [
+                        { key: 'type', value: 'control' },
+                        { key: 'ctrl_id', value: 'toto' },
+                        { key: 'period_code', value: 'toto' },
+                      ],
+                    },
                     content:
                       'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - M1</p>',
                     hint: null,

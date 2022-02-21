@@ -64,7 +64,8 @@ export class Security implements ISecurity {
       .setUsername(User.Roles.ANON)
       .setRoles([User.Roles.ANON])
       .setJwt(null)
-      .setExpireAt(null);
+      .setExpireAt(null)
+      .setLang('fr');
     try {
       localStorage.setItem(this._sessionKey, JSON.stringify(user));
     } catch (e: any) {

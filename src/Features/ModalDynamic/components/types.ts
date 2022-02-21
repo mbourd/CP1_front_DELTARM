@@ -54,6 +54,7 @@ interface IElementTextValueModal {
       {
         type: 'text';
         value?: string;
+        action: IActionButton | null;
       },
     ];
   };

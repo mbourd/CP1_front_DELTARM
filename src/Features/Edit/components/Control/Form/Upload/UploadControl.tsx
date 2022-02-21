@@ -31,9 +31,6 @@ export const UploadControl: React.FC<IProps> = ({
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
 
-  // @TODO
-  // mock api call to tests api calls
-
   const saveFileToUpload = useCallback(
     (e) => {
       setNewUploadFile(e.target.files[0]);
@@ -103,8 +100,12 @@ export const UploadControl: React.FC<IProps> = ({
       <ControlLabel control={control} />
       <UploadControlStyled>
         <Button
+          disableRipple
+          disableTouchRipple
+          disableFocusRipple
+          disableElevation
           disabled={!control.editable}
-          id={`disabled-button${control.control_id}`}
+          id={`upload-id${control.control_id}`}
           style={{
             display: 'block',
             width: '100%',

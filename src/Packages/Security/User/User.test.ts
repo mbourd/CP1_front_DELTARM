@@ -53,6 +53,15 @@ describe('Security/User', () => {
     expect(user2.getUsername()).toStrictEqual('jean_moust');
   });
 
+  it('should have a fr lang', () => {
+    expect(user2.getLang()).toStrictEqual('fr');
+  });
+
+  it('should have a en lang', () => {
+    user2.setLang('en');
+    expect(user2.getLang()).toStrictEqual('en');
+  });
+
   it('should have expireAt', () => {
     expect(user2.getExpireAt()).not.toBeNull();
   });

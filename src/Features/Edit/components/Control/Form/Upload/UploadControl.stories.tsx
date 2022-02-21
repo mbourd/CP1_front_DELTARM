@@ -51,14 +51,23 @@ Upload.decorators = [
   (story: any) => {
     worker?.use(
       rest.post('https://undefined/control/set_value', (req, res, ctx) => {
+        req.url.searchParams.set('file_id', '133');
+        req.url.searchParams.set('elm_id', '1931');
+        req.url.searchParams.set('control_family', 'standard');
+        req.url.searchParams.set('elm_val', 'test.png');
+
         return res(ctx.status(200), ctx.json(listAfterUpload));
       }),
       rest.post('https://undefined/control/delete_value', (req, res, ctx) => {
+        req.url.searchParams.set('file_id', '133');
+        req.url.searchParams.set('elm_id', '1931');
+        req.url.searchParams.set('control_family', 'standard');
+        req.url.searchParams.set('eml_val', 'test.png');
+
         return res(ctx.status(200), ctx.json(listAfterDelete));
       }),
       rest.get('https://undefined/control/get_upfile', (req, res, ctx) => {
-        // blob file to download
-        // todo mock return of blob
+        // TODO msw mock return of blob download and make an available return from requests above in storybook
 
         return res(ctx.status(200), ctx.json(initialList));
       }),

@@ -5,7 +5,7 @@ import { worker } from '../src/mocks/server';
 import { initialize, mswDecorator } from 'msw-storybook-addon';
 
 initialize();
-addDecorator(mswDecorator);
+export const decorators = [mswDecorator];
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
