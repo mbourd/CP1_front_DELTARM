@@ -236,7 +236,16 @@ export const ModalDynamic: FC<IDataModalProps> = ({
                                   );
                                 case 'text':
                                   return (
-                                    <StyledTableCell scope="row" key={index}>
+                                    <StyledTableCell
+                                      style={{
+                                        cursor: cell.action
+                                          ? 'pointer'
+                                          : 'initial',
+                                      }}
+                                      scope="row"
+                                      key={index}
+                                      onClick={() => actionButton(cell.action)}
+                                    >
                                       {cell.value}
                                     </StyledTableCell>
                                   );

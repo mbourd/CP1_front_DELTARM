@@ -17,9 +17,11 @@ import {
   TimeControl,
   DateTimeControl,
   BooleanControl,
+  RichTextControl,
 } from './Form';
 import { EditValidationContext } from 'Features/Edit';
 import { SliderControl } from './Form/Slider/SliderControl';
+import { Box } from '@mui/material';
 
 interface IProps {
   control: IApiControl;
@@ -209,10 +211,14 @@ export const SwitchControlItem: React.FC<IProps> = ({
           setFormState={setFormState}
         />
       );
+    case 'rich_text':
+      return <RichTextControl control={control} fileId={fileId} />;
     case 'file_upload':
       return <UploadControl control={control} fileId={fileId} />;
     case 'info_block':
       return <InfoBlockControl control={control} />;
+    case 'line_break':
+      return <Box width="100%" />;
   }
 
   return null;

@@ -53,10 +53,20 @@ export const data = {
                   {
                     type: 'text',
                     value: 'CTR019/00',
+                    action: null,
                   },
                   {
                     type: 'text',
                     value: 'DELCOURT FERROVIAIIIIIRE',
+                    action: {
+                      method: 'GET',
+                      route: '/edit',
+                      params: [
+                        { key: 'type', value: 'control' },
+                        { key: 'ctrl_id', value: 'toto' },
+                        { key: 'period_code', value: 'toto' },
+                      ],
+                    },
                   },
                   {
                     type: 'btn',

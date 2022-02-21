@@ -15,9 +15,7 @@ describe('Upload Control', () => {
     expect(queryByText('disabled.png')).toBeInTheDocument();
     expect(queryByText('disabled2.png')).toBeInTheDocument();
     const result = render(<UploadDisabled />);
-    const containerUpload = result.container.querySelector(
-      '#disabled-button1937',
-    );
+    const containerUpload = result.container.querySelector('#upload-id1937');
     expect(containerUpload).toHaveAttribute('disabled');
   });
 });

@@ -7,6 +7,7 @@ export class User implements IUser {
   private _roles: string[] = [];
   private _email: string | null = null;
   private _jwt: string | null = null;
+  private _lang = 'fr';
   private _username: string = User.Roles.ANON;
   private _expireAt: Date | null = null;
 
@@ -30,6 +31,10 @@ export class User implements IUser {
 
   public getUsername(): string {
     return this._username;
+  }
+
+  public getLang(): string {
+    return this._lang;
   }
 
   public hasRole(role: string): boolean {
@@ -106,6 +111,11 @@ export class User implements IUser {
       this._expireAt = new Date(decodedJwt.exp * 1000);
     }
 
+    // Set lang
+    if (decodedJwt.lang) {
+      this._lang = decodedJwt.lang;
+    }
+
     this._jwt = token;
 
     return { error: false };
@@ -144,6 +154,12 @@ export class User implements IUser {
 
   public setUsername(username: string): this {
     this._username = username;
+
+    return this;
+  }
+
+  public setLang(lang: string): this {
+    this._lang = lang;
 
     return this;
   }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { DashboardDynamic } from './DashboardDynamic';
 import { worker } from '../../../mocks/server';
 import { rest } from 'msw';
@@ -19,6 +19,8 @@ export default {
 };
 
 const Template: any = (args: any) => {
+  useEffect(() => () => worker?.resetHandlers());
+
   return <DashboardDynamic {...args} />;
 };
 
@@ -27,8 +29,6 @@ Dashboard.decorators = [
   (story: any) => {
     worker?.use(
       rest.get('https://undefined/dashboard/contr_perm', (req, res, ctx) => {
-        ctx.delay('infinite');
-
         return res(ctx.status(200), ctx.json(DASHBOARD));
       }),
       rest.get(
