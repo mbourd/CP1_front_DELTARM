@@ -22,6 +22,7 @@ const Dashboard: React.FC = (): React.ReactElement => {
   const { callState, send, data } = useApi<ICard[]>();
   const { data: dataSecurity, logout } = useContext(SecurityContext);
   const { user } = useSecurity();
+
   useEffect(() => {
     // Temporary if statements behavior
     if (dataSecurity.context === 'contr_perm') {
