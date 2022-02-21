@@ -42,4 +42,5 @@ export type JwtData = {
   user_id: number;
   context: string;
   lang: string;
+  session: string;
 };
