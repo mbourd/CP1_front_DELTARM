@@ -1,0 +1,135 @@
+import React, { useEffect, useState } from 'react';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { IApiControl } from '../../../../types';
+import DataGrid, { Row } from 'react-data-grid';
+import { Grid } from '@mui/material';
+import { DataGridControlStyled } from './DataGridControl.style';
+import { DataGridUpload } from './DataGridFields/DataGridUpload/DataGridUpload';
+import { DataGridBoolean } from './DataGridFields/DataGridBoolean/DataGridBoolean';
+import { DataGridText } from './DataGridFields/DataGridText/DataGridText';
+import { DataGridInteger } from './DataGridFields/DataGridInteger/DataGridInteger';
+import { DataGridSelect } from './DataGridFields/DataGridSelect/DataGridSelect';
+import { ControlLabel } from '../ControlLabel';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { BPITooltip, FormError } from '../../../../../../Shared/components';
+import { useSecurity } from '../../../../../../Packages/Security';
+import { addRow } from './apiRoutes/addRow';
+
+interface IProps {
+  control: IApiControl;
+  fileId: string;
+  context: 'edit' | 'validate';
+}
+
+export const DataGridControl: React.FC<IProps> = ({
+  control,
+  fileId,
+  context,
+}) => {
+  const [gridDetails, setGridDetails] = useState(control.data_grid_detail);
+  const [errorMessage, setErrorMessage] = useState('');
+  const { user } = useSecurity();
+  const jwt = user.getJwt();
+  const handleClickAddRow = () => {
+    addRow(fileId, control.control_id, jwt, setGridDetails, setErrorMessage);
+  };
+
+  useEffect(() => {
+    if (control.data_grid_detail) {
+      setGridDetails(control.data_grid_detail);
+    }
+  }, [control.data_grid_detail]);
+
+  const rowRenderer = (props: any) => {
+    const targetedColumns = Object.keys(props.row);
+    targetedColumns.forEach((column, index) => {
+      switch (props.row[column].component) {
+        case 'upload_file':
+          props.row[column] = (
+            <DataGridUpload
+              key={index}
+              value={props.row[column].value}
+              fileId={fileId}
+              controlId={control.control_id}
+            />
+          );
+
+          return <Row {...props} />;
+        case 'boolean':
+          props.row[column] = (
+            <DataGridBoolean
+              fileId={fileId}
+              controlId={control.control_id}
+              key={index}
+              value={props.row[column].value.toString()}
+            />
+          );
+
+          return <Row {...props} />;
+        case 'text':
+          props.row[column] = (
+            <DataGridText
+              fileId={fileId}
+              controlId={control.control_id}
+              key={index}
+              value={props.row[column].value.toString()}
+            />
+          );
+
+          return <Row {...props} />;
+        case 'integer':
+          props.row[column] = (
+            <DataGridInteger
+              fileId={fileId}
+              controlId={control.control_id}
+              key={index}
+              value={props.row[column].value.toString()}
+            />
+          );
+
+          return <Row {...props} />;
+        case 'select':
+          props.row[column] = (
+            <DataGridSelect
+              fileId={fileId}
+              controlId={control.control_id}
+              answerChoices={props.row[column].answer_choices}
+              key={index}
+              value={props.row[column].value}
+            />
+          );
+
+          return <Row {...props} className={'row-grid'} />;
+        default:
+          return <Row {...props} />;
+      }
+    });
+
+    return <Row {...props} />;
+  };
+
+  return (
+    <DataGridControlStyled>
+      <Grid item xs={12}>
+        <ControlLabel control={control} />
+        {gridDetails?.rows && gridDetails?.columns && (
+          <DataGrid
+            style={{ height: 'auto' }}
+            rowHeight={150}
+            headerRowHeight={50}
+            columns={gridDetails.columns}
+            rows={gridDetails.rows}
+            components={{ rowRenderer: rowRenderer }}
+          />
+        )}
+        <BPITooltip title={'Ajouter une ligne'}>
+          <AddCircleOutlineIcon
+            fontSize={'large'}
+            onClick={handleClickAddRow}
+          />
+        </BPITooltip>
+        {errorMessage && <FormError>{errorMessage}</FormError>}
+      </Grid>
+    </DataGridControlStyled>
+  );
+};

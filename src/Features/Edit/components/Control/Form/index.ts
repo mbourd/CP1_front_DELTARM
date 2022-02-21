@@ -17,3 +17,4 @@ export * from './Time/TimeControl';
 export * from './DateTime/DateTimeControl';
 export * from './Boolean/BooleanControl';
 export * from './RichText/RichTextControl';
+export * from './DataGrid/DataGridControl';

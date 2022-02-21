@@ -21,6 +21,7 @@ export const controls: IApiControl[] = [
     control_options: null,
     upload_detail: null,
     rich_text_detail: null,
+    data_grid_detail: null,
     control_rejectable: null,
     answerChoices: {
       '1': {
@@ -63,6 +64,7 @@ export const controls: IApiControl[] = [
     control_options: null,
     upload_detail: null,
     rich_text_detail: null,
+    data_grid_detail: null,
     control_rejectable: null,
     conditional: {
       conditional_formula: '$==1',
@@ -90,6 +92,7 @@ export const controls: IApiControl[] = [
     control_options: null,
     upload_detail: null,
     rich_text_detail: null,
+    data_grid_detail: null,
     control_rejectable: null,
     conditional: {
       conditional_formula: '$==3',
@@ -115,6 +118,7 @@ export const controls: IApiControl[] = [
     control_options: null,
     upload_detail: null,
     rich_text_detail: null,
+    data_grid_detail: null,
     control_rejectable: null,
     control_conditional: false,
   },
@@ -138,6 +142,7 @@ export const controls: IApiControl[] = [
     control_options: null,
     upload_detail: null,
     rich_text_detail: null,
+    data_grid_detail: null,
     control_rejectable: null,
     conditional: {
       conditional_formula: '$ != null',
@@ -165,6 +170,7 @@ export const controls: IApiControl[] = [
     control_options: null,
     upload_detail: null,
     rich_text_detail: null,
+    data_grid_detail: null,
     control_rejectable: null,
     conditional: {
       conditional_formula: '$ == null',
@@ -191,6 +197,7 @@ export const controls: IApiControl[] = [
     control_conditional: false,
     upload_detail: null,
     rich_text_detail: null,
+    data_grid_detail: null,
     control_rejectable: null,
   },
   {
@@ -215,6 +222,7 @@ export const controls: IApiControl[] = [
     upload_detail: null,
     rich_text_detail: null,
     control_rejectable: null,
+    data_grid_detail: null,
     conditional: {
       conditional_formula:
         '($>20 && $<=40) || ($>=60 && $<80) || ($%10==0 && $!=100)',
