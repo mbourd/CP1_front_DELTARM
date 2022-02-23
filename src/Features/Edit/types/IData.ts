@@ -32,6 +32,7 @@ export interface IApiDataEdit {
   valid_num?: string;
   section_header?: IApiSectionHeader;
   section_footer?: IApiSectionFooter;
+  valid_mode: 'global' | 'control';
 }
 
 export interface IData {
@@ -49,4 +50,6 @@ export interface IData {
   sectionHeader?: ISectionHeader;
   sectionFooter?: ISectionFooter;
   title: string | null;
+  valid_mode: 'global' | 'control';
+  context: 'edit' | 'validate';
 }

@@ -25,7 +25,7 @@ export const Radio: React.FC<IRadio> = ({
         className={'_CheckboxRadioInput'}
         name={name}
         value={value}
-        defaultChecked={checked}
+        checked={checked}
         onChange={onChange}
       />
       <span className={'_CheckboxRadioCheckmark'} />

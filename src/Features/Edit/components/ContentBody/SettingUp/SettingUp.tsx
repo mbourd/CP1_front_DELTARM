@@ -13,7 +13,10 @@ export const SettingUp: React.FC = (): React.ReactElement | null => {
   return (
     <>
       <ContentHeader />
-      <FormControls chapters={data?.currentSection.chapters} />
+      <FormControls
+        chapters={data?.currentSection.chapters}
+        context={data.context}
+      />
     </>
   );
 };
