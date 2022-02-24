@@ -8,12 +8,14 @@ import { ControlLabel } from '../ControlLabel';
 import { ControlFooter } from '../ControlFooter';
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
 import { Slider } from '@mui/material';
+import { RejectControl } from '../RejectByPointControl/RejectControl';
 
 interface IProps {
   control: IApiControl;
   fileId: string;
   formState: IChapter[];
   setFormState: React.Dispatch<SetStateAction<IChapter[]>>;
+  context: 'edit' | 'validate';
 }
 
 export const SliderControl: React.FC<IProps> = ({
@@ -21,10 +23,16 @@ export const SliderControl: React.FC<IProps> = ({
   fileId,
   formState,
   setFormState,
+  context,
 }): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);
+  const [isRejected, setIsRejected] = useState(
+    control.control_rejectable?.is_rejected
+      ? control.control_rejectable.is_rejected
+      : false,
+  );
   const { currentRoute } = useRouter();
 
   useEffect(() => {
@@ -81,6 +89,12 @@ export const SliderControl: React.FC<IProps> = ({
     }
   }, [error]);
 
+  useEffect(() => {
+    if (!isRejected) {
+      setIsRejected(false);
+    }
+  }, [isRejected]);
+
   return (
     <Grid item xs={6}>
       <SliderControlStyled>
@@ -128,6 +142,15 @@ export const SliderControl: React.FC<IProps> = ({
         />
         <ControlFooter control={control} />
       </SliderControlStyled>
+      {control.useRejection && control.control_rejectable && (
+        <RejectControl
+          isRejected={isRejected}
+          setIsRejected={setIsRejected}
+          controlId={control.control_id}
+          context={context}
+          controlRejectable={control.useRejection}
+        />
+      )}
       {errorMessage ? <FormError>{errorMessage}</FormError> : null}
     </Grid>
   );

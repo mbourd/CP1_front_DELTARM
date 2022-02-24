@@ -1,6 +1,7 @@
 import { ISelectData } from 'Shared/components';
 import { IColor } from '../../../Packages/Design';
 import { RawDraftContentState } from 'draft-js';
+import { IApiFileComment, IFileComment } from '../../Comments';
 
 export type ControlTypeType =
   | 'text'
@@ -164,6 +165,16 @@ export interface IUploadDetail {
   file_name: string;
 }
 
+export interface IAPIControlRejectable {
+  is_rejected: boolean | null;
+  control_reject_comment: IApiFileComment[] | null;
+}
+
+export interface ControlRejectable {
+  isRejected: boolean | null;
+  rejectComments: IFileComment[];
+}
+
 export interface IApiControl {
   control_desc_1: string | null;
   control_desc_2: string | null;
@@ -193,4 +204,6 @@ export interface IApiControl {
   control_options: IControlOptions | null;
   upload_detail: IUploadDetail[] | null;
   rich_text_detail: RawDraftContentState | null;
+  control_rejectable: IAPIControlRejectable | null;
+  useRejection?: ControlRejectable;
 }

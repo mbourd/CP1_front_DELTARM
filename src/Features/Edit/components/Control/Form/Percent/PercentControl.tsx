@@ -10,12 +10,14 @@ import { checkIfSameValues } from '../../../../../../Packages/Helpers/src/checkI
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
 import { minMax } from '../../../../../../Packages/Helpers/src/minMax';
 import useFocus from '../../../../../../Packages/Helpers/src/useFocus';
+import { RejectControl } from '../RejectByPointControl/RejectControl';
 
 interface IProps {
   control: IApiControl;
   fileId: string;
   formState: IChapter[];
   setFormState: React.Dispatch<SetStateAction<IChapter[]>>;
+  context: 'edit' | 'validate';
 }
 
 export const PercentControl: React.FC<IProps> = ({
@@ -23,10 +25,16 @@ export const PercentControl: React.FC<IProps> = ({
   fileId,
   formState,
   setFormState,
+  context,
 }): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);
+  const [isRejected, setIsRejected] = useState(
+    control.control_rejectable?.is_rejected
+      ? control.control_rejectable.is_rejected
+      : false,
+  );
   const [inputRef, setInputFocus] = useFocus();
   const { currentRoute } = useRouter();
 
@@ -137,6 +145,12 @@ export const PercentControl: React.FC<IProps> = ({
     }
   }, [error]);
 
+  useEffect(() => {
+    if (!isRejected) {
+      setIsRejected(false);
+    }
+  }, [isRejected]);
+
   const controlValue = currentValue
     ? parseFloat(currentValue)?.toFixed(
         control.control_options?.precision
@@ -171,6 +185,15 @@ export const PercentControl: React.FC<IProps> = ({
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ControlFooter control={control} />
       </PercentControlStyled>
+      {control.useRejection && control.control_rejectable && (
+        <RejectControl
+          isRejected={isRejected}
+          setIsRejected={setIsRejected}
+          controlId={control.control_id}
+          context={context}
+          controlRejectable={control.useRejection}
+        />
+      )}
     </Grid>
   );
 };

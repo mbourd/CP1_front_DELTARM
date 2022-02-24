@@ -9,6 +9,7 @@ import { ControlFooter } from '../ControlFooter';
 import { Compliance } from '../Compliance/Compliance';
 import { CheckboxWrapper } from '../../../../../../Packages/Design/components/Checkbox/CheckboxWrapper';
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
+import { RejectControl } from '../RejectByPointControl/RejectControl';
 
 interface IProps {
   control: IApiControl;
@@ -16,6 +17,7 @@ interface IProps {
   multiple: boolean;
   formState: IChapter[];
   setFormState: React.Dispatch<SetStateAction<IChapter[]>>;
+  context: 'edit' | 'validate';
 }
 
 export const CheckboxControl: React.FC<IProps> = ({
@@ -24,6 +26,7 @@ export const CheckboxControl: React.FC<IProps> = ({
   multiple,
   formState,
   setFormState,
+  context,
 }): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -39,6 +42,12 @@ export const CheckboxControl: React.FC<IProps> = ({
       ? control.compliance.compliance_resolved
       : false,
   );
+  const [isRejected, setIsRejected] = useState(
+    control.control_rejectable?.is_rejected
+      ? control.control_rejectable.is_rejected
+      : false,
+  );
+
   const selectedValue: Record<string, true> = {
     [currentValue || control.control_value || '']: true,
   };
@@ -97,6 +106,12 @@ export const CheckboxControl: React.FC<IProps> = ({
   }, [control.control_id, control.mandatory, currentValue, control.editable]);
 
   useEffect(() => {
+    if (!isRejected) {
+      setIsRejected(false);
+    }
+  }, [isRejected]);
+
+  useEffect(() => {
     if (error) {
       setErrorMessage(
         "Une erreur s'est produite, veuillez re-sélectionner une valeur",
@@ -140,6 +155,15 @@ export const CheckboxControl: React.FC<IProps> = ({
           fileId={fileId}
           choiceIsKo={choiceIsKo}
           compliance={control.useCompliance}
+        />
+      )}
+      {control.useRejection && control.control_rejectable && (
+        <RejectControl
+          isRejected={isRejected}
+          setIsRejected={setIsRejected}
+          controlId={control.control_id}
+          context={context}
+          controlRejectable={control.useRejection}
         />
       )}
     </Grid>
