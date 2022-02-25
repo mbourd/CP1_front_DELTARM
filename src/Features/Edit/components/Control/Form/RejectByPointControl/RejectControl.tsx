@@ -62,7 +62,7 @@ export const RejectControl: React.FC<IRejectedProps> = ({
             placement={'bottom-start'}
             bdr={'0'}
             border={'0'}
-            onClickAway={handleClickAway}
+            onClickAway={() => setAnchorEl(null)}
             zIndex={2}
           >
             <FileCommentStyled>
