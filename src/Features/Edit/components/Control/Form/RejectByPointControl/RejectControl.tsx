@@ -1,13 +1,9 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { CheckboxRejectControl } from './CheckboxRejectControl/CheckboxRejectControl';
 import { RejectControlContainer } from './RejectControl.style';
 import { ControlRejectable } from '../../../../types';
 import { FileCommentBody } from '../../../../../Comments/File/Body/FileCommentBody';
-import {
-  FormError,
-  InputBase,
-  Popper,
-} from '../../../../../../Packages/Design/components';
+import { Popper } from '../../../../../../Packages/Design/components';
 import {
   FileCommentHeaderStyled,
   FileCommentStyled,
@@ -15,10 +11,7 @@ import {
 import { Card } from '@material-ui/core';
 import { CommentIcon } from '../../../../../../Packages/Design';
 import { router } from '../../../../../../Packages/Router';
-import { addRejectComment } from './apiRoute/addRejectComment';
-import { IUser, security } from '../../../../../../Packages/Security';
-import { EditValidationContext } from '../../../../EditValidationContext';
-import { FileCommentFooterStyled } from '../../../../../Comments/File/Footer/FileCommentFooter.style';
+import { FileCommentRejectionFooter } from './FileCommentRejection/FileCommentRejectionFooter';
 
 interface IRejectedProps {
   isRejected: boolean;
@@ -38,51 +31,9 @@ export const RejectControl: React.FC<IRejectedProps> = ({
   const [anchorEl, setAnchorEl] = React.useState<
     SVGSVGElement | Element | null
   >(null);
-  const [user] = useState<IUser>(security.getUser());
-  const jwt = user.getJwt();
-  const { fileId } = useContext(EditValidationContext);
   const [rejectComments, setRejectComments] = useState(
     controlRejectable.rejectComments,
   );
-  const [inputCommentValue, setInputCommentValue] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
-
-  const handleChangeInputValue = useCallback(
-    (value: string) => {
-      setInputCommentValue(value);
-    },
-    [setInputCommentValue],
-  );
-
-  const addComment = useCallback(
-    (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Enter') {
-        if (!inputCommentValue) {
-          return;
-        }
-
-        const value = inputCommentValue.trim();
-
-        if (!value || value === '') {
-          return;
-        }
-        addRejectComment(
-          fileId,
-          controlId,
-          jwt,
-          value,
-          setRejectComments,
-          setError,
-          setInputCommentValue,
-        );
-      }
-    },
-    [controlId, fileId, jwt, setInputCommentValue, inputCommentValue],
-  );
-
-  const handleClickAway = () => {
-    setAnchorEl(null);
-  };
 
   return (
     <RejectControlContainer>
@@ -111,7 +62,7 @@ export const RejectControl: React.FC<IRejectedProps> = ({
             placement={'bottom-start'}
             bdr={'0'}
             border={'0'}
-            onClickAway={handleClickAway}
+            onClickAway={() => setAnchorEl(null)}
             zIndex={2}
           >
             <FileCommentStyled>
@@ -120,21 +71,10 @@ export const RejectControl: React.FC<IRejectedProps> = ({
                   Commentaires liés au rejet
                 </FileCommentHeaderStyled>
                 <FileCommentBody comments={rejectComments} />
-                <FileCommentFooterStyled>
-                  <InputBase
-                    color={'disabled'}
-                    bdr={'4px'}
-                    placeholder={
-                      'Appuyez sur la touche ENTREE pour valider votre message'
-                    }
-                    onChange={(e) =>
-                      handleChangeInputValue(e.currentTarget.value)
-                    }
-                    value={inputCommentValue}
-                    onKeyPress={addComment}
-                  />
-                </FileCommentFooterStyled>
-                {error && <FormError>{error}</FormError>}
+                <FileCommentRejectionFooter
+                  controlId={controlId}
+                  setRejectComments={setRejectComments}
+                />
               </Card>
             </FileCommentStyled>
           </Popper>

@@ -38,10 +38,6 @@ export const FileComment: React.FC = (): React.ReactElement => {
     send('getFileComments', {}, { file_id: fileId });
   }, [send, fileId]);
 
-  const handleClickAway = () => {
-    setAnchorEl(null);
-  };
-
   return (
     <>
       <BPIBadge content={data?.length}>
@@ -61,7 +57,7 @@ export const FileComment: React.FC = (): React.ReactElement => {
         placement={'bottom-start'}
         bdr={'0'}
         border={'0'}
-        onClickAway={handleClickAway}
+        onClickAway={() => setAnchorEl(null)}
         zIndex={2}
       >
         <FileCommentStyled>
