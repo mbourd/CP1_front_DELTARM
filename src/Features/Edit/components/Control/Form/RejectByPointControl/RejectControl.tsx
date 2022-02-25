@@ -125,7 +125,7 @@ export const RejectControl: React.FC<IRejectedProps> = ({
                     color={'disabled'}
                     bdr={'4px'}
                     placeholder={
-                      'Appuyez sur la touche ENTRER pour valider votre message'
+                      'Appuyez sur la touche ENTREE pour valider votre message'
                     }
                     onChange={(e) =>
                       handleChangeInputValue(e.currentTarget.value)
