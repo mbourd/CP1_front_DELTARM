@@ -10,6 +10,7 @@ export const addRejectComment = (
   value: string,
   setRejectComments: React.Dispatch<React.SetStateAction<IFileComment[]>>,
   setError: React.Dispatch<React.SetStateAction<string | null>>,
+  setInputCommentValue: React.Dispatch<React.SetStateAction<string>>,
 ) => {
   axios
     .post(
@@ -54,10 +55,12 @@ export const addRejectComment = (
         return rejectComments;
       }
       setRejectComments(rejectComments);
+      setError('');
+      setInputCommentValue('');
     })
     .catch((err) => {
-      if (err?.response?.data?.data?.error_msg) {
-        setError(err);
+      if (err?.response?.data?.error_msg) {
+        setError(err?.response?.data?.error_msg);
       }
     });
 };
