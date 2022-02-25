@@ -44,33 +44,40 @@ export const RejectControl: React.FC<IRejectedProps> = ({
   const [rejectComments, setRejectComments] = useState(
     controlRejectable.rejectComments,
   );
+  const [inputCommentValue, setInputCommentValue] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
+
+  const handleChangeInputValue = useCallback(
+    (value: string) => {
+      setInputCommentValue(value);
+    },
+    [setInputCommentValue],
+  );
 
   const addComment = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter') {
-        const input = e.currentTarget.querySelector('input');
-
-        if (!input) {
+        if (!inputCommentValue) {
           return;
         }
 
-        const val = input.value.trim();
+        const value = inputCommentValue.trim();
 
-        if (!val || val === '') {
+        if (!value || value === '') {
           return;
         }
         addRejectComment(
           fileId,
           controlId,
           jwt,
-          val,
+          value,
           setRejectComments,
           setError,
+          setInputCommentValue,
         );
       }
     },
-    [controlId, fileId, jwt],
+    [controlId, fileId, jwt, setInputCommentValue, inputCommentValue],
   );
 
   const handleClickAway = () => {
@@ -120,6 +127,10 @@ export const RejectControl: React.FC<IRejectedProps> = ({
                     placeholder={
                       'Appuyez sur la touche ENTRER pour valider votre message'
                     }
+                    onChange={(e) =>
+                      handleChangeInputValue(e.currentTarget.value)
+                    }
+                    value={inputCommentValue}
                     onKeyPress={addComment}
                   />
                 </FileCommentFooterStyled>
