@@ -48,7 +48,10 @@ export const RejectControl: React.FC<IRejectedProps> = ({
       />
       {rejectComments.length > 0 ? (
         <>
-          <span style={{ marginLeft: '10px' }}>
+          <span
+            style={{ marginLeft: '10px' }}
+            id={`rejected-comments${controlId}`}
+          >
             <CommentIcon
               fontSize={'small'}
               onClick={(e) => {
