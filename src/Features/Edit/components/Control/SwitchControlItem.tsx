@@ -18,6 +18,7 @@ import {
   DateTimeControl,
   BooleanControl,
   RichTextControl,
+  DataGridControl,
 } from './Form';
 import { EditValidationContext } from 'Features/Edit';
 import { SliderControl } from './Form/Slider/SliderControl';
@@ -231,6 +232,10 @@ export const SwitchControlItem: React.FC<IProps> = ({
           setFormState={setFormState}
           context={context}
         />
+      );
+    case 'data_grid':
+      return (
+        <DataGridControl control={control} fileId={fileId} context={context} />
       );
     case 'rich_text':
       return (

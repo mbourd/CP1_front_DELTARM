@@ -26,6 +26,7 @@ export type ControlTypeType =
   | 'rich_text'
   | 'boolean'
   | 'line_break'
+  | 'data_grid'
   | 'slider';
 
 export type ControlFontSize = 'standard' | 'bold';
@@ -175,6 +176,17 @@ export interface ControlRejectable {
   rejectComments: IFileComment[];
 }
 
+export interface DataGridDetail {
+  columns: { key: string; name: string }[];
+  rows: {
+    [key: string]: {
+      component: 'integer' | 'select' | 'upload_file' | 'boolean' | 'text';
+      value: string;
+      answer_choices: Record<string, ISelectData> | null;
+    };
+  }[];
+}
+
 export interface IApiControl {
   control_desc_1: string | null;
   control_desc_2: string | null;
@@ -206,4 +218,5 @@ export interface IApiControl {
   rich_text_detail: RawDraftContentState | null;
   control_rejectable: IAPIControlRejectable | null;
   useRejection?: ControlRejectable;
+  data_grid_detail: DataGridDetail | null;
 }
