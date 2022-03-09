@@ -26,18 +26,16 @@ export const DataGridBoolean: React.FC<IProps> = ({
     }
   }, [value]);
 
-  const toogleAndSaveValue = useCallback(() => {
-    const booleanValue = !stringToBoolean(currentValue);
-
+  const toggleAndSaveValue = useCallback(() => {
     saveValueDataGrid(
       fileId,
       controlId,
       jwt,
       setCurrentValue,
       setErrorMessage,
-      value,
+      currentValue,
     );
-  }, [controlId, jwt, fileId, currentValue, value]);
+  }, [controlId, jwt, fileId, currentValue]);
 
   const booleanValue = stringToBoolean(currentValue);
 
@@ -51,7 +49,7 @@ export const DataGridBoolean: React.FC<IProps> = ({
         placeholder={'Validation'}
         disabled={false}
         checked={booleanValue ? booleanValue : false}
-        onClick={() => toogleAndSaveValue()}
+        onClick={() => toggleAndSaveValue()}
       />
       {errorMessage ? <FormError>{errorMessage}</FormError> : null}
     </DataGridBooleanStyled>
