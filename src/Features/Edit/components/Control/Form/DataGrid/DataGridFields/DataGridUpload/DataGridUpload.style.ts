@@ -6,6 +6,7 @@ export const DataGridUploadStyled = styled.div`
   border-radius: 5px;
   padding: 0.3em;
   margin: 5px;
+  line-height: initial;
 
   .MuiSvgIcon-root:hover {
     color: inherit;

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { DataGridBooleanStyled } from './DataGridBoolean.style';
 import { FormError } from 'Shared/components';
 import { Checkbox } from '@mui/material';
@@ -19,6 +19,12 @@ export const DataGridBoolean: React.FC<IProps> = ({
   const [currentValue, setCurrentValue] = useState(value);
   const { user } = useSecurity();
   const jwt = user.getJwt();
+
+  useEffect(() => {
+    if (value) {
+      setCurrentValue(value.toString());
+    }
+  }, [value]);
 
   const toogleAndSaveValue = useCallback(() => {
     const booleanValue = !stringToBoolean(currentValue);

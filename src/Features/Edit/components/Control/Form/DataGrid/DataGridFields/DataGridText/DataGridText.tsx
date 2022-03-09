@@ -19,7 +19,9 @@ export const DataGridText: React.FC<IProps> = ({
   const jwt = user.getJwt();
 
   useEffect(() => {
-    setCurrentValue(value);
+    if (value) {
+      setCurrentValue(value.toString());
+    }
   }, [value]);
 
   const saveValue = useCallback(

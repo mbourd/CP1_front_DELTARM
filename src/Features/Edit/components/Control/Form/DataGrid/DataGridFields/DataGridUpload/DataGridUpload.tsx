@@ -136,6 +136,7 @@ export const DataGridUpload: React.FC<IProps> = ({
         </Container>
       </Button>
       <UploadList
+        style={{ overflowY: 'auto', maxHeight: '50px' }}
         currentUploadFile={currentUploadFile}
         handleDeleteFile={handleDeleteFile}
         handleDownloadFile={handleDownloadFile}
