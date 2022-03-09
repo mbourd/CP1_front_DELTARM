@@ -99,8 +99,6 @@ export const DataGridControl: React.FC<IProps> = ({
             />
           );
 
-          return <Row {...props} className={'row-grid'} />;
-        default:
           return <Row {...props} />;
       }
     });
@@ -118,6 +116,7 @@ export const DataGridControl: React.FC<IProps> = ({
             rowHeight={150}
             headerRowHeight={50}
             columns={gridDetails.columns}
+            className={'_DataGrid rdg-light'}
             rows={gridDetails.rows}
             components={{ rowRenderer: rowRenderer }}
           />
