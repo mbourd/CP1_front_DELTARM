@@ -6,14 +6,16 @@ export const dataGridDetail = {
     { key: 'column4', name: 'column title to display select' },
     { key: 'column5', name: 'column title to display checkbox boolean' },
   ],
-  // rows: [],
   rows: [
     {
-      column1: { component: 'integer', value: 12 },
-      column2: { component: 'upload_file', value: null },
+      column1: { component: 'integer', value: null },
+      column2: {
+        component: 'upload_file',
+        value: null,
+      },
       column3: {
         component: 'text',
-        value: 'toto text',
+        value: null,
       },
       column4: {
         component: 'select',
@@ -21,66 +23,74 @@ export const dataGridDetail = {
         answer_choices: {
           '1': {
             id: '1',
-            label: 'CONFORME',
+            label: 'SOUS TRAITANT',
             value: '1',
-            isKo: false,
           },
           '2': {
             id: '2',
-            label: 'NON APPLICABLE',
+            label: 'SOUS TRAITANT 2',
             value: '2',
-            isKo: false,
           },
           '3': {
             id: '3',
-            label: 'NON CONFORME',
+            label: 'SOUS TRAITANt 3',
             value: '3',
-            isKo: false,
           },
           '4': {
             id: '4',
-            label: 'CONFORME a point',
+            label: 'SOUS TRAITANT 4',
             value: '4',
-            isKo: false,
           },
         },
       },
-      column5: { component: 'boolean', value: 'true' },
+      column5: { component: 'boolean', value: null },
     },
     {
       column1: { component: 'integer', value: 12 },
-      column2: { component: 'upload_file', value: null },
+      column2: {
+        component: 'upload_file',
+        value: [
+          {
+            file_id: 27,
+            file_name: 'totoooooooooooooooooooooooooo.png',
+          },
+          {
+            file_id: 28,
+            file_name: 'tata.png',
+          },
+          {
+            file_id: 21,
+            file_name: 'tutu.png',
+          },
+        ],
+      },
       column3: {
         component: 'text',
         value: 'toto text',
       },
       column4: {
         component: 'select',
-        value: null,
+        value: '2',
         answer_choices: {
           '1': {
             id: '1',
-            label: 'CONFORME',
+            label: 'SOUS TRAITANT',
             value: '1',
-            isKo: false,
           },
           '2': {
             id: '2',
-            label: 'NON APPLICABLE',
+            label: 'SOUS TRAITANT 2',
             value: '2',
-            isKo: false,
           },
           '3': {
             id: '3',
-            label: 'NON CONFORME',
+            label: 'SOUS TRAITANt 3',
             value: '3',
-            isKo: false,
           },
           '4': {
             id: '4',
-            label: 'CONFORME a point',
+            label: 'SOUS TRAITANT 4',
             value: '4',
-            isKo: false,
           },
         },
       },

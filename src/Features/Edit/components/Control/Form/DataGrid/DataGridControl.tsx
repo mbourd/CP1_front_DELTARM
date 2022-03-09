@@ -61,7 +61,7 @@ export const DataGridControl: React.FC<IProps> = ({
               fileId={fileId}
               controlId={control.control_id}
               key={index}
-              value={props.row[column].value.toString()}
+              value={props.row[column].value}
             />
           );
 
@@ -72,7 +72,7 @@ export const DataGridControl: React.FC<IProps> = ({
               fileId={fileId}
               controlId={control.control_id}
               key={index}
-              value={props.row[column].value.toString()}
+              value={props.row[column].value}
             />
           );
 
@@ -83,7 +83,7 @@ export const DataGridControl: React.FC<IProps> = ({
               fileId={fileId}
               controlId={control.control_id}
               key={index}
-              value={props.row[column].value.toString()}
+              value={props.row[column].value}
             />
           );
 
