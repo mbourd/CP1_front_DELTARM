@@ -219,4 +219,5 @@ export interface IApiControl {
   control_rejectable: IAPIControlRejectable | null;
   useRejection?: ControlRejectable;
   data_grid_detail: DataGridDetail | null;
+  calculatedValue?: string;
 }

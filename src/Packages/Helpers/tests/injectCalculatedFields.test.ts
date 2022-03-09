@@ -547,6 +547,7 @@ describe('Inject calculated fields into the form', () => {
             control_title: 'Calculé : (A + B) * C',
             control_type: 'formula',
             control_value: '50',
+            calculatedValue: '50',
             upload_detail: null,
             formula: {
               formula: '(#2307+#2308)*#2309',
@@ -578,6 +579,7 @@ describe('Inject calculated fields into the form', () => {
             control_title: 'Calculé: (A - B) / C',
             control_type: 'formula',
             control_value: '0',
+            calculatedValue: '0',
             upload_detail: null,
             formula: {
               formula: '(#2307-#2308)/#2309',
@@ -609,6 +611,7 @@ describe('Inject calculated fields into the form', () => {
             control_title: 'Calculé : (A / B) * 100',
             control_type: 'formula',
             control_value: '100',
+            calculatedValue: '100',
             upload_detail: null,
             formula: {
               formula: '(#2307/#2308)*100',
@@ -786,6 +789,7 @@ describe('Inject calculated fields into the form', () => {
               'Avg_Simple(D;E;F) : Pas de coef ; Scale=>0-45:Bad;45-85:Mean;85-100:Ok',
             control_type: 'formula',
             control_value: 'Mauvais',
+            calculatedValue: 'Mauvais',
             formula: {
               formula: '(#2313+#2314+#2315)/3',
               map: [
@@ -843,6 +847,7 @@ describe('Inject calculated fields into the form', () => {
               'Avg_Coef(D;E;F) : Coef =>10-20-70; Scale=>0-45:Bad;45-85:Mean;85-100:Ok',
             control_type: 'formula',
             control_value: 'Mauvais',
+            calculatedValue: 'Mauvais',
             formula: {
               formula: '(#2313*10+#2314*20+#2315*70)/100',
               map: [
