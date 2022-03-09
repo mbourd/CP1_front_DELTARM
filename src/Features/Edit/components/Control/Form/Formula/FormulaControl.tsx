@@ -26,6 +26,7 @@ export const FormulaControl: React.FC<IProps> = ({
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);
   const { currentRoute } = useRouter();
+
   useEffect(() => {
     setCurrentValue(control.control_value);
   }, [control.control_value]);
@@ -83,6 +84,12 @@ export const FormulaControl: React.FC<IProps> = ({
       control.mandatory,
     ],
   );
+
+  useEffect(() => {
+    if (control.calculatedValue) {
+      saveValue(control.calculatedValue);
+    }
+  }, [control.calculatedValue, saveValue]);
 
   useEffect(() => {
     if (control.mandatory && control.editable && !currentValue) {

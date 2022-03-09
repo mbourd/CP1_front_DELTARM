@@ -192,5 +192,6 @@ export interface IApiControl {
   useCompliance?: ICompliance;
   control_options: IControlOptions | null;
   upload_detail: IUploadDetail[] | null;
+  calculatedValue?: string;
   rich_text_detail: RawDraftContentState | null;
 }

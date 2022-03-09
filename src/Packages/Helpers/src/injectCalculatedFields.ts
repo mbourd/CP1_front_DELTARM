@@ -52,16 +52,19 @@ export const injectCalculatedFields = (formState: IChapter[]): IChapter[] => {
             isFinite(calculatedValue())
           ) {
             field.control_value = calculatedValue().toString();
+            field.calculatedValue = calculatedValue().toString();
           }
         }
         if (oneOfValueIsMissing) {
           field.control_value = '';
+          field.calculatedValue = '';
         }
       }
       if (field.formula?.map) {
         field.formula.map.map((map) => {
           if (between(field.control_value, map.min, map.max)) {
             field.control_value = map.lib;
+            field.calculatedValue = map.lib;
           }
         });
       }
