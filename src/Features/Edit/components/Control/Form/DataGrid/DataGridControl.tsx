@@ -107,8 +107,8 @@ export const DataGridControl: React.FC<IProps> = ({
   };
 
   return (
-    <DataGridControlStyled>
-      <Grid item xs={12}>
+    <Grid item xs={12}>
+      <DataGridControlStyled>
         <ControlLabel control={control} />
         {gridDetails?.rows && gridDetails?.columns && (
           <DataGrid
@@ -128,7 +128,7 @@ export const DataGridControl: React.FC<IProps> = ({
           />
         </BPITooltip>
         {errorMessage && <FormError>{errorMessage}</FormError>}
-      </Grid>
-    </DataGridControlStyled>
+      </DataGridControlStyled>
+    </Grid>
   );
 };
