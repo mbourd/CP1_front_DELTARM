@@ -44,7 +44,7 @@ export const DataGridControl: React.FC<IProps> = ({
     const targetedColumns = Object.keys(props.row);
     targetedColumns.forEach((column, index) => {
       switch (props.row[column].component) {
-        case 'upload_file':
+        case 'file_upload':
           props.row[column] = (
             <DataGridUpload
               key={index}

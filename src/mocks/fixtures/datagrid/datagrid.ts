@@ -1,7 +1,7 @@
 export const dataGridDetail = {
   columns: [
     { key: 'column1', name: 'column title to display integer' },
-    { key: 'column2', name: 'column title to display upload_file' },
+    { key: 'column2', name: 'column title to display file_upload' },
     { key: 'column3', name: 'column title to display text' },
     { key: 'column4', name: 'column title to display select' },
     { key: 'column5', name: 'column title to display checkbox boolean' },
@@ -10,7 +10,7 @@ export const dataGridDetail = {
     {
       column1: { component: 'integer', value: 12 },
       column2: {
-        component: 'upload_file',
+        component: 'file_upload',
         value: [
           {
             file_id: 27,
@@ -64,7 +64,7 @@ export const dataGridDetail = {
 export const GRID_DETAILS_ADD_ROW = {
   columns: [
     { key: 'column1', name: 'column title to display integer' },
-    { key: 'column2', name: 'column title to display upload_file' },
+    { key: 'column2', name: 'column title to display file_upload' },
     { key: 'column3', name: 'column title to display text' },
     { key: 'column4', name: 'column title to display select' },
     { key: 'column5', name: 'column title to display checkbox boolean' },
@@ -73,7 +73,7 @@ export const GRID_DETAILS_ADD_ROW = {
     {
       column1: { component: 'integer', value: 12 },
       column2: {
-        component: 'upload_file',
+        component: 'file_upload',
         value: [
           {
             file_id: 27,
@@ -124,7 +124,7 @@ export const GRID_DETAILS_ADD_ROW = {
     {
       column1: { component: 'integer', value: null },
       column2: {
-        component: 'upload_file',
+        component: 'file_upload',
         value: null,
       },
       column3: {
