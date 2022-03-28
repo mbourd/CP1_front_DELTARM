@@ -5,5 +5,4 @@ export const FormErrorStyled = styled.span`
   font-family: ${({ theme }) => theme.font.medium.italic};
   font-size: ${({ theme }) => theme.sizing.small};
   margin-bottom: ${({ theme }) => theme.spacing.xSmall};
-  padding-left: ${({ theme }) => theme.spacing.small};
 `;

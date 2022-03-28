@@ -4,10 +4,8 @@ import {
   FormError,
   Heading,
   HeadingTwo,
-  InputBase,
   ISelectData,
   Modal,
-  Select,
 } from 'Shared/components';
 import { ModalDynamicFooterStyled } from './ModalDynamic.style';
 import { IDataModalProps } from './types';
@@ -24,6 +22,8 @@ import {
 import { IActionButton } from '../../DashboardDynamic/components/types';
 import { Controller, useForm } from 'react-hook-form';
 import { StyledTableCell } from '../../DashboardDynamic/components/Card/Card.style';
+import { InputModalDynamic } from './InputModalDynamic/InputModalDynamic';
+import { SelectModalDynamic } from './SelectModalDynamic/SelectModalDynamic';
 
 export const ModalDynamic: FC<IDataModalProps> = ({
   open,
@@ -64,10 +64,8 @@ export const ModalDynamic: FC<IDataModalProps> = ({
   });
 
   const handleChangeValue = useCallback(
-    (e) => {
-      const name = e.currentTarget.id;
-      const value = e.currentTarget.value;
-      setValue(name, value);
+    (id, value) => {
+      setValue(id, value);
     },
     [setValue],
   );
@@ -77,11 +75,26 @@ export const ModalDynamic: FC<IDataModalProps> = ({
       if (action.params) {
         const keys = Object.keys(action.params);
         const params = { ...getValues(keys) };
-        const values = Object.values(params);
-        if (values.includes('')) {
+        let errorMandatory = false;
+
+        data?.content.map((value) => {
+          keys.map((key) => {
+            if (key === value?.attribute?.id) {
+              if (value.attribute.mandatory && getValues(key) === '') {
+                errorMandatory = true;
+              }
+            }
+          });
+        });
+
+        if (errorMandatory) {
           setErrorMessage('Champs obligatoire manquant');
 
           return;
+        }
+
+        if (!errorMandatory) {
+          setErrorMessage('');
         }
 
         const modifiedAction: IActionButton = {
@@ -95,7 +108,7 @@ export const ModalDynamic: FC<IDataModalProps> = ({
 
       actionButton(action);
     },
-    [getValues, actionButton],
+    [getValues, actionButton, data?.content],
   );
 
   return (
@@ -141,33 +154,14 @@ export const ModalDynamic: FC<IDataModalProps> = ({
                     defaultValue={element?.value}
                     control={control}
                     name={element.attribute.id}
+                    rules={{ required: element.attribute.mandatory }}
                     render={() => (
-                      <>
-                        <InputBase
-                          border={element.attribute.type === 'hidden' ? 0 : 1}
-                          autofocus
-                          key={index}
-                          type={element.attribute?.type}
-                          placeholder={element.attribute?.placeholder}
-                          id={element.attribute?.id}
-                          name={element.attribute?.id}
-                          multiline={element.attribute?.multiline}
-                          multilineRows={
-                            element.attribute?.multilineRows
-                              ? element.attribute.multilineRows
-                              : undefined
-                          }
-                          required={element.attribute?.mandatory}
-                          defaultValue={element?.value || undefined}
-                          onChange={(e) => handleChangeValue(e)}
-                          {...register(`${element.attribute?.id}`, {
-                            required: element.attribute?.mandatory,
-                          })}
-                        />
-                        {element.attribute.mandatory ? (
-                          <FormError>{'Valeur obligatoire'}</FormError>
-                        ) : null}
-                      </>
+                      <InputModalDynamic
+                        element={element}
+                        index={index}
+                        handleChangeValue={handleChangeValue}
+                        register={register}
+                      />
                     )}
                   />
                 </Grid>
@@ -176,6 +170,11 @@ export const ModalDynamic: FC<IDataModalProps> = ({
               const selectedValue: Record<string, true> = {
                 [element?.value || '']: true,
               };
+
+              const keySelectField: Record<string, string> = {
+                [element.attribute.id]: element?.value ? element.value : '',
+              };
+              Object.assign(defaultQueries, keySelectField);
 
               const options: Record<string, ISelectData> = {};
               element.attribute?.option?.map((option) => {
@@ -190,25 +189,21 @@ export const ModalDynamic: FC<IDataModalProps> = ({
 
               return (
                 <Grid key={index} item xs={8}>
-                  <Select
-                    closeOnSelect
-                    name={'select_list' + element.attribute?.id}
-                    data={options || {}}
-                    selectedValues={selectedValue}
-                    onChange={(selectedValues) => {
-                      const value =
-                        Object.keys(selectedValues).length >= 2
-                          ? Object.keys(selectedValues).join(';')
-                          : Object.keys(selectedValues)[0];
-
-                      return value ? value : '';
-                    }}
-                    {...register(`${element.attribute?.id}`, {
-                      required: element.attribute?.mandatory,
-                    })}
-                  >
-                    {'Sélectionner une valeur'}
-                  </Select>
+                  <Controller
+                    defaultValue={element?.value}
+                    control={control}
+                    name={element.attribute.id}
+                    rules={{ required: element.attribute.mandatory }}
+                    render={() => (
+                      <SelectModalDynamic
+                        element={element}
+                        options={options}
+                        selectedValue={selectedValue}
+                        handleChangeValue={handleChangeValue}
+                        register={register}
+                      />
+                    )}
+                  />
                 </Grid>
               );
             case 'table':
