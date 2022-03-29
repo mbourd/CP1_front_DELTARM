@@ -35,24 +35,19 @@ export const dataGridDetail = {
         value: '2',
         answer_choices: [
           {
-            id: '1',
-            label: 'SOUS TRAITANT',
-            value: '1',
+            id: 1,
+            label: 'Conforme',
+            value: 1,
           },
           {
-            id: '2',
-            label: 'SOUS TRAITANT 2',
-            value: '2',
+            id: 2,
+            label: 'Non-Conforme',
+            value: 2,
           },
           {
-            id: '3',
-            label: 'SOUS TRAITANT 3',
-            value: '3',
-          },
-          {
-            id: '4',
-            label: 'SOUS TRAITANT 4',
-            value: '4',
+            id: 3,
+            label: 'Sans Objet',
+            value: 3,
           },
         ],
       },
