@@ -11,7 +11,11 @@ import { DataGridInteger } from './DataGridFields/DataGridInteger/DataGridIntege
 import { DataGridSelect } from './DataGridFields/DataGridSelect/DataGridSelect';
 import { ControlLabel } from '../ControlLabel';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { BPITooltip, FormError } from '../../../../../../Shared/components';
+import {
+  BPITooltip,
+  FormError,
+  ISelectData,
+} from '../../../../../../Shared/components';
 import { useSecurity } from '../../../../../../Packages/Security';
 import { addRow } from './apiRoutes/addRow';
 
@@ -89,11 +93,23 @@ export const DataGridControl: React.FC<IProps> = ({
 
           return <Row {...props} />;
         case 'select':
+          const answerChoices: Record<string, ISelectData> = {};
+          props.row[column].answer_choices.map(
+            (answer: { id: string; label: string; value: string }) => {
+              answerChoices[answer.id] = {
+                id: '' + answer.id,
+                label: answer.label,
+                value: '' + answer.value,
+              };
+
+              return answer;
+            },
+          );
           props.row[column] = (
             <DataGridSelect
               fileId={fileId}
               controlId={control.control_id}
-              answerChoices={props.row[column].answer_choices}
+              answerChoices={answerChoices}
               key={index}
               value={props.row[column].value}
             />

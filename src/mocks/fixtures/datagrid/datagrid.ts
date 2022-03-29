@@ -33,28 +33,28 @@ export const dataGridDetail = {
       column4: {
         component: 'select',
         value: '2',
-        answer_choices: {
-          '1': {
+        answer_choices: [
+          {
             id: '1',
             label: 'SOUS TRAITANT',
             value: '1',
           },
-          '2': {
+          {
             id: '2',
             label: 'SOUS TRAITANT 2',
             value: '2',
           },
-          '3': {
+          {
             id: '3',
-            label: 'SOUS TRAITANt 3',
+            label: 'SOUS TRAITANT 3',
             value: '3',
           },
-          '4': {
+          {
             id: '4',
             label: 'SOUS TRAITANT 4',
             value: '4',
           },
-        },
+        ],
       },
       column5: { component: 'boolean', value: 'true' },
     },
@@ -96,28 +96,28 @@ export const GRID_DETAILS_ADD_ROW = {
       column4: {
         component: 'select',
         value: '2',
-        answer_choices: {
-          '1': {
+        answer_choices: [
+          {
             id: '1',
             label: '1',
             value: '1',
           },
-          '2': {
+          {
             id: '2',
             label: '2',
             value: '2',
           },
-          '3': {
+          {
             id: '3',
             label: '3',
             value: '3',
           },
-          '4': {
+          {
             id: '4',
             label: '4',
             value: '4',
           },
-        },
+        ],
       },
       column5: { component: 'boolean', value: 'true' },
     },
@@ -134,28 +134,28 @@ export const GRID_DETAILS_ADD_ROW = {
       column4: {
         component: 'select',
         value: null,
-        answer_choices: {
-          '1': {
+        answer_choices: [
+          {
             id: '1',
             label: 'NEW SOUS TRAITANT',
             value: '1',
           },
-          '2': {
+          {
             id: '2',
             label: '2',
             value: '2',
           },
-          '3': {
+          {
             id: '3',
             label: '3',
             value: '3',
           },
-          '4': {
+          {
             id: '4',
             label: '4',
             value: '4',
           },
-        },
+        ],
       },
       column5: { component: 'boolean', value: null },
     },
