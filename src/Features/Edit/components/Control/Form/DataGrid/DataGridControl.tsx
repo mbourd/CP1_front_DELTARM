@@ -92,7 +92,7 @@ export const DataGridControl: React.FC<IProps> = ({
           );
 
           return <Row {...props} />;
-        case 'select':
+        case 'select_list':
           const answerChoices: Record<string, ISelectData> = {};
           props.row[column].answer_choices.map(
             (answer: {

@@ -31,8 +31,8 @@ export const dataGridDetail = {
         value: 'toto text',
       },
       column4: {
-        component: 'select',
-        value: '2',
+        component: 'select_list',
+        value: null,
         answer_choices: [
           {
             id: 1,
@@ -89,7 +89,7 @@ export const GRID_DETAILS_ADD_ROW = {
         value: 'toto text',
       },
       column4: {
-        component: 'select',
+        component: 'select_list',
         value: '2',
         answer_choices: [
           {
@@ -127,7 +127,7 @@ export const GRID_DETAILS_ADD_ROW = {
         value: null,
       },
       column4: {
-        component: 'select',
+        component: 'select_list',
         value: null,
         answer_choices: [
           {
