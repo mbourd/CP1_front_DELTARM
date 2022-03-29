@@ -10,7 +10,7 @@ describe('Data Grid Control', () => {
     const grid = getByRole('grid');
     expect(grid).toBeVisible();
     const header1 = getByRole('columnheader', {
-      name: /column title to display upload_file/i,
+      name: /column title to display file_upload/i,
     });
     expect(header1).toBeInTheDocument();
     const header2 = getByRole('columnheader', {
