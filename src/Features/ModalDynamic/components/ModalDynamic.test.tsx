@@ -1,8 +1,8 @@
 import React from 'react';
 import * as stories from './ModalDynamic.stories';
 import { composeStories } from '@storybook/testing-react';
-import { render, screen } from 'setupTests';
-const { Modal } = composeStories(stories);
+import { render, screen, fireEvent } from 'setupTests';
+const { Modal, ModalWorksite } = composeStories(stories);
 
 describe('ModalDynamic', () => {
   describe('ModalDynamic', () => {
@@ -44,6 +44,22 @@ describe('ModalDynamic', () => {
       const text = screen.getByText('CTR019/01');
       expect(table).toBeInTheDocument();
       expect(text).toBeInTheDocument();
+    });
+    test('Should show error message when mandates fields are not set', async () => {
+      const { getByText } = render(<ModalWorksite />);
+      const buttonCreate = getByText('Créer le chantier');
+      fireEvent.click(buttonCreate);
+      expect(getByText('Champs obligatoire manquant')).toBeInTheDocument();
+    });
+    test('Should NOT show error message when mandates fields are set', async () => {
+      const { getByText, getByPlaceholderText } = render(<ModalWorksite />);
+      const selectListMandate = getByText('Sélectionner une valeur');
+      fireEvent.click(selectListMandate);
+      fireEvent.click(getByText('Client Chantier ABC'));
+      const input = getByPlaceholderText('Renseignez le nom du chantier');
+      fireEvent.change(input, {
+        target: { value: 'Une valeur mandatory' },
+      });
     });
   });
 });

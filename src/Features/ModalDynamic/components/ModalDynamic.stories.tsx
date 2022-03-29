@@ -1,7 +1,10 @@
 import React from 'react';
 import { ModalDynamic } from './ModalDynamic';
-import { data } from '../../../mocks/fixtures/modal/modal';
-import { dataPeriodClose } from '../../../mocks/fixtures/modal/modal';
+import {
+  data,
+  dataWorksite,
+  dataPeriodClose,
+} from '../../../mocks/fixtures/modal/modal';
 
 export default {
   title: 'ModalDynamic',
@@ -23,4 +26,10 @@ export const ModalPeriodClose = Template.bind({});
 ModalPeriodClose.args = {
   open: true,
   data: dataPeriodClose,
+};
+
+export const ModalWorksite = Template.bind({});
+ModalWorksite.args = {
+  open: true,
+  data: dataWorksite,
 };
