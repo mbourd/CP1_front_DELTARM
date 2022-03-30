@@ -10,7 +10,7 @@ export const addRow = (
   setErrorMessage: React.Dispatch<SetStateAction<string>>,
 ) => {
   axios
-    .get(
+    .post(
       `${getEnv('API_PROTOCOL')}://${getEnv(
         'API_HOST',
       )}/control/data_grid/add_row?file_id=${fileId}&elm_id=${controlId}`,
