@@ -1,6 +1,5 @@
 import React from 'react';
 import { EditValidation } from 'Features/Edit';
-import { BreadCrumb } from 'Shared/components';
 import { storage } from 'Services';
 
 interface IProps {
@@ -11,10 +10,5 @@ interface IProps {
 export const Validation: React.FC<IProps> = (props): React.ReactElement => {
   storage.removeData('validation');
 
-  return (
-    <>
-      <BreadCrumb values={['Dashboard', 'Validation']} />
-      <EditValidation {...props} />
-    </>
-  );
+  return <EditValidation {...props} />;
 };

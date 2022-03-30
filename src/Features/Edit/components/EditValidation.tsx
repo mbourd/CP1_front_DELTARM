@@ -11,7 +11,7 @@ import {
   useApi,
   useSecurity,
 } from 'Services';
-import { HeadingOne, PreWrapStyled } from 'Shared/components';
+import { BreadCrumb, PreWrapStyled } from 'Shared/components';
 import { NavItem } from './NavItem/NavItem';
 import { IData } from '../types';
 import { EditValidationContext } from '../EditValidationContext';
@@ -66,17 +66,21 @@ export const EditValidation: React.FC<IProps> = ({
     <SwitchCallState
       callState={callState}
       states={{
-        IS_LOADING: <IsLoading title={title} />,
-        NOT_FOUND: <NotFound title={title} />,
-        BAD_REQUEST: <NotFound title={title} />,
+        IS_LOADING: <IsLoading title={data?.title} />,
+        NOT_FOUND: <NotFound title={data?.title} />,
+        BAD_REQUEST: <NotFound title={data?.title} />,
       }}
     >
       {data ? (
         <EditStyled>
           <EditHeaderStyled>
-            <HeadingOne>
-              <SubHeader title={title} data={data} />
-            </HeadingOne>
+            {data.context === 'edit' && (
+              <BreadCrumb values={['Dashboard', 'Edit']} />
+            )}
+            {data.context === 'validate' && (
+              <BreadCrumb values={['Dashboard', 'Validation']} />
+            )}
+            <SubHeader data={data} />
           </EditHeaderStyled>
 
           <EditValidationContext.Provider
