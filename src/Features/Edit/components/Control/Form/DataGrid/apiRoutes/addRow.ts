@@ -23,8 +23,8 @@ export const addRow = (
       },
     )
     .then((response) => {
-      if (response.data.data_grid_detail) {
-        setGridDetails(response.data.data_grid_detail);
+      if (response.data) {
+        setGridDetails(response.data);
       }
     })
     .catch(() => {
