@@ -177,7 +177,12 @@ export interface ControlRejectable {
 }
 
 export interface DataGridDetail {
-  columns: { key: string; name: string }[];
+  columns: {
+    key: string;
+    name: string;
+    width?: string | number;
+    resizable: boolean;
+  }[];
   rows: {
     [key: string]: {
       component: 'integer' | 'select' | 'upload_file' | 'boolean' | 'text';

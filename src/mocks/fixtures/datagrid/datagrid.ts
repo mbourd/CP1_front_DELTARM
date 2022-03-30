@@ -1,7 +1,16 @@
 export const dataGridDetail = {
   columns: [
-    { key: 'column1', name: 'column title to display integer' },
-    { key: 'column2', name: 'column title to display file_upload' },
+    {
+      key: 'column1',
+      name: 'column title to display integer',
+      resizable: true,
+    },
+    {
+      key: 'column2',
+      name: 'column title to display file_upload',
+      resizable: true,
+      width: '30%',
+    },
     { key: 'column3', name: 'column title to display text' },
     { key: 'column4', name: 'column title to display select' },
     { key: 'column5', name: 'column title to display checkbox boolean' },
