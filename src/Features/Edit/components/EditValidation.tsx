@@ -66,16 +66,16 @@ export const EditValidation: React.FC<IProps> = ({
     <SwitchCallState
       callState={callState}
       states={{
-        IS_LOADING: <IsLoading title={title} />,
-        NOT_FOUND: <NotFound title={title} />,
-        BAD_REQUEST: <NotFound title={title} />,
+        IS_LOADING: <IsLoading title={data?.title} />,
+        NOT_FOUND: <NotFound title={data?.title} />,
+        BAD_REQUEST: <NotFound title={data?.title} />,
       }}
     >
       {data ? (
         <EditStyled>
           <EditHeaderStyled>
             <HeadingOne>
-              <SubHeader title={title} data={data} />
+              <SubHeader data={data} />
             </HeadingOne>
           </EditHeaderStyled>
 
