@@ -14,6 +14,7 @@ export const addRow = (
       `${getEnv('API_PROTOCOL')}://${getEnv(
         'API_HOST',
       )}/control/data_grid/add_row?file_id=${fileId}&elm_id=${controlId}`,
+      {},
       {
         headers: {
           Authorization: jwt,
