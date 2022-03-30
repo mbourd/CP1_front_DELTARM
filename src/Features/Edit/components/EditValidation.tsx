@@ -11,7 +11,7 @@ import {
   useApi,
   useSecurity,
 } from 'Services';
-import { HeadingOne, PreWrapStyled } from 'Shared/components';
+import { BreadCrumb, PreWrapStyled } from 'Shared/components';
 import { NavItem } from './NavItem/NavItem';
 import { IData } from '../types';
 import { EditValidationContext } from '../EditValidationContext';
@@ -74,9 +74,13 @@ export const EditValidation: React.FC<IProps> = ({
       {data ? (
         <EditStyled>
           <EditHeaderStyled>
-            <HeadingOne>
-              <SubHeader data={data} />
-            </HeadingOne>
+            {data.context === 'edit' && (
+              <BreadCrumb values={['Dashboard', 'Edit']} />
+            )}
+            {data.context === 'validate' && (
+              <BreadCrumb values={['Dashboard', 'Validation']} />
+            )}
+            <SubHeader data={data} />
           </EditHeaderStyled>
 
           <EditValidationContext.Provider

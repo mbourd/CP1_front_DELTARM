@@ -37,6 +37,7 @@ export const EditStyled = styled.div`
 export const EditHeaderStyled = styled.div`
   position: fixed;
   left: 0;
+  height: 110px;
   right: 0;
   background: ${({ theme }) => theme.color.background.main};
   background: ${({ theme }) => {
@@ -47,14 +48,18 @@ export const EditHeaderStyled = styled.div`
   z-index: 5;
 
   & + * {
-    padding-top: 200px;
+    padding-top: 100px;
   }
 `;
 
 export const EditTitleFileStyled = styled.p`
   align-items: center;
-  display: inline-flex;
+  text-align: center;
+  position: relative;
+  margin: 10px;
   font-size: ${({ theme }) => theme.sizing.normal};
+  font-family: ${({ theme }) => theme.font.heading.main};
+  line-height: 40px;
 
   .MuiSvgIcon-root,
   span {
