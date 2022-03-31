@@ -8,6 +8,7 @@ export const BreadCrumbStyled = styled.div`
   position: fixed;
   top: ${({ theme }) => theme.data.header.height};
   z-index: 99;
+  width: 25%;
 
   .MuiGrid-item {
     padding: 0 ${({ theme }) => theme.spacing.small};

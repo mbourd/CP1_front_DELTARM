@@ -15,7 +15,7 @@ import { NavItem } from './NavItem/NavItem';
 import { IData } from '../types';
 import { EditValidationContext } from '../EditValidationContext';
 import { IsLoading } from './IsLoading/IsLoading';
-import { ContentBody } from './ContentBody/ContentBody';
+import { ContentBody } from './ContentBody';
 import { NotFound } from './NotFound/NotFound';
 import { SubHeader } from './SubHeader';
 
@@ -103,23 +103,6 @@ export const EditValidation: React.FC<IProps> = ({
                 </List>
               </Grid>
               <Grid item className={'content'}>
-                {data.sectionHeader && (
-                  <Box paddingBottom={5}>
-                    <Alert
-                      variant="outlined"
-                      icon={false}
-                      severity={
-                        data.sectionHeader.type === 'alert'
-                          ? 'error'
-                          : 'success'
-                      }
-                    >
-                      <PreWrapStyled>
-                        {data.sectionHeader.message}
-                      </PreWrapStyled>
-                    </Alert>
-                  </Box>
-                )}
                 <ContentBody />
                 {data.sectionFooter && (
                   <Box paddingY={5}>

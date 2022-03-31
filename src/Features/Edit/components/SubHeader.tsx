@@ -9,7 +9,7 @@ interface IProps {
 
 export const SubHeader: React.FC<IProps> = ({ data }): React.ReactElement => {
   return (
-    <div>
+    <div style={{ width: '50%', margin: 'auto' }}>
       <EditTitleFileStyled>
         <FolderOpenIcon />
         {data.title ? (
