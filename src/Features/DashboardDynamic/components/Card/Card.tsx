@@ -122,7 +122,9 @@ export const Card: React.FC<ICardC> = ({
                               dangerouslySetInnerHTML={{
                                 __html: DOMPurify.sanitize(cell.content),
                               }}
-                              style={{ cursor: 'pointer' }}
+                              style={{
+                                cursor: cell.action ? 'pointer' : 'initial',
+                              }}
                               onClick={() => triggerAction(cell.action)}
                             />
                           </BPITooltip>
