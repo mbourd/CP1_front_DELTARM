@@ -6,7 +6,6 @@ import {
   isEmpty,
   router,
   SecurityContext,
-  storage,
   SwitchCallState,
   useApi,
   useSecurity,
@@ -16,7 +15,7 @@ import { NavItem } from './NavItem/NavItem';
 import { IData } from '../types';
 import { EditValidationContext } from '../EditValidationContext';
 import { IsLoading } from './IsLoading/IsLoading';
-import { SwitchContentBody } from './ContentBody/SwitchContentBody';
+import { ContentBody } from './ContentBody/ContentBody';
 import { NotFound } from './NotFound/NotFound';
 import { SubHeader } from './SubHeader';
 
@@ -92,10 +91,6 @@ export const EditValidation: React.FC<IProps> = ({
                   {data?.sections.map((section, index) => {
                     const current = currentSection || data?.currentSection.id;
 
-                    if (section.id === current) {
-                      storage.setData('edit.section.active', section.code);
-                    }
-
                     return (
                       <NavItem
                         key={index}
@@ -125,7 +120,7 @@ export const EditValidation: React.FC<IProps> = ({
                     </Alert>
                   </Box>
                 )}
-                <SwitchContentBody />
+                <ContentBody />
                 {data.sectionFooter && (
                   <Box paddingY={5}>
                     <Alert variant="outlined" severity="info">
