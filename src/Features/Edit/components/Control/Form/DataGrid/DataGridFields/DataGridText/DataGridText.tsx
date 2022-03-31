@@ -3,15 +3,21 @@ import { DataGridTextStyled } from './DataGridText.style';
 import { FormError, InputBase } from 'Shared/components';
 import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
 import { useSecurity } from '../../../../../../../../Packages/Security';
+
 interface IProps {
   value: string;
   fileId: string;
   controlId: string;
+  columnId: number;
+  rowNum: number;
 }
+
 export const DataGridText: React.FC<IProps> = ({
   value,
   fileId,
   controlId,
+  columnId,
+  rowNum,
 }): React.ReactElement => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [currentValue, setCurrentValue] = useState(value);
@@ -29,13 +35,15 @@ export const DataGridText: React.FC<IProps> = ({
       saveValueDataGrid(
         fileId,
         controlId,
+        columnId,
+        rowNum,
         jwt,
         setCurrentValue,
         setErrorMessage,
         value,
       );
     },
-    [controlId, jwt, fileId],
+    [controlId, jwt, fileId, columnId, rowNum],
   );
 
   return (

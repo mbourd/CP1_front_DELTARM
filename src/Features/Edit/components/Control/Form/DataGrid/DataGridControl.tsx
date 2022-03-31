@@ -51,6 +51,8 @@ export const DataGridControl: React.FC<IProps> = ({
         case 'file_upload':
           props.row[column] = (
             <DataGridUpload
+              columnId={props.row[column].col_elm_id}
+              rowNum={props.row[column].row_num}
               key={index}
               value={props.row[column].value}
               fileId={fileId}
@@ -62,6 +64,8 @@ export const DataGridControl: React.FC<IProps> = ({
         case 'boolean':
           props.row[column] = (
             <DataGridBoolean
+              columnId={props.row[column].col_elm_id}
+              rowNum={props.row[column].row_num}
               fileId={fileId}
               controlId={control.control_id}
               key={index}
@@ -73,6 +77,8 @@ export const DataGridControl: React.FC<IProps> = ({
         case 'text':
           props.row[column] = (
             <DataGridText
+              columnId={props.row[column].col_elm_id}
+              rowNum={props.row[column].row_num}
               fileId={fileId}
               controlId={control.control_id}
               key={index}
@@ -84,6 +90,8 @@ export const DataGridControl: React.FC<IProps> = ({
         case 'integer':
           props.row[column] = (
             <DataGridInteger
+              columnId={props.row[column].col_elm_id}
+              rowNum={props.row[column].row_num}
               fileId={fileId}
               controlId={control.control_id}
               key={index}
@@ -111,6 +119,8 @@ export const DataGridControl: React.FC<IProps> = ({
           );
           props.row[column] = (
             <DataGridSelect
+              columnId={props.row[column].col_elm_id}
+              rowNum={props.row[column].row_num}
               fileId={fileId}
               controlId={control.control_id}
               answerChoices={answerChoices}

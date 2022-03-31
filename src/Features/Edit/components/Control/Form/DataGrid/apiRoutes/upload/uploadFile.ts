@@ -6,6 +6,8 @@ import React, { SetStateAction } from 'react';
 export const uploadFile = (
   fileId: string,
   controlId: string,
+  rowNum: number,
+  columnId: number,
   newUploadFile: File,
   jwt: string | null,
   setCurrentUploadFile: React.Dispatch<SetStateAction<IUploadDetail[] | null>>,
@@ -18,7 +20,7 @@ export const uploadFile = (
     .post(
       `${getEnv('API_PROTOCOL')}://${getEnv(
         'API_HOST',
-      )}/control/data_grid/save_value?file_id=${fileId}&elm_id=${controlId}&elm_val=${fileName}`,
+      )}/control/data_grid/save_value?file_id=${fileId}&elm_id=${controlId}&elm_val=${fileName}&row_num=${rowNum}&column_id=${columnId}`,
       formData,
       {
         headers: {
@@ -29,10 +31,13 @@ export const uploadFile = (
     )
     .then((res) => {
       setErrorMessage(null);
-
-      return setCurrentUploadFile(res.data.data.file_detail);
+      if (res.data.data.file_detail) {
+        return setCurrentUploadFile(res.data.data.file_detail);
+      }
     })
     .catch((err) => {
-      return setErrorMessage(err.response.data.error_msg);
+      if (err.response.data.error_msg) {
+        return setErrorMessage(err.response.data.error_msg);
+      }
     });
 };

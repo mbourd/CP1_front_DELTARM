@@ -5,15 +5,21 @@ import { Checkbox } from '@mui/material';
 import { stringToBoolean } from '../../../../../../../../Packages/Helpers/src/stringToBoolean';
 import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
 import { useSecurity } from '../../../../../../../../Packages/Security';
+
 interface IProps {
   value: string;
   fileId: string;
   controlId: string;
+  columnId: number;
+  rowNum: number;
 }
+
 export const DataGridBoolean: React.FC<IProps> = ({
   value,
   fileId,
   controlId,
+  columnId,
+  rowNum,
 }): React.ReactElement => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [currentValue, setCurrentValue] = useState(value);
@@ -30,12 +36,14 @@ export const DataGridBoolean: React.FC<IProps> = ({
     saveValueDataGrid(
       fileId,
       controlId,
+      columnId,
+      rowNum,
       jwt,
       setCurrentValue,
       setErrorMessage,
       currentValue,
     );
-  }, [controlId, jwt, fileId, currentValue]);
+  }, [controlId, jwt, fileId, currentValue, columnId, rowNum]);
 
   const booleanValue = stringToBoolean(currentValue);
 
