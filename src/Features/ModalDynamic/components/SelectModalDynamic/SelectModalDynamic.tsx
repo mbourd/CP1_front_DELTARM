@@ -24,7 +24,7 @@ export const SelectModalDynamic: React.FC<InputModalDynamicProps> = ({
   register,
 }) => {
   const [value, setValue] = useState(element.value);
-  const [errorMessage, setErrorMessage] = useState(element.value);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     if (element.attribute.mandatory && !value) {
