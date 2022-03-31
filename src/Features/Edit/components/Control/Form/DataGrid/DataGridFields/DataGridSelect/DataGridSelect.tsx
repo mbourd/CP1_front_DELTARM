@@ -3,17 +3,23 @@ import { DataGridSelectStyled } from './DataGridSelect.style';
 import { FormError, ISelectData, Select } from 'Shared/components';
 import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
 import { useSecurity } from '../../../../../../../../Packages/Security';
+
 interface IProps {
   value: string;
   answerChoices: Record<string, ISelectData>;
   fileId: string;
   controlId: string;
+  columnId: number;
+  rowNum: number;
 }
+
 export const DataGridSelect: React.FC<IProps> = ({
   value,
   answerChoices,
   fileId,
   controlId,
+  columnId,
+  rowNum,
 }): React.ReactElement => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [currentValue, setCurrentValue] = useState(value);
@@ -29,13 +35,15 @@ export const DataGridSelect: React.FC<IProps> = ({
       saveValueDataGrid(
         fileId,
         controlId,
+        columnId,
+        rowNum,
         jwt,
         setCurrentValue,
         setErrorMessage,
         value,
       );
     },
-    [controlId, jwt, fileId],
+    [controlId, jwt, fileId, columnId, rowNum],
   );
 
   return (

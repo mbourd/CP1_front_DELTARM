@@ -11,15 +11,21 @@ import { uploadFile } from '../../apiRoutes/upload/uploadFile';
 import { downloadFile } from '../../apiRoutes/upload/downloadFile';
 import { deleteFile } from '../../apiRoutes/upload/deleteFile';
 import { UploadList } from '../../../../../../../../Shared/components/UploadList/UploadList';
+
 interface IProps {
   value: IUploadDetail[];
   fileId: string;
   controlId: string;
+  columnId: number;
+  rowNum: number;
 }
+
 export const DataGridUpload: React.FC<IProps> = ({
   value,
   fileId,
   controlId,
+  columnId,
+  rowNum,
 }): React.ReactElement => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [newUploadFile, setNewUploadFile] = useState<File | null>(null);
@@ -48,13 +54,15 @@ export const DataGridUpload: React.FC<IProps> = ({
       uploadFile(
         fileId,
         controlId,
+        rowNum,
+        columnId,
         newUploadFile,
         jwt,
         setCurrentUploadFile,
         setErrorMessage,
       );
     }
-  }, [fileId, controlId, newUploadFile, jwt]);
+  }, [fileId, controlId, newUploadFile, jwt, rowNum, columnId]);
 
   const handleDeleteFile = useCallback(
     (e, name) => {

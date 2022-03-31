@@ -187,6 +187,8 @@ export interface DataGridDetail {
     [key: string]: {
       component: 'integer' | 'select' | 'upload_file' | 'boolean' | 'text';
       value: string;
+      col_elm_id: number;
+      row_num: number;
       answer_choices: Record<string, ISelectData> | null;
     };
   }[];
@@ -223,6 +225,6 @@ export interface IApiControl {
   rich_text_detail: RawDraftContentState | null;
   control_rejectable: IAPIControlRejectable | null;
   useRejection?: ControlRejectable;
-  data_grid_detail: DataGridDetail | null;
+  data_grid_detail?: DataGridDetail | null;
   calculatedValue?: string;
 }
