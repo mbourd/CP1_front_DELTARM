@@ -1,7 +1,6 @@
 import styled from 'styled-components/macro';
 
 export const EditStyled = styled.div`
-  padding-bottom: 20vh;
   max-width: ${({ theme }) => theme.breakpoint.lg};
   margin: 0 auto;
 
