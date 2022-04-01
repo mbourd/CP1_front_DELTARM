@@ -21,7 +21,7 @@ export const RadioStyled = styled.label<IProps>`
     height: 18px;
     position: relative;
     transition: all ${({ theme }) => theme.transition.time};
-    width: 18px;
+    min-width: 18px;
   }
 
   ._CheckboxRadioCheckmark:after {
