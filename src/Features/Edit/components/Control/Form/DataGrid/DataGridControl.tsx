@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { IApiControl } from '../../../../types';
+import { DataGridDetail, IApiControl } from '../../../../types';
 import DataGrid, { Row } from 'react-data-grid';
 import { Grid } from '@mui/material';
 import { DataGridControlStyled } from './DataGridControl.style';
@@ -10,14 +10,18 @@ import { DataGridText } from './DataGridFields/DataGridText/DataGridText';
 import { DataGridInteger } from './DataGridFields/DataGridInteger/DataGridInteger';
 import { DataGridSelect } from './DataGridFields/DataGridSelect/DataGridSelect';
 import { ControlLabel } from '../ControlLabel';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { AddCircleOutline, Delete } from '@mui/icons-material';
 import {
   BPITooltip,
+  Button,
   FormError,
   ISelectData,
+  Modal,
 } from '../../../../../../Shared/components';
 import { useSecurity } from '../../../../../../Packages/Security';
 import { addRow } from './apiRoutes/addRow';
+import { deleteRow } from './apiRoutes/deleteRow';
+import { SearchModalFooterStyled } from '../../../../../Manage/components/Search/Modal/SearchModal.style';
 
 interface IProps {
   control: IApiControl;
@@ -30,13 +34,41 @@ export const DataGridControl: React.FC<IProps> = ({
   fileId,
   context,
 }) => {
-  const [gridDetails, setGridDetails] = useState(control.data_grid_detail);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [gridDetails, setGridDetails] = useState<
+    DataGridDetail | undefined | null
+  >(control.data_grid_detail);
+  const [errorMessageAdd, setErrorMessageAdd] = useState<string>('');
+  const [errorMessageDelete, setErrorMessageDelete] = useState<string>('');
+  const [currentRowNum, setCurrentRowNum] = useState<string>('');
+  const [showModal, setShowModal] = useState<boolean>(false);
   const { user } = useSecurity();
   const jwt = user.getJwt();
-  const handleClickAddRow = () => {
-    addRow(fileId, control.control_id, jwt, setGridDetails, setErrorMessage);
-  };
+
+  const handleClickCloseModal = useCallback(() => {
+    setShowModal(false);
+    setErrorMessageDelete('');
+  }, []);
+
+  const handleShowModalToDelete = useCallback((row_num: string) => {
+    setShowModal(true);
+    setCurrentRowNum(row_num);
+  }, []);
+
+  const handleClickAddRow = useCallback(() => {
+    addRow(fileId, control.control_id, jwt, setGridDetails, setErrorMessageAdd);
+  }, [control.control_id, jwt, fileId]);
+
+  const handleClickConfirmDeleteRow = useCallback(() => {
+    deleteRow(
+      fileId,
+      control.control_id,
+      currentRowNum,
+      jwt,
+      setGridDetails,
+      setErrorMessageDelete,
+      setShowModal,
+    );
+  }, [control.control_id, jwt, fileId, currentRowNum]);
 
   useEffect(() => {
     if (control.data_grid_detail) {
@@ -130,11 +162,41 @@ export const DataGridControl: React.FC<IProps> = ({
           );
 
           return <Row {...props} />;
+        case 'delete':
+          // if we want dynamic icon => change for icon action (same as icons in card from dashboard dynamic)
+          props.row[column] = (
+            <div
+              style={{ padding: '5px', textAlign: 'center' }}
+              id={'delete-row-container'}
+            >
+              <BPITooltip title={'Supprimer la ligne'}>
+                <Delete
+                  fontSize={'medium'}
+                  onClick={() =>
+                    handleShowModalToDelete(props.row[column].row_num)
+                  }
+                />
+              </BPITooltip>
+            </div>
+          );
+
+          return <Row {...props} />;
       }
     });
 
     return <Row {...props} />;
   };
+
+  const deleteFooter = (
+    <SearchModalFooterStyled>
+      {errorMessageDelete && (
+        <FormError style={{ padding: '10px' }}>{errorMessageDelete}</FormError>
+      )}
+      <Button color={'error'} onClick={handleClickConfirmDeleteRow}>
+        Supprimer
+      </Button>
+    </SearchModalFooterStyled>
+  );
 
   return (
     <Grid item xs={12}>
@@ -152,13 +214,19 @@ export const DataGridControl: React.FC<IProps> = ({
           />
         )}
         <BPITooltip title={'Ajouter une ligne'}>
-          <AddCircleOutlineIcon
-            fontSize={'large'}
-            onClick={handleClickAddRow}
-          />
+          <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} />
         </BPITooltip>
-        {errorMessage && <FormError>{errorMessage}</FormError>}
+        {errorMessageAdd && <FormError>{errorMessageAdd}</FormError>}
       </DataGridControlStyled>
+      {showModal && (
+        <Modal
+          open={showModal}
+          onClose={handleClickCloseModal}
+          footer={deleteFooter}
+        >
+          Souhaitez-vous vraiment supprimer la ligne ?
+        </Modal>
+      )}
     </Grid>
   );
 };
