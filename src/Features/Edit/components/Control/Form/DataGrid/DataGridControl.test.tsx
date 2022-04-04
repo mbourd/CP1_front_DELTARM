@@ -23,7 +23,7 @@ describe('Data Grid Control', () => {
     expect(getByTitle('Ajouter une ligne')).toBeInTheDocument();
   });
   test('Should call for a new row while clicking on button', async () => {
-    const { getByTitle, getByText } = render(<DataGrid />);
+    const { getByTitle } = render(<DataGrid />);
     const button = getByTitle('Ajouter une ligne');
     expect(button).toBeInTheDocument();
     fireEvent.click(button);

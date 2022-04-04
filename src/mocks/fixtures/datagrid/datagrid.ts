@@ -14,6 +14,7 @@ export const dataGridDetail = {
     { key: 'column3', name: 'column title to display text' },
     { key: 'column4', name: 'column title to display select' },
     { key: 'column5', name: 'column title to display checkbox boolean' },
+    { key: 'column6', width: '5%' },
   ],
   rows: [
     {
@@ -61,6 +62,7 @@ export const dataGridDetail = {
         ],
       },
       column5: { component: 'boolean', value: 'true' },
+      column6: { component: 'delete' },
     },
   ],
 };
@@ -72,6 +74,7 @@ export const GRID_DETAILS_ADD_ROW = {
     { key: 'column3', name: 'column title to display text' },
     { key: 'column4', name: 'column title to display select' },
     { key: 'column5', name: 'column title to display checkbox boolean' },
+    { key: 'column6', name: 'column title to display delete button' },
   ],
   rows: [
     {
@@ -124,6 +127,7 @@ export const GRID_DETAILS_ADD_ROW = {
         ],
       },
       column5: { component: 'boolean', value: 'true' },
+      column6: { component: 'delete' },
     },
     {
       column1: { component: 'integer', value: null },
@@ -162,6 +166,7 @@ export const GRID_DETAILS_ADD_ROW = {
         ],
       },
       column5: { component: 'boolean', value: null },
+      column6: { component: 'delete' },
     },
   ],
 };
