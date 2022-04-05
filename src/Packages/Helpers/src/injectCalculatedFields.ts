@@ -39,6 +39,9 @@ export const injectCalculatedFields = (formState: IChapter[]): IChapter[] => {
                   fieldToReplace,
                   `${value?.choice_value}`,
                 );
+                if (!value?.choice_value && value?.choice_value !== 0) {
+                  oneOfValueIsMissing = true;
+                }
               }
             });
           });
