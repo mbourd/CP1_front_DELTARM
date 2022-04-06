@@ -1,6 +1,5 @@
 import styled from 'styled-components/macro';
 
-export const DataGridIntegerStyled = styled.div`
-  padding: 5px;
+export const DataGridDeleteStyled = styled.div`
   text-align: center;
 `;

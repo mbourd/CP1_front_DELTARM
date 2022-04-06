@@ -59,7 +59,9 @@ export const DataGridBoolean: React.FC<IProps> = ({
         checked={booleanValue ? booleanValue : false}
         onClick={() => toggleAndSaveValue()}
       />
-      {errorMessage ? <FormError>{errorMessage}</FormError> : null}
+      {errorMessage ? (
+        <FormError style={{ paddingLeft: '0' }}>{errorMessage}</FormError>
+      ) : null}
     </DataGridBooleanStyled>
   );
 };

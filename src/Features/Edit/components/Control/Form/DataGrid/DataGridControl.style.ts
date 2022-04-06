@@ -5,7 +5,7 @@ export const DataGridControlStyled = styled.div`
     contain: unset;
     overflow: unset;
     content-visibility: unset;
-    div[role='gridcell'] {
+    #select-list {
       contain: unset;
       overflow: unset;
     }
