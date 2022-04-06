@@ -52,7 +52,7 @@ export const DataGridBoolean: React.FC<IProps> = ({
       <Checkbox
         id={`checkbox-boolean`}
         title={'Validation'}
-        style={{ paddingLeft: '0' }}
+        style={{ paddingLeft: '0', display: 'block', textAlign: 'center' }}
         disableRipple
         placeholder={'Validation'}
         disabled={false}

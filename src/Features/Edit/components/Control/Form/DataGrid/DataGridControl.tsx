@@ -121,6 +121,7 @@ export const DataGridControl: React.FC<IProps> = ({
               return answer;
             },
           );
+
           props.row[column] = (
             <DataGridSelect
               columnId={props.row[column].col_elm_id}
@@ -133,7 +134,7 @@ export const DataGridControl: React.FC<IProps> = ({
             />
           );
 
-          return <Row id={'select-list'} {...props} />;
+          return <Row {...props} />;
         case 'delete':
           props.row[column] = (
             <DataGridDelete

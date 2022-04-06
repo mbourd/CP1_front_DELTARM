@@ -1,5 +1,3 @@
 import styled from 'styled-components/macro';
 
-export const DataGridDeleteStyled = styled.div`
-  text-align: center;
-`;
+export const DataGridDeleteStyled = styled.div``;
