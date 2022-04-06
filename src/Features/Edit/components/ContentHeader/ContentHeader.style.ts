@@ -1,6 +1,21 @@
 import styled from 'styled-components/macro';
 
 export const ContentHeaderStyled = styled.div`
+  background: ${({ theme }) => {
+    const color = theme.color.white.main;
+
+    return `linear-gradient(to bottom, ${color} 0%, ${color} 85%, transparent 100%)`;
+  }};
+  height: auto;
+  position: sticky;
+  top: 170px;
+  padding-top: 10px;
+  z-index: 6;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  width: inherit;
+
   .right {
     text-align: right;
     width: 100%;

@@ -13,21 +13,29 @@ import { uploadFile } from './apiRoutes/uploadFile';
 import { UploadList } from '../../../../../../Shared/components/UploadList/UploadList';
 import { deleteFile } from '../../../../../../Shared/components/UploadList/apiRoutes/deleteFile';
 import { downloadFile } from '../../../../../../Shared/components/UploadList/apiRoutes/downloadFile';
+import { RejectControl } from '../RejectByPointControl/RejectControl';
 
 interface IProps {
   control: IApiControl;
   fileId: string;
+  context: 'edit' | 'validate';
 }
 
 export const UploadControl: React.FC<IProps> = ({
   control,
   fileId,
+  context,
 }): React.ReactElement => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [newUploadFile, setNewUploadFile] = useState<File | null>(null);
   const [currentUploadFile, setCurrentUploadFile] = useState<
     IUploadDetail[] | null
   >(control.upload_detail);
+  const [isRejected, setIsRejected] = useState(
+    control.control_rejectable?.is_rejected
+      ? control.control_rejectable.is_rejected
+      : false,
+  );
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
 
@@ -95,6 +103,12 @@ export const UploadControl: React.FC<IProps> = ({
     }
   }, [newUploadFile, handleUploadFile]);
 
+  useEffect(() => {
+    if (!isRejected) {
+      setIsRejected(false);
+    }
+  }, [isRejected]);
+
   return (
     <Grid item xs={6}>
       <ControlLabel control={control} />
@@ -155,6 +169,15 @@ export const UploadControl: React.FC<IProps> = ({
           disabled={!control.control_editable}
         />
       </UploadControlStyled>
+      {control.useRejection && control.control_rejectable && (
+        <RejectControl
+          isRejected={isRejected}
+          setIsRejected={setIsRejected}
+          controlId={control.control_id}
+          context={context}
+          controlRejectable={control.useRejection}
+        />
+      )}
       {errorMessage ? (
         <p>
           <FormError>{errorMessage}</FormError>

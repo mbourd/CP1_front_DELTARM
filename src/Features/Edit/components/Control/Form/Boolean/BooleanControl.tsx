@@ -9,12 +9,14 @@ import { ControlFooter } from '../ControlFooter';
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
 import { Checkbox } from '@mui/material';
 import { stringToBoolean } from '../../../../../../Packages/Helpers/src/stringToBoolean';
+import { RejectControl } from '../RejectByPointControl/RejectControl';
 
 interface IProps {
   control: IApiControl;
   fileId: string;
   formState: IChapter[];
   setFormState: React.Dispatch<SetStateAction<IChapter[]>>;
+  context: 'edit' | 'validate';
 }
 
 export const BooleanControl: React.FC<IProps> = ({
@@ -22,10 +24,17 @@ export const BooleanControl: React.FC<IProps> = ({
   fileId,
   formState,
   setFormState,
+  context,
 }): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);
+  const [isRejected, setIsRejected] = useState(
+    control.control_rejectable?.is_rejected
+      ? control.control_rejectable.is_rejected
+      : false,
+  );
+
   const { currentRoute } = useRouter();
   useEffect(() => {
     setCurrentValue(control.control_value);
@@ -74,6 +83,12 @@ export const BooleanControl: React.FC<IProps> = ({
   }, [control.mandatory, control.editable, currentValue]);
 
   useEffect(() => {
+    if (!isRejected) {
+      setIsRejected(false);
+    }
+  }, [isRejected]);
+
+  useEffect(() => {
     if (error) {
       setErrorMessage("Une erreur s'est produite durant l'enregistrement");
     }
@@ -103,6 +118,15 @@ export const BooleanControl: React.FC<IProps> = ({
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ControlFooter control={control} />
       </BooleanControlStyled>
+      {control.useRejection && control.control_rejectable && (
+        <RejectControl
+          isRejected={isRejected}
+          setIsRejected={setIsRejected}
+          controlId={control.control_id}
+          context={context}
+          controlRejectable={control.useRejection}
+        />
+      )}
     </Grid>
   );
 };

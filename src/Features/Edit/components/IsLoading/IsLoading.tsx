@@ -4,7 +4,7 @@ import { HeadingOne, PageLoader } from 'Shared/components';
 import { EditStyled } from '../Edit.style';
 
 interface IProps {
-  title: string;
+  title?: string | null;
 }
 
 export const IsLoading: React.FC<IProps> = ({ title }): React.ReactElement => {
@@ -12,7 +12,7 @@ export const IsLoading: React.FC<IProps> = ({ title }): React.ReactElement => {
 
   return (
     <EditStyled>
-      <HeadingOne>{title}</HeadingOne>
+      {title && <HeadingOne>{title}</HeadingOne>}
       <div>
         <PageLoader text={trans('loading', { ns: 'Default' })} />
       </div>

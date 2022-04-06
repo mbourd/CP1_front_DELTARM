@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 import './polyfills';
 import React, { Suspense, StrictMode } from 'react';
 import ReactDOM from 'react-dom';
@@ -10,6 +12,7 @@ import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
 
 import { BPIGlobalStyle, BPITheme } from 'Styles';
+import { AppEmbedded } from './AppEmbedded';
 
 if (process.env.REACT_APP_ENV !== 'staging') {
   Sentry.init({
@@ -20,18 +23,61 @@ if (process.env.REACT_APP_ENV !== 'staging') {
   });
 }
 
-ReactDOM.render(
-  <StrictMode>
-    <RecoilRoot>
-      <Router>
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Suspense fallback={<PageLoader text={'...'} />}>
-            <App />
-          </Suspense>
-        </ThemeProvider>
-      </Router>
-    </RecoilRoot>
-  </StrictMode>,
-  document.getElementById('root'),
+// V2 divs to target for embedded features
+const rootElementReferentiel = document.getElementById(
+  'referentielControlCP1-root',
 );
+const rootElementControlsPoint = document.getElementById(
+  'root-embedded-points-control',
+);
+
+if (rootElementReferentiel || rootElementControlsPoint) {
+  process.env.REACT_APP_MODE === 'embedded'
+    ? ReactDOM.render(
+        <StrictMode>
+          <AppEmbedded />
+        </StrictMode>,
+        rootElementReferentiel || rootElementControlsPoint,
+      )
+    : null;
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.ready.then((registration) => {
+      registration.unregister();
+    });
+  }
+}
+
+const root = document.getElementById('root');
+
+if (root) {
+  ReactDOM.render(
+    <StrictMode>
+      <RecoilRoot>
+        <Router>
+          <ThemeProvider theme={BPITheme}>
+            <BPIGlobalStyle />
+            <Suspense fallback={<PageLoader text={'...'} />}>
+              <App />
+            </Suspense>
+          </ThemeProvider>
+        </Router>
+      </RecoilRoot>
+    </StrictMode>,
+    root,
+  );
+}
+
+if (module.hot) {
+  module.hot.accept(() => {
+    const NextApp =
+      process.env.REACT_APP_MODE === 'embedded'
+        ? require('./AppEmbedded').default
+        : require('./App').default;
+    if (rootElementControlsPoint || rootElementReferentiel) {
+      ReactDOM.render(
+        <NextApp />,
+        rootElementControlsPoint || rootElementReferentiel,
+      );
+    }
+  });
+}

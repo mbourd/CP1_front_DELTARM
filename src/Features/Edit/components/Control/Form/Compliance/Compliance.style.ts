@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
 
 export const ActionsComplianceContainer = styled.div`
-  margin-top: 5px;
+  margin-top: 10px;
   & span {
     margin-top: 5px;
   }

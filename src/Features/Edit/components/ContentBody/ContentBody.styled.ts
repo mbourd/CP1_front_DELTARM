@@ -1,3 +1,3 @@
 import styled from 'styled-components/macro';
 
-export const InformationStyled = styled.div``;
+export const ContentBodyStyled = styled.div``;

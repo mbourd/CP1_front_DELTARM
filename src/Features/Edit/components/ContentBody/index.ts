@@ -1,1 +1,1 @@
-export * from './Information/Information';
+export * from './ContentBody';

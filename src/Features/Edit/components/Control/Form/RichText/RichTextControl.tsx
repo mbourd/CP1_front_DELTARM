@@ -9,17 +9,28 @@ import { Grid } from '@mui/material';
 import { saveEditor } from './apiRoutes/saveEditor';
 import { IUser, security } from '../../../../../../Packages/Security';
 import { FormError } from '../../../../../../Packages/Design/components';
+import { RejectControl } from '../RejectByPointControl/RejectControl';
 
 interface IProps {
   control: IApiControl;
   fileId: string;
+  context: 'edit' | 'validate';
 }
 
-export const RichTextControl: React.FC<IProps> = ({ control, fileId }) => {
+export const RichTextControl: React.FC<IProps> = ({
+  control,
+  fileId,
+  context,
+}) => {
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
 
   const [message, setMessage] = useState<string | null>(null);
+  const [isRejected, setIsRejected] = useState(
+    control.control_rejectable?.is_rejected
+      ? control.control_rejectable.is_rejected
+      : false,
+  );
   const [editorState, setEditorState] = useState<EditorState>(() =>
     control.rich_text_detail
       ? EditorState.createWithContent(convertFromRaw(control.rich_text_detail))
@@ -45,6 +56,12 @@ export const RichTextControl: React.FC<IProps> = ({ control, fileId }) => {
       setMessage(null);
     }
   }, [control.mandatory, control.editable]);
+
+  useEffect(() => {
+    if (!isRejected) {
+      setIsRejected(false);
+    }
+  }, [isRejected]);
 
   return (
     <Grid item xs={12}>
@@ -72,6 +89,15 @@ export const RichTextControl: React.FC<IProps> = ({ control, fileId }) => {
           </p>
         ) : null}
       </RichTextControlStyled>
+      {control.useRejection && control.control_rejectable && (
+        <RejectControl
+          isRejected={isRejected}
+          setIsRejected={setIsRejected}
+          controlId={control.control_id}
+          context={context}
+          controlRejectable={control.useRejection}
+        />
+      )}
     </Grid>
   );
 };

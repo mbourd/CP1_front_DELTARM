@@ -8,12 +8,14 @@ import { ControlLabel } from '../ControlLabel';
 import { ControlFooter } from '../ControlFooter';
 import { checkIfSameValues } from '../../../../../../Packages/Helpers/src/checkIfSameValues';
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
+import { RejectControl } from '../RejectByPointControl/RejectControl';
 
 interface IProps {
   control: IApiControl;
   fileId: string;
   formState: IChapter[];
   setFormState: React.Dispatch<SetStateAction<IChapter[]>>;
+  context: 'edit' | 'validate';
 }
 
 export const CommentControl: React.FC<IProps> = ({
@@ -21,10 +23,16 @@ export const CommentControl: React.FC<IProps> = ({
   fileId,
   formState,
   setFormState,
+  context,
 }): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);
+  const [isRejected, setIsRejected] = useState(
+    control.control_rejectable?.is_rejected
+      ? control.control_rejectable.is_rejected
+      : false,
+  );
   const { currentRoute } = useRouter();
 
   useEffect(() => {
@@ -97,6 +105,12 @@ export const CommentControl: React.FC<IProps> = ({
   }, [control.mandatory, control.editable, currentValue]);
 
   useEffect(() => {
+    if (!isRejected) {
+      setIsRejected(false);
+    }
+  }, [isRejected]);
+
+  useEffect(() => {
     if (error) {
       setErrorMessage("Une erreur s'est produite durant l'enregistrement");
     }
@@ -124,6 +138,15 @@ export const CommentControl: React.FC<IProps> = ({
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ControlFooter control={control} />
       </CommentControlStyled>
+      {control.useRejection && control.control_rejectable && (
+        <RejectControl
+          isRejected={isRejected}
+          setIsRejected={setIsRejected}
+          controlId={control.control_id}
+          context={context}
+          controlRejectable={control.useRejection}
+        />
+      )}
     </Grid>
   );
 };

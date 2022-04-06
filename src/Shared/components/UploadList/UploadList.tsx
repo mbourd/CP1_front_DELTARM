@@ -9,6 +9,7 @@ interface IProps {
   handleDeleteFile: (e: any, name: any) => void;
   handleDownloadFile: (e: any, id: string, name: any) => void;
   disabled?: boolean;
+  style?: React.CSSProperties;
 }
 
 export const UploadList: React.FC<IProps> = ({
@@ -16,9 +17,10 @@ export const UploadList: React.FC<IProps> = ({
   handleDeleteFile,
   handleDownloadFile,
   disabled = false,
+  style,
 }): React.ReactElement => {
   return (
-    <Container style={{ padding: '0', overflow: 'hidden' }}>
+    <Container style={{ padding: '0', overflow: 'hidden', ...style }}>
       {currentUploadFile?.map((file) => {
         return (
           <Container

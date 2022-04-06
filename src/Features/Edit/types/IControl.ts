@@ -1,6 +1,7 @@
 import { ISelectData } from 'Shared/components';
 import { IColor } from '../../../Packages/Design';
 import { RawDraftContentState } from 'draft-js';
+import { IApiFileComment, IFileComment } from '../../Comments';
 
 export type ControlTypeType =
   | 'text'
@@ -25,6 +26,7 @@ export type ControlTypeType =
   | 'rich_text'
   | 'boolean'
   | 'line_break'
+  | 'data_grid'
   | 'slider';
 
 export type ControlFontSize = 'standard' | 'bold';
@@ -164,6 +166,34 @@ export interface IUploadDetail {
   file_name: string;
 }
 
+export interface IAPIControlRejectable {
+  is_rejected: boolean | null;
+  control_reject_comment: IApiFileComment[] | null;
+}
+
+export interface ControlRejectable {
+  isRejected: boolean | null;
+  rejectComments: IFileComment[];
+}
+
+export interface DataGridDetail {
+  columns: {
+    key: string;
+    name: string;
+    width?: string | number;
+    resizable: boolean;
+  }[];
+  rows: {
+    [key: string]: {
+      component: 'integer' | 'select' | 'upload_file' | 'boolean' | 'text';
+      value: string;
+      col_elm_id: number;
+      row_num: number;
+      answer_choices: Record<string, ISelectData> | null;
+    };
+  }[];
+}
+
 export interface IApiControl {
   control_desc_1: string | null;
   control_desc_2: string | null;
@@ -194,4 +224,8 @@ export interface IApiControl {
   upload_detail: IUploadDetail[] | null;
   calculatedValue?: string;
   rich_text_detail: RawDraftContentState | null;
+  control_rejectable: IAPIControlRejectable | null;
+  useRejection?: ControlRejectable;
+  data_grid_detail?: DataGridDetail | null;
+  calculatedValue?: string;
 }
