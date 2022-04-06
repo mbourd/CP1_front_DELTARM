@@ -185,7 +185,13 @@ export interface DataGridDetail {
   }[];
   rows: {
     [key: string]: {
-      component: 'integer' | 'select' | 'upload_file' | 'boolean' | 'text';
+      component:
+        | 'integer'
+        | 'select_list'
+        | 'file_upload'
+        | 'boolean'
+        | 'text'
+        | 'delete';
       value: string;
       col_elm_id: number;
       row_num: number;

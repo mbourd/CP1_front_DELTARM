@@ -10,18 +10,15 @@ import { DataGridText } from './DataGridFields/DataGridText/DataGridText';
 import { DataGridInteger } from './DataGridFields/DataGridInteger/DataGridInteger';
 import { DataGridSelect } from './DataGridFields/DataGridSelect/DataGridSelect';
 import { ControlLabel } from '../ControlLabel';
-import { AddCircleOutline, Delete } from '@mui/icons-material';
+import { AddCircleOutline } from '@mui/icons-material';
 import {
   BPITooltip,
-  Button,
   FormError,
   ISelectData,
-  Modal,
 } from '../../../../../../Shared/components';
 import { useSecurity } from '../../../../../../Packages/Security';
 import { addRow } from './apiRoutes/addRow';
-import { deleteRow } from './apiRoutes/deleteRow';
-import { SearchModalFooterStyled } from '../../../../../Manage/components/Search/Modal/SearchModal.style';
+import { DataGridDelete } from './DataGridFields/DataGridDelete/DataGridDelete';
 
 interface IProps {
   control: IApiControl;
@@ -38,37 +35,12 @@ export const DataGridControl: React.FC<IProps> = ({
     DataGridDetail | undefined | null
   >(control.data_grid_detail);
   const [errorMessageAdd, setErrorMessageAdd] = useState<string>('');
-  const [errorMessageDelete, setErrorMessageDelete] = useState<string>('');
-  const [currentRowNum, setCurrentRowNum] = useState<string>('');
-  const [showModal, setShowModal] = useState<boolean>(false);
   const { user } = useSecurity();
   const jwt = user.getJwt();
-
-  const handleClickCloseModal = useCallback(() => {
-    setShowModal(false);
-    setErrorMessageDelete('');
-  }, []);
-
-  const handleShowModalToDelete = useCallback((row_num: string) => {
-    setShowModal(true);
-    setCurrentRowNum(row_num);
-  }, []);
 
   const handleClickAddRow = useCallback(() => {
     addRow(fileId, control.control_id, jwt, setGridDetails, setErrorMessageAdd);
   }, [control.control_id, jwt, fileId]);
-
-  const handleClickConfirmDeleteRow = useCallback(() => {
-    deleteRow(
-      fileId,
-      control.control_id,
-      currentRowNum,
-      jwt,
-      setGridDetails,
-      setErrorMessageDelete,
-      setShowModal,
-    );
-  }, [control.control_id, jwt, fileId, currentRowNum]);
 
   useEffect(() => {
     if (control.data_grid_detail) {
@@ -161,23 +133,15 @@ export const DataGridControl: React.FC<IProps> = ({
             />
           );
 
-          return <Row {...props} />;
+          return <Row id={'select-list'} {...props} />;
         case 'delete':
-          // if we want dynamic icon => change for icon action (same as icons in card from dashboard dynamic)
           props.row[column] = (
-            <div
-              style={{ padding: '5px', textAlign: 'center' }}
-              id={'delete-row-container'}
-            >
-              <BPITooltip title={'Supprimer la ligne'}>
-                <Delete
-                  fontSize={'medium'}
-                  onClick={() =>
-                    handleShowModalToDelete(props.row[column].row_num)
-                  }
-                />
-              </BPITooltip>
-            </div>
+            <DataGridDelete
+              fileId={fileId}
+              controlId={control.control_id}
+              rowNum={props.row[column].row_num}
+              setGridDetails={setGridDetails}
+            />
           );
 
           return <Row {...props} />;
@@ -186,17 +150,6 @@ export const DataGridControl: React.FC<IProps> = ({
 
     return <Row {...props} />;
   };
-
-  const deleteFooter = (
-    <SearchModalFooterStyled>
-      {errorMessageDelete && (
-        <FormError style={{ padding: '10px' }}>{errorMessageDelete}</FormError>
-      )}
-      <Button color={'error'} onClick={handleClickConfirmDeleteRow}>
-        Supprimer
-      </Button>
-    </SearchModalFooterStyled>
-  );
 
   return (
     <Grid item xs={12}>
@@ -218,15 +171,6 @@ export const DataGridControl: React.FC<IProps> = ({
         </BPITooltip>
         {errorMessageAdd && <FormError>{errorMessageAdd}</FormError>}
       </DataGridControlStyled>
-      {showModal && (
-        <Modal
-          open={showModal}
-          onClose={handleClickCloseModal}
-          footer={deleteFooter}
-        >
-          Souhaitez-vous vraiment supprimer la ligne ?
-        </Modal>
-      )}
     </Grid>
   );
 };
