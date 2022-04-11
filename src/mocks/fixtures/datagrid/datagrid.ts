@@ -4,23 +4,34 @@ export const dataGridDetail = {
       key: 'column1',
       name: 'column title to display integer',
       resizable: true,
+      cellClass: 'cell',
     },
     {
       key: 'column2',
       name: 'column title to display file_upload',
       resizable: true,
       width: '30%',
+      cellClass: 'cell',
     },
-    { key: 'column3', name: 'column title to display text' },
-    { key: 'column4', name: 'column title to display select' },
-    { key: 'column5', name: 'column title to display checkbox boolean' },
-    { key: 'column6', width: '5%' },
+    { key: 'column3', name: 'column title to display text', cellClass: 'cell' },
+    {
+      key: 'column4',
+      name: 'column title to display select',
+      cellClass: 'select-list-data-grid',
+    },
+    {
+      key: 'column5',
+      name: 'column title to display checkbox boolean',
+      cellClass: 'cell',
+    },
+    { key: 'column6', width: '5%', cellClass: 'cell' },
   ],
   rows: [
     {
       column1: { component: 'integer', value: 12 },
       column2: {
         component: 'file_upload',
+        // value: null,
         value: [
           {
             file_id: 27,

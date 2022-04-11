@@ -52,14 +52,16 @@ export const DataGridBoolean: React.FC<IProps> = ({
       <Checkbox
         id={`checkbox-boolean`}
         title={'Validation'}
-        style={{ paddingLeft: '0' }}
+        style={{ paddingLeft: '0', display: 'block', textAlign: 'center' }}
         disableRipple
         placeholder={'Validation'}
         disabled={false}
         checked={booleanValue ? booleanValue : false}
         onClick={() => toggleAndSaveValue()}
       />
-      {errorMessage ? <FormError>{errorMessage}</FormError> : null}
+      {errorMessage ? (
+        <FormError style={{ paddingLeft: '0' }}>{errorMessage}</FormError>
+      ) : null}
     </DataGridBooleanStyled>
   );
 };
