@@ -2,10 +2,10 @@ import React from 'react';
 import { Button } from '@mui/material';
 
 interface IProps {
-  mode: 'referential' | 'control-points';
+  mode: string;
 }
 
-export const SwitchReferentialAndPointsControl: React.FC<IProps> = ({
+export const EmbeddedContent: React.FC<IProps> = ({
   mode,
 }): React.ReactElement | null => {
   switch (mode) {
