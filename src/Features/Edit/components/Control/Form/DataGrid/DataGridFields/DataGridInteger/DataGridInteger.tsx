@@ -56,9 +56,7 @@ export const DataGridInteger: React.FC<IProps> = ({
         onBlur={(e) => saveValue(e.currentTarget.value)}
       />
       {errorMessage ? (
-        <FormError style={{ paddingLeft: '0', display: 'inline' }}>
-          {errorMessage}
-        </FormError>
+        <FormError style={{ paddingLeft: '0' }}>{errorMessage}</FormError>
       ) : null}
     </DataGridIntegerStyled>
   );

@@ -9,8 +9,10 @@ export const DataGridControlStyled = styled.div`
       contain: unset;
       overflow: unset;
       padding-top: 50px;
+      white-space: unset;
     }
     .cell {
+      white-space: unset;
       display: flex;
       align-items: center;
       flex-direction: column;
