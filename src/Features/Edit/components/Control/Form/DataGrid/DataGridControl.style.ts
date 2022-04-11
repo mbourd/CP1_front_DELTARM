@@ -5,9 +5,17 @@ export const DataGridControlStyled = styled.div`
     contain: unset;
     overflow: unset;
     content-visibility: unset;
-    #select-list {
+    .select-list-data-grid {
       contain: unset;
       overflow: unset;
+      padding-top: 50px;
+    }
+    .cell {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      line-height: initial;
     }
   }
 `;

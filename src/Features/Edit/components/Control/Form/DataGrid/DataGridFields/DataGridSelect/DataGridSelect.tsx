@@ -52,6 +52,8 @@ export const DataGridSelect: React.FC<IProps> = ({
         closeOnSelect
         name={'select_list_data_grid'}
         data={answerChoices || {}}
+        labelColor={'text'}
+        labelBdc={'text'}
         selectedValues={selectedValue}
         onChange={(selectedValues) => {
           const value =
