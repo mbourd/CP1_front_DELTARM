@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { DataGridIntegerStyled } from './DataGridInteger.style';
+import { DataGridDateStyled } from './DataGridDate.style';
 import { FormError, InputBase } from 'Shared/components';
 import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
 import { useSecurity } from '../../../../../../../../Packages/Security';
@@ -12,7 +12,7 @@ interface IProps {
   rowNum: number;
 }
 
-export const DataGridInteger: React.FC<IProps> = ({
+export const DataGridDate: React.FC<IProps> = ({
   value,
   fileId,
   controlId,
@@ -47,19 +47,18 @@ export const DataGridInteger: React.FC<IProps> = ({
   );
 
   return (
-    <DataGridIntegerStyled>
+    <DataGridDateStyled>
       <InputBase
-        id={`integer input grid`}
-        placeholder={'Nombre entier'}
+        id={`input date grid`}
+        placeholder={'input date grid'}
         disabled={false}
         defaultValue={currentValue ? currentValue : ''}
         onBlur={(e) => saveValue(e.currentTarget.value)}
+        type={'date'}
       />
       {errorMessage ? (
-        <FormError style={{ paddingLeft: '0', display: 'inline' }}>
-          {errorMessage}
-        </FormError>
+        <FormError style={{ paddingLeft: '0' }}>{errorMessage}</FormError>
       ) : null}
-    </DataGridIntegerStyled>
+    </DataGridDateStyled>
   );
 };

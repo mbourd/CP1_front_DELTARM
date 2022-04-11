@@ -19,6 +19,7 @@ import {
 import { useSecurity } from '../../../../../../Packages/Security';
 import { addRow } from './apiRoutes/addRow';
 import { DataGridDelete } from './DataGridFields/DataGridDelete/DataGridDelete';
+import { DataGridDate } from './DataGridFields/DataGridDate/DataGridDate';
 
 interface IProps {
   control: IApiControl;
@@ -142,6 +143,19 @@ export const DataGridControl: React.FC<IProps> = ({
               controlId={control.control_id}
               rowNum={props.row[column].row_num}
               setGridDetails={setGridDetails}
+            />
+          );
+
+          return <Row {...props} />;
+        case 'date':
+          props.row[column] = (
+            <DataGridDate
+              columnId={props.row[column].col_elm_id}
+              rowNum={props.row[column].row_num}
+              fileId={fileId}
+              controlId={control.control_id}
+              key={index}
+              value={props.row[column].value}
             />
           );
 

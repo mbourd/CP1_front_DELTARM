@@ -24,7 +24,12 @@ export const dataGridDetail = {
       name: 'column title to display checkbox boolean',
       cellClass: 'cell',
     },
-    { key: 'column6', width: '5%', cellClass: 'cell' },
+    {
+      key: 'column6',
+      name: 'column title to display date',
+      cellClass: 'cell',
+    },
+    { key: 'column7', width: '5%', cellClass: 'cell' },
   ],
   rows: [
     {
@@ -73,7 +78,8 @@ export const dataGridDetail = {
         ],
       },
       column5: { component: 'boolean', value: 'true' },
-      column6: { component: 'delete' },
+      column6: { component: 'date', value: null },
+      column7: { component: 'delete' },
     },
   ],
 };
