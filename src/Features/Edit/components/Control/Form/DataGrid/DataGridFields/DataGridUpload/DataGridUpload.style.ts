@@ -1,7 +1,6 @@
 import styled from 'styled-components/macro';
 
 export const DataGridUploadStyled = styled.div`
-  display: grid;
   width: 100%;
   border: 1px solid #e0dddc;
   border-radius: 5px;
