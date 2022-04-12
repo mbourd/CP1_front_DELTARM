@@ -26,10 +26,25 @@ export const dataGridDetail = {
     },
     {
       key: 'column6',
-      name: 'column title to display date',
+      name: 'date',
       cellClass: 'cell',
     },
-    { key: 'column7', width: '5%', cellClass: 'cell' },
+    {
+      key: 'column7',
+      name: 'percent',
+      cellClass: 'cell',
+    },
+    {
+      key: 'column8',
+      name: 'financial',
+      cellClass: 'cell',
+    },
+    {
+      key: 'column9',
+      name: 'decimal',
+      cellClass: 'cell',
+    },
+    { key: 'column10', width: '5%', cellClass: 'cell' },
   ],
   rows: [
     {
@@ -79,7 +94,10 @@ export const dataGridDetail = {
       },
       column5: { component: 'boolean', value: 'true' },
       column6: { component: 'date', value: null },
-      column7: { component: 'delete' },
+      column7: { component: 'percent', value: null },
+      column8: { component: 'financial', value: '12.23030' },
+      column9: { component: 'decimal', value: 13.292 },
+      column10: { component: 'delete' },
     },
   ],
 };

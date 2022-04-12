@@ -54,7 +54,6 @@ export const DataGridBoolean: React.FC<IProps> = ({
         title={'Validation'}
         style={{ paddingLeft: '0', display: 'block', textAlign: 'center' }}
         disableRipple
-        placeholder={'Validation'}
         disabled={false}
         checked={booleanValue ? booleanValue : false}
         onClick={() => toggleAndSaveValue()}

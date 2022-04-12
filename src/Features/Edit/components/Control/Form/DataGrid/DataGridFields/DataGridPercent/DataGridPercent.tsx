@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { DataGridTextStyled } from './DataGridText.style';
+import { DataGridPercentStyled } from './DataGridPercent.style';
 import { FormError, InputBase } from 'Shared/components';
 import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
 import { useSecurity } from '../../../../../../../../Packages/Security';
@@ -12,7 +12,7 @@ interface IProps {
   rowNum: number;
 }
 
-export const DataGridText: React.FC<IProps> = ({
+export const DataGridPercent: React.FC<IProps> = ({
   value,
   fileId,
   controlId,
@@ -46,20 +46,27 @@ export const DataGridText: React.FC<IProps> = ({
     [controlId, jwt, fileId, columnId, rowNum],
   );
 
+  const controlValue = currentValue
+    ? parseFloat(currentValue)?.toFixed(2)
+    : currentValue;
+
   return (
-    <DataGridTextStyled>
+    <DataGridPercentStyled>
       <InputBase
-        multiline={true}
-        multilineRows={3}
-        placeholder={'Texte'}
+        placeholder={'Pourcentage'}
         id={`input grid`}
         disabled={false}
-        defaultValue={currentValue ? currentValue : ''}
+        defaultValue={controlValue ? controlValue : ''}
         onBlur={(e) => saveValue(e.currentTarget.value)}
+        icon={
+          <i style={{ paddingLeft: '5px' }} className="material-icons">
+            %
+          </i>
+        }
       />
       {errorMessage ? (
         <FormError style={{ paddingLeft: '0' }}>{errorMessage}</FormError>
       ) : null}
-    </DataGridTextStyled>
+    </DataGridPercentStyled>
   );
 };
