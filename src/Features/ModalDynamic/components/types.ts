@@ -34,7 +34,7 @@ interface IElementPModal {
   value: string | null;
 }
 
-interface IElementModal {
+export interface IElementModal {
   element: 'input' | 'select';
   attribute: {
     type: string;

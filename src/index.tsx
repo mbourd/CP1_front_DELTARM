@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 import './polyfills';
 import React, { Suspense, StrictMode } from 'react';
 import ReactDOM from 'react-dom';
@@ -22,18 +24,36 @@ if (process.env.REACT_APP_ENV !== 'staging') {
   });
 }
 
-ReactDOM.render(
-  <StrictMode>
-    <RecoilRoot>
-      <Router>
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Suspense fallback={<PageLoader text={'...'} />}>
-            {maintenanceMode ? <AppMaintenance /> : <App />}
-          </Suspense>
-        </ThemeProvider>
-      </Router>
-    </RecoilRoot>
-  </StrictMode>,
-  document.getElementById('root'),
-);
+const root = document.getElementById('root');
+let isEmbedded = false;
+
+// to know if we are embedded or not
+function inIframe() {
+  try {
+    return window.self !== window.top;
+  } catch (e) {
+    return true;
+  }
+}
+
+if (inIframe()) {
+  isEmbedded = true;
+}
+
+if (root) {
+  ReactDOM.render(
+    <StrictMode>
+      <RecoilRoot>
+        <Router>
+          <ThemeProvider theme={BPITheme}>
+            <BPIGlobalStyle />
+            <Suspense fallback={<PageLoader text={'...'} />}>
+              <App isEmbedded={isEmbedded} />
+            </Suspense>
+          </ThemeProvider>
+        </Router>
+      </RecoilRoot>
+    </StrictMode>,
+    root,
+  );
+}

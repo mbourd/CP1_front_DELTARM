@@ -9,10 +9,12 @@ import { ContentTitle } from '../../ContentTitle/ContentTitle';
 
 export interface IProps {
   chapters: IChapter[];
+  context: 'edit' | 'validate';
 }
 
 export const FormControls: React.FC<IProps> = ({
   chapters,
+  context,
 }): React.ReactElement => {
   const [formState, setFormState] = useState(chapters);
   const formStateWithCalculated = injectCalculatedFields(formState);
@@ -39,6 +41,7 @@ export const FormControls: React.FC<IProps> = ({
                   control={control}
                   formState={formState}
                   setFormState={setFormState}
+                  context={context}
                 />
               );
             })}

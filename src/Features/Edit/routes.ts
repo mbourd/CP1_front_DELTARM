@@ -1,6 +1,16 @@
 import { apiRouter, router } from 'Services';
 import { Edit } from 'Features/Edit';
 import { IApiComplianceData, IComplianceData } from './types';
+import { EmbeddedGate } from '../Embedded/components/EmbeddedGate/EmbeddedGate';
+
+router.registerRoute({
+  name: 'embedded',
+  path: '/embedded',
+  component: EmbeddedGate,
+  exact: true,
+  strict: false,
+  sensitive: false,
+});
 
 router.registerRoute({
   name: 'edit',

@@ -35,14 +35,8 @@ export const Actions: React.FC<Pick<ICard, 'id' | 'comments' | 'context'>> = ({
           )}
         </Link>
       </BPITooltip>
-      <BPITooltip title={trans('readComments')} placement={'left'}>
-        <Link
-          to={
-            (router.generatePath(context === 'EDIT' ? 'edit' : 'validation', {
-              id,
-            }) || '/') + '?comments=1'
-          }
-        >
+      <BPITooltip title={trans('numberComments')} placement={'left'}>
+        <a>
           {comments && comments > 0 ? (
             <span className={'icon'}>
               <BPIBadge content={comments}>
@@ -52,7 +46,7 @@ export const Actions: React.FC<Pick<ICard, 'id' | 'comments' | 'context'>> = ({
           ) : (
             <CommentIcon className={'icon'} />
           )}
-        </Link>
+        </a>
       </BPITooltip>
     </ActionsStyled>
   );

@@ -38,6 +38,10 @@ translation.addBatchResource({
       en: 'Apply filters',
       fr: 'Appliquer les filtres',
     },
+    numberComments: {
+      en: 'Number of comments',
+      fr: 'Nombre de commentaires',
+    },
     resetFilterButtonLabel: {
       en: 'Reset filters',
       fr: 'Réinitialiser les filtres',

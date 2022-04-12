@@ -17,12 +17,13 @@ import {
 } from '../Actions';
 
 import { EditValidationContext, FileComment, FileAudit } from 'Features';
-import { Button } from 'Shared/components';
+import { Button, PreWrapStyled } from 'Shared/components';
 import { useActionButton } from '../../../../Packages/Helpers/src/useActionButton';
 import { useSecurity } from '../../../../Packages/Security';
 import { ModalDynamic } from '../../../ModalDynamic/components/ModalDynamic';
 import { IDataModal } from '../../../ModalDynamic/components/types';
 import { useRecoilValue } from 'recoil';
+import { Alert } from '@material-ui/lab';
 
 export const ContentHeader: React.FC = (): React.ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,6 +35,17 @@ export const ContentHeader: React.FC = (): React.ReactElement => {
 
   return (
     <ContentHeaderStyled>
+      <Grid container style={{ width: '100%' }}>
+        {data?.sectionHeader && (
+          <Alert
+            variant="outlined"
+            icon={false}
+            severity={data.sectionHeader.type === 'alert' ? 'error' : 'success'}
+          >
+            <PreWrapStyled>{data.sectionHeader.message}</PreWrapStyled>
+          </Alert>
+        )}
+      </Grid>
       <Grid container alignItems={'center'} wrap={'nowrap'}>
         <Grid item className={'icon-container'}>
           <FileComment />

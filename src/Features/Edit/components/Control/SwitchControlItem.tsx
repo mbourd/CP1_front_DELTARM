@@ -18,6 +18,7 @@ import {
   DateTimeControl,
   BooleanControl,
   RichTextControl,
+  DataGridControl,
 } from './Form';
 import { EditValidationContext } from 'Features/Edit';
 import { SliderControl } from './Form/Slider/SliderControl';
@@ -27,12 +28,14 @@ interface IProps {
   control: IApiControl;
   formState: IChapter[];
   setFormState: React.Dispatch<SetStateAction<IChapter[]>>;
+  context: 'edit' | 'validate';
 }
 
 export const SwitchControlItem: React.FC<IProps> = ({
   control,
   formState,
   setFormState,
+  context,
 }): React.ReactElement | null => {
   const { fileId } = useContext(EditValidationContext);
   switch (control.control_type) {
@@ -43,6 +46,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'email':
@@ -52,6 +56,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'auth_num':
@@ -61,6 +66,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'formula':
@@ -70,6 +76,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'select_list':
@@ -80,6 +87,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'multiple_list':
@@ -90,6 +98,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'radio':
@@ -100,6 +109,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'checkbox':
@@ -110,6 +120,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'financial':
@@ -119,6 +130,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'integer':
@@ -128,6 +140,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'decimal':
@@ -137,6 +150,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'date':
@@ -146,6 +160,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'time':
@@ -155,6 +170,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'timestamp':
@@ -164,6 +180,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'comment':
@@ -173,6 +190,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'long_text':
@@ -182,6 +200,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'percent':
@@ -191,6 +210,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'slider':
@@ -200,6 +220,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'boolean':
@@ -209,14 +230,23 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
+    case 'data_grid':
+      return (
+        <DataGridControl control={control} fileId={fileId} context={context} />
+      );
     case 'rich_text':
-      return <RichTextControl control={control} fileId={fileId} />;
+      return (
+        <RichTextControl control={control} fileId={fileId} context={context} />
+      );
     case 'file_upload':
-      return <UploadControl control={control} fileId={fileId} />;
+      return (
+        <UploadControl control={control} fileId={fileId} context={context} />
+      );
     case 'info_block':
-      return <InfoBlockControl control={control} />;
+      return <InfoBlockControl control={control} context={context} />;
     case 'line_break':
       return <Box width="100%" />;
   }

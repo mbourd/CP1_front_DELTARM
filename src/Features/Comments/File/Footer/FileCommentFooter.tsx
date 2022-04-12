@@ -52,7 +52,7 @@ export const FileCommentFooter: React.FC<IProps> = ({
       <InputBase
         color={'disabled'}
         bdr={'4px'}
-        placeholder={'Appuyez sur la touche ENTRER pour valider votre message'}
+        placeholder={'Appuyez sur la touche ENTREE pour valider votre message'}
         onKeyPress={onAddComment}
       />
     </FileCommentFooterStyled>

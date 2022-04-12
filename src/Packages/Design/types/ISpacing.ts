@@ -4,6 +4,7 @@ export interface ISpacing {
   readonly large: string;
   readonly medium: string;
   readonly normal: string;
+  readonly xNormal: string;
   readonly small: string;
   readonly xSmall: string;
   readonly none: string;

@@ -10,7 +10,6 @@ export const FormControlStyled = styled.div`
   }
   ._FormError {
     padding: 0;
-    position: absolute;
   }
 
   ._FormLabel {

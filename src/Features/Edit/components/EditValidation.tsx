@@ -6,17 +6,16 @@ import {
   isEmpty,
   router,
   SecurityContext,
-  storage,
   SwitchCallState,
   useApi,
   useSecurity,
 } from 'Services';
-import { HeadingOne, PreWrapStyled } from 'Shared/components';
+import { BreadCrumb, PreWrapStyled } from 'Shared/components';
 import { NavItem } from './NavItem/NavItem';
 import { IData } from '../types';
 import { EditValidationContext } from '../EditValidationContext';
 import { IsLoading } from './IsLoading/IsLoading';
-import { SwitchContentBody } from './ContentBody/SwitchContentBody';
+import { ContentBody } from './ContentBody';
 import { NotFound } from './NotFound/NotFound';
 import { SubHeader } from './SubHeader';
 
@@ -66,17 +65,21 @@ export const EditValidation: React.FC<IProps> = ({
     <SwitchCallState
       callState={callState}
       states={{
-        IS_LOADING: <IsLoading title={title} />,
-        NOT_FOUND: <NotFound title={title} />,
-        BAD_REQUEST: <NotFound title={title} />,
+        IS_LOADING: <IsLoading title={data?.title} />,
+        NOT_FOUND: <NotFound title={data?.title} />,
+        BAD_REQUEST: <NotFound title={data?.title} />,
       }}
     >
       {data ? (
         <EditStyled>
           <EditHeaderStyled>
-            <HeadingOne>
-              <SubHeader title={title} data={data} />
-            </HeadingOne>
+            {data.context === 'edit' && (
+              <BreadCrumb values={['Dashboard', 'Edit']} />
+            )}
+            {data.context === 'validate' && (
+              <BreadCrumb values={['Dashboard', 'Validation']} />
+            )}
+            <SubHeader data={data} />
           </EditHeaderStyled>
 
           <EditValidationContext.Provider
@@ -87,10 +90,6 @@ export const EditValidation: React.FC<IProps> = ({
                 <List>
                   {data?.sections.map((section, index) => {
                     const current = currentSection || data?.currentSection.id;
-
-                    if (section.id === current) {
-                      storage.setData('edit.section.active', section.code);
-                    }
 
                     return (
                       <NavItem
@@ -104,24 +103,7 @@ export const EditValidation: React.FC<IProps> = ({
                 </List>
               </Grid>
               <Grid item className={'content'}>
-                {data.sectionHeader && (
-                  <Box paddingBottom={5}>
-                    <Alert
-                      variant="outlined"
-                      icon={false}
-                      severity={
-                        data.sectionHeader.type === 'alert'
-                          ? 'error'
-                          : 'success'
-                      }
-                    >
-                      <PreWrapStyled>
-                        {data.sectionHeader.message}
-                      </PreWrapStyled>
-                    </Alert>
-                  </Box>
-                )}
-                <SwitchContentBody />
+                <ContentBody />
                 {data.sectionFooter && (
                   <Box paddingY={5}>
                     <Alert variant="outlined" severity="info">

@@ -8,6 +8,7 @@ import { ControlLabel } from '../ControlLabel';
 import { ControlFooter } from '../ControlFooter';
 import { Compliance } from '../Compliance/Compliance';
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
+import { RejectControl } from '../RejectByPointControl/RejectControl';
 
 interface IProps {
   control: IApiControl;
@@ -15,6 +16,7 @@ interface IProps {
   multiple: boolean;
   formState: IChapter[];
   setFormState: React.Dispatch<SetStateAction<IChapter[]>>;
+  context: 'edit' | 'validate';
 }
 
 export const SelectListControl: React.FC<IProps> = ({
@@ -23,11 +25,10 @@ export const SelectListControl: React.FC<IProps> = ({
   multiple,
   formState,
   setFormState,
+  context,
 }): React.ReactElement => {
-  const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);
-  const { currentRoute } = useRouter();
   const [choiceIsKo, setChoiceIsKo] = useState(
     control.compliance?.compliance_checkbox_resolved
       ? control.compliance.compliance_checkbox_resolved
@@ -38,6 +39,15 @@ export const SelectListControl: React.FC<IProps> = ({
       ? control.compliance.compliance_resolved
       : false,
   );
+
+  const [isRejected, setIsRejected] = useState(
+    control.control_rejectable?.is_rejected
+      ? control.control_rejectable.is_rejected
+      : false,
+  );
+
+  const { currentRoute } = useRouter();
+  const { send, error } = useApi<void>();
 
   const selectedValue: Record<string, true> = {
     [currentValue || control.control_value || '']: true,
@@ -56,6 +66,12 @@ export const SelectListControl: React.FC<IProps> = ({
       setIsResolved(false);
     }
   }, [choiceIsKo]);
+
+  useEffect(() => {
+    if (!isRejected) {
+      setIsRejected(false);
+    }
+  }, [isRejected]);
 
   const saveValue = useCallback(
     (value: string) => {
@@ -132,8 +148,8 @@ export const SelectListControl: React.FC<IProps> = ({
         >
           {'Sélectionner une valeur'}
         </Select>
-        {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ControlFooter control={control} />
+        {errorMessage ? <FormError>{errorMessage}</FormError> : null}
       </SelectListControlStyled>
       {control.useCompliance && control.compliance && (
         <Compliance
@@ -144,6 +160,15 @@ export const SelectListControl: React.FC<IProps> = ({
           fileId={fileId}
           choiceIsKo={choiceIsKo}
           compliance={control.useCompliance}
+        />
+      )}
+      {control.useRejection && control.control_rejectable && (
+        <RejectControl
+          isRejected={isRejected}
+          setIsRejected={setIsRejected}
+          controlId={control.control_id}
+          context={context}
+          controlRejectable={control.useRejection}
         />
       )}
     </Grid>

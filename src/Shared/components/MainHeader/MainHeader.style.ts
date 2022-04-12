@@ -29,7 +29,7 @@ export const MainHeaderStyled = styled.header`
 
   .app-name {
     left: ${({ theme }) => theme.spacing.xxLarge};
-    bottom: ${({ theme }) => theme.spacing.medium};
+    bottom: ${({ theme }) => theme.spacing.xNormal};
     margin: auto;
     position: relative;
     display: inline-block;
