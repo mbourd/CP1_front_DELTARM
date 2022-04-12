@@ -11,9 +11,7 @@ export const MainHeader: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('MainHeader');
   const dashboardPath = router.generatePath('dashboard');
   const { data: context } = useContext(SecurityContext);
-  const { send: clientInfos, data: dataClientInfos } = useApi<any>({
-    waitForAuthenticated: true,
-  });
+  const { send: clientInfos, data: dataClientInfos } = useApi<any>();
 
   useEffect(() => {
     if (context.cli_id) {

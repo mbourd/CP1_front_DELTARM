@@ -7,3 +7,4 @@ export * from './Edit';
 export * from './Validation';
 export * from './Comments';
 export * from './Audit';
+export * from './LoginEmbedded';

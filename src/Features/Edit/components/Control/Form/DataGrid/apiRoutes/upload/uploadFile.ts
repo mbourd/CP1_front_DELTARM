@@ -20,7 +20,7 @@ export const uploadFile = (
     .post(
       `${getEnv('API_PROTOCOL')}://${getEnv(
         'API_HOST',
-      )}/control/data_grid/save_value?file_id=${fileId}&elm_id=${controlId}&elm_val=${fileName}&row_num=${rowNum}&column_id=${columnId}`,
+      )}/control/data_grid/save_value?file_id=${fileId}&elm_id=${controlId}&elm_val=${fileName}&row_num=${rowNum}&col_elm_id=${columnId}`,
       formData,
       {
         headers: {

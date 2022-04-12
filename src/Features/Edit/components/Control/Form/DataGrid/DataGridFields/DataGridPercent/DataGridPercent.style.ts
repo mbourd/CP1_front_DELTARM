@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
 
-export const DataGridIntegerStyled = styled.div`
+export const DataGridPercentStyled = styled.div`
   display: contents;
 `;

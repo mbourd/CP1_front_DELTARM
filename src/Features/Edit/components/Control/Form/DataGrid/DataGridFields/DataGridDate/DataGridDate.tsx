@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { DataGridTextStyled } from './DataGridText.style';
+import { DataGridDateStyled } from './DataGridDate.style';
 import { FormError, InputBase } from 'Shared/components';
 import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
 import { useSecurity } from '../../../../../../../../Packages/Security';
@@ -12,7 +12,7 @@ interface IProps {
   rowNum: number;
 }
 
-export const DataGridText: React.FC<IProps> = ({
+export const DataGridDate: React.FC<IProps> = ({
   value,
   fileId,
   controlId,
@@ -47,19 +47,17 @@ export const DataGridText: React.FC<IProps> = ({
   );
 
   return (
-    <DataGridTextStyled>
+    <DataGridDateStyled>
       <InputBase
-        multiline={true}
-        multilineRows={3}
-        placeholder={'Texte'}
-        id={`input grid`}
+        id={`input date grid`}
         disabled={false}
         defaultValue={currentValue ? currentValue : ''}
         onBlur={(e) => saveValue(e.currentTarget.value)}
+        type={'date'}
       />
       {errorMessage ? (
         <FormError style={{ paddingLeft: '0' }}>{errorMessage}</FormError>
       ) : null}
-    </DataGridTextStyled>
+    </DataGridDateStyled>
   );
 };
