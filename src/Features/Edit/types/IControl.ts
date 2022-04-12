@@ -185,13 +185,7 @@ export interface DataGridDetail {
   }[];
   rows: {
     [key: string]: {
-      component:
-        | 'integer'
-        | 'select_list'
-        | 'file_upload'
-        | 'boolean'
-        | 'text'
-        | 'delete';
+      component: DataGridComponent;
       value: string;
       col_elm_id: number;
       row_num: number;
@@ -199,6 +193,17 @@ export interface DataGridDetail {
     };
   }[];
 }
+
+export type DataGridComponent =
+  | 'integer'
+  | 'select_list'
+  | 'file_upload'
+  | 'boolean'
+  | 'text'
+  | 'delete'
+  | 'financial'
+  | 'decimal'
+  | 'percent';
 
 export interface IApiControl {
   control_desc_1: string | null;

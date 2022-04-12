@@ -20,6 +20,9 @@ import { useSecurity } from '../../../../../../Packages/Security';
 import { addRow } from './apiRoutes/addRow';
 import { DataGridDelete } from './DataGridFields/DataGridDelete/DataGridDelete';
 import { DataGridDate } from './DataGridFields/DataGridDate/DataGridDate';
+import { DataGridDecimal } from './DataGridFields/DataGridDecimal/DataGridDecimal';
+import { DataGridPercent } from './DataGridFields/DataGridPercent/DataGridPercent';
+import { DataGridFinancial } from './DataGridFields/DataGridFinancial/DataGridFinancial';
 
 interface IProps {
   control: IApiControl;
@@ -150,6 +153,45 @@ export const DataGridControl: React.FC<IProps> = ({
         case 'date':
           props.row[column] = (
             <DataGridDate
+              columnId={props.row[column].col_elm_id}
+              rowNum={props.row[column].row_num}
+              fileId={fileId}
+              controlId={control.control_id}
+              key={index}
+              value={props.row[column].value}
+            />
+          );
+
+          return <Row {...props} />;
+        case 'decimal':
+          props.row[column] = (
+            <DataGridDecimal
+              columnId={props.row[column].col_elm_id}
+              rowNum={props.row[column].row_num}
+              fileId={fileId}
+              controlId={control.control_id}
+              key={index}
+              value={props.row[column].value}
+            />
+          );
+
+          return <Row {...props} />;
+        case 'percent':
+          props.row[column] = (
+            <DataGridPercent
+              columnId={props.row[column].col_elm_id}
+              rowNum={props.row[column].row_num}
+              fileId={fileId}
+              controlId={control.control_id}
+              key={index}
+              value={props.row[column].value}
+            />
+          );
+
+          return <Row {...props} />;
+        case 'financial':
+          props.row[column] = (
+            <DataGridFinancial
               columnId={props.row[column].col_elm_id}
               rowNum={props.row[column].row_num}
               fileId={fileId}

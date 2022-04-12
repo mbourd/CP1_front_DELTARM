@@ -50,7 +50,6 @@ export const DataGridDate: React.FC<IProps> = ({
     <DataGridDateStyled>
       <InputBase
         id={`input date grid`}
-        placeholder={'input date grid'}
         disabled={false}
         defaultValue={currentValue ? currentValue : ''}
         onBlur={(e) => saveValue(e.currentTarget.value)}

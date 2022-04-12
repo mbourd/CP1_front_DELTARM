@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { DataGridTextStyled } from './DataGridText.style';
+import { DataGridFinancialStyled } from './DataGridFinancial.style';
 import { FormError, InputBase } from 'Shared/components';
 import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
 import { useSecurity } from '../../../../../../../../Packages/Security';
+import { EuroIcon } from '../../../../../../../../Packages/Design';
 
 interface IProps {
   value: string;
@@ -12,7 +13,7 @@ interface IProps {
   rowNum: number;
 }
 
-export const DataGridText: React.FC<IProps> = ({
+export const DataGridFinancial: React.FC<IProps> = ({
   value,
   fileId,
   controlId,
@@ -46,20 +47,23 @@ export const DataGridText: React.FC<IProps> = ({
     [controlId, jwt, fileId, columnId, rowNum],
   );
 
+  const controlValue = currentValue
+    ? parseFloat(currentValue)?.toFixed(2)
+    : currentValue;
+
   return (
-    <DataGridTextStyled>
+    <DataGridFinancialStyled>
       <InputBase
-        multiline={true}
-        multilineRows={3}
-        placeholder={'Texte'}
+        placeholder={'Euro'}
         id={`input grid`}
         disabled={false}
-        defaultValue={currentValue ? currentValue : ''}
+        defaultValue={controlValue ? controlValue : ''}
         onBlur={(e) => saveValue(e.currentTarget.value)}
+        icon={<EuroIcon />}
       />
       {errorMessage ? (
         <FormError style={{ paddingLeft: '0' }}>{errorMessage}</FormError>
       ) : null}
-    </DataGridTextStyled>
+    </DataGridFinancialStyled>
   );
 };
