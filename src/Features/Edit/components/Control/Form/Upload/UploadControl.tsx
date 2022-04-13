@@ -138,7 +138,7 @@ export const UploadControl: React.FC<IProps> = ({
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              height: '150px',
+              height: '50px',
             }}
             {...getRootProps({ onClick: (event) => event.stopPropagation() })}
           >
