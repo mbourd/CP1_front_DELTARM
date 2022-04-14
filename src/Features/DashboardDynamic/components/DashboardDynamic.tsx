@@ -11,6 +11,7 @@ import { BreadCrumb, Heading } from 'Shared/components';
 import {
   DashboardDynamicStyled,
   MetricsContainerStyled,
+  HeaderDashDynamicFixedStyled,
 } from './DashboardDynamic.style';
 import { ButtonContainerStyled } from './DashboardDynamic.style';
 import { Card } from './Card/Card';
@@ -58,57 +59,59 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
       >
         <BreadCrumb values={['Dashboard']} />
         <DashboardDynamicStyled>
-          {response?.data.title.visible && (
-            <Heading
-              style={{
-                fontSize: response?.data.title.font_size,
-                color: response?.data.title.font_color,
-              }}
-            >
-              {response?.data.title.lib}
-            </Heading>
-          )}
-          {response?.data.subtitle.visible && (
-            <Heading
-              style={{
-                fontSize: response?.data.subtitle.font_size,
-                color: response?.data.subtitle.font_color,
-              }}
-            >
-              {response?.data.subtitle.lib}
-            </Heading>
-          )}
-          {response?.data.search_bar.search_bar && (
-            <SearchBar
-              btn_lib={response?.data.search_bar.btn_lib}
-              options={response?.data.search_bar.options}
-              setIsModalOpen={setIsModalOpen}
-            />
-          )}
-          {response && response?.data.btns.length > 0 ? (
-            <ButtonContainerStyled>
-              {response?.data.btns.map((btn, index) => {
-                return (
-                  <Button
-                    key={index}
-                    onClick={() => actionButton(btn.action)}
-                    style={{ backgroundColor: btn.bg_color }}
-                  >
-                    {btn.btn_lib}
-                  </Button>
-                );
-              })}
-            </ButtonContainerStyled>
-          ) : null}
-          <MetricsContainerStyled>
-            <Grid container component={'span'} alignItems={'center'}>
-              {response?.data.metrics.visible
-                ? response?.data.metrics.indicator.map((indicator, index) => (
-                    <SwitchMetric indicator={indicator} key={index} />
-                  ))
-                : null}
-            </Grid>
-          </MetricsContainerStyled>
+          <HeaderDashDynamicFixedStyled>
+            {response?.data.title.visible && (
+              <Heading
+                style={{
+                  fontSize: response?.data.title.font_size,
+                  color: response?.data.title.font_color,
+                }}
+              >
+                {response?.data.title.lib}
+              </Heading>
+            )}
+            {response?.data.subtitle.visible && (
+              <Heading
+                style={{
+                  fontSize: response?.data.subtitle.font_size,
+                  color: response?.data.subtitle.font_color,
+                }}
+              >
+                {response?.data.subtitle.lib}
+              </Heading>
+            )}
+            {response?.data.search_bar.search_bar && (
+              <SearchBar
+                btn_lib={response?.data.search_bar.btn_lib}
+                options={response?.data.search_bar.options}
+                setIsModalOpen={setIsModalOpen}
+              />
+            )}
+            {response && response?.data.btns.length > 0 ? (
+              <ButtonContainerStyled>
+                {response?.data.btns.map((btn, index) => {
+                  return (
+                    <Button
+                      key={index}
+                      onClick={() => actionButton(btn.action)}
+                      style={{ backgroundColor: btn.bg_color }}
+                    >
+                      {btn.btn_lib}
+                    </Button>
+                  );
+                })}
+              </ButtonContainerStyled>
+            ) : null}
+            <MetricsContainerStyled>
+              <Grid container component={'span'} alignItems={'center'}>
+                {response?.data.metrics.visible
+                  ? response?.data.metrics.indicator.map((indicator, index) => (
+                      <SwitchMetric indicator={indicator} key={index} />
+                    ))
+                  : null}
+              </Grid>
+            </MetricsContainerStyled>
+          </HeaderDashDynamicFixedStyled>
           <Grid container>
             {response?.data.cards.visible &&
               response?.data.cards.card.map((card, index) => (
