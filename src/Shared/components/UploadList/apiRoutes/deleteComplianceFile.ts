@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { SetStateAction } from 'react';
 import { getEnv } from '../../../../Packages/Helpers';
 import {
-  IApiComplianceFields,
+  IComplianceData,
   IUploadDetail,
 } from '../../../../Features/Edit/types';
 
@@ -13,15 +13,15 @@ export const deleteComplianceFile = (
   jwt: string | null,
   setErrorMessage: React.Dispatch<SetStateAction<string | null>>,
   setCurrentUploadFile: React.Dispatch<SetStateAction<IUploadDetail[] | null>>,
-  compliance: IApiComplianceFields,
+  compliance: IComplianceData,
 ) => {
   axios
     .post(
       `${getEnv('API_PROTOCOL')}://${getEnv(
         'API_HOST',
       )}/control/delete_upfile?file_id=${fileId}&control_id=${controlId}&file_name=${name}&control_family=${
-        compliance.compliance_elm_family
-      }&compliance_id=${compliance.compliance_id}`,
+        compliance.family
+      }&compliance_id=${compliance.id}`,
       {},
       {
         headers: {
