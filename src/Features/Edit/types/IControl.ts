@@ -63,7 +63,7 @@ export interface IApiComplianceData {
   compliance_elm_type: ControlTypeType;
   compliance_elm_value: string;
   compliance_id: string;
-  compliance_upload_detail: IUploadDetail[] | null;
+  compliance_file_detail: IUploadDetail[] | null;
 }
 
 export interface IComplianceData {
