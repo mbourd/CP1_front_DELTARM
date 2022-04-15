@@ -11,7 +11,7 @@ import { useDropzone } from 'react-dropzone';
 import { uploadComplianceFile } from './apiRoutes/uploadComplianceFile';
 import { Container } from '@mui/material';
 import { UploadList } from '../../../../../../../../Shared/components/UploadList/UploadList';
-import { deleteFile } from '../../../../../../../../Shared/components/UploadList/apiRoutes/deleteFile';
+import { deleteComplianceFile } from '../../../../../../../../Shared/components/UploadList/apiRoutes/deleteComplianceFile';
 import { downloadFile } from '../../../../../../../../Shared/components/UploadList/apiRoutes/downloadFile';
 
 interface IProps {
@@ -64,16 +64,17 @@ export const UploadCompliance: React.FC<IProps> = ({
   const handleDeleteFile = useCallback(
     (e, name) => {
       e.preventDefault();
-      deleteFile(
+      deleteComplianceFile(
         fileId,
         controlId,
         name,
         jwt,
         setErrorMessage,
         setCurrentUploadFile,
+        compliance,
       );
     },
-    [jwt, controlId, fileId],
+    [jwt, controlId, fileId, compliance],
   );
 
   const handleDownloadFile = useCallback(

@@ -1,10 +1,22 @@
 import styled from 'styled-components/macro';
 
 export const DashboardDynamicStyled = styled.div`
-  padding-top: 2.6rem;
   .MuiGrid-item {
     padding: ${({ theme }) => theme.sizing.xxLarge};
   }
+`;
+
+export const HeaderDashDynamicFixedStyled = styled.div`
+  background: ${({ theme }) => {
+    const color = theme.color.background.main;
+
+    return `linear-gradient(to bottom, ${color} 0%, ${color} 97%, transparent 100%)`;
+  }};
+  position: sticky;
+  top: 60px;
+  z-index: 98;
+  width: 100%;
+  padding-top: 35px;
 `;
 
 export const ButtonContainerStyled = styled.div`
