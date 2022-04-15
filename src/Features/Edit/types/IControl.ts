@@ -62,7 +62,6 @@ export interface IApiComplianceFields {
   compliance_elm_type: ControlTypeType;
   compliance_elm_value: string;
   compliance_id: string;
-  compliance_answer_choices?: Record<string, ISelectData>;
   compliance_file_detail: IUploadDetail[] | null;
 }
 
