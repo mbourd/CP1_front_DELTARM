@@ -22,7 +22,6 @@ export const CardStyled = styled.section<IProps>`
 export const StyledTableCell = styled(TableCell)((cardColor) => ({
   [`&.${tableCellClasses.body}`]: {
     borderRight: `1px solid ${cardColor}`,
-    borderBottom: `1px solid ${cardColor}`,
     borderLeft: `1px solid ${cardColor}`,
     textAlign: 'center',
   },

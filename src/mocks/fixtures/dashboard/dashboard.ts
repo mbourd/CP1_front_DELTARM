@@ -1,46 +1,35 @@
 export default {
-  target: 'main',
-  route_front: 'dashboard/contr_perm',
   data: {
-    btns: [
-      {
-        btn_color: '#23cf84',
-        btn_hover_color: '#065e3b',
-        btn_lib: 'Nouveau Dossier',
-        route: '/file/new_file',
-      },
-      {
-        btn_color: '#ad6910',
-        btn_hover_color: '#3d3117',
-        btn_lib: 'Bouton Bidon',
-        route: '/btn/bidon',
-      },
-    ],
+    btns: [],
     cards: {
       card: [
         {
           cols: {
-            header_visible: true,
+            header_visible: false,
             values: [
               {
                 border_right: true,
-                header: 'Contrôle',
-              },
-              {
-                border_right: false,
-                header: 'Etat',
-              },
-              {
-                border_right: false,
-                header: '+',
+                header: 'Chantier',
+                dataKey: 'Chantier',
+                width: 200,
               },
               {
                 border_right: true,
-                header: 'BI',
+                header: 'Création',
+                dataKey: 'Création',
+                width: 200,
+              },
+              {
+                border_right: true,
+                header: 'U.O. Rattachement',
+                dataKey: 'U.O. Rattachement',
+                width: 200,
               },
               {
                 border_right: false,
-                header: 'Fini',
+                header: '% Complétude',
+                dataKey: '% Complétude',
+                width: 200,
               },
             ],
           },
@@ -48,275 +37,598 @@ export default {
             border_bottom: true,
             values: [
               {
-                id: 1,
-                item: [
-                  {
-                    content:
-                      'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site A - M1</p>',
-                    hint: null,
-                    icon: '',
-                    action: {
-                      method: 'GET',
-                      route: '/edit',
-                      params: [
-                        { key: 'type', value: 'control' },
-                        { key: 'ctrl_id', value: 'toto' },
-                        { key: 'period_code', value: 'toto' },
-                      ],
-                    },
-                  },
-                  {
-                    content: null,
-                    icon: {
-                      ref: 'CreateNewFolder',
-                      color: '#3248A8',
-                      size: 12,
-                    },
-                    hint: "Saisie d'un nouveau contrôle",
-                    action: {
-                      method: 'GET',
-                      route: '/edit',
-                      params: [
-                        { key: 'type', value: 'control' },
-                        { key: 'ctrl_id', value: 'toto' },
-                        { key: 'period_code', value: 'toto' },
-                      ],
-                    },
-                  },
-                  {
-                    action: {
-                      endpoint: '/file/add_new_fil?&control_id=1&period_id=M1',
-                      method: 'POST',
-                    },
-                    content: null,
-                    hint: 'Ajouter un dossier contrôlé',
-                    icon: {
-                      color: '#3248a8',
-                      ref: 'CreateNewFolder',
-                      size: 12,
-                    },
-                  },
-                  {
-                    action: {
-                      endpoint: '/file/aiv-v5',
-                      method: 'GET',
-                    },
-                    content: null,
-                    hint: 'Ouvrir Reporting',
-                    icon: {
-                      color: '#333333',
-                      ref: 'Assessment',
-                      size: 12,
-                    },
-                  },
-                  {
-                    action: {
-                      endpoint:
-                        '/control/end_period_control?control_id=1&period_id=M1',
-                      method: 'POST',
-                    },
-                    content: null,
-                    hint: 'Clôturer la période de déclaration de ce contrôle',
-                    icon: {
-                      color: '#f5c0b5',
-                      ref: 'HighlightOff',
-                      size: 12,
-                    },
-                  },
-                ],
-              },
-              {
-                id: 2,
+                id: 'd67b5ce9-6ef5-4cc9-8199-c905af6be218',
                 item: [
                   {
                     action: {
+                      endpoint: '/edit',
                       method: 'GET',
-                      route: '/edit',
-                      params: [
-                        { key: 'type', value: 'control' },
-                        { key: 'ctrl_id', value: 'toto' },
-                        { key: 'period_code', value: 'toto' },
-                      ],
+                      params: {
+                        file_id: 'd67b5ce9-6ef5-4cc9-8199-c905af6be218',
+                      },
                     },
                     content:
-                      'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - M1</p>',
-                    hint: null,
+                      '<p style="color:#5a4749; font-weight:bold;">Rennes</p><p>Le 65</p>',
+                    hint: 'Rennes',
                     icon: null,
                   },
                   {
                     action: null,
+                    content: '21/03/22',
+                    hint: 'Déclaration chantier le 21/03/22 par Chantal CARNEL',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Icade',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: 'd67b5ce9-6ef5-4cc9-8199-c905af6be218',
+                      },
+                    },
                     content: null,
-                    hint: 'Smiley 2',
+                    hint: 'A améliorer (50%)',
                     icon: {
-                      color: 'orange',
+                      color: '#F1AA00',
                       ref: 'SentimentDissatisfied',
                       size: 12,
                     },
                   },
-                  {
-                    action: {
-                      endpoint: '/file/add_new_file?control_id=2&period_id=M1',
-                      method: 'POST',
-                    },
-                    content: null,
-                    hint: 'Ajouter un dossier contrôlé',
-                    icon: {
-                      color: '#3248a8',
-                      ref: 'CreateNewFolder',
-                      size: 12,
-                    },
-                  },
-                  {
-                    action: {
-                      endpoint:
-                        '/file/aiv-v5/url_aiv?control_id=2&period_id=M1',
-                      method: 'POST',
-                    },
-                    content: null,
-                    hint: 'Ouvrir Reporting',
-                    icon: {
-                      color: '#333333',
-                      ref: 'Assessment',
-                      size: 12,
-                    },
-                  },
-                  {
-                    action: {
-                      endpoint:
-                        '/control/end_period_control?control_id=2&period_id=M1',
-                      method: 'POST',
-                    },
-                    content: null,
-                    hint: 'Clôturer la période de déclaration de ce contrôle',
-                    icon: {
-                      color: '#f5c0b5',
-                      ref: 'HighlightOff',
-                      size: 12,
-                    },
-                  },
                 ],
               },
               {
-                id: 3,
+                id: 'c8530868-8b50-4ea2-a3f0-1a7b1d11d513',
                 item: [
                   {
-                    action: null,
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: 'c8530868-8b50-4ea2-a3f0-1a7b1d11d513',
+                      },
+                    },
                     content:
-                      'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site A - T3</p>',
-                    hint: null,
+                      '<p style="color:#5a4749; font-weight:bold;">Toulouse</p><p>Villa Dumond</p>',
+                    hint: 'Toulouse',
                     icon: null,
                   },
                   {
                     action: null,
-                    content: null,
-                    hint: 'Smiley 3',
-                    icon: {
-                      color: 'green',
-                      ref: 'Mood',
-                      size: 12,
-                    },
-                  },
-                  {
-                    action: {
-                      endpoint: '/file/add_new_file?control_id=3&period_id=T3',
-                      method: 'POST',
-                    },
-                    content: null,
-                    hint: 'Ajouter un dossier contrôlé',
-                    icon: {
-                      color: '#3248a8',
-                      ref: 'CreateNewFolder',
-                      size: 12,
-                    },
-                  },
-                  {
-                    action: {
-                      endpoint:
-                        '/file/aiv-v5/url_aiv?control_id=3&period_id=T3',
-                      method: 'POST',
-                    },
-                    content: null,
-                    hint: 'Ouvrir Reporting',
-                    icon: {
-                      color: '#333333',
-                      ref: 'Assessment',
-                      size: 12,
-                    },
-                  },
-                  {
-                    action: {
-                      endpoint:
-                        '/control/end_period_control?control_id=3&period_id=T3',
-                      method: 'POST',
-                    },
-                    content: null,
-                    hint: 'Clôturer la période de déclaration de ce contrôle',
-                    icon: {
-                      color: '#f5c0b5',
-                      ref: 'HighlightOff',
-                      size: 12,
-                    },
-                  },
-                ],
-              },
-              {
-                id: 4,
-                item: [
-                  {
-                    action: null,
-                    content:
-                      'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site B - T4</p>',
-                    hint: null,
+                    content: '21/03/22',
+                    hint: 'Déclaration chantier le 21/03/22 par Chantal CARNEL',
                     icon: null,
                   },
                   {
                     action: null,
+                    content: 'Kaufman & Broad',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: 'c8530868-8b50-4ea2-a3f0-1a7b1d11d513',
+                      },
+                    },
                     content: null,
-                    hint: 'Smiley 4',
+                    hint: 'A améliorer (50%)',
                     icon: {
-                      color: 'orange',
+                      color: '#F1AA00',
                       ref: 'SentimentDissatisfied',
                       size: 12,
                     },
                   },
+                ],
+              },
+              {
+                id: '62f2d825-8406-4abc-b5e1-51bc64b985d8',
+                item: [
                   {
                     action: {
-                      endpoint: '/file/add_new_file?control_id=4&period_id=T4',
-                      method: 'POST',
-                    },
-                    content: null,
-                    hint: 'Ajouter un dossier contrôlé',
-                    icon: {
-                      color: '#3248a8',
-                      ref: 'CreateNewFolder',
-                      size: 12,
-                    },
-                  },
-                  {
-                    action: {
-                      endpoint:
-                        '/file/aiv-v5/url_aiv?control_id=4&period_id=T4',
+                      endpoint: '/edit',
                       method: 'GET',
+                      params: {
+                        file_id: '62f2d825-8406-4abc-b5e1-51bc64b985d8',
+                      },
                     },
-                    content: null,
-                    hint: 'Ouvrir Reporting',
-                    icon: {
-                      color: '#333333',
-                      ref: 'Assessment',
-                      size: 12,
-                    },
+                    content:
+                      '<p style="color:#5a4749; font-weight:bold;">Vannes</p><p>Résidence 11</p>',
+                    hint: 'Vannes',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: '21/03/22',
+                    hint: 'Déclaration chantier le 21/03/22 par Chantal CARNEL',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Icade',
+                    hint: null,
+                    icon: null,
                   },
                   {
                     action: {
-                      endpoint:
-                        '/control/end_period_control?control_id=4&period_id=T4',
-                      method: 'POST',
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '62f2d825-8406-4abc-b5e1-51bc64b985d8',
+                      },
                     },
                     content: null,
-                    hint: 'Clôturer la période de déclaration de ce contrôle',
+                    hint: 'Non satisfaisant (10%)',
                     icon: {
-                      color: '#f5c0b5',
-                      ref: 'HighlightOff',
+                      color: '#FF0000',
+                      ref: 'MoodBad',
+                      size: 12,
+                    },
+                  },
+                ],
+              },
+              {
+                id: '2e7e0fde-8369-438d-963b-b2a999a1a9e7',
+                item: [
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '2e7e0fde-8369-438d-963b-b2a999a1a9e7',
+                      },
+                    },
+                    content:
+                      '<p style="color:#5a4749; font-weight:bold;">Toulon</p><p>Projet AB42</p>',
+                    hint: 'Toulon',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: '26/03/22',
+                    hint: 'Déclaration chantier le 26/03/22 par Boris Horowitz',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Icade',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '2e7e0fde-8369-438d-963b-b2a999a1a9e7',
+                      },
+                    },
+                    content: null,
+                    hint: 'Non satisfaisant (30%)',
+                    icon: {
+                      color: '#FF0000',
+                      ref: 'MoodBad',
+                      size: 12,
+                    },
+                  },
+                ],
+              },
+              {
+                id: '998e05f2-d618-49af-a8ca-9eb5c5447f5d',
+                item: [
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '998e05f2-d618-49af-a8ca-9eb5c5447f5d',
+                      },
+                    },
+                    content:
+                      '<p style="color:#5a4749; font-weight:bold;">Reims</p><p>Le Champagne</p>',
+                    hint: 'Reims',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: '26/03/22',
+                    hint: 'Déclaration chantier le 26/03/22 par Boris Horowitz',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Icade',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '998e05f2-d618-49af-a8ca-9eb5c5447f5d',
+                      },
+                    },
+                    content: null,
+                    hint: 'A améliorer (50%)',
+                    icon: {
+                      color: '#F1AA00',
+                      ref: 'SentimentDissatisfied',
+                      size: 12,
+                    },
+                  },
+                ],
+              },
+              {
+                id: '3e642520-00bf-4792-9070-480381421191',
+                item: [
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '3e642520-00bf-4792-9070-480381421191',
+                      },
+                    },
+                    content:
+                      '<p style="color:#5a4749; font-weight:bold;">test</p><p>test</p>',
+                    hint: 'test',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: '29/03/22',
+                    hint: 'Déclaration chantier le 29/03/22 par Nicolas Teysseyre',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Nord Midi Pyrénées - DPO',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '3e642520-00bf-4792-9070-480381421191',
+                      },
+                    },
+                    content: null,
+                    hint: 'Non satisfaisant (20%)',
+                    icon: {
+                      color: '#FF0000',
+                      ref: 'MoodBad',
+                      size: 12,
+                    },
+                  },
+                ],
+              },
+              {
+                id: 'f8de1823-cee3-47fe-acd5-e2b9123eaf46',
+                item: [
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: 'f8de1823-cee3-47fe-acd5-e2b9123eaf46',
+                      },
+                    },
+                    content:
+                      '<p style="color:#5a4749; font-weight:bold;">Vincennes</p><p>Rue Gambetta</p>',
+                    hint: 'Vincennes',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: '29/03/22',
+                    hint: 'Déclaration chantier le 29/03/22 par Boris Horowitz',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Kaufman & Broad',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: 'f8de1823-cee3-47fe-acd5-e2b9123eaf46',
+                      },
+                    },
+                    content: null,
+                    hint: 'A améliorer (40%)',
+                    icon: {
+                      color: '#F1AA00',
+                      ref: 'SentimentDissatisfied',
+                      size: 12,
+                    },
+                  },
+                ],
+              },
+              {
+                id: '9953b690-819b-4f98-870d-65e21695b777',
+                item: [
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '9953b690-819b-4f98-870d-65e21695b777',
+                      },
+                    },
+                    content:
+                      '<p style="color:#5a4749; font-weight:bold;">Immeuble 34</p><p>CODE34</p>',
+                    hint: 'Immeuble 34',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: '29/03/22',
+                    hint: 'Déclaration chantier le 29/03/22 par Chantal CARNEL',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Client Chantier ABC',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '9953b690-819b-4f98-870d-65e21695b777',
+                      },
+                    },
+                    content: null,
+                    hint: 'A améliorer (50%)',
+                    icon: {
+                      color: '#F1AA00',
+                      ref: 'SentimentDissatisfied',
+                      size: 12,
+                    },
+                  },
+                ],
+              },
+              {
+                id: 'f31c6165-518c-4fbf-92ce-5f9fbba79f9c',
+                item: [
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: 'f31c6165-518c-4fbf-92ce-5f9fbba79f9c',
+                      },
+                    },
+                    content:
+                      '<p style="color:#5a4749; font-weight:bold;">Hotel ABC</p><p>ABD</p>',
+                    hint: 'Hotel ABC',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: '30/03/22',
+                    hint: 'Déclaration chantier le 30/03/22 par Chantal CARNEL',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Client Chantier ABC',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: 'f31c6165-518c-4fbf-92ce-5f9fbba79f9c',
+                      },
+                    },
+                    content: null,
+                    hint: 'Non satisfaisant (30%)',
+                    icon: {
+                      color: '#FF0000',
+                      ref: 'MoodBad',
+                      size: 12,
+                    },
+                  },
+                ],
+              },
+              {
+                id: '212a0d54-1439-4536-b8c0-ec3aa2a7ebe9',
+                item: [
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '212a0d54-1439-4536-b8c0-ec3aa2a7ebe9',
+                      },
+                    },
+                    content:
+                      '<p style="color:#5a4749; font-weight:bold;">Test</p><p></p>',
+                    hint: 'Test',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: '31/03/22',
+                    hint: 'Déclaration chantier le 31/03/22 par Nicolas Teysseyre',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Centre Est - DPO',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '212a0d54-1439-4536-b8c0-ec3aa2a7ebe9',
+                      },
+                    },
+                    content: null,
+                    hint: 'A améliorer (60%)',
+                    icon: {
+                      color: '#F1AA00',
+                      ref: 'SentimentDissatisfied',
+                      size: 12,
+                    },
+                  },
+                ],
+              },
+              {
+                id: '9d485eaf-4d25-4c86-ad5c-fd6ea54ddb49',
+                item: [
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '9d485eaf-4d25-4c86-ad5c-fd6ea54ddb49',
+                      },
+                    },
+                    content:
+                      '<p style="color:#5a4749; font-weight:bold;">test</p><p></p>',
+                    hint: 'test',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: '01/04/22',
+                    hint: 'Déclaration chantier le 01/04/22 par Nicolas Teysseyre',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Centre Est - DPO',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '9d485eaf-4d25-4c86-ad5c-fd6ea54ddb49',
+                      },
+                    },
+                    content: null,
+                    hint: 'Bon (90%)',
+                    icon: {
+                      color: '#00B456',
+                      ref: 'SentimentVerySatisfied',
+                      size: 12,
+                    },
+                  },
+                ],
+              },
+              {
+                id: 'b41d73d7-9271-4ea4-8240-274d80095d57',
+                item: [
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: 'b41d73d7-9271-4ea4-8240-274d80095d57',
+                      },
+                    },
+                    content:
+                      '<p style="color:#5a4749; font-weight:bold;">Bonneuil</p><p></p>',
+                    hint: 'Bonneuil',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: '06/04/22',
+                    hint: 'Déclaration chantier le 06/04/22 par Chantal CARNEL',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Icade',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: 'b41d73d7-9271-4ea4-8240-274d80095d57',
+                      },
+                    },
+                    content: null,
+                    hint: 'Non satisfaisant (30%)',
+                    icon: {
+                      color: '#FF0000',
+                      ref: 'MoodBad',
+                      size: 12,
+                    },
+                  },
+                ],
+              },
+              {
+                id: '34db58a6-310a-4e94-b3bf-8e6f35d511b8',
+                item: [
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '34db58a6-310a-4e94-b3bf-8e6f35d511b8',
+                      },
+                    },
+                    content:
+                      '<p style="color:#5a4749; font-weight:bold;">Lyon</p><p></p>',
+                    hint: 'Lyon',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: '06/04/22',
+                    hint: 'Déclaration chantier le 06/04/22 par Chantal CARNEL',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Corse - CISO',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '34db58a6-310a-4e94-b3bf-8e6f35d511b8',
+                      },
+                    },
+                    content: null,
+                    hint: 'A améliorer (50%)',
+                    icon: {
+                      color: '#F1AA00',
+                      ref: 'SentimentDissatisfied',
                       size: 12,
                     },
                   },
@@ -325,9 +637,9 @@ export default {
             ],
           },
           title: {
-            bg_color: '#ABCDEF',
-            font_color: '#FFFFFFF',
-            lib: '4 Contrôles à réaliser',
+            bg_color: '#2ECC71',
+            font_color: '#FFFFFF',
+            lib: 'Chantiers en cours',
           },
         },
         {
@@ -335,148 +647,91 @@ export default {
             header_visible: false,
             values: [
               {
-                border_right: false,
-                header: 'Contrôle',
+                border_right: true,
+                header: 'Chantier',
+                width: 200,
               },
               {
                 border_right: true,
-                header: 'Liste',
+                header: 'Création',
+                width: 200,
               },
               {
                 border_right: false,
-                header: 'Fini',
+                header: 'U.O. Rattachement',
+                width: 200,
               },
             ],
           },
           lines: {
-            border_bottom: false,
+            border_bottom: true,
             values: [
               {
-                id: 10,
+                id: '5f745bcf-941d-4181-b7e4-672b8c0e22f3',
                 item: [
                   {
-                    action: null,
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '5f745bcf-941d-4181-b7e4-672b8c0e22f3',
+                      },
+                    },
                     content:
-                      'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site A - M1</p>',
-                    hint: null,
+                      '<p style="color:#5a4749; font-weight:bold;">Montreuil</p><p>Tour #23</p>',
+                    hint: 'Montreuil',
                     icon: null,
                   },
                   {
-                    action: {
-                      endpoint:
-                        '/control/display_file_ko?control_id=10&period_id=M1',
-                      method: 'POST',
-                    },
-                    content: null,
-                    hint: 'Affiche la liste des dossiers avec Contrôles KO',
-                    icon: {
-                      color: '#bf6f8a',
-                      ref: 'Toc',
-                      size: 12,
-                    },
+                    action: null,
+                    content: '21/03/22',
+                    hint: 'Déclaration chantier le 21/03/22 par Chantal CARNEL',
+                    icon: null,
                   },
                   {
-                    action: {
-                      endpoint:
-                        '/control/end_period_control?control_id=10&period_id=M1',
-                      method: 'POST',
-                    },
-                    content: null,
-                    hint: 'Clôturer la période de déclaration de ce contrôle',
-                    icon: {
-                      color: '#f5c0b5',
-                      ref: 'HighlightOff',
-                      size: 12,
-                    },
+                    action: null,
+                    content: 'Icade',
+                    hint: null,
+                    icon: null,
                   },
                 ],
               },
               {
-                id: 11,
+                id: 'e99551df-0d32-4152-8534-a3899dc15383',
                 item: [
                   {
-                    action: null,
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: 'e99551df-0d32-4152-8534-a3899dc15383',
+                      },
+                    },
                     content:
-                      'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site A - M2</p>',
-                    hint: null,
+                      '<p style="color:#5a4749; font-weight:bold;">Perpignan</p><p>Lot 72</p>',
+                    hint: 'Perpignan',
                     icon: null,
                   },
                   {
-                    action: {
-                      endpoint:
-                        '/control/display_file_ko?control_id=11&period_id=M2',
-                      method: 'POST',
-                    },
-                    content: null,
-                    hint: 'Affiche la liste des dossiers avec Contrôles KO',
-                    icon: {
-                      color: '#bf6f8a',
-                      ref: 'Toc',
-                      size: 12,
-                    },
-                  },
-                  {
-                    action: {
-                      endpoint:
-                        '/control/end_period_control?control_id=11&period_id=M2',
-                      method: 'POST',
-                    },
-                    content: null,
-                    hint: 'Clôturer la période de déclaration de ce contrôle',
-                    icon: {
-                      color: '#f5c0b5',
-                      ref: 'HighlightOff',
-                      size: 12,
-                    },
-                  },
-                ],
-              },
-              {
-                id: 12,
-                item: [
-                  {
                     action: null,
-                    content:
-                      'Contrôler la conformité statutaire de la tenue des instances (Périmètre SCI) - <p style="color:red; font-weight:bold;">Site A - M3</p>',
-                    hint: null,
+                    content: '21/03/22',
+                    hint: 'Déclaration chantier le 21/03/22 par Chantal CARNEL',
                     icon: null,
                   },
                   {
-                    action: {
-                      endpoint:
-                        '/control/display_file_ko?control_id=12&period_id=M3',
-                      method: 'POST',
-                    },
-                    content: null,
-                    hint: 'Affiche la liste des dossiers avec Contrôles KO',
-                    icon: {
-                      color: '#bf6f8a',
-                      ref: 'Toc',
-                      size: 12,
-                    },
-                  },
-                  {
-                    action: {
-                      endpoint:
-                        '/control/end_period_control?control_id=12&period_id=M3',
-                      method: 'POST',
-                    },
-                    content: null,
-                    hint: 'Clôturer la période de déclaration de ce contrôle',
-                    icon: {
-                      color: '#f5c0b5',
-                      ref: 'HighlightOff',
-                      size: 12,
-                    },
+                    action: null,
+                    content: 'Kaufman & Broad',
+                    hint: null,
+                    icon: null,
                   },
                 ],
               },
             ],
           },
           title: {
-            bg_color: '#FF0000',
-            font_color: '#FFFFFFF',
-            lib: '3 Contrôles KO',
+            bg_color: '#28A586',
+            font_color: '#FFFFFF',
+            lib: 'Chantiers en attente de validation',
           },
         },
         {
@@ -484,99 +739,82 @@ export default {
             header_visible: false,
             values: [
               {
-                border_right: false,
-                header: 'Contrôle',
+                border_right: true,
+                header: 'Chantier',
+                width: 200,
               },
               {
                 border_right: true,
-                header: 'Liste',
+                header: 'Création',
+                width: 200,
               },
               {
                 border_right: false,
-                header: 'Fini',
+                header: 'U.O. Rattachement',
+                width: 200,
               },
             ],
           },
           lines: {
-            border_bottom: false,
+            border_bottom: true,
             values: [
               {
-                id: 20,
+                id: '78942cf5-d093-4723-aaea-b4e720675c83',
                 item: [
                   {
-                    action: null,
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '78942cf5-d093-4723-aaea-b4e720675c83',
+                      },
+                    },
                     content:
-                      'Contrôler la conformité statutaire - <p style="color:red; font-weight:bold;">Site V1 - M6</p>',
-                    hint: null,
+                      '<p style="color:#5a4749; font-weight:bold;">Nice</p><p>55 Volga</p>',
+                    hint: 'Nice',
                     icon: null,
                   },
                   {
-                    action: {
-                      endpoint:
-                        '/control/validate_control?control_id=20&period_id=M6',
-                      method: 'POST',
-                    },
-                    content: null,
-                    hint: 'Affiche la liste des dossiers avec Contrôles à Valider',
-                    icon: {
-                      color: '#94c26e',
-                      ref: 'PlaylistAddCheck',
-                      size: 12,
-                    },
+                    action: null,
+                    content: '21/03/22',
+                    hint: 'Déclaration chantier le 21/03/22 par Chantal CARNEL',
+                    icon: null,
                   },
                   {
-                    action: {
-                      endpoint:
-                        '/control/end_period_control?control_id=20&period_id=M6',
-                      method: 'POST',
-                    },
-                    content: null,
-                    hint: 'Clôturer la période de déclaration de ce contrôle',
-                    icon: {
-                      color: '#f5c0b5',
-                      ref: 'HighlightOff',
-                      size: 12,
-                    },
+                    action: null,
+                    content: 'Icade',
+                    hint: null,
+                    icon: null,
                   },
                 ],
               },
               {
-                id: 21,
+                id: 'd82bb617-abed-4483-9f8e-df1936b27c28',
                 item: [
                   {
-                    action: null,
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: 'd82bb617-abed-4483-9f8e-df1936b27c28',
+                      },
+                    },
                     content:
-                      'Contrôler la conformité statutaire - <p style="color:red; font-weight:bold;">Site V2 - M12</p>',
-                    hint: null,
+                      '<p style="color:#5a4749; font-weight:bold;">Valenciennes</p><p>Centre-ville</p>',
+                    hint: 'Valenciennes',
                     icon: null,
                   },
                   {
-                    action: {
-                      endpoint:
-                        '/control/validate_control?control_id=21&period_id=M12',
-                      method: 'POST',
-                    },
-                    content: null,
-                    hint: 'Affiche la liste des dossiers avec Contrôles à Valider',
-                    icon: {
-                      color: '#94c26e',
-                      ref: 'PlaylistAddCheck',
-                      size: 12,
-                    },
+                    action: null,
+                    content: '21/03/22',
+                    hint: 'Déclaration chantier le 21/03/22 par Chantal CARNEL',
+                    icon: null,
                   },
                   {
-                    action: {
-                      endpoint:
-                        '/control/end_period_control?control_id=21&period_id=M12',
-                      method: 'POST',
-                    },
-                    content: null,
-                    hint: 'Clôturer la période de déclaration de ce contrôle',
-                    icon: {
-                      color: '#f5c0b5',
-                      ref: 'HighlightOff',
-                      size: 12,
-                    },
+                    action: null,
+                    content: 'Kaufman & Broad',
+                    hint: null,
+                    icon: null,
                   },
                 ],
               },
@@ -584,263 +822,194 @@ export default {
           },
           title: {
             bg_color: '#FF0000',
-            font_color: '#FFFFFFF',
-            lib: '2 Contrôles à Valider',
+            font_color: '#FFFFFF',
+            lib: 'Chantiers rejetés',
           },
         },
         {
           cols: {
-            header_visible: false,
+            header_visible: true,
             values: [
               {
-                border_right: false,
-                header: 'Contrôle',
+                border_right: true,
+                label: 'Chantier',
+                dataKey: 'Chantier',
+                width: 200,
               },
               {
                 border_right: true,
-                header: 'Liste',
+                label: 'Création',
+                dataKey: 'Création',
+                width: 200,
+              },
+              {
+                border_right: true,
+                label: 'U.O. Rattachement',
+                dataKey: 'U.O. Rattachement',
+                width: 200,
               },
               {
                 border_right: false,
-                header: 'Fini',
+                label: 'Nb Doc Manquant',
+                dataKey: 'Nb Doc Manquant',
+                width: 200,
               },
             ],
           },
           lines: {
-            border_bottom: false,
+            border_bottom: true,
             values: [
               {
-                id: 30,
+                id: 'c8530868-8b50-4ea2-a3f0-1a7b1d11d513',
                 item: [
                   {
-                    action: null,
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: 'c8530868-8b50-4ea2-a3f0-1a7b1d11d513',
+                      },
+                    },
                     content:
-                      'Contrôler la conformité statutaire - <p style="color:red; font-weight:bold;">Site Rej1 - M4</p>',
+                      '<p style="color:#5a4749; font-weight:bold;">Toulouse</p><p>Villa Dumond</p>',
+                    hint: 'Toulouse',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: '21/03/22',
+                    hint: 'Déclaration chantier le 21/03/22 par Chantal CARNEL',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Kaufman & Broad',
                     hint: null,
                     icon: null,
                   },
                   {
-                    action: {
-                      endpoint:
-                        '/control/validate_control?control_id=30&period_id=M4',
-                      method: 'POST',
-                    },
-                    content: null,
-                    hint: 'Affiche la liste des dossiers avec Contrôles Rejetés',
-                    icon: {
-                      color: '#bfa06d',
-                      ref: 'ListAlt',
-                      size: 12,
-                    },
+                    action: null,
+                    content: '8',
+                    hint: null,
+                    icon: null,
                   },
+                ],
+              },
+              {
+                id: '9d485eaf-4d25-4c86-ad5c-fd6ea54ddb49',
+                item: [
                   {
                     action: {
-                      endpoint:
-                        '/control/end_period_control?control_id=30&period_id=M4',
-                      method: 'POST',
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '9d485eaf-4d25-4c86-ad5c-fd6ea54ddb49',
+                      },
                     },
-                    content: null,
-                    hint: 'Clôturer la période de déclaration de ce contrôle',
-                    icon: {
-                      color: '#f5c0b5',
-                      ref: 'HighlightOff',
-                      size: 12,
+                    content:
+                      '<p style="color:#5a4749; font-weight:bold;">test</p><p></p>',
+                    hint: 'test',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: '01/04/22',
+                    hint: 'Déclaration chantier le 01/04/22 par Nicolas Teysseyre',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Centre Est - DPO',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: '5',
+                    hint: null,
+                    icon: null,
+                  },
+                ],
+              },
+              {
+                id: 'f31c6165-518c-4fbf-92ce-5f9fbba79f9c',
+                item: [
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: 'f31c6165-518c-4fbf-92ce-5f9fbba79f9c',
+                      },
                     },
+                    content:
+                      '<p style="color:#5a4749; font-weight:bold;">Hotel ABC</p><p>ABD</p>',
+                    hint: 'Hotel ABC',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: '30/03/22',
+                    hint: 'Déclaration chantier le 30/03/22 par Chantal CARNEL',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Client Chantier ABC',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: '9',
+                    hint: null,
+                    icon: null,
                   },
                 ],
               },
             ],
           },
           title: {
-            bg_color: '#FF0000',
-            font_color: '#FFFFFFF',
-            lib: '1 Contrôle Rejetés',
-          },
-        },
-        {
-          cols: {
-            header_visible: false,
-            values: [
-              {
-                border_right: false,
-                header: 'Contrôle',
-              },
-              {
-                border_right: true,
-                header: 'Liste',
-              },
-              {
-                border_right: false,
-                header: 'Fini',
-              },
-            ],
-          },
-          lines: {
-            border_bottom: false,
-            values: [
-              {
-                id: 20,
-                item: [
-                  {
-                    action: null,
-                    content:
-                      'Contrôler la conformité statutaire - <p style="color:red; font-weight:bold;">Site V1 - M6</p>',
-                    hint: null,
-                    icon: null,
-                  },
-                  {
-                    action: {
-                      endpoint:
-                        '/control/validate_control?control_id=20&period_id=M6',
-                      method: 'POST',
-                    },
-                    content: null,
-                    hint: 'Affiche la liste des dossiers avec Contrôles à Valider',
-                    icon: {
-                      color: '#94c26e',
-                      ref: 'PlaylistAddCheck',
-                      size: 12,
-                    },
-                  },
-                  {
-                    action: {
-                      endpoint:
-                        '/control/end_period_control?control_id=20&period_id=M6',
-                      method: 'POST',
-                    },
-                    content: null,
-                    hint: 'Clôturer la période de déclaration de ce contrôle',
-                    icon: {
-                      color: '#f5c0b5',
-                      ref: 'HighlightOff',
-                      size: 12,
-                    },
-                  },
-                ],
-              },
-              {
-                id: 21,
-                item: [
-                  {
-                    action: null,
-                    content:
-                      'Contrôler la conformité statutaire - <p style="color:red; font-weight:bold;">Site V2 - M12</p>',
-                    hint: null,
-                    icon: null,
-                  },
-                  {
-                    action: {
-                      endpoint:
-                        '/control/validate_control?control_id=21&period_id=M12',
-                      method: 'POST',
-                    },
-                    content: null,
-                    hint: 'Affiche la liste des dossiers avec Contrôles à Valider',
-                    icon: {
-                      color: '#94c26e',
-                      ref: 'PlaylistAddCheck',
-                      size: 12,
-                    },
-                  },
-                  {
-                    action: {
-                      endpoint:
-                        '/control/end_period_control?control_id=21&period_id=M12',
-                      method: 'POST',
-                    },
-                    content: null,
-                    hint: 'Clôturer la période de déclaration de ce contrôle',
-                    icon: {
-                      color: '#f5c0b5',
-                      ref: 'HighlightOff',
-                      size: 12,
-                    },
-                  },
-                ],
-              },
-            ],
-          },
-          title: {
-            bg_color: '#FF0000',
-            font_color: '#FFFFFFF',
-            lib: '2 Contrôles à Valider',
+            bg_color: '#B12B67',
+            font_color: '#FFFFFF',
+            lib: 'Chantiers avec documents manquants',
           },
         },
       ],
       visible: true,
     },
     metrics: {
-      indicator: [
-        {
-          bg_color: '#F1CBF7',
-          color: '#5B0E69',
-          hint: 'Taux de Complétude : 65 dossiers contrôlés / 89 prévus = 73%',
-          info: 'Le taux de complétude est calculé selon les élément bla bla bla...',
-          lib: 'Taux de Complétude',
-          style: 'linear',
-          value: 73,
-        },
-        {
-          bg_color: null,
-          color: '#5B0E69',
-          hint: 'Taux de Conformité : 65 dossiers conformes / 125 contrôles = 52%',
-          info: 'Le taux de conformité est calculé selon les élément bla bla bla...',
-          lib: 'Taux de Conformité',
-          style: 'linear',
-          value: 52,
-        },
-        {
-          bg_color: '#F1CBF7',
-          color: '#5B0E69',
-          hint: 'Taux de Correction : 10 dossiers corrigés / 85 non-conformes = 12%',
-          info: 'Le taux de correction est calculé selon les élément bla bla bla...',
-          lib: 'Taux de Correction',
-          style: 'linear',
-          value: 12,
-        },
-      ],
-      visible: true,
+      indicator: [],
+      visible: false,
     },
     search_bar: {
-      btn_lib: 'Lancer la recherche',
+      btn_lib: 'Rechercher',
       options: [
         {
-          lib: 'Rechercher un Dossier Klesia',
-          placeholder: 'Numéro de Dossier / Avenant - Klesia',
-          regex: '[0-9A-Za-z]\\/[0-9A-Za-z]',
-          regex_msg:
-            'La recherche doit respecter le format : N° de Dossier / Avenant',
           action: {
-            endpoint: '/contr_perm/get_search_test?value=',
+            endpoint: '/worksite/search_worksite?value=',
             method: 'GET',
             params: null,
           },
-        },
-        {
-          lib: 'Rechercher un Utilisateur Klesia',
-          placeholder: "Nom de l'utilisateur - Klesia",
+          lib: 'Rechercher un chantier',
+          placeholder: 'Référence ou Nom du chantier',
           regex: null,
           regex_msg: null,
-          action: {
-            endpoint: '/contr_perm/get_search_test?value=',
-            method: 'GET',
-            params: null,
-          },
         },
       ],
       search_bar: true,
     },
     subtitle: {
-      font_color: '#ED9532',
-      font_size: '24px',
-      lib: "Assureur d'Intérêt Général",
-      visible: true,
+      'font-color': null,
+      'font-size': null,
+      lib: null,
+      visible: false,
     },
     title: {
-      font_color: '#4E3F43',
-      font_size: '48px',
-      lib: 'Klesia',
-      visible: true,
+      'font-color': null,
+      'font-size': null,
+      lib: null,
+      visible: false,
     },
   },
 };
