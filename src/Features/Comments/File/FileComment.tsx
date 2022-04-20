@@ -48,7 +48,6 @@ export const FileComment: React.FC = (): React.ReactElement => {
           }
           onClick={(e) => {
             setAnchorEl(anchorEl ? null : e.currentTarget);
-            router.setQueries({});
           }}
         />
       </BPIBadge>
