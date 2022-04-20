@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef } from 'react';
 import { Card } from '@material-ui/core';
 import { BPIBadge, Popper } from 'Shared/components';
 import { AuditIcon } from 'Styles';
-import { router, useApi } from 'Services';
+import { useApi } from 'Services';
 import { EditValidationContext } from 'Features/Edit';
 import { IFileAudit } from '../types';
 import { FileAuditBody } from './Body/FileAuditBody';
@@ -35,7 +35,6 @@ export const FileAudit: React.FC = (): React.ReactElement => {
           onClick={(e) => {
             iconRef.current = null;
             setAnchorEl(anchorEl ? null : e.currentTarget);
-            router.setQueries({});
           }}
         />
       </BPIBadge>
