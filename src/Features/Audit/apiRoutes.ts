@@ -12,7 +12,7 @@ interface IApiFileAudit {
 
 apiRouter.registerRoute({
   name: 'getFileAudit',
-  path: '/file/audit',
+  path: '/file/audit?target=screen',
   method: 'get',
   handler: (response): IFileAudit[] => {
     const data: IApiFileAudit[] = response.data.audit;
