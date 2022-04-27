@@ -17,6 +17,9 @@ export const CardStyled = styled.section<IProps>`
     position: relative;
     height: ${cardHeight}px;
   }
+  .ReactVirtualized__Table__headerRow {
+    height: auto !important;
+  }
 `;
 
 export const StyledTableCell = styled(TableCell)((cardColor) => ({

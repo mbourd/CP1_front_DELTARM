@@ -186,7 +186,7 @@ export const Card: React.FC<ICardC> = ({
               height={card.cols.header_visible ? height + 48 : height}
               width={width}
               rowHeight={getRowHeight}
-              headerHeight={card.cols.header_visible ? 48 : 0}
+              headerHeight={48}
               rowStyle={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -196,6 +196,7 @@ export const Card: React.FC<ICardC> = ({
               }}
               rowCount={rows.length}
               rowGetter={({ index }) => rows[index].item}
+              disableHeader={!card.cols.header_visible}
             >
               {card.cols.values.map(
                 ({ dataKey, width, border_right, ...other }, index) => {
