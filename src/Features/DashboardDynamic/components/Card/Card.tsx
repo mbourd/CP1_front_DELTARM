@@ -28,9 +28,7 @@ export const Card: React.FC<ICardC> = ({
   triggerAction,
 }): React.ReactElement => {
   const [rows] = useState<ICardRow[]>(card.lines.values);
-  const [heightTable, setHeightTable] = useState<number>(
-    card.cols.header_visible ? 252 : 300,
-  );
+  const [heightTable, setHeightTable] = useState<number>(300);
   const theme = useTheme();
   const indexCellColumnBorderRight: number[] = [];
   // stores the knowing of which cells should have a border right
@@ -185,7 +183,7 @@ export const Card: React.FC<ICardC> = ({
           {({ height, width }) => (
             <Table
               deferredMeasurementCache={cache}
-              height={card.cols.header_visible ? height + 48 : height}
+              height={height}
               width={width}
               rowHeight={getRowHeight}
               headerHeight={48}
