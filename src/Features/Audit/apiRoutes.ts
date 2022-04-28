@@ -27,17 +27,17 @@ apiRouter.registerRoute({
         event_id: audit.event_id,
         lib: audit.event_lib,
         date:
-          date.getDate() +
+          ('0' + date.getDate()).slice(-2) +
           '/' +
-          (date.getMonth() + 1) +
+          ('0' + (date.getMonth() + 1)).slice(-2) +
           '/' +
           date.getFullYear() +
           ' à ' +
-          date.getHours() +
+          ('0' + date.getHours()).slice(-2) +
           ':' +
-          date.getMinutes() +
+          ('0' + date.getMinutes()).slice(-2) +
           ':' +
-          date.getSeconds(),
+          ('0' + date.getSeconds()).slice(-2),
         params: audit.event_params,
       });
 
