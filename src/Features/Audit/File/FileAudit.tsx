@@ -10,7 +10,7 @@ import { BPIBadge, FormError, Popper } from 'Shared/components';
 import { AuditIcon } from 'Styles';
 import { IUser, security, useApi } from 'Services';
 import { EditValidationContext } from 'Features/Edit';
-import { IFileAudit } from '../types';
+import { IDataFileAudit } from '../types';
 import { FileAuditBody } from './Body/FileAuditBody';
 import { FileAuditStyled, FileAuditHeaderStyled } from './FileAudit.style';
 import { ExcelIcon } from '../../../Packages/Design/icons/ExcelIcon';
@@ -19,7 +19,7 @@ import { downloadAuditExcel } from './downloadAuditExcel';
 export const FileAudit: React.FC = (): React.ReactElement => {
   const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const { request, send, data } = useApi<IFileAudit[]>();
+  const { request, send, data } = useApi<IDataFileAudit>();
   const context = useContext(EditValidationContext);
   const { fileId } = context;
   const [user] = useState<IUser>(security.getUser());
@@ -45,19 +45,21 @@ export const FileAudit: React.FC = (): React.ReactElement => {
 
   return (
     <>
-      <BPIBadge content={data?.length}>
-        <AuditIcon
-          fontSize={'large'}
-          className={
-            'audit-icon open-audits-icon' +
-            (iconRef.current || anchorEl ? ' active' : '')
-          }
-          onClick={(e) => {
-            iconRef.current = null;
-            setAnchorEl(anchorEl ? null : e.currentTarget);
-          }}
-        />
-      </BPIBadge>
+      {data?.is_audit && (
+        <BPIBadge content={data?.audits.length}>
+          <AuditIcon
+            fontSize={'large'}
+            className={
+              'audit-icon open-audits-icon' +
+              (iconRef.current || anchorEl ? ' active' : '')
+            }
+            onClick={(e) => {
+              iconRef.current = null;
+              setAnchorEl(anchorEl ? null : e.currentTarget);
+            }}
+          />
+        </BPIBadge>
+      )}
       <Popper
         element={iconRef.current || anchorEl}
         placement={'bottom-start'}
@@ -70,13 +72,15 @@ export const FileAudit: React.FC = (): React.ReactElement => {
           <Card>
             <FileAuditHeaderStyled>
               Audit du dossier{' '}
-              <ExcelIcon
-                style={{ float: 'right' }}
-                fontSize={'medium'}
-                onClick={handleDownloadExcelAudit}
-              />
+              {data?.is_audit_xls && (
+                <ExcelIcon
+                  style={{ float: 'right' }}
+                  fontSize={'medium'}
+                  onClick={handleDownloadExcelAudit}
+                />
+              )}
             </FileAuditHeaderStyled>
-            {data ? <FileAuditBody audits={data} /> : null}
+            {data?.audits ? <FileAuditBody audits={data.audits} /> : null}
           </Card>
         </FileAuditStyled>
         {errorMessage ? (

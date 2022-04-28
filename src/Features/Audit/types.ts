@@ -7,3 +7,9 @@ export interface IFileAudit {
   };
   date: string;
 }
+
+export interface IDataFileAudit {
+  audits: IFileAudit[];
+  is_audit: boolean;
+  is_audit_xls: boolean;
+}

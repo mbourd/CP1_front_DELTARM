@@ -1,5 +1,5 @@
 import { apiRouter } from 'Services';
-import { IFileAudit } from './types';
+import { IDataFileAudit, IFileAudit } from './types';
 
 interface IApiFileAudit {
   event_id: number;
@@ -14,8 +14,10 @@ apiRouter.registerRoute({
   name: 'getFileAudit',
   path: '/file/audit?target=screen',
   method: 'get',
-  handler: (response): IFileAudit[] => {
+  handler: (response): IDataFileAudit => {
     const data: IApiFileAudit[] = response.data.audit;
+    const is_audit: boolean = response.data.is_audit;
+    const is_audit_xls: boolean = response.data.is_audit_xls;
     const audits: IFileAudit[] = [];
 
     data.map((audit, index) => {
@@ -42,6 +44,10 @@ apiRouter.registerRoute({
       return audit;
     });
 
-    return audits;
+    return {
+      is_audit,
+      is_audit_xls,
+      audits,
+    };
   },
 });
