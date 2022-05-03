@@ -49,8 +49,6 @@ export const DataGridText: React.FC<IProps> = ({
   return (
     <DataGridTextStyled>
       <InputBase
-        multiline={true}
-        multilineRows={3}
         placeholder={'Texte'}
         id={`input grid`}
         disabled={false}

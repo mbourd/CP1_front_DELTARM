@@ -27,14 +27,9 @@ import { DataGridFinancial } from './DataGridFields/DataGridFinancial/DataGridFi
 interface IProps {
   control: IApiControl;
   fileId: string;
-  context: 'edit' | 'validate';
 }
 
-export const DataGridControl: React.FC<IProps> = ({
-  control,
-  fileId,
-  context,
-}) => {
+export const DataGridControl: React.FC<IProps> = ({ control, fileId }) => {
   const [gridDetails, setGridDetails] = useState<
     DataGridDetail | undefined | null
   >(control.data_grid_detail);
@@ -209,13 +204,13 @@ export const DataGridControl: React.FC<IProps> = ({
   };
 
   return (
-    <Grid item xs={12}>
+    <Grid xs={11} style={{ maxWidth: '95%', margin: '0 auto' }}>
       <DataGridControlStyled>
         <ControlLabel control={control} />
         {gridDetails?.rows && gridDetails?.columns && (
           <DataGrid
             style={{ height: 'auto' }}
-            rowHeight={150}
+            rowHeight={100}
             headerRowHeight={50}
             columns={gridDetails.columns}
             className={'_DataGrid rdg-light'}

@@ -119,7 +119,7 @@ export const DataGridUpload: React.FC<IProps> = ({
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            height: '80px',
+            height: '30px',
           }}
           {...getRootProps({ onClick: (event) => event.stopPropagation() })}
         >
