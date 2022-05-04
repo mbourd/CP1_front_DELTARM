@@ -1,4 +1,10 @@
-import React, { useCallback, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { CardStyled, StyledTableCell } from './Card.style';
 import { ICard, IActionButton, ICardRow } from '../types';
 import { Paper, TableContainer } from '@mui/material';
@@ -28,16 +34,19 @@ export const Card: React.FC<ICardC> = ({
   triggerAction,
 }): React.ReactElement => {
   const [rows] = useState<ICardRow[]>(card.lines.values);
-  const [heightTable, setHeightTable] = useState<number>(300);
+  const [heightTable, setHeightTable] = useState<number>(0);
+  const tableRef = useRef<HTMLDivElement | null>(null);
   const theme = useTheme();
   const indexCellColumnBorderRight: number[] = [];
-  // stores the knowing of which cells should have a border right
+
+  // stores the knowing of which cells should have a border right or not.
   card.cols.values.forEach((column, index) => {
     if (column.border_right) {
       indexCellColumnBorderRight.push(index);
     }
   });
-  // generate on demand (by icon name) a material ui icon
+
+  // generate (by icon name) a material ui icon component.
   const generateMaterialIcon = useCallback(
     (
       iconName: SvgIconComponent,
@@ -69,14 +78,16 @@ export const Card: React.FC<ICardC> = ({
     [triggerAction],
   );
 
-  // help us to identify the current height of a cell
-  const cache = new CellMeasurerCache({
-    defaultHeight: 50,
-    minHeight: 50,
-    fixedWidth: true,
-  });
+  // Helps us to identify the current height of a cell.
+  const cache = useMemo(
+    () =>
+      new CellMeasurerCache({
+        fixedWidth: true,
+      }),
+    [],
+  );
 
-  // return a cell with its given data
+  // Returns a cell with its given data.
   const cellRenderer: TableCellRenderer = ({
     rowData,
     columnIndex,
@@ -94,21 +105,36 @@ export const Card: React.FC<ICardC> = ({
         parent={parent}
         rowIndex={rowIndex}
       >
-        <StyledTableCell
-          scope="row"
-          component={'div'}
-          style={{
-            width: '100%',
-            fontFamily: `${theme.font.text.main}`,
-            textAlign: 'center',
-            borderBottom: 'none',
-            display: 'block',
-            padding: '2px',
-          }}
-        >
-          {rowData[columnIndex].content ? (
-            rowData[columnIndex].hint ? (
-              <BPITooltip title={rowData[columnIndex].hint}>
+        {({ measure }) => (
+          <StyledTableCell
+            onLoad={measure}
+            scope="row"
+            component={'div'}
+            style={{
+              width: '100%',
+              fontFamily: `${theme.font.text.main}`,
+              textAlign: 'center',
+              borderBottom: 'none',
+              display: 'block',
+              padding: '2px',
+            }}
+          >
+            {rowData[columnIndex].content ? (
+              rowData[columnIndex].hint ? (
+                <BPITooltip title={rowData[columnIndex].hint}>
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: DOMPurify.sanitize(rowData[columnIndex].content),
+                    }}
+                    style={{
+                      cursor: rowData[columnIndex].action
+                        ? 'pointer'
+                        : 'initial',
+                    }}
+                    onClick={() => triggerAction(rowData[columnIndex].action)}
+                  />
+                </BPITooltip>
+              ) : (
                 <p
                   dangerouslySetInnerHTML={{
                     __html: DOMPurify.sanitize(rowData[columnIndex].content),
@@ -118,29 +144,19 @@ export const Card: React.FC<ICardC> = ({
                   }}
                   onClick={() => triggerAction(rowData[columnIndex].action)}
                 />
-              </BPITooltip>
-            ) : (
-              <p
-                dangerouslySetInnerHTML={{
-                  __html: DOMPurify.sanitize(rowData[columnIndex].content),
-                }}
-                style={{
-                  cursor: rowData[columnIndex].action ? 'pointer' : 'initial',
-                }}
-                onClick={() => triggerAction(rowData[columnIndex].action)}
-              />
-            )
-          ) : null}
-          {rowData[columnIndex].icon
-            ? generateMaterialIcon(
-                rowData[columnIndex].icon.ref,
-                rowData[columnIndex].icon.color,
-                rowData[columnIndex].icon.size,
-                rowData[columnIndex].action,
-                rowData[columnIndex].hint,
               )
-            : null}
-        </StyledTableCell>
+            ) : null}
+            {rowData[columnIndex].icon
+              ? generateMaterialIcon(
+                  rowData[columnIndex].icon.ref,
+                  rowData[columnIndex].icon.color,
+                  rowData[columnIndex].icon.size,
+                  rowData[columnIndex].action,
+                  rowData[columnIndex].hint,
+                )
+              : null}
+          </StyledTableCell>
+        )}
       </CellMeasurer>
     );
   };
@@ -160,7 +176,7 @@ export const Card: React.FC<ICardC> = ({
     </StyledTableCell>
   );
 
-  // returns the maximum height cell value for a given row
+  // Returns the maximum height cell value for a given row. We do that cause the lib needs static height.
   const getRowHeight = ({ index }: any) => {
     let maxValue = 0;
     rows[index].item.forEach((row, colIndex) => {
@@ -172,18 +188,31 @@ export const Card: React.FC<ICardC> = ({
     return maxValue;
   };
 
+  useEffect(() => {
+    let totalHeight = 0;
+    rows.forEach((row, index) => {
+      totalHeight += cache.rowHeight({ index: index });
+    });
+    setHeightTable(totalHeight);
+  }, [rows, cache]);
+
   return (
     <CardStyled cardColor={card.title.bg_color}>
       <Header color={card.title.bg_color}>{card.title.lib}</Header>
       <TableContainer
         component={Paper}
-        style={{ height: heightTable, overflowX: 'unset' }}
+        style={{
+          height: heightTable < 300 ? heightTable : 300,
+          overflowX: 'unset',
+        }}
+        ref={tableRef}
       >
         <AutoSizer>
-          {({ height, width }) => (
+          {({ width }) => (
             <Table
+              id={'Table_Virtualized' + card.title.lib}
               deferredMeasurementCache={cache}
-              height={height}
+              height={300}
               width={width}
               rowHeight={getRowHeight}
               headerHeight={48}
@@ -197,6 +226,7 @@ export const Card: React.FC<ICardC> = ({
               rowCount={rows.length}
               rowGetter={({ index }) => rows[index].item}
               disableHeader={!card.cols.header_visible}
+              style={{ maxHeight: '300px' }}
             >
               {card.cols.values.map(
                 ({ dataKey, width, border_right, ...other }, index) => {
