@@ -204,7 +204,7 @@ export const DataGridControl: React.FC<IProps> = ({ control, fileId }) => {
   };
 
   return (
-    <Grid xs={11} style={{ maxWidth: '95%', margin: '0 auto' }}>
+    <Grid item xs={11} style={{ maxWidth: '95%', margin: '0 auto' }}>
       <DataGridControlStyled>
         <ControlLabel control={control} />
         {gridDetails?.rows && gridDetails?.columns && (

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { DataGridBooleanStyled } from './DataGridBoolean.style';
 import { FormError } from 'Shared/components';
 import { Checkbox } from '@mui/material';
@@ -22,17 +22,15 @@ export const DataGridBoolean: React.FC<IProps> = ({
   rowNum,
 }): React.ReactElement => {
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const [currentValue, setCurrentValue] = useState(value);
+  const [currentValue, setCurrentValue] = useState<boolean>(
+    stringToBoolean(value),
+  );
   const { user } = useSecurity();
   const jwt = user.getJwt();
 
-  useEffect(() => {
-    if (value) {
-      setCurrentValue(value.toString());
-    }
-  }, [value]);
-
   const toggleAndSaveValue = useCallback(() => {
+    const toggledValue = !currentValue;
+    setCurrentValue(toggledValue);
     saveValueDataGrid(
       fileId,
       controlId,
@@ -41,11 +39,9 @@ export const DataGridBoolean: React.FC<IProps> = ({
       jwt,
       setCurrentValue,
       setErrorMessage,
-      currentValue,
+      toggledValue?.toString(),
     );
   }, [controlId, jwt, fileId, currentValue, columnId, rowNum]);
-
-  const booleanValue = stringToBoolean(currentValue);
 
   return (
     <DataGridBooleanStyled>
@@ -55,7 +51,7 @@ export const DataGridBoolean: React.FC<IProps> = ({
         style={{ paddingLeft: '0', display: 'block', textAlign: 'center' }}
         disableRipple
         disabled={false}
-        checked={booleanValue ? booleanValue : false}
+        checked={currentValue ? currentValue : false}
         onClick={() => toggleAndSaveValue()}
       />
       {errorMessage ? (
