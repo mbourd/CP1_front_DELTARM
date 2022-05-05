@@ -118,7 +118,13 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
             <Grid container>
               {response?.data.cards.visible &&
                 response?.data.cards.card.map((card, index) => (
-                  <Grid item xs={12} md={6} key={index}>
+                  <Grid
+                    item
+                    xs={12}
+                    md={6}
+                    key={index}
+                    style={{ height: '400px' }}
+                  >
                     <Card
                       card={card}
                       key={index}
