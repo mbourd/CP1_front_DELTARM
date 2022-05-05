@@ -3839,3 +3839,1010 @@ export const DASHBOARD_CHANTIER_ABC = {
     },
   },
 };
+export const DASHBOARD_CNIM = {
+  data: {
+    btns: [],
+    cards: {
+      card: [
+        {
+          cols: {
+            header_visible: true,
+            values: [
+              {
+                border_right: true,
+                dataKey: 'Contract',
+                label: 'Contract',
+                width: 500,
+              },
+              {
+                border_right: true,
+                dataKey: 'Last edit',
+                label: 'Last edit',
+                width: 100,
+              },
+              {
+                border_right: true,
+                dataKey: 'Status',
+                label: 'Status',
+                width: 100,
+              },
+              {
+                border_right: true,
+                dataKey: '% Progress',
+                label: '% Progress',
+                width: 100,
+              },
+              {
+                border_right: false,
+                dataKey: 'Scenario',
+                label: 'Scenario',
+                width: 100,
+              },
+            ],
+          },
+          lines: {
+            border_bottom: true,
+            values: [
+              {
+                id: 'b49448c9-c543-4740-807b-1f32e708e2d6',
+                item: [
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: 'b49448c9-c543-4740-807b-1f32e708e2d6',
+                      },
+                    },
+                    content:
+                      '<p style="color:#5a4749; font-weight:bold;">Créteil (CNIM - France)</p>',
+                    hint: 'reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: '16/02/22',
+                    hint: 'Last edit on 16/02/22 by Boris Horowitz',
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: 'b49448c9-c543-4740-807b-1f32e708e2d6',
+                      },
+                    },
+                    content: null,
+                    hint: 'To be improved (40%)',
+                    icon: {
+                      color: '#F1AA00',
+                      ref: 'SentimentDissatisfied',
+                      size: 12,
+                    },
+                  },
+                  {
+                    action: null,
+                    content: '81%',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/cnim/list_scenario',
+                      method: 'GET',
+                      params: {
+                        contract: 'Créteil',
+                        value: 'b49448c9-c543-4740-807b-1f32e708e2d6',
+                      },
+                    },
+                    content: null,
+                    hint: 'Scenario List',
+                    icon: {
+                      color: '#012557',
+                      ref: 'FormatListBulleted',
+                      size: 12,
+                    },
+                  },
+                ],
+              },
+              {
+                id: '1612895f-8cac-4812-8a3d-6b1e77b34f41',
+                item: [
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '1612895f-8cac-4812-8a3d-6b1e77b34f41',
+                      },
+                    },
+                    content:
+                      '<p style="color:#5a4749; font-weight:bold;">Lodz (CNIM - Poland)</p>',
+                    hint: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: '16/02/22',
+                    hint: 'Last edit on 16/02/22 by Boris Horowitz',
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '1612895f-8cac-4812-8a3d-6b1e77b34f41',
+                      },
+                    },
+                    content: null,
+                    hint: 'Unsatisfactory (20%)',
+                    icon: {
+                      color: '#FF0000',
+                      ref: 'MoodBad',
+                      size: 12,
+                    },
+                  },
+                  {
+                    action: null,
+                    content: '47%',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/cnim/list_scenario',
+                      method: 'GET',
+                      params: {
+                        contract: 'Lodz',
+                        value: '1612895f-8cac-4812-8a3d-6b1e77b34f41',
+                      },
+                    },
+                    content: null,
+                    hint: 'Scenario List',
+                    icon: {
+                      color: '#012557',
+                      ref: 'FormatListBulleted',
+                      size: 12,
+                    },
+                  },
+                ],
+              },
+              {
+                id: '06165068-dde0-4979-91da-307196c6fce5',
+                item: [
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '06165068-dde0-4979-91da-307196c6fce5',
+                      },
+                    },
+                    content:
+                      '<p style="color:#5a4749; font-weight:bold;">Northbeck (UK) (CNIM - England)</p>',
+                    hint: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: '16/02/22',
+                    hint: 'Last edit on 16/02/22 by Boris Horowitz',
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '06165068-dde0-4979-91da-307196c6fce5',
+                      },
+                    },
+                    content: null,
+                    hint: 'To be improved (50%)',
+                    icon: {
+                      color: '#F1AA00',
+                      ref: 'SentimentDissatisfied',
+                      size: 12,
+                    },
+                  },
+                  {
+                    action: null,
+                    content: '17%',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/cnim/list_scenario',
+                      method: 'GET',
+                      params: {
+                        contract: 'Northbeck (UK)',
+                        value: '06165068-dde0-4979-91da-307196c6fce5',
+                      },
+                    },
+                    content: null,
+                    hint: 'Scenario List',
+                    icon: {
+                      color: '#012557',
+                      ref: 'FormatListBulleted',
+                      size: 12,
+                    },
+                  },
+                ],
+              },
+              {
+                id: '126166fa-8ee9-41f0-8d10-c877f0efe9b2',
+                item: [
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '126166fa-8ee9-41f0-8d10-c877f0efe9b2',
+                      },
+                    },
+                    content:
+                      '<p style="color:#5a4749; font-weight:bold;">Tees Valley (CNIM - England)</p>',
+                    hint: 'ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in ',
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: '16/02/22',
+                    hint: 'Last edit on 16/02/22 by Boris Horowitz',
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '126166fa-8ee9-41f0-8d10-c877f0efe9b2',
+                      },
+                    },
+                    content: null,
+                    hint: 'Good (90%)',
+                    icon: {
+                      color: '#00B456',
+                      ref: 'SentimentVerySatisfied',
+                      size: 12,
+                    },
+                  },
+                  {
+                    action: null,
+                    content: '42%',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/cnim/list_scenario',
+                      method: 'GET',
+                      params: {
+                        contract: 'Tees Valley',
+                        value: '126166fa-8ee9-41f0-8d10-c877f0efe9b2',
+                      },
+                    },
+                    content: null,
+                    hint: 'Scenario List',
+                    icon: {
+                      color: '#012557',
+                      ref: 'FormatListBulleted',
+                      size: 12,
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+          title: {
+            bg_color: '#2ECC71',
+            font_color: '#FFFFFF',
+            lib: 'Contracts in progress',
+          },
+        },
+        {
+          cols: {
+            header_visible: true,
+            values: [
+              {
+                border_right: true,
+                dataKey: 'Contract',
+                label: 'Contract',
+                width: 180,
+              },
+              {
+                border_right: true,
+                dataKey: 'Risk',
+                label: 'Risk',
+                width: 180,
+              },
+              {
+                border_right: true,
+                dataKey: 'Status',
+                label: 'Status',
+                width: 90,
+              },
+              {
+                border_right: true,
+                dataKey: '% Progress',
+                label: '% Progress',
+                width: 90,
+              },
+              {
+                border_right: true,
+                dataKey: 'Validator',
+                label: 'Validator',
+                width: 180,
+              },
+              {
+                border_right: false,
+                dataKey: 'Edit',
+                label: 'Edit',
+                width: 80,
+              },
+            ],
+          },
+          lines: {
+            border_bottom: true,
+            values: [
+              {
+                id: '126166fa-8ee9-41f0-8d10-c877f0efe9b2',
+                item: [
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '126166fa-8ee9-41f0-8d10-c877f0efe9b2',
+                      },
+                    },
+                    content:
+                      '<p style="color:#5a4749; font-weight:bold;">Tees Valley (CNIM - England)',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Contract Management',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '126166fa-8ee9-41f0-8d10-c877f0efe9b2',
+                      },
+                    },
+                    content: null,
+                    hint: 'To be improved (60%)',
+                    icon: {
+                      color: '#F1AA00',
+                      ref: 'SentimentDissatisfied',
+                      size: 12,
+                    },
+                  },
+                  {
+                    action: null,
+                    content: '42%',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Jean-Louis Leclair',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '126166fa-8ee9-41f0-8d10-c877f0efe9b2',
+                      },
+                    },
+                    content: null,
+                    hint: 'View contract',
+                    icon: {
+                      color: '#012557',
+                      ref: 'Pageview',
+                      size: 12,
+                    },
+                  },
+                ],
+              },
+              {
+                id: '126166fa-8ee9-41f0-8d10-c877f0efe9b2',
+                item: [
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '126166fa-8ee9-41f0-8d10-c877f0efe9b2',
+                      },
+                    },
+                    content:
+                      '<p style="color:#5a4749; font-weight:bold;">Tees Valley (CNIM - England)',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Civil Work',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '126166fa-8ee9-41f0-8d10-c877f0efe9b2',
+                      },
+                    },
+                    content: null,
+                    hint: 'To be improved (60%)',
+                    icon: {
+                      color: '#F1AA00',
+                      ref: 'SentimentDissatisfied',
+                      size: 12,
+                    },
+                  },
+                  {
+                    action: null,
+                    content: '42%',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Alexis Boss',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '126166fa-8ee9-41f0-8d10-c877f0efe9b2',
+                      },
+                    },
+                    content: null,
+                    hint: 'View contract',
+                    icon: {
+                      color: '#012557',
+                      ref: 'Pageview',
+                      size: 12,
+                    },
+                  },
+                ],
+              },
+              {
+                id: 'b49448c9-c543-4740-807b-1f32e708e2d6',
+                item: [
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: 'b49448c9-c543-4740-807b-1f32e708e2d6',
+                      },
+                    },
+                    content:
+                      '<p style="color:#5a4749; font-weight:bold;">Créteil - (CNIM - France)',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Sourcing',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: 'b49448c9-c543-4740-807b-1f32e708e2d6',
+                      },
+                    },
+                    content: null,
+                    hint: 'Unsatisfactory (20%)',
+                    icon: {
+                      color: '#FF0000',
+                      ref: 'MoodBad',
+                      size: 12,
+                    },
+                  },
+                  {
+                    action: null,
+                    content: '81%',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Jean-Louis Leclair',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: 'b49448c9-c543-4740-807b-1f32e708e2d6',
+                      },
+                    },
+                    content: null,
+                    hint: 'View contract',
+                    icon: {
+                      color: '#012557',
+                      ref: 'Pageview',
+                      size: 12,
+                    },
+                  },
+                ],
+              },
+              {
+                id: '06165068-dde0-4979-91da-307196c6fce5',
+                item: [
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '06165068-dde0-4979-91da-307196c6fce5',
+                      },
+                    },
+                    content:
+                      '<p style="color:#5a4749; font-weight:bold;">Northbeck (UK) (CNIM - England)',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Legal',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '06165068-dde0-4979-91da-307196c6fce5',
+                      },
+                    },
+                    content: null,
+                    hint: 'Unsatisfactory (30%)',
+                    icon: {
+                      color: '#FF0000',
+                      ref: 'MoodBad',
+                      size: 12,
+                    },
+                  },
+                  {
+                    action: null,
+                    content: '17%',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Emmanuel Collombier',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '06165068-dde0-4979-91da-307196c6fce5',
+                      },
+                    },
+                    content: null,
+                    hint: 'View contract',
+                    icon: {
+                      color: '#012557',
+                      ref: 'Pageview',
+                      size: 12,
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+          title: {
+            bg_color: '#3498DB',
+            font_color: '#FFFFFF',
+            lib: 'Contracts to be validated',
+          },
+        },
+        {
+          cols: {
+            header_visible: true,
+            values: [
+              {
+                border_right: true,
+                dataKey: 'Contract',
+                label: 'Contract',
+                width: 180,
+              },
+              {
+                border_right: true,
+                dataKey: 'Risk',
+                label: 'Risk',
+                width: 180,
+              },
+              {
+                border_right: true,
+                dataKey: 'Status',
+                label: 'Status',
+                width: 90,
+              },
+              {
+                border_right: true,
+                dataKey: '% Progress',
+                label: '% Progress',
+                width: 90,
+              },
+              {
+                border_right: true,
+                dataKey: 'Rejected by',
+                label: 'Rejected by',
+                width: 180,
+              },
+              {
+                border_right: false,
+                dataKey: 'Edit',
+                label: 'Edit',
+                width: 80,
+              },
+            ],
+          },
+          lines: {
+            border_bottom: true,
+            values: [
+              {
+                id: '126166fa-8ee9-41f0-8d10-c877f0efe9b2',
+                item: [
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '126166fa-8ee9-41f0-8d10-c877f0efe9b2',
+                      },
+                    },
+                    content:
+                      '<p style="color:#5a4749; font-weight:bold;">Tees Valley (CNIM - England)',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Contract Management',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '126166fa-8ee9-41f0-8d10-c877f0efe9b2',
+                      },
+                    },
+                    content: null,
+                    hint: 'To be improved (60%)',
+                    icon: {
+                      color: '#F1AA00',
+                      ref: 'SentimentDissatisfied',
+                      size: 12,
+                    },
+                  },
+                  {
+                    action: null,
+                    content: '42%',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Jean-Louis Leclair',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '126166fa-8ee9-41f0-8d10-c877f0efe9b2',
+                      },
+                    },
+                    content: null,
+                    hint: 'View contract',
+                    icon: {
+                      color: '#012557',
+                      ref: 'Pageview',
+                      size: 12,
+                    },
+                  },
+                ],
+              },
+              {
+                id: '126166fa-8ee9-41f0-8d10-c877f0efe9b2',
+                item: [
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '126166fa-8ee9-41f0-8d10-c877f0efe9b2',
+                      },
+                    },
+                    content:
+                      '<p style="color:#5a4749; font-weight:bold;">Tees Valley (CNIM - England)',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Civil Work',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '126166fa-8ee9-41f0-8d10-c877f0efe9b2',
+                      },
+                    },
+                    content: null,
+                    hint: 'To be improved (60%)',
+                    icon: {
+                      color: '#F1AA00',
+                      ref: 'SentimentDissatisfied',
+                      size: 12,
+                    },
+                  },
+                  {
+                    action: null,
+                    content: '42%',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Alexis Boss',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '126166fa-8ee9-41f0-8d10-c877f0efe9b2',
+                      },
+                    },
+                    content: null,
+                    hint: 'View contract',
+                    icon: {
+                      color: '#012557',
+                      ref: 'Pageview',
+                      size: 12,
+                    },
+                  },
+                ],
+              },
+              {
+                id: 'b49448c9-c543-4740-807b-1f32e708e2d6',
+                item: [
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: 'b49448c9-c543-4740-807b-1f32e708e2d6',
+                      },
+                    },
+                    content:
+                      '<p style="color:#5a4749; font-weight:bold;">Créteil (CNIM - France)',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Sourcing',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: 'b49448c9-c543-4740-807b-1f32e708e2d6',
+                      },
+                    },
+                    content: null,
+                    hint: 'Unsatisfactory (20%)',
+                    icon: {
+                      color: '#FF0000',
+                      ref: 'MoodBad',
+                      size: 12,
+                    },
+                  },
+                  {
+                    action: null,
+                    content: '81%',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Jean-Louis Leclair',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: 'b49448c9-c543-4740-807b-1f32e708e2d6',
+                      },
+                    },
+                    content: null,
+                    hint: 'View contract',
+                    icon: {
+                      color: '#012557',
+                      ref: 'Pageview',
+                      size: 12,
+                    },
+                  },
+                ],
+              },
+              {
+                id: '06165068-dde0-4979-91da-307196c6fce5',
+                item: [
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '06165068-dde0-4979-91da-307196c6fce5',
+                      },
+                    },
+                    content:
+                      '<p style="color:#5a4749; font-weight:bold;">Northbeck (UK) (CNIM - England)',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Legal',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '06165068-dde0-4979-91da-307196c6fce5',
+                      },
+                    },
+                    content: null,
+                    hint: 'Unsatisfactory (30%)',
+                    icon: {
+                      color: '#FF0000',
+                      ref: 'MoodBad',
+                      size: 12,
+                    },
+                  },
+                  {
+                    action: null,
+                    content: '17%',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: null,
+                    content: 'Emmanuel Collombier',
+                    hint: null,
+                    icon: null,
+                  },
+                  {
+                    action: {
+                      endpoint: '/edit',
+                      method: 'GET',
+                      params: {
+                        file_id: '06165068-dde0-4979-91da-307196c6fce5',
+                      },
+                    },
+                    content: null,
+                    hint: 'View contract',
+                    icon: {
+                      color: '#012557',
+                      ref: 'Pageview',
+                      size: 12,
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+          title: {
+            bg_color: '#EB4D0D',
+            font_color: '#FFFFFF',
+            lib: 'Contracts rejected',
+          },
+        },
+      ],
+      visible: true,
+    },
+    metrics: {
+      indicator: [
+        {
+          bg_color: '#DFE7E8',
+          color: '#05f0ad',
+          hint: 'Taux de Couverture : 0 cas réalisés / 0 cas prévus au plan = 0%',
+          info: "Le taux de couverture du plan : indicateur de suivi de l'avancement de la réalisation des volumes prévisionnels de contrôle. Il permet d'apprécier le respect du plan annuel. Le taux de couverture doit être maintenu à 100%.",
+          lib: 'Progress Rate',
+          style: 'linear',
+          value: 87,
+        },
+        {
+          bg_color: '#DFE7E8',
+          color: '#f0a905',
+          hint: 'Taux de Qualité : 0 cas conformes / 0 cas réalisés = 0%',
+          info: "Le taux de qualité des contrôles réalisés : indicateur du suivi de la qualité. Il permet d'apprécier le niveau de qualité des activités. Le taux de qualité à atteindre est défini chaque année par la Direction Générale.",
+          lib: 'Quality Rate',
+          style: 'linear',
+          value: 42,
+        },
+      ],
+      visible: true,
+    },
+    search_bar: {
+      btn_lib: 'Search',
+      options: [
+        {
+          action: null,
+          lib: 'Search in contract',
+          placeholder: 'Contract',
+          regex: null,
+          regex_msg: null,
+        },
+      ],
+      search_bar: true,
+    },
+    subtitle: {
+      'font-color': null,
+      'font-size': null,
+      lib: null,
+      visible: false,
+    },
+    title: {
+      'font-color': null,
+      'font-size': null,
+      lib: null,
+      visible: false,
+    },
+  },
+};

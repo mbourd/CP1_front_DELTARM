@@ -2,17 +2,17 @@ import React from 'react';
 import * as stories from './DashboardDynamic.stories';
 import { composeStories } from '@storybook/testing-react';
 import { render, screen, fireEvent, waitFor } from 'setupTests';
-const { Dashboard } = composeStories(stories);
-import DASHBOARD from '../../../mocks/fixtures/dashboard/dashboard';
+const { DashboardBPI } = composeStories(stories);
+import { DASHBOARD_BPI } from '../../../mocks/fixtures/dashboard/dashboard';
 import { rest } from 'msw';
 
 describe('DashboardDynamic', () => {
   describe('DashboardDynamic', () => {
     test('Should render the Dashboard', async () => {
-      render(<Dashboard />);
+      render(<DashboardBPI />);
     });
     test('Should call the msw api to get dashboard data', async () => {
-      const { queryByText } = render(<Dashboard />);
+      const { queryByText } = render(<DashboardBPI />);
       // expect(screen.getByText('Aucun contrôle disponible')).toBeInTheDocument();
       // await waitFor(() => {
       //   expect(
