@@ -83,6 +83,7 @@ export const Card: React.FC<ICardC> = ({
     () =>
       new CellMeasurerCache({
         fixedWidth: true,
+        minHeight: 50,
       }),
     [],
   );

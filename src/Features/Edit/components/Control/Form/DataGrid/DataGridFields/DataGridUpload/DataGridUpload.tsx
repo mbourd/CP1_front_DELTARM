@@ -47,6 +47,7 @@ export const DataGridUpload: React.FC<IProps> = ({
       setNewUploadFile(file);
     });
   }, []);
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   const handleUploadFile = useCallback(() => {
@@ -70,13 +71,15 @@ export const DataGridUpload: React.FC<IProps> = ({
       deleteFile(
         fileId,
         controlId,
+        rowNum,
+        columnId,
         name,
         jwt,
         setErrorMessage,
         setCurrentUploadFile,
       );
     },
-    [jwt, controlId, fileId],
+    [jwt, controlId, fileId, rowNum, columnId],
   );
 
   const handleDownloadFile = useCallback(
@@ -101,7 +104,7 @@ export const DataGridUpload: React.FC<IProps> = ({
         disableFocusRipple
         disableElevation
         disabled={false}
-        id={`upload-id${123}`}
+        id={`upload-id${rowNum}`}
         style={{
           display: 'block',
           width: '100%',
@@ -123,10 +126,10 @@ export const DataGridUpload: React.FC<IProps> = ({
           }}
           {...getRootProps({ onClick: (event) => event.stopPropagation() })}
         >
-          <label htmlFor={`compliance-file-upload`}>
+          <label htmlFor={`compliance-file-upload-id${rowNum}`}>
             <input
               style={{ display: 'none' }}
-              id={`compliance-file-upload`}
+              id={`compliance-file-upload-id${rowNum}`}
               name={`compliance-file-upload`}
               type="file"
               onChange={saveFileToUpload}
