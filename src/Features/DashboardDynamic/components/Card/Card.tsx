@@ -64,7 +64,7 @@ export const Card: React.FC<ICardC> = ({
         return (
           <BPITooltip title={hint}>
             <Icon
-              style={{ color, size }}
+              style={{ color, size, cursor: action ? 'pointer' : 'initial' }}
               onClick={() => triggerAction(action)}
             />
           </BPITooltip>
