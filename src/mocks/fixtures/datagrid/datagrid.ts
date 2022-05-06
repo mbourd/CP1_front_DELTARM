@@ -51,8 +51,8 @@ export const dataGridDetail = {
       column1: { component: 'integer', value: 12 },
       column2: {
         component: 'file_upload',
-        // value: null,
-        value: [
+        value: null,
+        upload_detail: [
           {
             file_id: 27,
             file_name: 'totoooooooooooooooooooooooooo.png',
@@ -116,7 +116,8 @@ export const GRID_DETAILS_ADD_ROW = {
       column1: { component: 'integer', value: 12 },
       column2: {
         component: 'file_upload',
-        value: [
+        value: null,
+        upload_detail: [
           {
             file_id: 27,
             file_name: 'totoooooooooooooooooooooooooo.png',
@@ -169,6 +170,7 @@ export const GRID_DETAILS_ADD_ROW = {
       column2: {
         component: 'file_upload',
         value: null,
+        upload_detail: null,
       },
       column3: {
         component: 'text',

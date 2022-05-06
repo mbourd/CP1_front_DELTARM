@@ -187,6 +187,7 @@ export interface DataGridDetail {
     [key: string]: {
       component: DataGridComponent;
       value: string;
+      upload_detail: IUploadDetail[] | null;
       col_elm_id: number;
       row_num: number;
       answer_choices: Record<string, ISelectData> | null;

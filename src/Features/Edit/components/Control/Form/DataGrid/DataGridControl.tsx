@@ -57,7 +57,7 @@ export const DataGridControl: React.FC<IProps> = ({ control, fileId }) => {
               columnId={props.row[column].col_elm_id}
               rowNum={props.row[column].row_num}
               key={index}
-              value={props.row[column].value}
+              value={props.row[column].upload_detail}
               fileId={fileId}
               controlId={control.control_id}
             />
