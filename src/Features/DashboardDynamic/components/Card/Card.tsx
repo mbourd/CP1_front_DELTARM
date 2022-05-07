@@ -256,6 +256,7 @@ export const Card: React.FC<ICardC> = ({
                         borderRight: border_right
                           ? `1px solid ${card.title.bg_color}`
                           : 'none',
+                        overflow: 'hidden',
                       }}
                     />
                   );
