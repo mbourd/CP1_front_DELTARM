@@ -12,6 +12,8 @@ interface IProps {
   controlId: string;
   columnId: number;
   rowNum: number;
+  regex: RegExp | null;
+  regexMsg: string | null;
 }
 
 export const DataGridBoolean: React.FC<IProps> = ({
@@ -20,6 +22,8 @@ export const DataGridBoolean: React.FC<IProps> = ({
   controlId,
   columnId,
   rowNum,
+  regex,
+  regexMsg,
 }): React.ReactElement => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [currentValue, setCurrentValue] = useState<boolean>(
@@ -31,6 +35,15 @@ export const DataGridBoolean: React.FC<IProps> = ({
   const toggleAndSaveValue = useCallback(() => {
     const toggledValue = !currentValue;
     setCurrentValue(toggledValue);
+
+    if (regex && currentValue) {
+      const regexControl = new RegExp(regex, 'i');
+      if (!currentValue.toString().match(regexControl) && regexMsg) {
+        setErrorMessage(regexMsg);
+
+        return;
+      }
+    }
     saveValueDataGrid(
       fileId,
       controlId,
@@ -41,7 +54,7 @@ export const DataGridBoolean: React.FC<IProps> = ({
       setErrorMessage,
       toggledValue?.toString(),
     );
-  }, [controlId, jwt, fileId, currentValue, columnId, rowNum]);
+  }, [regexMsg, regex, controlId, jwt, fileId, currentValue, columnId, rowNum]);
 
   return (
     <DataGridBooleanStyled>
