@@ -10,6 +10,8 @@ interface IProps {
   controlId: string;
   columnId: number;
   rowNum: number;
+  regex: RegExp | null;
+  regexMsg: string | null;
 }
 
 export const DataGridDecimal: React.FC<IProps> = ({
@@ -18,6 +20,8 @@ export const DataGridDecimal: React.FC<IProps> = ({
   controlId,
   columnId,
   rowNum,
+  regex,
+  regexMsg,
 }): React.ReactElement => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [currentValue, setCurrentValue] = useState(value);
@@ -32,6 +36,15 @@ export const DataGridDecimal: React.FC<IProps> = ({
 
   const saveValue = useCallback(
     (value) => {
+      if (regex && value) {
+        const regexControl = new RegExp(regex, 'i');
+        if (!value.match(regexControl) && regexMsg) {
+          setErrorMessage(regexMsg);
+
+          return;
+        }
+      }
+
       saveValueDataGrid(
         fileId,
         controlId,
@@ -43,7 +56,7 @@ export const DataGridDecimal: React.FC<IProps> = ({
         value,
       );
     },
-    [controlId, jwt, fileId, columnId, rowNum],
+    [regexMsg, regex, controlId, jwt, fileId, columnId, rowNum],
   );
   const controlValue = currentValue
     ? parseFloat(currentValue)?.toFixed(2)

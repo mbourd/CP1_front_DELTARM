@@ -18,6 +18,8 @@ interface IProps {
   controlId: string;
   columnId: number;
   rowNum: number;
+  regex: RegExp | null;
+  regexMsg: string | null;
 }
 
 export const DataGridUpload: React.FC<IProps> = ({
@@ -26,6 +28,8 @@ export const DataGridUpload: React.FC<IProps> = ({
   controlId,
   columnId,
   rowNum,
+  regex,
+  regexMsg,
 }): React.ReactElement => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [newUploadFile, setNewUploadFile] = useState<File | null>(null);
@@ -51,6 +55,14 @@ export const DataGridUpload: React.FC<IProps> = ({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   const handleUploadFile = useCallback(() => {
+    if (regex && currentUploadFile) {
+      const regexControl = new RegExp(regex, 'i');
+      if (!currentUploadFile.toString().match(regexControl) && regexMsg) {
+        setErrorMessage(regexMsg);
+
+        return;
+      }
+    }
     if (newUploadFile) {
       uploadFile(
         fileId,
@@ -63,7 +75,17 @@ export const DataGridUpload: React.FC<IProps> = ({
         setErrorMessage,
       );
     }
-  }, [fileId, controlId, newUploadFile, jwt, rowNum, columnId]);
+  }, [
+    currentUploadFile,
+    regex,
+    regexMsg,
+    fileId,
+    controlId,
+    newUploadFile,
+    jwt,
+    rowNum,
+    columnId,
+  ]);
 
   const handleDeleteFile = useCallback(
     (e, name) => {
