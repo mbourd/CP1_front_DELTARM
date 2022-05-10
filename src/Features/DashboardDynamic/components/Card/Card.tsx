@@ -203,7 +203,12 @@ export const Card: React.FC<ICardC> = ({
       <TableContainer
         component={Paper}
         style={{
-          height: heightTable < 300 ? heightTable : 300,
+          height:
+            heightTable < 300
+              ? card.cols.header_visible
+                ? heightTable + 48
+                : heightTable
+              : 300,
           overflowX: 'unset',
         }}
         ref={tableRef}
