@@ -9,7 +9,9 @@ export interface IButtons {
 }
 interface ICardCol {
   border_right: boolean;
-  header: string;
+  label: string;
+  width: number;
+  dataKey: string;
 }
 
 export interface IActionButton {
@@ -31,7 +33,7 @@ interface ICardValueItem {
   border_right?: boolean;
 }
 
-interface ICardRow {
+export interface ICardRow {
   id: number;
   item: ICardValueItem[];
 }

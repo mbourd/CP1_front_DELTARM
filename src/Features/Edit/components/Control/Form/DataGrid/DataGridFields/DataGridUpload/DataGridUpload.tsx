@@ -18,6 +18,8 @@ interface IProps {
   controlId: string;
   columnId: number;
   rowNum: number;
+  regex: RegExp | null;
+  regexMsg: string | null;
 }
 
 export const DataGridUpload: React.FC<IProps> = ({
@@ -26,6 +28,8 @@ export const DataGridUpload: React.FC<IProps> = ({
   controlId,
   columnId,
   rowNum,
+  regex,
+  regexMsg,
 }): React.ReactElement => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [newUploadFile, setNewUploadFile] = useState<File | null>(null);
@@ -47,9 +51,18 @@ export const DataGridUpload: React.FC<IProps> = ({
       setNewUploadFile(file);
     });
   }, []);
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   const handleUploadFile = useCallback(() => {
+    if (regex && currentUploadFile) {
+      const regexControl = new RegExp(regex, 'i');
+      if (!currentUploadFile.toString().match(regexControl) && regexMsg) {
+        setErrorMessage(regexMsg);
+
+        return;
+      }
+    }
     if (newUploadFile) {
       uploadFile(
         fileId,
@@ -62,7 +75,17 @@ export const DataGridUpload: React.FC<IProps> = ({
         setErrorMessage,
       );
     }
-  }, [fileId, controlId, newUploadFile, jwt, rowNum, columnId]);
+  }, [
+    currentUploadFile,
+    regex,
+    regexMsg,
+    fileId,
+    controlId,
+    newUploadFile,
+    jwt,
+    rowNum,
+    columnId,
+  ]);
 
   const handleDeleteFile = useCallback(
     (e, name) => {
@@ -70,13 +93,15 @@ export const DataGridUpload: React.FC<IProps> = ({
       deleteFile(
         fileId,
         controlId,
+        rowNum,
+        columnId,
         name,
         jwt,
         setErrorMessage,
         setCurrentUploadFile,
       );
     },
-    [jwt, controlId, fileId],
+    [jwt, controlId, fileId, rowNum, columnId],
   );
 
   const handleDownloadFile = useCallback(
@@ -101,7 +126,7 @@ export const DataGridUpload: React.FC<IProps> = ({
         disableFocusRipple
         disableElevation
         disabled={false}
-        id={`upload-id${123}`}
+        id={`upload-id${rowNum}`}
         style={{
           display: 'block',
           width: '100%',
@@ -119,14 +144,14 @@ export const DataGridUpload: React.FC<IProps> = ({
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            height: '80px',
+            height: '30px',
           }}
           {...getRootProps({ onClick: (event) => event.stopPropagation() })}
         >
-          <label htmlFor={`compliance-file-upload`}>
+          <label htmlFor={`compliance-file-upload-id${rowNum}`}>
             <input
               style={{ display: 'none' }}
-              id={`compliance-file-upload`}
+              id={`compliance-file-upload-id${rowNum}`}
               name={`compliance-file-upload`}
               type="file"
               onChange={saveFileToUpload}

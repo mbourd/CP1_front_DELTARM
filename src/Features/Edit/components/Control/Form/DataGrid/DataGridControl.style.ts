@@ -8,7 +8,7 @@ export const DataGridControlStyled = styled.div`
     .select-list-data-grid {
       contain: unset;
       overflow: unset;
-      padding-top: 50px;
+      padding-top: 26px;
       white-space: unset;
     }
     .cell {
