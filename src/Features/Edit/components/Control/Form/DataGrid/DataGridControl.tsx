@@ -61,8 +61,6 @@ export const DataGridControl: React.FC<IProps> = ({ control, fileId }) => {
               value={props.row[column].upload_detail}
               fileId={fileId}
               controlId={control.control_id}
-              regex={control.control_regex}
-              regexMsg={control.control_regex_msg}
             />
           );
 
