@@ -18,8 +18,6 @@ interface IProps {
   controlId: string;
   columnId: number;
   rowNum: number;
-  regex: RegExp | null;
-  regexMsg: string | null;
 }
 
 export const DataGridUpload: React.FC<IProps> = ({
@@ -28,8 +26,6 @@ export const DataGridUpload: React.FC<IProps> = ({
   controlId,
   columnId,
   rowNum,
-  regex,
-  regexMsg,
 }): React.ReactElement => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [newUploadFile, setNewUploadFile] = useState<File | null>(null);
@@ -55,14 +51,6 @@ export const DataGridUpload: React.FC<IProps> = ({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   const handleUploadFile = useCallback(() => {
-    if (regex && currentUploadFile) {
-      const regexControl = new RegExp(regex, 'i');
-      if (!currentUploadFile.toString().match(regexControl) && regexMsg) {
-        setErrorMessage(regexMsg);
-
-        return;
-      }
-    }
     if (newUploadFile) {
       uploadFile(
         fileId,
@@ -75,17 +63,7 @@ export const DataGridUpload: React.FC<IProps> = ({
         setErrorMessage,
       );
     }
-  }, [
-    currentUploadFile,
-    regex,
-    regexMsg,
-    fileId,
-    controlId,
-    newUploadFile,
-    jwt,
-    rowNum,
-    columnId,
-  ]);
+  }, [fileId, controlId, newUploadFile, jwt, rowNum, columnId]);
 
   const handleDeleteFile = useCallback(
     (e, name) => {
@@ -126,7 +104,7 @@ export const DataGridUpload: React.FC<IProps> = ({
         disableFocusRipple
         disableElevation
         disabled={false}
-        id={`upload-id${rowNum}`}
+        id={`data-grid-upload${controlId}`}
         style={{
           display: 'block',
           width: '100%',
@@ -148,11 +126,11 @@ export const DataGridUpload: React.FC<IProps> = ({
           }}
           {...getRootProps({ onClick: (event) => event.stopPropagation() })}
         >
-          <label htmlFor={`compliance-file-upload-id${rowNum}`}>
+          <label htmlFor={`data-grid-file-upload${controlId}`}>
             <input
               style={{ display: 'none' }}
-              id={`compliance-file-upload-id${rowNum}`}
-              name={`compliance-file-upload`}
+              id={`data-grid-file-upload${controlId}`}
+              name={`data-grid-file-upload${controlId}`}
               type="file"
               onChange={saveFileToUpload}
               {...getInputProps()}
