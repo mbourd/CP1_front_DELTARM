@@ -208,6 +208,7 @@ export type DataGridComponent =
   | 'delete'
   | 'financial'
   | 'decimal'
+  | 'long_text'
   | 'percent';
 
 export interface IApiControl {

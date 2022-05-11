@@ -23,6 +23,7 @@ import { DataGridDate } from './DataGridFields/DataGridDate/DataGridDate';
 import { DataGridDecimal } from './DataGridFields/DataGridDecimal/DataGridDecimal';
 import { DataGridPercent } from './DataGridFields/DataGridPercent/DataGridPercent';
 import { DataGridFinancial } from './DataGridFields/DataGridFinancial/DataGridFinancial';
+import { DataGridLongText } from './DataGridFields/DataGridLongText/DataGridLongText';
 
 interface IProps {
   control: IApiControl;
@@ -84,6 +85,22 @@ export const DataGridControl: React.FC<IProps> = ({ control, fileId }) => {
         case 'text':
           props.row[column] = (
             <DataGridText
+              columnId={props.row[column].col_elm_id}
+              rowNum={props.row[column].row_num}
+              fileId={fileId}
+              controlId={control.control_id}
+              key={index}
+              value={props.row[column].value}
+              regex={control.control_regex}
+              regexMsg={control.control_regex_msg}
+            />
+          );
+
+          return <Row {...props} />;
+
+        case 'long_text':
+          props.row[column] = (
+            <DataGridLongText
               columnId={props.row[column].col_elm_id}
               rowNum={props.row[column].row_num}
               fileId={fileId}

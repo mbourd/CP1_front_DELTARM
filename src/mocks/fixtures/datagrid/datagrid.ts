@@ -44,7 +44,12 @@ export const dataGridDetail = {
       name: 'decimal',
       cellClass: 'cell',
     },
-    { key: 'column10', width: '5%', cellClass: 'cell' },
+    {
+      key: 'column10',
+      name: 'long_text',
+      cellClass: 'cell',
+    },
+    { key: 'column11', width: '5%', cellClass: 'cell' },
   ],
   rows: [
     {
@@ -97,7 +102,8 @@ export const dataGridDetail = {
       column7: { component: 'percent', value: null },
       column8: { component: 'financial', value: '12.23030' },
       column9: { component: 'decimal', value: 13.292 },
-      column10: { component: 'delete' },
+      column10: { component: 'long_text', value: null },
+      column11: { component: 'delete' },
     },
   ],
 };
