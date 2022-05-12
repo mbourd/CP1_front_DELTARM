@@ -68,6 +68,25 @@ export const RichTextControl: React.FC<IProps> = ({
       <RichTextControlStyled>
         <ControlLabel control={control} />
         <Editor
+          toolbar={{
+            options: [
+              'inline',
+              'blockType',
+              'fontSize',
+              'fontFamily',
+              'list',
+              'textAlign',
+              'colorPicker',
+              'link',
+              'embedded',
+              'image',
+              'remove',
+              'history',
+            ],
+            inline: {
+              options: ['bold', 'italic', 'underline', 'strikethrough'],
+            },
+          }}
           locale={user.getLang()}
           toolbarHidden={!control.editable}
           editorState={editorState}
