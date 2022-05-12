@@ -25,6 +25,7 @@ import { useActionButton } from '../../../Packages/Helpers/src/useActionButton';
 import { useRecoilValue } from 'recoil';
 import { IDataModal } from '../../ModalDynamic/components/types';
 import { NoData } from './NoData';
+import { AgGridCard } from './Card/AgGridCard';
 
 const DashboardDynamic: React.FC = (): React.ReactElement => {
   const { send, data: response, callState } = useApi<IDashboard>();
@@ -116,7 +117,7 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
               </MetricsContainerStyled>
             </HeaderDashDynamicFixedStyled>
             <Grid container>
-              {response?.data.cards.visible &&
+              {response?.data?.cards?.visible &&
                 response?.data.cards.card.map((card, index) => (
                   <Grid
                     item
@@ -126,6 +127,22 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
                     style={{ height: '400px' }}
                   >
                     <Card
+                      card={card}
+                      key={index}
+                      triggerAction={actionButton}
+                    />
+                  </Grid>
+                ))}
+              {response?.data?.ag_cards?.visible &&
+                response?.data.ag_cards.card.map((card, index) => (
+                  <Grid
+                    item
+                    xs={12}
+                    md={6}
+                    key={index}
+                    style={{ height: '400px' }}
+                  >
+                    <AgGridCard
                       card={card}
                       key={index}
                       triggerAction={actionButton}

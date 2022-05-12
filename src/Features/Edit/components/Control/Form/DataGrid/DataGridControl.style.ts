@@ -20,4 +20,26 @@ export const DataGridControlStyled = styled.div`
       line-height: initial;
     }
   }
+
+  .ag-row {
+    z-index: 0;
+  }
+
+  .ag-row.ag-row-focus {
+    z-index: 1;
+  }
+  .ag-center-cols-clipper,
+  .ag-center-cols-container {
+    min-height: 40px !important;
+  }
+  .select-cell-ag-grid {
+    .ag-cell-value {
+      overflow-x: clip;
+      overflow-y: visible;
+    }
+  }
+  .ag-root,
+  .ag-root-wrapper {
+    overflow-y: visible !important;
+  }
 `;

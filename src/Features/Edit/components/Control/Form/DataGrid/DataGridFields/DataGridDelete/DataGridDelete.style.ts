@@ -1,3 +1,6 @@
 import styled from 'styled-components/macro';
 
-export const DataGridDeleteStyled = styled.div``;
+export const DataGridDeleteStyled = styled.div`
+  margin: 0 auto;
+  margin-bottom: 3px;
+`;
