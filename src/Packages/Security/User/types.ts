@@ -10,7 +10,6 @@ export interface IUser {
   addRole: (role: string) => IUser;
   removeRole: (role: string) => IUser;
   hasRole: (role: string) => boolean;
-  isGranted: (role: string) => boolean;
   setJwt: (token: string | null) => IUser;
   hasJwt: () => boolean;
   getJwt: () => string | null;

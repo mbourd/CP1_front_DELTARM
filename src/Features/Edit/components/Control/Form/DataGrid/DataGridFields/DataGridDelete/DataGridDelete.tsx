@@ -5,15 +5,12 @@ import { Delete } from '@mui/icons-material';
 import { SearchModalFooterStyled } from '../../../../../../../Manage/components/Search/Modal/SearchModal.style';
 import { deleteRow } from '../../apiRoutes/deleteRow';
 import { useSecurity } from '../../../../../../../../Packages/Security';
-import { DataGridDetail } from '../../../../../../types';
 
 interface IProps {
   rowNum: number;
   fileId: string;
   controlId: string;
-  setGridDetails: React.Dispatch<
-    SetStateAction<DataGridDetail | null | undefined>
-  >;
+  setGridDetails: React.Dispatch<SetStateAction<any>>;
 }
 
 export const DataGridDelete: React.FC<IProps> = ({

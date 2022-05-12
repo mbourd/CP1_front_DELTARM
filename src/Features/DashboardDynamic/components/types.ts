@@ -1,4 +1,6 @@
 import { SvgIconComponent } from '@mui/icons-material';
+import { ForwardRefExoticComponent, RefAttributes } from 'react';
+import { CellStyle, CellStyleFunc, IFilterParams } from 'ag-grid-community';
 
 export interface IButtons {
   bg_color: string;
@@ -7,11 +9,24 @@ export interface IButtons {
   btn_lib: string;
   action: IActionButton;
 }
-interface ICardCol {
+export interface IAgGridCol {
   border_right: boolean;
-  label: string;
+  field: string;
+  headerName: string;
   width: number;
-  dataKey: string;
+  cellStyle: CellStyle | CellStyleFunc | undefined;
+  comparator:
+    | 'StringComparator'
+    | ((
+        valueA: any,
+        valueB: any,
+        nodeA: any,
+        nodeB: any,
+        isInverted: boolean,
+      ) => 0 | 1 | -1);
+  filter:
+    | 'StringFilter'
+    | ForwardRefExoticComponent<IFilterParams & RefAttributes<unknown>>;
 }
 
 export interface IActionButton {
@@ -33,9 +48,41 @@ interface ICardValueItem {
   border_right?: boolean;
 }
 
+interface AgGridRowType {
+  id: number;
+  border_bottom: boolean;
+}
+
 export interface ICardRow {
   id: number;
   item: ICardValueItem[];
+}
+
+export interface AgGridRowValue {
+  [key: string]: ICardValueItem[];
+}
+
+export type AgGridRow = AgGridRowValue & AgGridRowType;
+
+export interface ICardAgGrid {
+  cols: {
+    values: IAgGridCol[];
+    header_visible: boolean;
+  };
+  lines: AgGridRow[];
+  title: {
+    bg_color: string;
+    font_color: string;
+    lib: string;
+  };
+}
+
+interface ICardCol {
+  border_right: boolean;
+  label: string;
+  width: number;
+  field: string;
+  dataKey: string;
 }
 
 export interface ICard {
@@ -91,8 +138,12 @@ export interface IDashboard {
   route_front: string;
   data: {
     btns: IButtons[];
-    cards: {
+    cards?: {
       card: ICard[];
+      visible: boolean;
+    };
+    ag_cards?: {
+      card: ICardAgGrid[];
       visible: boolean;
     };
     metrics: {

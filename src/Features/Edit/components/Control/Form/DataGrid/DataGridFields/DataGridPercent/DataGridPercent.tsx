@@ -114,7 +114,13 @@ export const DataGridPercent: React.FC<IProps> = ({
         defaultValue={controlValue ? controlValue : ''}
         onBlur={(e) => saveValue(e.currentTarget.value)}
         icon={
-          <i style={{ paddingLeft: '5px' }} className="material-icons">
+          <i
+            style={{
+              paddingLeft: '5px',
+              color: editable ? 'text' : 'disabled',
+            }}
+            className="material-icons"
+          >
             %
           </i>
         }
