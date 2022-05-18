@@ -17,12 +17,14 @@ export const CardStyled = styled.section<IProps>`
     position: relative;
     height: ${cardHeight}px;
   }
+  .ReactVirtualized__Table__headerRow {
+    height: auto !important;
+  }
 `;
 
 export const StyledTableCell = styled(TableCell)((cardColor) => ({
   [`&.${tableCellClasses.body}`]: {
     borderRight: `1px solid ${cardColor}`,
-    borderBottom: `1px solid ${cardColor}`,
     borderLeft: `1px solid ${cardColor}`,
     textAlign: 'center',
   },

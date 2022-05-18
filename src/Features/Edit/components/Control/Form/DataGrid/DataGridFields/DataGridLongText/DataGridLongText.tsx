@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { DataGridTextStyled } from './DataGridText.style';
+import { DataGridTextStyled } from './DataGridLongText.style';
 import { FormError, InputBase } from 'Shared/components';
 import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
 import { useSecurity } from '../../../../../../../../Packages/Security';
@@ -14,7 +14,7 @@ interface IProps {
   regexMsg: string | null;
 }
 
-export const DataGridText: React.FC<IProps> = ({
+export const DataGridLongText: React.FC<IProps> = ({
   value,
   fileId,
   controlId,
@@ -61,6 +61,8 @@ export const DataGridText: React.FC<IProps> = ({
   return (
     <DataGridTextStyled>
       <InputBase
+        multilineRows={3}
+        multiline={true}
         placeholder={'Texte'}
         id={`input grid`}
         disabled={false}

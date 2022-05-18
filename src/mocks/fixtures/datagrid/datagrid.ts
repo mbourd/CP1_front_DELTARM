@@ -44,15 +44,20 @@ export const dataGridDetail = {
       name: 'decimal',
       cellClass: 'cell',
     },
-    { key: 'column10', width: '5%', cellClass: 'cell' },
+    {
+      key: 'column10',
+      name: 'long_text',
+      cellClass: 'cell',
+    },
+    { key: 'column11', width: '5%', cellClass: 'cell' },
   ],
   rows: [
     {
       column1: { component: 'integer', value: 12 },
       column2: {
         component: 'file_upload',
-        // value: null,
-        value: [
+        value: null,
+        upload_detail: [
           {
             file_id: 27,
             file_name: 'totoooooooooooooooooooooooooo.png',
@@ -97,7 +102,8 @@ export const dataGridDetail = {
       column7: { component: 'percent', value: null },
       column8: { component: 'financial', value: '12.23030' },
       column9: { component: 'decimal', value: 13.292 },
-      column10: { component: 'delete' },
+      column10: { component: 'long_text', value: null },
+      column11: { component: 'delete' },
     },
   ],
 };
@@ -116,7 +122,8 @@ export const GRID_DETAILS_ADD_ROW = {
       column1: { component: 'integer', value: 12 },
       column2: {
         component: 'file_upload',
-        value: [
+        value: null,
+        upload_detail: [
           {
             file_id: 27,
             file_name: 'totoooooooooooooooooooooooooo.png',
@@ -169,6 +176,7 @@ export const GRID_DETAILS_ADD_ROW = {
       column2: {
         component: 'file_upload',
         value: null,
+        upload_detail: null,
       },
       column3: {
         component: 'text',

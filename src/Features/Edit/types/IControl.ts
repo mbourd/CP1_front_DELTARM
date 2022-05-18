@@ -183,15 +183,20 @@ export interface DataGridDetail {
     width?: string | number;
     resizable: boolean;
   }[];
-  rows: {
-    [key: string]: {
-      component: DataGridComponent;
-      value: string;
-      col_elm_id: number;
-      row_num: number;
-      answer_choices: Record<string, ISelectData> | null;
-    };
-  }[];
+  rows: DataGridDetailsRows[];
+}
+
+export interface DataGridDetailsRows {
+  [key: string]: {
+    component: DataGridComponent;
+    value: string;
+    upload_detail: IUploadDetail[] | null;
+    col_elm_id: number;
+    row_num: number;
+    control_regex: RegExp | null;
+    control_regex_msg: string | null;
+    answer_choices: Record<string, ISelectData> | null;
+  };
 }
 
 export type DataGridComponent =
@@ -203,6 +208,7 @@ export type DataGridComponent =
   | 'delete'
   | 'financial'
   | 'decimal'
+  | 'long_text'
   | 'percent';
 
 export interface IApiControl {

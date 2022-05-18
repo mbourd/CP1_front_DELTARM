@@ -23,18 +23,14 @@ import { DataGridDate } from './DataGridFields/DataGridDate/DataGridDate';
 import { DataGridDecimal } from './DataGridFields/DataGridDecimal/DataGridDecimal';
 import { DataGridPercent } from './DataGridFields/DataGridPercent/DataGridPercent';
 import { DataGridFinancial } from './DataGridFields/DataGridFinancial/DataGridFinancial';
+import { DataGridLongText } from './DataGridFields/DataGridLongText/DataGridLongText';
 
 interface IProps {
   control: IApiControl;
   fileId: string;
-  context: 'edit' | 'validate';
 }
 
-export const DataGridControl: React.FC<IProps> = ({
-  control,
-  fileId,
-  context,
-}) => {
+export const DataGridControl: React.FC<IProps> = ({ control, fileId }) => {
   const [gridDetails, setGridDetails] = useState<
     DataGridDetail | undefined | null
   >(control.data_grid_detail);
@@ -62,7 +58,7 @@ export const DataGridControl: React.FC<IProps> = ({
               columnId={props.row[column].col_elm_id}
               rowNum={props.row[column].row_num}
               key={index}
-              value={props.row[column].value}
+              value={props.row[column].upload_detail}
               fileId={fileId}
               controlId={control.control_id}
             />
@@ -78,6 +74,8 @@ export const DataGridControl: React.FC<IProps> = ({
               controlId={control.control_id}
               key={index}
               value={props.row[column].value}
+              regex={control.control_regex}
+              regexMsg={control.control_regex_msg}
             />
           );
 
@@ -91,6 +89,24 @@ export const DataGridControl: React.FC<IProps> = ({
               controlId={control.control_id}
               key={index}
               value={props.row[column].value}
+              regex={control.control_regex}
+              regexMsg={control.control_regex_msg}
+            />
+          );
+
+          return <Row {...props} />;
+
+        case 'long_text':
+          props.row[column] = (
+            <DataGridLongText
+              columnId={props.row[column].col_elm_id}
+              rowNum={props.row[column].row_num}
+              fileId={fileId}
+              controlId={control.control_id}
+              key={index}
+              value={props.row[column].value}
+              regex={control.control_regex}
+              regexMsg={control.control_regex_msg}
             />
           );
 
@@ -104,6 +120,8 @@ export const DataGridControl: React.FC<IProps> = ({
               controlId={control.control_id}
               key={index}
               value={props.row[column].value}
+              regex={control.control_regex}
+              regexMsg={control.control_regex_msg}
             />
           );
 
@@ -135,6 +153,8 @@ export const DataGridControl: React.FC<IProps> = ({
               answerChoices={answerChoices}
               key={index}
               value={props.row[column].value}
+              regex={control.control_regex}
+              regexMsg={control.control_regex_msg}
             />
           );
 
@@ -159,6 +179,8 @@ export const DataGridControl: React.FC<IProps> = ({
               controlId={control.control_id}
               key={index}
               value={props.row[column].value}
+              regex={control.control_regex}
+              regexMsg={control.control_regex_msg}
             />
           );
 
@@ -172,6 +194,8 @@ export const DataGridControl: React.FC<IProps> = ({
               controlId={control.control_id}
               key={index}
               value={props.row[column].value}
+              regex={control.control_regex}
+              regexMsg={control.control_regex_msg}
             />
           );
 
@@ -185,6 +209,8 @@ export const DataGridControl: React.FC<IProps> = ({
               controlId={control.control_id}
               key={index}
               value={props.row[column].value}
+              regex={control.control_regex}
+              regexMsg={control.control_regex_msg}
             />
           );
 
@@ -198,6 +224,8 @@ export const DataGridControl: React.FC<IProps> = ({
               controlId={control.control_id}
               key={index}
               value={props.row[column].value}
+              regex={control.control_regex}
+              regexMsg={control.control_regex_msg}
             />
           );
 
@@ -209,13 +237,13 @@ export const DataGridControl: React.FC<IProps> = ({
   };
 
   return (
-    <Grid item xs={12}>
+    <Grid item xs={11} style={{ maxWidth: '95%', margin: '0 auto' }}>
       <DataGridControlStyled>
         <ControlLabel control={control} />
         {gridDetails?.rows && gridDetails?.columns && (
           <DataGrid
             style={{ height: 'auto' }}
-            rowHeight={150}
+            rowHeight={100}
             headerRowHeight={50}
             columns={gridDetails.columns}
             className={'_DataGrid rdg-light'}

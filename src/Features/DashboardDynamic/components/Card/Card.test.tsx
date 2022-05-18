@@ -20,9 +20,5 @@ describe('Card Dashboard', () => {
       expect(getByText('Fini')).toBeInTheDocument();
       expect(getByText('BI')).toBeInTheDocument();
     });
-    test('Should display content of cells on card dashboard', async () => {
-      const { getByText } = render(<CardDashboard />);
-      expect(getByText('Site A - M1')).toBeInTheDocument();
-    });
   });
 });

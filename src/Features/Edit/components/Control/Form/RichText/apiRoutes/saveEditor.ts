@@ -26,9 +26,6 @@ export const saveEditor = (
         },
       },
     )
-    .then((res) => {
-      return setMessage(res.data.success_msg);
-    })
     .catch((err) => {
       if (err?.response?.data?.data?.error_msg) {
         return setMessage(err.response.data.data.error_msg);

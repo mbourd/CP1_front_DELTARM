@@ -6,6 +6,8 @@ import { IUploadDetail } from '../../../../../../types';
 export const deleteFile = (
   fileId: string,
   controlId: string,
+  rowNum: number,
+  columnId: number,
   name: string,
   jwt: string | null,
   setErrorMessage: React.Dispatch<SetStateAction<string | null>>,
@@ -15,7 +17,7 @@ export const deleteFile = (
     .post(
       `${getEnv('API_PROTOCOL')}://${getEnv(
         'API_HOST',
-      )}/control/data_grid/delete_upfile?file_id=${fileId}&control_id=${controlId}&file_name=${name}`,
+      )}/control/data_grid/delete_upfile?file_id=${fileId}&control_id=${controlId}&file_name=${name}&row_num=${rowNum}&col_elm_id=${columnId}`,
       {},
       {
         headers: {
