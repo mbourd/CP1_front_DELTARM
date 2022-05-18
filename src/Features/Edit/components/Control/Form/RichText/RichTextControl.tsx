@@ -55,7 +55,10 @@ export const RichTextControl: React.FC<IProps> = ({
     if (!control.mandatory) {
       setMessage(null);
     }
-  }, [control.mandatory, control.editable]);
+    if (editorState.getCurrentContent().hasText()) {
+      setMessage(null);
+    }
+  }, [control.mandatory, control.editable, editorState]);
 
   useEffect(() => {
     if (!isRejected) {
