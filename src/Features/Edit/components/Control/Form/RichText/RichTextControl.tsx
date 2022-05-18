@@ -55,7 +55,10 @@ export const RichTextControl: React.FC<IProps> = ({
     if (!control.mandatory) {
       setMessage(null);
     }
-  }, [control.mandatory, control.editable]);
+    if (editorState.getCurrentContent().hasText()) {
+      setMessage(null);
+    }
+  }, [control.mandatory, control.editable, editorState]);
 
   useEffect(() => {
     if (!isRejected) {
@@ -68,6 +71,25 @@ export const RichTextControl: React.FC<IProps> = ({
       <RichTextControlStyled>
         <ControlLabel control={control} />
         <Editor
+          toolbar={{
+            options: [
+              'inline',
+              'blockType',
+              'fontSize',
+              'fontFamily',
+              'list',
+              'textAlign',
+              'colorPicker',
+              'link',
+              'embedded',
+              'image',
+              'remove',
+              'history',
+            ],
+            inline: {
+              options: ['bold', 'italic', 'underline', 'strikethrough'],
+            },
+          }}
           locale={user.getLang()}
           toolbarHidden={!control.editable}
           editorState={editorState}
