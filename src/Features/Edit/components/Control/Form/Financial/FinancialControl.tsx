@@ -12,6 +12,7 @@ import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFo
 import { minMax } from '../../../../../../Packages/Helpers/src/minMax';
 import useFocus from '../../../../../../Packages/Helpers/src/useFocus';
 import { RejectControl } from '../RejectByPointControl/RejectControl';
+import { numberWithSpaces } from '../../../../../../Packages/Helpers/src/numberWithSpaces';
 
 interface IProps {
   control: IApiControl;
@@ -175,7 +176,7 @@ export const FinancialControl: React.FC<IProps> = ({
           }
           disabled={!control.editable}
           color={control.editable ? 'text' : 'disabled'}
-          defaultValue={controlValue ? controlValue : ''}
+          defaultValue={controlValue ? numberWithSpaces(controlValue) : ''}
           icon={<EuroIcon />}
           onBlur={(e) => saveValue(e.currentTarget.value)}
           unit={control.control_options?.unit}
