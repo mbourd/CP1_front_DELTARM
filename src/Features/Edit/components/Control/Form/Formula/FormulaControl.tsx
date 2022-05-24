@@ -125,6 +125,8 @@ export const FormulaControl: React.FC<IProps> = ({
       ? parseFloat(currentValue)?.toFixed(
           control.control_options?.precision
             ? control.control_options?.precision
+            : control.control_options?.precision === 0
+            ? control.control_options.precision
             : 2,
         )
       : currentValue;
