@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
-import { IComplianceData } from 'Features/Edit/types';
+import { IApiComplianceFields } from 'Features/Edit/types';
 import { FormError, Select } from 'Shared/components';
 import { storage, useApi, useRouter } from 'Services';
 import { SelectListComplianceStyled } from './SelectListCompliance.style';
@@ -8,7 +8,7 @@ import { ComplianceLabel } from '../ComplianceLabel';
 import { ComplianceFooter } from '../ComplianceFooter';
 
 interface IProps {
-  compliance: IComplianceData;
+  compliance: IApiComplianceFields;
   fileId: string;
   controlId: string;
 }
@@ -23,22 +23,33 @@ export const SelectListCompliance: React.FC<IProps> = ({
   const { currentRoute } = useRouter();
 
   const value = storage.getData<string>(
-    fileId + controlId + '.edit.compliance.' + compliance.id + '.value',
+    fileId +
+      controlId +
+      '.edit.compliance.' +
+      compliance.compliance_id +
+      '.value',
   );
   const selectedValue: Record<string, true> = {
-    [value || compliance.value || '']: true,
+    [value || compliance.compliance_elm_value || '']: true,
   };
 
   const saveValue = useCallback(
     (value: string) => {
-      if (compliance.regex && !value.match(compliance.regex)) {
-        setErrorMessage(compliance.regexMsg);
+      if (
+        compliance.compliance_elm_regex &&
+        !value.match(compliance.compliance_elm_regex)
+      ) {
+        setErrorMessage(compliance.compliance_elm_regex_msg);
 
         return;
       }
       setErrorMessage(null);
       storage.setData(
-        fileId + controlId + '.edit.compliance.' + compliance.id + '.value',
+        fileId +
+          controlId +
+          '.edit.compliance.' +
+          compliance.compliance_id +
+          '.value',
         value,
       );
       send(
@@ -48,8 +59,8 @@ export const SelectListCompliance: React.FC<IProps> = ({
           file_id: fileId,
           elm_id: controlId,
           elm_val: value,
-          control_family: compliance.family,
-          compliance_id: compliance.id,
+          control_family: compliance.compliance_elm_family,
+          compliance_id: compliance.compliance_id,
         },
       );
     },
@@ -57,11 +68,11 @@ export const SelectListCompliance: React.FC<IProps> = ({
       send,
       fileId,
       controlId,
-      compliance.family,
+      compliance.compliance_elm_family,
       currentRoute,
-      compliance.regex,
-      compliance.id,
-      compliance.regexMsg,
+      compliance.compliance_elm_regex,
+      compliance.compliance_id,
+      compliance.compliance_elm_regex_msg,
     ],
   );
 
@@ -79,8 +90,8 @@ export const SelectListCompliance: React.FC<IProps> = ({
         <ComplianceLabel compliance={compliance} />
         <Select
           closeOnSelect
-          name={'select_list' + compliance.id}
-          data={compliance.answerChoices || {}}
+          name={'select_list' + compliance.compliance_id}
+          data={compliance.compliance_answer_choices || {}}
           selectedValues={selectedValue}
           multiple={false}
           onChange={(selectedValues) => {

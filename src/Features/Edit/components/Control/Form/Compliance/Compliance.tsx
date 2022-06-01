@@ -56,7 +56,6 @@ export const Compliance: React.FC<IComplianceProps> = ({
         <ModalCompliance
           open={showComplianceFields}
           onClose={() => setShowComplianceFields(false)}
-          compliance={compliance}
           controlId={controlId}
           fileId={fileId}
         />

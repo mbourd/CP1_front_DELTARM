@@ -2,10 +2,10 @@ import React from 'react';
 import { Box, Grid } from '@material-ui/core';
 import { BPITooltip } from 'Shared/components';
 import { WarningIcon } from 'Styles';
-import { IComplianceData } from 'Features/Edit/types';
+import { IApiComplianceFields } from 'Features/Edit/types';
 
 interface IProps {
-  compliance: IComplianceData;
+  compliance: IApiComplianceFields;
 }
 
 export const ComplianceFooter: React.FC<IProps> = ({
@@ -21,8 +21,8 @@ export const ComplianceFooter: React.FC<IProps> = ({
         wrap={'nowrap'}
       >
         <Grid item component={'span'}>
-          {compliance.desc2 ? (
-            <BPITooltip title={compliance.desc2}>
+          {compliance.compliance_elm_desc_2 ? (
+            <BPITooltip title={compliance.compliance_elm_desc_2}>
               <span>
                 <WarningIcon fontSize={'small'} />
               </span>
