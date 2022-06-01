@@ -1,12 +1,15 @@
 import axios from 'axios';
 import React, { SetStateAction } from 'react';
-import { IComplianceData, IUploadDetail } from '../../../../../../../types';
+import {
+  IApiComplianceFields,
+  IUploadDetail,
+} from '../../../../../../../types';
 import { getEnv } from '../../../../../../../../../Packages/Helpers';
 
 export const uploadComplianceFile = (
   fileId: string,
   controlId: string,
-  compliance: IComplianceData,
+  compliance: IApiComplianceFields,
   newUploadFile: File,
   jwt: string | null,
   setCurrentUploadFile: React.Dispatch<SetStateAction<IUploadDetail[] | null>>,
@@ -20,8 +23,8 @@ export const uploadComplianceFile = (
       `${getEnv('API_PROTOCOL')}://${getEnv(
         'API_HOST',
       )}/control/set_value?file_id=${fileId}&elm_id=${controlId}&elm_val=${fileName}&control_family=${
-        compliance.family
-      }&compliance_id=${compliance.id}`,
+        compliance.compliance_elm_family
+      }&compliance_id=${compliance.compliance_id}`,
       formData,
       {
         headers: {

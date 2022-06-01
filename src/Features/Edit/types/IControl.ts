@@ -52,8 +52,7 @@ export interface IApiConditional {
   conditional_by_field_id: number;
   conditional_formula: string;
 }
-
-export interface IApiComplianceData {
+export interface IApiComplianceFields {
   compliance_elm_desc_1: string | null;
   compliance_elm_desc_2: string | null;
   compliance_elm_family: string;
@@ -63,21 +62,13 @@ export interface IApiComplianceData {
   compliance_elm_type: ControlTypeType;
   compliance_elm_value: string;
   compliance_id: string;
+  compliance_answer_choices?: Record<string, ISelectData>;
   compliance_file_detail: IUploadDetail[] | null;
 }
 
-export interface IComplianceData {
-  desc1: string | null;
-  desc2: string | null;
-  family: string;
-  id: string;
-  lib: string;
-  regex: RegExp;
-  regexMsg: string | null;
-  type: ControlTypeType;
-  value: string;
-  answerChoices?: Record<string, ISelectData>;
-  uploadDetail: IUploadDetail[] | null;
+export interface IApiComplianceData {
+  compliance_fields: IApiComplianceFields[];
+  compliance_modal_title: string | null;
 }
 
 export interface ICompliance {
