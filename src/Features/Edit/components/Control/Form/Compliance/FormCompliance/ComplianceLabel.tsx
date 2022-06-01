@@ -2,10 +2,10 @@ import React from 'react';
 import { Grid } from '@material-ui/core';
 import { BPITooltip, FormLabel } from 'Shared/components';
 import { HelpIcon } from 'Styles';
-import { IComplianceData } from 'Features/Edit/types';
+import { IApiComplianceFields } from 'Features/Edit/types';
 
 interface IProps {
-  compliance: IComplianceData;
+  compliance: IApiComplianceFields;
 }
 
 export const ComplianceLabel: React.FC<IProps> = ({
@@ -21,11 +21,11 @@ export const ComplianceLabel: React.FC<IProps> = ({
           wrap={'nowrap'}
         >
           <Grid item component={'span'} xs={12}>
-            {compliance.lib}
+            {compliance.compliance_elm_lib}
           </Grid>
           <Grid item component={'span'}>
-            {compliance.desc1 ? (
-              <BPITooltip title={compliance.desc1}>
+            {compliance.compliance_elm_desc_1 ? (
+              <BPITooltip title={compliance.compliance_elm_desc_1}>
                 <span>
                   <HelpIcon fontSize={'small'} />
                 </span>

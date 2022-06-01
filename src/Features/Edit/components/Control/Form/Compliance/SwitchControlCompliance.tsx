@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { IComplianceData } from 'Features/Edit/types';
+import { IApiComplianceFields } from 'Features/Edit/types';
 import { EditValidationContext } from 'Features/Edit';
 import { CommentCompliance } from './FormCompliance/CommentCompliance/CommentCompliance';
 import { DateCompliance } from './FormCompliance/DateCompliance/DateCompliance';
@@ -11,7 +11,7 @@ import { PercentCompliance } from './FormCompliance/PercentCompliance/PercentCom
 import { UploadCompliance } from './FormCompliance/UploadCompliance/UploadCompliance';
 
 interface IProps {
-  compliance: IComplianceData;
+  compliance: IApiComplianceFields;
   controlId: string;
 }
 
@@ -21,7 +21,7 @@ export const SwitchControlCompliance: React.FC<IProps> = ({
 }): React.ReactElement | null => {
   const { fileId } = useContext(EditValidationContext);
 
-  switch (compliance.type) {
+  switch (compliance.compliance_elm_type) {
     case 'text':
       return (
         <TextCompliance
