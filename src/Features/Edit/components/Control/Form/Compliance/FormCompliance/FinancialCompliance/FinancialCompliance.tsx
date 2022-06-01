@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
-import { IComplianceData } from 'Features/Edit/types';
+import { IApiComplianceFields } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
 import { FinancialComplianceStyled } from './FinancialCompliance.style';
 import { EuroIcon } from 'Styles';
@@ -10,7 +10,7 @@ import { ComplianceFooter } from '../ComplianceFooter';
 import { numberWithSpaces } from '../../../../../../../../Packages/Helpers/src/numberWithSpaces';
 
 interface IProps {
-  compliance: IComplianceData;
+  compliance: IApiComplianceFields;
   fileId: string;
   controlId: string;
 }
@@ -26,8 +26,11 @@ export const FinancialCompliance: React.FC<IProps> = ({
 
   const saveValue = useCallback(
     (value: string) => {
-      if (compliance.regex && !value.match(compliance.regex)) {
-        setErrorMessage(compliance.regexMsg);
+      if (
+        compliance.compliance_elm_regex &&
+        !value.match(compliance.compliance_elm_regex)
+      ) {
+        setErrorMessage(compliance.compliance_elm_regex_msg);
 
         return;
       }
@@ -40,20 +43,20 @@ export const FinancialCompliance: React.FC<IProps> = ({
           file_id: fileId,
           elm_id: controlId,
           elm_val: value,
-          control_family: compliance.family,
-          compliance_id: compliance.id,
+          control_family: compliance.compliance_elm_family,
+          compliance_id: compliance.compliance_id,
         },
       );
     },
     [
       send,
       fileId,
-      compliance.id,
+      compliance.compliance_id,
       controlId,
-      compliance.family,
+      compliance.compliance_elm_family,
       currentRoute,
-      compliance.regex,
-      compliance.regexMsg,
+      compliance.compliance_elm_regex,
+      compliance.compliance_elm_regex_msg,
     ],
   );
 
@@ -63,16 +66,20 @@ export const FinancialCompliance: React.FC<IProps> = ({
     }
   }, [error]);
 
-  const complianceValue = compliance.value
-    ? numberWithSpaces(compliance.value)
-    : compliance.value;
+  const complianceValue = compliance.compliance_elm_value
+    ? numberWithSpaces(compliance.compliance_elm_value)
+    : compliance.compliance_elm_value;
 
   return (
     <Grid item xs={6}>
       <FinancialComplianceStyled>
         <ComplianceLabel compliance={compliance} />
         <InputBase
-          placeholder={compliance.lib ? compliance.lib : compliance.value}
+          placeholder={
+            compliance.compliance_elm_lib
+              ? compliance.compliance_elm_lib
+              : compliance.compliance_elm_value
+          }
           defaultValue={complianceValue}
           icon={<EuroIcon />}
           onBlur={(e) => saveValue(e.currentTarget.value)}

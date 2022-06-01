@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
-import { IComplianceData } from 'Features/Edit/types';
+import { IApiComplianceFields } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
 import { IntegerComplianceStyled } from './IntegerCompliance.style';
 import { useApi, useRouter } from 'Services';
@@ -8,7 +8,7 @@ import { ComplianceLabel } from '../ComplianceLabel';
 import { ComplianceFooter } from '../ComplianceFooter';
 
 interface IProps {
-  compliance: IComplianceData;
+  compliance: IApiComplianceFields;
   fileId: string;
   controlId: string;
 }
@@ -24,8 +24,11 @@ export const IntegerCompliance: React.FC<IProps> = ({
 
   const saveValue = useCallback(
     (value: string) => {
-      if (compliance.regex && !value.match(compliance.regex)) {
-        setErrorMessage(compliance.regexMsg);
+      if (
+        compliance.compliance_elm_regex &&
+        !value.match(compliance.compliance_elm_regex)
+      ) {
+        setErrorMessage(compliance.compliance_elm_regex_msg);
 
         return;
       }
@@ -38,8 +41,8 @@ export const IntegerCompliance: React.FC<IProps> = ({
           file_id: fileId,
           elm_id: controlId,
           elm_val: value,
-          control_family: compliance.family,
-          compliance_id: compliance.id,
+          control_family: compliance.compliance_elm_family,
+          compliance_id: compliance.compliance_id,
         },
       );
     },
@@ -47,11 +50,11 @@ export const IntegerCompliance: React.FC<IProps> = ({
       send,
       fileId,
       controlId,
-      compliance.family,
+      compliance.compliance_elm_family,
       currentRoute,
-      compliance.regex,
-      compliance.id,
-      compliance.regexMsg,
+      compliance.compliance_elm_regex,
+      compliance.compliance_id,
+      compliance.compliance_elm_regex_msg,
     ],
   );
 
@@ -66,8 +69,12 @@ export const IntegerCompliance: React.FC<IProps> = ({
       <IntegerComplianceStyled>
         <ComplianceLabel compliance={compliance} />
         <InputBase
-          placeholder={compliance.lib ? compliance.lib : compliance.value}
-          defaultValue={compliance.value}
+          placeholder={
+            compliance.compliance_elm_lib
+              ? compliance.compliance_elm_lib
+              : compliance.compliance_elm_value
+          }
+          defaultValue={compliance.compliance_elm_value}
           onBlur={(e) => saveValue(e.currentTarget.value)}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}

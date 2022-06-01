@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { UploadComplianceStyled } from './UploadCompliance.style';
 import { Grid, Fab } from '@material-ui/core';
 import { CloudUpload } from '@material-ui/icons';
-import { IComplianceData, IUploadDetail } from 'Features/Edit/types';
+import { IApiComplianceFields, IUploadDetail } from 'Features/Edit/types';
 import { FormError } from 'Shared/components';
 import { IUser, security } from 'Services';
 import { ComplianceLabel } from '../ComplianceLabel';
@@ -15,7 +15,7 @@ import { deleteComplianceFile } from '../../../../../../../../Shared/components/
 import { downloadFile } from '../../../../../../../../Shared/components/UploadList/apiRoutes/downloadFile';
 
 interface IProps {
-  compliance: IComplianceData;
+  compliance: IApiComplianceFields;
   fileId: string;
   controlId: string;
 }
@@ -29,7 +29,7 @@ export const UploadCompliance: React.FC<IProps> = ({
   const [newUploadFile, setNewUploadFile] = useState<File | null>(null);
   const [currentUploadFile, setCurrentUploadFile] = useState<
     IUploadDetail[] | null
-  >(compliance.uploadDetail);
+  >(compliance.compliance_file_detail);
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
 
