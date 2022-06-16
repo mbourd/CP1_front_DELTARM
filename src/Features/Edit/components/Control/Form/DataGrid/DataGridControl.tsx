@@ -60,6 +60,8 @@ export const DataGridControl: React.FC<IProps> = ({ control, fileId }) => {
               key={index}
               value={props.row[column].upload_detail}
               fileId={fileId}
+              editable={props.row[column].control_editable}
+              mandatory={props.row[column].control_mandatory}
               controlId={control.control_id}
             />
           );
@@ -76,6 +78,8 @@ export const DataGridControl: React.FC<IProps> = ({ control, fileId }) => {
               value={props.row[column].value}
               regex={control.control_regex}
               regexMsg={control.control_regex_msg}
+              editable={props.row[column].control_editable}
+              mandatory={props.row[column].control_mandatory}
             />
           );
 
@@ -91,6 +95,8 @@ export const DataGridControl: React.FC<IProps> = ({ control, fileId }) => {
               value={props.row[column].value}
               regex={control.control_regex}
               regexMsg={control.control_regex_msg}
+              editable={props.row[column].control_editable}
+              mandatory={props.row[column].control_mandatory}
             />
           );
 
@@ -107,6 +113,8 @@ export const DataGridControl: React.FC<IProps> = ({ control, fileId }) => {
               value={props.row[column].value}
               regex={control.control_regex}
               regexMsg={control.control_regex_msg}
+              editable={props.row[column].control_editable}
+              mandatory={props.row[column].control_mandatory}
             />
           );
 
@@ -122,6 +130,8 @@ export const DataGridControl: React.FC<IProps> = ({ control, fileId }) => {
               value={props.row[column].value}
               regex={control.control_regex}
               regexMsg={control.control_regex_msg}
+              editable={props.row[column].control_editable}
+              mandatory={props.row[column].control_mandatory}
             />
           );
 
@@ -155,6 +165,8 @@ export const DataGridControl: React.FC<IProps> = ({ control, fileId }) => {
               value={props.row[column].value}
               regex={control.control_regex}
               regexMsg={control.control_regex_msg}
+              editable={props.row[column].control_editable}
+              mandatory={props.row[column].control_mandatory}
             />
           );
 
@@ -181,6 +193,8 @@ export const DataGridControl: React.FC<IProps> = ({ control, fileId }) => {
               value={props.row[column].value}
               regex={control.control_regex}
               regexMsg={control.control_regex_msg}
+              editable={props.row[column].control_editable}
+              mandatory={props.row[column].control_mandatory}
             />
           );
 
@@ -196,6 +210,8 @@ export const DataGridControl: React.FC<IProps> = ({ control, fileId }) => {
               value={props.row[column].value}
               regex={control.control_regex}
               regexMsg={control.control_regex_msg}
+              editable={props.row[column].control_editable}
+              mandatory={props.row[column].control_mandatory}
             />
           );
 
@@ -211,6 +227,8 @@ export const DataGridControl: React.FC<IProps> = ({ control, fileId }) => {
               value={props.row[column].value}
               regex={control.control_regex}
               regexMsg={control.control_regex_msg}
+              editable={props.row[column].control_editable}
+              mandatory={props.row[column].control_mandatory}
             />
           );
 
@@ -226,6 +244,8 @@ export const DataGridControl: React.FC<IProps> = ({ control, fileId }) => {
               value={props.row[column].value}
               regex={control.control_regex}
               regexMsg={control.control_regex_msg}
+              editable={props.row[column].control_editable}
+              mandatory={props.row[column].control_mandatory}
             />
           );
 

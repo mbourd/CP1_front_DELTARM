@@ -3,6 +3,7 @@ import { DataGridTextStyled } from './DataGridText.style';
 import { FormError, InputBase } from 'Shared/components';
 import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
 import { useSecurity } from '../../../../../../../../Packages/Security';
+import { checkIfSameValues } from '../../../../../../../../Packages/Helpers/src/checkIfSameValues';
 
 interface IProps {
   value: string;
@@ -12,6 +13,8 @@ interface IProps {
   rowNum: number;
   regex: RegExp | null;
   regexMsg: string | null;
+  editable: boolean;
+  mandatory: boolean;
 }
 
 export const DataGridText: React.FC<IProps> = ({
@@ -22,8 +25,10 @@ export const DataGridText: React.FC<IProps> = ({
   rowNum,
   regex,
   regexMsg,
+  editable,
+  mandatory,
 }): React.ReactElement => {
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string | null>('');
   const [currentValue, setCurrentValue] = useState(value);
   const { user } = useSecurity();
   const jwt = user.getJwt();
@@ -44,6 +49,21 @@ export const DataGridText: React.FC<IProps> = ({
           return;
         }
       }
+      if (!checkIfSameValues(value, currentValue)) {
+        setErrorMessage(null);
+        if (mandatory && !value.trim()) {
+          setErrorMessage('Valeur obligatoire');
+        }
+
+        return;
+      }
+
+      setErrorMessage(null);
+
+      if (mandatory && !value.trim()) {
+        setErrorMessage('Valeur obligatoire');
+      }
+
       saveValueDataGrid(
         fileId,
         controlId,
@@ -55,15 +75,35 @@ export const DataGridText: React.FC<IProps> = ({
         value,
       );
     },
-    [regexMsg, regex, controlId, jwt, fileId, columnId, rowNum],
+    [
+      regexMsg,
+      regex,
+      controlId,
+      jwt,
+      fileId,
+      columnId,
+      rowNum,
+      mandatory,
+      currentValue,
+    ],
   );
+
+  useEffect(() => {
+    if (mandatory && editable && !currentValue) {
+      setErrorMessage('Valeur obligatoire');
+    }
+    if (mandatory) {
+      setErrorMessage(null);
+    }
+  }, [mandatory, editable, currentValue]);
 
   return (
     <DataGridTextStyled>
       <InputBase
         placeholder={'Texte'}
         id={`input grid`}
-        disabled={false}
+        disabled={!editable}
+        color={editable ? 'text' : 'disabled'}
         defaultValue={currentValue ? currentValue : ''}
         onBlur={(e) => saveValue(e.currentTarget.value)}
       />

@@ -184,6 +184,8 @@ export interface DataGridDetailsRows {
     upload_detail: IUploadDetail[] | null;
     col_elm_id: number;
     row_num: number;
+    control_editable: boolean;
+    control_mandatory: boolean;
     control_regex: RegExp | null;
     control_regex_msg: string | null;
     answer_choices: Record<string, ISelectData> | null;
