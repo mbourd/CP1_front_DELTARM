@@ -31,6 +31,9 @@ export const DataGridUpload: React.FC<IProps> = ({
   editable,
   mandatory,
 }): React.ReactElement => {
+  if (editable === undefined) {
+    editable = true;
+  }
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [newUploadFile, setNewUploadFile] = useState<File | null>(null);
   const [currentUploadFile, setCurrentUploadFile] = useState<

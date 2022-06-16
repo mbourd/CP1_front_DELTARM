@@ -29,6 +29,9 @@ export const DataGridBoolean: React.FC<IProps> = ({
   editable,
   mandatory,
 }): React.ReactElement => {
+  if (editable === undefined) {
+    editable = true;
+  }
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState<boolean>(
     stringToBoolean(value),
