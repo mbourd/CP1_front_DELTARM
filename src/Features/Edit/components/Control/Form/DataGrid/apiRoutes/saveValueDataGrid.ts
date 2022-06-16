@@ -9,7 +9,7 @@ export const saveValueDataGrid = (
   rowNum: number,
   jwt: string | null,
   setGridDetails: React.Dispatch<SetStateAction<any>>,
-  setErrorMessage: React.Dispatch<SetStateAction<string>>,
+  setErrorMessage: React.Dispatch<SetStateAction<string | null>>,
   value: string,
 ) => {
   axios

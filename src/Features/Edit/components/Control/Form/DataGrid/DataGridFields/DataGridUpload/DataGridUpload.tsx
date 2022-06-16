@@ -18,6 +18,8 @@ interface IProps {
   controlId: string;
   columnId: number;
   rowNum: number;
+  editable: boolean;
+  mandatory: boolean;
 }
 
 export const DataGridUpload: React.FC<IProps> = ({
@@ -26,6 +28,8 @@ export const DataGridUpload: React.FC<IProps> = ({
   controlId,
   columnId,
   rowNum,
+  editable,
+  mandatory,
 }): React.ReactElement => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [newUploadFile, setNewUploadFile] = useState<File | null>(null);
@@ -51,6 +55,14 @@ export const DataGridUpload: React.FC<IProps> = ({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   const handleUploadFile = useCallback(() => {
+    if (mandatory && !newUploadFile) {
+      setErrorMessage('Valeur obligatoire');
+
+      return;
+    }
+    if (!mandatory) {
+      setErrorMessage(null);
+    }
     if (newUploadFile) {
       uploadFile(
         fileId,
@@ -63,7 +75,7 @@ export const DataGridUpload: React.FC<IProps> = ({
         setErrorMessage,
       );
     }
-  }, [fileId, controlId, newUploadFile, jwt, rowNum, columnId]);
+  }, [fileId, controlId, newUploadFile, jwt, rowNum, columnId, mandatory]);
 
   const handleDeleteFile = useCallback(
     (e, name) => {
@@ -103,13 +115,14 @@ export const DataGridUpload: React.FC<IProps> = ({
         disableTouchRipple
         disableFocusRipple
         disableElevation
-        disabled={false}
+        disabled={!editable}
         id={`data-grid-upload${controlId}`}
         style={{
           display: 'block',
           width: '100%',
           padding: '0',
           margin: '0',
+          opacity: `${editable ? '1' : '0.5'}`,
         }}
       >
         <Container
@@ -151,6 +164,7 @@ export const DataGridUpload: React.FC<IProps> = ({
         currentUploadFile={currentUploadFile}
         handleDeleteFile={handleDeleteFile}
         handleDownloadFile={handleDownloadFile}
+        disabled={!editable}
       />
       {errorMessage ? (
         <p>
