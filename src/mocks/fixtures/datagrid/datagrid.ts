@@ -79,6 +79,7 @@ export const dataGridDetail = {
       column4: {
         component: 'select_list',
         value: null,
+        control_editable: false,
         answer_choices: [
           {
             id: 1,
@@ -102,7 +103,11 @@ export const dataGridDetail = {
       column7: { component: 'percent', value: null },
       column8: { component: 'financial', value: '12.23030' },
       column9: { component: 'decimal', value: 13.292 },
-      column10: { component: 'long_text', value: null },
+      column10: {
+        component: 'long_text',
+        control_editable: false,
+        value: null,
+      },
       column11: { component: 'delete' },
     },
   ],

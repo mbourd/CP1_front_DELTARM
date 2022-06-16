@@ -29,6 +29,9 @@ export const DataGridFinancial: React.FC<IProps> = ({
   editable,
   mandatory,
 }): React.ReactElement => {
+  if (editable === undefined) {
+    editable = true;
+  }
   const [errorMessage, setErrorMessage] = useState<string | null>('');
   const [currentValue, setCurrentValue] = useState(value);
   const { user } = useSecurity();
