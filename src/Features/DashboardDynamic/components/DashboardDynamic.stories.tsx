@@ -7,6 +7,7 @@ import {
   DASHBOARD_BPI,
   DASHBOARD_CHANTIER_ABC,
   DASHBOARD_CNIM,
+  AG_GRID_DASHBOARD,
 } from '../../../mocks/fixtures/dashboard/dashboard';
 import { data as MODAL } from '../../../mocks/fixtures/modal/modal';
 import { RecoilRoot } from 'recoil';
@@ -98,6 +99,27 @@ DashboardCNIM.decorators = [
     worker?.use(
       rest.get('https://undefined/dashboard/contr_perm', (req, res, ctx) => {
         return res(ctx.status(200), ctx.json(DASHBOARD_CNIM));
+      }),
+      rest.get(
+        'https://undefined/contr_perm/get_search_test',
+        (req, res, ctx) => {
+          req.url.searchParams.get('value');
+
+          return res(ctx.status(200), ctx.json(MODAL));
+        },
+      ),
+    );
+
+    return story();
+  },
+];
+
+export const DashboardAgGrid = Template.bind({});
+DashboardAgGrid.decorators = [
+  (story: any) => {
+    worker?.use(
+      rest.get('https://undefined/dashboard/contr_perm', (req, res, ctx) => {
+        return res(ctx.status(200), ctx.json(AG_GRID_DASHBOARD));
       }),
       rest.get(
         'https://undefined/contr_perm/get_search_test',

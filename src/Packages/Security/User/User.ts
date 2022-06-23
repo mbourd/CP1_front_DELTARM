@@ -42,11 +42,6 @@ export class User implements IUser {
     return this._roles.includes(role);
   }
 
-  public isGranted(role: string): boolean {
-    // Todo
-    return false;
-  }
-
   /**
    * This function checks if user is logged. It based on JWT.
    */
