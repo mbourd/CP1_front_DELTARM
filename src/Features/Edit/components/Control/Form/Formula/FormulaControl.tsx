@@ -53,7 +53,6 @@ export const FormulaControl: React.FC<IProps> = ({
           return;
         }
       }
-
       if (!checkIfSameValues(value, currentValue)) {
         setErrorMessage(null);
         if (control.mandatory && !value.trim()) {
@@ -145,7 +144,7 @@ export const FormulaControl: React.FC<IProps> = ({
           }
           disabled={!control.editable}
           color={control.editable ? 'text' : 'disabled'}
-          value={controlValue ? controlValue : ''}
+          defaultValue={controlValue ? controlValue : ''}
           onBlur={(e) => saveValue(e.currentTarget.value)}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}

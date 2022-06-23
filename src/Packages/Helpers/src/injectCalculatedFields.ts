@@ -4,7 +4,7 @@ import { between } from './between';
 export const injectCalculatedFields = (formState: IChapter[]): IChapter[] => {
   formState.map((chapter: IChapter) => {
     chapter.controls.map((field) => {
-      if (field.formula) {
+      if (field.formula?.formula) {
         const regex = new RegExp(/#\d+/g);
         const fieldsToReplaceInFormula = field.formula.formula.match(regex);
         let formula = field.formula.formula;
