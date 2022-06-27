@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { DataGridBooleanStyled } from './DataGridBoolean.style';
 import { FormError } from 'Shared/components';
 import { Checkbox } from '@mui/material';
@@ -14,6 +14,8 @@ interface IProps {
   rowNum: number;
   regex: RegExp | null;
   regexMsg: string | null;
+  editable: boolean;
+  mandatory: boolean;
 }
 
 export const DataGridBoolean: React.FC<IProps> = ({
@@ -24,8 +26,13 @@ export const DataGridBoolean: React.FC<IProps> = ({
   rowNum,
   regex,
   regexMsg,
+  editable,
+  mandatory,
 }): React.ReactElement => {
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  if (editable === undefined) {
+    editable = true;
+  }
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState<boolean>(
     stringToBoolean(value),
   );
@@ -56,6 +63,15 @@ export const DataGridBoolean: React.FC<IProps> = ({
     );
   }, [regexMsg, regex, controlId, jwt, fileId, currentValue, columnId, rowNum]);
 
+  useEffect(() => {
+    if (mandatory && editable && !currentValue) {
+      setErrorMessage('Valeur obligatoire');
+    }
+    if (mandatory) {
+      setErrorMessage(null);
+    }
+  }, [mandatory, editable, currentValue]);
+
   return (
     <DataGridBooleanStyled>
       <Checkbox
@@ -63,7 +79,7 @@ export const DataGridBoolean: React.FC<IProps> = ({
         title={'Validation'}
         style={{ paddingLeft: '0', display: 'block', textAlign: 'center' }}
         disableRipple
-        disabled={false}
+        disabled={!editable}
         checked={currentValue ? currentValue : false}
         onClick={() => toggleAndSaveValue()}
       />

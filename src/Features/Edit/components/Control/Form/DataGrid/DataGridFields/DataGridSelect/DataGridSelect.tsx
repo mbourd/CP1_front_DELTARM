@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { DataGridSelectStyled } from './DataGridSelect.style';
 import { FormError, ISelectData, Select } from 'Shared/components';
 import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
@@ -13,6 +13,8 @@ interface IProps {
   rowNum: number;
   regex: RegExp | null;
   regexMsg: string | null;
+  editable: boolean;
+  mandatory: boolean;
 }
 
 export const DataGridSelect: React.FC<IProps> = ({
@@ -24,8 +26,13 @@ export const DataGridSelect: React.FC<IProps> = ({
   rowNum,
   regex,
   regexMsg,
+  editable,
+  mandatory,
 }): React.ReactElement => {
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  if (editable === undefined) {
+    editable = true;
+  }
+  const [errorMessage, setErrorMessage] = useState<string | null>('');
   const [currentValue, setCurrentValue] = useState(value);
   const { user } = useSecurity();
   const jwt = user.getJwt();
@@ -59,14 +66,24 @@ export const DataGridSelect: React.FC<IProps> = ({
     [regexMsg, regex, controlId, jwt, fileId, columnId, rowNum],
   );
 
+  useEffect(() => {
+    if (mandatory && editable && !currentValue) {
+      setErrorMessage('Valeur obligatoire');
+    }
+    if (!mandatory) {
+      setErrorMessage(null);
+    }
+  }, [mandatory, editable, currentValue]);
+
   return (
     <DataGridSelectStyled>
       <Select
         closeOnSelect
         name={'select_list_data_grid'}
         data={answerChoices || {}}
-        labelColor={'text'}
-        labelBdc={'text'}
+        labelColor={editable ? 'text' : 'disabled'}
+        labelBdc={editable ? 'text' : 'disabled'}
+        disabled={!editable}
         selectedValues={selectedValue}
         onChange={(selectedValues) => {
           const value =

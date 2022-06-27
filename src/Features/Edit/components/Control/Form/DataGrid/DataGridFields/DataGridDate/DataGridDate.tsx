@@ -3,6 +3,7 @@ import { DataGridDateStyled } from './DataGridDate.style';
 import { FormError, InputBase } from 'Shared/components';
 import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
 import { useSecurity } from '../../../../../../../../Packages/Security';
+import { checkIfSameValues } from '../../../../../../../../Packages/Helpers/src/checkIfSameValues';
 
 interface IProps {
   value: string;
@@ -12,6 +13,8 @@ interface IProps {
   rowNum: number;
   regex: RegExp | null;
   regexMsg: string | null;
+  editable: boolean;
+  mandatory: boolean;
 }
 
 export const DataGridDate: React.FC<IProps> = ({
@@ -22,8 +25,13 @@ export const DataGridDate: React.FC<IProps> = ({
   rowNum,
   regex,
   regexMsg,
+  editable,
+  mandatory,
 }): React.ReactElement => {
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  if (editable === undefined) {
+    editable = true;
+  }
+  const [errorMessage, setErrorMessage] = useState<string | null>('');
   const [currentValue, setCurrentValue] = useState(value);
   const { user } = useSecurity();
   const jwt = user.getJwt();
@@ -45,6 +53,20 @@ export const DataGridDate: React.FC<IProps> = ({
         }
       }
 
+      if (!checkIfSameValues(value, currentValue)) {
+        setErrorMessage(null);
+        if (mandatory && !value.trim()) {
+          setErrorMessage('Valeur obligatoire');
+        }
+
+        return;
+      }
+      setErrorMessage(null);
+
+      if (mandatory && !value.trim()) {
+        setErrorMessage('Valeur obligatoire');
+      }
+
       saveValueDataGrid(
         fileId,
         controlId,
@@ -56,14 +78,34 @@ export const DataGridDate: React.FC<IProps> = ({
         value,
       );
     },
-    [regexMsg, regex, controlId, jwt, fileId, columnId, rowNum],
+    [
+      regexMsg,
+      regex,
+      controlId,
+      jwt,
+      fileId,
+      columnId,
+      rowNum,
+      currentValue,
+      mandatory,
+    ],
   );
+
+  useEffect(() => {
+    if (mandatory && editable && !currentValue) {
+      setErrorMessage('Valeur obligatoire');
+    }
+    if (!mandatory) {
+      setErrorMessage(null);
+    }
+  }, [mandatory, editable, currentValue]);
 
   return (
     <DataGridDateStyled>
       <InputBase
         id={`input date grid`}
-        disabled={false}
+        disabled={!editable}
+        color={editable ? 'text' : 'disabled'}
         defaultValue={currentValue ? currentValue : ''}
         onBlur={(e) => saveValue(e.currentTarget.value)}
         type={'date'}
