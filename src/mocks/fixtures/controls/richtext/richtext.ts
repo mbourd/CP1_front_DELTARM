@@ -201,3 +201,62 @@ export const RICHTEXT = {
   ],
   entityMap: {},
 };
+
+export const richTextDataJodit =
+  '<p><u><img src="https://picsum.photos/200" alt="" width="300px">sssss<em>ssssssss<strong>ssss</strong></em></u>dddd</p><table style="border-collapse:collapse;width: 100%;"><tbody>\n' +
+  '<tr>\n' +
+  '\t<td style="width: 14.2857%;">ef</td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td></tr>\n' +
+  '<tr>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td></tr>\n' +
+  '<tr>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td></tr>\n' +
+  '<tr>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;">test data</td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td></tr>\n' +
+  '<tr>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td></tr>\n' +
+  '<tr>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;">ddddd</td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td></tr>\n' +
+  '<tr>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td>\n' +
+  '\t<td style="width: 14.2857%;"><br></td></tr></tbody></table><p>ffokffsqf<s>ssss</s><br></p>';
