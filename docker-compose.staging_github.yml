@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+    front:
+        image: ghcr.io/deltarm/cp1-front/github-staging
+        container_name: cp1_staging_github
+        restart: always
+        ports:
+            - 200:200
+            - 500:500
+        volumes:
+            - /home/deltarm/etc/ssl:/etc/nginx/certs
