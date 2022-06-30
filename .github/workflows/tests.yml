@@ -1,0 +1,29 @@
+name: Tests
+
+on:
+    pull_request:
+        types: [ opened ]
+        branches:
+            - 'staging'
+            - 'preprod'
+            - 'master'
+    workflow_call:
+
+jobs:
+    jest-tests:
+        name: Jest Unit tests
+        runs-on: ubuntu-20.04
+        steps:
+            -   name: checkout
+                uses: actions/checkout@v3
+
+            -   name: setup node
+                uses: actions/setup-node@v3
+                with:
+                    node-version: 16.13.1
+
+            -   name: yarn install
+                run: yarn install
+
+            -   name: launch tests
+                run: yarn test --watchAll=false
