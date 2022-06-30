@@ -58,6 +58,17 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+### Build image docker
+
+build the image before pushing it
+```bash
+docker build -t ghcr.io/deltarm/cp1-front/[env]:latest -f ci/[env]/Dockerfile .
+```
+pushing image
+```bash
+docker push ghcr.io/deltarm/cp1-front/[env]:latest
+```
+
 ### Deployment
 
 The front-end part is totally separate from the back-end part and run by itself on a docker container. The docker container is launch by the CI on GitLab and builds all the necessary assets for every environments.
