@@ -34,7 +34,7 @@ const control = {
   control_type: 'rich_text',
   control_value: null,
   control_options: null,
-  rich_text_detail: richTextDataJodit,
+  jodit_rich_text_detail: richTextDataJodit,
 };
 
 export const JoditRichText = Template.bind({});
@@ -83,7 +83,7 @@ const controlDisabled = {
   control_type: 'rich_text',
   control_value: null,
   control_options: null,
-  rich_text_detail: richTextDataJodit,
+  jodit_rich_text_detail: richTextDataJodit,
 };
 
 export const JoditRichTextDisabled = Template.bind({});
