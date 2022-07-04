@@ -1,6 +1,10 @@
 import React, { useState, useRef, useCallback } from 'react';
 import JoditEditor from 'jodit-react';
 import { IApiControl } from '../../../../types';
+import { saveJoditEditor } from './apiRoutes/saveJoditEditor';
+import { FormError } from '../../../../../../Packages/Design/components';
+import { IUser, security } from '../../../../../../Packages/Security';
+import { RejectControl } from '../RejectByPointControl/RejectControl';
 
 interface IProps {
   control: IApiControl;
@@ -13,18 +17,26 @@ export const JoditRichTextControl: React.FC<IProps> = ({
   fileId,
   context,
 }) => {
+  const [user] = useState<IUser>(security.getUser());
+  const jwt = user.getJwt();
   const editor = useRef(null);
-  const [content, setContent] = useState(control.rich_text_detail);
-  console.log(control);
-  console.log(fileId);
-  console.log(context);
+  const [message, setMessage] = useState<string | null>(null);
+  const [content, setContent] = useState<string | null>(
+    control.jodit_rich_text_detail ? control.jodit_rich_text_detail : null,
+  );
+  const [isRejected, setIsRejected] = useState(
+    control.control_rejectable?.is_rejected
+      ? control.control_rejectable.is_rejected
+      : false,
+  );
 
-  const handleBlurContent = useCallback((newContent) => {
-    console.log(newContent);
-    setContent(newContent);
-  }, []);
+  const handleBlurContent = useCallback(
+    (newContent) => {
+      saveJoditEditor(fileId, control, newContent, jwt, setMessage);
+    },
+    [control, fileId, jwt],
+  );
 
-  //
   const config = {
     readonly: !control.control_editable, // all options from http://rmamuzic.rs/node_modules/jodit/examples/index.html
     zIndex: 0,
@@ -197,12 +209,28 @@ export const JoditRichTextControl: React.FC<IProps> = ({
   };
 
   return (
-    <JoditEditor
-      ref={editor}
-      value={content}
-      config={config}
-      onBlur={handleBlurContent} // preferred to use only this option to update the content for performance reasons
-      onChange={(newContent) => console.log(newContent)}
-    />
+    <>
+      <JoditEditor
+        ref={editor}
+        value={content ? content : ''}
+        config={config}
+        onBlur={handleBlurContent} // preferred to use only this option to update the content for performance reasons
+        onChange={(newContent) => setContent(newContent)}
+      />
+      {message ? (
+        <p>
+          <FormError>{message}</FormError>
+        </p>
+      ) : null}
+      {control.useRejection && control.control_rejectable && (
+        <RejectControl
+          isRejected={isRejected}
+          setIsRejected={setIsRejected}
+          controlId={control.control_id}
+          context={context}
+          controlRejectable={control.useRejection}
+        />
+      )}
+    </>
   );
 };
