@@ -553,8 +553,7 @@ export const dataGridDetailAgGrid = {
       },
     },
     {
-      border_bottom: 'green',
-      zIndex: -1,
+      border_bottom: 'grey',
       Integer: {
         col_elm_id: 870,
         component: 'integer',
