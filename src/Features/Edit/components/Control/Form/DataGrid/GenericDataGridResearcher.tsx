@@ -5,11 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {
-  IAfterGuiAttachedParams,
-  IDoesFilterPassParams,
-  IFilterParams,
-} from 'ag-grid-community';
+import { IDoesFilterPassParams, IFilterParams } from 'ag-grid-community';
 
 // eslint-disable-next-line react/display-name
 export const GenericDataGridResearcher = forwardRef(
@@ -73,7 +69,7 @@ export const GenericDataGridResearcher = forwardRef(
           setFilterText(model == null ? null : model.value);
         },
 
-        afterGuiAttached(params: IAfterGuiAttachedParams) {
+        afterGuiAttached() {
           focus();
         },
       };
