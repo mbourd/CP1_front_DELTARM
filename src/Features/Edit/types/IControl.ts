@@ -30,6 +30,8 @@ export type ControlTypeType =
   | 'boolean'
   | 'line_break'
   | 'data_grid'
+  | 'ag_data_grid'
+  | 'jodit_rich_text'
   | 'slider';
 
 export type ControlFontSize = 'standard' | 'bold';
