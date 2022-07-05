@@ -1,18 +1,18 @@
 import React from 'react';
-import { RichTextControl } from './RichTextControl';
-import { richTextData } from '../../../../../../mocks/fixtures/controls/richtext/richtext';
+import { JoditRichTextControl } from './JoditRichTextControl';
+import { richTextDataJodit } from '../../../../../../mocks/fixtures/controls/richtext/richtext';
 import { worker } from '../../../../../../mocks/server';
 import { rest } from 'msw';
 import { RICHTEXT } from '../../../../../../mocks/fixtures/controls/richtext/richtext';
 
 export default {
-  title: 'RichTextControl',
-  component: RichTextControl,
+  title: 'JoditRichTextControl',
+  component: JoditRichTextControl,
   decorators: [(story: any) => <div className="p-6">{story()}</div>],
 };
 
 const Template: any = (args: any) => {
-  return <RichTextControl {...args} />;
+  return <JoditRichTextControl {...args} />;
 };
 
 const control = {
@@ -34,11 +34,11 @@ const control = {
   control_type: 'rich_text',
   control_value: null,
   control_options: null,
-  rich_text_detail: richTextData,
+  jodit_rich_text_detail: richTextDataJodit,
 };
 
-export const RichText = Template.bind({});
-RichText.args = {
+export const JoditRichText = Template.bind({});
+JoditRichText.args = {
   control,
   fileId: 133,
   formState: [{ controls: [control] }],
@@ -47,7 +47,7 @@ RichText.args = {
   },
 };
 
-RichText.decorators = [
+JoditRichText.decorators = [
   (story: any) => {
     worker?.use(
       rest.post('https://undefined/control/set_value', (req, res, ctx) => {
@@ -83,11 +83,11 @@ const controlDisabled = {
   control_type: 'rich_text',
   control_value: null,
   control_options: null,
-  rich_text_detail: richTextData,
+  jodit_rich_text_detail: richTextDataJodit,
 };
 
-export const RichTextDisabled = Template.bind({});
-RichTextDisabled.args = {
+export const JoditRichTextDisabled = Template.bind({});
+JoditRichTextDisabled.args = {
   control: controlDisabled,
   fileId: 133,
   formState: [{ controls: [control] }],

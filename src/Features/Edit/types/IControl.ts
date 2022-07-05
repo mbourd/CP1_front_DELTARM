@@ -30,6 +30,8 @@ export type ControlTypeType =
   | 'boolean'
   | 'line_break'
   | 'data_grid'
+  | 'ag_data_grid'
+  | 'jodit_rich_text'
   | 'slider';
 
 export type ControlFontSize = 'standard' | 'bold';
@@ -264,6 +266,7 @@ export interface IApiControl {
   control_options: IControlOptions | null;
   upload_detail: IUploadDetail[] | null;
   rich_text_detail: RawDraftContentState | null;
+  jodit_rich_text_detail?: string | null;
   control_rejectable: IAPIControlRejectable | null;
   useRejection?: ControlRejectable;
   data_grid_detail_ag_grid?: DataGridDetailAgGrid | null;
