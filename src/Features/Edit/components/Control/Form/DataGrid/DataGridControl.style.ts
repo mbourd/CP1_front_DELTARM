@@ -41,15 +41,8 @@ export const DataGridControlStyled = styled.div`
   }
   .ag-root,
   .ag-root-wrapper {
+    overflow-x: clip !important;
     overflow-y: visible !important;
-  }
-
-  .ag-root-wrapper {
-    cursor: default;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    overflow: visible !important;
   }
 
   .ag-root.ag-layout-auto-height {
