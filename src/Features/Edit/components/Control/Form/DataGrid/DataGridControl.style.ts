@@ -41,7 +41,7 @@ export const DataGridControlStyled = styled.div`
   }
   .ag-root,
   .ag-root-wrapper {
-    overflow-x: clip !important;
+    overflow-x: scroll !important;
     overflow-y: visible !important;
   }
 
