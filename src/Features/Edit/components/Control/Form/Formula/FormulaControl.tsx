@@ -138,13 +138,13 @@ export const FormulaControl: React.FC<IProps> = ({
           placeholder={
             control.editable
               ? control.control_title
-              : currentValue
-              ? currentValue
+              : controlValue
+              ? controlValue
               : ''
           }
           disabled={!control.editable}
           color={control.editable ? 'text' : 'disabled'}
-          defaultValue={controlValue ? controlValue : ''}
+          value={controlValue ? controlValue : ''}
           onBlur={(e) => saveValue(e.currentTarget.value)}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
