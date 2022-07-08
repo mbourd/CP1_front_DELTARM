@@ -70,9 +70,9 @@ jobs:
                     hosts: ${{ secrets.SSH_COMMON_USER_CP1 }}@${{ secrets.SSH_STAGING_HOST_CP1 }}
                     privateKey: ${{ secrets.SSH_PRIVATE_KEY_COMMON_CP1 }}
                     command: |
-                        docker login ghcr.io/deltarm/cp1-front/staging:latest -u ${{ github.repository_owner }} -p ${{ secrets.GITHUB_TOKEN }}
-                        docker-compose -f /home/deltarm/client/docker-compose.staging_test.yml pull
-                        docker-compose -f /home/deltarm/client/docker-compose.staging_test.yml up -d --remove-orphans
+                        docker login ghcr.io/deltarm/cp1-front/github-staging:latest -u ${{ github.repository_owner }} -p ${{ secrets.GITHUB_TOKEN }}
+                        docker-compose -f /home/deltarm/client/docker-compose.staging_github.yml pull
+                        docker-compose -f /home/deltarm/client/docker-compose.staging_github.yml up -d --remove-orphans
 
 
 
