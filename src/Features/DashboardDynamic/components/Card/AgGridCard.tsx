@@ -173,7 +173,9 @@ export const AgGridCard: React.FC<ICardC> = ({
 
   return (
     <CardStyled cardColor={card.title.bg_color}>
-      <Header color={card.title.bg_color}>{card.title.lib}</Header>
+      <Header color={card.title.bg_color}>
+        <span style={{ color: card.title.font_color }}>{card.title.lib}</span>
+      </Header>
       <div style={containerStyle}>
         <TableContainer
           component={Paper}

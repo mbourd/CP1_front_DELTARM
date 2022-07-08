@@ -22,4 +22,10 @@ describe('Ad Grid Card Dashboard', () => {
     expect(getByText('A La fonction de tri')).toBeInTheDocument();
     expect(getByText('SERVICE PARTENARIAT RECHERCHE')).toBeInTheDocument();
   });
+  test('Should display dynamic color title card', async () => {
+    const { container } = render(<AgCardDashboard />);
+    const element = container.getElementsByTagName('header');
+    const title = element[0].getElementsByTagName('span');
+    expect(title[0]).toHaveAttribute('style', 'color: blue;');
+  });
 });
