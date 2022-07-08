@@ -1393,7 +1393,7 @@ AgCardDashboard.args = {
     ],
     title: {
       bg_color: '#2ECC71',
-      font_color: '#FFFFFF',
+      font_color: 'blue',
       lib: 'Contracts in progress',
     },
   },
