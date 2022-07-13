@@ -51,11 +51,15 @@ export const EditHeaderStyled = styled.div`
 export const EditTitleFileStyled = styled.p`
   align-items: center;
   text-align: center;
+  justify-content: center;
   position: relative;
-  margin: 10px;
-  font-size: ${({ theme }) => theme.sizing.normal};
+  margin-top: 10px !important;
+  margin: 5px;
+  font-size: 1.4rem;
+  width: 120%;
+  height: auto;
   font-family: ${({ theme }) => theme.font.heading.main};
-  line-height: 40px;
+  line-height: 25px;
 
   .MuiSvgIcon-root,
   span {
