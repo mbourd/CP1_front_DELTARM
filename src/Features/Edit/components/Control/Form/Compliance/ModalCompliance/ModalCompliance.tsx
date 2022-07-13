@@ -3,10 +3,10 @@ import { Button, Modal } from '../../../../../../../Packages/Design/components';
 import { IApiComplianceData, IApiComplianceFields } from '../../../../../types';
 import { SwitchControlCompliance } from '../SwitchControlCompliance';
 import { Grid } from '@material-ui/core';
-import { FormControlStyled } from '../../../Display/FormControl.style';
 import { SearchModalFooterStyled } from '../../../../../../Manage/components/Search/Modal/SearchModal.style';
 import { HeadingTwo } from '../../../../../../../Shared/components';
 import { useApi } from '../../../../../../../Services';
+import { FormComplianceContainer } from '../Compliance.style';
 
 interface IProps {
   open: boolean;
@@ -43,9 +43,16 @@ export const ModalCompliance: React.FC<IProps> = ({
   );
 
   return (
-    <Modal open={open} height={'618px'} onClose={onClose} footer={footer}>
+    <Modal
+      open={open}
+      height={'618px'}
+      onClose={onClose}
+      footer={footer}
+      className={'_ModalCompliance'}
+      footerBorderTop={true}
+    >
       <HeadingTwo>{data?.compliance_modal_title}</HeadingTwo>
-      <FormControlStyled>
+      <FormComplianceContainer className={'_FormModalCompliance'}>
         <Grid container className={'control-container'}>
           {data?.compliance_fields.map(
             (compliance: IApiComplianceFields, index) => {
@@ -59,7 +66,7 @@ export const ModalCompliance: React.FC<IProps> = ({
             },
           )}
         </Grid>
-      </FormControlStyled>
+      </FormComplianceContainer>
     </Modal>
   );
 };

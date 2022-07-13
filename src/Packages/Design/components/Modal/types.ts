@@ -45,4 +45,8 @@ export interface IModal {
    * Display the top and bottom dividers.
    */
   dividers?: boolean;
+  /**
+   * Footer borderTop
+   */
+  footerBorderTop?: boolean;
 }
