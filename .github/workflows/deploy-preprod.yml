@@ -4,7 +4,7 @@ on:
         branches:
             - 'preprod'
     pull_request:
-        types: [ opened,closed ]
+        types: [ closed ]
         branches:
             - 'preprod'
 jobs:
@@ -15,7 +15,7 @@ jobs:
         if: success() && (github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true))
         name: Deploy-preprod
         runs-on: ubuntu-20.04
-#        needs: tests
+        needs: tests
         continue-on-error: false
 
         steps:
@@ -59,15 +59,15 @@ jobs:
                 with:
                     switches: -av --include="docker-compose.*" --exclude="*"
                     path: .
-                    remote_path: ${{ secrets.SSH_STAGING_DIRECTORY_BUILD_CP1 }}
-                    remote_host: ${{ secrets.SSH_STAGING_HOST_CP1 }}
+                    remote_path: ${{ secrets.SSH_PREPROD_DIRECTORY_BUILD_CP1 }}
+                    remote_host: ${{ secrets.SSH_PREPROD_HOST_CP1 }}
                     remote_user: ${{ secrets.SSH_COMMON_USER_CP1 }}
                     remote_key: ${{ secrets.SSH_PRIVATE_KEY_COMMON_CP1 }}
 
             -   name : Install on Server
                 uses: JimCronqvist/action-ssh@0.1.1
                 with:
-                    hosts: ${{ secrets.SSH_COMMON_USER_CP1 }}@${{ secrets.SSH_STAGING_HOST_CP1 }}
+                    hosts: ${{ secrets.SSH_COMMON_USER_CP1 }}@${{ secrets.SSH_PREPROD_HOST_CP1 }}
                     privateKey: ${{ secrets.SSH_PRIVATE_KEY_COMMON_CP1 }}
                     command: |
                         docker login ghcr.io/deltarm/cp1-front/preprod:latest -u ${{ github.repository_owner }} -p ${{ secrets.GITHUB_TOKEN }}
