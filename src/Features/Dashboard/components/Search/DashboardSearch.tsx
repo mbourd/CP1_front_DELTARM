@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { DashboardSearchStyled } from './DashboardSearch.style';
 import { FormControlLabel, Paper, Radio, RadioGroup } from '@material-ui/core';

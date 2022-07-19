@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 
 import {
@@ -8,7 +8,7 @@ import {
   useSecurity,
   SecurityContext,
 } from 'Services';
-import { BreadCrumb, HeadingOne } from 'Shared/components';
+import { BreadCrumb, HeadingOne, ErrorNoData } from 'Shared/components';
 import { DashboardStyled } from './Dashboard.style';
 import { Card } from './Card/Card';
 import { ICard } from './Card/types';
@@ -22,6 +22,29 @@ const Dashboard: React.FC = (): React.ReactElement => {
   const { callState, send, data } = useApi<ICard[]>();
   const { data: dataSecurity, logout } = useContext(SecurityContext);
   const { user } = useSecurity();
+  const [clientInfoSignal, setClientInfoSignal] = useState(false);
+
+  const { data: context } = useContext(SecurityContext);
+  const { send: clientInfos, data: dataClientInfos } = useApi<any>({
+    waitForAuthenticated: true,
+  });
+
+  useEffect(() => {
+    if (context.cli_id && clientInfoSignal === false) {
+      clientInfos('clientInfo', {}, { cli_id: context.cli_id });
+
+      // checks whether client data came or not
+      if (dataClientInfos?.data?.length > 0) {
+        setClientInfoSignal(true);
+
+        return;
+      } else {
+        setClientInfoSignal(false);
+
+        return;
+      }
+    }
+  }, [context.cli_id, clientInfoSignal, clientInfos, dataClientInfos]);
 
   useEffect(() => {
     // Temporary if statements behavior
@@ -40,7 +63,7 @@ const Dashboard: React.FC = (): React.ReactElement => {
     logout();
   }
 
-  return (
+  return clientInfoSignal ? (
     <>
       <BreadCrumb values={['Dashboard']} />
       <SwitchCallState
@@ -66,6 +89,10 @@ const Dashboard: React.FC = (): React.ReactElement => {
         </DashboardStyled>
       </SwitchCallState>
     </>
+  ) : (
+    <div style={{ marginTop: 40 }}>
+      <ErrorNoData message={'Aucun client trouvé'} />
+    </div>
   );
 };
 
