@@ -9,6 +9,10 @@ import { SelectListCompliance } from './FormCompliance/SelectListCompliance/Sele
 import { IntegerCompliance } from './FormCompliance/IntegerCompliance/IntegerCompliance';
 import { PercentCompliance } from './FormCompliance/PercentCompliance/PercentCompliance';
 import { UploadCompliance } from './FormCompliance/UploadCompliance/UploadCompliance';
+import { LongTextCompliance } from './FormCompliance/LongTextCompliance/LongTextCompliance';
+import { RadioCompliance } from './FormCompliance/RadioCompliance/RadioCompliance';
+import { ChexboxesCompliance } from './FormCompliance/CheckboxesCompliance/CheckboxCompliance';
+import { BooleanCompliance } from './FormCompliance/BooleanCompliance/BooleanCompliance';
 
 interface IProps {
   compliance: IApiComplianceFields;
@@ -25,6 +29,14 @@ export const SwitchControlCompliance: React.FC<IProps> = ({
     case 'text':
       return (
         <TextCompliance
+          compliance={compliance}
+          fileId={fileId}
+          controlId={controlId}
+        />
+      );
+    case 'long_text':
+      return (
+        <LongTextCompliance
           compliance={compliance}
           fileId={fileId}
           controlId={controlId}
@@ -81,6 +93,30 @@ export const SwitchControlCompliance: React.FC<IProps> = ({
     case 'file_upload':
       return (
         <UploadCompliance
+          compliance={compliance}
+          fileId={fileId}
+          controlId={controlId}
+        />
+      );
+    case 'radio':
+      return (
+        <RadioCompliance
+          compliance={compliance}
+          fileId={fileId}
+          controlId={controlId}
+        />
+      );
+    case 'checkbox':
+      return (
+        <ChexboxesCompliance
+          compliance={compliance}
+          fileId={fileId}
+          controlId={controlId}
+        />
+      );
+    case 'boolean':
+      return (
+        <BooleanCompliance
           compliance={compliance}
           fileId={fileId}
           controlId={controlId}

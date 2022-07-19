@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { IApiComplianceFields } from 'Features/Edit/types';
-import { FormError, Select } from 'Shared/components';
+import { FormError } from 'Shared/components';
+import { RadioComplianceStyled } from './RadioCompliance.style';
 import { storage, useApi, useRouter } from 'Services';
-import { SelectListComplianceStyled } from './SelectListCompliance.style';
 import { ComplianceLabel } from '../ComplianceLabel';
 import { ComplianceFooter } from '../ComplianceFooter';
+import { CheckboxWrapper } from '../../../../../../../../Packages/Design/components/Checkbox/CheckboxWrapper';
 
 interface IProps {
   compliance: IApiComplianceFields;
@@ -13,7 +14,7 @@ interface IProps {
   controlId: string;
 }
 
-export const SelectListCompliance: React.FC<IProps> = ({
+export const RadioCompliance: React.FC<IProps> = ({
   compliance,
   fileId,
   controlId,
@@ -21,7 +22,6 @@ export const SelectListCompliance: React.FC<IProps> = ({
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
-
   const value = storage.getData<string>(
     fileId +
       controlId +
@@ -43,15 +43,8 @@ export const SelectListCompliance: React.FC<IProps> = ({
 
         return;
       }
+
       setErrorMessage(null);
-      storage.setData(
-        fileId +
-          controlId +
-          '.edit.compliance.' +
-          compliance.compliance_id +
-          '.value',
-        value,
-      );
       send(
         currentRoute?.props?.apiSaveControlRouteName,
         {},
@@ -78,35 +71,32 @@ export const SelectListCompliance: React.FC<IProps> = ({
 
   useEffect(() => {
     if (error) {
-      setErrorMessage(
-        "Une erreur s'est produite, veuillez re-sélectionner une valeur",
-      );
+      setErrorMessage("Une erreur s'est produite durant l'enregistrement");
     }
   }, [error]);
 
   return (
     <Grid item xs={6}>
-      <SelectListComplianceStyled className={'compliance-container'}>
+      <RadioComplianceStyled>
         <ComplianceLabel compliance={compliance} />
-        <Select
-          labelColor={'text'}
-          labelBdc={'text'}
-          closeOnSelect
-          name={'select_list' + compliance.compliance_id}
+        <CheckboxWrapper
+          name={'checkbox' + compliance.compliance_id}
           data={compliance.compliance_answer_choices || {}}
           selectedValues={selectedValue}
           multiple={false}
           onChange={(selectedValues) => {
-            const first = Object.keys(selectedValues)[0];
-            saveValue('' + first);
+            const value =
+              Object.keys(selectedValues).length >= 2
+                ? Object.keys(selectedValues).join(';')
+                : Object.keys(selectedValues)[0];
+            const val = value ? value : '';
+            saveValue('' + val);
           }}
           error={!!error}
-        >
-          {'Sélectionner une valeur'}
-        </Select>
+        />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ComplianceFooter compliance={compliance} />
-      </SelectListComplianceStyled>
+      </RadioComplianceStyled>
     </Grid>
   );
 };
