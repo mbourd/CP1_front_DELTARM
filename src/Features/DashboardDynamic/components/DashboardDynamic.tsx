@@ -18,7 +18,7 @@ import { Card } from './Card/Card';
 import { IsLoading } from './IsLoading';
 import { SearchBar } from './Search/SearchBar';
 import { IDashboard } from './types';
-import { Button } from 'Shared/components';
+import { Button, ErrorNoData } from 'Shared/components';
 import { SwitchMetric } from './Metrics/SwitchMetric';
 import { ModalDynamic } from '../../ModalDynamic/components/ModalDynamic';
 import { useActionButton } from '../../../Packages/Helpers/src/useActionButton';
@@ -44,11 +44,33 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
     logout();
   }
 
+  const [clientInfoSignal, setClientInfoSignal] = useState(false);
+
+  const client_info: any = localStorage.getItem('client_info');
+  const review = JSON.parse(client_info);
+  const { data: context } = useContext(SecurityContext);
+
+  useEffect(() => {
+    if (context.cli_id && clientInfoSignal === false) {
+      // checks whether client data came or not
+      if (review?.length > 0) {
+        setClientInfoSignal(true);
+        localStorage.removeItem('client_info');
+
+        return;
+      } else {
+        setClientInfoSignal(false);
+
+        return;
+      }
+    }
+  }, [context.cli_id, clientInfoSignal, review]);
+
   useEffect(() => {
     send('dashboardControlPermanent');
   }, [send]);
 
-  return (
+  return clientInfoSignal ? (
     <>
       <SwitchCallState
         callState={callState}
@@ -160,6 +182,12 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
           </DashboardDynamicStyled>
         )}
       </SwitchCallState>
+    </>
+  ) : (
+    <>
+      <div style={{ marginTop: 40 }}>
+        <ErrorNoData message={'Aucun client trouvé'} />
+      </div>
     </>
   );
 };
