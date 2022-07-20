@@ -23,19 +23,16 @@ const Dashboard: React.FC = (): React.ReactElement => {
   const { data: dataSecurity, logout } = useContext(SecurityContext);
   const { user } = useSecurity();
   const [clientInfoSignal, setClientInfoSignal] = useState(false);
-
+  const client_info: any = localStorage.getItem('client_info');
+  const review = JSON.parse(client_info);
   const { data: context } = useContext(SecurityContext);
-  const { send: clientInfos, data: dataClientInfos } = useApi<any>({
-    waitForAuthenticated: true,
-  });
 
   useEffect(() => {
     if (context.cli_id && clientInfoSignal === false) {
-      clientInfos('clientInfo', {}, { cli_id: context.cli_id });
-
       // checks whether client data came or not
-      if (dataClientInfos?.data?.length > 0) {
+      if (review?.length > 0) {
         setClientInfoSignal(true);
+        localStorage.removeItem('client_info');
 
         return;
       } else {
@@ -44,7 +41,7 @@ const Dashboard: React.FC = (): React.ReactElement => {
         return;
       }
     }
-  }, [context.cli_id, clientInfoSignal, clientInfos, dataClientInfos]);
+  }, [context.cli_id, clientInfoSignal, review]);
 
   useEffect(() => {
     // Temporary if statements behavior
