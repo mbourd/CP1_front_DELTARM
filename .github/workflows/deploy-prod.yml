@@ -3,16 +3,13 @@ on:
     push:
         branches:
             - 'master'
-    pull_request:
-        types: [ closed ]
-        branches:
-            - 'master'
+
 jobs:
     tests:
         name: Tests
         uses: ./.github/workflows/tests.yml
     deploy-prod:
-        if: success() && (github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true))
+        if: success() && (github.event_name == 'push')
         name: Deploy-prod
         runs-on: ubuntu-20.04
         needs: tests
