@@ -16,6 +16,7 @@ import { IsLoading } from './IsLoading';
 import { NoData } from './NoData';
 import { DashboardSearch } from './Search/DashboardSearch';
 import { DashboardDynamic } from '../../DashboardDynamic';
+import { translation } from '../../../Packages/Translation/Translation';
 
 const Dashboard: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Dashboard');
@@ -51,6 +52,12 @@ const Dashboard: React.FC = (): React.ReactElement => {
     send('dashboard');
   }, [send, dataSecurity.context]);
 
+  useEffect(() => {
+    // Temporary if statements behavior
+    localStorage.setItem('lang', 'en');
+    console.log(localStorage.getItem('lang'), trans('pageTitle'));
+  }, []);
+
   // Temporary if statements behavior
   if (dataSecurity.context === 'contr_perm') {
     return <DashboardDynamic />;
@@ -59,6 +66,8 @@ const Dashboard: React.FC = (): React.ReactElement => {
   if (!user.isLogged()) {
     logout();
   }
+
+  const titl = trans('pageTitle');
 
   return clientInfoSignal ? (
     <>
@@ -72,7 +81,7 @@ const Dashboard: React.FC = (): React.ReactElement => {
         }}
       >
         <DashboardStyled>
-          <HeadingOne>{trans('pageTitle')}</HeadingOne>
+          <HeadingOne>{titl}</HeadingOne>
           <DashboardSearch />
           <Grid container>
             {data?.map((card, index) => {
