@@ -10,6 +10,7 @@ import {
 } from 'Styles';
 import { Link } from 'react-router-dom';
 import { router } from '../../../Packages/Router';
+import { useTrans } from '../../../Services';
 
 type BreadCrumbType = 'Dashboard' | 'Manage' | 'Edit' | 'Validation';
 
@@ -23,6 +24,7 @@ export const BreadCrumb: React.FC<IBreadCrumb> = ({
   const queries = router.getQueries();
   const { id } = router.getParams();
   const isComment = queries.comments === '1';
+  const [trans] = useTrans('Dashboard');
 
   return (
     <BreadCrumbStyled>
@@ -34,10 +36,10 @@ export const BreadCrumb: React.FC<IBreadCrumb> = ({
                 <Grid item key={index}>
                   <HomeIcon fontSize={'small'} />
                   {index === values.length - 1 ? (
-                    <span>Tableau de bord</span>
+                    <span>{trans('pageTitle')}</span>
                   ) : (
                     <Link to={router.generatePath('dashboard') || '/'}>
-                      Tableau de bord
+                      {trans('pageTitle')}
                     </Link>
                   )}
                 </Grid>

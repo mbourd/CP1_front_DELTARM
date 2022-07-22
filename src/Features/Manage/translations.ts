@@ -54,5 +54,17 @@ translation.addBatchResource({
       en: 'No files available',
       fr: "Le format de la recherche n'est pas valide.",
     },
+    searchByCounterPartyOrUser: {
+      en: 'Search by counterparty or user',
+      fr: 'Rechercher par contrepartie ou utilisateur',
+    },
+    searchByNumber: {
+      en: 'Search by number',
+      fr: 'Rechercher par numéro',
+    },
+    counterpartyBorrowerOrSurname: {
+      en: 'Counterparty borrower or surname',
+      fr: 'Contrepartie emprunteuse ou nom de famille',
+    },
   },
 });
