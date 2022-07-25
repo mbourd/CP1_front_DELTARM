@@ -24,12 +24,14 @@ import { Controller, useForm } from 'react-hook-form';
 import { StyledTableCell } from '../../DashboardDynamic/components/Card/Card.style';
 import { InputModalDynamic } from './InputModalDynamic/InputModalDynamic';
 import { SelectModalDynamic } from './SelectModalDynamic/SelectModalDynamic';
+import { useTrans } from '../../../Services';
 
 export const ModalDynamic: FC<IDataModalProps> = ({
   open,
   setIsModalOpen,
   data,
 }): React.ReactElement => {
+  const [trans] = useTrans('Manage');
   const { user } = useSecurity();
   const jwt = user.getJwt();
   const { actionButton } = useActionButton(jwt, setIsModalOpen);
@@ -88,7 +90,7 @@ export const ModalDynamic: FC<IDataModalProps> = ({
         });
 
         if (errorMandatory) {
-          setErrorMessage('Champs obligatoire manquant');
+          setErrorMessage(trans('mandatoryFields'));
 
           return;
         }

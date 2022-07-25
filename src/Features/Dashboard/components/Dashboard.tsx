@@ -16,7 +16,6 @@ import { IsLoading } from './IsLoading';
 import { NoData } from './NoData';
 import { DashboardSearch } from './Search/DashboardSearch';
 import { DashboardDynamic } from '../../DashboardDynamic';
-import { translation } from '../../../Packages/Translation/Translation';
 
 const Dashboard: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Dashboard');
@@ -27,6 +26,8 @@ const Dashboard: React.FC = (): React.ReactElement => {
   const client_info: any = localStorage.getItem('client_info');
   const review = JSON.parse(client_info);
   const { data: context } = useContext(SecurityContext);
+  const storage_security: any = localStorage.getItem('security');
+  const security = JSON.parse(storage_security);
 
   useEffect(() => {
     if (context.cli_id && clientInfoSignal === false) {
@@ -54,9 +55,8 @@ const Dashboard: React.FC = (): React.ReactElement => {
 
   useEffect(() => {
     // Temporary if statements behavior
-    localStorage.setItem('lang', 'en');
-    console.log(localStorage.getItem('lang'), trans('pageTitle'));
-  }, []);
+    localStorage.setItem('lang', security?._lang);
+  }, [security]);
 
   // Temporary if statements behavior
   if (dataSecurity.context === 'contr_perm') {
@@ -97,7 +97,7 @@ const Dashboard: React.FC = (): React.ReactElement => {
     </>
   ) : (
     <div style={{ marginTop: 40 }}>
-      <ErrorNoData message={'Aucun client trouvé'} />
+      <ErrorNoData message={trans('noClientFound')} />
     </div>
   );
 };

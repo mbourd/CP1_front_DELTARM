@@ -11,6 +11,8 @@ import { Checkbox } from '@mui/material';
 import { stringToBoolean } from '../../../../../../Packages/Helpers/src/stringToBoolean';
 import { RejectControl } from '../RejectByPointControl/RejectControl';
 
+import { useTrans } from '../../../../../../Services';
+
 interface IProps {
   control: IApiControl;
   fileId: string;
@@ -26,6 +28,7 @@ export const BooleanControl: React.FC<IProps> = ({
   setFormState,
   context,
 }): React.ReactElement => {
+  const [trans] = useTrans('Edit');
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);
@@ -50,7 +53,7 @@ export const BooleanControl: React.FC<IProps> = ({
     setErrorMessage(null);
 
     if (control.mandatory && currentValue !== null) {
-      setErrorMessage('Valeur obligatoire');
+      setErrorMessage(trans('mandatoryValue'));
     }
 
     setCurrentValue(booleanValue.toString());
@@ -71,16 +74,17 @@ export const BooleanControl: React.FC<IProps> = ({
     control.control_family,
     setCurrentValue,
     control.mandatory,
+    trans,
   ]);
 
   useEffect(() => {
     if (control.mandatory && control.editable && !currentValue) {
-      setErrorMessage('Valeur obligatoire');
+      setErrorMessage(trans('mandatoryValue'));
     }
     if (!control.mandatory) {
       setErrorMessage(null);
     }
-  }, [control.mandatory, control.editable, currentValue]);
+  }, [control.mandatory, control.editable, currentValue, trans]);
 
   useEffect(() => {
     if (!isRejected) {
@@ -90,9 +94,9 @@ export const BooleanControl: React.FC<IProps> = ({
 
   useEffect(() => {
     if (error) {
-      setErrorMessage("Une erreur s'est produite durant l'enregistrement");
+      setErrorMessage(trans('errorRecording'));
     }
-  }, [error]);
+  }, [error, trans]);
 
   const booleanValue = stringToBoolean(currentValue);
 

@@ -66,5 +66,13 @@ translation.addBatchResource({
       en: 'Counterparty borrower or surname',
       fr: 'Contrepartie emprunteuse ou nom de famille',
     },
+    filterFolders: {
+      en: 'Filter folders',
+      fr: 'Filtrer les dossiers',
+    },
+    mandatoryFields: {
+      en: 'Mandatory fields missing',
+      fr: 'Champs obligatoire manquant',
+    },
   },
 });
