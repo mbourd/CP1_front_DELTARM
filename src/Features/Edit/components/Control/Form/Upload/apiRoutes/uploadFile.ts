@@ -35,6 +35,8 @@ export const uploadFile = (
       return setCurrentUploadFile(res.data.data.file_detail);
     })
     .catch((err) => {
-      return setErrorMessage(err.response.data.error_msg);
+      if (err.response.data.error_msg) {
+        return setErrorMessage(err.response.data.error_msg);
+      }
     });
 };
