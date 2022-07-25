@@ -14,6 +14,7 @@ import { UploadList } from '../../../../../../Shared/components/UploadList/Uploa
 import { deleteFile } from '../../../../../../Shared/components/UploadList/apiRoutes/deleteFile';
 import { downloadFile } from '../../../../../../Shared/components/UploadList/apiRoutes/downloadFile';
 import { RejectControl } from '../RejectByPointControl/RejectControl';
+import { useTrans } from '../../../../../../Services';
 
 interface IProps {
   control: IApiControl;
@@ -26,6 +27,7 @@ export const UploadControl: React.FC<IProps> = ({
   fileId,
   context,
 }): React.ReactElement => {
+  const [trans] = useTrans('Edit');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [newUploadFile, setNewUploadFile] = useState<File | null>(null);
   const [currentUploadFile, setCurrentUploadFile] = useState<
@@ -55,7 +57,7 @@ export const UploadControl: React.FC<IProps> = ({
 
   const handleUploadFile = useCallback(() => {
     if (control.mandatory && !newUploadFile) {
-      setErrorMessage('Valeur obligatoire');
+      setErrorMessage(trans('mandatoryValue'));
 
       return;
     }
@@ -72,7 +74,7 @@ export const UploadControl: React.FC<IProps> = ({
         setErrorMessage,
       );
     }
-  }, [fileId, control, newUploadFile, jwt]);
+  }, [fileId, control, newUploadFile, jwt, trans]);
 
   const handleDeleteFile = useCallback(
     (e, name) => {

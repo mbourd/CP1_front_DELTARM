@@ -12,7 +12,13 @@ import { Link } from 'react-router-dom';
 import { router } from '../../../Packages/Router';
 import { useTrans } from '../../../Services';
 
-type BreadCrumbType = 'Dashboard' | 'Manage' | 'Edit' | 'Validation';
+type BreadCrumbType =
+  | 'Dashboard'
+  | 'Manage'
+  | 'Edit'
+  | 'Validation'
+  | 'Tableau de bord'
+  | 'Gestion';
 
 interface IBreadCrumb {
   values: BreadCrumbType[];
@@ -53,10 +59,10 @@ export const BreadCrumb: React.FC<IBreadCrumb> = ({
                   <Grid item>
                     <FolderIcon fontSize={'small'} />
                     {index === values.length - 1 ? (
-                      <span>Gestion</span>
+                      <span>{trans('manage')}</span>
                     ) : (
                       <Link to={router.generatePath('manage') || '/'}>
-                        Gestion
+                        {trans('manage')}
                       </Link>
                     )}
                   </Grid>

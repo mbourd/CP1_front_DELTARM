@@ -35,6 +35,17 @@ export const MainHeaderStyled = styled.header`
     display: inline-block;
   }
 
+  .language-option {
+    right: 100px;
+    bottom: 0;
+    margin: auto;
+    position: absolute;
+    right: ${({ theme }) => theme.spacing.xxLarge};
+    bottom: ${({ theme }) => theme.spacing.normal};
+    top: ${({ theme }) => theme.spacing.normal};
+    background-color: ${({ theme }) => theme.color.white.main};
+  }
+
   .menu-icon {
     bottom: 0;
     color: ${({ theme }) => theme.color.text.dark};

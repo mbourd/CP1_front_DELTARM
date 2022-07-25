@@ -18,6 +18,8 @@ import { apiRouter, router, storage, SwitchCallState, useApi } from 'Services';
 import { IFileSearchApiReturn, IKSIOPManualInput } from 'Features/Manage';
 import { CreateModal } from './CreateModal';
 
+import { useTrans } from '../../../../../Services';
+
 interface IProps {
   open: boolean;
   onClose: () => void;
@@ -35,6 +37,7 @@ export const SearchModal: React.FC<IProps> = ({
     callState: callStateManualInput,
     route: routeManualInput,
   } = useApi<IKSIOPManualInput | null>();
+  const [trans] = useTrans('Dashboard');
 
   const file = (
     storage.getData('shared.component.search.value') as string
@@ -213,20 +216,20 @@ export const SearchModal: React.FC<IProps> = ({
         states={{
           IS_LOADING: <StairsLoader size={'md'} />,
           SERVER_ERROR: (
-            <Error500 size={'md'} message={'Le serveur ne répond pas'} />
+            <Error500 size={'md'} message={trans('noServerResponding')} />
           ),
           BAD_REQUEST:
             route?.type === 'KSIOP' ? (
               <BadRequest
                 size={'md'}
                 message={error?.response ? error?.response.body.error_msg : ''}
-                title={'Réponse de KSIOP'}
+                title={trans('responseFromKSIOP')}
               />
             ) : (
               <BadRequest
                 size={'md'}
                 message={error?.response ? error?.response.body.error_msg : ''}
-                title={'Dossier introuvable !'}
+                title={trans('fileNotFound')}
               />
             ),
         }}
