@@ -4,6 +4,7 @@ import { FormError, InputBase } from 'Shared/components';
 import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
 import { useSecurity } from '../../../../../../../../Packages/Security';
 import { checkIfSameValues } from '../../../../../../../../Packages/Helpers/src/checkIfSameValues';
+import { useTrans } from '../../../../../../../../Services';
 
 interface IProps {
   value: string;
@@ -35,6 +36,7 @@ export const DataGridText: React.FC<IProps> = ({
   const [currentValue, setCurrentValue] = useState(value);
   const { user } = useSecurity();
   const jwt = user.getJwt();
+  const [trans] = useTrans('Edit');
 
   useEffect(() => {
     if (value) {
@@ -55,7 +57,7 @@ export const DataGridText: React.FC<IProps> = ({
       if (!checkIfSameValues(value, currentValue)) {
         setErrorMessage(null);
         if (mandatory && !value.trim()) {
-          setErrorMessage('Valeur obligatoire');
+          setErrorMessage(trans('mandatoryValue'));
         }
 
         return;
@@ -64,7 +66,7 @@ export const DataGridText: React.FC<IProps> = ({
       setErrorMessage(null);
 
       if (mandatory && !value.trim()) {
-        setErrorMessage('Valeur obligatoire');
+        setErrorMessage(trans('mandatoryValue'));
       }
 
       saveValueDataGrid(
@@ -88,22 +90,23 @@ export const DataGridText: React.FC<IProps> = ({
       rowNum,
       mandatory,
       currentValue,
+      trans,
     ],
   );
 
   useEffect(() => {
     if (mandatory && editable && !currentValue) {
-      setErrorMessage('Valeur obligatoire');
+      setErrorMessage(trans('mandatoryValue'));
     }
     if (mandatory) {
       setErrorMessage(null);
     }
-  }, [mandatory, editable, currentValue]);
+  }, [mandatory, editable, currentValue, trans]);
 
   return (
     <DataGridTextStyled>
       <InputBase
-        placeholder={'Texte'}
+        placeholder={trans('text')}
         id={`input grid`}
         disabled={!editable}
         color={editable ? 'text' : 'disabled'}

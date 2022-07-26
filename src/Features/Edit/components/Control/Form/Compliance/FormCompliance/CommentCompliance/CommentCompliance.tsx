@@ -6,6 +6,7 @@ import { FormError, InputBase } from 'Shared/components';
 import { useApi, useRouter } from 'Services';
 import { ComplianceLabel } from '../ComplianceLabel';
 import { ComplianceFooter } from '../ComplianceFooter';
+import { useTrans } from '../../../../../../../../Services';
 
 interface IProps {
   compliance: IApiComplianceFields;
@@ -19,6 +20,7 @@ export const CommentCompliance: React.FC<IProps> = ({
   controlId,
 }): React.ReactElement => {
   const { send, error } = useApi<void>();
+  const [trans] = useTrans('Edit');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
 
@@ -61,9 +63,9 @@ export const CommentCompliance: React.FC<IProps> = ({
 
   useEffect(() => {
     if (error) {
-      setErrorMessage("Une erreur s'est produite durant l'enregistrement");
+      setErrorMessage(trans('errorRecording'));
     }
-  }, [error]);
+  }, [error, trans]);
 
   return (
     <Grid item xs={6}>

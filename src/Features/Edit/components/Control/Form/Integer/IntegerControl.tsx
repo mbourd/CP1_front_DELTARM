@@ -11,6 +11,7 @@ import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFo
 import { minMax } from '../../../../../../Packages/Helpers/src/minMax';
 import useFocus from '../../../../../../Packages/Helpers/src/useFocus';
 import { RejectControl } from '../RejectByPointControl/RejectControl';
+import { useTrans } from '../../../../../../Services';
 
 interface IProps {
   control: IApiControl;
@@ -37,6 +38,7 @@ export const IntegerControl: React.FC<IProps> = ({
   );
   const [inputRef, setInputFocus] = useFocus();
   const { currentRoute } = useRouter();
+  const [trans] = useTrans('Edit');
 
   useEffect(() => {
     setCurrentValue(control.control_value);
@@ -79,9 +81,7 @@ export const IntegerControl: React.FC<IProps> = ({
           )
         ) {
           setInputFocus();
-          setErrorMessage(
-            'La valeur saisie ne respecte pas les contraintes définies',
-          );
+          setErrorMessage(trans('enteredValueConstraints'));
 
           return;
         }
@@ -90,7 +90,7 @@ export const IntegerControl: React.FC<IProps> = ({
       if (!checkIfSameValues(value, currentValue)) {
         setErrorMessage(null);
         if (control.mandatory && !value.trim()) {
-          setErrorMessage('Valeur obligatoire');
+          setErrorMessage(trans('mandatoryValue'));
         }
 
         return;
@@ -99,7 +99,7 @@ export const IntegerControl: React.FC<IProps> = ({
       setErrorMessage(null);
 
       if (control.mandatory && !value.trim()) {
-        setErrorMessage('Valeur obligatoire');
+        setErrorMessage(trans('mandatoryValue'));
       }
 
       setCurrentValue(value);
@@ -127,23 +127,24 @@ export const IntegerControl: React.FC<IProps> = ({
       control.mandatory,
       control.control_options,
       setInputFocus,
+      trans,
     ],
   );
 
   useEffect(() => {
     if (control.mandatory && control.editable && !currentValue) {
-      setErrorMessage('Valeur obligatoire');
+      setErrorMessage(trans('mandatoryValue'));
     }
     if (!control.mandatory) {
       setErrorMessage(null);
     }
-  }, [control.mandatory, control.editable, currentValue]);
+  }, [control.mandatory, control.editable, currentValue, trans]);
 
   useEffect(() => {
     if (error) {
-      setErrorMessage("Une erreur s'est produite durant l'enregistrement");
+      setErrorMessage(trans('errorRecording'));
     }
-  }, [error]);
+  }, [error, trans]);
 
   useEffect(() => {
     if (!isRejected) {

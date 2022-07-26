@@ -10,6 +10,7 @@ import { saveEditor } from './apiRoutes/saveEditor';
 import { IUser, security } from '../../../../../../Packages/Security';
 import { FormError } from '../../../../../../Packages/Design/components';
 import { RejectControl } from '../RejectByPointControl/RejectControl';
+import { useTrans } from '../../../../../../Services';
 
 interface IProps {
   control: IApiControl;
@@ -24,6 +25,7 @@ export const RichTextControl: React.FC<IProps> = ({
 }) => {
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
+  const [trans] = useTrans('Edit');
 
   const [message, setMessage] = useState<string | null>(null);
   const [isRejected, setIsRejected] = useState(
@@ -50,7 +52,7 @@ export const RichTextControl: React.FC<IProps> = ({
 
   useEffect(() => {
     if (control.mandatory && control.editable) {
-      setMessage('Valeur obligatoire');
+      setMessage(trans('mandatoryValue'));
     }
     if (!control.mandatory) {
       setMessage(null);
@@ -58,7 +60,7 @@ export const RichTextControl: React.FC<IProps> = ({
     if (editorState.getCurrentContent().hasText()) {
       setMessage(null);
     }
-  }, [control.mandatory, control.editable, editorState]);
+  }, [control.mandatory, control.editable, editorState, trans]);
 
   useEffect(() => {
     if (!isRejected) {
