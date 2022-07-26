@@ -27,9 +27,6 @@ jobs:
             -   name: yarn install
                 run: yarn install
 
-            -   name: create .env
-                run: cp .env.prod .env.production
-
             -   name: yarn build
                 run: CI='' yarn run build --profile
 
