@@ -5,6 +5,7 @@ import { Checkbox } from '@mui/material';
 import { stringToBoolean } from '../../../../../../../../Packages/Helpers/src/stringToBoolean';
 import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
 import { useSecurity } from '../../../../../../../../Packages/Security';
+import { useTrans } from '../../../../../../../../Services';
 
 interface IProps {
   value: string;
@@ -38,6 +39,7 @@ export const DataGridBoolean: React.FC<IProps> = ({
   );
   const { user } = useSecurity();
   const jwt = user.getJwt();
+  const [trans] = useTrans('Edit');
 
   const toggleAndSaveValue = useCallback(() => {
     const toggledValue = !currentValue;
@@ -65,12 +67,12 @@ export const DataGridBoolean: React.FC<IProps> = ({
 
   useEffect(() => {
     if (mandatory && editable && !currentValue) {
-      setErrorMessage('Valeur obligatoire');
+      setErrorMessage(trans('mandatoryValue'));
     }
     if (mandatory) {
       setErrorMessage(null);
     }
-  }, [mandatory, editable, currentValue]);
+  }, [mandatory, editable, currentValue, trans]);
 
   return (
     <DataGridBooleanStyled>

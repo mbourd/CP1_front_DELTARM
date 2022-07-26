@@ -9,6 +9,7 @@ import { IUser, security } from '../../../../../../../Packages/Security';
 import axios from 'axios';
 import { getEnv } from '../../../../../../../Packages/Helpers';
 import { IApiFileComment, IFileComment } from '../../../../../../Comments';
+import { useTrans } from '../../../../../../../Services';
 
 interface IProps {
   open: boolean;
@@ -32,14 +33,13 @@ export const ModalRejectControl: React.FC<IProps> = ({
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
+  const [trans] = useTrans('Edit');
   const [commentValue, setCommentValue] = useState<string | null>(null);
 
   const saveValue = useCallback(() => {
     setErrorMessage(null);
     if (!commentValue) {
-      setErrorMessage(
-        'Le commentaire est obligatoire pour rejeter un controle',
-      );
+      setErrorMessage(trans('commentMandatoryReject'));
 
       return;
     }
@@ -98,7 +98,7 @@ export const ModalRejectControl: React.FC<IProps> = ({
           if (error.response.data.error_msg) {
             setErrorMessage(error.response.data.error_msg);
           } else {
-            setErrorMessage("Une erreur s'est produite");
+            setErrorMessage(trans('errorOccured'));
           }
 
           return;
@@ -113,6 +113,7 @@ export const ModalRejectControl: React.FC<IProps> = ({
     controlId,
     jwt,
     isRejected,
+    trans,
   ]);
 
   const footer = (
@@ -128,7 +129,7 @@ export const ModalRejectControl: React.FC<IProps> = ({
 
   return (
     <Modal open={open} height={'350px'} onClose={onClose} footer={footer}>
-      <HeadingTwo>{'Expliquer la raison du rejet'}</HeadingTwo>
+      <HeadingTwo>{trans('explainReasonRejection')}</HeadingTwo>
       <FormControlStyled>
         <Grid container className={'control-container'}>
           <CommentRejectControl

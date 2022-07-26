@@ -4,6 +4,7 @@ import { FormError, InputBase } from 'Shared/components';
 import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
 import { useSecurity } from '../../../../../../../../Packages/Security';
 import { checkIfSameValues } from '../../../../../../../../Packages/Helpers/src/checkIfSameValues';
+import { useTrans } from '../../../../../../../../Services';
 
 interface IProps {
   value: string;
@@ -35,6 +36,7 @@ export const DataGridDecimal: React.FC<IProps> = ({
   const [currentValue, setCurrentValue] = useState(value);
   const { user } = useSecurity();
   const jwt = user.getJwt();
+  const [trans] = useTrans('Edit');
 
   useEffect(() => {
     if (value) {
@@ -56,7 +58,7 @@ export const DataGridDecimal: React.FC<IProps> = ({
       if (!checkIfSameValues(value, currentValue)) {
         setErrorMessage(null);
         if (mandatory && !value.trim()) {
-          setErrorMessage('Valeur obligatoire');
+          setErrorMessage(trans('mandatoryValue'));
         }
 
         return;
@@ -64,7 +66,7 @@ export const DataGridDecimal: React.FC<IProps> = ({
       setErrorMessage(null);
 
       if (mandatory && !value.trim()) {
-        setErrorMessage('Valeur obligatoire');
+        setErrorMessage(trans('mandatoryValue'));
       }
 
       saveValueDataGrid(
@@ -88,6 +90,7 @@ export const DataGridDecimal: React.FC<IProps> = ({
       rowNum,
       currentValue,
       mandatory,
+      trans,
     ],
   );
   const controlValue = currentValue
@@ -96,18 +99,18 @@ export const DataGridDecimal: React.FC<IProps> = ({
 
   useEffect(() => {
     if (mandatory && editable && !currentValue) {
-      setErrorMessage('Valeur obligatoire');
+      setErrorMessage(trans('mandatoryValue'));
     }
     if (!mandatory) {
       setErrorMessage(null);
     }
-  }, [mandatory, editable, currentValue]);
+  }, [mandatory, editable, currentValue, trans]);
 
   return (
     <DataGridDecimalStyled>
       <InputBase
         id={`decimal input grid`}
-        placeholder={'Nombre decimal'}
+        placeholder={trans('decimalNumber')}
         disabled={!editable}
         color={editable ? 'text' : 'disabled'}
         defaultValue={controlValue ? controlValue : ''}

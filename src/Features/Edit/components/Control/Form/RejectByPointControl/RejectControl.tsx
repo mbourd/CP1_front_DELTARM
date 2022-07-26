@@ -12,6 +12,7 @@ import { Card } from '@material-ui/core';
 import { CommentIcon } from '../../../../../../Packages/Design';
 import { router } from '../../../../../../Packages/Router';
 import { FileCommentRejectionFooter } from './FileCommentRejection/FileCommentRejectionFooter';
+import { useTrans } from '../../../../../../Services';
 
 interface IRejectedProps {
   isRejected: boolean;
@@ -34,6 +35,7 @@ export const RejectControl: React.FC<IRejectedProps> = ({
   const [rejectComments, setRejectComments] = useState(
     controlRejectable.rejectComments,
   );
+  const [trans] = useTrans('Edit');
 
   return (
     <RejectControlContainer>
@@ -71,7 +73,7 @@ export const RejectControl: React.FC<IRejectedProps> = ({
             <FileCommentStyled>
               <Card>
                 <FileCommentHeaderStyled>
-                  Commentaires liés au rejet
+                  {trans('commentsRelatedRejection')}
                 </FileCommentHeaderStyled>
                 <FileCommentBody comments={rejectComments} />
                 <FileCommentRejectionFooter

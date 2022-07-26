@@ -11,6 +11,7 @@ import { uploadFile } from '../../apiRoutes/upload/uploadFile';
 import { downloadFile } from '../../apiRoutes/upload/downloadFile';
 import { deleteFile } from '../../apiRoutes/upload/deleteFile';
 import { UploadList } from '../../../../../../../../Shared/components/UploadList/UploadList';
+import { useTrans } from '../../../../../../../../Services';
 
 interface IProps {
   value: IUploadDetail[];
@@ -41,6 +42,7 @@ export const DataGridUpload: React.FC<IProps> = ({
   >(value);
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
+  const [trans] = useTrans('Edit');
 
   const saveFileToUpload = useCallback(
     (e) => {
@@ -59,7 +61,7 @@ export const DataGridUpload: React.FC<IProps> = ({
 
   const handleUploadFile = useCallback(() => {
     if (mandatory && !newUploadFile) {
-      setErrorMessage('Valeur obligatoire');
+      setErrorMessage(trans('mandatoryValue'));
 
       return;
     }
@@ -78,7 +80,16 @@ export const DataGridUpload: React.FC<IProps> = ({
         setErrorMessage,
       );
     }
-  }, [fileId, controlId, newUploadFile, jwt, rowNum, columnId, mandatory]);
+  }, [
+    fileId,
+    controlId,
+    newUploadFile,
+    jwt,
+    rowNum,
+    columnId,
+    mandatory,
+    trans,
+  ]);
 
   const handleDeleteFile = useCallback(
     (e, name) => {

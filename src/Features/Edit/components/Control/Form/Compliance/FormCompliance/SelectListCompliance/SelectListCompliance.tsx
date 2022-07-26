@@ -6,6 +6,7 @@ import { storage, useApi, useRouter } from 'Services';
 import { SelectListComplianceStyled } from './SelectListCompliance.style';
 import { ComplianceLabel } from '../ComplianceLabel';
 import { ComplianceFooter } from '../ComplianceFooter';
+import { useTrans } from '../../../../../../../../Services';
 
 interface IProps {
   compliance: IApiComplianceFields;
@@ -21,6 +22,7 @@ export const SelectListCompliance: React.FC<IProps> = ({
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
+  const [trans] = useTrans('Edit');
 
   const value = storage.getData<string>(
     fileId +
@@ -78,11 +80,9 @@ export const SelectListCompliance: React.FC<IProps> = ({
 
   useEffect(() => {
     if (error) {
-      setErrorMessage(
-        "Une erreur s'est produite, veuillez re-sélectionner une valeur",
-      );
+      setErrorMessage(trans('errorReselect'));
     }
-  }, [error]);
+  }, [error, trans]);
 
   return (
     <Grid item xs={6}>
@@ -102,7 +102,7 @@ export const SelectListCompliance: React.FC<IProps> = ({
           }}
           error={!!error}
         >
-          {'Sélectionner une valeur'}
+          {trans('selectValue')}
         </Select>
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ComplianceFooter compliance={compliance} />
