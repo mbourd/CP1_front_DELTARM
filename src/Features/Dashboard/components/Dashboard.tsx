@@ -7,6 +7,7 @@ import {
   SwitchCallState,
   useSecurity,
   SecurityContext,
+  translation,
 } from 'Services';
 import { BreadCrumb, HeadingOne, ErrorNoData } from 'Shared/components';
 import { DashboardStyled } from './Dashboard.style';
@@ -55,7 +56,6 @@ const Dashboard: React.FC = (): React.ReactElement => {
 
   useEffect(() => {
     // Temporary if statements behavior
-    localStorage.setItem('lang', security?._lang);
   }, [security]);
 
   // Temporary if statements behavior
@@ -66,8 +66,6 @@ const Dashboard: React.FC = (): React.ReactElement => {
   if (!user.isLogged()) {
     logout();
   }
-
-  const titl = trans('pageTitle');
 
   return clientInfoSignal ? (
     <>
@@ -81,7 +79,7 @@ const Dashboard: React.FC = (): React.ReactElement => {
         }}
       >
         <DashboardStyled>
-          <HeadingOne>{titl}</HeadingOne>
+          <HeadingOne>{trans('pageTitle')}</HeadingOne>
           <DashboardSearch />
           <Grid container>
             {data?.map((card, index) => {

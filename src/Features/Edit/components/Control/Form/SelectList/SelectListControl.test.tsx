@@ -6,6 +6,7 @@ import { getByText } from '@testing-library/react';
 const { Select, SelectRejectable } = composeStories(stories);
 
 describe('Suite test select list control', () => {
+
   it('should render the select list with list of choices', () => {
     const { getByRole, getByText } = render(<Select />);
     expect(getByRole('button', { name: /conforme/i })).toBeInTheDocument();

@@ -5,6 +5,7 @@ import { render, screen, fireEvent, waitFor } from 'setupTests';
 const { Upload, UploadDisabled } = composeStories(stories);
 
 describe('Upload Control', () => {
+
   test('Should render the upload control', async () => {
     const { queryByText } = render(<Upload />);
     expect(queryByText('tata.png')).toBeInTheDocument();

@@ -43,6 +43,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   const gridRef = useRef<any>();
   const [trans] = useTrans('Edit');
   const jwt = user.getJwt();
+
   const columnDefs = useMemo(
     () => control.data_grid_detail_ag_grid?.cols.values,
     [control.data_grid_detail_ag_grid?.cols.values],
@@ -318,7 +319,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           getRowStyle={getRowStyle}
           animateRows
         />
-        <BPITooltip title={trans('addLine')}>
+        <BPITooltip title="Ajouter une ligne">
           <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} />
         </BPITooltip>
         {errorMessageAdd && <FormError>{errorMessageAdd}</FormError>}

@@ -42,6 +42,30 @@ translation.addBatchResource({
       en: 'Close',
       fr: 'Fermer',
     },
+    cancel: {
+      en: 'Cancel',
+      fr: 'Annuler',
+    },
+    sliderControl: {
+      en: 'Slider control',
+      fr: 'Slider control',
+    },
+    refuse: {
+      en: 'Refuse',
+      fr: 'Refusé',
+    },
+    fifty: {
+      en: '50',
+      fr: '50',
+    },
+    gras: {
+      en: 'Gras',
+      fr: 'Gras',
+    },
+    createSite: {
+      en: 'Create the site',
+      fr: 'Créer le chantier',
+    },
     cancelNoActionStatus: {
       en: 'Would you like to cancel the no action status?',
       fr: 'Souhaitez-vous annuler le statut sans-suite ?',

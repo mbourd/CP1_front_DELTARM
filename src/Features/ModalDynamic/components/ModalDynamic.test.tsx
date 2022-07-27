@@ -6,9 +6,7 @@ const { Modal, ModalWorksite } = composeStories(stories);
 
 describe('ModalDynamic', () => {
   describe('ModalDynamic', () => {
-    test('Should render the modal', async () => {
-      render(<Modal />);
-    });
+
     test('Should render the text component', async () => {
       render(<Modal />);
       const text = screen.getByText('Le texte a afficher');

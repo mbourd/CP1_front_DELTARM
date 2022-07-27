@@ -2,7 +2,7 @@ import React from 'react';
 import * as stories from './DataGridControlAgGrid.stories';
 import { composeStories } from '@storybook/testing-react';
 import { render, screen, fireEvent, waitFor } from 'setupTests';
-const { DataGridAgGrid } = composeStories(stories);
+const { DataGridAgGrid} = composeStories(stories);
 
 describe('Data Grid Control AG Grid', () => {
   test('Should have a button for pdf export', async () => {
