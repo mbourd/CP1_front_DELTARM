@@ -319,7 +319,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           getRowStyle={getRowStyle}
           animateRows
         />
-        <BPITooltip title="Ajouter une ligne">
+        <BPITooltip title={trans('addLine')}>
           <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} />
         </BPITooltip>
         {errorMessageAdd && <FormError>{errorMessageAdd}</FormError>}

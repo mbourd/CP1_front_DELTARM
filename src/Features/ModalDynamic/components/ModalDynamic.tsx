@@ -110,7 +110,7 @@ export const ModalDynamic: FC<IDataModalProps> = ({
 
       actionButton(action);
     },
-    [getValues, actionButton, data?.content],
+    [getValues, actionButton, data?.content, trans],
   );
 
   return (
