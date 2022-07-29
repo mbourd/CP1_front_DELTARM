@@ -8,7 +8,7 @@ const { RichText, RichTextDisabled } = composeStories(stories);
 describe('Rich Text Control', () => {
   test('Should render options rich text control', async () => {
     const { getByTitle, getByRole } = render(<RichText />);
-    expect(getByTitle('gras').toBeInTheDocument();
+    expect(getByTitle('Gras')).toBeInTheDocument();
     expect(getByTitle('Italique')).toBeInTheDocument();
     expect(getByTitle('Souligner')).toBeInTheDocument();
     expect(getByTitle('Barrer')).toBeInTheDocument();

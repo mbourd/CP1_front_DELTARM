@@ -28,8 +28,8 @@ import {
  */
 export class Translation implements ITranslation {
   private _options: InitOptionsType = {
-    lng: 'en',
-    fallbackLng: ['en', 'fr'],
+    lng: 'fr',
+    fallbackLng: 'fr',
     supportedLngs: ['en', 'fr'],
     debug: false,
     defaultNS: 'common',
