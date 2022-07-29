@@ -22,5 +22,29 @@ translation.addBatchResource({
       en: 'Files to Validate',
       fr: 'Dossiers à Valider',
     },
+    noClientFound: {
+      en: 'No client found',
+      fr: 'Aucun client trouvé',
+    },
+    noRecordAvailable: {
+      en: 'No records available',
+      fr: 'Aucun dossier disponible',
+    },
+    noServerResponding: {
+      en: 'The server is not responding',
+      fr: 'Le serveur ne répond pas',
+    },
+    responseFromKSIOP: {
+      en: 'Response from KSIOP',
+      fr: 'Réponse de KSIOP',
+    },
+    fileNotFound: {
+      en: 'File not found!',
+      fr: 'Dossier introuvable !',
+    },
+    manage: {
+      en: 'Manage',
+      fr: 'Gestion',
+    },
   },
 });

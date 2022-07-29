@@ -27,6 +27,7 @@ import { useReactToPrint } from 'react-to-print';
 import { Button } from 'Shared/components';
 import { GenericDataGridResearcher } from './GenericDataGridResearcher';
 import { AgDataGridUpload } from './DataGridFields/AgDataGridUpload/AgDataGridUpload';
+import { useTrans } from '../../../../../../Services';
 
 interface IProps {
   control: IApiControl;
@@ -40,7 +41,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   const [errorMessageAdd, setErrorMessageAdd] = useState<string>('');
   const { user } = useSecurity();
   const gridRef = useRef<any>();
+  const [trans] = useTrans('Edit');
   const jwt = user.getJwt();
+
   const columnDefs = useMemo(
     () => control.data_grid_detail_ag_grid?.cols.values,
     [control.data_grid_detail_ag_grid?.cols.values],
@@ -316,7 +319,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           getRowStyle={getRowStyle}
           animateRows
         />
-        <BPITooltip title={'Ajouter une ligne'}>
+        <BPITooltip title={trans('addLine')}>
           <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} />
         </BPITooltip>
         {errorMessageAdd && <FormError>{errorMessageAdd}</FormError>}

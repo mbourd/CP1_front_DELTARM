@@ -26,8 +26,10 @@ import { useRecoilValue } from 'recoil';
 import { IDataModal } from '../../ModalDynamic/components/types';
 import { NoData } from './NoData';
 import { AgGridCard } from './Card/AgGridCard';
+import { useTrans } from '../../../Services';
 
 const DashboardDynamic: React.FC = (): React.ReactElement => {
+  const [trans] = useTrans('Dashboard');
   const { send, data: response, callState } = useApi<IDashboard>();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user } = useSecurity();
@@ -186,7 +188,7 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
   ) : (
     <>
       <div style={{ marginTop: 40 }}>
-        <ErrorNoData message={'Aucun client trouvé'} />
+        <ErrorNoData message={trans('noClientFound')} />
       </div>
     </>
   );

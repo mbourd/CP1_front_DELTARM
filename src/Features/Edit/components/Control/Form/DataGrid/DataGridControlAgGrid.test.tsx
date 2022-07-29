@@ -2,7 +2,7 @@ import React from 'react';
 import * as stories from './DataGridControlAgGrid.stories';
 import { composeStories } from '@storybook/testing-react';
 import { render, screen, fireEvent, waitFor } from 'setupTests';
-const { DataGridAgGrid } = composeStories(stories);
+const { DataGridAgGrid} = composeStories(stories);
 
 describe('Data Grid Control AG Grid', () => {
   test('Should have a button for pdf export', async () => {
@@ -34,11 +34,11 @@ describe('Data Grid Control AG Grid', () => {
   });
   test('Should have a click button to add a row', async () => {
     const { getByTitle } = render(<DataGridAgGrid />);
-    expect(getByTitle('Ajouter une ligne')).toBeInTheDocument();
+    expect(getByTitle("Ajouter une ligne")).toBeInTheDocument();
   });
   test('Should call for a new row while clicking on button', async () => {
     const { getByTitle } = render(<DataGridAgGrid />);
-    const button = getByTitle('Ajouter une ligne');
+    const button = getByTitle("Ajouter une ligne");
     expect(button).toBeInTheDocument();
     fireEvent.click(button);
   });

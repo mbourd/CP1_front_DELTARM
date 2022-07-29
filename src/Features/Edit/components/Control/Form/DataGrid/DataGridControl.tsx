@@ -24,6 +24,7 @@ import { DataGridDecimal } from './DataGridFields/DataGridDecimal/DataGridDecima
 import { DataGridPercent } from './DataGridFields/DataGridPercent/DataGridPercent';
 import { DataGridFinancial } from './DataGridFields/DataGridFinancial/DataGridFinancial';
 import { DataGridLongText } from './DataGridFields/DataGridLongText/DataGridLongText';
+import { useTrans } from '../../../../../../Services';
 
 interface IProps {
   control: IApiControl;
@@ -37,6 +38,7 @@ export const DataGridControl: React.FC<IProps> = ({ control, fileId }) => {
   const [errorMessageAdd, setErrorMessageAdd] = useState<string>('');
   const { user } = useSecurity();
   const jwt = user.getJwt();
+  const [trans] = useTrans('Edit');
 
   const handleClickAddRow = useCallback(() => {
     addRow(fileId, control.control_id, jwt, setGridDetails, setErrorMessageAdd);
@@ -271,7 +273,7 @@ export const DataGridControl: React.FC<IProps> = ({ control, fileId }) => {
             components={{ rowRenderer: rowRenderer }}
           />
         )}
-        <BPITooltip title={'Ajouter une ligne'}>
+        <BPITooltip title={trans('addLine')}>
           <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} />
         </BPITooltip>
         {errorMessageAdd && <FormError>{errorMessageAdd}</FormError>}

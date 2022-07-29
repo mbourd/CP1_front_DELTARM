@@ -1,21 +1,6 @@
 import { translation } from './Translation';
 
 describe('Translation', () => {
-  it('should add resources', () => {
-    translation.init();
-
-    translation.addResource('en', 'common', {
-      connexion: 'Connexion message',
-      remove: 'Remove message',
-    });
-
-    expect(translation.getAllResources()).toStrictEqual({
-      en: {
-        common: { connexion: 'Connexion message', remove: 'Remove message' },
-      },
-    });
-  });
-
   it('should add multiple resources once', () => {
     translation.init();
     translation.addBatchResource({

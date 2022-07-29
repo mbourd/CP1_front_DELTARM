@@ -11,7 +11,7 @@ export const NoData: React.FC = (): React.ReactElement => {
     <DashboardStyled>
       <HeadingOne>{trans('dashboard')}</HeadingOne>
       <DashboardSearch />
-      <ErrorNoData message={'Aucun dossier disponible'} />
+      <ErrorNoData message={trans('noRecordAvailable')} />
     </DashboardStyled>
   );
 };

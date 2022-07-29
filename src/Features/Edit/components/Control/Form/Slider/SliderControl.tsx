@@ -9,6 +9,7 @@ import { ControlFooter } from '../ControlFooter';
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
 import { Slider } from '@mui/material';
 import { RejectControl } from '../RejectByPointControl/RejectControl';
+import { useTrans } from '../../../../../../Services';
 
 interface IProps {
   control: IApiControl;
@@ -28,6 +29,7 @@ export const SliderControl: React.FC<IProps> = ({
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);
+  const [trans] = useTrans('Edit');
   const [isRejected, setIsRejected] = useState(
     control.control_rejectable?.is_rejected
       ? control.control_rejectable.is_rejected
@@ -45,7 +47,7 @@ export const SliderControl: React.FC<IProps> = ({
 
   const saveValue = useCallback(() => {
     if (!currentValue && control.mandatory) {
-      setErrorMessage('Valeur obligatoire');
+      setErrorMessage(trans('mandatoryValue'));
 
       return;
     }
@@ -72,22 +74,23 @@ export const SliderControl: React.FC<IProps> = ({
     control.control_family,
     currentValue,
     control.mandatory,
+    trans,
   ]);
 
   useEffect(() => {
     if (control.mandatory && control.editable && !currentValue) {
-      setErrorMessage('Valeur obligatoire');
+      setErrorMessage(trans('mandatoryValue'));
     }
     if (!control.mandatory) {
       setErrorMessage(null);
     }
-  }, [control.mandatory, control.editable, currentValue]);
+  }, [control.mandatory, control.editable, currentValue, trans]);
 
   useEffect(() => {
     if (error) {
-      setErrorMessage("Une erreur s'est produite durant l'enregistrement");
+      setErrorMessage(trans('errorRecording'));
     }
-  }, [error]);
+  }, [error, trans]);
 
   useEffect(() => {
     if (!isRejected) {

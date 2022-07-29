@@ -142,8 +142,8 @@ export const Manage: React.FC = (): React.ReactElement => {
             <Search
               placeholder={
                 searchMode === 'fileNum'
-                  ? 'N°Dossier / N°Avenant'
-                  : 'Contrepartie emprunteuse ou nom de famille'
+                  ? trans('searchPlaceholder')
+                  : trans('counterpartyBorrowerOrSurname')
               }
             />
             <Divider className={'divider'} orientation="vertical" />
@@ -177,12 +177,12 @@ export const Manage: React.FC = (): React.ReactElement => {
                 <FormControlLabel
                   value="fileNum"
                   control={<Radio size="small" />}
-                  label="Rechercher par numéro "
+                  label={trans('searchByNumber')}
                 />
                 <FormControlLabel
                   value="full"
                   control={<Radio size="small" />}
-                  label="Rechercher par contrepartie ou utilisateur"
+                  label={trans('searchByCounterPartyOrUser')}
                 />
               </RadioGroup>
             </div>

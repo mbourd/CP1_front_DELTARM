@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import './translations';
@@ -8,6 +8,8 @@ import { IconsContainer } from './IconsContainer/IconsContainer';
 import { MainNav } from '..';
 
 export const MainHeader: React.FC = (): React.ReactElement => {
+  const language = localStorage.getItem('lang');
+  const [option, setoption]: any = useState(language);
   const [trans] = useTrans('MainHeader');
   const dashboardPath = router.generatePath('dashboard');
   const { data: context } = useContext(SecurityContext);
@@ -38,6 +40,17 @@ export const MainHeader: React.FC = (): React.ReactElement => {
         <p className={'app-name'}>{dataClientInfos?.data[0].cli_app_name}</p>
       )}
       <IconsContainer />
+      <select
+        value={option}
+        className={'language-option'}
+        onChange={(e) => {
+          localStorage.setItem('lang', e.target.value);
+          location.reload();
+        }}
+      >
+        <option value="fr">French</option>
+        <option value="en">English</option>
+      </select>
       <MainNav />
     </MainHeaderStyled>
   );

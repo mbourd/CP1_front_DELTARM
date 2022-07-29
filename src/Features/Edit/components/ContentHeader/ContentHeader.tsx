@@ -24,8 +24,10 @@ import { ModalDynamic } from '../../../ModalDynamic/components/ModalDynamic';
 import { IDataModal } from '../../../ModalDynamic/components/types';
 import { useRecoilValue } from 'recoil';
 import { Alert } from '@material-ui/lab';
+import { useTrans } from '../../../../Services';
 
 export const ContentHeader: React.FC = (): React.ReactElement => {
+  const [trans] = useTrans('Edit');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data } = useContext(EditValidationContext);
   const { user } = useSecurity();
@@ -95,11 +97,11 @@ export const ContentHeader: React.FC = (): React.ReactElement => {
                   <GenericAction
                     key={index}
                     action={action}
-                    message="Souhaitez-vous annuler la clôture du dossier ?"
-                    actionLabel="Oui"
-                    cancelLabel="Non"
-                    successMessage="La clôture du dossier a été annulée"
-                    successCloseLabel="Fermer"
+                    message={trans('cancelClosure')}
+                    actionLabel={trans('yes')}
+                    cancelLabel={trans('no')}
+                    successMessage={trans('closureFileCancelled')}
+                    successCloseLabel={trans('close')}
                     postRouteName="actionUnclose"
                     comment
                     commentRequired
@@ -112,11 +114,11 @@ export const ContentHeader: React.FC = (): React.ReactElement => {
                     key={index}
                     action={action}
                     color="secondary"
-                    message="Souhaitez-vous annuler le statut sans-suite ?"
-                    actionLabel="Oui"
-                    cancelLabel="Non"
-                    successMessage="Le statut sans-suite du dossier a été annulé"
-                    successCloseLabel="Fermer"
+                    message={trans('cancelNoActionStatus')}
+                    actionLabel={trans('yes')}
+                    cancelLabel={trans('no')}
+                    successMessage={trans('statusFileCancelled')}
+                    successCloseLabel={trans('close')}
                     postRouteName="actionUnnoncase"
                   />
                 );

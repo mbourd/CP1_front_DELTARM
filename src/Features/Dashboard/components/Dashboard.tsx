@@ -7,6 +7,7 @@ import {
   SwitchCallState,
   useSecurity,
   SecurityContext,
+  translation,
 } from 'Services';
 import { BreadCrumb, HeadingOne, ErrorNoData } from 'Shared/components';
 import { DashboardStyled } from './Dashboard.style';
@@ -26,6 +27,8 @@ const Dashboard: React.FC = (): React.ReactElement => {
   const client_info: any = localStorage.getItem('client_info');
   const review = JSON.parse(client_info);
   const { data: context } = useContext(SecurityContext);
+  const storage_security: any = localStorage.getItem('security');
+  const security = JSON.parse(storage_security);
 
   useEffect(() => {
     if (context.cli_id && clientInfoSignal === false) {
@@ -50,6 +53,10 @@ const Dashboard: React.FC = (): React.ReactElement => {
     }
     send('dashboard');
   }, [send, dataSecurity.context]);
+
+  useEffect(() => {
+    // Temporary if statements behavior
+  }, [security]);
 
   // Temporary if statements behavior
   if (dataSecurity.context === 'contr_perm') {
@@ -88,7 +95,7 @@ const Dashboard: React.FC = (): React.ReactElement => {
     </>
   ) : (
     <div style={{ marginTop: 40 }}>
-      <ErrorNoData message={'Aucun client trouvé'} />
+      <ErrorNoData message={trans('noClientFound')} />
     </div>
   );
 };
