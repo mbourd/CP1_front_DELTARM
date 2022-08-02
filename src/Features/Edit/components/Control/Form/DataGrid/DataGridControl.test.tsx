@@ -20,11 +20,11 @@ describe('Data Grid Control', () => {
   });
   test('Should have a click button', async () => {
     const { getByTitle } = render(<DataGrid />);
-    expect(getByTitle('Ajouter une ligne')).toBeInTheDocument();
+    expect(getByTitle("Ajouter une ligne'")).toBeInTheDocument();
   });
   test('Should call for a new row while clicking on button', async () => {
     const { getByTitle } = render(<DataGrid />);
-    const button = getByTitle('Ajouter une ligne');
+    const button = getByTitle("Ajouter une ligne'");
     expect(button).toBeInTheDocument();
     fireEvent.click(button);
   });
