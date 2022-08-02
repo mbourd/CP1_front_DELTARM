@@ -30,7 +30,7 @@ export class Translation implements ITranslation {
   private _options: InitOptionsType = {
     lng: 'fr',
     fallbackLng: 'fr',
-    supportedLngs: ['en', 'fr'],
+    supportedLngs: ['fr', 'en', 'de'],
     debug: false,
     defaultNS: 'common',
     fallbackNS: false,

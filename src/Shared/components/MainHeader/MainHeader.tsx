@@ -50,6 +50,7 @@ export const MainHeader: React.FC = (): React.ReactElement => {
       >
         <option value="fr">French</option>
         <option value="en">English</option>
+        <option value="de">German</option>
       </select>
       <MainNav />
     </MainHeaderStyled>

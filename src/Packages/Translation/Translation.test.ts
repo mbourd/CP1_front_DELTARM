@@ -8,6 +8,7 @@ describe('Translation', () => {
         name: {
           en: 'Nom',
           fr: 'Name',
+          de: 'Name',
         },
       },
     });
@@ -15,6 +16,7 @@ describe('Translation', () => {
     expect(translation.getAllResources()).toStrictEqual({
       en: { common: { name: 'Nom' } },
       fr: { common: { name: 'Name' } },
+      de: { common: { name: 'Name' } },
     });
   });
 
@@ -25,6 +27,7 @@ describe('Translation', () => {
         message: {
           en: 'Hello world!',
           fr: 'Bonjour tout le monde !',
+          de: 'Hallo Welt!',
         },
       },
     });

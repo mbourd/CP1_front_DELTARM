@@ -54,10 +54,6 @@ const Dashboard: React.FC = (): React.ReactElement => {
     send('dashboard');
   }, [send, dataSecurity.context]);
 
-  useEffect(() => {
-    // Temporary if statements behavior
-  }, [security]);
-
   // Temporary if statements behavior
   if (dataSecurity.context === 'contr_perm') {
     return <DashboardDynamic />;
