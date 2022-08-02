@@ -5,6 +5,7 @@ translation.addBatchResource({
     validateMessage: {
       en: 'Press the ENTER key to validate your message',
       fr: 'Appuyez sur la touche ENTREE pour valider votre message',
+      de: ' Drücken Sie die EINGABETASTE, um Ihre Nachricht zu bestätigen',
     },
   },
 });
