@@ -14,6 +14,7 @@ export const uploadFile = (
   const formData = new FormData();
   formData.append('file', newUploadFile);
   const fileName = newUploadFile.name;
+
   axios
     .post(
       `${getEnv('API_PROTOCOL')}://${getEnv(
@@ -36,7 +37,7 @@ export const uploadFile = (
     })
     .catch((err) => {
       if (err.response.data.error_msg) {
-        return setErrorMessage(err.response.data.error_msg);
+        return setErrorMessage(err?.response?.data?.error_msg);
       }
     });
 };
