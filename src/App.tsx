@@ -16,17 +16,13 @@ interface AppProps {
 const App: React.FC<AppProps> = ({ isEmbedded }): React.ReactElement => {
   const { user } = useSecurity();
 
-  const abc: any = user;
-
-  console.log(jwtDecode(abc?._jwt));
-
   return (
-    // <ThemeProvider theme={BPITheme}>
-    <SecurityProvider security={security}>
-      {user.isLogged() && !isEmbedded && <MainHeader />}
-      <MainContent />
-    </SecurityProvider>
-    // </ThemeProvider>
+    <ThemeProvider theme={BPITheme}>
+      <SecurityProvider security={security}>
+        {user.isLogged() && !isEmbedded && <MainHeader />}
+        <MainContent />
+      </SecurityProvider>
+    </ThemeProvider>
   );
 };
 
