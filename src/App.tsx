@@ -5,7 +5,6 @@ import 'Shared';
 import 'Services/Api/registerCallState';
 import { security, SecurityProvider, useSecurity } from 'Services';
 import { MainContent, MainHeader } from './Shared/components';
-import jwtDecode from 'jwt-decode';
 import { BPITheme } from 'Styles';
 import { ThemeProvider } from 'styled-components/macro';
 
