@@ -57,5 +57,10 @@ translation.addBatchResource({
       fr: 'Gestion',
       de: 'Verwalten',
     },
+    cancelSearch: {
+      en: 'Cancel search',
+      fr: 'Annuler la recherche',
+      de: 'Suche abbrechen',
+    },
   },
 });

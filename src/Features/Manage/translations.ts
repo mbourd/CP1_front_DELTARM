@@ -142,5 +142,10 @@ translation.addBatchResource({
       fr: 'Résultat de la recherche',
       de: 'Ergebnis der Recherche',
     },
+    cancel: {
+      en: 'cancel',
+      fr: 'Annuler',
+      de: 'abbrechen',
+    },
   },
 });
