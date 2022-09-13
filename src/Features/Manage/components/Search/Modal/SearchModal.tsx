@@ -14,7 +14,14 @@ import {
   SearchModalBPIContentStyled,
   SearchModalFooterStyled,
 } from './SearchModal.style';
-import { apiRouter, router, storage, SwitchCallState, useApi } from 'Services';
+import {
+  apiRouter,
+  router,
+  storage,
+  SwitchCallState,
+  useApi,
+  useTrans,
+} from 'Services';
 import { IFileSearchApiReturn, IKSIOPManualInput } from 'Features/Manage';
 import { CreateModal } from './CreateModal';
 
@@ -29,6 +36,7 @@ export const SearchModal: React.FC<IProps> = ({
 }): React.ReactElement | null => {
   const { request, error, callState, route, send, data } =
     useApi<IFileSearchApiReturn | null>();
+  const [trans] = useTrans('Manage');
   const {
     send: sendManualInput,
     data: dataManualInput,
@@ -183,10 +191,10 @@ export const SearchModal: React.FC<IProps> = ({
     footer = (
       <SearchModalFooterStyled>
         <Button color={'error'} onClick={onClose}>
-          Annuler la création
+          {trans('cancelCreation')}
         </Button>
         <Button color={'success'} onClick={createFile}>
-          Confirmer la création
+          {trans('confirmCreation')}
         </Button>
       </SearchModalFooterStyled>
     );
@@ -221,13 +229,13 @@ export const SearchModal: React.FC<IProps> = ({
               <BadRequest
                 size={'md'}
                 message={error?.response ? error?.response.body.error_msg : ''}
-                title={'Réponse de KSIOP'}
+                title={trans('responseFromKSIOP')}
               />
             ) : (
               <BadRequest
                 size={'md'}
                 message={error?.response ? error?.response.body.error_msg : ''}
-                title={'Dossier introuvable !'}
+                title={trans('fileNotFound')}
               />
             ),
         }}
@@ -249,10 +257,10 @@ export const SearchModal: React.FC<IProps> = ({
                 );
               })}
             </Grid>
-            <div className={'product-list'}>
+            {/* <div className={'product-list'}>
               {data.productList ? (
                 <>
-                  <FormLabel>Sélectionner une famille de produit</FormLabel>
+                  <FormLabel>{trans('selectProductFamily')}</FormLabel>
                   <Select
                     name={'productList'}
                     data={data.productList}
@@ -264,11 +272,11 @@ export const SearchModal: React.FC<IProps> = ({
                     onClose={setProduct}
                     closeOnSelect
                   >
-                    Sélectionner une famille de produit
+                    {trans('selectProductFamily')}
                   </Select>
                 </>
               ) : null}
-            </div>
+            </div> */}
             <p className={'bottom-message'}>{data.bottomMessage}</p>
           </SearchModalBPIContentStyled>
         ) : null}
