@@ -92,5 +92,55 @@ translation.addBatchResource({
       fr: 'Champs obligatoire manquant',
       de: 'Pflichtfelder fehlen',
     },
+    cancelCreation: {
+      en: 'Cancel creation',
+      fr: 'Annuler la création',
+      de: 'Erstellung abbrechen',
+    },
+    confirmCreation: {
+      en: 'Confirm creation',
+      fr: 'Confirmer la création',
+      de: 'Erstellung bestätigen',
+    },
+    selectProductFamily: {
+      en: 'Select a product family',
+      fr: 'Sélectionner une famille de produit',
+      de: 'Produktfamilie aus',
+    },
+    serverNotResponding: {
+      en: 'The server is not responding',
+      fr: 'Le serveur ne répond pas',
+      de: 'Der Server antwortet nicht',
+    },
+    responseFromKSIOP: {
+      en: 'Response from KSIOP',
+      fr: 'Réponse de KSIOP',
+      de: 'Antwort von KSIOP',
+    },
+    fileNotFound: {
+      en: 'File not found!',
+      fr: 'Dossier introuvable !',
+      de: 'Datei nicht gefunden!',
+    },
+    Sélectionner: {
+      en: 'Select',
+      fr: 'Sélectionner',
+      de: 'Auswählen',
+    },
+    noResult: {
+      en: 'No result',
+      fr: 'Aucun résultat',
+      de: 'Kein Ergebnis',
+    },
+    cancelSearch: {
+      en: 'Cancel search',
+      fr: 'Annuler la recherche',
+      de: 'Suche abbrechen',
+    },
+    resultOfTheSearch: {
+      en: 'Result of the research',
+      fr: 'Résultat de la recherche',
+      de: 'Ergebnis der Recherche',
+    },
   },
 });

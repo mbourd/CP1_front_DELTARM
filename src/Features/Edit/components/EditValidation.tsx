@@ -37,6 +37,8 @@ export const EditValidation: React.FC<IProps> = ({
   const { id } = router.getParams();
   const frontRouterQueries = router.getQueries();
 
+  console.log(user);
+
   if (!user.isLogged()) {
     logout();
   }
