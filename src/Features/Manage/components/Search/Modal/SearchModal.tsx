@@ -216,7 +216,7 @@ export const SearchModal: React.FC<IProps> = ({
   }
 
   return (
-    <Modal open={open} onClose={onClose} footer={footer} height={'610px'}>
+    <Modal open={open} onClose={onClose} footer={footer} height={'560px'}>
       <SwitchCallState
         callState={callState}
         states={{
@@ -257,9 +257,7 @@ export const SearchModal: React.FC<IProps> = ({
                 );
               })}
             </Grid>
-            <p className={'bottom-message'} style={{ textAlign: 'center' }}>
-              {data.bottomMessage}
-            </p>
+            <p className={'bottom-message'}>{data.bottomMessage}</p>
           </SearchModalBPIContentStyled>
         ) : null}
       </SwitchCallState>
