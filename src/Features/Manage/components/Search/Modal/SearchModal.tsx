@@ -257,10 +257,7 @@ export const SearchModal: React.FC<IProps> = ({
                 );
               })}
             </Grid>
-            <p
-              className={'bottom-message'}
-              style={{ textAlign: 'center', marginBottom: -10, marginTop: -10 }}
-            >
+            <p className={'bottom-message'} style={{ textAlign: 'center' }}>
               {data.bottomMessage}
             </p>
           </SearchModalBPIContentStyled>
