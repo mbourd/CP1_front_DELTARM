@@ -8,7 +8,6 @@ import {
   BadRequest,
   FormLabel,
   FormText,
-  Select,
 } from 'Shared/components';
 import {
   SearchModalBPIContentStyled,
@@ -37,6 +36,7 @@ export const SearchModal: React.FC<IProps> = ({
   const { request, error, callState, route, send, data } =
     useApi<IFileSearchApiReturn | null>();
   const [trans] = useTrans('Manage');
+
   const {
     send: sendManualInput,
     data: dataManualInput,
@@ -50,22 +50,36 @@ export const SearchModal: React.FC<IProps> = ({
   const file_num = file[0];
   const file_avenant = file[1];
 
+  useEffect(() => {
+    if (data !== null || undefined) {
+      const move: any = data;
+      const id: any = Object.values(move?.productList)[0];
+      localStorage.setItem('prod', JSON.stringify(id));
+    }
+    // const dat: any = Object.keys(data?.productList);
+    // setprod_id(dat);
+  }, [data]);
+
   const setProduct = useCallback((values: Record<string, true>) => {
     storage.setData('edit.selected.product', values);
   }, []);
 
   const createFile = useCallback(() => {
-    const prod_id = Object.keys(
-      storage.getData<Record<string, true>>('edit.selected.product') as Record<
-        string,
-        true
-      >,
-    )[0];
+    // const prod_id = Object.keys(
+    //   storage.getData<Record<string, true>>('edit.selected.product') as Record<
+    //     string,
+    //     true
+    //   >,
+    // )[0];
+    const decode: any = localStorage.getItem('prod');
+    const pr = JSON.parse(decode);
+    const prod_id = pr?.id;
     const queries = {
       ...storage.getData<Record<string, any>>('edit.create.queries'),
       prod_id,
     };
     send('createFile', {}, queries);
+    localStorage.removeItem('prod');
   }, [send]);
 
   useEffect(() => {
