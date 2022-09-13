@@ -137,8 +137,8 @@ export const SearchModal: React.FC<IProps> = ({
   ) {
     footer = (
       <SearchModalFooterStyled>
-        <Button color={'error'} onClick={onClose}>
-          Annuler
+        <Button color={'success'} onClick={onClose}>
+          {trans('cancel')}
         </Button>
       </SearchModalFooterStyled>
     );
@@ -222,7 +222,7 @@ export const SearchModal: React.FC<IProps> = ({
         states={{
           IS_LOADING: <StairsLoader size={'md'} />,
           SERVER_ERROR: (
-            <Error500 size={'md'} message={'Le serveur ne répond pas'} />
+            <Error500 size={'md'} message={trans('serverNotResponding')} />
           ),
           BAD_REQUEST:
             route?.type === 'KSIOP' ? (
@@ -257,26 +257,6 @@ export const SearchModal: React.FC<IProps> = ({
                 );
               })}
             </Grid>
-            {/* <div className={'product-list'}>
-              {data.productList ? (
-                <>
-                  <FormLabel>{trans('selectProductFamily')}</FormLabel>
-                  <Select
-                    name={'productList'}
-                    data={data.productList}
-                    multiple={false}
-                    selectedValues={{
-                      [Object.keys(data.productList)[0] || '-1']: true,
-                    }}
-                    onInit={setProduct}
-                    onClose={setProduct}
-                    closeOnSelect
-                  >
-                    {trans('selectProductFamily')}
-                  </Select>
-                </>
-              ) : null}
-            </div> */}
             <p className={'bottom-message'}>{data.bottomMessage}</p>
           </SearchModalBPIContentStyled>
         ) : null}
