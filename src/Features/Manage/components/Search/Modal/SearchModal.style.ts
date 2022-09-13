@@ -22,7 +22,7 @@ export const SearchModalBPIContentStyled = styled.div`
   .top-message,
   .bottom-message {
     font-weight: bold;
-    margin: ${({ theme }) => theme.spacing.small} 0;
+    margin: ${({ theme }) => theme.spacing.normal} 0;
   }
 
   .file-info {
