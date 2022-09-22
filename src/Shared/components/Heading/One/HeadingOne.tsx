@@ -11,7 +11,7 @@ export const HeadingOne: React.FC<IProps> = ({
   variant = 'main',
   children,
 }): React.ReactElement => {
-  console.log('heading title', children);
+  //   console.log('heading title', children);
 
   return <HeadingOneStyled variant={variant}>{children}</HeadingOneStyled>;
 };

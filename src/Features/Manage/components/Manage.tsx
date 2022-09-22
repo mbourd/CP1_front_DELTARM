@@ -41,6 +41,10 @@ export const Manage: React.FC = (): React.ReactElement => {
     logout();
   }
 
+  //   useEffect(() => {
+  //     console.log(data);
+  //   }, [data]);
+
   const initStages: Record<number | string, true> = {};
   const initStates: Record<number | string, true> = {};
   const initRoles: Record<number | string, true> = {};

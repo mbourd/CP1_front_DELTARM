@@ -36,12 +36,13 @@ export const EditValidation: React.FC<IProps> = ({
   // To avoid (bpi specific)
   const { id } = router.getParams();
   const frontRouterQueries = router.getQueries();
-
-  console.log(user);
-
   if (!user.isLogged()) {
     logout();
   }
+
+  //   useEffect(() => {
+  //     console.log(data);
+  //   }, [data]);
 
   useEffect(() => {
     // To avoid (bpi specific)
