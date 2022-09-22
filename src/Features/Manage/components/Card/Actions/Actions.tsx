@@ -12,12 +12,13 @@ export const Actions: React.FC<Pick<ICard, 'id' | 'comments' | 'context'>> = ({
   context,
 }): React.ReactElement => {
   const [trans] = useTrans('Manage');
+  //   console.log(id);
 
   return (
     <ActionsStyled>
       <BPITooltip
         title={
-          context === 'EDIT' ? 'Editer le dossier' : 'Accéder à la validation'
+          context === 'EDIT' ? trans('editFolder') : trans('goToVerification')
         }
         placement={'left'}
       >

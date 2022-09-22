@@ -147,5 +147,15 @@ translation.addBatchResource({
       fr: 'Annuler',
       de: 'abbrechen',
     },
+    goToVerification: {
+      en: 'Go to verification',
+      fr: 'Accéder à la validation',
+      de: 'Gehen Sie zur Überprüfung',
+    },
+    editFolder: {
+      en: 'Edit Folder',
+      fr: 'Editer le dossier',
+      de: 'Ordner bearbeiten',
+    },
   },
 });
