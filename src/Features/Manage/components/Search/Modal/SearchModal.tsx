@@ -29,6 +29,12 @@ interface IProps {
   onClose: () => void;
 }
 
+interface SearchReturnProductList {
+  item: {
+    id: any;
+  };
+}
+
 export const SearchModal: React.FC<IProps> = ({
   onClose,
   open,
@@ -51,7 +57,7 @@ export const SearchModal: React.FC<IProps> = ({
   const file_avenant = file[1];
 
   useEffect(() => {
-    if (data !== null || undefined) {
+    if (data?.productList !== null && data?.productList !== undefined) {
       const move: any = data;
       const id: any = Object.values(move?.productList)[0];
       localStorage.setItem('prod', JSON.stringify(id));
@@ -73,7 +79,7 @@ export const SearchModal: React.FC<IProps> = ({
     // )[0];
     const decode: any = localStorage.getItem('prod');
     const pr = JSON.parse(decode);
-    const prod_id = pr?.id;
+    const prod_id: any = pr?.id;
     const queries = {
       ...storage.getData<Record<string, any>>('edit.create.queries'),
       prod_id,
@@ -134,9 +140,9 @@ export const SearchModal: React.FC<IProps> = ({
         {error?.response?.body.data.btn[1] !== undefined ? (
           <Button
             color={'success'}
-            onClick={() =>
-              send('searchFileKSIOP', {}, { file_num, file_avenant })
-            }
+            onClick={() => {
+              send('searchFileKSIOP', {}, { file_num, file_avenant });
+            }}
           >
             {error?.response?.body.data.btn[1].label}
           </Button>
