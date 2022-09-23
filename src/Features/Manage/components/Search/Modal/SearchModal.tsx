@@ -208,7 +208,7 @@ export const SearchModal: React.FC<IProps> = ({
   }
 
   return (
-    <Modal open={open} onClose={onClose} footer={footer} height={'610px'}>
+    <Modal open={open} onClose={onClose} footer={footer} height={'560px'}>
       <SwitchCallState
         callState={callState}
         states={{
@@ -249,7 +249,7 @@ export const SearchModal: React.FC<IProps> = ({
                 );
               })}
             </Grid>
-            <div className={'product-list'}>
+            {/* <div className={'product-list'}>
               {data.productList ? (
                 <>
                   <FormLabel>Sélectionner une famille de produit</FormLabel>
@@ -268,7 +268,7 @@ export const SearchModal: React.FC<IProps> = ({
                   </Select>
                 </>
               ) : null}
-            </div>
+            </div> */}
             <p className={'bottom-message'}>{data.bottomMessage}</p>
           </SearchModalBPIContentStyled>
         ) : null}
