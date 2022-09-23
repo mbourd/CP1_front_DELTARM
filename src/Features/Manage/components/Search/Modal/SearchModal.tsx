@@ -36,6 +36,16 @@ export const SearchModal: React.FC<IProps> = ({
     route: routeManualInput,
   } = useApi<IKSIOPManualInput | null>();
 
+  useEffect(() => {
+    if (data?.productList !== null && data?.productList !== undefined) {
+      const move: any = data;
+      const id: any = Object.values(move?.productList)[0];
+      localStorage.setItem('prod', JSON.stringify(id));
+    }
+    // const dat: any = Object.keys(data?.productList);
+    // setprod_id(dat);
+  }, [data]);
+
   const file = (
     storage.getData('shared.component.search.value') as string
   ).split(/ *\/ */);
@@ -47,17 +57,21 @@ export const SearchModal: React.FC<IProps> = ({
   }, []);
 
   const createFile = useCallback(() => {
-    const prod_id = Object.keys(
-      storage.getData<Record<string, true>>('edit.selected.product') as Record<
-        string,
-        true
-      >,
-    )[0];
+    // const prod_id = Object.keys(
+    //   storage.getData<Record<string, true>>('edit.selected.product') as Record<
+    //     string,
+    //     true
+    //   >,
+    // )[0];
+    const decode: any = localStorage.getItem('prod');
+    const pr = JSON.parse(decode);
+    const prod_id: any = pr?.id;
     const queries = {
       ...storage.getData<Record<string, any>>('edit.create.queries'),
       prod_id,
     };
     send('createFile', {}, queries);
+    localStorage.removeItem('prod');
   }, [send]);
 
   useEffect(() => {
