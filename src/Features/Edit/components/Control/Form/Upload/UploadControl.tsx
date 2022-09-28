@@ -39,6 +39,18 @@ export const UploadControl: React.FC<IProps> = ({
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
 
+  useEffect(() => {
+    if (
+      control.mandatory &&
+      (currentUploadFile?.length === 0 || !currentUploadFile)
+    ) {
+      setErrorMessage('Valeur obligatoire');
+    }
+    if (!control.mandatory) {
+      setErrorMessage(null);
+    }
+  }, [control, newUploadFile, currentUploadFile]);
+
   const saveFileToUpload = useCallback(
     (e) => {
       setNewUploadFile(e.target.files[0]);
@@ -140,7 +152,9 @@ export const UploadControl: React.FC<IProps> = ({
               alignItems: 'center',
               height: '50px',
             }}
-            {...getRootProps({ onClick: (event) => event.stopPropagation() })}
+            {...getRootProps({
+              onClick: (event: any) => event.stopPropagation(),
+            })}
           >
             <label htmlFor={`compliance-file-upload${control.control_id}`}>
               <input
