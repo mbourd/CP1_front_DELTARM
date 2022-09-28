@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './apiRoutes';
 import { Button, Popper } from 'Shared/components';
 import { UserCheckedIcon } from 'Styles';
@@ -9,6 +9,10 @@ import { ValidationPopper } from './Popper/ValidationPopper';
 export const SubmitForValidation: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Edit');
   const [anchorEl, setAnchorEl] = React.useState<Element | null>(null);
+
+  useEffect(() => {
+    console.log(anchorEl);
+  }, []);
 
   return (
     <SubmitForValidationStyled className={'action'}>
