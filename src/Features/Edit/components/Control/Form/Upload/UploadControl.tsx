@@ -48,6 +48,16 @@ export const UploadControl: React.FC<IProps> = ({
     [setNewUploadFile],
   );
 
+  useEffect(() => {
+    if (control.mandatory && !newUploadFile) {
+      setErrorMessage(trans('mandatoryValue'));
+    }
+    if (!control.mandatory) {
+      setErrorMessage(null);
+    }
+    console.log(control);
+  }, [control]);
+
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file: File) => {
       setNewUploadFile(file);
@@ -58,11 +68,11 @@ export const UploadControl: React.FC<IProps> = ({
   const handleUploadFile = useCallback(() => {
     if (control.mandatory && !newUploadFile) {
       setErrorMessage(trans('mandatoryValue'));
-
-      return;
+      console.log(errorMessage);
     }
     if (!control.mandatory) {
       setErrorMessage(null);
+      console.log(errorMessage);
     }
     if (newUploadFile) {
       uploadFile(
@@ -142,7 +152,9 @@ export const UploadControl: React.FC<IProps> = ({
               alignItems: 'center',
               height: '50px',
             }}
-            {...getRootProps({ onClick: (event) => event.stopPropagation() })}
+            {...getRootProps({
+              onClick: (event: any) => event.stopPropagation(),
+            })}
           >
             <label htmlFor={`compliance-file-upload${control.control_id}`}>
               <input

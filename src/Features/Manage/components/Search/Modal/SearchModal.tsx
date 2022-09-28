@@ -50,6 +50,10 @@ export const SearchModal: React.FC<IProps> = ({
     route: routeManualInput,
   } = useApi<IKSIOPManualInput | null>();
 
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
   const file = (
     storage.getData('shared.component.search.value') as string
   ).split(/ *\/ */);
