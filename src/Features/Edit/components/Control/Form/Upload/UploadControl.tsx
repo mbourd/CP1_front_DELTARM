@@ -49,13 +49,16 @@ export const UploadControl: React.FC<IProps> = ({
   );
 
   useEffect(() => {
-    if (control.mandatory && !newUploadFile) {
+    if (
+      control.mandatory &&
+      (currentUploadFile?.length === 0 || !currentUploadFile)
+    ) {
       setErrorMessage(trans('mandatoryValue'));
     }
     if (!control.mandatory) {
       setErrorMessage(null);
     }
-  }, [control]);
+  }, [control, newUploadFile, trans, currentUploadFile]);
 
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file: File) => {
