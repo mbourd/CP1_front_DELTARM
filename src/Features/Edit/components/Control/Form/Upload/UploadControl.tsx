@@ -55,7 +55,6 @@ export const UploadControl: React.FC<IProps> = ({
     if (!control.mandatory) {
       setErrorMessage(null);
     }
-    console.log(control);
   }, [control]);
 
   const onDrop = useCallback((acceptedFiles) => {
@@ -68,11 +67,9 @@ export const UploadControl: React.FC<IProps> = ({
   const handleUploadFile = useCallback(() => {
     if (control.mandatory && !newUploadFile) {
       setErrorMessage(trans('mandatoryValue'));
-      console.log(errorMessage);
     }
     if (!control.mandatory) {
       setErrorMessage(null);
-      console.log(errorMessage);
     }
     if (newUploadFile) {
       uploadFile(
