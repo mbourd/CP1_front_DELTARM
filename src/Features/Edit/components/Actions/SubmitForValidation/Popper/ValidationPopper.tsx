@@ -24,6 +24,9 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
   const context = useContext(EditValidationContext);
 
   useEffect(() => {
+    console.log(data);
+  }, [data]);
+  useEffect(() => {
     const q: Record<string, string> = { file_id: context.fileId };
     if (context.data?.validationCount) {
       q['valid_num'] = context.data?.validationCount;
