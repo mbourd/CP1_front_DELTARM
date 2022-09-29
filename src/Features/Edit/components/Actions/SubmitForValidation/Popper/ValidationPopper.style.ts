@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 export const ValidationPopperStyled = styled.div`
   .MuiCard-root {
     border: 1px solid ${({ theme }) => theme.color.success.main};
-    height: 365px;
+    height: 400px;
     position: relative;
     width: ${({ theme }) => theme.breakpoint.xs};
 
@@ -67,5 +67,9 @@ export const ValidationPopperStyled = styled.div`
     position: absolute;
     top: 2px;
     left: 6px;
+  }
+
+  .font {
+    font-family: ${({ theme }) => theme.font.regular.main};
   }
 `;
