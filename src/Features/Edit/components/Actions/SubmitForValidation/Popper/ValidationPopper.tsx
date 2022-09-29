@@ -215,9 +215,15 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
           ) : openFileSelection &&
             data?.response?.linkable_files?.length !== 0 ? (
             <>
-              <div style={{ margin: 30 }}>
+              <div
+                style={{
+                  margin: 30,
+                  height: 300,
+                  overflowY: 'scroll',
+                }}
+              >
                 <h2
-                  style={{ fontSize: 22, fontWeight: 'bold' }}
+                  style={{ fontSize: 18, fontWeight: 'bold' }}
                 >{`Sélectionnez les fichiers à dupliquer`}</h2>
 
                 {data?.response?.linkable_files?.map((file: any) => {
@@ -228,7 +234,6 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
                         flexDirection: 'column',
                         display: 'flex',
                         alignItems: 'start',
-                        marginTop: 10,
                       }}
                     >
                       <div
@@ -236,7 +241,7 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
                           flexDirection: 'row',
                           display: 'flex',
                           alignItems: 'center',
-                          marginTop: 10,
+                          marginTop: 7,
                         }}
                       >
                         <input
@@ -247,7 +252,7 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
                           onChange={handleSelectionOfFiles}
                         />
 
-                        <b style={{ fontSize: 16, fontWeight: 600 }}>{`${
+                        <b style={{ fontSize: 16, fontWeight: 500 }}>{`${
                           file?.file_name
                         }/${file?.file_avenant} créé le  ${new Date(
                           file?.file_creation_date,
@@ -271,45 +276,45 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
           ) : displaySelectedFiles && selectedFiles.length !== 0 ? (
             <>
               <div style={{ margin: 20 }}>
-                <h2
-                  style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}
-                >
+                <h2 style={{ fontSize: 18, fontWeight: 600 }} className="font">
                   {`Vous êtes sur le point d'effectuer une duplication entre
                 plusieurs fichiers. Vous avez demandé de dupliquer les
                 informations du dossier :`}
                 </h2>
-                {selectedFiles.length > 0 &&
-                  data?.response?.linkable_files
-                    .filter(function (item: any) {
-                      return selectedFiles.indexOf(item.file_uuid) !== -1;
-                    })
-                    .map((file: any, index: any) => {
-                      return (
-                        <>
-                          <b
-                            style={{
-                              fontSize: 16,
-                              fontWeight: 600,
-                              marginTop: 5,
-                              marginBottom: 5,
-                            }}
-                            key={file?.file_uuid}
-                          >{`${index + 1}: ${file?.file_name}/${
-                            file?.file_avenant
-                          } créé le  ${new Date(
-                            file?.file_creation_date,
-                          ).toLocaleDateString()} par ${
-                            file?.file_creation_by
-                          }`}</b>
-                          <br />
-                        </>
-                      );
-                    })}
+                <div style={{ marginTop: 15 }}>
+                  {selectedFiles.length > 0 &&
+                    data?.response?.linkable_files
+                      .filter(function (item: any) {
+                        return selectedFiles.indexOf(item.file_uuid) !== -1;
+                      })
+                      .map((file: any, index: any) => {
+                        return (
+                          <>
+                            <b
+                              style={{
+                                fontSize: 16,
+                                fontWeight: 500,
+                                marginTop: 5,
+                                marginBottom: 5,
+                              }}
+                              key={file?.file_uuid}
+                            >{`${index + 1}: ${file?.file_name}/${
+                              file?.file_avenant
+                            } créé le  ${new Date(
+                              file?.file_creation_date,
+                            ).toLocaleDateString()} par ${
+                              file?.file_creation_by
+                            }`}</b>
+                            <br />
+                          </>
+                        );
+                      })}
+                </div>
                 <br />
 
                 <b
                   style={{
-                    fontSize: 18,
+                    fontSize: 15,
                     fontWeight: 500,
                     marginTop: 10,
                     marginBottom: 10,
@@ -319,8 +324,8 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
                 </b>
                 <p
                   style={{
-                    fontSize: 19,
-                    fontWeight: 500,
+                    fontSize: 16,
+                    fontWeight: 600,
                     marginTop: 20,
                   }}
                 >{`Souhaitez-vous confirmer cette duplication ?`}</p>
