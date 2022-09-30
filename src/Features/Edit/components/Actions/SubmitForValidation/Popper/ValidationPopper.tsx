@@ -106,7 +106,6 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
 
     const response = {
       selected_files: linkable_files,
-      validators: data?.response?.unmodified_validators,
     };
     // console.log(response);
 
@@ -157,197 +156,207 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
 
   return (
     <ValidationPopperStyled>
-      <Card elevation={0}>
-        <SwitchCallState
-          callState={callState}
-          states={{
-            IS_LOADING: <StairsLoader size={'md'} />,
-            SERVER_ERROR: (
-              <Error500 size={'md'} message={'Le serveur ne répond pas'} />
-            ),
-            BAD_REQUEST: (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+        }}
+      >
+        <Card elevation={0}>
+          <SwitchCallState
+            callState={callState}
+            states={{
+              IS_LOADING: <StairsLoader size={'md'} />,
+              SERVER_ERROR: (
+                <Error500 size={'md'} message={'Le serveur ne répond pas'} />
+              ),
+              BAD_REQUEST: (
+                <>
+                  <BadRequest
+                    size={'md'}
+                    message={
+                      error?.response ? error?.response.body.error_msg : ''
+                    }
+                    title={'Echec !'}
+                  />
+                  {onClose && (
+                    <div className={'footer'}>
+                      <Button color={'error'} onClick={onClose}>
+                        Fermer
+                      </Button>
+                    </div>
+                  )}
+                </>
+              ),
+            }}
+          >
+            {callState === 'SUCCESS' &&
+            data?.type === 'GET_VALIDATORS' &&
+            openFileSelection === false &&
+            displaySelectedFiles === false ? (
               <>
-                <BadRequest
-                  size={'md'}
-                  message={
-                    error?.response ? error?.response.body.error_msg : ''
-                  }
-                  title={'Echec !'}
-                />
-                {onClose && (
-                  <div className={'footer'}>
-                    <Button color={'error'} onClick={onClose}>
-                      Fermer
-                    </Button>
-                  </div>
-                )}
+                <Select
+                  open={true}
+                  closable={false}
+                  multiple={false}
+                  bdc={'transparent'}
+                  name={'validators'}
+                  data={data?.response?.validators}
+                  selectedValues={{
+                    [Object.keys(data?.response?.validators)[0]]: true,
+                  }}
+                  onInit={storeSelectedValues}
+                  onChange={storeSelectedValues}
+                >
+                  Sélectionez un valideur
+                </Select>
+
+                <div className={'footer'}>
+                  <Button color={'success'} onClick={handleSubmit}>
+                    Soumettre
+                  </Button>
+                </div>
               </>
-            ),
-          }}
-        >
-          {callState === 'SUCCESS' &&
-          data?.type === 'GET_VALIDATORS' &&
-          openFileSelection === false &&
-          displaySelectedFiles === false ? (
-            <>
-              <Select
-                open={true}
-                closable={false}
-                multiple={false}
-                bdc={'transparent'}
-                name={'validators'}
-                data={data?.response?.validators}
-                selectedValues={{
-                  [Object.keys(data?.response?.validators)[0]]: true,
-                }}
-                onInit={storeSelectedValues}
-                onChange={storeSelectedValues}
-              >
-                Sélectionez un valideur
-              </Select>
+            ) : openFileSelection &&
+              data?.response?.linkable_files?.length !== 0 ? (
+              <>
+                <div className="card-items">
+                  <h2
+                    style={{
+                      fontSize: 18,
+                      fontWeight: 'bold',
+                      marginBottom: 15,
+                    }}
+                  >{`Sélectionnez les fichiers à dupliquer`}</h2>
 
-              <div className={'footer'}>
-                <Button color={'success'} onClick={handleSubmit}>
-                  Soumettre
-                </Button>
-              </div>
-            </>
-          ) : openFileSelection &&
-            data?.response?.linkable_files?.length !== 0 ? (
-            <>
-              <div
-                style={{
-                  margin: 30,
-                  height: 300,
-                  overflowY: 'scroll',
-                }}
-              >
-                <h2
-                  style={{ fontSize: 18, fontWeight: 'bold' }}
-                >{`Sélectionnez les fichiers à dupliquer`}</h2>
-
-                {data?.response?.linkable_files?.map((file: any) => {
-                  return (
-                    <div
-                      key={file?.file_uuid}
-                      style={{
-                        flexDirection: 'column',
-                        display: 'flex',
-                        alignItems: 'start',
-                      }}
-                    >
+                  {data?.response?.linkable_files?.map((file: any) => {
+                    return (
                       <div
+                        key={file?.file_uuid}
                         style={{
-                          flexDirection: 'row',
+                          flexDirection: 'column',
                           display: 'flex',
-                          alignItems: 'center',
-                          marginTop: 7,
+                          alignItems: 'start',
+                          marginTop: 100,
                         }}
                       >
-                        <input
-                          type="checkbox"
-                          className="custom-control-input"
-                          id={file?.file_uuid}
-                          value={file?.file_uuid}
-                          onChange={handleSelectionOfFiles}
-                        />
+                        <div
+                          style={{
+                            flexDirection: 'row',
+                            display: 'flex',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <input
+                            type="checkbox"
+                            className="custom-control-input"
+                            id={file?.file_uuid}
+                            value={file?.file_uuid}
+                            onChange={handleSelectionOfFiles}
+                          />
 
-                        <b style={{ fontSize: 16, fontWeight: 500 }}>{`${
-                          file?.file_name
-                        }/${file?.file_avenant} créé le  ${new Date(
-                          file?.file_creation_date,
-                        ).toLocaleDateString()} par ${
-                          file?.file_creation_by
-                        }`}</b>
+                          <b style={{ fontSize: 16, fontWeight: 500 }}>{`${
+                            file?.file_name
+                          }/${file?.file_avenant} créé le  ${new Date(
+                            file?.file_creation_date,
+                          ).toLocaleDateString()} par ${
+                            file?.file_creation_by
+                          }`}</b>
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
-              <div className={'footer'}>
-                <Button color={'error'} onClick={cancelFileSelection}>
-                  Annuler la demande
-                </Button>{' '}
-                <Button color={'success'} onClick={handleFileSelection}>
-                  Valider la demande
-                </Button>
-              </div>
-            </>
-          ) : displaySelectedFiles && selectedFiles.length !== 0 ? (
-            <>
-              <div style={{ margin: 20 }}>
-                <h2 style={{ fontSize: 18, fontWeight: 600 }} className="font">
-                  {`Vous êtes sur le point d'effectuer une duplication entre
+                    );
+                  })}
+                </div>
+                <div className={'footer'}>
+                  <Button color={'error'} onClick={onClose}>
+                    Annuler la demande
+                  </Button>{' '}
+                  <Button color={'success'} onClick={handleFileSelection}>
+                    Valider la demande
+                  </Button>
+                </div>
+              </>
+            ) : displaySelectedFiles && selectedFiles.length !== 0 ? (
+              <>
+                <div className="card-items">
+                  <h2
+                    style={{ fontSize: 18, fontWeight: 600 }}
+                    className="font"
+                  >
+                    {`Vous êtes sur le point d'effectuer une duplication entre
                 plusieurs fichiers. Vous avez demandé de dupliquer les
                 informations du dossier :`}
-                </h2>
-                <div style={{ marginTop: 15 }}>
-                  {selectedFiles.length > 0 &&
-                    data?.response?.linkable_files
-                      .filter(function (item: any) {
-                        return selectedFiles.indexOf(item.file_uuid) !== -1;
-                      })
-                      .map((file: any, index: any) => {
-                        return (
-                          <>
-                            <b
-                              style={{
-                                fontSize: 16,
-                                fontWeight: 500,
-                                marginTop: 5,
-                                marginBottom: 5,
-                              }}
-                              key={file?.file_uuid}
-                            >{`${index + 1}: ${file?.file_name}/${
-                              file?.file_avenant
-                            } créé le  ${new Date(
-                              file?.file_creation_date,
-                            ).toLocaleDateString()} par ${
-                              file?.file_creation_by
-                            }`}</b>
-                            <br />
-                          </>
-                        );
-                      })}
-                </div>
-                <br />
+                  </h2>
+                  <div style={{ marginTop: 15 }}>
+                    {selectedFiles.length > 0 &&
+                      data?.response?.linkable_files
+                        .filter(function (item: any) {
+                          return selectedFiles.indexOf(item.file_uuid) !== -1;
+                        })
+                        .map((file: any, index: any) => {
+                          return (
+                            <>
+                              <b
+                                style={{
+                                  fontSize: 16,
+                                  fontWeight: 500,
+                                  marginTop: 5,
+                                  marginBottom: 5,
+                                }}
+                                key={file?.file_uuid}
+                              >{`${index + 1}: ${file?.file_name}/${
+                                file?.file_avenant
+                              } créé le  ${new Date(
+                                file?.file_creation_date,
+                              ).toLocaleDateString()} par ${
+                                file?.file_creation_by
+                              }`}</b>
+                              <br />
+                            </>
+                          );
+                        })}
+                  </div>
+                  <br />
 
-                <b
-                  style={{
-                    fontSize: 15,
-                    fontWeight: 500,
-                    marginTop: 10,
-                    marginBottom: 10,
-                  }}
-                >
-                  {`Si vous confimez cette duplication, toutes les informations de la section "Mise en Place" seront dupliquées entre ces dossiers.`}
-                </b>
-                <p
-                  style={{
-                    fontSize: 16,
-                    fontWeight: 600,
-                    marginTop: 20,
-                  }}
-                >{`Souhaitez-vous confirmer cette duplication ?`}</p>
-              </div>
-              <div className={'footer'}>
-                <Button color={'error'} onClick={cancelDisplayFileSelection}>
-                  Annuler
-                </Button>{' '}
-                <Button color={'success'} onClick={DisplayFileSelection}>
-                  Confirmer la duplication
-                </Button>
-              </div>
-            </>
-          ) : (
-            <RequestSuccess
-              size={'md'}
-              message={'La validation a été soumise !'}
-              title={'Opération réussie'}
-            />
-          )}
-        </SwitchCallState>
-      </Card>
+                  <b
+                    style={{
+                      fontSize: 15,
+                      fontWeight: 500,
+                      marginTop: 10,
+                      marginBottom: 10,
+                    }}
+                  >
+                    {`Si vous confimez cette duplication, toutes les informations de la section "Mise en Place" seront dupliquées entre ces dossiers.`}
+                  </b>
+                  <p
+                    style={{
+                      fontSize: 16,
+                      fontWeight: 600,
+                      marginTop: 20,
+                    }}
+                  >{`Souhaitez-vous confirmer cette duplication ?`}</p>
+                </div>
+                <div className={'footer'}>
+                  <Button color={'error'} onClick={onClose}>
+                    Annuler
+                  </Button>{' '}
+                  <Button color={'success'} onClick={DisplayFileSelection}>
+                    Confirmer la duplication
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <RequestSuccess
+                size={'md'}
+                message={'La validation a été soumise !'}
+                title={'Opération réussie'}
+              />
+            )}
+          </SwitchCallState>
+        </Card>
+      </div>
     </ValidationPopperStyled>
   );
 };

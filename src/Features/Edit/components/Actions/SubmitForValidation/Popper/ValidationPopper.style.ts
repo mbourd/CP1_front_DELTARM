@@ -4,8 +4,9 @@ export const ValidationPopperStyled = styled.div`
   .MuiCard-root {
     border: 1px solid ${({ theme }) => theme.color.success.main};
     height: 400px;
+    align-self: center !important;
+    width: 650px;
     position: relative;
-    width: ${({ theme }) => theme.breakpoint.xs};
 
     ._SelectLabelButton {
       border-bottom-color: ${({ theme }) => theme.color.success.main};
@@ -71,5 +72,50 @@ export const ValidationPopperStyled = styled.div`
 
   .font {
     font-family: ${({ theme }) => theme.font.regular.main};
+  }
+
+  .card-items { 
+    margin: 20px;
+    height: 300px;
+    overflow-y: auto;
+  }
+
+  @media only screen and (min-width: 1800px) {
+    .MuiCard-root {
+      border: 1px solid ${({ theme }) => theme.color.success.main};
+      height: 500px;
+      align-self: center !important;
+      width: 750px;
+      position: relative;
+
+      ._SelectLabelButton {
+        border-bottom-color: ${({ theme }) => theme.color.success.main};
+        border-width: 0 0 1px;
+        cursor: default;
+
+        .MuiSvgIcon-root {
+          color: ${({ theme }) => theme.color.success.main};
+        }
+      }
+
+      ._SelectItem {
+        border-bottom: 1px dotted ${({ theme }) => theme.color.success.main};
+      }
+
+      ._SelectItem:last-child {
+        border-bottom: none;
+      }
+
+      .footer {
+        bottom: 0;
+        left: 0;
+        padding: ${({ theme }) => theme.spacing.normal};
+        position: absolute;
+        text-align: right;
+        width: 100%;
+      }
+    }
+
+    .card-items { margin: 20px, height: 400px, overflow-y: auto }
   }
 `;
