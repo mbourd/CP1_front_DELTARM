@@ -10,9 +10,9 @@ export const SubmitForValidation: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Edit');
   const [anchorEl, setAnchorEl] = React.useState<Element | null>(null);
 
-  useEffect(() => {
-    console.log(anchorEl);
-  }, []);
+  //   useEffect(() => {
+  //     console.log(anchorEl);
+  //   }, []);
 
   return (
     <SubmitForValidationStyled className={'action'}>
