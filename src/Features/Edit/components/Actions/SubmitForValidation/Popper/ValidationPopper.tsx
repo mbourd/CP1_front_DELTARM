@@ -133,6 +133,7 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
   };
 
   const handleSelectionOfFiles = (event: any) => {
+    console.log(event.target.checked);
     if (event.target.checked) {
       if (!selectedFiles?.includes(event.target.value)) {
         setselectedFiles((selectedFiles: any) =>
@@ -244,7 +245,7 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
                           marginTop: -15,
                         }}
                       >
-                        <div
+                        <label
                           style={{
                             flexDirection: 'row',
                             display: 'flex',
@@ -259,14 +260,20 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
                             onChange={handleSelectionOfFiles}
                           />
 
-                          <b style={{ fontSize: 16, fontWeight: 500 }}>{`${
-                            file?.file_name
-                          }/${file?.file_avenant} créé le  ${new Date(
+                          <b
+                            style={{
+                              fontSize: 16,
+                              fontWeight: 500,
+                              cursor: 'pointer',
+                            }}
+                          >{`${file?.file_name}/${
+                            file?.file_avenant
+                          } créé le  ${new Date(
                             file?.file_creation_date,
                           ).toLocaleDateString()} par ${
                             file?.file_creation_by
                           }`}</b>
-                        </div>
+                        </label>
                       </div>
                     );
                   })}
