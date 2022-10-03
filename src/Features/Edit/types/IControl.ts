@@ -265,11 +265,11 @@ export interface IApiControl {
   useCompliance?: ICompliance;
   control_options: IControlOptions | null;
   upload_detail: IUploadDetail[] | null;
+  calculatedValue?: string;
   rich_text_detail: RawDraftContentState | null;
   jodit_rich_text_detail?: string | null;
   control_rejectable: IAPIControlRejectable | null;
   useRejection?: ControlRejectable;
   data_grid_detail_ag_grid?: DataGridDetailAgGrid | null;
   data_grid_detail?: DataGridDetail | null;
-  calculatedValue?: string;
 }

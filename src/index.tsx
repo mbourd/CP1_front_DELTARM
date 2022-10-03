@@ -10,8 +10,10 @@ import { PageLoader } from './Shared/components';
 import { RecoilRoot } from 'recoil';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
-
 import { BPIGlobalStyle, BPITheme } from 'Styles';
+import { AppMaintenance } from './AppMaintenance';
+
+const maintenanceMode = false;
 
 if (process.env.REACT_APP_ENV !== 'staging') {
   Sentry.init({

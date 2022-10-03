@@ -48,6 +48,8 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
   useEffect(() => {
     if (data?.response?.linkable_files?.length !== 0) {
       setopenFileSelection(true);
+    } else {
+      setopenFileSelection(false);
     }
   }, [data?.response?.linkable_files]);
   useEffect(() => {
@@ -239,7 +241,7 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
                           flexDirection: 'column',
                           display: 'flex',
                           alignItems: 'start',
-                          marginTop: 100,
+                          marginTop: -15,
                         }}
                       >
                         <div
