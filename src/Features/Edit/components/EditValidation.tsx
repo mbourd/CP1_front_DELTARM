@@ -40,9 +40,9 @@ export const EditValidation: React.FC<IProps> = ({
     logout();
   }
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  //   useEffect(() => {
+  //     console.log(data);
+  //   }, [data]);
 
   useEffect(() => {
     // To avoid (bpi specific)

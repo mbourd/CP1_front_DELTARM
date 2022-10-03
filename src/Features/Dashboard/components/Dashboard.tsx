@@ -30,21 +30,21 @@ const Dashboard: React.FC = (): React.ReactElement => {
   const storage_security: any = localStorage.getItem('security');
   const security = JSON.parse(storage_security);
 
-  useEffect(() => {
-    if (context.cli_id && clientInfoSignal === false) {
-      // checks whether client data came or not
-      if (review?.length > 0) {
-        setClientInfoSignal(true);
-        localStorage.removeItem('client_info');
+  //   useEffect(() => {
+  //     if (context.cli_id && clientInfoSignal === false) {
+  //       // checks whether client data came or not
+  //       if (review?.length > 0) {
+  //         setClientInfoSignal(true);
+  //         localStorage.removeItem('client_info');
 
-        return;
-      } else {
-        setClientInfoSignal(false);
+  //         return;
+  //       } else {
+  //         setClientInfoSignal(false);
 
-        return;
-      }
-    }
-  }, [context.cli_id, clientInfoSignal, review]);
+  //         return;
+  //       }
+  //     }
+  //   }, [context.cli_id, clientInfoSignal, review]);
 
   useEffect(() => {
     // Temporary if statements behavior
@@ -63,7 +63,7 @@ const Dashboard: React.FC = (): React.ReactElement => {
     logout();
   }
 
-  return clientInfoSignal ? (
+  return (
     <>
       <BreadCrumb values={['Dashboard']} />
       <SwitchCallState
@@ -89,10 +89,6 @@ const Dashboard: React.FC = (): React.ReactElement => {
         </DashboardStyled>
       </SwitchCallState>
     </>
-  ) : (
-    <div style={{ marginTop: 40 }}>
-      <ErrorNoData message={trans('noClientFound')} />
-    </div>
   );
 };
 
