@@ -39,11 +39,12 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
 
-  // useEffect(() => {
-  //   console.log(data);
-  //   console.log(data?.response?.linkable_files);
-  //   console.log('selected_files', selectedFiles);
-  // }, [data, selectedFiles]);
+  //   useEffect(() => {
+  //     console.log(data);
+  //     console.log(data?.response?.linkable_files);
+  //     console.log('selected_files', selectedFiles);
+  //     console.log(context);
+  //   }, [context, data]);
 
   useEffect(() => {
     if (data?.response?.linkable_files?.length !== 0) {
@@ -108,6 +109,7 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
 
     const response = {
       selected_files: linkable_files,
+      master_file_id: context.fileId,
     };
     // console.log(response);
 
@@ -120,6 +122,7 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
         {
           headers: {
             Authorization: jwt,
+            'Content-type': 'application/json',
           },
         },
       )
@@ -232,7 +235,7 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
                       fontWeight: 'bold',
                       marginBottom: 15,
                     }}
-                  >{`Sélectionnez les fichiers à dupliquer`}</h2>
+                  >{`Sélectionner les fichiers à dupliquer depuis le fichier ${context?.data?.number}`}</h2>
 
                   {data?.response?.linkable_files?.map((file: any) => {
                     return (
@@ -242,7 +245,7 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
                           flexDirection: 'column',
                           display: 'flex',
                           alignItems: 'start',
-                          marginTop: -15,
+                          marginTop: -10,
                         }}
                       >
                         <label
@@ -294,9 +297,11 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
                     style={{ fontSize: 18, fontWeight: 600 }}
                     className="font"
                   >
-                    {`Vous êtes sur le point d'effectuer une duplication entre
-                plusieurs fichiers. Vous avez demandé de dupliquer les
-                informations du dossier :`}
+                    {`Vous êtes sur le point d'effectuer une duplication entre plusieurs fichiers. Vous avez demandé de dupliquer les informations du dossier ${
+                      context?.data?.number
+                    } vers les ${
+                      selectedFiles.length === 1 ? 'dossier' : 'dossiers'
+                    }:`}
                   </h2>
                   <div style={{ marginTop: 15 }}>
                     {selectedFiles.length > 0 &&

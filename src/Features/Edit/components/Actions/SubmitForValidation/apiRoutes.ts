@@ -32,10 +32,27 @@ apiRouter.registerRoute({
       return validator;
     });
 
+    // response?.data?.linkable_files,
+
     return {
       error: false,
       response: {
-        linkable_files: response?.data?.linkable_files,
+        linkable_files: [
+          {
+            file_uuid: '1',
+            file_name: 'asim',
+            file_avenant: 'dfdsa',
+            file_creation_date: '2/11/22',
+            file_creation_by: 'aswe',
+          },
+          {
+            file_uuid: '2',
+            file_name: 'asim',
+            file_avenant: 'dfdsa',
+            file_creation_date: '2/11/22',
+            file_creation_by: 'aswe',
+          },
+        ],
         validators,
         unmodified_validators: response?.data?.validator_list,
       },
