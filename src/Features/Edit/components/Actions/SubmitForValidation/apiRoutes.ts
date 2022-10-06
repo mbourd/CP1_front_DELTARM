@@ -31,6 +31,26 @@ apiRouter.registerRoute({
 
       return validator;
     });
+    // response?.data?.linkable_files
+
+    // [
+    //     {
+    //       file_avenant: '10c',
+    //       file_creation_by: 'Asim',
+    //       file_creation_date: 'Sun, 02 Oct 2022 00:00:00 GMT',
+    //       file_name: 'test',
+    //       file_selected: 0,
+    //       file_uuid: '6fa65sfgsrgd1-3789-4776-953b-a9fde5890e1a',
+    //     },
+    //     {
+    //       file_avenant: '10c',
+    //       file_creation_by: 'Boris Horowitz',
+    //       file_creation_date: 'Sun, 02 Oct 2022 00:00:00 GMT',
+    //       file_name: 'test',
+    //       file_selected: 1,
+    //       file_uuid: '6fa650d1-3789-4776-953b-a9fde5890e1a',
+    //     },
+    //   ],
 
     return {
       error: false,
