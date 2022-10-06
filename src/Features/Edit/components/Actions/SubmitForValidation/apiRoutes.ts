@@ -52,8 +52,6 @@ apiRouter.registerRoute({
     //     },
     //   ],
 
-    // response?.data?.linkable_files,
-
     return {
       error: false,
       response: {
