@@ -41,28 +41,10 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
 
   //   useEffect(() => {
   //     console.log(data);
-  //       console.log(data?.response?.linkable_files);
+  //     console.log(data?.response?.linkable_files);
   //     console.log('selected_files', selectedFiles);
-  //       console.log(context);
-  //   }, [selectedFiles, data]);
-
-  useEffect(() => {
-    if (data?.response?.linkable_files.length > 0) {
-      data?.response?.linkable_files?.forEach((e: any) => {
-        if (e?.file_selected === 1) {
-          if (!selectedFiles?.includes(e?.file_uuid)) {
-            setselectedFiles((selectedFiles: any) =>
-              selectedFiles.concat(e?.file_uuid),
-            );
-          } else {
-            setselectedFiles((selectedFiles: any) =>
-              selectedFiles.filter((f: string) => f !== e?.file_uuid),
-            );
-          }
-        }
-      });
-    }
-  }, [data?.response?.linkable_files]);
+  //     console.log(context);
+  //   }, [context, data]);
 
   useEffect(() => {
     if (data?.response?.linkable_files?.length !== 0) {
@@ -127,27 +109,37 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
   //   }, []);
 
   const DisplayFileSelection = async () => {
+    const linkable_files: any = await data?.response?.linkable_files.filter(
+      function (item: any) {
+        return selectedFiles.indexOf(item.file_uuid) !== -1;
+      },
+    );
+
+    const response = {
+      selected_files: linkable_files,
+      master_file_id: context.fileId,
+    };
     // console.log(response);
 
-    // axios
-    //   .post(
-    //     `${getEnv('API_PROTOCOL')}://${getEnv(
-    //       'API_HOST',
-    //     )}/validate/validation_linked_files`,
-    //     response,
-    //     {
-    //       headers: {
-    //         Authorization: jwt,
-    //         'Content-type': 'application/json',
-    //       },
-    //     },
-    //   )
-    //   .then((data: any) => {
-    //     // console.log(data);
-    //   })
-    //   .catch((error: any) => {
-    //     // console.log(error);
-    //   });
+    axios
+      .post(
+        `${getEnv('API_PROTOCOL')}://${getEnv(
+          'API_HOST',
+        )}/validate/validation_linked_files`,
+        response,
+        {
+          headers: {
+            Authorization: jwt,
+            'Content-type': 'application/json',
+          },
+        },
+      )
+      .then((data: any) => {
+        // console.log(data);
+      })
+      .catch((error: any) => {
+        // console.log(error);
+      });
     setdisplaySelectedFiles(false);
   };
 
@@ -251,7 +243,7 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
                       fontWeight: 'bold',
                       marginBottom: 15,
                     }}
-                  >{`Sélectionnez les fichiers à dupliquer`}</h2>
+                  >{`Sélectionner les fichiers à dupliquer depuis le fichier ${context?.data?.number}`}</h2>
 
                   {data?.response?.linkable_files?.map((file: any) => {
                     return (
@@ -261,7 +253,7 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
                           flexDirection: 'column',
                           display: 'flex',
                           alignItems: 'start',
-                          marginTop: -15,
+                          marginTop: -10,
                         }}
                       >
                         <label
@@ -316,9 +308,11 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
                     style={{ fontSize: 18, fontWeight: 600 }}
                     className="font"
                   >
-                    {`Vous êtes sur le point d'effectuer une duplication entre
-                plusieurs fichiers. Vous avez demandé de dupliquer les
-                informations du dossier :`}
+                    {`Vous êtes sur le point d'effectuer une duplication entre plusieurs fichiers. Vous avez demandé de dupliquer les informations du dossier ${
+                      context?.data?.number
+                    } vers ${
+                      selectedFiles.length === 1 ? 'le dossier' : 'les dossiers'
+                    }:`}
                   </h2>
                   <div style={{ marginTop: 15 }}>
                     {selectedFiles.length > 0 &&
