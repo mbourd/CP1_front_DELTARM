@@ -41,10 +41,28 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
 
   //   useEffect(() => {
   //     console.log(data);
-  //     console.log(data?.response?.linkable_files);
+  //       console.log(data?.response?.linkable_files);
   //     console.log('selected_files', selectedFiles);
-  //     console.log(context);
-  //   }, [context, data]);
+  //       console.log(context);
+  //   }, [selectedFiles, data]);
+
+  useEffect(() => {
+    if (data?.response?.linkable_files.length > 0) {
+      data?.response?.linkable_files?.forEach((e: any) => {
+        if (e?.file_selected === 1) {
+          if (!selectedFiles?.includes(e?.file_uuid)) {
+            setselectedFiles((selectedFiles: any) =>
+              selectedFiles.concat(e?.file_uuid),
+            );
+          } else {
+            setselectedFiles((selectedFiles: any) =>
+              selectedFiles.filter((f: string) => f !== e?.file_uuid),
+            );
+          }
+        }
+      });
+    }
+  }, [data?.response?.linkable_files]);
 
   useEffect(() => {
     if (data?.response?.linkable_files?.length !== 0) {
