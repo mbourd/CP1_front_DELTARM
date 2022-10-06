@@ -41,28 +41,10 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
 
   //   useEffect(() => {
   //     console.log(data);
-  //       console.log(data?.response?.linkable_files);
+  //     console.log(data?.response?.linkable_files);
   //     console.log('selected_files', selectedFiles);
-  //       console.log(context);
-  //   }, [selectedFiles, data]);
-
-  useEffect(() => {
-    if (data?.response?.linkable_files.length > 0) {
-      data?.response?.linkable_files?.forEach((e: any) => {
-        if (e?.file_selected === 1) {
-          if (!selectedFiles?.includes(e?.file_uuid)) {
-            setselectedFiles((selectedFiles: any) =>
-              selectedFiles.concat(e?.file_uuid),
-            );
-          } else {
-            setselectedFiles((selectedFiles: any) =>
-              selectedFiles.filter((f: string) => f !== e?.file_uuid),
-            );
-          }
-        }
-      });
-    }
-  }, [data?.response?.linkable_files]);
+  //     console.log(context);
+  //   }, [context, data]);
 
   useEffect(() => {
     if (data?.response?.linkable_files?.length !== 0) {
@@ -134,27 +116,37 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
   //   }, []);
 
   const DisplayFileSelection = async () => {
+    const linkable_files: any = await data?.response?.linkable_files.filter(
+      function (item: any) {
+        return selectedFiles.indexOf(item.file_uuid) !== -1;
+      },
+    );
+
+    const response = {
+      selected_files: linkable_files,
+      master_file_id: context.fileId,
+    };
     // console.log(response);
 
-    // axios
-    //   .post(
-    //     `${getEnv('API_PROTOCOL')}://${getEnv(
-    //       'API_HOST',
-    //     )}/validate/validation_linked_files`,
-    //     response,
-    //     {
-    //       headers: {
-    //         Authorization: jwt,
-    //         'Content-type': 'application/json',
-    //       },
-    //     },
-    //   )
-    //   .then((data: any) => {
-    //     // console.log(data);
-    //   })
-    //   .catch((error: any) => {
-    //     // console.log(error);
-    //   });
+    axios
+      .post(
+        `${getEnv('API_PROTOCOL')}://${getEnv(
+          'API_HOST',
+        )}/validate/validation_linked_files`,
+        response,
+        {
+          headers: {
+            Authorization: jwt,
+            'Content-type': 'application/json',
+          },
+        },
+      )
+      .then((data: any) => {
+        // console.log(data);
+      })
+      .catch((error: any) => {
+        // console.log(error);
+      });
     setdisplaySelectedFiles(false);
   };
 
