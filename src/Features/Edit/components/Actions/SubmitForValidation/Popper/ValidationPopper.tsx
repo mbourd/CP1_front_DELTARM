@@ -85,18 +85,26 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
   }, [send, context.fileId, request, context.data]);
 
   const handleSubmit = useCallback(() => {
+    const linkable_files: any = data?.response?.linkable_files.filter(function (
+      item: any,
+    ) {
+      return selectedFiles.indexOf(item.file_uuid) !== -1;
+    });
+
     const selectedValues = storage.getData<Record<string, true>>(
       'edit.selected.validators',
     );
     const selectedValue = Object.keys(
       selectedValues as Record<string, true>,
     )[0];
-    send(
-      'askValidation',
-      {},
-      { file_id: context.fileId, ask_to_user_id: selectedValue },
-    );
-  }, [send, context.fileId]);
+
+    const body = {
+      selected_files: linkable_files,
+      file_id: context.fileId,
+      ask_to_user_id: selectedValue,
+    };
+    send('askValidation', {}, {}, body);
+  }, [send, context.fileId, data?.response?.linkable_files, selectedFiles]);
 
   const handleFileSelection = useCallback(() => {
     setopenFileSelection(false);
@@ -107,47 +115,39 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
     }
   }, [selectedFiles]);
 
-  const cancelFileSelection = useCallback(() => {
-    setopenFileSelection(false);
-    setselectedFiles([]);
-  }, []);
+  //   const cancelFileSelection = useCallback(() => {
+  //     setopenFileSelection(false);
+  //     setselectedFiles([]);
+  //   }, []);
 
-  const cancelDisplayFileSelection = useCallback(() => {
-    setdisplaySelectedFiles(false);
-    setopenFileSelection(false);
-    setselectedFiles([]);
-  }, []);
+  //   const cancelDisplayFileSelection = useCallback(() => {
+  //     setdisplaySelectedFiles(false);
+  //     setopenFileSelection(false);
+  //     setselectedFiles([]);
+  //   }, []);
 
   const DisplayFileSelection = async () => {
-    const linkable_files: any = await data?.response?.linkable_files.filter(
-      function (item: any) {
-        return selectedFiles.indexOf(item.file_uuid) !== -1;
-      },
-    );
-
-    const response = {
-      selected_files: linkable_files,
-    };
     // console.log(response);
 
-    axios
-      .post(
-        `${getEnv('API_PROTOCOL')}://${getEnv(
-          'API_HOST',
-        )}/validate/validation_linked_files`,
-        response,
-        {
-          headers: {
-            Authorization: jwt,
-          },
-        },
-      )
-      .then((data: any) => {
-        // console.log(data);
-      })
-      .catch((error: any) => {
-        // console.log(error);
-      });
+    // axios
+    //   .post(
+    //     `${getEnv('API_PROTOCOL')}://${getEnv(
+    //       'API_HOST',
+    //     )}/validate/validation_linked_files`,
+    //     response,
+    //     {
+    //       headers: {
+    //         Authorization: jwt,
+    //         'Content-type': 'application/json',
+    //       },
+    //     },
+    //   )
+    //   .then((data: any) => {
+    //     // console.log(data);
+    //   })
+    //   .catch((error: any) => {
+    //     // console.log(error);
+    //   });
     setdisplaySelectedFiles(false);
   };
 
