@@ -41,9 +41,9 @@ export const EditValidation: React.FC<IProps> = ({
     logout();
   }
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  //   useEffect(() => {
+  //     console.log(data);
+  //   }, [data]);
 
   useEffect(() => {
     // To avoid (bpi specific)
@@ -53,8 +53,6 @@ export const EditValidation: React.FC<IProps> = ({
     if (!isEmpty(frontRouterQueries)) {
       queries = frontRouterQueries;
     }
-
-    console.log(frontRouterQueries, apiRouteName);
 
     if (currentSection) {
       queries.section_id = currentSection;
