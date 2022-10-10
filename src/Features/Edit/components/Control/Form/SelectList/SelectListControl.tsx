@@ -18,6 +18,7 @@ interface IProps {
   formState: IChapter[];
   setFormState: React.Dispatch<SetStateAction<IChapter[]>>;
   context: 'edit' | 'validate';
+  get_value_response?: any;
 }
 
 export const SelectListControl: React.FC<IProps> = ({
@@ -27,6 +28,7 @@ export const SelectListControl: React.FC<IProps> = ({
   formState,
   setFormState,
   context,
+  get_value_response,
 }): React.ReactElement => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);
@@ -58,6 +60,10 @@ export const SelectListControl: React.FC<IProps> = ({
   useEffect(() => {
     setCurrentValue(control.control_value);
   }, [control.control_value]);
+
+  //   useEffect(() => {
+  //     console.log(control.control_id, get_value_response);
+  //   }, [get_value_response]);
 
   useEffect(() => {
     updateFormState(formState, control.control_id, currentValue, setFormState);
