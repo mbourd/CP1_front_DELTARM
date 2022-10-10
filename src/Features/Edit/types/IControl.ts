@@ -226,7 +226,7 @@ export interface IApiControl {
   control_regex_msg: string | null;
   control_manage_compliance: boolean;
   control_pg_base_type?: string | null;
-  conditional?: IApiConditional;
+  conditional?: IApiConditional | any;
   compliance?: IApiCompliance;
   formula?: IFormula;
   useCompliance?: ICompliance;

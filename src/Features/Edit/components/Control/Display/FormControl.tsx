@@ -25,6 +25,7 @@ export const FormControls: React.FC<IProps> = ({
   useEffect(() => {
     if (chapters) {
       setFormState(chapters);
+      console.log(formStateWithDisabledAndCalculated);
     }
   }, [chapters]);
 
