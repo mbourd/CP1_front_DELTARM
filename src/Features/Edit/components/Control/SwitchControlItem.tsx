@@ -52,7 +52,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
   //   }, [control, formState, setFormState, context]);
   useEffect(() => {
     if (control.control_conditional === true) {
-      console.log('control', control);
+      //   console.log('control', control);
       axios
         .get(
           `${getEnv('API_PROTOCOL')}://${getEnv(
@@ -68,13 +68,13 @@ export const SwitchControlItem: React.FC<IProps> = ({
           },
         )
         .then((data: any) => {
-          console.log(control.control_id, data.data.data.value);
+          //   console.log(control.control_id, data.data.data.value);
           setget_value_response(data?.data);
 
           let condition = control.conditional?.conditional_formula;
           if (data.data.data.value) {
             condition = condition?.replaceAll('$', `'${data.data.data.value}'`);
-            console.log(condition);
+            // console.log(condition);
 
             // if (!data.data.data.value) {
             //   condition = condition?.replaceAll('$', `null`);
@@ -101,7 +101,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           }
 
           setupdated_form_state((formState: any) => formState.concat(control));
-          console.log(control);
+          //   console.log(control);
         })
         .catch((error: any) => {
           //   console.log(error);

@@ -22,12 +22,12 @@ export const FormControls: React.FC<IProps> = ({
     formStateWithCalculated,
   );
 
-  useEffect(() => {
-    if (chapters) {
-      setFormState(chapters);
-      console.log(formStateWithDisabledAndCalculated);
-    }
-  }, [chapters]);
+  //   useEffect(() => {
+  //     if (chapters) {
+  //       setFormState(chapters);
+  //       console.log(formStateWithDisabledAndCalculated);
+  //     }
+  //   }, [chapters]);
 
   return (
     <FormControlStyled>
