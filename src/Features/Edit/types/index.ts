@@ -5,6 +5,7 @@ export * from './IChapter';
 export * from './IControl';
 export * from './IState';
 export * from './IData';
+export * from './ILinkedFiles';
 
 export const CONTENT_TYPE = {
   1: 'INFORMATION',
