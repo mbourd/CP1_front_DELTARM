@@ -33,6 +33,7 @@ interface IProps {
   commentParam?: string;
   forceRedirect?: boolean;
   queries?: Record<string, string>;
+  body?: any;
 }
 
 export const GenericActionModal: React.FC<IProps> = ({
@@ -51,6 +52,7 @@ export const GenericActionModal: React.FC<IProps> = ({
   commentParam,
   forceRedirect = false,
   queries = {},
+  body,
 }): React.ReactElement | null => {
   const { request, callState, send, error } = useApi<any>();
   const [commentError, setCommentError] = useState<string | null>(null);
@@ -70,7 +72,7 @@ export const GenericActionModal: React.FC<IProps> = ({
       }
     }
 
-    send(postRouteName, {}, Object.assign({}, q, queries));
+    send(postRouteName, {}, Object.assign({}, q, queries), body);
   }, [
     fileId,
     send,
