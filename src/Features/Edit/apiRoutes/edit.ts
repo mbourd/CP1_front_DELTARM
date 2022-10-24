@@ -170,6 +170,7 @@ export const editValidationHandlerCallback = (
     productType: apiData.file_info.product_type,
     countComments: apiData.nb_comment,
     validationCount: apiData.valid_num,
+    linked_files: apiData.linked_files,
     sectionHeader:
       header_message && header_type
         ? { message: header_message, type: header_type }

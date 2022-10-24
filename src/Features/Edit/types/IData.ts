@@ -13,6 +13,7 @@ import {
 } from './ISection';
 import { IApiState, IState } from './IState';
 import { IButtons } from '../../DashboardDynamic/components/types';
+import { ILinkedFiles } from './ILinkedFiles';
 
 export interface IApiData {
   route_front: string;
@@ -27,6 +28,7 @@ export interface IApiDataEdit {
   sections: IApiSection[];
   state: IApiState;
   file: IFileItem[];
+  linked_files: ILinkedFiles[] | [];
   file_info: IApiFileInfo;
   nb_comment: number;
   valid_num?: string;
@@ -47,6 +49,7 @@ export interface IData {
   productType: string;
   countComments: number;
   validationCount?: string;
+  linked_files: ILinkedFiles[] | [];
   sectionHeader?: ISectionHeader;
   sectionFooter?: ISectionFooter;
   title: string | null;

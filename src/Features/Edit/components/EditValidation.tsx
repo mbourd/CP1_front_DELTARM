@@ -41,6 +41,10 @@ export const EditValidation: React.FC<IProps> = ({
     logout();
   }
 
+  //   useEffect(() => {
+  //     console.log(data);
+  //   }, [data]);
+
   useEffect(() => {
     // To avoid (bpi specific)
     let queries: Record<string, any> = { file_id: id };
