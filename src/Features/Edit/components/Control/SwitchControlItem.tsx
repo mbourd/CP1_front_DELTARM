@@ -1,4 +1,4 @@
-import React, { SetStateAction, useContext } from 'react';
+import React, { SetStateAction, useContext, useEffect, useState } from 'react';
 import { IApiControl, IChapter } from 'Features/Edit/types';
 import {
   TextControl,
@@ -23,6 +23,8 @@ import {
 import { EditValidationContext } from 'Features/Edit';
 import { SliderControl } from './Form/Slider/SliderControl';
 import { Box } from '@mui/material';
+import { useApi, useRouter, getEnv, security, IUser } from 'Services';
+import axios from 'axios';
 
 interface IProps {
   control: IApiControl;
@@ -38,6 +40,80 @@ export const SwitchControlItem: React.FC<IProps> = ({
   context,
 }): React.ReactElement | null => {
   const { fileId } = useContext(EditValidationContext);
+  const [user] = useState<IUser>(security.getUser());
+  const [updated_form_state, setupdated_form_state] = useState([]);
+
+  const jwt = user.getJwt();
+  const [get_value_response, setget_value_response] = useState(null);
+  //   useEffect(() => {
+  //     console.log(control, formState, setFormState, context);
+  //   }, [control, formState, setFormState, context]);
+  useEffect(() => {
+    if (control.control_conditional === true) {
+      //   console.log('control', control);
+      axios
+        .get(
+          `${getEnv('API_PROTOCOL')}://${getEnv(
+            'API_HOST',
+          )}/control/get_value?file_id=${fileId}&control_id=${
+            control.conditional.conditional_by_field_id
+          }`,
+          {
+            headers: {
+              Authorization: jwt,
+              'Content-type': 'application/json',
+            },
+          },
+        )
+        .then((data: any) => {
+          //   console.log(control.control_id, data.data.data.value);
+          setget_value_response(data?.data);
+
+          let condition = control.conditional?.conditional_formula;
+          if (data.data.data.value) {
+            condition = condition?.replaceAll('$', `'${data.data.data.value}'`);
+            // console.log(condition);
+
+            // if (!data.data.data.value) {
+            //   condition = condition?.replaceAll('$', `null`);
+            // }
+            if (condition) {
+              const executeCondition = Function('return ' + condition);
+              if (executeCondition()) {
+                control.editable = true;
+                if (control.control_mandatory) {
+                  control.mandatory = true;
+                }
+              }
+              if (!executeCondition()) {
+                control.editable = false;
+                if (control.control_mandatory) {
+                  control.mandatory = false;
+                }
+              }
+              // 2 keys in control object : editable is use in component and control_editable is the initial api state
+              if (!control.control_editable) {
+                control.editable = false;
+              }
+            }
+          }
+
+          setupdated_form_state((formState: any) => formState.concat(control));
+          //   console.log(control);
+        })
+        .catch((error: any) => {
+          //   console.log(error);
+        });
+    } else {
+      setupdated_form_state((formState: any) => formState.concat(control));
+      setget_value_response(null);
+    }
+  }, [control, fileId, jwt]);
+
+  //   useEffect(() => {
+  //     console.log(updated_form_state);
+  //   }, [updated_form_state]);
+
   switch (control.control_type) {
     case 'text':
       return (
@@ -47,6 +123,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           formState={formState}
           setFormState={setFormState}
           context={context}
+          get_value_response={get_value_response}
         />
       );
     case 'email':
@@ -57,6 +134,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           formState={formState}
           setFormState={setFormState}
           context={context}
+          get_value_response={get_value_response}
         />
       );
     case 'auth_num':
@@ -67,6 +145,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           formState={formState}
           setFormState={setFormState}
           context={context}
+          get_value_response={get_value_response}
         />
       );
     case 'formula':
@@ -88,6 +167,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           formState={formState}
           setFormState={setFormState}
           context={context}
+          get_value_response={get_value_response}
         />
       );
     case 'multiple_list':
@@ -99,6 +179,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           formState={formState}
           setFormState={setFormState}
           context={context}
+          get_value_response={get_value_response}
         />
       );
     case 'radio':
