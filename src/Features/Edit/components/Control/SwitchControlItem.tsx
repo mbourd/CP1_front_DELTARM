@@ -108,15 +108,17 @@ export const SwitchControlItem: React.FC<IProps> = ({
         )
         .then((data: any) => {
           setget_value_response(data?.data);
-
           let condition = control.conditional?.conditional_formula;
-          if (data.data.data.value) {
-            condition = condition?.replaceAll('$', `'${data.data.data.value}'`);
-            // console.log(condition);
-
-            // if (!data.data.data.value) {
-            //   condition = condition?.replaceAll('$', `null`);
-            // }
+          if (data.data) {
+            if (data.data.data) {
+              condition = condition?.replaceAll(
+                '$',
+                `'${data.data.data.value}'`,
+              );
+            }
+            if (!data.data.data) {
+              condition = condition?.replaceAll('$', `null`);
+            }
             if (condition) {
               const executeCondition = Function('return ' + condition);
               if (executeCondition()) {
