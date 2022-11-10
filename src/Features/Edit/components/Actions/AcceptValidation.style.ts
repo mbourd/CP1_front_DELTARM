@@ -40,7 +40,7 @@ export const AcceptValidationStyled = styled.div`
   }
 
   .card-items {
-    height: 200px;
+    maxHeight: 280px;
     overflow-y: auto;
   }
   }
