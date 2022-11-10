@@ -128,7 +128,8 @@ export const AcceptValidation: React.FC = (): React.ReactElement => {
                   marginBottom: 20,
                   marginTop: 0,
                 }}
-              >{`Sélectionner les fichiers à dupliquer depuis le fichier ${data?.number}`}</h2>
+              >{`
+              Sélectionner les fichiers à valider: ${data?.number}`}</h2>
 
               {data?.linked_files?.map((file: any) => {
                 return (
@@ -185,7 +186,7 @@ export const AcceptValidation: React.FC = (): React.ReactElement => {
               Annuler
             </Button>{' '}
             <Button color={'success'} onClick={DisplayFileSelection}>
-              Confirmer la duplication
+              Confirmer la validation
             </Button>
           </div>
         }
@@ -242,7 +243,7 @@ export const AcceptValidation: React.FC = (): React.ReactElement => {
                 fontWeight: 600,
                 marginTop: 20,
               }}
-            >{`Souhaitez-vous confirmer cette duplication ?`}</p>
+            >{`Souhaitez-vous confirmer cette validation ?`}</p>
           </div>
         </AcceptValidationStyled>
       </Modal>
