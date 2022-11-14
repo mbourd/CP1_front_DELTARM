@@ -12,13 +12,17 @@ export const RejectValidation: React.FC = (): React.ReactElement => {
   const [selectedFiles, setselectedFiles] = useState<any>([]);
 
   const new_data: any = data;
-  useEffect(() => {
-    console.log('selectedFiles', selectedFiles);
-  }, [selectedFiles]);
+
+  const current_file_data: any = {
+    file_avenant: data?.number?.split('/')[1],
+    file_name: data?.number?.split('/')[0],
+    file_selected: 1,
+    linked_file_id: fileId,
+  };
 
   useEffect(() => {
     if (new_data?.linked_files?.length > 0) {
-      data?.linked_files?.forEach((e: any) => {
+      data?.linked_files?.concat(current_file_data).forEach((e: any) => {
         if (e?.file_selected === 1) {
           if (!selectedFiles?.includes(e?.linked_file_id)) {
             setselectedFiles((selectedFiles: any) =>
@@ -71,7 +75,7 @@ export const RejectValidation: React.FC = (): React.ReactElement => {
         type={'alt'}
         onClick={() => {
           if (new_data?.linked_files?.length > 0) {
-            data?.linked_files?.forEach((e: any) => {
+            data?.linked_files?.concat(current_file_data).forEach((e: any) => {
               if (e?.file_selected === 1) {
                 if (!selectedFiles?.includes(e?.linked_file_id)) {
                   setselectedFiles((selectedFiles: any) =>
@@ -108,7 +112,7 @@ export const RejectValidation: React.FC = (): React.ReactElement => {
         }
         body={
           selectedFiles.length > 0 && {
-            rejectedFiles: selectedFiles.concat(fileId).map((s: string) => {
+            rejectedFiles: selectedFiles.map((s: string) => {
               return {
                 file_id: s,
               };
@@ -142,48 +146,50 @@ export const RejectValidation: React.FC = (): React.ReactElement => {
                   marginBottom: 20,
                   marginTop: 0,
                 }}
-              >{`Sélectionner les fichiers à refuser: ${data?.number}`}</h2>
+              >{`Sélectionner les fichiers à refuser:`}</h2>
 
-              {data?.linked_files?.map((file: any) => {
-                return (
-                  <div
-                    key={file?.file_uuid}
-                    style={{
-                      flexDirection: 'column',
-                      display: 'flex',
-                      alignItems: 'start',
-                      marginTop: -10,
-                    }}
-                  >
-                    <label
+              {data?.linked_files
+                ?.concat(current_file_data)
+                .map((file: any) => {
+                  return (
+                    <div
+                      key={file?.file_uuid}
                       style={{
-                        flexDirection: 'row',
+                        flexDirection: 'column',
                         display: 'flex',
-                        alignItems: 'center',
+                        alignItems: 'start',
+                        marginTop: -10,
                       }}
                     >
-                      <input
-                        type="checkbox"
-                        className="custom-control-input"
-                        id={file?.linked_file_id}
-                        value={file?.linked_file_id}
-                        onChange={handleSelectionOfFiles}
-                        defaultChecked={
-                          file?.file_selected === 0 ? false : true
-                        }
-                      />
-
-                      <b
+                      <label
                         style={{
-                          fontSize: 16,
-                          fontWeight: 500,
-                          cursor: 'pointer',
+                          flexDirection: 'row',
+                          display: 'flex',
+                          alignItems: 'center',
                         }}
-                      >{`${file?.file_name}/${file?.file_avenant}`}</b>
-                    </label>
-                  </div>
-                );
-              })}
+                      >
+                        <input
+                          type="checkbox"
+                          className="custom-control-input"
+                          id={file?.linked_file_id}
+                          value={file?.linked_file_id}
+                          onChange={handleSelectionOfFiles}
+                          defaultChecked={
+                            file?.file_selected === 0 ? false : true
+                          }
+                        />
+
+                        <b
+                          style={{
+                            fontSize: 16,
+                            fontWeight: 500,
+                            cursor: 'pointer',
+                          }}
+                        >{`${file?.file_name}/${file?.file_avenant}`}</b>
+                      </label>
+                    </div>
+                  );
+                })}
             </div>
           </AcceptValidationStyled>
         </Modal>
@@ -207,15 +213,16 @@ export const RejectValidation: React.FC = (): React.ReactElement => {
         <AcceptValidationStyled>
           <div className="card-items">
             <h2 style={{ fontSize: 18, fontWeight: 600 }} className="font">
-              {`Vous êtes sur le point d'effectuer une duplication entre plusieurs fichiers. Vous avez demandé de dupliquer les informations du dossier ${
-                data?.number
-              } vers ${
-                selectedFiles.length === 1 ? 'le dossier' : 'les dossiers'
-              }:`}
+              {`${
+                selectedFiles.length === 1
+                  ? 'Vous êtes sur le point de refuser la validation du dossier :'
+                  : 'Vous êtes sur le point de refuser la validation de plusieurs dossiers :'
+              }`}
             </h2>
             <div style={{ marginTop: 15 }}>
               {selectedFiles.length > 0 &&
                 data?.linked_files
+                  .concat(current_file_data)
                   .filter(function (item: any) {
                     return selectedFiles.indexOf(item.linked_file_id) !== -1;
                   })
@@ -230,9 +237,9 @@ export const RejectValidation: React.FC = (): React.ReactElement => {
                             marginBottom: 5,
                           }}
                           key={file?.linked_file_id}
-                        >{`${index + 1}: ${file?.file_name}/${
-                          file?.file_avenant
-                        }`}</b>
+                        >{`${
+                          selectedFiles.length === 1 ? `` : `${index + 1}:`
+                        } ${file?.file_name}/${file?.file_avenant}`}</b>
                         <br />
                       </>
                     );
@@ -248,7 +255,11 @@ export const RejectValidation: React.FC = (): React.ReactElement => {
                 marginBottom: 10,
               }}
             >
-              {`Si vous confimez cette duplication, toutes les informations de la section "Mise en Place" seront dupliquées entre ces dossiers.`}
+              {`${
+                selectedFiles.length === 1
+                  ? 'Si vous confirmez ce refus, ce dossier sera transféré dans la bannette "Dossiers Rejetés" du déclarant.'
+                  : 'Si vous confirmez ce refus, ces dossiers seront transférés dans la bannette "Dossiers Rejetés" du déclarant.'
+              }`}
             </b>
             <p
               style={{
@@ -256,7 +267,7 @@ export const RejectValidation: React.FC = (): React.ReactElement => {
                 fontWeight: 600,
                 marginTop: 20,
               }}
-            >{`Souhaitez-vous confirmer ce refus?`}</p>
+            >{`Souhaitez-vous confirmer ce refus ?`}</p>
           </div>
         </AcceptValidationStyled>
       </Modal>
