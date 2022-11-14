@@ -13,7 +13,10 @@ export const RejectValidation: React.FC = (): React.ReactElement => {
 
   const new_data: any = data;
   useEffect(() => {
-    console.log(new_data);
+    console.log('selectedFiles', selectedFiles);
+  }, [selectedFiles]);
+
+  useEffect(() => {
     if (new_data?.linked_files?.length > 0) {
       data?.linked_files?.forEach((e: any) => {
         if (e?.file_selected === 1) {
@@ -93,7 +96,6 @@ export const RejectValidation: React.FC = (): React.ReactElement => {
           displaySelectedFiles === false
         }
         onClose={() => setIsModalOpen(false)}
-        fileId={fileId}
         actionLabel={'Refuser la validation'}
         successMessage={'La validation a été refusé'}
         message={'Souhaitez-vous refuser cette validation ?'}
@@ -104,7 +106,15 @@ export const RejectValidation: React.FC = (): React.ReactElement => {
         queries={
           data?.validationCount ? { valid_num: data?.validationCount } : {}
         }
-        body={selectedFiles.length > 0 && { selectedFiles }}
+        body={
+          selectedFiles.length > 0 && {
+            rejectedFiles: selectedFiles.concat(fileId).map((s: string) => {
+              return {
+                file_id: s,
+              };
+            }),
+          }
+        }
       />
 
       <>

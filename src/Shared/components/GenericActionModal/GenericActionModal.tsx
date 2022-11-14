@@ -19,7 +19,7 @@ import {
 interface IProps {
   open: boolean;
   onClose: () => void;
-  fileId: string;
+  fileId?: string;
   actionLabel: string;
   cancelLabel?: string;
   successMessage: string;
@@ -57,7 +57,7 @@ export const GenericActionModal: React.FC<IProps> = ({
   const [commentError, setCommentError] = useState<string | null>(null);
 
   const submit = useCallback(() => {
-    const q: Record<string, string> = { file_id: fileId };
+    const q: any = { file_id: fileId };
 
     if (comment) {
       const com = storage.getData<string>('validation.reject.comments');
