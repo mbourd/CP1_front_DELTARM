@@ -45,12 +45,53 @@ export const SwitchControlItem: React.FC<IProps> = ({
 
   const jwt = user.getJwt();
   const [get_value_response, setget_value_response] = useState(null);
-  //   useEffect(() => {
-  //     console.log(control, formState, setFormState, context);
-  //   }, [control, formState, setFormState, context]);
   useEffect(() => {
-    if (control.control_conditional === true) {
-      //   console.log('control', control);
+    const data = formState[0].controls
+      .map((c: any) => {
+        return c.control_id;
+      })
+      .includes(control?.conditional?.conditional_by_field_id);
+
+    if (data) {
+      let condition = control.conditional?.conditional_formula;
+      const findValueOfField: any = formState[0].controls.find((c: any) => {
+        return control?.conditional?.conditional_by_field_id === c.control_id;
+      });
+
+      if (findValueOfField) {
+        if (findValueOfField.control_value) {
+          condition = condition?.replaceAll(
+            '$',
+            `'${findValueOfField.control_value}'`,
+          );
+        }
+        if (!findValueOfField.control_value) {
+          condition = condition?.replaceAll('$', `null`);
+        }
+
+        if (condition) {
+          const executeCondition = Function('return ' + condition);
+
+          if (executeCondition()) {
+            control.editable = true;
+            if (control.control_mandatory) {
+              control.mandatory = true;
+            }
+          }
+          if (!executeCondition()) {
+            control.editable = false;
+            if (control.control_mandatory) {
+              control.mandatory = false;
+            }
+          }
+          // 2 keys in control object : editable is use in component and control_editable is the initial api state
+          if (!control.control_editable) {
+            control.editable = false;
+          }
+        }
+      }
+      setupdated_form_state((formState: any) => formState.concat(control));
+    } else if (control.control_conditional === true) {
       axios
         .get(
           `${getEnv('API_PROTOCOL')}://${getEnv(
@@ -66,17 +107,18 @@ export const SwitchControlItem: React.FC<IProps> = ({
           },
         )
         .then((data: any) => {
-          //   console.log(control.control_id, data.data.data.value);
           setget_value_response(data?.data);
-
           let condition = control.conditional?.conditional_formula;
-          if (data.data.data.value) {
-            condition = condition?.replaceAll('$', `'${data.data.data.value}'`);
-            // console.log(condition);
-
-            // if (!data.data.data.value) {
-            //   condition = condition?.replaceAll('$', `null`);
-            // }
+          if (data.data) {
+            if (data.data.data) {
+              condition = condition?.replaceAll(
+                '$',
+                `'${data.data.data.value}'`,
+              );
+            }
+            if (!data.data.data) {
+              condition = condition?.replaceAll('$', `null`);
+            }
             if (condition) {
               const executeCondition = Function('return ' + condition);
               if (executeCondition()) {
@@ -108,11 +150,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
       setupdated_form_state((formState: any) => formState.concat(control));
       setget_value_response(null);
     }
-  }, [control, fileId, jwt]);
-
-  //   useEffect(() => {
-  //     console.log(updated_form_state);
-  //   }, [updated_form_state]);
+  }, [control, fileId, jwt, formState]);
 
   switch (control.control_type) {
     case 'text':
