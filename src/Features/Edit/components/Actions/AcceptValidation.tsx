@@ -29,6 +29,7 @@ export const AcceptValidation: React.FC = (): React.ReactElement => {
     setopenFileSelection(false);
     if (selectedFiles.length === 0) {
       setdisplaySelectedFiles(false);
+      setIsModalOpen(true);
     } else {
       setdisplaySelectedFiles(true);
     }
