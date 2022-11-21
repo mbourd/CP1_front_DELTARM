@@ -7,7 +7,7 @@ import axios from 'axios';
 
 export const PostDisbursement: React.FC = (): React.ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { fileId } = useContext(EditValidationContext);
+  const { fileId, data } = useContext(EditValidationContext);
   const [openFileSelection, setopenFileSelection] = useState(false);
   const [displaySelectedFiles, setdisplaySelectedFiles] = useState(false);
   const [selectedFiles, setselectedFiles] = useState<any>([]);
@@ -16,6 +16,15 @@ export const PostDisbursement: React.FC = (): React.ReactElement => {
   const jwt = user.getJwt();
 
   const new_Adata: any = Adata;
+
+  const current_file_data: any = {
+    file_avenant: data?.number?.split('/')[1],
+    file_name: data?.number?.split('/')[0],
+    file_selected: 1,
+    file_uuid: fileId,
+    file_creation_by: data?.file[6].value,
+    file_creation_date: data?.file[5].value,
+  };
 
   useEffect(() => {
     axios
@@ -47,7 +56,7 @@ export const PostDisbursement: React.FC = (): React.ReactElement => {
 
   useEffect(() => {
     if (new_Adata?.linkable_files?.length > 0) {
-      Adata?.linkable_files?.forEach((e: any) => {
+      [current_file_data].concat(Adata?.linkable_files)?.forEach((e: any) => {
         if (e?.file_selected === 1) {
           if (!selectedFiles?.includes(e?.file_uuid)) {
             setselectedFiles((selectedFiles: any) =>
@@ -101,15 +110,17 @@ export const PostDisbursement: React.FC = (): React.ReactElement => {
         type={'alt'}
         onClick={() => {
           if (new_Adata?.linkable_files?.length > 0) {
-            Adata?.linkable_files?.forEach((e: any) => {
-              if (e?.file_selected === 1) {
-                if (!selectedFiles?.includes(e?.file_uuid)) {
-                  setselectedFiles((selectedFiles: any) =>
-                    selectedFiles.concat(e?.file_uuid),
-                  );
+            [current_file_data]
+              .concat(Adata?.linkable_files)
+              ?.forEach((e: any) => {
+                if (e?.file_selected === 1) {
+                  if (!selectedFiles?.includes(e?.file_uuid)) {
+                    setselectedFiles((selectedFiles: any) =>
+                      selectedFiles.concat(e?.file_uuid),
+                    );
+                  }
                 }
-              }
-            });
+              });
           }
           Adata?.linked_files?.length === 0
             ? setIsModalOpen(!isModalOpen)
@@ -163,52 +174,54 @@ export const PostDisbursement: React.FC = (): React.ReactElement => {
               >{`
               Sélectionner les fichiers à passer en post-décaissement:`}</h2>
 
-              {Adata?.linkable_files?.map((file: any) => {
-                return (
-                  <div
-                    key={file?.file_uuid}
-                    style={{
-                      flexDirection: 'column',
-                      display: 'flex',
-                      alignItems: 'start',
-                      marginTop: -10,
-                    }}
-                  >
-                    <label
+              {[current_file_data]
+                .concat(Adata?.linkable_files)
+                ?.map((file: any) => {
+                  return (
+                    <div
+                      key={file?.file_uuid}
                       style={{
-                        flexDirection: 'row',
+                        flexDirection: 'column',
                         display: 'flex',
-                        alignItems: 'center',
+                        alignItems: 'start',
+                        marginTop: -10,
                       }}
                     >
-                      <input
-                        type="checkbox"
-                        className="custom-control-input"
-                        id={file?.file_uuid}
-                        value={file?.file_uuid}
-                        onChange={handleSelectionOfFiles}
-                        defaultChecked={
-                          file?.file_selected === 0 ? false : true
-                        }
-                      />
-
-                      <b
+                      <label
                         style={{
-                          fontSize: 16,
-                          fontWeight: 500,
-                          cursor: 'pointer',
+                          flexDirection: 'row',
+                          display: 'flex',
+                          alignItems: 'center',
                         }}
-                      >{`${file?.file_name}/${
-                        file?.file_avenant
-                      } créé le  ${new Date(
-                        file?.file_creation_date,
-                      ).toLocaleDateString()} par ${
-                        file?.file_creation_by
-                      }`}</b>
-                    </label>
-                  </div>
-                );
-              })}
+                      >
+                        <input
+                          type="checkbox"
+                          className="custom-control-input"
+                          id={file?.file_uuid}
+                          value={file?.file_uuid}
+                          onChange={handleSelectionOfFiles}
+                          defaultChecked={
+                            file?.file_selected === 0 ? false : true
+                          }
+                        />
+
+                        <b
+                          style={{
+                            fontSize: 16,
+                            fontWeight: 500,
+                            cursor: 'pointer',
+                          }}
+                        >{`${file?.file_name}/${
+                          file?.file_avenant
+                        } créé le  ${new Date(
+                          file?.file_creation_date,
+                        ).toLocaleDateString()} par ${
+                          file?.file_creation_by
+                        }`}</b>
+                      </label>
+                    </div>
+                  );
+                })}
             </div>
           </AcceptValidationStyled>
         </Modal>
@@ -238,7 +251,8 @@ export const PostDisbursement: React.FC = (): React.ReactElement => {
             </h2>
             <div style={{ marginTop: 15 }}>
               {selectedFiles.length > 0 &&
-                Adata?.linkable_files
+                [current_file_data]
+                  .concat(Adata?.linkable_files)
                   .filter(function (item: any) {
                     return selectedFiles.indexOf(item.file_uuid) !== -1;
                   })
