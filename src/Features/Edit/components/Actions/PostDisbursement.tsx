@@ -109,7 +109,9 @@ export const PostDisbursement: React.FC = (): React.ReactElement => {
         color={'success'}
         type={'alt'}
         onClick={() => {
-          if (new_Adata?.linkable_files?.length > 0) {
+          if (
+            [current_file_data].concat(new_Adata?.linkable_files)?.length > 0
+          ) {
             [current_file_data]
               .concat(Adata?.linkable_files)
               ?.forEach((e: any) => {
@@ -122,7 +124,7 @@ export const PostDisbursement: React.FC = (): React.ReactElement => {
                 }
               });
           }
-          Adata?.linked_files?.length === 0
+          [current_file_data].concat(Adata?.linkable_files)?.length === 0
             ? setIsModalOpen(!isModalOpen)
             : setopenFileSelection(true);
         }}
@@ -148,7 +150,10 @@ export const PostDisbursement: React.FC = (): React.ReactElement => {
       />
       <>
         <Modal
-          open={openFileSelection && Adata?.linkable_files?.length !== 0}
+          open={
+            openFileSelection &&
+            [current_file_data].concat(Adata?.linkable_files)?.length !== 0
+          }
           onClose={cancelDisplayFileSelection}
           height={'360px'}
           footer={
