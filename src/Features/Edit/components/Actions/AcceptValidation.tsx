@@ -29,6 +29,7 @@ export const AcceptValidation: React.FC = (): React.ReactElement => {
     setopenFileSelection(false);
     if (selectedFiles.length === 0) {
       setdisplaySelectedFiles(false);
+      setIsModalOpen(true);
     } else {
       setdisplaySelectedFiles(true);
     }
@@ -93,7 +94,7 @@ export const AcceptValidation: React.FC = (): React.ReactElement => {
         fileId={fileId}
         actionLabel={'Valider le dossier'}
         successMessage={'Le dossier a été validé'}
-        message={'Souhaitez-vous valider ce dossier ?'}
+        message={'Merci de renseigner un commentaire de validation :'}
         postRouteName={'actionAcceptValidation'}
         queries={
           data?.validationCount ? { valid_num: data?.validationCount } : {}
@@ -194,11 +195,9 @@ export const AcceptValidation: React.FC = (): React.ReactElement => {
         <AcceptValidationStyled>
           <div className="card-items">
             <h2 style={{ fontSize: 18, fontWeight: 600 }} className="font">
-              {`Vous êtes sur le point d'effectuer une duplication entre plusieurs fichiers. Vous avez demandé de dupliquer les informations du dossier ${
-                data?.number
-              } vers ${
-                selectedFiles.length === 1 ? 'le dossier' : 'les dossiers'
-              }:`}
+              {selectedFiles.length === 1
+                ? "Vous êtes sur le point d'effectuer une validation d'un fichier. Vous avez demandé de valider les informations du dossier :"
+                : "Vous êtes sur le point d'effectuer la validation de plusieurs fichiers. Vous avez demandé de valider les dossiers :"}
             </h2>
             <div style={{ marginTop: 15 }}>
               {selectedFiles.length > 0 &&
@@ -235,7 +234,8 @@ export const AcceptValidation: React.FC = (): React.ReactElement => {
                 marginBottom: 10,
               }}
             >
-              {`Si vous confimez cette duplication, toutes les informations de la section "Mise en Place" seront dupliquées entre ces dossiers.`}
+              {selectedFiles.length > 1 &&
+                `Si vous confirmez cette validation, toutes les informations que vous avez saisies seront dupliquées entre ces dossiers.`}
             </b>
             <p
               style={{

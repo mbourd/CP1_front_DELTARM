@@ -22,7 +22,7 @@ export const RejectValidation: React.FC = (): React.ReactElement => {
 
   useEffect(() => {
     if (new_data?.linked_files?.length > 0) {
-      data?.linked_files?.concat(current_file_data).forEach((e: any) => {
+      [current_file_data].concat(data?.linked_files)?.forEach((e: any) => {
         if (e?.file_selected === 1) {
           if (!selectedFiles?.includes(e?.linked_file_id)) {
             setselectedFiles((selectedFiles: any) =>
@@ -38,6 +38,7 @@ export const RejectValidation: React.FC = (): React.ReactElement => {
     setopenFileSelection(false);
     if (selectedFiles.length === 0) {
       setdisplaySelectedFiles(false);
+      setIsModalOpen(true);
     } else {
       setdisplaySelectedFiles(true);
     }
@@ -74,18 +75,20 @@ export const RejectValidation: React.FC = (): React.ReactElement => {
         color={'error'}
         type={'alt'}
         onClick={() => {
-          if (new_data?.linked_files?.length > 0) {
-            data?.linked_files?.concat(current_file_data).forEach((e: any) => {
-              if (e?.file_selected === 1) {
-                if (!selectedFiles?.includes(e?.linked_file_id)) {
-                  setselectedFiles((selectedFiles: any) =>
-                    selectedFiles.concat(e?.linked_file_id),
-                  );
+          if ([current_file_data].concat(data?.linked_files).length > 0) {
+            [current_file_data]
+              .concat(data?.linked_files)
+              ?.forEach((e: any) => {
+                if (e?.file_selected === 1) {
+                  if (!selectedFiles?.includes(e?.linked_file_id)) {
+                    setselectedFiles((selectedFiles: any) =>
+                      selectedFiles.concat(e?.linked_file_id),
+                    );
+                  }
                 }
-              }
-            });
+              });
           }
-          data?.linked_files?.length === 0
+          [current_file_data].concat(data?.linked_files).length === 0
             ? setIsModalOpen(!isModalOpen)
             : setopenFileSelection(true);
         }}
@@ -123,7 +126,10 @@ export const RejectValidation: React.FC = (): React.ReactElement => {
 
       <>
         <Modal
-          open={openFileSelection && data?.linked_files?.length !== 0}
+          open={
+            openFileSelection &&
+            [current_file_data].concat(data?.linked_files)?.length !== 0
+          }
           onClose={cancelDisplayFileSelection}
           height={'360px'}
           footer={
@@ -148,8 +154,8 @@ export const RejectValidation: React.FC = (): React.ReactElement => {
                 }}
               >{`Sélectionner les fichiers à refuser:`}</h2>
 
-              {data?.linked_files
-                ?.concat(current_file_data)
+              {[current_file_data]
+                .concat(data?.linked_files)
                 .map((file: any) => {
                   return (
                     <div
@@ -221,8 +227,8 @@ export const RejectValidation: React.FC = (): React.ReactElement => {
             </h2>
             <div style={{ marginTop: 15 }}>
               {selectedFiles.length > 0 &&
-                data?.linked_files
-                  .concat(current_file_data)
+                [current_file_data]
+                  .concat(data?.linked_files)
                   .filter(function (item: any) {
                     return selectedFiles.indexOf(item.linked_file_id) !== -1;
                   })
