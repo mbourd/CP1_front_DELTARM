@@ -14,6 +14,10 @@ import {
   InputBase,
   FormError,
 } from 'Shared/components';
+import {
+  GenericActionModalStyled,
+  GenericActionCommentModalStyled,
+} from '../../../../Shared/components/GenericActionModal/GenericActionModal.style';
 
 export const NewDisbursement: React.FC = (): React.ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -181,6 +185,25 @@ export const NewDisbursement: React.FC = (): React.ReactElement => {
           }
           setIsModalOpen(false);
         }}
+        footer={
+          <GenericActionModalStyled>
+            <Button
+              color={'error'}
+              onClick={() => {
+                request.abort();
+                if (callState === 'SUCCESS') {
+                  router.redirectTo('edit', { id: fileId }, {}, false);
+
+                  return null;
+                }
+                setIsModalOpen(false);
+              }}
+            >
+              {callState === 'SUCCESS' &&
+                (callState === 'SUCCESS' ? 'Fermer' : 'Annuler')}
+            </Button>
+          </GenericActionModalStyled>
+        }
         width={'sm'}
       >
         <SwitchCallState

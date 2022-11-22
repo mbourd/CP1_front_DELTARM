@@ -3,14 +3,28 @@ import { Button, GenericActionModal, Modal } from 'Shared/components';
 import { EditValidationContext } from 'Features/Edit';
 import { AcceptValidationStyled } from './AcceptValidation.style';
 import { getEnv, IUser, security } from 'Services';
+import { useApi, router, SwitchCallState } from 'Services';
 import axios from 'axios';
-
+import {
+  FormLabel,
+  StairsLoader,
+  Error500,
+  RequestSuccess,
+  BadRequest,
+  InputBase,
+  FormError,
+} from 'Shared/components';
+import {
+  GenericActionModalStyled,
+  GenericActionCommentModalStyled,
+} from '../../../../Shared/components/GenericActionModal/GenericActionModal.style';
 export const PostDisbursement: React.FC = (): React.ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { fileId, data } = useContext(EditValidationContext);
   const [openFileSelection, setopenFileSelection] = useState(false);
   const [displaySelectedFiles, setdisplaySelectedFiles] = useState(false);
   const [selectedFiles, setselectedFiles] = useState<any>([]);
+  const { request, callState, send, error } = useApi<any>();
   const [user] = useState<IUser>(security.getUser());
   const [Adata, setAdata]: any = useState([]);
   const jwt = user.getJwt();
@@ -79,6 +93,13 @@ export const PostDisbursement: React.FC = (): React.ReactElement => {
   }, [selectedFiles]);
 
   const DisplayFileSelection = async () => {
+    if (selectedFiles.length > 0) {
+      const q: any = { file_id: fileId };
+
+      send('actionPostDisbursement', {}, Object.assign({}, q, {}), {
+        selectedFiles,
+      });
+    }
     setdisplaySelectedFiles(false);
     setIsModalOpen(true);
   };
@@ -132,7 +153,7 @@ export const PostDisbursement: React.FC = (): React.ReactElement => {
         Passer en Post-Décaissement
       </Button>
 
-      <GenericActionModal
+      {/* <GenericActionModal
         open={
           isModalOpen &&
           openFileSelection === false &&
@@ -147,7 +168,67 @@ export const PostDisbursement: React.FC = (): React.ReactElement => {
         body={selectedFiles.length > 0 && { selectedFiles }}
         redirectRouteName={'edit'}
         forceRedirect
-      />
+      /> */}
+      <Modal
+        open={
+          isModalOpen &&
+          openFileSelection === false &&
+          displaySelectedFiles === false
+        }
+        onClose={() => {
+          request.abort();
+          if (callState === 'SUCCESS') {
+            router.redirectTo('edit', { id: fileId }, {}, false);
+
+            return null;
+          }
+          setIsModalOpen(false);
+        }}
+        footer={
+          <GenericActionModalStyled>
+            <Button
+              color={'error'}
+              onClick={() => {
+                request.abort();
+                if (callState === 'SUCCESS') {
+                  router.redirectTo('edit', { id: fileId }, {}, false);
+
+                  return null;
+                }
+                setIsModalOpen(false);
+              }}
+            >
+              {callState === 'SUCCESS' &&
+                (callState === 'SUCCESS' ? 'Fermer' : 'Annuler')}
+            </Button>
+          </GenericActionModalStyled>
+        }
+        width={'sm'}
+      >
+        <SwitchCallState
+          callState={callState}
+          states={{
+            IS_LOADING: <StairsLoader size={'md'} />,
+            SERVER_ERROR: (
+              <Error500 size={'md'} message={'Le serveur ne répond pas'} />
+            ),
+            SUCCESS: (
+              <RequestSuccess
+                size={'lg'}
+                message={'Vous pouvez compléter le nouveau décaissement'}
+                title={'Opération réussie'}
+              />
+            ),
+            BAD_REQUEST: (
+              <BadRequest
+                size={'md'}
+                message={error?.response ? error?.response.body.error_msg : ''}
+                title={'Echec !'}
+              />
+            ),
+          }}
+        ></SwitchCallState>
+      </Modal>
       <>
         <Modal
           open={
