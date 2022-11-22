@@ -11,6 +11,10 @@ import {
   RequestSuccess,
   BadRequest,
 } from 'Shared/components';
+import {
+  GenericActionModalStyled,
+  GenericActionCommentModalStyled,
+} from '../../../../Shared/components/GenericActionModal/GenericActionModal.style';
 
 export const Close: React.FC = (): React.ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -163,6 +167,24 @@ export const Close: React.FC = (): React.ReactElement => {
           setIsModalOpen(false);
         }}
         width={'sm'}
+        footer={
+          <GenericActionModalStyled>
+            <Button
+              color={'error'}
+              onClick={() => {
+                request.abort();
+                if (callState === 'SUCCESS') {
+                  router.redirectTo('manage');
+
+                  return null;
+                }
+                setIsModalOpen(false);
+              }}
+            >
+              {callState === 'SUCCESS' || 'SERVER_ERROR' ? 'Fermer' : 'Annuler'}
+            </Button>
+          </GenericActionModalStyled>
+        }
       >
         <SwitchCallState
           callState={callState}
