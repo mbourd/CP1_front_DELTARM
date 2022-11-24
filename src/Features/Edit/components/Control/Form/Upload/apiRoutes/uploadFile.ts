@@ -10,6 +10,7 @@ export const uploadFile = (
   jwt: string | null,
   setCurrentUploadFile: React.Dispatch<SetStateAction<IUploadDetail[] | null>>,
   setErrorMessage: React.Dispatch<SetStateAction<string | null>>,
+  setNewUploadFile: React.Dispatch<SetStateAction<File | null>>,
 ) => {
   const formData = new FormData();
   formData.append('file', newUploadFile);
@@ -31,7 +32,7 @@ export const uploadFile = (
     )
     .then((res) => {
       setErrorMessage(null);
-
+      setNewUploadFile(null);
       return setCurrentUploadFile(res.data.data.file_detail);
     })
     .catch((err) => {
