@@ -82,6 +82,7 @@ export const UploadControl: React.FC<IProps> = ({
         jwt,
         setCurrentUploadFile,
         setErrorMessage,
+        setNewUploadFile,
       );
     }
   }, [fileId, control, newUploadFile, jwt]);
@@ -113,7 +114,7 @@ export const UploadControl: React.FC<IProps> = ({
     if (newUploadFile !== null) {
       handleUploadFile();
     }
-    setNewUploadFile(null);
+    // setNewUploadFile(null);
   }, [newUploadFile, handleUploadFile]);
 
   useEffect(() => {
