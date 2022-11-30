@@ -32,6 +32,7 @@ export const uploadFile = (
     )
     .then((res) => {
       setErrorMessage(null);
+      setNewUploadFile(null);
       return setCurrentUploadFile(res.data.data.file_detail);
     })
     .catch((err) => {

@@ -85,7 +85,6 @@ export const UploadControl: React.FC<IProps> = ({
         setNewUploadFile,
       );
     }
-    setNewUploadFile(null);
   }, [fileId, control, newUploadFile, jwt]);
 
   const handleDeleteFile = useCallback(
