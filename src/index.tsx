@@ -13,7 +13,7 @@ import { Integrations } from '@sentry/tracing';
 import { BPIGlobalStyle, BPITheme } from 'Styles';
 import { AppMaintenance } from './AppMaintenance';
 
-const maintenanceMode = false;
+const maintenanceMode = true;
 
 if (process.env.REACT_APP_ENV !== 'staging') {
   Sentry.init({
@@ -48,7 +48,8 @@ if (root) {
           <ThemeProvider theme={BPITheme}>
             <BPIGlobalStyle />
             <Suspense fallback={<PageLoader text={'...'} />}>
-              <App isEmbedded={isEmbedded} />
+              {/* <App isEmbedded={isEmbedded} /> */}
+              <AppMaintenance />
             </Suspense>
           </ThemeProvider>
         </Router>

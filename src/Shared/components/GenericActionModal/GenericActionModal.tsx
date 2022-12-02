@@ -19,7 +19,7 @@ import {
 interface IProps {
   open: boolean;
   onClose: () => void;
-  fileId: string;
+  fileId?: string;
   actionLabel: string;
   cancelLabel?: string;
   successMessage: string;
@@ -32,6 +32,7 @@ interface IProps {
   commentParam?: string;
   forceRedirect?: boolean;
   queries?: Record<string, string>;
+  body?: any;
 }
 
 export const GenericActionModal: React.FC<IProps> = ({
@@ -50,12 +51,13 @@ export const GenericActionModal: React.FC<IProps> = ({
   commentParam,
   forceRedirect = false,
   queries = {},
+  body,
 }): React.ReactElement | null => {
   const { request, callState, send, error } = useApi<any>();
   const [commentError, setCommentError] = useState<string | null>(null);
 
   const submit = useCallback(() => {
-    const q: Record<string, string> = { file_id: fileId };
+    const q: any = { file_id: fileId };
 
     if (comment) {
       const com = storage.getData<string>('validation.reject.comments');
@@ -68,7 +70,7 @@ export const GenericActionModal: React.FC<IProps> = ({
       }
     }
 
-    send(postRouteName, {}, Object.assign({}, q, queries));
+    send(postRouteName, {}, Object.assign({}, q, queries), body);
   }, [
     fileId,
     send,

@@ -7,11 +7,10 @@ export const injectDisabledFields = (formState: IChapter[]): IChapter[] => {
         // Find the listened field
         formState.map((chapter) => {
           chapter.controls.map(() => {
-            const fieldToTest = chapter.controls.find(
-              (fieldToFind) =>
-                fieldToFind.control_id ==
-                field.conditional?.conditional_by_field_id + '',
-            );
+            const fieldToTest = chapter.controls.find((fieldToFind) => {
+              fieldToFind.control_id ==
+                field.conditional?.conditional_by_field_id + '';
+            });
 
             let condition = field.conditional?.conditional_formula;
             if (fieldToTest) {

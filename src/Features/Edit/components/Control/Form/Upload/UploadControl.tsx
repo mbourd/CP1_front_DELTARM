@@ -27,7 +27,7 @@ export const UploadControl: React.FC<IProps> = ({
   context,
 }): React.ReactElement => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [newUploadFile, setNewUploadFile] = useState<File | null>(null);
+  const [newUploadFile, setNewUploadFile] = useState<File | any>(null);
   const [currentUploadFile, setCurrentUploadFile] = useState<
     IUploadDetail[] | null
   >(control.upload_detail);
@@ -74,16 +74,18 @@ export const UploadControl: React.FC<IProps> = ({
     if (!control.mandatory) {
       setErrorMessage(null);
     }
-    if (newUploadFile) {
-      uploadFile(
-        fileId,
-        control,
-        newUploadFile,
-        jwt,
-        setCurrentUploadFile,
-        setErrorMessage,
-      );
-    }
+    uploadFile(
+      fileId,
+      control,
+      newUploadFile,
+      jwt,
+      setCurrentUploadFile,
+      setErrorMessage,
+      setNewUploadFile,
+    );
+    setTimeout(() => {
+      setNewUploadFile(null);
+    }, 2000);
   }, [fileId, control, newUploadFile, jwt]);
 
   const handleDeleteFile = useCallback(
@@ -110,9 +112,10 @@ export const UploadControl: React.FC<IProps> = ({
   );
 
   useEffect(() => {
-    if (newUploadFile) {
+    if (newUploadFile !== null) {
       handleUploadFile();
     }
+    // setNewUploadFile(null);
   }, [newUploadFile, handleUploadFile]);
 
   useEffect(() => {

@@ -3,12 +3,13 @@ import { TextControlStyled } from './TextControl.style';
 import { Grid } from '@material-ui/core';
 import { IApiControl, IChapter } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
-import { useApi, useRouter } from 'Services';
+import { useApi, useRouter, getEnv, security, IUser } from 'Services';
 import { ControlLabel } from '../ControlLabel';
 import { ControlFooter } from '../ControlFooter';
 import { checkIfSameValues } from '../../../../../../Packages/Helpers/src/checkIfSameValues';
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
 import { RejectControl } from '../RejectByPointControl/RejectControl';
+import axios from 'axios';
 
 interface IProps {
   control: IApiControl;
@@ -16,6 +17,7 @@ interface IProps {
   formState: IChapter[];
   setFormState: React.Dispatch<SetStateAction<IChapter[]>>;
   context: 'edit' | 'validate';
+  get_value_response?: any;
 }
 
 export const TextControl: React.FC<IProps> = ({
@@ -24,6 +26,7 @@ export const TextControl: React.FC<IProps> = ({
   formState,
   setFormState,
   context,
+  get_value_response,
 }): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -38,6 +41,10 @@ export const TextControl: React.FC<IProps> = ({
   useEffect(() => {
     setCurrentValue(control.control_value);
   }, [control.control_value]);
+
+  //   useEffect(() => {
+  //     console.log(control.control_id, get_value_response);
+  //   }, [get_value_response]);
 
   useEffect(() => {
     updateFormState(formState, control.control_id, currentValue, setFormState);

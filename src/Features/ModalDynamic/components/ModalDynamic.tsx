@@ -71,7 +71,7 @@ export const ModalDynamic: FC<IDataModalProps> = ({
   );
 
   const handleCLickActionsBeforeSendToActionButtons = useCallback(
-    (action: IActionButton) => {
+    (action: any) => {
       if (action.params) {
         const keys = Object.keys(action.params);
         const params = { ...getValues(keys) };
@@ -133,7 +133,7 @@ export const ModalDynamic: FC<IDataModalProps> = ({
         </Container>
       )}
       <Grid container spacing={1}>
-        {data?.content?.map((element, index) => {
+        {data?.content?.map((element: any, index) => {
           switch (element.element) {
             case 'p':
               return (
@@ -177,7 +177,7 @@ export const ModalDynamic: FC<IDataModalProps> = ({
               Object.assign(defaultQueries, keySelectField);
 
               const options: Record<string, ISelectData> = {};
-              element.attribute?.option?.map((option) => {
+              element.attribute?.option?.map((option: any) => {
                 options[option.id] = {
                   id: '' + option.id,
                   label: option.label,
@@ -212,9 +212,9 @@ export const ModalDynamic: FC<IDataModalProps> = ({
                   <TableContainer>
                     <Table>
                       <TableBody>
-                        {element.value.row.value.map((row, index) => (
+                        {element.value.row.value.map((row: any, index: any) => (
                           <TableRow key={index}>
-                            {row.cell.value.map((cell, index) => {
+                            {row.cell.value.map((cell: any, index: any) => {
                               switch (cell.type) {
                                 case 'btn':
                                   return (
