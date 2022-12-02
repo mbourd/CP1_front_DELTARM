@@ -5,7 +5,12 @@ services:
         container_name: cp1_staging_github
         restart: always
         ports:
+<<<<<<< HEAD
             - 80:80
             - 443:443
+=======
+            - 200:200
+            - 500:500
+>>>>>>> ecbb318 (commit CI/CD)
         volumes:
             - /home/deltarm/etc/ssl:/etc/nginx/certs
