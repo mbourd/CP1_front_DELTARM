@@ -74,6 +74,8 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
   useEffect(() => {
     if (data?.response?.linkable_files?.length !== 0) {
       setopenFileSelection(true);
+    } else {
+      setopenFileSelection(false);
     }
   }, [data?.response?.linkable_files]);
   useEffect(() => {
