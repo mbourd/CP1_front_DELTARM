@@ -84,6 +84,18 @@ export const SelectListCompliance: React.FC<IProps> = ({
     }
   }, [error, trans]);
 
+  const modified_data = compliance?.control_answer_choices
+    ?.map((choice: any) => {
+      return {
+        label: choice.choice_lib,
+        value: choice.choice_lib,
+        id: choice.choice_id,
+      };
+    })
+    .reduce((obj: any, cur: any, i: any) => {
+      return { ...obj, [i]: cur };
+    }, {});
+
   return (
     <Grid item xs={6}>
       <SelectListComplianceStyled className={'compliance-container'}>
@@ -93,7 +105,7 @@ export const SelectListCompliance: React.FC<IProps> = ({
           labelBdc={'text'}
           closeOnSelect
           name={'select_list' + compliance.compliance_id}
-          data={compliance.compliance_answer_choices || {}}
+          data={modified_data || {}}
           selectedValues={selectedValue}
           multiple={false}
           onChange={(selectedValues) => {
