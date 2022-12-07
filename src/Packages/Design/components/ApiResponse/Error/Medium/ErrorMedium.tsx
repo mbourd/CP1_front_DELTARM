@@ -10,7 +10,11 @@ export const ErrorMedium: React.FC<Omit<IError, 'size'>> = ({
 }): React.ReactElement => {
   return (
     <ErrorMediumStyled className={'_Error'}>
-      {title ? <div className={'_ErrorTitle'}>{title}</div> : null}
+      {title ? (
+        <div className={'_ErrorTitle'} style={{ textAlign: 'center' }}>
+          {title}
+        </div>
+      ) : null}
       {icon ? (
         <p className={'_ErrorIcon'}>
           <img src={icon} alt={''} className={'_ErrorPicture'} />

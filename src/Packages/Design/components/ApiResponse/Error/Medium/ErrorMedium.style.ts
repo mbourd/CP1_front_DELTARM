@@ -1,8 +1,8 @@
 import styled from 'styled-components/macro';
 
 export const ErrorMediumStyled = styled.div`
-  text-align: center;
   max-height: 320px;
+  margin: 0 15px;
   overflow-y: scroll;
 
   ._ErrorTitle {
@@ -27,5 +27,11 @@ export const ErrorMediumStyled = styled.div`
     line-height: 23px;
     margin-bottom: ${({ theme }) => theme.spacing.normal};
     white-space: pre-wrap;
+  }
+
+  @media only screen and (min-width: 1800px) {
+    max-height: 420px;
+    margin: 0 15px;
+    overflow-y: scroll;
   }
 `;
