@@ -198,6 +198,7 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
                 <>
                   <BadRequest
                     size={'md'}
+                    validate="error"
                     message={
                       error?.response ? error?.response.body.error_msg : ''
                     }

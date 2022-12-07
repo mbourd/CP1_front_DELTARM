@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { IApiComplianceFields } from 'Features/Edit/types';
-import { FormError, Select } from 'Shared/components';
-import { storage, useApi, useRouter } from 'Services';
-import { SelectListComplianceStyled } from './SelectListCompliance.style';
+import { FormError } from 'Shared/components';
+import { CheckboxesComplianceStyled } from './CheckboxesCompliance.style';
+import { useApi, useRouter } from 'Services';
 import { ComplianceLabel } from '../ComplianceLabel';
 import { ComplianceFooter } from '../ComplianceFooter';
+import { CheckboxWrapper } from '../../../../../../../../Packages/Design/components/Checkbox/CheckboxWrapper';
 
 interface IProps {
   compliance: IApiComplianceFields;
@@ -13,24 +14,19 @@ interface IProps {
   controlId: string;
 }
 
-export const SelectListCompliance: React.FC<IProps> = ({
+export const ChexboxesCompliance: React.FC<IProps> = ({
   compliance,
   fileId,
   controlId,
 }): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const { currentRoute } = useRouter();
-
-  const value = storage.getData<string>(
-    fileId +
-      controlId +
-      '.edit.compliance.' +
-      compliance.compliance_id +
-      '.value',
+  const [currentValue, setCurrentValue] = useState(
+    compliance.compliance_elm_value,
   );
+  const { currentRoute } = useRouter();
   const selectedValue: Record<string, true> = {
-    [value || compliance.compliance_elm_value || '']: true,
+    [currentValue || compliance.compliance_elm_value || '']: true,
   };
 
   const saveValue = useCallback(
@@ -43,15 +39,10 @@ export const SelectListCompliance: React.FC<IProps> = ({
 
         return;
       }
+
       setErrorMessage(null);
-      storage.setData(
-        fileId +
-          controlId +
-          '.edit.compliance.' +
-          compliance.compliance_id +
-          '.value',
-        value,
-      );
+      setCurrentValue(value);
+
       send(
         currentRoute?.props?.apiSaveControlRouteName,
         {},
@@ -78,11 +69,13 @@ export const SelectListCompliance: React.FC<IProps> = ({
 
   useEffect(() => {
     if (error) {
-      setErrorMessage(
-        "Une erreur s'est produite, veuillez re-sélectionner une valeur",
-      );
+      setErrorMessage("Une erreur s'est produite durant l'enregistrement");
     }
   }, [error]);
+
+  useEffect(() => {
+    setCurrentValue(compliance.compliance_elm_value);
+  }, [compliance.compliance_elm_value]);
 
   const modified_data = compliance?.control_answer_choices
     ?.map((choice: any) => {
@@ -98,27 +91,26 @@ export const SelectListCompliance: React.FC<IProps> = ({
 
   return (
     <Grid item xs={6}>
-      <SelectListComplianceStyled className={'compliance-container'}>
+      <CheckboxesComplianceStyled>
         <ComplianceLabel compliance={compliance} />
-        <Select
-          labelColor={'text'}
-          labelBdc={'text'}
-          closeOnSelect
-          name={'select_list' + compliance.compliance_id}
+        <CheckboxWrapper
+          name={'checkbox' + compliance.compliance_id}
           data={modified_data || {}}
           selectedValues={selectedValue}
-          multiple={false}
+          multiple={true}
           onChange={(selectedValues) => {
-            const first = Object.keys(selectedValues)[0];
-            saveValue('' + first);
+            const value =
+              Object.keys(selectedValues).length >= 2
+                ? Object.keys(selectedValues).join(';')
+                : Object.keys(selectedValues)[0];
+            const val = value ? value : '';
+            saveValue('' + val);
           }}
           error={!!error}
-        >
-          {'Sélectionner une valeur'}
-        </Select>
+        />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ComplianceFooter compliance={compliance} />
-      </SelectListComplianceStyled>
+      </CheckboxesComplianceStyled>
     </Grid>
   );
 };
