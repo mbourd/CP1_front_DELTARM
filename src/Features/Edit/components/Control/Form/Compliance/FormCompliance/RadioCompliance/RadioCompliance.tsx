@@ -75,13 +75,25 @@ export const RadioCompliance: React.FC<IProps> = ({
     }
   }, [error]);
 
+  const modified_data = compliance?.control_answer_choices
+    ?.map((choice: any) => {
+      return {
+        label: choice.choice_lib,
+        value: choice.choice_lib,
+        id: choice.choice_id,
+      };
+    })
+    .reduce((obj: any, cur: any, i: any) => {
+      return { ...obj, [i]: cur };
+    }, {});
+
   return (
     <Grid item xs={6}>
       <RadioComplianceStyled>
         <ComplianceLabel compliance={compliance} />
         <CheckboxWrapper
           name={'checkbox' + compliance.compliance_id}
-          data={compliance.compliance_answer_choices || {}}
+          data={modified_data || {}}
           selectedValues={selectedValue}
           multiple={false}
           onChange={(selectedValues) => {
