@@ -69,9 +69,9 @@ export const EditValidation: React.FC<IProps> = ({
     };
   }, [send, id, currentSection, request, apiRouteName, frontRouterQueries]);
 
-  useEffect(() => {
-    console.log(frontRouterQueries);
-  }, [frontRouterQueries]);
+  // useEffect(() => {
+  //   console.log(frontRouterQueries);
+  // }, [frontRouterQueries]);
 
   return (
     <SwitchCallState
