@@ -13,7 +13,7 @@ export const ErrorMedium: React.FC<Omit<IError, 'size'>> = ({
     <ErrorMediumStyled
       className={'_Error'}
       style={{
-        maxHeight: validate && 320,
+        maxHeight: validate ? 420 : 320,
         overflowY: validate ? 'scroll' : 'auto',
         margin: 15,
       }}
