@@ -23,6 +23,8 @@ export const ModalDynamicFooterStyled = styled.div`
 `;
 
 export const ModalDynamicContentStyled = styled.div`
+  max-height: 320px;
+  overflow-y: scroll;
   .top-message,
   .bottom-message {
     font-weight: bold;

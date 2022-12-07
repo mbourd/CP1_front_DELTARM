@@ -140,7 +140,10 @@ export const ModalDynamic: FC<IDataModalProps> = ({
             case 'p':
               return (
                 <Grid key={index} item xs={12}>
-                  <p>{element.value}</p>
+                  <p
+                    dangerouslySetInnerHTML={{ __html: element.value }}
+                    style={{ textAlign: 'center' }}
+                  ></p>
                 </Grid>
               );
             case 'input':
