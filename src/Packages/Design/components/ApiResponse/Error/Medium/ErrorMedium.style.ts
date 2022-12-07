@@ -1,10 +1,6 @@
 import styled from 'styled-components/macro';
 
 export const ErrorMediumStyled = styled.div`
-  max-height: 320px;
-  margin: 0 15px;
-  overflow-y: scroll;
-
   ._ErrorTitle {
     color: ${({ theme }) => theme.color.heading.main};
     font-family: ${({ theme }) => theme.font.heading.main};
