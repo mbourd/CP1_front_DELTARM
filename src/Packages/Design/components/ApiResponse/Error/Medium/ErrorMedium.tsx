@@ -7,9 +7,17 @@ export const ErrorMedium: React.FC<Omit<IError, 'size'>> = ({
   children,
   message,
   icon,
+  validate,
 }): React.ReactElement => {
   return (
-    <ErrorMediumStyled className={'_Error'}>
+    <ErrorMediumStyled
+      className={'_Error'}
+      style={{
+        maxHeight: validate && 320,
+        overflowY: validate ? 'scroll' : 'auto',
+        margin: 15,
+      }}
+    >
       {title ? (
         <div className={'_ErrorTitle'} style={{ textAlign: 'center' }}>
           {title}
@@ -21,7 +29,14 @@ export const ErrorMedium: React.FC<Omit<IError, 'size'>> = ({
         </p>
       ) : null}
       {message || children ? (
-        <p className={'_ErrorMessage'}>{message || children}</p>
+        <p
+          className={'_ErrorMessage'}
+          style={{
+            textAlign: validate ? 'left' : 'center',
+          }}
+        >
+          {message || children}
+        </p>
       ) : null}
     </ErrorMediumStyled>
   );
