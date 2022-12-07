@@ -5,4 +5,5 @@ export interface IError {
   message?: React.ReactNode | any;
   icon?: string;
   size?: 'sm' | 'md' | 'lg';
+  validate?: string;
 }
