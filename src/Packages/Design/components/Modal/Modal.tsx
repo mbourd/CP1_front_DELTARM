@@ -22,6 +22,7 @@ export const Modal: React.FC<IModal> = ({
   maxHeight,
   dividers = false,
   onClose,
+  footerBorderTop = false,
 }) => {
   const IconClasses = useStyles();
 
@@ -53,7 +54,12 @@ export const Modal: React.FC<IModal> = ({
         {children}
       </DialogContent>
       {footer && (
-        <DialogActions className={'_ModalFooter'}>{footer}</DialogActions>
+        <DialogActions
+          className={'_ModalFooter'}
+          style={{ borderTop: footerBorderTop ? '1px solid grey' : 'none' }}
+        >
+          {footer}
+        </DialogActions>
       )}
     </Dialog>
   );
