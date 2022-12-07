@@ -33,7 +33,6 @@ export const Select: React.FC<ISelect> = ({
 }): React.ReactElement => {
   const sizing = useSizing();
   const [isOpen, setIsOpen] = useState(open);
-  console.log(data, selectedValues);
   if (!multiple) {
     const first = Object.keys(selectedValues)[0];
 

@@ -84,7 +84,7 @@ export const RadioCompliance: React.FC<IProps> = ({
       };
     })
     .reduce((obj: any, cur: any, i: any) => {
-      return { ...obj, [i]: cur };
+      return { ...obj, [cur?.id]: cur };
     }, {});
 
   return (
