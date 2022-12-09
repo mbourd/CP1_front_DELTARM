@@ -8,6 +8,8 @@ interface IProps {
   bdr: string;
   isOpen: boolean;
   containerBdc: keyof IColor;
+  font_style?: any;
+  font_color?: any;
 }
 
 export const SelectLabelStyled = styled.div<IProps>`
@@ -19,7 +21,11 @@ export const SelectLabelStyled = styled.div<IProps>`
     border-bottom: 1px solid ${({ theme, bdc }) => theme.color[bdc].main};
     border-radius: ${({ bdr, isOpen }) =>
       isOpen ? bdr + ' ' + bdr + ' 0 0' : bdr};
-    color: ${({ theme, labelColor }) => theme.color[labelColor].main};
+    color: ${({ theme, labelColor, font_color }) =>
+      font_color ? `#${font_color}` : theme.color[labelColor].main};
+    font-weight: ${({ font_style }) => (font_style ? `#${font_style}` : 0)};
+    text-decoration: ${({ font_style }) =>
+      font_style ? `#${font_style}` : 'none'};
     cursor: pointer;
     display: block;
     font-family: ${({ theme, isOpen }) =>
@@ -57,6 +63,9 @@ export const SelectLabelStyled = styled.div<IProps>`
     &:hover {
       background-color: transparent;
       border: 1px solid ${({ theme }) => theme.color.hover.main};
+      font-weight: ${({ font_style }) => (font_style ? `#${font_style}` : 0)};
+      text-decoration: ${({ font_style }) =>
+        font_style ? `#${font_style}` : 'none'};
     }
   }
 `;

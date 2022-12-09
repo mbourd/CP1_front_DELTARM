@@ -135,6 +135,7 @@ export const SelectListControl: React.FC<IProps> = ({
           closeOnSelect
           name={'select_list' + control.control_id}
           data={control.answerChoices || {}}
+          colour_data={control.control_answer_choices || {}}
           selectedValues={selectedValue}
           labelColor={control.editable ? 'text' : 'disabled'}
           labelBdc={control.editable ? 'text' : 'disabled'}
