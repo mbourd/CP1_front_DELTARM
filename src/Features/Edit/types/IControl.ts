@@ -41,6 +41,8 @@ export interface IApiAnswerChoice {
   choice_lib: string;
   choice_is_ko?: boolean;
   choice_value: number | null;
+  choice_font_color?: any;
+  choice_font_style?: any;
 }
 
 export interface IApiCompliance {

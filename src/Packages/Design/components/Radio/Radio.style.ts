@@ -5,6 +5,9 @@ interface IProps {
   mainColor: keyof IColor;
   checkedColor: keyof IColor;
   inputType: 'checkbox' | 'radio';
+  checked: any;
+  font_style: any;
+  font_color: any;
 }
 
 export const RadioStyled = styled.label<IProps>`

@@ -12,4 +12,7 @@ export interface IRadio {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   style?: React.CSSProperties;
   disabled?: boolean;
+  font_color?: any;
+  font_style?: any;
+  id?: any;
 }
