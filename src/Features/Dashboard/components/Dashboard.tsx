@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Grid } from '@material-ui/core';
 
 import {
@@ -22,13 +22,6 @@ const Dashboard: React.FC = (): React.ReactElement => {
   const { callState, send, data } = useApi<ICard[]>();
   const { data: dataSecurity, logout } = useContext(SecurityContext);
   const { user } = useSecurity();
-  const [clientInfoSignal, setClientInfoSignal] = useState(false);
-  const client_info: any = localStorage.getItem('client_info');
-  const review = JSON.parse(client_info);
-  const { data: context } = useContext(SecurityContext);
-  const storage_security: any = localStorage.getItem('security');
-  const security = JSON.parse(storage_security);
-
   //   useEffect(() => {
   //     if (context.cli_id && clientInfoSignal === false) {
   //       // checks whether client data came or not
