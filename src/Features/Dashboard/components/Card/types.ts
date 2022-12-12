@@ -18,6 +18,7 @@ export interface ICardBodyRow {
   role: number;
   stageName: string;
   color: string;
+  workflow: number | any;
 }
 
 export interface ICardBody {
