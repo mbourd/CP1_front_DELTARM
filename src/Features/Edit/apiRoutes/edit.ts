@@ -35,6 +35,8 @@ export const editValidationHandlerCallback = (
             label: answer.choice_lib,
             value: '' + answer.choice_id,
             isKo: answer.choice_is_ko,
+            font_color: answer.choice_font_color,
+            font_style: answer.choice_font_style,
           };
 
           return answer;

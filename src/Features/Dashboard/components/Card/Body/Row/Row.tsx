@@ -13,13 +13,14 @@ export const Row: React.FC<ICardBodyRow> = ({
   color,
   state,
   role,
+  workflow,
 }): React.ReactElement => {
   const [trans] = useTrans('Dashboard');
 
   const path = router.generatePath(
     'manage',
     {},
-    { stage_id: stage, state_id: state, state_role: role },
+    { stage_id: stage, state_id: state, state_role: role, swf: workflow },
   );
 
   return (

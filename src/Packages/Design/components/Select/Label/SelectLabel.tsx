@@ -16,6 +16,7 @@ export const SelectLabel: React.FC<ISelectLabel> = ({
   isDisabled = false,
   containerBdc = 'primary',
   children,
+  current_value_styles,
 }): React.ReactElement => {
   const sizing = useSizing();
 
@@ -27,6 +28,8 @@ export const SelectLabel: React.FC<ISelectLabel> = ({
       bdr={bdr || sizing.radius}
       isOpen={isOpen}
       containerBdc={containerBdc}
+      font_color={current_value_styles[0]?.font_color}
+      font_style={current_value_styles[0]?.font_style}
     >
       <MUIButton
         className={'_SelectLabelButton'}
