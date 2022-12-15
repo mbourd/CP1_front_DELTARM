@@ -104,4 +104,6 @@ export interface IInputBase {
    * Input ref.
    */
   inputRef?: any;
+
+  InputProps?: any;
 }

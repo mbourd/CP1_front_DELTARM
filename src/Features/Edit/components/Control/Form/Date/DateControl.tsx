@@ -169,6 +169,7 @@ export const DateControl: React.FC<IProps> = ({
           defaultValue={currentValue ? currentValue : ''}
           onBlur={(e) => saveValue(e.currentTarget.value)}
           type={'date'}
+          InputProps={{ inputProps: { min: '2022-05-04', max: '2022-05-22' } }}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ControlFooter control={control} />
