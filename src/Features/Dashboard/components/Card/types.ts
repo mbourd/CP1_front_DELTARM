@@ -30,6 +30,7 @@ export interface ICardFooter {
   color: string;
   state: number;
   role: number;
+  workflow?: number;
 }
 
 export interface ICard {

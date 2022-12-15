@@ -30,6 +30,7 @@ export const InputBase: React.FC<IInputBase> = ({
   multilineRows = 2,
   unit,
   inputRef,
+  InputProps,
 }): React.ReactElement => {
   const theme = useTheme();
   const c = theme.color[color];
@@ -68,6 +69,7 @@ export const InputBase: React.FC<IInputBase> = ({
         onKeyPress={onKeyPress}
         onBlur={onBlur}
         multiline={multiline}
+        InputProps={InputProps}
         rows={multiline ? multilineRows : undefined}
       />
       <span style={{ padding: '5px' }}>{unit}</span>
