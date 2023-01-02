@@ -28,6 +28,25 @@ export const DateControl: React.FC<IProps> = ({
   setFormState,
   context,
 }): React.ReactElement => {
+  // const today = new Date();
+  // const yesterday = new Date(today);
+  // const tomorrow = new Date(today);
+
+  // yesterday.setDate(yesterday.getDate() - 1);
+  // tomorrow.setDate(tomorrow.getDate() + 1);
+
+  // const today_min_date = `${today.toLocaleDateString().split('/')[2]}-${
+  //   today.toLocaleDateString().split('/')[0]
+  // }-${today.toLocaleDateString().split('/')[1]}`;
+
+  // const yesterday_min_date = `${yesterday.toLocaleDateString().split('/')[2]}-${
+  //   yesterday.toLocaleDateString().split('/')[0]
+  // }-${yesterday.toLocaleDateString().split('/')[1]}`;
+
+  // const tomorrow_min_date = `${tomorrow.toLocaleDateString().split('/')[2]}-${
+  //   tomorrow.toLocaleDateString().split('/')[0]
+  // }-${tomorrow.toLocaleDateString().split('/')[1]}`;
+
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);
@@ -170,6 +189,8 @@ export const DateControl: React.FC<IProps> = ({
           defaultValue={currentValue ? currentValue : ''}
           onBlur={(e) => saveValue(e.currentTarget.value)}
           type={'date'}
+          // InputProps={{ inputProps: { min: tomorrow_min_date } }}
+          // InputProps={{ inputProps: { min: '2022-05-04', max: '2022-05-22' } }}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ControlFooter control={control} />

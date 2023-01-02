@@ -10,11 +10,10 @@ export const uploadFile = (
   jwt: string | null,
   setCurrentUploadFile: React.Dispatch<SetStateAction<IUploadDetail[] | null>>,
   setErrorMessage: React.Dispatch<SetStateAction<string | null>>,
-  setNewUploadFile: React.Dispatch<SetStateAction<File | any>>,
 ) => {
   const formData = new FormData();
   formData.append('file', newUploadFile);
-  const fileName = newUploadFile.name;
+  const fileName = newUploadFile.name.replace('#', ' ');
 
   axios
     .post(
@@ -33,6 +32,7 @@ export const uploadFile = (
     )
     .then((res) => {
       setErrorMessage(null);
+
       return setCurrentUploadFile(res.data.data.file_detail);
     })
     .catch((err) => {
