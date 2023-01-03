@@ -13,6 +13,7 @@ export const uploadFile = (
 ) => {
   const formData = new FormData();
   formData.append('file', newUploadFile);
+  formData.append('file_name', newUploadFile.name);
   const fileName = newUploadFile.name.replace('#', ' ');
 
   axios
