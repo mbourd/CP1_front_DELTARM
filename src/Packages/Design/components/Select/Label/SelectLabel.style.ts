@@ -26,6 +26,8 @@ export const SelectLabelStyled = styled.div<IProps>`
     font-weight: ${({ font_style }) => (font_style ? `${font_style}` : 0)};
     text-decoration: ${({ font_style }) =>
       font_style ? `${font_style}` : 'none'};
+    font-style: ${({ font_style }) =>
+      font_style ? `${font_style}` : 'normal'};
     cursor: pointer;
     display: block;
     font-family: ${({ theme, isOpen }) =>
@@ -66,6 +68,8 @@ export const SelectLabelStyled = styled.div<IProps>`
       font-weight: ${({ font_style }) => (font_style ? `${font_style}` : 0)};
       text-decoration: ${({ font_style }) =>
         font_style ? `${font_style}` : 'none'};
+      font-style: ${({ font_style }) =>
+        font_style ? `${font_style}` : 'normal'};
     }
   }
 `;
