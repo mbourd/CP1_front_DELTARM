@@ -12,7 +12,12 @@ export const SelectBody: React.FC = (): React.ReactElement => {
     <SelectBodyStyled className={'_SelectBody'}>
       {Object.values(data).map((datum) => {
         return (
-          <ListItem className={'_SelectItem'} disableGutters key={datum.id}>
+          <ListItem
+            className={'_SelectItem'}
+            disableGutters
+            key={datum.id}
+            style={{ backgroundColor: `#${datum.font_color}` }}
+          >
             <Radio
               value={datum.value}
               font_color={datum.font_color}
