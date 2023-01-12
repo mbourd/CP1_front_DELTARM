@@ -63,9 +63,9 @@ export const SelectLabelStyled = styled.div<IProps>`
     &:hover {
       background-color: transparent;
       border: 1px solid ${({ theme }) => theme.color.hover.main};
-      font-weight: ${({ font_style }) => (font_style ? `#${font_style}` : 0)};
+      font-weight: ${({ font_style }) => (font_style ? `${font_style}` : 0)};
       text-decoration: ${({ font_style }) =>
-        font_style ? `#${font_style}` : 'none'};
+        font_style ? `${font_style}` : 'none'};
     }
   }
 `;
