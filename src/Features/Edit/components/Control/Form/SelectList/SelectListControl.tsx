@@ -59,10 +59,6 @@ export const SelectListControl: React.FC<IProps> = ({
     setCurrentValue(control.control_value);
   }, [control.control_value]);
 
-  //   useEffect(() => {
-  //     console.log(control.control_id, get_value_response);
-  //   }, [get_value_response]);
-
   useEffect(() => {
     updateFormState(formState, control.control_id, currentValue, setFormState);
   }, [formState, control.control_id, currentValue, setFormState]);
