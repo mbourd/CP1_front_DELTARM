@@ -14,7 +14,7 @@ interface IProps {
 
 export const SelectLabelStyled = styled.div<IProps>`
   ._SelectLabelButton {
-    background-color: ${({ theme, bgc }) => theme.color[bgc].main};
+    background-color: 'gray';
     border: 1px solid
       ${({ theme, bdc, isOpen, containerBdc }) =>
         isOpen ? theme.color[containerBdc].main : theme.color[bdc].main};

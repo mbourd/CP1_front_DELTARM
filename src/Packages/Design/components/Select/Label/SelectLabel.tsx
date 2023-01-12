@@ -38,7 +38,7 @@ export const SelectLabel: React.FC<ISelectLabel> = ({
         onClick={onClick}
         disabled={isDisabled}
       >
-        <span className={'container'}>
+        <span className={'container'} style={{ backgroundColor: 'gray' }}>
           <span className={'right'}>
             <TextEllipsis>{children}</TextEllipsis>
           </span>
