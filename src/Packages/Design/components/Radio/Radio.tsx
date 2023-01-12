@@ -42,6 +42,7 @@ export const Radio: React.FC<IRadio> = ({
             color: font_color ? `#${font_color}` : '#000000',
             fontWeight: font_style ? `${font_style}` : 0,
             textDecoration: font_style ? `${font_style}` : 'none',
+            fontStyle: font_style ? `${font_style}` : 'normal',
           }}
         >
           {label || children}
