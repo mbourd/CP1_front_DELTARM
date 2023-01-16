@@ -38,6 +38,7 @@ export interface IApiAnswerChoice {
   choice_value: number | null;
   choice_font_color?: any;
   choice_font_style?: any;
+  choice_background_color?: any;
 }
 
 export interface IApiCompliance {
