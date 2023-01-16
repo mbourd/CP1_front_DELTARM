@@ -16,12 +16,13 @@ export const SelectBody: React.FC = (): React.ReactElement => {
             className={'_SelectItem'}
             disableGutters
             key={datum.id}
-            style={{ backgroundColor: `#${datum.font_color}` }}
+            style={{ backgroundColor: `#${datum.background}` }}
           >
             <Radio
               value={datum.value}
               font_color={datum.font_color}
               font_style={datum.font_style}
+              background={datum.background}
               id={datum.id}
               checked={(selectedValues && selectedValues[datum.id]) || false}
               type={multiple ? 'checkbox' : 'radio'}
