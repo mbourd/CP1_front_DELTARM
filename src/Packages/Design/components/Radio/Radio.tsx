@@ -14,6 +14,7 @@ export const Radio: React.FC<IRadio> = ({
   onChange,
   font_color,
   font_style,
+  background,
   id,
 }) => {
   return (

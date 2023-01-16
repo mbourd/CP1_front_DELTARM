@@ -14,6 +14,7 @@ export interface ISelectData {
   isKo?: boolean;
   font_color?: any;
   font_style?: any;
+  background?: any;
 }
 
 // export interface ISelectBody {

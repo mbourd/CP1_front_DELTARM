@@ -30,6 +30,7 @@ export const SelectLabel: React.FC<ISelectLabel> = ({
       containerBdc={containerBdc}
       font_color={current_value_styles[0]?.font_color}
       font_style={current_value_styles[0]?.font_style}
+      background={current_value_styles[0]?.background}
     >
       <MUIButton
         className={'_SelectLabelButton'}
@@ -38,7 +39,7 @@ export const SelectLabel: React.FC<ISelectLabel> = ({
         onClick={onClick}
         disabled={isDisabled}
       >
-        <span className={'container'} style={{ backgroundColor: 'gray' }}>
+        <span className={'container'}>
           <span className={'right'}>
             <TextEllipsis>{children}</TextEllipsis>
           </span>
