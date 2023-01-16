@@ -15,4 +15,5 @@ export interface IRadio {
   font_color?: any;
   font_style?: any;
   id?: any;
+  background?: any;
 }

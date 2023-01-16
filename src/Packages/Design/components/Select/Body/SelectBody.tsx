@@ -12,11 +12,17 @@ export const SelectBody: React.FC = (): React.ReactElement => {
     <SelectBodyStyled className={'_SelectBody'}>
       {Object.values(data).map((datum) => {
         return (
-          <ListItem className={'_SelectItem'} disableGutters key={datum.id}>
+          <ListItem
+            className={'_SelectItem'}
+            disableGutters
+            key={datum.id}
+            style={{ backgroundColor: `#${datum.background}` }}
+          >
             <Radio
               value={datum.value}
               font_color={datum.font_color}
               font_style={datum.font_style}
+              background={datum.background}
               id={datum.id}
               checked={(selectedValues && selectedValues[datum.id]) || false}
               type={multiple ? 'checkbox' : 'radio'}
