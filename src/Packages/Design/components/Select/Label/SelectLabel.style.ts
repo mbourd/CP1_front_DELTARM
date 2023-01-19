@@ -10,11 +10,11 @@ interface IProps {
   containerBdc: keyof IColor;
   font_style?: any;
   font_color?: any;
+  background?: any;
 }
 
 export const SelectLabelStyled = styled.div<IProps>`
   ._SelectLabelButton {
-    background-color: ${({ theme, bgc }) => theme.color[bgc].main};
     border: 1px solid
       ${({ theme, bdc, isOpen, containerBdc }) =>
         isOpen ? theme.color[containerBdc].main : theme.color[bdc].main};
@@ -28,6 +28,8 @@ export const SelectLabelStyled = styled.div<IProps>`
       font_style ? `${font_style}` : 'none'};
     font-style: ${({ font_style }) =>
       font_style ? `${font_style}` : 'normal'};
+    background-color: ${({ background }) =>
+      background ? `#${background}` : 'transparent'};
     cursor: pointer;
     display: block;
     font-family: ${({ theme, isOpen }) =>
@@ -70,6 +72,8 @@ export const SelectLabelStyled = styled.div<IProps>`
         font_style ? `${font_style}` : 'none'};
       font-style: ${({ font_style }) =>
         font_style ? `${font_style}` : 'normal'};
+      background-color: ${({ background }) =>
+        background ? `#${background}` : '#fff'};
     }
   }
 `;
