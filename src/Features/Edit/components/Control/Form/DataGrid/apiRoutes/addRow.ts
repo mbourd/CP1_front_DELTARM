@@ -8,6 +8,7 @@ export const addRow = (
   jwt: string | null,
   setGridDetails: React.Dispatch<SetStateAction<any>>,
   setErrorMessage: React.Dispatch<SetStateAction<string>>,
+  setRowsData?: any,
 ) => {
   axios
     .post(
@@ -22,9 +23,11 @@ export const addRow = (
         responseType: 'json',
       },
     )
-    .then((response) => {
+    .then((response: any) => {
       if (response.data) {
-        setGridDetails(response.data);
+        setRowsData(response.data.rows);
+
+        // setGridDetails(response.data);
       }
     })
     .catch(() => {
