@@ -1,4 +1,10 @@
-import React, { useState, useCallback, useMemo, useRef } from 'react';
+import React, {
+  useState,
+  useCallback,
+  useMemo,
+  useRef,
+  useEffect,
+} from 'react';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { IApiControl } from '../../../../types';
 import { Grid } from '@mui/material';
@@ -45,15 +51,30 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   const jwt = user.getJwt();
 
   const columnDefs = useMemo(
-    () => control.data_grid_detail_ag_grid?.cols.values,
-    [control.data_grid_detail_ag_grid?.cols.values],
+    () =>
+      control.data_grid_detail?.columns.map((g) => {
+        return {
+          headerName: g.name,
+          field: g.key,
+        };
+      }),
+    [control.data_grid_detail_ag_grid],
   );
-  const [rowData, setRowData] = useState(
-    control.data_grid_detail_ag_grid?.lines,
-  );
+  const [rowData, setRowData]: any = useState([]);
+
+  useEffect(() => {
+    setRowData(control?.data_grid_detail?.rows);
+  }, [control.data_grid_detail?.rows]);
 
   const handleClickAddRow = useCallback(() => {
-    addRow(fileId, control.control_id, jwt, setRowData, setErrorMessageAdd);
+    addRow(
+      fileId,
+      control.control_id,
+      jwt,
+      setRowData,
+      setErrorMessageAdd,
+      setRowData,
+    );
   }, [control.control_id, jwt, fileId]);
 
   // use for custom sorting
@@ -243,7 +264,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           return null;
       }
     },
-    [control.control_id, fileId],
+    [control.control_id, fileId, rowData],
   );
 
   const defaultColDef = useMemo(
@@ -252,10 +273,35 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       sortable: true,
       cellRenderer: cellRenderer,
       autoHeight: true,
+      filter: true,
       cellClass: 'grid-cell-centered',
     }),
     [cellRenderer],
   );
+
+  const sideBar = useMemo(() => {
+    return {
+      toolPanels: [
+        {
+          id: 'columns',
+          labelDefault: 'Columns',
+          labelKey: 'columns',
+          iconKey: 'columns',
+          toolPanel: 'agColumnsToolPanel',
+          toolPanelParams: {
+            suppressValues: true,
+            suppressPivots: true,
+            suppressPivotMode: true,
+            suppressSideButtons: true,
+            suppressColumnFilter: true,
+            suppressColumnSelectAll: true,
+            suppressColumnExpandAll: true,
+          },
+        },
+      ],
+      defaultToolPanel: 'columns',
+    };
+  }, []);
 
   const onGridReady = (params: any) => {
     // Make the currently visible columns fit the screen
@@ -268,10 +314,14 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     if (params.data.border_bottom) {
       return {
         borderBottom: `1px solid ${params.data.border_bottom}`,
+        paddingTop: 15,
       };
     }
     if (!params.data.border_bottom) {
-      return { borderBottom: 'none' };
+      return {
+        borderBottom: 'none',
+        paddingTop: 15,
+      };
     }
   };
 
@@ -299,7 +349,11 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       <DataGridControlStyled>
         <ControlLabel control={control} />
         <Button
-          style={{ backgroundColor: '#f50057', marginLeft: '10px' }}
+          style={{
+            backgroundColor: '#f50057',
+            marginLeft: '10px',
+            marginBottom: 10,
+          }}
           onClick={handlePrint}
         >
           Export PDF
@@ -308,6 +362,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           className="ag-theme-alpine"
           domLayout={'autoHeight'}
           ref={gridRef}
+          rowHeight={80}
           // @ts-ignore
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
@@ -316,6 +371,10 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           overlayLoadingTemplate={
             '<span class="ag-overlay-loading-center">Loading..</span>'
           }
+          sideBar={sideBar}
+          pagination={true}
+          paginationPageSize={4}
+          // paginationAutoPageSize={true}
           getRowStyle={getRowStyle}
           animateRows
         />
