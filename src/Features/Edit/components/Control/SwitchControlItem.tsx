@@ -354,9 +354,9 @@ export const SwitchControlItem: React.FC<IProps> = ({
           context={context}
         />
       );
+    // case 'data_grid':
+    //   return <DataGridControl control={control} fileId={fileId} />;
     case 'data_grid':
-      return <DataGridControl control={control} fileId={fileId} />;
-    case 'ag_data_grid':
       return <DataGridControlAgGrid control={control} fileId={fileId} />;
     case 'jodit_rich_text':
       return (
