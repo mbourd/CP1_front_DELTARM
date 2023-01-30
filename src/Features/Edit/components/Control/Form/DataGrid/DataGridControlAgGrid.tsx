@@ -53,9 +53,13 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         return {
           headerName: g.name,
           field: g.key,
+          filter: true,
+          sortable: true,
+          floatingFilter: true,
+          resizable: true,
         };
       }),
-    [control.data_grid_detail_ag_grid],
+    [control.data_grid_detail?.columns],
   );
   const [rowData, setRowData]: any = useState([]);
 
@@ -76,6 +80,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
 
   // use for custom sorting
   const StringComparator = (valueA: any, valueB: any) => {
+    console.log(valueA);
     if (valueA.value == valueB.value) {
       return 0;
     }
@@ -85,6 +90,11 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
 
   const cellRenderer = useCallback(
     (props: any) => {
+      // console.log(props);
+      // const targetedColumns = Object.keys(props.data);
+      // targetedColumns.forEach((column, index) => {
+      //   console.log(props.row[column].component);
+      // });
       switch (props.value.component) {
         case 'border_bottom':
           return null;
@@ -271,6 +281,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       cellRenderer: cellRenderer,
       autoHeight: true,
       filter: true,
+      floatingFilter: true,
       cellClass: 'grid-cell-centered',
     }),
     [cellRenderer],
@@ -307,6 +318,10 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     // params.api.hideOverlay();
   };
 
+  useEffect(() => {
+    console.log(control.data_grid_detail);
+  }, []);
+
   const getRowStyle = (params: any) => {
     if (params.data.border_bottom) {
       return {
@@ -326,7 +341,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     content: () => gridRef.current,
   });
 
-  control.data_grid_detail_ag_grid?.cols.values.forEach((column) => {
+  control.data_grid_detail?.columns.map((column: any) => {
     if (column.filter) {
       switch (column.filter) {
         case 'GenericDataGridResearcher':
