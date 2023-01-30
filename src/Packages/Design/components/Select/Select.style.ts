@@ -11,12 +11,17 @@ export const SelectStyled = styled.section<IProps>`
 
   ._SelectContainer {
     background-color: ${({ theme }) => theme.color.white.main};
-    border: 1px solid ${({ theme, bdc }) => theme.color[bdc].main};
+    /* border: 1px solid ${({ theme, bdc }) => theme.color[bdc].main}; */
     border-radius: ${({ bdr }) => '0 0 ' + bdr + ' ' + bdr};
     border-top: none;
     padding: ${({ bdr }) => bdr};
-    position: absolute;
+    position: relative;
     width: 100%;
     z-index: 10;
+  }
+
+  .eKJxUU ._SelectLabelButton {
+    border: none;
+    border-bottom: none;
   }
 `;
