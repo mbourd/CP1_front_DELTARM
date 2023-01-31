@@ -28,24 +28,146 @@ export const DateControl: React.FC<IProps> = ({
   setFormState,
   context,
 }): React.ReactElement => {
-  // const today = new Date();
-  // const yesterday = new Date(today);
-  // const tomorrow = new Date(today);
+  const today = new Date();
+  const yesterday = new Date(today);
+  const tomorrow = new Date(today);
+  const day_after_tomorrow = new Date(today);
+  const next_month = new Date(today);
 
-  // yesterday.setDate(yesterday.getDate() - 1);
-  // tomorrow.setDate(tomorrow.getDate() + 1);
+  yesterday.setDate(yesterday.getDate() - 1);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  day_after_tomorrow.setDate(day_after_tomorrow.getDate() + 2);
+  next_month.setDate(next_month.getMonth() + 2);
 
-  // const today_min_date = `${today.toLocaleDateString().split('/')[2]}-${
-  //   today.toLocaleDateString().split('/')[0]
-  // }-${today.toLocaleDateString().split('/')[1]}`;
+  const today_date = `${
+    today
+      .toLocaleString('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .split('/')[2]
+  }-${
+    today
+      .toLocaleString('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .split('/')[1]
+  }-${
+    today
+      .toLocaleString('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .split('/')[0]
+  }`;
 
-  // const yesterday_min_date = `${yesterday.toLocaleDateString().split('/')[2]}-${
-  //   yesterday.toLocaleDateString().split('/')[0]
-  // }-${yesterday.toLocaleDateString().split('/')[1]}`;
+  const yesterday_date = `${
+    yesterday
+      .toLocaleString('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .split('/')[2]
+  }-${
+    yesterday
+      .toLocaleString('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .split('/')[1]
+  }-${
+    yesterday
+      .toLocaleString('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .split('/')[0]
+  }`;
 
-  // const tomorrow_min_date = `${tomorrow.toLocaleDateString().split('/')[2]}-${
-  //   tomorrow.toLocaleDateString().split('/')[0]
-  // }-${tomorrow.toLocaleDateString().split('/')[1]}`;
+  const tomorrow_date = `${
+    tomorrow
+      .toLocaleString('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .split('/')[2]
+  }-${
+    tomorrow
+      .toLocaleString('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .split('/')[1]
+  }-${
+    tomorrow
+      .toLocaleString('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .split('/')[0]
+  }`;
+
+  const day_after_tomorrow_date = `${
+    day_after_tomorrow
+      .toLocaleString('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .split('/')[2]
+  }-${
+    day_after_tomorrow
+      .toLocaleString('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .split('/')[1]
+  }-${
+    day_after_tomorrow
+      .toLocaleString('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .split('/')[0]
+  }`;
+
+  const next_month_date = `${
+    next_month
+      .toLocaleString('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .split('/')[2]
+  }-${
+    next_month
+      .toLocaleString('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .split('/')[1]
+  }-${
+    next_month
+      .toLocaleString('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .split('/')[0]
+  }`;
 
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -171,6 +293,32 @@ export const DateControl: React.FC<IProps> = ({
     }
   }, [isRejected]);
 
+  useEffect(() => {
+    console.log(control);
+  }, [control]);
+
+  const min_date =
+    control?.control_options?.min_date === 'today'
+      ? today_date
+      : control?.control_options?.min_date === 'tomorrow'
+      ? tomorrow_date
+      : control?.control_options?.min_date === 'day_after_tomorrow'
+      ? day_after_tomorrow_date
+      : control?.control_options?.min_date === 'next_month'
+      ? next_month
+      : control?.control_options?.min_date;
+
+  const max_date =
+    control?.control_options?.max_date === 'today'
+      ? today_date
+      : control?.control_options?.max_date === 'tomorrow'
+      ? tomorrow_date
+      : control?.control_options?.max_date === 'day_after_tomorrow'
+      ? day_after_tomorrow_date
+      : control?.control_options?.max_date === 'next_month'
+      ? next_month
+      : control?.control_options?.max_date;
+
   return (
     <Grid item xs={6}>
       <DateControlStyled>
@@ -189,7 +337,12 @@ export const DateControl: React.FC<IProps> = ({
           defaultValue={currentValue ? currentValue : ''}
           onBlur={(e) => saveValue(e.currentTarget.value)}
           type={'date'}
-          // InputProps={{ inputProps: { min: tomorrow_min_date } }}
+          InputProps={{
+            inputProps: {
+              min: min_date,
+              max: max_date,
+            },
+          }}
           // InputProps={{ inputProps: { min: '2022-05-04', max: '2022-05-22' } }}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
