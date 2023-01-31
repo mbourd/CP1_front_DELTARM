@@ -61,14 +61,15 @@ export const DecimalControl: React.FC<IProps> = ({
       }
 
       if (
-        (control.control_options?.min || control.control_options?.max) &&
+        (control.control_options?.min_value ||
+          control.control_options?.max_value) &&
         value.trim()
       ) {
         if (
           minMax(
             value,
-            control.control_options.min,
-            control.control_options.max,
+            control.control_options.min_value,
+            control.control_options.max_value,
           )
         ) {
           setErrorMessage(null);
@@ -76,12 +77,14 @@ export const DecimalControl: React.FC<IProps> = ({
         if (
           !minMax(
             value,
-            control.control_options.min,
-            control.control_options.max,
+            control.control_options.min_value,
+            control.control_options.max_value,
           )
         ) {
           setInputFocus();
-          setErrorMessage(trans('enteredValueConstraints'));
+          setErrorMessage(
+            'La valeur saisie ne respecte pas les contraintes définies',
+          );
 
           return;
         }
@@ -90,7 +93,7 @@ export const DecimalControl: React.FC<IProps> = ({
       if (!checkIfSameValues(value, currentValue)) {
         setErrorMessage(null);
         if (control.mandatory && !value.trim()) {
-          setErrorMessage(trans('mandatoryValue'));
+          setErrorMessage('Valeur obligatoire');
         }
 
         return;
@@ -99,7 +102,7 @@ export const DecimalControl: React.FC<IProps> = ({
       setErrorMessage(null);
 
       if (control.mandatory && !value.trim()) {
-        setErrorMessage(trans('mandatoryValue'));
+        setErrorMessage('Valeur obligatoire');
       }
 
       setCurrentValue(value);
@@ -133,7 +136,7 @@ export const DecimalControl: React.FC<IProps> = ({
 
   useEffect(() => {
     if (control.mandatory && control.editable && !currentValue) {
-      setErrorMessage(trans('mandatoryValue'));
+      setErrorMessage('Valeur obligatoire');
     }
     if (!control.mandatory) {
       setErrorMessage(null);
@@ -142,7 +145,7 @@ export const DecimalControl: React.FC<IProps> = ({
 
   useEffect(() => {
     if (error) {
-      setErrorMessage(trans('errorRecording'));
+      setErrorMessage("Une erreur s'est produite durant l'enregistrement");
     }
   }, [error, trans]);
 
@@ -151,6 +154,10 @@ export const DecimalControl: React.FC<IProps> = ({
       setIsRejected(false);
     }
   }, [isRejected]);
+
+  useEffect(() => {
+    console.log(control);
+  }, [control]);
 
   const controlValue = currentValue
     ? parseFloat(currentValue)?.toFixed(
