@@ -293,6 +293,32 @@ export const DateControl: React.FC<IProps> = ({
     }
   }, [isRejected]);
 
+  useEffect(() => {
+    console.log(control);
+  }, [control]);
+
+  const min_date =
+    control?.control_options?.min_date === 'today'
+      ? today_date
+      : control?.control_options?.min_date === 'tomorrow'
+      ? tomorrow_date
+      : control?.control_options?.min_date === 'day_after_tomorrow'
+      ? day_after_tomorrow_date
+      : control?.control_options?.min_date === 'next_month'
+      ? next_month
+      : control?.control_options?.min_date;
+
+  const max_date =
+    control?.control_options?.max_date === 'today'
+      ? today_date
+      : control?.control_options?.max_date === 'tomorrow'
+      ? tomorrow_date
+      : control?.control_options?.max_date === 'day_after_tomorrow'
+      ? day_after_tomorrow_date
+      : control?.control_options?.max_date === 'next_month'
+      ? next_month
+      : control?.control_options?.max_date;
+
   return (
     <Grid item xs={6}>
       <DateControlStyled>
@@ -312,7 +338,10 @@ export const DateControl: React.FC<IProps> = ({
           onBlur={(e) => saveValue(e.currentTarget.value)}
           type={'date'}
           InputProps={{
-            inputProps: { min: tomorrow_date, max: day_after_tomorrow_date },
+            inputProps: {
+              min: min_date,
+              max: max_date,
+            },
           }}
           // InputProps={{ inputProps: { min: '2022-05-04', max: '2022-05-22' } }}
         />
