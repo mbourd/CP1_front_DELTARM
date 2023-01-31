@@ -59,14 +59,15 @@ export const IntegerControl: React.FC<IProps> = ({
       }
 
       if (
-        (control.control_options?.min || control.control_options?.max) &&
+        (control.control_options?.min_value ||
+          control.control_options?.max_value) &&
         value.trim()
       ) {
         if (
           minMax(
             value,
-            control.control_options.min,
-            control.control_options.max,
+            control.control_options.min_value,
+            control.control_options.max_value,
           )
         ) {
           setErrorMessage(null);
@@ -74,8 +75,8 @@ export const IntegerControl: React.FC<IProps> = ({
         if (
           !minMax(
             value,
-            control.control_options.min,
-            control.control_options.max,
+            control.control_options.min_value,
+            control.control_options.max_value,
           )
         ) {
           setInputFocus();

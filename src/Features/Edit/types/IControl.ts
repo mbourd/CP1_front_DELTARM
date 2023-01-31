@@ -233,7 +233,7 @@ export interface IApiControl {
   compliance?: IApiCompliance;
   formula?: IFormula;
   useCompliance?: ICompliance;
-  control_options: IControlOptions | null;
+  control_options: IControlOptions | null | any;
   upload_detail: IUploadDetail[] | null;
   calculatedValue?: string;
   rich_text_detail: RawDraftContentState | null;
