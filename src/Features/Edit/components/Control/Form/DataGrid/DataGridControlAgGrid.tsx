@@ -76,74 +76,57 @@ const rows = [
       control_regex: '^-?[0-9]\\d*$',
       control_regex_msg: "La valeur saisie n'est pas une valeur entière",
       row_num: 5,
-      value: 54645,
+      value: 'New regime',
     },
     Attachement: {
-      col_elm_id: 871,
+      col_elm_id: 870,
       component: 'file_upload',
       control_editable: true,
       control_mandatory: false,
-      control_regex: null,
-      control_regex_msg: null,
+      control_regex: '^-?[0-9]\\d*$',
+      control_regex_msg: "La valeur saisie n'est pas une valeur entière",
       row_num: 5,
-      upload_detail: null,
       value: 'first.png',
     },
     Texte: {
-      col_elm_id: 872,
+      col_elm_id: 870,
       component: 'boolean',
       control_editable: true,
       control_mandatory: false,
-      control_regex: null,
-      control_regex_msg: null,
+      control_regex: '^-?[0-9]\\d*$',
+      control_regex_msg: "La valeur saisie n'est pas une valeur entière",
       row_num: 5,
-      value: false,
+      value: true,
     },
     Liste_de_sélection: {
-      col_elm_id: 874,
+      col_elm_id: 870,
       component: 'select_list',
       control_editable: true,
       control_mandatory: false,
-      control_regex: null,
-      control_regex_msg: null,
+      control_regex: '^-?[0-9]\\d*$',
+      control_regex_msg: "La valeur saisie n'est pas une valeur entière",
       row_num: 5,
-      value: '2',
-      answer_choices: [
-        {
-          choice_background_color: 'FFFFFF',
-          choice_font_color: '000000',
-          choice_font_style: 'normal',
-          id: 1,
-          label: 'OK',
-          value: '1',
-        },
-        {
-          choice_background_color: 'FFFFFF',
-          choice_font_color: '000000',
-          choice_font_style: 'normal',
-          id: 2,
-          label: 'KO',
-          value: '2',
-        },
-      ],
+      value: '54645',
     },
     Case_à_cocher: {
+      col_elm_id: 870,
       component: 'delete',
+      control_editable: true,
+      control_mandatory: false,
+      control_regex: '^-?[0-9]\\d*$',
+      control_regex_msg: "La valeur saisie n'est pas une valeur entière",
       row_num: 5,
+      value: '54645',
     },
     date: {
       col_elm_id: 870,
       component: 'date',
       control_editable: true,
       control_mandatory: false,
-      control_regex: null,
-      control_regex_msg: null,
+      control_regex: '^-?[0-9]\\d*$',
+      control_regex_msg: "La valeur saisie n'est pas une valeur entière",
       row_num: 5,
       value: '2020-06-06',
-      control_options: {
-        max_date: '2023-02-15',
-        min_date: '2023-01-01',
-      },
     },
   },
   {
@@ -155,68 +138,55 @@ const rows = [
       control_regex: '^-?[0-9]\\d*$',
       control_regex_msg: "La valeur saisie n'est pas une valeur entière",
       row_num: 5,
-      value: 54645,
+      value: 'merton',
     },
     Attachement: {
-      col_elm_id: 871,
+      col_elm_id: 870,
       component: 'file_upload',
       control_editable: true,
       control_mandatory: false,
-      control_regex: null,
-      control_regex_msg: null,
+      control_regex: '^-?[0-9]\\d*$',
+      control_regex_msg: "La valeur saisie n'est pas une valeur entière",
       row_num: 5,
-      upload_detail: null,
       value: 'first.png',
     },
     Texte: {
-      col_elm_id: 872,
+      col_elm_id: 870,
       component: 'boolean',
       control_editable: true,
       control_mandatory: false,
-      control_regex: null,
-      control_regex_msg: null,
+      control_regex: '^-?[0-9]\\d*$',
+      control_regex_msg: "La valeur saisie n'est pas une valeur entière",
       row_num: 5,
       value: false,
     },
     Liste_de_sélection: {
-      col_elm_id: 874,
+      col_elm_id: 870,
       component: 'select_list',
       control_editable: true,
       control_mandatory: false,
-      control_regex: null,
-      control_regex_msg: null,
+      control_regex: '^-?[0-9]\\d*$',
+      control_regex_msg: "La valeur saisie n'est pas une valeur entière",
       row_num: 5,
-      value: '1',
-      answer_choices: [
-        {
-          choice_background_color: 'FFFFFF',
-          choice_font_color: '000000',
-          choice_font_style: 'normal',
-          id: 1,
-          label: 'OK',
-          value: '1',
-        },
-        {
-          choice_background_color: 'FFFFFF',
-          choice_font_color: '000000',
-          choice_font_style: 'normal',
-          id: 2,
-          label: 'KO',
-          value: '2',
-        },
-      ],
+      value: '54645',
     },
     Case_à_cocher: {
+      col_elm_id: 870,
       component: 'delete',
+      control_editable: true,
+      control_mandatory: false,
+      control_regex: '^-?[0-9]\\d*$',
+      control_regex_msg: "La valeur saisie n'est pas une valeur entière",
       row_num: 5,
+      value: '54645',
     },
     date: {
       col_elm_id: 870,
       component: 'date',
       control_editable: true,
       control_mandatory: false,
-      control_regex: null,
-      control_regex_msg: null,
+      control_regex: '^-?[0-9]\\d*$',
+      control_regex_msg: "La valeur saisie n'est pas une valeur entière",
       row_num: 5,
       value: '2020-06-06',
     },
@@ -239,6 +209,11 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   const errrorMessage = '';
   const [error, seterror] = useState('');
 
+  const valueGetter = (params: any) => {
+    console.log(params);
+
+    return params.value;
+  };
   // const columnDefs = useMemo(
   //   () =>
   //     control.data_grid_detail?.columns.map((g) => {
@@ -256,11 +231,14 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   // );
   const [rowData, setRowData]: any = useState([]);
   // useEffect(() => {
+  //   console.log(control.data_grid_detail);
+  // }, []);
+  // useEffect(() => {
   //   setRowData(control?.data_grid_detail?.rows);
   // }, [control?.data_grid_detail?.rows]);
-  // useEffect(() => {
-  //   setRowData(rows);
-  // }, [rowData]);
+  useEffect(() => {
+    setRowData(rows);
+  }, [rowData]);
 
   // const handleClickAddRow = useCallback(() => {
   //   addRow(
@@ -285,74 +263,47 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             control_regex: '^-?[0-9]\\d*$',
             control_regex_msg: "La valeur saisie n'est pas une valeur entière",
             row_num: 5,
-            value: 54645,
+            value: 'New regime',
           },
           Attachement: {
-            col_elm_id: 871,
+            col_elm_id: 870,
             component: 'file_upload',
             control_editable: true,
             control_mandatory: false,
-            control_regex: null,
-            control_regex_msg: null,
+            control_regex: '^-?[0-9]\\d*$',
+            control_regex_msg: "La valeur saisie n'est pas une valeur entière",
             row_num: 5,
-            upload_detail: null,
-            value: 'first.png',
+            value: 3233,
           },
           Texte: {
-            col_elm_id: 872,
-            component: 'boolean',
+            col_elm_id: 870,
+            component: 'integer',
             control_editable: true,
             control_mandatory: false,
-            control_regex: null,
-            control_regex_msg: null,
+            control_regex: '^-?[0-9]\\d*$',
+            control_regex_msg: "La valeur saisie n'est pas une valeur entière",
             row_num: 5,
-            value: false,
+            value: '54645',
           },
           Liste_de_sélection: {
-            col_elm_id: 874,
+            col_elm_id: 870,
             component: 'select_list',
             control_editable: true,
             control_mandatory: false,
-            control_regex: null,
-            control_regex_msg: null,
+            control_regex: '^-?[0-9]\\d*$',
+            control_regex_msg: "La valeur saisie n'est pas une valeur entière",
             row_num: 5,
-            value: '2',
-            answer_choices: [
-              {
-                choice_background_color: 'FFFFFF',
-                choice_font_color: '000000',
-                choice_font_style: 'normal',
-                id: 1,
-                label: 'OK',
-                value: '1',
-              },
-              {
-                choice_background_color: 'FFFFFF',
-                choice_font_color: '000000',
-                choice_font_style: 'normal',
-                id: 2,
-                label: 'KO',
-                value: '2',
-              },
-            ],
+            value: '54645',
           },
           Case_à_cocher: {
-            component: 'delete',
-            row_num: 5,
-          },
-          date: {
             col_elm_id: 870,
-            component: 'date',
+            component: 'delete',
             control_editable: true,
             control_mandatory: false,
-            control_regex: null,
-            control_regex_msg: null,
+            control_regex: '^-?[0-9]\\d*$',
+            control_regex_msg: "La valeur saisie n'est pas une valeur entière",
             row_num: 5,
-            value: '2020-06-06',
-            control_options: {
-              max_date: '2023-02-15',
-              min_date: '2023-01-01',
-            },
+            value: '54645',
           },
         },
       ],
@@ -363,9 +314,26 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     const selectedRows = gridRef.current.api.getSelectedRows();
     gridRef.current.api.applyTransaction({ remove: selectedRows });
   };
+  // useEffect(() => {
+  //   console.log(columnDefs, rowData);
+  // }, [columnDefs, rowData]);
+  // use for custom sorting
+  const StringComparator = (valueA: any, valueB: any) => {
+    console.log(valueA);
+    if (valueA.value == valueB.value) {
+      return 0;
+    }
+
+    return valueA.value > valueB.value ? 1 : -1;
+  };
 
   const cellRendere = useCallback(
     (props: any) => {
+      // console.log(props);
+      // const targetedColumns = Object.keys(props.data);
+      // targetedColumns.forEach((column, index) => {
+      //   console.log(props.row[column].component);
+      // });
       switch (props.value.component) {
         case 'border_bottom':
           return null;
@@ -553,7 +521,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     // const { value, api, data } = props;
     const [file, setFile] = useState(null);
 
-    // console.log(props, field_data, field_name);
+    console.log(props, field_data, field_name);
 
     /* HANDLE FILE CHANGE */
     const handleFileChange = (event: any) => {
@@ -563,16 +531,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       reader.onloadend = () => {
         setFile(reader?.result);
         const fileName = file.name;
-        // console.log(fileName.split('.')[0]);
-
-        if (fileName.split('.')[1] !== 'png') {
-          seterror('Invalid File Format');
-          setTimeout(() => {
-            seterror('');
-          }, 1500);
-
-          return;
-        }
         // data.Attachement.name = fileName;
         field_data.value = fileName;
         // props.api.applyTransaction({ update: [props.data] });
@@ -602,7 +560,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             hidden
             // defaultValue={props.value}
           />
-          <span style={{ fontSize: 14 }}>{props.value}</span>
+          <span style={{ fontSize: 13 }}>{props.value}</span>
         </label>
         {/* {file && <img src={file} alt="attachment" width="35" height="35" />} */}
       </div>
@@ -614,6 +572,13 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       props.setValue(event.target.value);
       field_data.value = event.target.value;
     };
+    const options = [
+      'Option 1',
+      'Option 2',
+      'Option 3',
+      'Option 4',
+      'Option 5',
+    ];
 
     return (
       <div
@@ -627,22 +592,12 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           style={{
             borderWidth: 0,
             backgroundColor: 'transparent',
-            fontSize: 14,
-            padding: 10,
+            fontSize: 13,
           }}
         >
-          {field_data?.answer_choices.map((option: any) => (
-            <option
-              key={option.id}
-              value={option.value}
-              style={{
-                padding: 10,
-                margin: 10,
-                paddingBottom: 30,
-                marginBottom: 30,
-              }}
-            >
-              {option.label}
+          {options.map((option) => (
+            <option key={option} value={option}>
+              {option}
             </option>
           ))}
         </select>
@@ -651,7 +606,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   };
 
   const CustomDeleteRenderer: React.FC<any> = ({ props }) => {
-    // console.log(props);
+    console.log(props);
     /* SINGLE DELETE */
     const handleDelete = () => {
       const updatedData = [...rowData];
@@ -685,10 +640,12 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     );
   };
 
-  const CustomDateRenderer: React.FC<any> = ({ props, field_data }) => {
+  const CustomDateRenderer: React.FC<any> = ({ props }) => {
     const checkedHandler = (event: any) => {
+      console.log(event.target.value);
       props.setValue(event.target.value);
     };
+
     return (
       <div
         style={{
@@ -699,18 +656,8 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           type="date"
           onChange={checkedHandler}
           id="date"
-          style={{ backgroundColor: 'transparent', fontSize: 14 }}
+          style={{ backgroundColor: 'transparent', fontSize: 13 }}
           defaultValue={props.value}
-          min={
-            field_data?.control_options?.min_date
-              ? field_data?.control_options?.min_date
-              : '1970-05-12'
-          }
-          max={
-            field_data?.control_options?.max_date
-              ? field_data?.control_options?.max_date
-              : '2270-05-12'
-          }
         />
       </div>
     );
@@ -746,11 +693,12 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       case 'delete':
         return <CustomDeleteRenderer props={props} />;
       case 'date':
-        return <CustomDateRenderer props={props} field_data={field_data} />;
+        return <CustomDateRenderer props={props} />;
       case 'boolean':
         return <CustomCheckBoxRenderer props={props} />;
+
       default:
-        return <p style={{ marginTop: 17, fontSize: 14 }}>{props.value}</p>;
+        return <p style={{ marginTop: 17, fontSize: 13 }}>{props.value}</p>;
     }
   };
 
@@ -816,14 +764,14 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       [],
     );
 
-    // console.log('editing starts', {
-    //   [data]: {
-    //     field_data,
-    //     row_index: event?.rowIndex,
-    //     old_value: event.oldValue,
-    //     value: event?.value,
-    //   },
-    // });
+    console.log('editing starts', {
+      [data]: {
+        field_data,
+        row_index: event?.rowIndex,
+        old_value: event.oldValue,
+        value: event?.value,
+      },
+    });
 
     if (field_data?.component !== 'boolean') {
       if (
@@ -859,6 +807,21 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     content: () => gridRef.current,
   });
 
+  control.data_grid_detail?.columns.map((column: any) => {
+    if (column.filter) {
+      switch (column.filter) {
+        case 'GenericDataGridResearcher':
+          column.filter = GenericDataGridResearcher;
+      }
+    }
+    if (column.comparator) {
+      switch (column.comparator) {
+        case 'StringComparator':
+          column.comparator = StringComparator;
+      }
+    }
+  });
+
   return (
     <Grid item xs={11} style={{ maxWidth: '95%', margin: '0 auto' }}>
       <DataGridControlStyled>
@@ -882,7 +845,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               color: '#fff',
               margin: 5,
               borderRadius: 5,
-              marginBottom: 14,
+              marginBottom: 13,
             }}
           >
             Add Row
@@ -898,7 +861,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               color: '#fff',
               margin: 5,
               borderRadius: 5,
-              marginBottom: 14,
+              marginBottom: 13,
             }}
           >
             Delete Selected Rows
@@ -913,7 +876,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           ref={gridRef}
           rowHeight={80}
           // @ts-ignore
-          columnDefs={control?.data_grid_detail?.cols}
+          columnDefs={columns}
           defaultColDef={defaultColDef}
           rowData={rowData}
           onGridReady={onGridReady}
