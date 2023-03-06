@@ -34,6 +34,139 @@ import { Button } from 'Shared/components';
 import { GenericDataGridResearcher } from './GenericDataGridResearcher';
 import { AgDataGridUpload } from './DataGridFields/AgDataGridUpload/AgDataGridUpload';
 
+const columns = [
+  {
+    headerName: 'Valeur entière',
+    field: 'Valeur_entière.value',
+    filter: true,
+    sortable: true,
+    resizable: true,
+    floatingFilter: true,
+    pinned: 'left',
+  },
+  {
+    headerName: 'Attachement',
+    field: 'Attachement.value',
+    filter: true,
+    sortable: true,
+    pinned: 'left',
+  },
+  {
+    headerName: 'Texte',
+    field: 'Texte.value',
+    resizable: true,
+    floatingFilter: true,
+  },
+  { headerName: 'Liste de sélection', field: 'Liste_de_sélection.value' },
+  { headerName: 'Case à cocher', field: 'Case_à_cocher.value' },
+];
+const rows = [
+  {
+    Valeur_entière: {
+      col_elm_id: 870,
+      component: 'integer',
+      control_editable: true,
+      control_mandatory: false,
+      control_regex: '^-?[0-9]\\d*$',
+      control_regex_msg: "La valeur saisie n'est pas une valeur entière",
+      row_num: 5,
+      value: 'New regime',
+    },
+    Attachement: {
+      col_elm_id: 870,
+      component: 'integer',
+      control_editable: true,
+      control_mandatory: false,
+      control_regex: '^-?[0-9]\\d*$',
+      control_regex_msg: "La valeur saisie n'est pas une valeur entière",
+      row_num: 5,
+      value: 3233,
+    },
+    Texte: {
+      col_elm_id: 870,
+      component: 'integer',
+      control_editable: true,
+      control_mandatory: false,
+      control_regex: '^-?[0-9]\\d*$',
+      control_regex_msg: "La valeur saisie n'est pas une valeur entière",
+      row_num: 5,
+      value: '54645',
+    },
+    Liste_de_sélection: {
+      col_elm_id: 870,
+      component: 'integer',
+      control_editable: true,
+      control_mandatory: false,
+      control_regex: '^-?[0-9]\\d*$',
+      control_regex_msg: "La valeur saisie n'est pas une valeur entière",
+      row_num: 5,
+      value: '54645',
+    },
+    Case_à_cocher: {
+      col_elm_id: 870,
+      component: 'integer',
+      control_editable: true,
+      control_mandatory: false,
+      control_regex: '^-?[0-9]\\d*$',
+      control_regex_msg: "La valeur saisie n'est pas une valeur entière",
+      row_num: 5,
+      value: '54645',
+    },
+  },
+  {
+    Valeur_entière: {
+      col_elm_id: 870,
+      component: 'integer',
+      control_editable: true,
+      control_mandatory: false,
+      control_regex: '^-?[0-9]\\d*$',
+      control_regex_msg: "La valeur saisie n'est pas une valeur entière",
+      row_num: 5,
+      value: 'merton',
+    },
+    Attachement: {
+      col_elm_id: 870,
+      component: 'integer',
+      control_editable: true,
+      control_mandatory: false,
+      control_regex: '^-?[0-9]\\d*$',
+      control_regex_msg: "La valeur saisie n'est pas une valeur entière",
+      row_num: 5,
+      value: '54645',
+    },
+    Texte: {
+      col_elm_id: 870,
+      component: 'integer',
+      control_editable: true,
+      control_mandatory: false,
+      control_regex: '^-?[0-9]\\d*$',
+      control_regex_msg: "La valeur saisie n'est pas une valeur entière",
+      row_num: 5,
+      value: '54645',
+    },
+    Liste_de_sélection: {
+      col_elm_id: 870,
+      component: 'integer',
+      control_editable: true,
+      control_mandatory: false,
+      control_regex: '^-?[0-9]\\d*$',
+      control_regex_msg: "La valeur saisie n'est pas une valeur entière",
+      row_num: 5,
+      value: '54645',
+    },
+    Case_à_cocher: {
+      col_elm_id: 870,
+      component: 'integer',
+      control_editable: true,
+      control_mandatory: false,
+      control_regex: '^-?[0-9]\\d*$',
+      control_regex_msg: "La valeur saisie n'est pas une valeur entière",
+      row_num: 5,
+      value: '54645',
+    },
+  },
+];
+
 interface IProps {
   control: IApiControl;
   fileId: string;
@@ -47,37 +180,115 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   const { user } = useSecurity();
   const gridRef = useRef<any>();
   const jwt = user.getJwt();
-  const columnDefs = useMemo(
-    () =>
-      control.data_grid_detail?.columns.map((g) => {
-        return {
-          headerName: g.name,
-          field: g.key,
-          filter: true,
-          sortable: true,
-          floatingFilter: true,
-          resizable: true,
-        };
-      }),
-    [control.data_grid_detail?.columns],
-  );
+
+  const valueGetter = (params: any) => {
+    console.log(params);
+
+    return params.value;
+  };
+  // const columnDefs = useMemo(
+  //   () =>
+  //     control.data_grid_detail?.columns.map((g) => {
+  //       return {
+  //         headerName: g.name,
+  //         field: g.key,
+  //         colId: g.key,
+  //         filter: true,
+  //         sortable: true,
+  //         floatingFilter: true,
+  //         resizable: true,
+  //       };
+  //     }),
+  //   [control.data_grid_detail?.columns],
+  // );
   const [rowData, setRowData]: any = useState([]);
-
+  // useEffect(() => {
+  //   console.log(control.data_grid_detail);
+  // }, []);
+  // useEffect(() => {
+  //   setRowData(control?.data_grid_detail?.rows);
+  // }, [control?.data_grid_detail?.rows]);
   useEffect(() => {
-    setRowData(control?.data_grid_detail?.rows);
-  }, [control.data_grid_detail?.rows]);
+    setRowData(rows);
+  }, [rowData]);
 
-  const handleClickAddRow = useCallback(() => {
-    addRow(
-      fileId,
-      control.control_id,
-      jwt,
-      setRowData,
-      setErrorMessageAdd,
-      setRowData,
-    );
-  }, [control.control_id, jwt, fileId]);
+  // const handleClickAddRow = useCallback(() => {
+  //   addRow(
+  //     fileId,
+  //     control.control_id,
+  //     jwt,
+  //     setRowData,
+  //     setErrorMessageAdd,
+  //     setRowData,
+  //   );
+  // }, [control.control_id, jwt, fileId]);
 
+  const handleClickAddRow = () => {
+    gridRef.current.api.applyTransaction({
+      add: [
+        {
+          Valeur_entière: {
+            col_elm_id: 870,
+            component: 'integer',
+            control_editable: true,
+            control_mandatory: false,
+            control_regex: '^-?[0-9]\\d*$',
+            control_regex_msg: "La valeur saisie n'est pas une valeur entière",
+            row_num: 5,
+            value: 'merton',
+          },
+          Attachement: {
+            col_elm_id: 870,
+            component: 'integer',
+            control_editable: true,
+            control_mandatory: false,
+            control_regex: '^-?[0-9]\\d*$',
+            control_regex_msg: "La valeur saisie n'est pas une valeur entière",
+            row_num: 5,
+            value: '54645',
+          },
+          Texte: {
+            col_elm_id: 870,
+            component: 'integer',
+            control_editable: true,
+            control_mandatory: false,
+            control_regex: '^-?[0-9]\\d*$',
+            control_regex_msg: "La valeur saisie n'est pas une valeur entière",
+            row_num: 5,
+            value: '54645',
+          },
+          Liste_de_sélection: {
+            col_elm_id: 870,
+            component: 'integer',
+            control_editable: true,
+            control_mandatory: false,
+            control_regex: '^-?[0-9]\\d*$',
+            control_regex_msg: "La valeur saisie n'est pas une valeur entière",
+            row_num: 5,
+            value: '54645',
+          },
+          Case_à_cocher: {
+            col_elm_id: 870,
+            component: 'integer',
+            control_editable: true,
+            control_mandatory: false,
+            control_regex: '^-?[0-9]\\d*$',
+            control_regex_msg: "La valeur saisie n'est pas une valeur entière",
+            row_num: 5,
+            value: '54645',
+          },
+        },
+      ],
+    });
+  };
+
+  const handleClickRemoveSelectedRow = () => {
+    const selectedRows = gridRef.current.api.getSelectedRows();
+    gridRef.current.api.applyTransaction({ remove: selectedRows });
+  };
+  // useEffect(() => {
+  //   console.log(columnDefs, rowData);
+  // }, [columnDefs, rowData]);
   // use for custom sorting
   const StringComparator = (valueA: any, valueB: any) => {
     console.log(valueA);
@@ -278,13 +489,14 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     () => ({
       resizable: true,
       sortable: true,
-      cellRenderer: cellRenderer,
+      // cellRenderer: cellRenderer,
       autoHeight: true,
       filter: true,
       floatingFilter: true,
+      editable: true,
       cellClass: 'grid-cell-centered',
     }),
-    [cellRenderer],
+    [],
   );
 
   const sideBar = useMemo(() => {
@@ -318,8 +530,52 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     // params.api.hideOverlay();
   };
 
-  useEffect(() => {
-    console.log(control.data_grid_detail);
+  // const onCellEditingStarted = useCallback((event) => {
+  //   console.log('cellEditingStarted', event);
+  //   gridRef.current.api.undoCellEditing();
+  // }, []);
+
+  // const onCellEditingStopped = useCallback((event) => {
+  //   console.log('cellEditingStopped', event);
+  //   gridRef.current.api.undoCellEditing();
+  // }, []);
+
+  // const onUndoStarted = useCallback((event) => {
+  //   console.log('undoStarted', event);
+  // }, []);
+
+  // const onUndoEnded = useCallback((event) => {
+  //   console.log('undoEnded', event);
+  // }, []);
+
+  const onCellValueChanged = useCallback((event) => {
+    const cellDefs = gridRef.current.api.getEditingCells();
+    // console.log(cellDefs);
+    const data = event?.colDef?.field?.split('.')[0];
+    // console.log('field name', data);
+    const field_data = Object.entries(event?.data).reduce(
+      (accum: any, current: any) => {
+        const [key, value] = current;
+        if (key.match(data)) {
+          return value;
+        }
+
+        return accum;
+      },
+      [],
+    );
+
+    console.log({
+      [data]: {
+        field_data,
+        row_index: event?.rowIndex,
+        old_value: event.oldValue,
+        value: event?.value,
+      },
+    });
+    // console.log(field_data);
+    // console.log('Data after change is', event);
+    gridRef.current.api.undoCellEditing();
   }, []);
 
   const getRowStyle = (params: any) => {
@@ -370,13 +626,45 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         >
           Export PDF
         </Button>
+        <BPITooltip title={trans('addLine')}>
+          <Button
+            onClick={handleClickAddRow}
+            style={{
+              backgroundColor: 'teal',
+              border: 0,
+              color: '#fff',
+              margin: 5,
+              borderRadius: 5,
+              marginBottom: 14,
+            }}
+          >
+            Add Row
+          </Button>
+          {/* <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} /> */}
+        </BPITooltip>
+        <BPITooltip title={'Remove Line'}>
+          <Button
+            onClick={handleClickRemoveSelectedRow}
+            style={{
+              backgroundColor: 'crimson',
+              border: 0,
+              color: '#fff',
+              margin: 5,
+              borderRadius: 5,
+              marginBottom: 14,
+            }}
+          >
+            Delete Selected Rows
+          </Button>
+          {/* <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} /> */}
+        </BPITooltip>
         <AgGridReact
           className="ag-theme-alpine"
           domLayout={'autoHeight'}
           ref={gridRef}
           rowHeight={80}
           // @ts-ignore
-          columnDefs={columnDefs}
+          columnDefs={columns}
           defaultColDef={defaultColDef}
           rowData={rowData}
           onGridReady={onGridReady}
@@ -386,13 +674,12 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           sideBar={sideBar}
           pagination={true}
           paginationPageSize={4}
+          rowSelection="multiple"
           // paginationAutoPageSize={true}
-          getRowStyle={getRowStyle}
-          animateRows
+          onCellValueChanged={onCellValueChanged}
+          undoRedoCellEditing={true}
+          enableCellChangeFlash={true}
         />
-        <BPITooltip title={'Ajouter une ligne'}>
-          <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} />
-        </BPITooltip>
         {errorMessageAdd && <FormError>{errorMessageAdd}</FormError>}
       </DataGridControlStyled>
     </Grid>
