@@ -181,7 +181,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   const gridRef = useRef<any>();
   const jwt = user.getJwt();
   const errrorMessage = '';
-  const [error, seterror]: any = useState('');
+  const [error, seterror] = useState('');
 
   const valueGetter = (params: any) => {
     console.log(params);
@@ -575,15 +575,10 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         value: event?.value,
       },
     });
-
-    if (
-      field_data.control_regex &&
-      !event?.value.match(field_data.control_regex) &&
-      event?.value
-    ) {
-      seterror(field_data.control_regex_msg);
-      gridRef.current.api.undoCellEditing();
-    }
+    // console.log(field_data);
+    // console.log('Data after change is', event);
+    seterror('Validation Failed');
+    gridRef.current.api.undoCellEditing();
     setTimeout(() => {
       seterror('');
     }, 2000);
