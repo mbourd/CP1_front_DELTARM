@@ -180,6 +180,8 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   const { user } = useSecurity();
   const gridRef = useRef<any>();
   const jwt = user.getJwt();
+  const errrorMessage = '';
+  const [error, seterror]: any = useState('');
 
   const valueGetter = (params: any) => {
     console.log(params);
@@ -573,9 +575,18 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         value: event?.value,
       },
     });
-    // console.log(field_data);
-    // console.log('Data after change is', event);
-    gridRef.current.api.undoCellEditing();
+
+    if (
+      field_data.control_regex &&
+      !event?.value.match(field_data.control_regex) &&
+      event?.value
+    ) {
+      seterror(field_data.control_regex_msg);
+      gridRef.current.api.undoCellEditing();
+    }
+    setTimeout(() => {
+      seterror('');
+    }, 2000);
   }, []);
 
   const getRowStyle = (params: any) => {
@@ -658,6 +669,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           </Button>
           {/* <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} /> */}
         </BPITooltip>
+        <h1 style={{ color: 'red' }}>Hello {error}</h1>
         <AgGridReact
           className="ag-theme-alpine"
           domLayout={'autoHeight'}
