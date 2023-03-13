@@ -23,8 +23,8 @@ export const useStyles = makeStyles<Theme, IUseStylesProps>({
 export const InputBaseStyled = styled.label<IProps>`
   align-items: center;
   background-color: ${({ bgc }) => bgc};
-  /* border: ${({ borderSize }) => borderSize}px solid
-    ${({ fontColor }) => fontColor}; */
+  border: ${({ borderSize }) => borderSize}px solid
+    ${({ fontColor }) => fontColor};
   border-radius: ${({ bdr }) => bdr};
   display: flex;
 
