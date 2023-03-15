@@ -17,6 +17,7 @@ import { ControlLabel } from '../ControlLabel';
 import { AddCircleOutline } from '@mui/icons-material';
 import { CloudUpload } from '@material-ui/icons';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import DeleteIcon from '@mui/icons-material/Delete';
 import {
   BPITooltip,
   FormError,
@@ -35,6 +36,8 @@ import { useReactToPrint } from 'react-to-print';
 import { Button } from 'Shared/components';
 import { GenericDataGridResearcher } from './GenericDataGridResearcher';
 import { AgDataGridUpload } from './DataGridFields/AgDataGridUpload/AgDataGridUpload';
+import { useTrans } from '../../../../../../Services';
+import './datagrid.css';
 
 const columns = [
   {
@@ -123,7 +126,7 @@ const rows = [
       control_regex: '^-?[0-9]\\d*$',
       control_regex_msg: "La valeur saisie n'est pas une valeur entière",
       row_num: 5,
-      value: '2023-03-14T11:18:01.787Z',
+      value: '2020-06-06',
     },
   },
   {
@@ -185,7 +188,7 @@ const rows = [
       control_regex: '^-?[0-9]\\d*$',
       control_regex_msg: "La valeur saisie n'est pas une valeur entière",
       row_num: 5,
-      value: '2023-03-14T11:18:01.787Z',
+      value: '2020-06-06',
     },
   },
 ];
@@ -538,22 +541,18 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     };
 
     return (
-      <div
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
+      <div>
         <label
           htmlFor="inputTag"
           style={{
             cursor: 'pointer',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginTop: 20,
           }}
         >
-          <CloudUpload
-            style={{ marginRight: 10, marginTop: 20, color: 'crimson' }}
-          />
+          <CloudUpload style={{ marginRight: 10, color: 'teal' }} />
           <input
             type="file"
             onChange={handleFileChange}
@@ -561,10 +560,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             hidden
             // defaultValue={props.value}
           />
+          <span style={{ fontSize: 13 }}>{props.value}</span>
         </label>
         {/* {file && <img src={file} alt="attachment" width="35" height="35" />} */}
-
-        <span>{props.value}</span>
       </div>
     );
   };
@@ -583,17 +581,27 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     ];
 
     return (
-      <select
-        value={props.value}
-        onChange={handleChange}
-        style={{ borderWidth: 0, backgroundColor: 'transparent' }}
+      <div
+        style={{
+          marginTop: 17,
+        }}
       >
-        {options.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
+        <select
+          value={props.value}
+          onChange={handleChange}
+          style={{
+            borderWidth: 0,
+            backgroundColor: 'transparent',
+            fontSize: 13,
+          }}
+        >
+          {options.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      </div>
     );
   };
 
@@ -606,7 +614,12 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       props.api.applyTransaction({ remove: [props.node.data] });
     };
 
-    return <button onClick={handleDelete}>Delete</button>;
+    return (
+      <DeleteIcon
+        onClick={handleDelete}
+        style={{ marginTop: 25, marginLeft: 25, color: 'crimson' }}
+      />
+    );
   };
 
   const CustomCheckBoxRenderer: React.FC<any> = ({ props }) => {
@@ -616,32 +629,41 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     };
 
     return (
-      <input
-        type="checkbox"
-        onClick={checkedHandler}
-        defaultChecked={props.value}
-      />
+      <div>
+        <input
+          type="checkbox"
+          onClick={checkedHandler}
+          defaultChecked={props.value}
+          style={{ width: 17, height: 17, marginTop: 30, marginLeft: 25 }}
+        />
+      </div>
     );
   };
 
   const CustomDateRenderer: React.FC<any> = ({ props }) => {
     const checkedHandler = (event: any) => {
-      console.log('event', event.target.value);
-      // const date = new Date(event.target.value)?.toISOString();
-      // props.setValue(date);
+      console.log(event.target.value);
+      props.setValue(event.target.value);
     };
 
     return (
-      <div>
-        <label htmlFor="date">
-          <input type="date" onClick={checkedHandler} id="date" />
-        </label>
-        <span>{props.value}</span>
+      <div
+        style={{
+          marginTop: 17,
+        }}
+      >
+        <input
+          type="date"
+          onChange={checkedHandler}
+          id="date"
+          style={{ backgroundColor: 'transparent', fontSize: 13 }}
+          defaultValue={props.value}
+        />
       </div>
     );
   };
 
-  const cellRenderer = useCallback((props: any) => {
+  const cellRenderer = (props: any) => {
     // console.log(props);
     const data = props?.colDef?.field?.split('.')[0];
     // console.log('field name', data);
@@ -657,28 +679,28 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       [],
     );
 
-    if (field_data?.component === 'file_upload') {
-      return (
-        <AttachementCellRenderer
-          props={props}
-          field_name={data}
-          field_data={field_data}
-        />
-      );
-    } else if (field_data?.component === 'select_list') {
-      return <CustomSelectRenderer props={props} field_data={field_data} />;
-    } else if (field_data?.component === 'delete') {
-      return <CustomDeleteRenderer props={props} />;
-    } else if (field_data?.component === 'boolean') {
-      return <CustomCheckBoxRenderer props={props} />;
-    } else if (field_data?.component === 'date') {
-      return <CustomDateRenderer props={props} />;
-    } else {
-      return props.value;
-    }
+    switch (field_data?.component) {
+      case 'file_upload':
+        return (
+          <AttachementCellRenderer
+            props={props}
+            field_name={data}
+            field_data={field_data}
+          />
+        );
+      case 'select_list':
+        return <CustomSelectRenderer props={props} field_data={field_data} />;
+      case 'delete':
+        return <CustomDeleteRenderer props={props} />;
+      case 'date':
+        return <CustomDateRenderer props={props} />;
+      case 'boolean':
+        return <CustomCheckBoxRenderer props={props} />;
 
-    // return props.value;
-  }, []);
+      default:
+        return <p style={{ marginTop: 17, fontSize: 13 }}>{props.value}</p>;
+    }
+  };
 
   const defaultColDef = useMemo(
     () => ({
@@ -823,7 +845,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               color: '#fff',
               margin: 5,
               borderRadius: 5,
-              marginBottom: 14,
+              marginBottom: 13,
             }}
           >
             Add Row
@@ -839,7 +861,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               color: '#fff',
               margin: 5,
               borderRadius: 5,
-              marginBottom: 14,
+              marginBottom: 13,
             }}
           >
             Delete Selected Rows
