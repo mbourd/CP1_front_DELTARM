@@ -75,7 +75,7 @@ const rows = [
     },
     Attachement: {
       col_elm_id: 870,
-      component: 'integer',
+      component: 'file_upload',
       control_editable: true,
       control_mandatory: false,
       control_regex: '^-?[0-9]\\d*$',
@@ -95,7 +95,7 @@ const rows = [
     },
     Liste_de_sélection: {
       col_elm_id: 870,
-      component: 'integer',
+      component: 'select_list',
       control_editable: true,
       control_mandatory: false,
       control_regex: '^-?[0-9]\\d*$',
@@ -105,7 +105,7 @@ const rows = [
     },
     Case_à_cocher: {
       col_elm_id: 870,
-      component: 'integer',
+      component: 'delete',
       control_editable: true,
       control_mandatory: false,
       control_regex: '^-?[0-9]\\d*$',
@@ -127,7 +127,7 @@ const rows = [
     },
     Attachement: {
       col_elm_id: 870,
-      component: 'integer',
+      component: 'file_upload',
       control_editable: true,
       control_mandatory: false,
       control_regex: '^-?[0-9]\\d*$',
@@ -147,7 +147,7 @@ const rows = [
     },
     Liste_de_sélection: {
       col_elm_id: 870,
-      component: 'integer',
+      component: 'select_list',
       control_editable: true,
       control_mandatory: false,
       control_regex: '^-?[0-9]\\d*$',
@@ -157,7 +157,7 @@ const rows = [
     },
     Case_à_cocher: {
       col_elm_id: 870,
-      component: 'integer',
+      component: 'delete',
       control_editable: true,
       control_mandatory: false,
       control_regex: '^-?[0-9]\\d*$',
@@ -239,17 +239,17 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             control_regex: '^-?[0-9]\\d*$',
             control_regex_msg: "La valeur saisie n'est pas une valeur entière",
             row_num: 5,
-            value: 'merton',
+            value: 'New regime',
           },
           Attachement: {
             col_elm_id: 870,
-            component: 'integer',
+            component: 'file_upload',
             control_editable: true,
             control_mandatory: false,
             control_regex: '^-?[0-9]\\d*$',
             control_regex_msg: "La valeur saisie n'est pas une valeur entière",
             row_num: 5,
-            value: '54645',
+            value: 3233,
           },
           Texte: {
             col_elm_id: 870,
@@ -263,7 +263,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           },
           Liste_de_sélection: {
             col_elm_id: 870,
-            component: 'integer',
+            component: 'select_list',
             control_editable: true,
             control_mandatory: false,
             control_regex: '^-?[0-9]\\d*$',
@@ -273,7 +273,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           },
           Case_à_cocher: {
             col_elm_id: 870,
-            component: 'integer',
+            component: 'delete',
             control_editable: true,
             control_mandatory: false,
             control_regex: '^-?[0-9]\\d*$',
@@ -303,7 +303,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     return valueA.value > valueB.value ? 1 : -1;
   };
 
-  const cellRenderer = useCallback(
+  const cellRendere = useCallback(
     (props: any) => {
       // console.log(props);
       // const targetedColumns = Object.keys(props.data);
@@ -489,11 +489,116 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     [control.control_id, fileId, rowData],
   );
 
+  const AttachementCellRenderer: React.FC<any> = ({
+    props,
+    field_data,
+    field_name,
+  }) => {
+    // const { value, api, data } = props;
+    const [file, setFile] = useState(null);
+
+    console.log(props, field_data, field_name);
+
+    /* HANDLE FILE CHANGE */
+    const handleFileChange = (event: any) => {
+      const file = event.target.files[0];
+      const reader: any = new FileReader();
+
+      reader.onloadend = () => {
+        setFile(reader?.result);
+        const fileName = file.name;
+        // data.Attachement.name = fileName;
+        field_data.value = fileName;
+        // props.api.applyTransaction({ update: [props.data] });
+        props.setValue(fileName);
+      };
+
+      reader?.readAsDataURL(file);
+    };
+
+    return (
+      <div>
+        {file && <img src={file} alt="attachment" width="35" height="35" />}
+        <input type="file" onChange={handleFileChange} />
+      </div>
+    );
+  };
+
+  const CustomSelectRenderer: React.FC<any> = ({ props, field_data }) => {
+    const handleChange = (event: any) => {
+      props.setValue(event.target.value);
+      field_data.value = event.target.value;
+    };
+    const options = [
+      'Option 1',
+      'Option 2',
+      'Option 3',
+      'Option 4',
+      'Option 5',
+    ];
+
+    return (
+      <select value={props.value} onChange={handleChange}>
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    );
+  };
+
+  const CustomDeleteRenderer: React.FC<any> = ({ props }) => {
+    /* SINGLE DELETE */
+    const handleDelete = () => {
+      const updatedData = [...rowData];
+      updatedData.splice(props.rowIndex, 1);
+      props.api.applyTransaction({ remove: [props.node.data] });
+    };
+
+    return <button onClick={handleDelete}>Delete</button>;
+  };
+
+  const cellRenderer = useCallback((props: any) => {
+    // console.log(props);
+    const data = props?.colDef?.field?.split('.')[0];
+    // console.log('field name', data);
+    const field_data = Object.entries(props?.data).reduce(
+      (accum: any, current: any) => {
+        const [key, value] = current;
+        if (key.match(data)) {
+          return value;
+        }
+
+        return accum;
+      },
+      [],
+    );
+
+    if (field_data?.component === 'file_upload') {
+      return (
+        <AttachementCellRenderer
+          props={props}
+          field_name={data}
+          field_data={field_data}
+        />
+      );
+    } else if (field_data?.component === 'select_list') {
+      return <CustomSelectRenderer props={props} field_data={field_data} />;
+    } else if (field_data?.component === 'delete') {
+      return <CustomDeleteRenderer props={props} />;
+    } else {
+      return props.value;
+    }
+
+    // return props.value;
+  }, []);
+
   const defaultColDef = useMemo(
     () => ({
       resizable: true,
       sortable: true,
-      // cellRenderer: cellRenderer,
+      cellRenderer: cellRenderer,
       autoHeight: true,
       filter: true,
       floatingFilter: true,
@@ -534,24 +639,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     // params.api.hideOverlay();
   };
 
-  // const onCellEditingStarted = useCallback((event) => {
-  //   console.log('cellEditingStarted', event);
-  //   gridRef.current.api.undoCellEditing();
-  // }, []);
-
-  // const onCellEditingStopped = useCallback((event) => {
-  //   console.log('cellEditingStopped', event);
-  //   gridRef.current.api.undoCellEditing();
-  // }, []);
-
-  // const onUndoStarted = useCallback((event) => {
-  //   console.log('undoStarted', event);
-  // }, []);
-
-  // const onUndoEnded = useCallback((event) => {
-  //   console.log('undoEnded', event);
-  // }, []);
-
   const onCellValueChanged = useCallback((event) => {
     const cellDefs = gridRef.current.api.getEditingCells();
     // console.log(cellDefs);
@@ -569,7 +656,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       [],
     );
 
-    console.log({
+    console.log('editing starts', {
       [data]: {
         field_data,
         row_index: event?.rowIndex,
@@ -666,7 +753,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           </Button>
           {/* <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} /> */}
         </BPITooltip>
-        <h1 style={{ color: 'red' }}>Hello {error}</h1>
+        <h1 style={{ color: 'red' }}>{error}</h1>
         <AgGridReact
           className="ag-theme-alpine"
           domLayout={'autoHeight'}
