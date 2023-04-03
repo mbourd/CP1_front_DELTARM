@@ -17,7 +17,6 @@ import { ControlLabel } from '../ControlLabel';
 import { AddCircleOutline } from '@mui/icons-material';
 import { CloudUpload } from '@material-ui/icons';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import DeleteIcon from '@mui/icons-material/Delete';
 import {
   BPITooltip,
   FormError,
@@ -86,18 +85,17 @@ const rows = [
       control_regex: null,
       control_regex_msg: null,
       row_num: 5,
-      upload_detail: null,
       value: 'first.png',
     },
     Texte: {
-      col_elm_id: 872,
+      col_elm_id: 870,
       component: 'boolean',
       control_editable: true,
       control_mandatory: false,
       control_regex: null,
       control_regex_msg: null,
       row_num: 5,
-      value: false,
+      value: true,
     },
     Liste_de_sélection: {
       col_elm_id: 870,
@@ -133,17 +131,13 @@ const rows = [
     },
     date: {
       col_elm_id: 870,
-      component: 'delete',
+      component: 'date',
       control_editable: true,
       control_mandatory: false,
-      control_regex: null,
-      control_regex_msg: null,
+      control_regex: '^-?[0-9]\\d*$',
+      control_regex_msg: "La valeur saisie n'est pas une valeur entière",
       row_num: 5,
-      value: '2020-06-06',
-      control_options: {
-        max_date: '2023-02-15',
-        min_date: '2023-01-01',
-      },
+      value: '2023-03-14T11:18:01.787Z',
     },
   },
   {
@@ -165,11 +159,10 @@ const rows = [
       control_regex: null,
       control_regex_msg: null,
       row_num: 5,
-      upload_detail: null,
       value: 'first.png',
     },
     Texte: {
-      col_elm_id: 872,
+      col_elm_id: 870,
       component: 'boolean',
       control_editable: true,
       control_mandatory: false,
@@ -212,13 +205,13 @@ const rows = [
     },
     date: {
       col_elm_id: 870,
-      component: 'delete',
+      component: 'date',
       control_editable: true,
       control_mandatory: false,
-      control_regex: null,
-      control_regex_msg: null,
+      control_regex: '^-?[0-9]\\d*$',
+      control_regex_msg: "La valeur saisie n'est pas une valeur entière",
       row_num: 5,
-      value: '2020-06-06',
+      value: '2023-03-14T11:18:01.787Z',
     },
   },
 ];
@@ -565,9 +558,33 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     };
 
     return (
-      <div>
-        {file && <img src={file} alt="attachment" width="35" height="35" />}
-        <input type="file" onChange={handleFileChange} />
+      <div
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <label
+          htmlFor="inputTag"
+          style={{
+            cursor: 'pointer',
+          }}
+        >
+          <CloudUpload
+            style={{ marginRight: 10, marginTop: 20, color: 'crimson' }}
+          />
+          <input
+            type="file"
+            onChange={handleFileChange}
+            id="inputTag"
+            hidden
+            // defaultValue={props.value}
+          />
+        </label>
+        {/* {file && <img src={file} alt="attachment" width="35" height="35" />} */}
+
+        <span>{props.value}</span>
       </div>
     );
   };
@@ -586,7 +603,11 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     ];
 
     return (
-      <select value={props.value} onChange={handleChange}>
+      <select
+        value={props.value}
+        onChange={handleChange}
+        style={{ borderWidth: 0, backgroundColor: 'transparent' }}
+      >
         {options.map((option) => (
           <option key={option} value={option}>
             {option}
@@ -597,6 +618,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   };
 
   const CustomDeleteRenderer: React.FC<any> = ({ props }) => {
+    console.log(props);
     /* SINGLE DELETE */
     const handleDelete = () => {
       const updatedData = [...rowData];
@@ -605,6 +627,38 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     };
 
     return <button onClick={handleDelete}>Delete</button>;
+  };
+
+  const CustomCheckBoxRenderer: React.FC<any> = ({ props }) => {
+    const checkedHandler = (event: any) => {
+      const checked = event.target.checked;
+      props.setValue(checked);
+    };
+
+    return (
+      <input
+        type="checkbox"
+        onClick={checkedHandler}
+        defaultChecked={props.value}
+      />
+    );
+  };
+
+  const CustomDateRenderer: React.FC<any> = ({ props }) => {
+    const checkedHandler = (event: any) => {
+      console.log('event', event.target.value);
+      // const date = new Date(event.target.value)?.toISOString();
+      // props.setValue(date);
+    };
+
+    return (
+      <div>
+        <label htmlFor="date">
+          <input type="date" onClick={checkedHandler} id="date" />
+        </label>
+        <span>{props.value}</span>
+      </div>
+    );
   };
 
   const cellRenderer = useCallback((props: any) => {
@@ -635,6 +689,10 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       return <CustomSelectRenderer props={props} field_data={field_data} />;
     } else if (field_data?.component === 'delete') {
       return <CustomDeleteRenderer props={props} />;
+    } else if (field_data?.component === 'boolean') {
+      return <CustomCheckBoxRenderer props={props} />;
+    } else if (field_data?.component === 'date') {
+      return <CustomDateRenderer props={props} />;
     } else {
       return props.value;
     }
