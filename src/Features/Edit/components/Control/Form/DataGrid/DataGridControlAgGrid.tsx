@@ -79,7 +79,7 @@ const rows = [
       value: 54645,
     },
     Attachement: {
-      col_elm_id: 871,
+      col_elm_id: 870,
       component: 'file_upload',
       control_editable: true,
       control_mandatory: false,
@@ -100,7 +100,7 @@ const rows = [
       value: false,
     },
     Liste_de_sélection: {
-      col_elm_id: 874,
+      col_elm_id: 870,
       component: 'select_list',
       control_editable: true,
       control_mandatory: false,
@@ -133,7 +133,7 @@ const rows = [
     },
     date: {
       col_elm_id: 870,
-      component: 'date',
+      component: 'delete',
       control_editable: true,
       control_mandatory: false,
       control_regex: null,
@@ -158,7 +158,7 @@ const rows = [
       value: 54645,
     },
     Attachement: {
-      col_elm_id: 871,
+      col_elm_id: 870,
       component: 'file_upload',
       control_editable: true,
       control_mandatory: false,
@@ -179,7 +179,7 @@ const rows = [
       value: false,
     },
     Liste_de_sélection: {
-      col_elm_id: 874,
+      col_elm_id: 870,
       component: 'select_list',
       control_editable: true,
       control_mandatory: false,
@@ -212,7 +212,7 @@ const rows = [
     },
     date: {
       col_elm_id: 870,
-      component: 'date',
+      component: 'delete',
       control_editable: true,
       control_mandatory: false,
       control_regex: null,
@@ -292,17 +292,17 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             control_regex: '^-?[0-9]\\d*$',
             control_regex_msg: "La valeur saisie n'est pas une valeur entière",
             row_num: 5,
-            value: 'merton',
+            value: 'New regime',
           },
           Attachement: {
             col_elm_id: 870,
-            component: 'integer',
+            component: 'file_upload',
             control_editable: true,
             control_mandatory: false,
             control_regex: '^-?[0-9]\\d*$',
             control_regex_msg: "La valeur saisie n'est pas une valeur entière",
             row_num: 5,
-            value: '54645',
+            value: 3233,
           },
           Texte: {
             col_elm_id: 870,
@@ -316,7 +316,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           },
           Liste_de_sélection: {
             col_elm_id: 870,
-            component: 'integer',
+            component: 'select_list',
             control_editable: true,
             control_mandatory: false,
             control_regex: '^-?[0-9]\\d*$',
@@ -326,7 +326,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           },
           Case_à_cocher: {
             col_elm_id: 870,
-            component: 'integer',
+            component: 'delete',
             control_editable: true,
             control_mandatory: false,
             control_regex: '^-?[0-9]\\d*$',
@@ -545,7 +545,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     // const { value, api, data } = props;
     const [file, setFile] = useState(null);
 
-    // console.log(props, field_data, field_name);
+    console.log(props, field_data, field_name);
 
     /* HANDLE FILE CHANGE */
     const handleFileChange = (event: any) => {
@@ -555,16 +555,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       reader.onloadend = () => {
         setFile(reader?.result);
         const fileName = file.name;
-        // console.log(fileName.split('.')[0]);
-
-        if (fileName.split('.')[1] !== 'png') {
-          seterror('Invalid File Format');
-          setTimeout(() => {
-            seterror('');
-          }, 1500);
-
-          return;
-        }
         // data.Attachement.name = fileName;
         field_data.value = fileName;
         // props.api.applyTransaction({ update: [props.data] });
@@ -576,27 +566,8 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
 
     return (
       <div>
-        <label
-          htmlFor="inputTag"
-          style={{
-            cursor: 'pointer',
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: 20,
-          }}
-        >
-          <CloudUpload style={{ marginRight: 10, color: 'teal' }} />
-          <input
-            type="file"
-            onChange={handleFileChange}
-            id="inputTag"
-            hidden
-            // defaultValue={props.value}
-          />
-          <span style={{ fontSize: 14 }}>{props.value}</span>
-        </label>
-        {/* {file && <img src={file} alt="attachment" width="35" height="35" />} */}
+        {file && <img src={file} alt="attachment" width="35" height="35" />}
+        <input type="file" onChange={handleFileChange} />
       </div>
     );
   };
@@ -606,44 +577,26 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       props.setValue(event.target.value);
       field_data.value = event.target.value;
     };
+    const options = [
+      'Option 1',
+      'Option 2',
+      'Option 3',
+      'Option 4',
+      'Option 5',
+    ];
 
     return (
-      <div
-        style={{
-          marginTop: 17,
-        }}
-      >
-        <select
-          value={props.value}
-          onChange={handleChange}
-          style={{
-            borderWidth: 0,
-            backgroundColor: 'transparent',
-            fontSize: 14,
-            padding: 10,
-          }}
-        >
-          {field_data?.answer_choices.map((option: any) => (
-            <option
-              key={option.id}
-              value={option.value}
-              style={{
-                padding: 10,
-                margin: 10,
-                paddingBottom: 30,
-                marginBottom: 30,
-              }}
-            >
-              {option.label}
-            </option>
-          ))}
-        </select>
-      </div>
+      <select value={props.value} onChange={handleChange}>
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
     );
   };
 
   const CustomDeleteRenderer: React.FC<any> = ({ props }) => {
-    // console.log(props);
     /* SINGLE DELETE */
     const handleDelete = () => {
       const updatedData = [...rowData];
@@ -651,64 +604,10 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       props.api.applyTransaction({ remove: [props.node.data] });
     };
 
-    return (
-      <DeleteIcon
-        onClick={handleDelete}
-        style={{ marginTop: 25, marginLeft: 25, color: 'crimson' }}
-      />
-    );
+    return <button onClick={handleDelete}>Delete</button>;
   };
 
-  const CustomCheckBoxRenderer: React.FC<any> = ({ props }) => {
-    const checkedHandler = (event: any) => {
-      const checked = event.target.checked;
-      props.setValue(checked);
-    };
-
-    return (
-      <div>
-        <input
-          type="checkbox"
-          onClick={checkedHandler}
-          defaultChecked={props.value}
-          style={{ width: 17, height: 17, marginTop: 30, marginLeft: 25 }}
-        />
-      </div>
-    );
-  };
-
-  const CustomDateRenderer: React.FC<any> = ({ props, field_data }) => {
-    const checkedHandler = (event: any) => {
-      props.setValue(event.target.value);
-    };
-    return (
-      <div
-        style={{
-          marginTop: 17,
-        }}
-      >
-        <input
-          type="date"
-          onChange={checkedHandler}
-          id="date"
-          style={{ backgroundColor: 'transparent', fontSize: 14 }}
-          defaultValue={props.value}
-          min={
-            field_data?.control_options?.min_date
-              ? field_data?.control_options?.min_date
-              : '1970-05-12'
-          }
-          max={
-            field_data?.control_options?.max_date
-              ? field_data?.control_options?.max_date
-              : '2270-05-12'
-          }
-        />
-      </div>
-    );
-  };
-
-  const cellRenderer = (props: any) => {
+  const cellRenderer = useCallback((props: any) => {
     // console.log(props);
     const data = props?.colDef?.field?.split('.')[0];
     // console.log('field name', data);
@@ -724,33 +623,30 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       [],
     );
 
-    switch (field_data?.component) {
-      case 'file_upload':
-        return (
-          <AttachementCellRenderer
-            props={props}
-            field_name={data}
-            field_data={field_data}
-          />
-        );
-      case 'select_list':
-        return <CustomSelectRenderer props={props} field_data={field_data} />;
-      case 'delete':
-        return <CustomDeleteRenderer props={props} />;
-      case 'date':
-        return <CustomDateRenderer props={props} field_data={field_data} />;
-      case 'boolean':
-        return <CustomCheckBoxRenderer props={props} />;
-      default:
-        return <p style={{ marginTop: 17, fontSize: 14 }}>{props.value}</p>;
+    if (field_data?.component === 'file_upload') {
+      return (
+        <AttachementCellRenderer
+          props={props}
+          field_name={data}
+          field_data={field_data}
+        />
+      );
+    } else if (field_data?.component === 'select_list') {
+      return <CustomSelectRenderer props={props} field_data={field_data} />;
+    } else if (field_data?.component === 'delete') {
+      return <CustomDeleteRenderer props={props} />;
+    } else {
+      return props.value;
     }
-  };
+
+    // return props.value;
+  }, []);
 
   const defaultColDef = useMemo(
     () => ({
       resizable: true,
       sortable: true,
-      // cellRenderer: cellRenderer,
+      cellRenderer: cellRenderer,
       autoHeight: true,
       filter: true,
       floatingFilter: true,
@@ -791,24 +687,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     // params.api.hideOverlay();
   };
 
-  // const onCellEditingStarted = useCallback((event) => {
-  //   console.log('cellEditingStarted', event);
-  //   gridRef.current.api.undoCellEditing();
-  // }, []);
-
-  // const onCellEditingStopped = useCallback((event) => {
-  //   console.log('cellEditingStopped', event);
-  //   gridRef.current.api.undoCellEditing();
-  // }, []);
-
-  // const onUndoStarted = useCallback((event) => {
-  //   console.log('undoStarted', event);
-  // }, []);
-
-  // const onUndoEnded = useCallback((event) => {
-  //   console.log('undoEnded', event);
-  // }, []);
-
   const onCellValueChanged = useCallback((event) => {
     const cellDefs = gridRef.current.api.getEditingCells();
     // console.log(cellDefs);
@@ -826,7 +704,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       [],
     );
 
-    console.log({
+    console.log('editing starts', {
       [data]: {
         field_data,
         row_index: event?.rowIndex,
@@ -908,7 +786,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           </Button>
           {/* <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} /> */}
         </BPITooltip>
-        <h1 style={{ color: 'red' }}>Hello {error}</h1>
+        <h1 style={{ color: 'red' }}>{error}</h1>
         <AgGridReact
           className="ag-theme-alpine"
           domLayout={'autoHeight'}
