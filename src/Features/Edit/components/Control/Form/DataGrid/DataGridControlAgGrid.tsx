@@ -255,9 +255,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   //   [control.data_grid_detail?.columns],
   // );
   const [rowData, setRowData]: any = useState([]);
-  useEffect(() => {
-    console.log(control.data_grid_detail);
-  }, []);
   // useEffect(() => {
   //   setRowData(control?.data_grid_detail?.rows);
   // }, [control?.data_grid_detail?.rows]);
@@ -366,18 +363,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     const selectedRows = gridRef.current.api.getSelectedRows();
     gridRef.current.api.applyTransaction({ remove: selectedRows });
   };
-  // useEffect(() => {
-  //   console.log(columnDefs, rowData);
-  // }, [columnDefs, rowData]);
-  // use for custom sorting
 
   const cellRendere = useCallback(
     (props: any) => {
-      console.log(props);
-      const targetedColumns = Object.keys(props.data);
-      targetedColumns.forEach((column, index) => {
-        console.log(props.row[column].component);
-      });
       switch (props.value.component) {
         case 'border_bottom':
           return null;
