@@ -40,10 +40,6 @@ export const EditValidation: React.FC<IProps> = ({
     logout();
   }
 
-  // useEffect(() => {
-  //   console.log(data);
-  // }, [data]);
-
   useEffect(() => {
     // To avoid (bpi specific)
     let queries: Record<string, any> = { file_id: id };
@@ -63,10 +59,6 @@ export const EditValidation: React.FC<IProps> = ({
       request.abort();
     };
   }, [send, id, currentSection, request, apiRouteName, frontRouterQueries]);
-
-  // useEffect(() => {
-  //   console.log(frontRouterQueries);
-  // }, [frontRouterQueries]);
 
   return (
     <SwitchCallState

@@ -55,7 +55,7 @@ export const InputBaseStyled = styled.label<IProps>`
   }
 
   &._Input-success {
-    border: 1px solid ${({ theme }) => theme.color.success.main};
+    /* border: 1px solid ${({ theme }) => theme.color.success.main}; */
 
     .MuiSvgIcon-root {
       color: ${({ theme }) => theme.color.success.main};
@@ -63,7 +63,7 @@ export const InputBaseStyled = styled.label<IProps>`
   }
 
   &._Input-warning {
-    border: 1px solid ${({ theme }) => theme.color.warning.main};
+    /* border: 1px solid ${({ theme }) => theme.color.warning.main}; */
 
     .MuiSvgIcon-root {
       color: ${({ theme }) => theme.color.warning.main};
@@ -71,7 +71,7 @@ export const InputBaseStyled = styled.label<IProps>`
   }
 
   &._Input-info {
-    border: 1px solid ${({ theme }) => theme.color.info.main};
+    /* border: 1px solid ${({ theme }) => theme.color.info.main}; */
 
     .MuiSvgIcon-root {
       color: ${({ theme }) => theme.color.info.main};
@@ -79,7 +79,7 @@ export const InputBaseStyled = styled.label<IProps>`
   }
 
   &._Input-error {
-    border: 1px solid ${({ theme }) => theme.color.error.main};
+    /* border: 1px solid ${({ theme }) => theme.color.error.main}; */
 
     .MuiSvgIcon-root {
       color: ${({ theme }) => theme.color.error.main};
