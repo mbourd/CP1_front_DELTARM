@@ -256,6 +256,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   //   [control.data_grid_detail?.columns],
   // );
   const [rowData, setRowData]: any = useState([]);
+  useEffect(() => {
+    console.log(control.data_grid_detail);
+  }, []);
   // useEffect(() => {
   //   setRowData(control?.data_grid_detail?.rows);
   // }, [control?.data_grid_detail?.rows]);
@@ -364,9 +367,18 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     const selectedRows = gridRef.current.api.getSelectedRows();
     gridRef.current.api.applyTransaction({ remove: selectedRows });
   };
+  // useEffect(() => {
+  //   console.log(columnDefs, rowData);
+  // }, [columnDefs, rowData]);
+  // use for custom sorting
 
   const cellRendere = useCallback(
     (props: any) => {
+      console.log(props);
+      const targetedColumns = Object.keys(props.data);
+      targetedColumns.forEach((column, index) => {
+        console.log(props.row[column].component);
+      });
       switch (props.value.component) {
         case 'border_bottom':
           return null;
@@ -817,7 +829,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       [],
     );
 
-<<<<<<< HEAD
     console.log('editing starts', {
       [data]: {
         field_data,
@@ -830,27 +841,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     // console.log('Data after change is', event);
     seterror('Validation Failed');
     gridRef.current.api.undoCellEditing();
-=======
-    // console.log('editing starts', {
-    //   [data]: {
-    //     field_data,
-    //     row_index: event?.rowIndex,
-    //     old_value: event.oldValue,
-    //     value: event?.value,
-    //   },
-    // });
-
-    if (field_data?.component !== 'boolean') {
-      if (
-        field_data.control_regex &&
-        !event?.value?.toString().match(field_data.control_regex) &&
-        event?.value
-      ) {
-        seterror(field_data.control_regex_msg);
-        gridRef.current.api.undoCellEditing();
-      }
-    }
->>>>>>> 8cf2703 (feat: added server columns)
     setTimeout(() => {
       seterror('');
     }, 2000);
