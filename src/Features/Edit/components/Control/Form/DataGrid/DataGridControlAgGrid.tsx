@@ -762,14 +762,14 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       [],
     );
 
-    console.log('editing starts', {
-      [data]: {
-        field_data,
-        row_index: event?.rowIndex,
-        old_value: event.oldValue,
-        value: event?.value,
-      },
-    });
+    // console.log('editing starts', {
+    //   [data]: {
+    //     field_data,
+    //     row_index: event?.rowIndex,
+    //     old_value: event.oldValue,
+    //     value: event?.value,
+    //   },
+    // });
     // console.log(field_data);
     // console.log('Data after change is', event);
     seterror('Validation Failed');
@@ -851,7 +851,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           ref={gridRef}
           rowHeight={80}
           // @ts-ignore
-          columnDefs={columns}
+          columnDefs={control?.data_grid_detail?.columns}
           defaultColDef={defaultColDef}
           rowData={rowData}
           onGridReady={onGridReady}
