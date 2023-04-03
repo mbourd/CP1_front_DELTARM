@@ -30,7 +30,7 @@ export type ControlTypeType =
   | 'boolean'
   | 'line_break'
   | 'data_grid'
-  | 'ag_data_grid'
+  | 'ag_datagrid'
   | 'jodit_rich_text'
   | 'slider';
 
