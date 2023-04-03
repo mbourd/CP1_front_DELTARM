@@ -108,7 +108,6 @@ export const Close: React.FC = (): React.ReactElement => {
   }, []);
 
   const handleSelectionOfFiles = (event: any) => {
-    // console.log(event.target.checked);
     if (event.target.checked) {
       if (!selectedFiles?.includes(event.target.value)) {
         setselectedFiles((selectedFiles: any) =>

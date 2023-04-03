@@ -49,10 +49,6 @@ export const SwitchControlItem: React.FC<IProps> = ({
   const [get_value_response, setget_value_response] = useState(null);
 
   useEffect(() => {
-    console.log('control', control);
-  }, [control]);
-
-  useEffect(() => {
     const data = formState[0].controls
       .map((c: any) => {
         return c.control_id;

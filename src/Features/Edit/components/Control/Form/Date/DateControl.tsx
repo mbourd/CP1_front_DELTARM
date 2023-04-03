@@ -293,10 +293,6 @@ export const DateControl: React.FC<IProps> = ({
     }
   }, [isRejected]);
 
-  useEffect(() => {
-    console.log(control);
-  }, [control]);
-
   const min_date =
     control?.control_options?.min_date === 'today'
       ? today_date

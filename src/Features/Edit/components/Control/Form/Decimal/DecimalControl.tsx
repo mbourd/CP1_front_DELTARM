@@ -155,10 +155,6 @@ export const DecimalControl: React.FC<IProps> = ({
     }
   }, [isRejected]);
 
-  useEffect(() => {
-    console.log(control);
-  }, [control]);
-
   const controlValue = currentValue
     ? parseFloat(currentValue)?.toFixed(
         control.control_options?.precision
