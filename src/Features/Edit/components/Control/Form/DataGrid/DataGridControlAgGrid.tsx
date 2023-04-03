@@ -256,9 +256,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   //   [control.data_grid_detail?.columns],
   // );
   const [rowData, setRowData]: any = useState([]);
-  useEffect(() => {
-    console.log(control.data_grid_detail);
-  }, []);
+  // useEffect(() => {
+  //   console.log(control.data_grid_detail);
+  // }, []);
   // useEffect(() => {
   //   setRowData(control?.data_grid_detail?.rows);
   // }, [control?.data_grid_detail?.rows]);
@@ -702,6 +702,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     const checkedHandler = (event: any) => {
       props.setValue(event.target.value);
     };
+
     return (
       <div
         style={{
@@ -829,14 +830,14 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       [],
     );
 
-    console.log('editing starts', {
-      [data]: {
-        field_data,
-        row_index: event?.rowIndex,
-        old_value: event.oldValue,
-        value: event?.value,
-      },
-    });
+    // console.log('editing starts', {
+    //   [data]: {
+    //     field_data,
+    //     row_index: event?.rowIndex,
+    //     old_value: event.oldValue,
+    //     value: event?.value,
+    //   },
+    // });
     // console.log(field_data);
     // console.log('Data after change is', event);
     seterror('Validation Failed');
@@ -918,7 +919,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           ref={gridRef}
           rowHeight={80}
           // @ts-ignore
-          columnDefs={control?.data_grid_detail?.cols}
+          columnDefs={control?.data_grid_detail?.columns}
           defaultColDef={defaultColDef}
           rowData={rowData}
           onGridReady={onGridReady}
