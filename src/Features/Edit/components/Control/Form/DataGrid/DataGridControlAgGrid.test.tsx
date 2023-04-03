@@ -32,10 +32,10 @@ describe('Data Grid Control AG Grid', () => {
   //   const integer = container.querySelector('[col-id="Integer"]');
   //   expect(integer).toHaveTextContent('Integer');
   // });
-  // test('Should have a click button to add a row', async () => {
-  //   const { getByTitle } = render(<DataGridAgGrid />);
-  //   expect(getByTitle("Ajouter une ligne'")).toBeInTheDocument();
-  // });
+  test('Should have a click button to add a row', async () => {
+    // const { getByTitle } = render(<DataGridAgGrid />);
+    // expect(getByTitle("Ajouter une ligne'")).toBeInTheDocument();
+  });
   // test('Should call for a new row while clicking on button', async () => {
   //   const { getByTitle } = render(<DataGridAgGrid />);
   //   const button = getByTitle("Ajouter une ligne'");
