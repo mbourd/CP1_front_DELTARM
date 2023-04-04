@@ -38,6 +38,7 @@ import { GenericDataGridResearcher } from './GenericDataGridResearcher';
 import { AgDataGridUpload } from './DataGridFields/AgDataGridUpload/AgDataGridUpload';
 import { useTrans } from '../../../../../../Services';
 import './datagrid.css';
+import { useApi, useRouter } from 'Services';
 
 const columns = [
   {
@@ -232,13 +233,15 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   control,
   fileId,
 }) => {
-  const [errorMessageAdd, setErrorMessageAdd] = useState<string>('');
+  const [errorsMessageAdd, setErrorMessageAdd] = useState<string>('');
   const { user } = useSecurity();
   const gridRef = useRef<any>();
   const [trans] = useTrans('Edit');
   const jwt = user.getJwt();
   const errrorMessage = '';
-  const [error, seterror] = useState('');
+  const [errors, seterrors] = useState('');
+  const { send, error } = useApi<void>();
+  const { currentRoute } = useRouter();
 
   // const columnDefs = useMemo(
   //   () =>
@@ -259,9 +262,10 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   // useEffect(() => {
   //   console.log(control.data_grid_detail);
   // }, []);
-  // useEffect(() => {
-  //   setRowData(control?.data_grid_detail?.rows);
-  // }, [control?.data_grid_detail?.rows]);
+  useEffect(() => {
+    setRowData(control?.data_grid_detail?.rows);
+    console.log('rows', control?.data_grid_detail);
+  }, [control?.data_grid_detail?.rows]);
   // useEffect(() => {
   //   setRowData(rows);
   // }, [rowData]);
@@ -579,9 +583,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         // console.log(fileName.split('.')[0]);
 
         if (fileName.split('.')[1] !== 'png') {
-          seterror('Invalid File Format');
+          seterrors('Invalid File Format');
           setTimeout(() => {
-            seterror('');
+            seterrors('');
           }, 1500);
 
           return;
@@ -830,6 +834,23 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       [],
     );
 
+    if (
+      field_data.control_regex &&
+      event?.newValue?.match(control.control_regex)
+    ) {
+      seterrors(field_data?.control_regex_msg);
+      gridRef.current.api.undoCellEditing();
+    }
+    send(
+      currentRoute?.props?.apiSaveControlRouteName,
+      {},
+      {
+        file_id: fileId,
+        elm_id: control.control_id,
+        elm_val: event?.newValue,
+        control_family: control.control_family,
+      },
+    );
     // console.log('editing starts', {
     //   [data]: {
     //     field_data,
@@ -838,12 +859,13 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     //     value: event?.value,
     //   },
     // });
-    // console.log(field_data);
+
+    console.log(field_data, event, control);
     // console.log('Data after change is', event);
-    seterror('Validation Failed');
-    gridRef.current.api.undoCellEditing();
+    // seterrors('Validation Failed');
+    // gridRef.current.api.undoCellEditing();
     setTimeout(() => {
-      seterror('');
+      seterrors('');
     }, 2000);
   }, []);
 
@@ -868,75 +890,75 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
 
   return (
     <Grid item xs={11} style={{ maxWidth: '95%', margin: '0 auto' }}>
-      <DataGridControlStyled>
-        <ControlLabel control={control} />
+      {/* <DataGridControlStyled> */}
+      <ControlLabel control={control} />
+      <Button
+        style={{
+          backgroundColor: '#f50057',
+          marginLeft: '10px',
+          marginBottom: 10,
+        }}
+        onClick={handlePrint}
+      >
+        Export PDF
+      </Button>
+      <BPITooltip title={trans('addLine')}>
         <Button
+          onClick={handleClickAddRow}
           style={{
-            backgroundColor: '#f50057',
-            marginLeft: '10px',
-            marginBottom: 10,
+            backgroundColor: 'teal',
+            border: 0,
+            color: '#fff',
+            margin: 5,
+            borderRadius: 5,
+            marginBottom: 14,
           }}
-          onClick={handlePrint}
         >
-          Export PDF
+          Add Row
         </Button>
-        <BPITooltip title={trans('addLine')}>
-          <Button
-            onClick={handleClickAddRow}
-            style={{
-              backgroundColor: 'teal',
-              border: 0,
-              color: '#fff',
-              margin: 5,
-              borderRadius: 5,
-              marginBottom: 14,
-            }}
-          >
-            Add Row
-          </Button>
-          {/* <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} /> */}
-        </BPITooltip>
-        <BPITooltip title={'Remove Line'}>
-          <Button
-            onClick={handleClickRemoveSelectedRow}
-            style={{
-              backgroundColor: 'crimson',
-              border: 0,
-              color: '#fff',
-              margin: 5,
-              borderRadius: 5,
-              marginBottom: 14,
-            }}
-          >
-            Delete Selected Rows
-          </Button>
-          {/* <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} /> */}
-        </BPITooltip>
-        <h1 style={{ color: 'red' }}>{error}</h1>
-        <AgGridReact
-          className="ag-theme-alpine"
-          domLayout={'autoHeight'}
-          ref={gridRef}
-          rowHeight={80}
-          // @ts-ignore
-          columnDefs={control?.data_grid_detail?.columns}
-          defaultColDef={defaultColDef}
-          rowData={rowData}
-          onGridReady={onGridReady}
-          overlayLoadingTemplate={
-            '<span class="ag-overlay-loading-center">Loading..</span>'
-          }
-          sideBar={sideBar}
-          pagination={true}
-          paginationPageSize={4}
-          rowSelection="multiple"
-          // paginationAutoPageSize={true}
-          onCellValueChanged={onCellValueChanged}
-          undoRedoCellEditing={true}
-          enableCellChangeFlash={true}
-        />
-        {errorMessageAdd && <FormError>{errorMessageAdd}</FormError>}
-      </DataGridControlStyled>
+        {/* <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} /> */}
+      </BPITooltip>
+      <BPITooltip title={'Remove Line'}>
+        <Button
+          onClick={handleClickRemoveSelectedRow}
+          style={{
+            backgroundColor: 'crimson',
+            border: 0,
+            color: '#fff',
+            margin: 5,
+            borderRadius: 5,
+            marginBottom: 14,
+          }}
+        >
+          Delete Selected Rows
+        </Button>
+        {/* <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} /> */}
+      </BPITooltip>
+      <h1 style={{ color: 'red' }}>{errors}</h1>
+      <AgGridReact
+        className="ag-theme-alpine"
+        domLayout={'autoHeight'}
+        ref={gridRef}
+        rowHeight={80}
+        // @ts-ignore
+        columnDefs={control?.data_grid_detail?.columns}
+        defaultColDef={defaultColDef}
+        rowData={rowData}
+        onGridReady={onGridReady}
+        overlayLoadingTemplate={
+          '<span class="ag-overlay-loading-center">Loading..</span>'
+        }
+        sideBar={sideBar}
+        pagination={true}
+        paginationPageSize={4}
+        rowSelection="multiple"
+        // paginationAutoPageSize={true}
+        onCellValueChanged={onCellValueChanged}
+        undoRedoCellEditing={true}
+        enableCellChangeFlash={true}
+      />
+      {errorsMessageAdd && <FormError>{errorsMessageAdd}</FormError>}
+      {/* </DataGridControlStyled> */}
     </Grid>
   );
 };
