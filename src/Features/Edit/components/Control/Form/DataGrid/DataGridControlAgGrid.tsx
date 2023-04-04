@@ -834,23 +834,23 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       [],
     );
 
-    if (
-      field_data.control_regex &&
-      event?.newValue?.match(control.control_regex)
-    ) {
-      seterrors(field_data?.control_regex_msg);
-      gridRef.current.api.undoCellEditing();
-    }
-    send(
-      currentRoute?.props?.apiSaveControlRouteName,
-      {},
-      {
-        file_id: fileId,
-        elm_id: control.control_id,
-        elm_val: event?.newValue,
-        control_family: control.control_family,
-      },
-    );
+    // if (
+    //   field_data.control_regex &&
+    //   event?.newValue?.match(control.control_regex)
+    // ) {
+    //   seterrors(field_data?.control_regex_msg);
+    //   gridRef.current.api.undoCellEditing();
+    // }
+    // send(
+    //   currentRoute?.props?.apiSaveControlRouteName,
+    //   {},
+    //   {
+    //     file_id: fileId,
+    //     elm_id: control.control_id,
+    //     elm_val: event?.newValue,
+    //     control_family: control.control_family,
+    //   },
+    // );
     // console.log('editing starts', {
     //   [data]: {
     //     field_data,
