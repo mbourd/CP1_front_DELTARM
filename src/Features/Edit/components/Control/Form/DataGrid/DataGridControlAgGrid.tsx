@@ -39,6 +39,7 @@ import { AgDataGridUpload } from './DataGridFields/AgDataGridUpload/AgDataGridUp
 import { useTrans } from '../../../../../../Services';
 import './datagrid.css';
 import { useApi, useRouter } from 'Services';
+import { saveValueDataGrid } from './apiRoutes/saveValueDataGrid';
 
 const columns = [
   {
@@ -833,24 +834,28 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       },
       [],
     );
+    if (field_data?.regex && event?.newValue) {
+      const regexControl = new RegExp(field_data?.regex, 'i');
+      if (
+        !event?.newValue.match(regexControl) &&
+        field_data?.control_regex_msg
+      ) {
+        seterrors(field_data?.control_regex_msg);
 
-    // if (
-    //   field_data.control_regex &&
-    //   event?.newValue?.match(control.control_regex)
-    // ) {
-    //   seterrors(field_data?.control_regex_msg);
-    //   gridRef.current.api.undoCellEditing();
-    // }
-    // send(
-    //   currentRoute?.props?.apiSaveControlRouteName,
-    //   {},
-    //   {
-    //     file_id: fileId,
-    //     elm_id: control.control_id,
-    //     elm_val: event?.newValue,
-    //     control_family: control.control_family,
-    //   },
-    // );
+        return;
+      }
+    }
+
+    saveValueDataGrid(
+      fileId,
+      control.control_id,
+      field_data?.col_elm_id,
+      field_data?.row_num,
+      jwt,
+      event?.newValue?.toString(),
+      seterrors,
+      event?.newValue,
+    );
     // console.log('editing starts', {
     //   [data]: {
     //     field_data,
@@ -939,7 +944,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         className="ag-theme-alpine"
         domLayout={'autoHeight'}
         ref={gridRef}
-        rowHeight={80}
+        rowHeight={10}
         // @ts-ignore
         columnDefs={control?.data_grid_detail?.columns}
         defaultColDef={defaultColDef}
