@@ -1,0 +1,12 @@
+.ag-header-row {
+  position: absolute;
+  overflow: hidden;
+  background-color: lightgray !important;
+}
+
+.ag-cell-value,
+.ag-group-value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-bottom: 20px !important;
+}
