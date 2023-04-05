@@ -39,6 +39,11 @@ import { useTrans } from '../../../../../../Services';
 import './datagrid.css';
 import { useApi, useRouter } from 'Services';
 import { saveValueDataGrid } from './apiRoutes/saveValueDataGrid';
+import AttachmentCellRenderer from './AgDataGridFields/AttachementCellRenderer/AttachementCellRenderer';
+import CustomSelectRenderer from './AgDataGridFields/CustomSelectRenderer/CustomSelectRenderer';
+import CustomDeleteRenderer from './AgDataGridFields/CustomDeleteRenderer/CustomDeleteRenderer';
+import CustomDateRenderer from './AgDataGridFields/CustomDateRenderer/CustomDateRenderer';
+import CustomCheckBoxRenderer from './AgDataGridFields/CustomCheckBoxRenderer/CustomCheckBoxRenderer';
 
 const columns = [
   {
@@ -535,146 +540,177 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     [control.control_id, fileId, rowData],
   );
 
-  const AttachementCellRenderer: React.FC<any> = ({
-    props,
-    field_data,
-    field_name,
-  }) => {
-    // const { value, api, data } = props;
-    const [file, setFile] = useState(null);
+  // const AttachementCellRenderer: React.FC<any> = ({
+  //   props,
+  //   field_data,
+  //   field_name,
+  // }) => {
+  //   // const { value, api, data } = props;
+  //   const [file, setFile] = useState(null);
 
-    console.log(props, field_data, field_name);
+  //   // console.log(props, field_data, field_name);
 
-    /* HANDLE FILE CHANGE */
-    const handleFileChange = (event: any) => {
-      const file = event.target.files[0];
-      const reader: any = new FileReader();
+  //   /* HANDLE FILE CHANGE */
+  //   const handleFileChange = (event: any) => {
+  //     const file = event.target.files[0];
+  //     const reader: any = new FileReader();
 
-      reader.onloadend = () => {
-        setFile(reader?.result);
-        const fileName = file.name;
-        // console.log(fileName.split('.')[0]);
+  //     reader.onloadend = () => {
+  //       setFile(reader?.result);
+  //       const fileName = file.name;
+  //       // console.log(fileName.split('.')[0]);
 
-        if (fileName.split('.')[1] !== 'png') {
-          seterrors('Invalid File Format');
-          setTimeout(() => {
-            seterrors('');
-          }, 1500);
+  //       if (fileName.split('.')[1] !== 'png') {
+  //         seterrors('Invalid File Format');
+  //         setTimeout(() => {
+  //           seterrors('');
+  //         }, 1500);
 
-          return;
-        }
-        // data.Attachement.name = fileName;
-        field_data.value = fileName;
-        // props.api.applyTransaction({ update: [props.data] });
-        props.setValue(fileName);
-      };
+  //         return;
+  //       }
+  //       // data.Attachement.name = fileName;
+  //       field_data.value = fileName;
+  //       // props.api.applyTransaction({ update: [props.data] });
+  //       props.setValue(fileName);
+  //     };
 
-      reader?.readAsDataURL(file);
-    };
+  //     reader?.readAsDataURL(file);
+  //   };
 
-    return (
-      <div
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <label
-          htmlFor="inputTag"
-          style={{
-            cursor: 'pointer',
-          }}
-        >
-          <CloudUpload
-            style={{ marginRight: 10, marginTop: 20, color: 'crimson' }}
-          />
-          <input
-            type="file"
-            onChange={handleFileChange}
-            id="inputTag"
-            hidden
-            // defaultValue={props.value}
-          />
-        </label>
-        {/* {file && <img src={file} alt="attachment" width="35" height="35" />} */}
+  //   return (
+  //     <div>
+  //       <label
+  //         htmlFor="inputTag"
+  //         style={{
+  //           cursor: 'pointer',
+  //           display: 'flex',
+  //           flexDirection: 'row',
+  //           alignItems: 'center',
+  //           marginTop: 20,
+  //         }}
+  //       >
+  //         <CloudUpload style={{ marginRight: 10, color: 'teal' }} />
+  //         <input
+  //           type="file"
+  //           onChange={handleFileChange}
+  //           id="inputTag"
+  //           hidden
+  //           // defaultValue={props.value}
+  //         />
+  //         <span style={{ fontSize: 14 }}>{props.value}</span>
+  //       </label>
+  //       {/* {file && <img src={file} alt="attachment" width="35" height="35" />} */}
+  //     </div>
+  //   );
+  // };
 
-        <span>{props.value}</span>
-      </div>
-    );
-  };
+  // const CustomSelectRenderer: React.FC<any> = ({ props, field_data }) => {
+  //   const handleChange = (event: any) => {
+  //     props.setValue(event.target.value);
+  //     field_data.value = event.target.value;
+  //   };
 
-  const CustomSelectRenderer: React.FC<any> = ({ props, field_data }) => {
-    const handleChange = (event: any) => {
-      props.setValue(event.target.value);
-      field_data.value = event.target.value;
-    };
-    const options = [
-      'Option 1',
-      'Option 2',
-      'Option 3',
-      'Option 4',
-      'Option 5',
-    ];
+  //   return (
+  //     <div
+  //       style={{
+  //         marginTop: 17,
+  //       }}
+  //     >
+  //       <select
+  //         value={props.value}
+  //         onChange={handleChange}
+  //         style={{
+  //           borderWidth: 0,
+  //           backgroundColor: 'transparent',
+  //           fontSize: 14,
+  //           padding: 10,
+  //         }}
+  //       >
+  //         {field_data?.answer_choices.map((option: any) => (
+  //           <option
+  //             key={option.id}
+  //             value={option.value}
+  //             style={{
+  //               padding: 10,
+  //               margin: 10,
+  //               paddingBottom: 30,
+  //               marginBottom: 30,
+  //             }}
+  //           >
+  //             {option.label}
+  //           </option>
+  //         ))}
+  //       </select>
+  //     </div>
+  //   );
+  // };
 
-    return (
-      <select
-        value={props.value}
-        onChange={handleChange}
-        style={{ borderWidth: 0, backgroundColor: 'transparent' }}
-      >
-        {options.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
-    );
-  };
+  // const CustomDeleteRenderer: React.FC<any> = ({ props }) => {
+  //   // console.log(props);
+  //   /* SINGLE DELETE */
+  //   const handleDelete = () => {
+  //     const updatedData = [...rowData];
+  //     updatedData.splice(props.rowIndex, 1);
+  //     props.api.applyTransaction({ remove: [props.node.data] });
+  //   };
 
-  const CustomDeleteRenderer: React.FC<any> = ({ props }) => {
-    console.log(props);
-    /* SINGLE DELETE */
-    const handleDelete = () => {
-      const updatedData = [...rowData];
-      updatedData.splice(props.rowIndex, 1);
-      props.api.applyTransaction({ remove: [props.node.data] });
-    };
+  //   return (
+  //     <DeleteIcon
+  //       onClick={handleDelete}
+  //       style={{ marginTop: 25, marginLeft: 25, color: 'crimson' }}
+  //     />
+  //   );
+  // };
 
-    return <button onClick={handleDelete}>Delete</button>;
-  };
+  // const CustomCheckBoxRenderer: React.FC<any> = ({ props }) => {
+  //   const checkedHandler = (event: any) => {
+  //     const checked = event.target.checked;
+  //     props.setValue(checked);
+  //   };
 
-  const CustomCheckBoxRenderer: React.FC<any> = ({ props }) => {
-    const checkedHandler = (event: any) => {
-      const checked = event.target.checked;
-      props.setValue(checked);
-    };
+  //   return (
+  //     <div>
+  //       <input
+  //         type="checkbox"
+  //         onClick={checkedHandler}
+  //         defaultChecked={props.value}
+  //         style={{ width: 17, height: 17, marginTop: 30, marginLeft: 25 }}
+  //       />
+  //     </div>
+  //   );
+  // };
 
-    return (
-      <input
-        type="checkbox"
-        onClick={checkedHandler}
-        defaultChecked={props.value}
-      />
-    );
-  };
+  // const CustomDateRenderer: React.FC<any> = ({ props, field_data }) => {
+  //   const checkedHandler = (event: any) => {
+  //     props.setValue(event.target.value);
+  //   };
 
-  const CustomDateRenderer: React.FC<any> = ({ props }) => {
-    const checkedHandler = (event: any) => {
-      console.log('event', event.target.value);
-      // const date = new Date(event.target.value)?.toISOString();
-      // props.setValue(date);
-    };
-
-    return (
-      <div>
-        <label htmlFor="date">
-          <input type="date" onClick={checkedHandler} id="date" />
-        </label>
-        <span>{props.value}</span>
-      </div>
-    );
-  };
+  //   return (
+  //     <div
+  //       style={{
+  //         marginTop: 17,
+  //       }}
+  //     >
+  //       <input
+  //         type="date"
+  //         onChange={checkedHandler}
+  //         id="date"
+  //         style={{ backgroundColor: 'transparent', fontSize: 14 }}
+  //         defaultValue={props.value}
+  //         min={
+  //           field_data?.control_options?.min_date
+  //             ? field_data?.control_options?.min_date
+  //             : '1970-05-12'
+  //         }
+  //         max={
+  //           field_data?.control_options?.max_date
+  //             ? field_data?.control_options?.max_date
+  //             : '2270-05-12'
+  //         }
+  //       />
+  //     </div>
+  //   );
+  // };
 
   const cellRenderer = useCallback((props: any) => {
     // console.log(props);
@@ -692,24 +728,25 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       [],
     );
 
-    if (field_data?.component === 'file_upload') {
-      return (
-        <AttachementCellRenderer
-          props={props}
-          field_name={data}
-          field_data={field_data}
-        />
-      );
-    } else if (field_data?.component === 'select_list') {
-      return <CustomSelectRenderer props={props} field_data={field_data} />;
-    } else if (field_data?.component === 'delete') {
-      return <CustomDeleteRenderer props={props} />;
-    } else if (field_data?.component === 'boolean') {
-      return <CustomCheckBoxRenderer props={props} />;
-    } else if (field_data?.component === 'date') {
-      return <CustomDateRenderer props={props} />;
-    } else {
-      return props.value;
+    switch (field_data?.component) {
+      case 'file_upload':
+        return (
+          <AttachmentCellRenderer
+            props={props}
+            field_name={data}
+            field_data={field_data}
+          />
+        );
+      case 'select_list':
+        return <CustomSelectRenderer props={props} field_data={field_data} />;
+      case 'delete':
+        return <CustomDeleteRenderer props={props} rowData={rowData} />;
+      case 'date':
+        return <CustomDateRenderer props={props} field_data={field_data} />;
+      case 'boolean':
+        return <CustomCheckBoxRenderer props={props} />;
+      default:
+        return <p style={{ marginTop: 17, fontSize: 14 }}>{props.value}</p>;
     }
 
     // return props.value;
