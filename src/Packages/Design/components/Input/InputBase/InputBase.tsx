@@ -52,7 +52,20 @@ export const InputBase: React.FC<IInputBase> = ({
         '_Input ' + (className || '') + (status ? ' _Input-' + status : '')
       }
     >
-      {icon}
+      <div
+        style={{
+          width: icon?.currency_symbol ? 50 : 'auto',
+          marginLeft: icon?.currency_symbol ? 5 : 0,
+        }}
+      >
+        {icon?.currency_symbol ? (
+          <p style={{ fontSize: 13, fontWeight: 'bolder' }}>
+            {icon?.currency_symbol}
+          </p>
+        ) : (
+          icon
+        )}
+      </div>
       <MUIInputBase
         inputRef={inputRef}
         classes={MUIInputBaseClasse}
