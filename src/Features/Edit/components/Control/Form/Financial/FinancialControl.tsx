@@ -61,16 +61,16 @@ export const FinancialControl: React.FC<IProps> = ({
 
         return;
       }
-
       if (
-        (control.control_options?.min || control.control_options?.max) &&
+        (control.control_options?.min_value ||
+          control.control_options?.max_value) &&
         value.trim()
       ) {
         if (
           minMax(
             value,
-            control.control_options.min,
-            control.control_options.max,
+            control.control_options.min_value,
+            control.control_options.max_value,
           )
         ) {
           setErrorMessage(null);
@@ -78,15 +78,26 @@ export const FinancialControl: React.FC<IProps> = ({
         if (
           !minMax(
             value,
-            control.control_options.min,
-            control.control_options.max,
+            control.control_options.min_value,
+            control.control_options.max_value,
           )
         ) {
           setInputFocus();
-          setErrorMessage(trans('enteredValueConstraints'));
+          setErrorMessage(
+            'La valeur saisie ne respecte pas les contraintes définies',
+          );
 
           return;
         }
+      }
+
+      if (!checkIfSameValues(value, currentValue)) {
+        setErrorMessage(null);
+        if (control.mandatory && !value.trim()) {
+          setErrorMessage('Valeur obligatoire');
+        }
+
+        return;
       }
 
       if (!checkIfSameValues(value, currentValue)) {

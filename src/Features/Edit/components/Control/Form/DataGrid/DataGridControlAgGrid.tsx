@@ -272,6 +272,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   // }, []);
   useEffect(() => {
     setGridDetails(control?.data_grid_detail);
+    console.log('control', control?.data_grid_detail);
   }, [control?.data_grid_detail]);
   // useEffect(() => {
   //   setRowData(rows);
@@ -572,24 +573,30 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     );
 
     switch (field_data?.component) {
-      case 'file_upload':
-        return (
-          <AttachmentCellRenderer
-            props={props}
-            field_name={data}
-            field_data={field_data}
-          />
-        );
-      case 'select_list':
-        return <CustomSelectRenderer props={props} field_data={field_data} />;
-      case 'delete':
-        return (
-          <CustomDeleteRenderer props={props} rowData={GridDetails?.rows} />
-        );
-      case 'date':
-        return <CustomDateRenderer props={props} field_data={field_data} />;
+      // case 'file_upload':
+      //   return (
+      //     <AttachmentCellRenderer
+      //       props={props}
+      //       field_name={data}
+      //       field_data={field_data}
+      //     />
+      //   );
+      // case 'select_list':
+      //   return <CustomSelectRenderer props={props} field_data={field_data} />;
+      // case 'delete':
+      //   return (
+      //     <CustomDeleteRenderer props={props} rowData={GridDetails?.rows} />
+      //   );
+      // case 'date':
+      //   return <CustomDateRenderer props={props} field_data={field_data} />;
       case 'boolean':
         return <CustomCheckBoxRenderer props={props} />;
+      case 'percent':
+        return (
+          <div style={{ flexDirection: 'row', alignItems: 'center' }}>
+            % {props.value}
+          </div>
+        );
       case 'financial':
         return (
           <div style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -694,16 +701,22 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       }
     }
 
-    if (field_data?.component === 'financial') {
+    if (
+      field_data?.component === 'financial' ||
+      'decimal' ||
+      'integer' ||
+      'percent'
+    ) {
       if (
-        (field_data.control_options?.min || field_data.control_options?.max) &&
+        (field_data?.control_options?.min_value ||
+          field_data?.control_options?.max_value) &&
         event?.newValue.trim()
       ) {
         if (
           minMax(
             event?.newValue,
-            field_data?.control_options?.min,
-            field_data.control_options.max,
+            field_data?.control_options?.min_value,
+            field_data.control_options.max_value,
           )
         ) {
           seterrors(null);
@@ -711,8 +724,8 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         if (
           !minMax(
             event?.newValue,
-            field_data.control_options.min,
-            field_data.control_options.max,
+            field_data.control_options.min_value,
+            field_data.control_options.max_value,
           )
         ) {
           seterrors(
