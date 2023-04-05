@@ -44,6 +44,7 @@ import CustomSelectRenderer from './AgDataGridFields/CustomSelectRenderer/Custom
 import CustomDeleteRenderer from './AgDataGridFields/CustomDeleteRenderer/CustomDeleteRenderer';
 import CustomDateRenderer from './AgDataGridFields/CustomDateRenderer/CustomDateRenderer';
 import CustomCheckBoxRenderer from './AgDataGridFields/CustomCheckBoxRenderer/CustomCheckBoxRenderer';
+import { EuroIcon } from 'Styles';
 
 const columns = [
   {
@@ -261,11 +262,13 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   //   [control.data_grid_detail?.columns],
   // );
   const [rowData, setRowData]: any = useState([]);
+  const [GridDetails, setGridDetails]: any = useState(null);
   // useEffect(() => {
   //   console.log(control.data_grid_detail);
   // }, []);
   useEffect(() => {
     setRowData(control?.data_grid_detail?.rows);
+    setGridDetails(control?.data_grid_detail);
     console.log('rows', control?.data_grid_detail);
   }, [control?.data_grid_detail?.rows]);
   // useEffect(() => {
@@ -283,64 +286,91 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   //   );
   // }, [control.control_id, jwt, fileId]);
 
-  const handleClickAddRow = () => {
-    gridRef.current.api.applyTransaction({
-      add: [
-        {
-          Valeur_entière: {
-            col_elm_id: 870,
-            component: 'integer',
-            control_editable: true,
-            control_mandatory: false,
-            control_regex: '^-?[0-9]\\d*$',
-            control_regex_msg: "La valeur saisie n'est pas une valeur entière",
-            row_num: 5,
-            value: 'New regime',
-          },
-          Attachement: {
-            col_elm_id: 870,
-            component: 'file_upload',
-            control_editable: true,
-            control_mandatory: false,
-            control_regex: '^-?[0-9]\\d*$',
-            control_regex_msg: "La valeur saisie n'est pas une valeur entière",
-            row_num: 5,
-            value: 3233,
-          },
-          Texte: {
-            col_elm_id: 870,
-            component: 'integer',
-            control_editable: true,
-            control_mandatory: false,
-            control_regex: '^-?[0-9]\\d*$',
-            control_regex_msg: "La valeur saisie n'est pas une valeur entière",
-            row_num: 5,
-            value: '54645',
-          },
-          Liste_de_sélection: {
-            col_elm_id: 870,
-            component: 'select_list',
-            control_editable: true,
-            control_mandatory: false,
-            control_regex: '^-?[0-9]\\d*$',
-            control_regex_msg: "La valeur saisie n'est pas une valeur entière",
-            row_num: 5,
-            value: '54645',
-          },
-          Case_à_cocher: {
-            col_elm_id: 870,
-            component: 'delete',
-            control_editable: true,
-            control_mandatory: false,
-            control_regex: '^-?[0-9]\\d*$',
-            control_regex_msg: "La valeur saisie n'est pas une valeur entière",
-            row_num: 5,
-            value: '54645',
-          },
-        },
-      ],
-    });
-  };
+  // const handleClickAddRow = () => {
+  //   gridRef.current.api.applyTransaction({
+  //     add: [
+  //       {
+  //         Valeur_entière: {
+  //           col_elm_id: 870,
+  //           component: 'integer',
+  //           control_editable: true,
+  //           control_mandatory: false,
+  //           control_regex: '^-?[0-9]\\d*$',
+  //           control_regex_msg: "La valeur saisie n'est pas une valeur entière",
+  //           row_num: 5,
+  //           value: 54645,
+  //         },
+  //         Attachement: {
+  //           col_elm_id: 871,
+  //           component: 'file_upload',
+  //           control_editable: true,
+  //           control_mandatory: false,
+  //           control_regex: null,
+  //           control_regex_msg: null,
+  //           row_num: 5,
+  //           upload_detail: null,
+  //           value: 'first.png',
+  //         },
+  //         Texte: {
+  //           col_elm_id: 872,
+  //           component: 'boolean',
+  //           control_editable: true,
+  //           control_mandatory: false,
+  //           control_regex: null,
+  //           control_regex_msg: null,
+  //           row_num: 5,
+  //           value: false,
+  //         },
+  //         Liste_de_sélection: {
+  //           col_elm_id: 874,
+  //           component: 'select_list',
+  //           control_editable: true,
+  //           control_mandatory: false,
+  //           control_regex: null,
+  //           control_regex_msg: null,
+  //           row_num: 5,
+  //           value: '2',
+  //           answer_choices: [
+  //             {
+  //               choice_background_color: 'FFFFFF',
+  //               choice_font_color: '000000',
+  //               choice_font_style: 'normal',
+  //               id: 1,
+  //               label: 'OK',
+  //               value: '1',
+  //             },
+  //             {
+  //               choice_background_color: 'FFFFFF',
+  //               choice_font_color: '000000',
+  //               choice_font_style: 'normal',
+  //               id: 2,
+  //               label: 'KO',
+  //               value: '2',
+  //             },
+  //           ],
+  //         },
+  //         Case_à_cocher: {
+  //           component: 'delete',
+  //           row_num: 5,
+  //         },
+  //         date: {
+  //           col_elm_id: 870,
+  //           component: 'date',
+  //           control_editable: true,
+  //           control_mandatory: false,
+  //           control_regex: null,
+  //           control_regex_msg: null,
+  //           row_num: 5,
+  //           value: '2020-06-06',
+  //           control_options: {
+  //             max_date: '2023-02-15',
+  //             min_date: '2023-01-01',
+  //           },
+  //         },
+  //       },
+  //     ],
+  //   });
+  // };
 
   const handleClickRemoveSelectedRow = () => {
     const selectedRows = gridRef.current.api.getSelectedRows();
@@ -358,187 +388,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
 
     return valueA.value > valueB.value ? 1 : -1;
   };
-
-  const cellRendere = useCallback(
-    (props: any) => {
-      switch (props.value.component) {
-        case 'border_bottom':
-          return null;
-        case 'file_upload':
-          return (
-            <AgDataGridUpload
-              columnId={props.value.col_elm_id}
-              rowNum={props.value.row_num}
-              value={props.value.upload_detail}
-              fileId={fileId}
-              controlId={control.control_id}
-              mandatory={props.value.control_mandatory}
-              editable={props.value.control_editable}
-            />
-          );
-        case 'boolean':
-          return (
-            <DataGridBoolean
-              columnId={props.value.col_elm_id}
-              rowNum={props.value.row_num}
-              fileId={fileId}
-              controlId={control.control_id}
-              value={props.value.value}
-              regex={props.value.control_regex}
-              regexMsg={props.value.control_regex_msg}
-              mandatory={props.value.control_mandatory}
-              editable={props.value.control_editable}
-            />
-          );
-        case 'text':
-          return (
-            <DataGridText
-              columnId={props.value.col_elm_id}
-              rowNum={props.value.row_num}
-              fileId={fileId}
-              controlId={control.control_id}
-              value={props.value.value}
-              regex={props.value.control_regex}
-              regexMsg={props.value.control_regex_msg}
-              mandatory={props.value.control_mandatory}
-              editable={props.value.control_editable}
-            />
-          );
-
-        case 'long_text':
-          return (
-            <DataGridLongText
-              columnId={props.value.col_elm_id}
-              rowNum={props.value.row_num}
-              fileId={fileId}
-              controlId={control.control_id}
-              value={props.value.value}
-              regex={props.value.control_regex}
-              regexMsg={props.value.control_regex_msg}
-              mandatory={props.value.control_mandatory}
-              editable={props.value.control_editable}
-            />
-          );
-
-        case 'integer':
-          return (
-            <DataGridInteger
-              columnId={props.value.col_elm_id}
-              rowNum={props.value.row_num}
-              fileId={fileId}
-              controlId={control.control_id}
-              value={props.value.value}
-              regex={props.value.control_regex}
-              regexMsg={props.value.control_regex_msg}
-              mandatory={props.value.control_mandatory}
-              editable={props.value.control_editable}
-            />
-          );
-
-        case 'select_list':
-          const answerChoices: Record<string, ISelectData> = {};
-          props.value.answer_choices.map(
-            (answer: {
-              id: number | string;
-              label: string;
-              value: number | string;
-            }) => {
-              answerChoices[answer.id] = {
-                id: '' + answer.id,
-                label: answer.label,
-                value: '' + answer.value,
-              };
-
-              return answer;
-            },
-          );
-
-          return (
-            <DataGridSelect
-              columnId={props.value.col_elm_id}
-              rowNum={props.value.row_num}
-              fileId={fileId}
-              controlId={control.control_id}
-              answerChoices={answerChoices}
-              value={props.value.value}
-              regex={props.value.control_regex}
-              regexMsg={props.value.control_regex_msg}
-              mandatory={props.value.control_mandatory}
-              editable={props.value.control_editable}
-            />
-          );
-
-        case 'delete':
-          return (
-            <DataGridDelete
-              fileId={fileId}
-              controlId={control.control_id}
-              rowNum={props.value.row_num}
-              setGridDetails={setRowData}
-            />
-          );
-        case 'date':
-          return (
-            <DataGridDate
-              columnId={props.value.col_elm_id}
-              rowNum={props.value.row_num}
-              fileId={fileId}
-              controlId={control.control_id}
-              value={props.value.value}
-              regex={props.value.control_regex}
-              regexMsg={props.value.control_regex_msg}
-              mandatory={props.value.control_mandatory}
-              editable={props.value.control_editable}
-            />
-          );
-        case 'decimal':
-          return (
-            <DataGridDecimal
-              columnId={props.value.col_elm_id}
-              rowNum={props.value.row_num}
-              fileId={fileId}
-              controlId={control.control_id}
-              value={props.value.value}
-              regex={props.value.control_regex}
-              regexMsg={props.value.control_regex_msg}
-              mandatory={props.value.control_mandatory}
-              editable={props.value.control_editable}
-            />
-          );
-        case 'percent':
-          return (
-            <DataGridPercent
-              columnId={props.value.col_elm_id}
-              rowNum={props.value.row_num}
-              fileId={fileId}
-              controlId={control.control_id}
-              value={props.value.value}
-              regex={props.value.control_regex}
-              regexMsg={props.value.control_regex_msg}
-              mandatory={props.value.control_mandatory}
-              editable={props.value.control_editable}
-            />
-          );
-        case 'financial':
-          return (
-            <DataGridFinancial
-              columnId={props.value.col_elm_id}
-              rowNum={props.value.row_num}
-              fileId={fileId}
-              controlId={control.control_id}
-              value={props.value.value}
-              regex={props.value.control_regex}
-              regexMsg={props.value.control_regex_msg}
-              mandatory={props.value.control_mandatory}
-              editable={props.value.control_editable}
-            />
-          );
-        default:
-          return null;
-      }
-    },
-    [control.control_id, fileId, rowData],
-  );
 
   // const AttachementCellRenderer: React.FC<any> = ({
   //   props,
@@ -745,8 +594,17 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         return <CustomDateRenderer props={props} field_data={field_data} />;
       case 'boolean':
         return <CustomCheckBoxRenderer props={props} />;
+      case 'financial':
+        return (
+          <div style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <EuroIcon
+              style={{ marginBottom: -4, fontSize: 19, marginLeft: 2 }}
+            />
+            {props.value}
+          </div>
+        );
       default:
-        return <p style={{ marginTop: 17, fontSize: 14 }}>{props.value}</p>;
+        return props.value;
     }
 
     // return props.value;
@@ -757,11 +615,11 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       resizable: true,
       sortable: true,
       cellRenderer: cellRenderer,
-      autoHeight: true,
-      filter: true,
-      floatingFilter: true,
-      editable: true,
+      // autoHeight: true,
       cellClass: 'grid-cell-centered',
+      editable: true,
+      // cellEditorPopup: true,
+      cellEditorPopupPosition: 'center',
     }),
     [],
   );
@@ -797,6 +655,10 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     // params.api.hideOverlay();
   };
 
+  const handleClickAddRow = useCallback(() => {
+    addRow(fileId, control.control_id, jwt, setGridDetails, setErrorMessageAdd);
+  }, [control.control_id, jwt, fileId]);
+
   const onCellValueChanged = useCallback((event) => {
     const cellDefs = gridRef.current.api.getEditingCells();
     // console.log(cellDefs);
@@ -813,28 +675,32 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       },
       [],
     );
-    if (field_data?.regex && event?.newValue) {
-      const regexControl = new RegExp(field_data?.regex, 'i');
+    if (field_data?.control_regex && event?.newValue) {
+      const regexControl = new RegExp(field_data?.control_regex, 'i');
       if (
         !event?.newValue.match(regexControl) &&
         field_data?.control_regex_msg
       ) {
+        // console.log('error occured');
         seterrors(field_data?.control_regex_msg);
-
-        return;
+        gridRef.current.api.undoCellEditing();
+        setTimeout(() => {
+          seterrors('');
+        }, 3000);
+      } else {
+        saveValueDataGrid(
+          fileId,
+          control.control_id,
+          field_data?.col_elm_id,
+          field_data?.row_num,
+          jwt,
+          event?.newValue?.toString(),
+          seterrors,
+          event?.newValue,
+        );
       }
     }
 
-    saveValueDataGrid(
-      fileId,
-      control.control_id,
-      field_data?.col_elm_id,
-      field_data?.row_num,
-      jwt,
-      event?.newValue?.toString(),
-      seterrors,
-      event?.newValue,
-    );
     // console.log('editing starts', {
     //   [data]: {
     //     field_data,
@@ -848,9 +714,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     // console.log('Data after change is', event);
     // seterrors('Validation Failed');
     // gridRef.current.api.undoCellEditing();
-    setTimeout(() => {
-      seterrors('');
-    }, 2000);
   }, []);
 
   const getRowStyle = (params: any) => {
@@ -918,16 +781,16 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         </Button>
         {/* <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} /> */}
       </BPITooltip>
-      <h1 style={{ color: 'red' }}>{errors}</h1>
+      <h1 style={{ color: 'red', padding: 10 }}>{errors}</h1>
       <AgGridReact
         className="ag-theme-alpine"
         domLayout={'autoHeight'}
         ref={gridRef}
-        rowHeight={10}
+        rowHeight={40}
         // @ts-ignore
-        columnDefs={control?.data_grid_detail?.columns}
+        columnDefs={GridDetails?.columns}
         defaultColDef={defaultColDef}
-        rowData={rowData}
+        rowData={GridDetails?.rows}
         onGridReady={onGridReady}
         overlayLoadingTemplate={
           '<span class="ag-overlay-loading-center">Loading..</span>'
