@@ -46,6 +46,7 @@ import CustomDateRenderer from './AgDataGridFields/CustomDateRenderer/CustomDate
 import CustomCheckBoxRenderer from './AgDataGridFields/CustomCheckBoxRenderer/CustomCheckBoxRenderer';
 import { EuroIcon } from 'Styles';
 import { minMax } from 'Packages/Helpers/src/minMax';
+import CustomCommentRenderer from './AgDataGridFields/CustomCommentRenderer/CustomCommentRenderer';
 
 const columns = [
   {
@@ -617,6 +618,15 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             )}
             {props.value}
           </div>
+        );
+      /* Created new component for comment text */
+      case 'comment':
+        return (
+          <CustomCommentRenderer
+            props={props}
+            field_data={field_data}
+            control={control}
+          />
         );
       default:
         return props?.value ? props?.value : 'No value';
