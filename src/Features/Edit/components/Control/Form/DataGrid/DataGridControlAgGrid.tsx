@@ -593,9 +593,17 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       case 'financial':
         return (
           <div style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <EuroIcon
-              style={{ marginBottom: -4, fontSize: 19, marginLeft: 2 }}
-            />
+            {field_data?.control_options?.currency_symbol ? (
+              <>
+                <p style={{ fontSize: 13, fontWeight: 'bolder' }}>
+                  {field_data?.control_options?.currency_symbol}
+                </p>
+              </>
+            ) : (
+              <EuroIcon
+                style={{ marginBottom: -4, fontSize: 19, marginLeft: 2 }}
+              />
+            )}
             {props.value}
           </div>
         );
