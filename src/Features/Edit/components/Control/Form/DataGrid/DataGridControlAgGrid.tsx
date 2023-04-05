@@ -589,8 +589,8 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       //   );
       // case 'date':
       //   return <CustomDateRenderer props={props} field_data={field_data} />;
-      case 'boolean':
-        return <CustomCheckBoxRenderer props={props} />;
+      // case 'boolean':
+      //   return <CustomCheckBoxRenderer props={props} />;
       case 'percent':
         return (
           <div style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -615,7 +615,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           </div>
         );
       default:
-        return props.value;
+        return props?.value ? props?.value : 'No value';
     }
   };
 
@@ -629,6 +629,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       editable: true,
       // cellEditorPopup: true,
       cellEditorPopupPosition: 'center',
+      singleClickEdit: true,
     }),
     [],
   );
