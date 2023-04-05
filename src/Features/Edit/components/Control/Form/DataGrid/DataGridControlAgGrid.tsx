@@ -46,6 +46,7 @@ import CustomDeleteRenderer from './AgDataGridFields/CustomDeleteRenderer/Custom
 import CustomDateRenderer from './AgDataGridFields/CustomDateRenderer/CustomDateRenderer';
 import CustomCheckBoxRenderer from './AgDataGridFields/CustomCheckBoxRenderer/CustomCheckBoxRenderer';
 import { EuroIcon } from 'Styles';
+import { minMax } from 'Packages/Helpers/src/minMax';
 
 const columns = [
   {
@@ -246,7 +247,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   const [trans] = useTrans('Edit');
   const jwt = user.getJwt();
   const errrorMessage = '';
-  const [errors, seterrors] = useState('');
+  const [errors, seterrors]: any = useState('');
   const { send, error } = useApi<void>();
   const { currentRoute } = useRouter();
 
@@ -271,7 +272,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   // }, []);
   useEffect(() => {
     setGridDetails(control?.data_grid_detail);
-    console.log('rows', control?.data_grid_detail);
   }, [control?.data_grid_detail]);
   // useEffect(() => {
   //   setRowData(rows);
@@ -681,19 +681,55 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         setTimeout(() => {
           seterrors('');
         }, 3000);
-      } else {
-        saveValueDataGrid(
-          fileId,
-          control.control_id,
-          field_data?.col_elm_id,
-          field_data?.row_num,
-          jwt,
-          event?.newValue?.toString(),
-          seterrors,
-          event?.newValue,
-        );
+
+        return;
       }
     }
+
+    if (field_data?.component === 'financial') {
+      if (
+        (field_data.control_options?.min || field_data.control_options?.max) &&
+        event?.newValue.trim()
+      ) {
+        if (
+          minMax(
+            event?.newValue,
+            field_data?.control_options?.min,
+            field_data.control_options.max,
+          )
+        ) {
+          seterrors(null);
+        }
+        if (
+          !minMax(
+            event?.newValue,
+            field_data.control_options.min,
+            field_data.control_options.max,
+          )
+        ) {
+          seterrors(
+            'La valeur saisie ne respecte pas les contraintes définies',
+          );
+          gridRef.current.api.undoCellEditing();
+          setTimeout(() => {
+            seterrors('');
+          }, 3000);
+
+          return;
+        }
+      }
+    }
+
+    saveValueDataGrid(
+      fileId,
+      control.control_id,
+      field_data?.col_elm_id,
+      field_data?.row_num,
+      jwt,
+      event?.newValue?.toString(),
+      seterrors,
+      event?.newValue,
+    );
 
     // console.log('editing starts', {
     //   [data]: {
@@ -704,7 +740,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     //   },
     // });
 
-    console.log(field_data, event, control);
+    // console.log(field_data, event, control);
     // console.log('Data after change is', event);
     // seterrors('Validation Failed');
     // gridRef.current.api.undoCellEditing();

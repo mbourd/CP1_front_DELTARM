@@ -149,6 +149,10 @@ export const FinancialControl: React.FC<IProps> = ({
   }, [error, trans]);
 
   useEffect(() => {
+    console.log(control);
+  }, []);
+
+  useEffect(() => {
     if (!isRejected) {
       setIsRejected(false);
     }
@@ -180,7 +184,13 @@ export const FinancialControl: React.FC<IProps> = ({
           disabled={!control.editable}
           color={control.editable ? 'text' : 'disabled'}
           defaultValue={controlValue ? numberWithSpaces(controlValue) : ''}
-          icon={<EuroIcon />}
+          icon={
+            control?.control_options?.currency_symbol ? (
+              control?.control_options
+            ) : (
+              <EuroIcon />
+            )
+          }
           onBlur={(e) => saveValue(e.currentTarget.value)}
           unit={control.control_options?.unit}
         />
