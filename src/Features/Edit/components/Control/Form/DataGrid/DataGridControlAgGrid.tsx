@@ -265,16 +265,14 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   //     }),
   //   [control.data_grid_detail?.columns],
   // );
-  const [rowData, setRowData]: any = useState([]);
   const [GridDetails, setGridDetails]: any = useState(null);
   // useEffect(() => {
   //   console.log(control.data_grid_detail);
   // }, []);
   useEffect(() => {
-    setRowData(control?.data_grid_detail?.rows);
     setGridDetails(control?.data_grid_detail);
     console.log('rows', control?.data_grid_detail);
-  }, [control?.data_grid_detail?.rows]);
+  }, [control?.data_grid_detail]);
   // useEffect(() => {
   //   setRowData(rows);
   // }, [rowData]);
@@ -585,7 +583,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       case 'select_list':
         return <CustomSelectRenderer props={props} field_data={field_data} />;
       case 'delete':
-        return <CustomDeleteRenderer props={props} rowData={rowData} />;
+        return (
+          <CustomDeleteRenderer props={props} rowData={GridDetails?.rows} />
+        );
       case 'date':
         return <CustomDateRenderer props={props} field_data={field_data} />;
       case 'boolean':
@@ -743,7 +743,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       >
         Export PDF
       </Button>
-      <BPITooltip title={trans('addLine')}>
+      {/* <BPITooltip title={trans('addLine')}>
         <Button
           onClick={handleClickAddRow}
           style={{
@@ -757,9 +757,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         >
           Add Row
         </Button>
-        {/* <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} /> */}
-      </BPITooltip>
-      <BPITooltip title={'Remove Line'}>
+       
+      </BPITooltip> */}
+      {/* <BPITooltip title={'Remove Line'}>
         <Button
           onClick={handleClickRemoveSelectedRow}
           style={{
@@ -773,9 +773,10 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         >
           Delete Selected Rows
         </Button>
-        {/* <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} /> */}
-      </BPITooltip>
+        <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} />
+      </BPITooltip> */}
       <h1 style={{ color: 'red', padding: 10 }}>{errors}</h1>
+      {errorsMessageAdd && <FormError>{errorsMessageAdd}</FormError>}
       <AgGridReact
         className="ag-theme-alpine"
         domLayout={'autoHeight'}
@@ -798,7 +799,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         undoRedoCellEditing={true}
         enableCellChangeFlash={true}
       />
-      {errorsMessageAdd && <FormError>{errorsMessageAdd}</FormError>}
       {/* </DataGridControlStyled> */}
     </Grid>
   );
