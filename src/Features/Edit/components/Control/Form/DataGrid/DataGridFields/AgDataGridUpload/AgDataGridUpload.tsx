@@ -151,7 +151,9 @@ export const AgDataGridUpload: React.FC<IProps> = ({
             alignItems: 'center',
             height: '30px',
           }}
-          {...getRootProps({ onClick: (event) => event.stopPropagation() })}
+          {...getRootProps({
+            onClick: (event: any) => event.stopPropagation(),
+          })}
         >
           <label htmlFor={`data-grid-file-upload${controlId}`}>
             <input

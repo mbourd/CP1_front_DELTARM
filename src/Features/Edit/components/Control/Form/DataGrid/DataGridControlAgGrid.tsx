@@ -40,6 +40,13 @@ import { useTrans } from '../../../../../../Services';
 import './datagrid.css';
 import { useApi, useRouter } from 'Services';
 import { saveValueDataGrid } from './apiRoutes/saveValueDataGrid';
+import AttachmentCellRenderer from './AgDataGridFields/AttachementCellRenderer/AttachementCellRenderer';
+import CustomSelectRenderer from './AgDataGridFields/CustomSelectRenderer/CustomSelectRenderer';
+import CustomDeleteRenderer from './AgDataGridFields/CustomDeleteRenderer/CustomDeleteRenderer';
+import CustomDateRenderer from './AgDataGridFields/CustomDateRenderer/CustomDateRenderer';
+import CustomCheckBoxRenderer from './AgDataGridFields/CustomCheckBoxRenderer/CustomCheckBoxRenderer';
+import { EuroIcon } from 'Styles';
+import { minMax } from 'Packages/Helpers/src/minMax';
 
 const columns = [
   {
@@ -240,7 +247,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   const [trans] = useTrans('Edit');
   const jwt = user.getJwt();
   const errrorMessage = '';
-  const [errors, seterrors] = useState('');
+  const [errors, seterrors]: any = useState('');
   const { send, error } = useApi<void>();
   const { currentRoute } = useRouter();
 
@@ -259,14 +266,13 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   //     }),
   //   [control.data_grid_detail?.columns],
   // );
-  const [rowData, setRowData]: any = useState([]);
+  const [GridDetails, setGridDetails]: any = useState(null);
   // useEffect(() => {
   //   console.log(control.data_grid_detail);
   // }, []);
   useEffect(() => {
-    setRowData(control?.data_grid_detail?.rows);
-    console.log('rows', control?.data_grid_detail);
-  }, [control?.data_grid_detail?.rows]);
+    setGridDetails(control?.data_grid_detail);
+  }, [control?.data_grid_detail]);
   // useEffect(() => {
   //   setRowData(rows);
   // }, [rowData]);
@@ -282,91 +288,91 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   //   );
   // }, [control.control_id, jwt, fileId]);
 
-  const handleClickAddRow = () => {
-    gridRef.current.api.applyTransaction({
-      add: [
-        {
-          Valeur_entière: {
-            col_elm_id: 870,
-            component: 'integer',
-            control_editable: true,
-            control_mandatory: false,
-            control_regex: '^-?[0-9]\\d*$',
-            control_regex_msg: "La valeur saisie n'est pas une valeur entière",
-            row_num: 5,
-            value: 54645,
-          },
-          Attachement: {
-            col_elm_id: 871,
-            component: 'file_upload',
-            control_editable: true,
-            control_mandatory: false,
-            control_regex: null,
-            control_regex_msg: null,
-            row_num: 5,
-            upload_detail: null,
-            value: 'first.png',
-          },
-          Texte: {
-            col_elm_id: 872,
-            component: 'boolean',
-            control_editable: true,
-            control_mandatory: false,
-            control_regex: null,
-            control_regex_msg: null,
-            row_num: 5,
-            value: false,
-          },
-          Liste_de_sélection: {
-            col_elm_id: 874,
-            component: 'select_list',
-            control_editable: true,
-            control_mandatory: false,
-            control_regex: null,
-            control_regex_msg: null,
-            row_num: 5,
-            value: '2',
-            answer_choices: [
-              {
-                choice_background_color: 'FFFFFF',
-                choice_font_color: '000000',
-                choice_font_style: 'normal',
-                id: 1,
-                label: 'OK',
-                value: '1',
-              },
-              {
-                choice_background_color: 'FFFFFF',
-                choice_font_color: '000000',
-                choice_font_style: 'normal',
-                id: 2,
-                label: 'KO',
-                value: '2',
-              },
-            ],
-          },
-          Case_à_cocher: {
-            component: 'delete',
-            row_num: 5,
-          },
-          date: {
-            col_elm_id: 870,
-            component: 'date',
-            control_editable: true,
-            control_mandatory: false,
-            control_regex: null,
-            control_regex_msg: null,
-            row_num: 5,
-            value: '2020-06-06',
-            control_options: {
-              max_date: '2023-02-15',
-              min_date: '2023-01-01',
-            },
-          },
-        },
-      ],
-    });
-  };
+  // const handleClickAddRow = () => {
+  //   gridRef.current.api.applyTransaction({
+  //     add: [
+  //       {
+  //         Valeur_entière: {
+  //           col_elm_id: 870,
+  //           component: 'integer',
+  //           control_editable: true,
+  //           control_mandatory: false,
+  //           control_regex: '^-?[0-9]\\d*$',
+  //           control_regex_msg: "La valeur saisie n'est pas une valeur entière",
+  //           row_num: 5,
+  //           value: 54645,
+  //         },
+  //         Attachement: {
+  //           col_elm_id: 871,
+  //           component: 'file_upload',
+  //           control_editable: true,
+  //           control_mandatory: false,
+  //           control_regex: null,
+  //           control_regex_msg: null,
+  //           row_num: 5,
+  //           upload_detail: null,
+  //           value: 'first.png',
+  //         },
+  //         Texte: {
+  //           col_elm_id: 872,
+  //           component: 'boolean',
+  //           control_editable: true,
+  //           control_mandatory: false,
+  //           control_regex: null,
+  //           control_regex_msg: null,
+  //           row_num: 5,
+  //           value: false,
+  //         },
+  //         Liste_de_sélection: {
+  //           col_elm_id: 874,
+  //           component: 'select_list',
+  //           control_editable: true,
+  //           control_mandatory: false,
+  //           control_regex: null,
+  //           control_regex_msg: null,
+  //           row_num: 5,
+  //           value: '2',
+  //           answer_choices: [
+  //             {
+  //               choice_background_color: 'FFFFFF',
+  //               choice_font_color: '000000',
+  //               choice_font_style: 'normal',
+  //               id: 1,
+  //               label: 'OK',
+  //               value: '1',
+  //             },
+  //             {
+  //               choice_background_color: 'FFFFFF',
+  //               choice_font_color: '000000',
+  //               choice_font_style: 'normal',
+  //               id: 2,
+  //               label: 'KO',
+  //               value: '2',
+  //             },
+  //           ],
+  //         },
+  //         Case_à_cocher: {
+  //           component: 'delete',
+  //           row_num: 5,
+  //         },
+  //         date: {
+  //           col_elm_id: 870,
+  //           component: 'date',
+  //           control_editable: true,
+  //           control_mandatory: false,
+  //           control_regex: null,
+  //           control_regex_msg: null,
+  //           row_num: 5,
+  //           value: '2020-06-06',
+  //           control_options: {
+  //             max_date: '2023-02-15',
+  //             min_date: '2023-01-01',
+  //           },
+  //         },
+  //       },
+  //     ],
+  //   });
+  // };
 
   const handleClickRemoveSelectedRow = () => {
     const selectedRows = gridRef.current.api.getSelectedRows();
@@ -377,363 +383,177 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   // }, [columnDefs, rowData]);
   // use for custom sorting
 
-  const cellRendere = useCallback(
-    (props: any) => {
-      console.log(props);
-      const targetedColumns = Object.keys(props.data);
-      targetedColumns.forEach((column, index) => {
-        console.log(props.row[column].component);
-      });
-      switch (props.value.component) {
-        case 'border_bottom':
-          return null;
-        case 'file_upload':
-          return (
-            <AgDataGridUpload
-              columnId={props.value.col_elm_id}
-              rowNum={props.value.row_num}
-              value={props.value.upload_detail}
-              fileId={fileId}
-              controlId={control.control_id}
-              mandatory={props.value.control_mandatory}
-              editable={props.value.control_editable}
-            />
-          );
-        case 'boolean':
-          return (
-            <DataGridBoolean
-              columnId={props.value.col_elm_id}
-              rowNum={props.value.row_num}
-              fileId={fileId}
-              controlId={control.control_id}
-              value={props.value.value}
-              regex={props.value.control_regex}
-              regexMsg={props.value.control_regex_msg}
-              mandatory={props.value.control_mandatory}
-              editable={props.value.control_editable}
-            />
-          );
-        case 'text':
-          return (
-            <DataGridText
-              columnId={props.value.col_elm_id}
-              rowNum={props.value.row_num}
-              fileId={fileId}
-              controlId={control.control_id}
-              value={props.value.value}
-              regex={props.value.control_regex}
-              regexMsg={props.value.control_regex_msg}
-              mandatory={props.value.control_mandatory}
-              editable={props.value.control_editable}
-            />
-          );
+  // const AttachementCellRenderer: React.FC<any> = ({
+  //   props,
+  //   field_data,
+  //   field_name,
+  // }) => {
+  //   // const { value, api, data } = props;
+  //   const [file, setFile] = useState(null);
 
-        case 'long_text':
-          return (
-            <DataGridLongText
-              columnId={props.value.col_elm_id}
-              rowNum={props.value.row_num}
-              fileId={fileId}
-              controlId={control.control_id}
-              value={props.value.value}
-              regex={props.value.control_regex}
-              regexMsg={props.value.control_regex_msg}
-              mandatory={props.value.control_mandatory}
-              editable={props.value.control_editable}
-            />
-          );
+  //   // console.log(props, field_data, field_name);
 
-        case 'integer':
-          return (
-            <DataGridInteger
-              columnId={props.value.col_elm_id}
-              rowNum={props.value.row_num}
-              fileId={fileId}
-              controlId={control.control_id}
-              value={props.value.value}
-              regex={props.value.control_regex}
-              regexMsg={props.value.control_regex_msg}
-              mandatory={props.value.control_mandatory}
-              editable={props.value.control_editable}
-            />
-          );
+  //   /* HANDLE FILE CHANGE */
+  //   const handleFileChange = (event: any) => {
+  //     const file = event.target.files[0];
+  //     const reader: any = new FileReader();
 
-        case 'select_list':
-          const answerChoices: Record<string, ISelectData> = {};
-          props.value.answer_choices.map(
-            (answer: {
-              id: number | string;
-              label: string;
-              value: number | string;
-            }) => {
-              answerChoices[answer.id] = {
-                id: '' + answer.id,
-                label: answer.label,
-                value: '' + answer.value,
-              };
+  //     reader.onloadend = () => {
+  //       setFile(reader?.result);
+  //       const fileName = file.name;
+  //       // console.log(fileName.split('.')[0]);
 
-              return answer;
-            },
-          );
+  //       if (fileName.split('.')[1] !== 'png') {
+  //         seterrors('Invalid File Format');
+  //         setTimeout(() => {
+  //           seterrors('');
+  //         }, 1500);
 
-          return (
-            <DataGridSelect
-              columnId={props.value.col_elm_id}
-              rowNum={props.value.row_num}
-              fileId={fileId}
-              controlId={control.control_id}
-              answerChoices={answerChoices}
-              value={props.value.value}
-              regex={props.value.control_regex}
-              regexMsg={props.value.control_regex_msg}
-              mandatory={props.value.control_mandatory}
-              editable={props.value.control_editable}
-            />
-          );
+  //         return;
+  //       }
+  //       // data.Attachement.name = fileName;
+  //       field_data.value = fileName;
+  //       // props.api.applyTransaction({ update: [props.data] });
+  //       props.setValue(fileName);
+  //     };
 
-        case 'delete':
-          return (
-            <DataGridDelete
-              fileId={fileId}
-              controlId={control.control_id}
-              rowNum={props.value.row_num}
-              setGridDetails={setRowData}
-            />
-          );
-        case 'date':
-          return (
-            <DataGridDate
-              columnId={props.value.col_elm_id}
-              rowNum={props.value.row_num}
-              fileId={fileId}
-              controlId={control.control_id}
-              value={props.value.value}
-              regex={props.value.control_regex}
-              regexMsg={props.value.control_regex_msg}
-              mandatory={props.value.control_mandatory}
-              editable={props.value.control_editable}
-            />
-          );
-        case 'decimal':
-          return (
-            <DataGridDecimal
-              columnId={props.value.col_elm_id}
-              rowNum={props.value.row_num}
-              fileId={fileId}
-              controlId={control.control_id}
-              value={props.value.value}
-              regex={props.value.control_regex}
-              regexMsg={props.value.control_regex_msg}
-              mandatory={props.value.control_mandatory}
-              editable={props.value.control_editable}
-            />
-          );
-        case 'percent':
-          return (
-            <DataGridPercent
-              columnId={props.value.col_elm_id}
-              rowNum={props.value.row_num}
-              fileId={fileId}
-              controlId={control.control_id}
-              value={props.value.value}
-              regex={props.value.control_regex}
-              regexMsg={props.value.control_regex_msg}
-              mandatory={props.value.control_mandatory}
-              editable={props.value.control_editable}
-            />
-          );
-        case 'financial':
-          return (
-            <DataGridFinancial
-              columnId={props.value.col_elm_id}
-              rowNum={props.value.row_num}
-              fileId={fileId}
-              controlId={control.control_id}
-              value={props.value.value}
-              regex={props.value.control_regex}
-              regexMsg={props.value.control_regex_msg}
-              mandatory={props.value.control_mandatory}
-              editable={props.value.control_editable}
-            />
-          );
-        default:
-          return null;
-      }
-    },
-    [control.control_id, fileId, rowData],
-  );
+  //     reader?.readAsDataURL(file);
+  //   };
 
-  const AttachementCellRenderer: React.FC<any> = ({
-    props,
-    field_data,
-    field_name,
-  }) => {
-    // const { value, api, data } = props;
-    const [file, setFile] = useState(null);
+  //   return (
+  //     <div>
+  //       <label
+  //         htmlFor="inputTag"
+  //         style={{
+  //           cursor: 'pointer',
+  //           display: 'flex',
+  //           flexDirection: 'row',
+  //           alignItems: 'center',
+  //           marginTop: 20,
+  //         }}
+  //       >
+  //         <CloudUpload style={{ marginRight: 10, color: 'teal' }} />
+  //         <input
+  //           type="file"
+  //           onChange={handleFileChange}
+  //           id="inputTag"
+  //           hidden
+  //           // defaultValue={props.value}
+  //         />
+  //         <span style={{ fontSize: 14 }}>{props.value}</span>
+  //       </label>
+  //       {/* {file && <img src={file} alt="attachment" width="35" height="35" />} */}
+  //     </div>
+  //   );
+  // };
 
-    // console.log(props, field_data, field_name);
+  // const CustomSelectRenderer: React.FC<any> = ({ props, field_data }) => {
+  //   const handleChange = (event: any) => {
+  //     props.setValue(event.target.value);
+  //     field_data.value = event.target.value;
+  //   };
 
-    /* HANDLE FILE CHANGE */
-    const handleFileChange = (event: any) => {
-      const file = event.target.files[0];
-      const reader: any = new FileReader();
+  //   return (
+  //     <div
+  //       style={{
+  //         marginTop: 17,
+  //       }}
+  //     >
+  //       <select
+  //         value={props.value}
+  //         onChange={handleChange}
+  //         style={{
+  //           borderWidth: 0,
+  //           backgroundColor: 'transparent',
+  //           fontSize: 14,
+  //           padding: 10,
+  //         }}
+  //       >
+  //         {field_data?.answer_choices.map((option: any) => (
+  //           <option
+  //             key={option.id}
+  //             value={option.value}
+  //             style={{
+  //               padding: 10,
+  //               margin: 10,
+  //               paddingBottom: 30,
+  //               marginBottom: 30,
+  //             }}
+  //           >
+  //             {option.label}
+  //           </option>
+  //         ))}
+  //       </select>
+  //     </div>
+  //   );
+  // };
 
-      reader.onloadend = () => {
-        setFile(reader?.result);
-        const fileName = file.name;
-        // console.log(fileName.split('.')[0]);
+  // const CustomDeleteRenderer: React.FC<any> = ({ props }) => {
+  //   // console.log(props);
+  //   /* SINGLE DELETE */
+  //   const handleDelete = () => {
+  //     const updatedData = [...rowData];
+  //     updatedData.splice(props.rowIndex, 1);
+  //     props.api.applyTransaction({ remove: [props.node.data] });
+  //   };
 
-        if (fileName.split('.')[1] !== 'png') {
-          seterrors('Invalid File Format');
-          setTimeout(() => {
-            seterrors('');
-          }, 1500);
+  //   return (
+  //     <DeleteIcon
+  //       onClick={handleDelete}
+  //       style={{ marginTop: 25, marginLeft: 25, color: 'crimson' }}
+  //     />
+  //   );
+  // };
 
-          return;
-        }
-        // data.Attachement.name = fileName;
-        field_data.value = fileName;
-        // props.api.applyTransaction({ update: [props.data] });
-        props.setValue(fileName);
-      };
+  // const CustomCheckBoxRenderer: React.FC<any> = ({ props }) => {
+  //   const checkedHandler = (event: any) => {
+  //     const checked = event.target.checked;
+  //     props.setValue(checked);
+  //   };
 
-      reader?.readAsDataURL(file);
-    };
+  //   return (
+  //     <div>
+  //       <input
+  //         type="checkbox"
+  //         onClick={checkedHandler}
+  //         defaultChecked={props.value}
+  //         style={{ width: 17, height: 17, marginTop: 30, marginLeft: 25 }}
+  //       />
+  //     </div>
+  //   );
+  // };
 
-    return (
-      <div>
-        <label
-          htmlFor="inputTag"
-          style={{
-            cursor: 'pointer',
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: 20,
-          }}
-        >
-          <CloudUpload style={{ marginRight: 10, color: 'teal' }} />
-          <input
-            type="file"
-            onChange={handleFileChange}
-            id="inputTag"
-            hidden
-            // defaultValue={props.value}
-          />
-          <span style={{ fontSize: 14 }}>{props.value}</span>
-        </label>
-        {/* {file && <img src={file} alt="attachment" width="35" height="35" />} */}
-      </div>
-    );
-  };
+  // const CustomDateRenderer: React.FC<any> = ({ props, field_data }) => {
+  //   const checkedHandler = (event: any) => {
+  //     props.setValue(event.target.value);
+  //   };
 
-  const CustomSelectRenderer: React.FC<any> = ({ props, field_data }) => {
-    const handleChange = (event: any) => {
-      props.setValue(event.target.value);
-      field_data.value = event.target.value;
-    };
-
-    return (
-      <div
-        style={{
-          marginTop: 17,
-        }}
-      >
-        <select
-          value={props.value}
-          onChange={handleChange}
-          style={{
-            borderWidth: 0,
-            backgroundColor: 'transparent',
-            fontSize: 14,
-            padding: 10,
-          }}
-        >
-          {field_data?.answer_choices.map((option: any) => (
-            <option
-              key={option.id}
-              value={option.value}
-              style={{
-                padding: 10,
-                margin: 10,
-                paddingBottom: 30,
-                marginBottom: 30,
-              }}
-            >
-              {option.label}
-            </option>
-          ))}
-        </select>
-      </div>
-    );
-  };
-
-  const CustomDeleteRenderer: React.FC<any> = ({ props }) => {
-    // console.log(props);
-    /* SINGLE DELETE */
-    const handleDelete = () => {
-      const updatedData = [...rowData];
-      updatedData.splice(props.rowIndex, 1);
-      props.api.applyTransaction({ remove: [props.node.data] });
-    };
-
-    return (
-      <DeleteIcon
-        onClick={handleDelete}
-        style={{ marginTop: 25, marginLeft: 25, color: 'crimson' }}
-      />
-    );
-  };
-
-  const CustomCheckBoxRenderer: React.FC<any> = ({ props }) => {
-    const checkedHandler = (event: any) => {
-      const checked = event.target.checked;
-      props.setValue(checked);
-    };
-
-    return (
-      <div>
-        <input
-          type="checkbox"
-          onClick={checkedHandler}
-          defaultChecked={props.value}
-          style={{ width: 17, height: 17, marginTop: 30, marginLeft: 25 }}
-        />
-      </div>
-    );
-  };
-
-  const CustomDateRenderer: React.FC<any> = ({ props, field_data }) => {
-    const checkedHandler = (event: any) => {
-      props.setValue(event.target.value);
-    };
-
-    return (
-      <div
-        style={{
-          marginTop: 17,
-        }}
-      >
-        <input
-          type="date"
-          onChange={checkedHandler}
-          id="date"
-          style={{ backgroundColor: 'transparent', fontSize: 14 }}
-          defaultValue={props.value}
-          min={
-            field_data?.control_options?.min_date
-              ? field_data?.control_options?.min_date
-              : '1970-05-12'
-          }
-          max={
-            field_data?.control_options?.max_date
-              ? field_data?.control_options?.max_date
-              : '2270-05-12'
-          }
-        />
-      </div>
-    );
-  };
+  //   return (
+  //     <div
+  //       style={{
+  //         marginTop: 17,
+  //       }}
+  //     >
+  //       <input
+  //         type="date"
+  //         onChange={checkedHandler}
+  //         id="date"
+  //         style={{ backgroundColor: 'transparent', fontSize: 14 }}
+  //         defaultValue={props.value}
+  //         min={
+  //           field_data?.control_options?.min_date
+  //             ? field_data?.control_options?.min_date
+  //             : '1970-05-12'
+  //         }
+  //         max={
+  //           field_data?.control_options?.max_date
+  //             ? field_data?.control_options?.max_date
+  //             : '2270-05-12'
+  //         }
+  //       />
+  //     </div>
+  //   );
+  // };
 
   const cellRenderer = (props: any) => {
     // console.log(props);
@@ -754,7 +574,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     switch (field_data?.component) {
       case 'file_upload':
         return (
-          <AttachementCellRenderer
+          <AttachmentCellRenderer
             props={props}
             field_name={data}
             field_data={field_data}
@@ -763,13 +583,24 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       case 'select_list':
         return <CustomSelectRenderer props={props} field_data={field_data} />;
       case 'delete':
-        return <CustomDeleteRenderer props={props} />;
+        return (
+          <CustomDeleteRenderer props={props} rowData={GridDetails?.rows} />
+        );
       case 'date':
         return <CustomDateRenderer props={props} field_data={field_data} />;
       case 'boolean':
         return <CustomCheckBoxRenderer props={props} />;
+      case 'financial':
+        return (
+          <div style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <EuroIcon
+              style={{ marginBottom: -4, fontSize: 19, marginLeft: 2 }}
+            />
+            {props.value}
+          </div>
+        );
       default:
-        return <p style={{ marginTop: 17, fontSize: 14 }}>{props.value}</p>;
+        return props.value;
     }
   };
 
@@ -778,11 +609,11 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       resizable: true,
       sortable: true,
       cellRenderer: cellRenderer,
-      autoHeight: true,
-      filter: true,
-      floatingFilter: true,
-      editable: true,
+      // autoHeight: true,
       cellClass: 'grid-cell-centered',
+      editable: true,
+      // cellEditorPopup: true,
+      cellEditorPopupPosition: 'center',
     }),
     [],
   );
@@ -818,6 +649,10 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     // params.api.hideOverlay();
   };
 
+  const handleClickAddRow = useCallback(() => {
+    addRow(fileId, control.control_id, jwt, setGridDetails, setErrorMessageAdd);
+  }, [control.control_id, jwt, fileId]);
+
   const onCellValueChanged = useCallback((event) => {
     const cellDefs = gridRef.current.api.getEditingCells();
     // console.log(cellDefs);
@@ -834,15 +669,54 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       },
       [],
     );
-    if (field_data?.regex && event?.newValue) {
-      const regexControl = new RegExp(field_data?.regex, 'i');
+    if (field_data?.control_regex && event?.newValue) {
+      const regexControl = new RegExp(field_data?.control_regex, 'i');
       if (
         !event?.newValue.match(regexControl) &&
         field_data?.control_regex_msg
       ) {
+        // console.log('error occured');
         seterrors(field_data?.control_regex_msg);
+        gridRef.current.api.undoCellEditing();
+        setTimeout(() => {
+          seterrors('');
+        }, 3000);
 
         return;
+      }
+    }
+
+    if (field_data?.component === 'financial') {
+      if (
+        (field_data.control_options?.min || field_data.control_options?.max) &&
+        event?.newValue.trim()
+      ) {
+        if (
+          minMax(
+            event?.newValue,
+            field_data?.control_options?.min,
+            field_data.control_options.max,
+          )
+        ) {
+          seterrors(null);
+        }
+        if (
+          !minMax(
+            event?.newValue,
+            field_data.control_options.min,
+            field_data.control_options.max,
+          )
+        ) {
+          seterrors(
+            'La valeur saisie ne respecte pas les contraintes définies',
+          );
+          gridRef.current.api.undoCellEditing();
+          setTimeout(() => {
+            seterrors('');
+          }, 3000);
+
+          return;
+        }
       }
     }
 
@@ -856,6 +730,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       seterrors,
       event?.newValue,
     );
+
     // console.log('editing starts', {
     //   [data]: {
     //     field_data,
@@ -865,13 +740,10 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     //   },
     // });
 
-    console.log(field_data, event, control);
+    // console.log(field_data, event, control);
     // console.log('Data after change is', event);
     // seterrors('Validation Failed');
     // gridRef.current.api.undoCellEditing();
-    setTimeout(() => {
-      seterrors('');
-    }, 2000);
   }, []);
 
   const getRowStyle = (params: any) => {
@@ -907,7 +779,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       >
         Export PDF
       </Button>
-      <BPITooltip title={trans('addLine')}>
+      {/* <BPITooltip title={trans('addLine')}>
         <Button
           onClick={handleClickAddRow}
           style={{
@@ -921,9 +793,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         >
           Add Row
         </Button>
-        {/* <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} /> */}
-      </BPITooltip>
-      <BPITooltip title={'Remove Line'}>
+       
+      </BPITooltip> */}
+      {/* <BPITooltip title={'Remove Line'}>
         <Button
           onClick={handleClickRemoveSelectedRow}
           style={{
@@ -937,18 +809,19 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         >
           Delete Selected Rows
         </Button>
-        {/* <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} /> */}
-      </BPITooltip>
-      <h1 style={{ color: 'red' }}>{errors}</h1>
+        <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} />
+      </BPITooltip> */}
+      <h1 style={{ color: 'red', padding: 10 }}>{errors}</h1>
+      {errorsMessageAdd && <FormError>{errorsMessageAdd}</FormError>}
       <AgGridReact
         className="ag-theme-alpine"
         domLayout={'autoHeight'}
         ref={gridRef}
-        rowHeight={10}
+        rowHeight={40}
         // @ts-ignore
-        columnDefs={control?.data_grid_detail?.columns}
+        columnDefs={GridDetails?.columns}
         defaultColDef={defaultColDef}
-        rowData={rowData}
+        rowData={GridDetails?.rows}
         onGridReady={onGridReady}
         overlayLoadingTemplate={
           '<span class="ag-overlay-loading-center">Loading..</span>'
@@ -962,7 +835,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         undoRedoCellEditing={true}
         enableCellChangeFlash={true}
       />
-      {errorsMessageAdd && <FormError>{errorsMessageAdd}</FormError>}
       {/* </DataGridControlStyled> */}
     </Grid>
   );
