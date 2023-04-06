@@ -43,10 +43,11 @@ import AttachmentCellRenderer from './AgDataGridFields/AttachementCellRenderer/A
 import CustomSelectRenderer from './AgDataGridFields/CustomSelectRenderer/CustomSelectRenderer';
 import CustomDeleteRenderer from './AgDataGridFields/CustomDeleteRenderer/CustomDeleteRenderer';
 import CustomDateRenderer from './AgDataGridFields/CustomDateRenderer/CustomDateRenderer';
-import CustomCheckBoxRenderer from './AgDataGridFields/CustomCheckBoxRenderer/CustomCheckBoxRenderer';
 import { EuroIcon } from 'Styles';
 import { minMax } from 'Packages/Helpers/src/minMax';
 import CustomCommentRenderer from './AgDataGridFields/CustomCommentRenderer/CustomCommentRenderer';
+import CustomCommentAndLongTextRenderer from './AgDataGridFields/CustomCommentAndLongTextRenderer/CustomCommentAndLongTextRenderer';
+import { ValueSetterParams } from 'ag-grid-community';
 
 const columns = [
   {
@@ -242,27 +243,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   const [errors, seterrors]: any = useState('');
   const { send, error } = useApi<void>();
   const { currentRoute } = useRouter();
-
-  const valueGetter = (params: any) => {
-    console.log(params);
-
-    return params.value;
-  };
-  // const columnDefs = useMemo(
-  //   () =>
-  //     control.data_grid_detail?.columns.map((g) => {
-  //       return {
-  //         headerName: g.name,
-  //         field: g.key,
-  //         colId: g.key,
-  //         filter: true,
-  //         sortable: true,
-  //         floatingFilter: true,
-  //         resizable: true,
-  //       };
-  //     }),
-  //   [control.data_grid_detail?.columns],
-  // );
   const [GridDetails, setGridDetails]: any = useState(null);
   // useEffect(() => {
   //   console.log(control.data_grid_detail);
@@ -275,110 +255,78 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   //   setRowData(rows);
   // }, [rowData]);
 
-  // const handleClickAddRow = useCallback(() => {
-  //   addRow(
-  //     fileId,
-  //     control.control_id,
-  //     jwt,
-  //     setRowData,
-  //     setErrorMessageAdd,
-  //     setRowData,
-  //   );
-  // }, [control.control_id, jwt, fileId]);
-
-  // const handleClickAddRow = () => {
-  //   gridRef.current.api.applyTransaction({
-  //     add: [
-  //       {
-  //         Valeur_entière: {
-  //           col_elm_id: 870,
-  //           component: 'integer',
-  //           control_editable: true,
-  //           control_mandatory: false,
-  //           control_regex: '^-?[0-9]\\d*$',
-  //           control_regex_msg: "La valeur saisie n'est pas une valeur entière",
-  //           row_num: 5,
-  //           value: 54645,
-  //         },
-  //         Attachement: {
-  //           col_elm_id: 871,
-  //           component: 'file_upload',
-  //           control_editable: true,
-  //           control_mandatory: false,
-  //           control_regex: null,
-  //           control_regex_msg: null,
-  //           row_num: 5,
-  //           upload_detail: null,
-  //           value: 'first.png',
-  //         },
-  //         Texte: {
-  //           col_elm_id: 872,
-  //           component: 'boolean',
-  //           control_editable: true,
-  //           control_mandatory: false,
-  //           control_regex: null,
-  //           control_regex_msg: null,
-  //           row_num: 5,
-  //           value: false,
-  //         },
-  //         Liste_de_sélection: {
-  //           col_elm_id: 874,
-  //           component: 'select_list',
-  //           control_editable: true,
-  //           control_mandatory: false,
-  //           control_regex: null,
-  //           control_regex_msg: null,
-  //           row_num: 5,
-  //           value: '2',
-  //           answer_choices: [
-  //             {
-  //               choice_background_color: 'FFFFFF',
-  //               choice_font_color: '000000',
-  //               choice_font_style: 'normal',
-  //               id: 1,
-  //               label: 'OK',
-  //               value: '1',
-  //             },
-  //             {
-  //               choice_background_color: 'FFFFFF',
-  //               choice_font_color: '000000',
-  //               choice_font_style: 'normal',
-  //               id: 2,
-  //               label: 'KO',
-  //               value: '2',
-  //             },
-  //           ],
-  //         },
-  //         Case_à_cocher: {
-  //           component: 'delete',
-  //           row_num: 5,
-  //         },
-  //         date: {
-  //           col_elm_id: 870,
-  //           component: 'date',
-  //           control_editable: true,
-  //           control_mandatory: false,
-  //           control_regex: null,
-  //           control_regex_msg: null,
-  //           row_num: 5,
-  //           value: '2020-06-06',
-  //           control_options: {
-  //             max_date: '2023-02-15',
-  //             min_date: '2023-01-01',
-  //           },
-  //         },
-  //       },
-  //     ],
-  //   });
-  // };
-
   const handleClickRemoveSelectedRow = () => {
     const selectedRows = gridRef.current.api.getSelectedRows();
     gridRef.current.api.applyTransaction({ remove: selectedRows });
   };
+
+  const columnDefs = useMemo(
+    () =>
+      control?.data_grid_detail?.columns?.map((g: any) => {
+        switch (g?.field_type) {
+          case 'select_list':
+            return {
+              ...g,
+              cellEditor: 'agSelectCellEditor',
+              cellEditorParams: {
+                values: g?.choice_options?.map((option: any) => {
+                  return option?.choice_lib;
+                }),
+              },
+              // valueSetter: (params: any) => {
+              //   const choice_label = params?.colDef?.choice_options?.filter(
+              //     (label: any) => {
+              //       return params?.newValue == label?.choice_lib?.toString();
+              //     },
+              //   );
+
+              //   console.log('seeting value', choice_label[0]?.choice_id);
+
+              //   return choice_label[0]?.choice_id;
+              // },
+              cellRenderer: (props: any) => {
+                console.log('new_selection', props.value);
+
+                const choice_label = props?.colDef?.choice_options?.filter(
+                  (label: any) => {
+                    return props.value === label?.choice_id?.toString();
+                  },
+                );
+
+                console.log(choice_label);
+
+                return <div>{choice_label[0]?.choice_lib}</div>;
+              },
+            };
+          case 'comment':
+            return {
+              ...g,
+              cellEditorPopup: true,
+              cellEditor: 'agLargeTextCellEditor',
+              cellEditorParams: {
+                rows: 10,
+                cols: 50,
+              },
+            };
+          case 'long_text':
+            return {
+              ...g,
+              cellEditorPopup: true,
+              cellEditor: 'agLargeTextCellEditor',
+              cellEditorParams: {
+                rows: 10,
+                cols: 50,
+              },
+            };
+          default:
+            return g;
+        }
+      }),
+    [control.data_grid_detail?.columns],
+  );
   // useEffect(() => {
-  //   console.log(columnDefs, rowData);
-  // }, [columnDefs, rowData]);
+  //   console.log('columnsss', columnDefs);
+  // }, [columnDefs]);
   // use for custom sorting
   const StringComparator = (valueA: any, valueB: any) => {
     console.log(valueA);
@@ -602,6 +550,21 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             % {props.value}
           </div>
         );
+      case 'comment':
+        return props.value;
+      case 'long_text':
+        return props.value;
+      // return (
+      //   <CustomCommentAndLongTextRenderer
+      //     old_value={props?.value}
+      //     field_data={field_data}
+      //     seterrors={seterrors}
+      //     jwt={jwt}
+      //     fileId={fileId}
+      //     control={control}
+      //     gridRef={gridRef}
+      //   />
+      // );
       case 'financial':
         return (
           <div style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -618,15 +581,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             )}
             {props.value}
           </div>
-        );
-      /* Created new component for comment text */
-      case 'comment':
-        return (
-          <CustomCommentRenderer
-            props={props}
-            field_data={field_data}
-            control={control}
-          />
         );
       default:
         return props?.value ? props?.value : 'No value';
@@ -718,6 +672,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       }
     }
 
+    console.log(event);
     if (
       field_data?.component === 'financial' ||
       'decimal' ||
@@ -758,16 +713,37 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       }
     }
 
-    saveValueDataGrid(
-      fileId,
-      control.control_id,
-      field_data?.col_elm_id,
-      field_data?.row_num,
-      jwt,
-      event?.newValue?.toString(),
-      seterrors,
-      event?.newValue,
-    );
+    if (field_data?.component === 'select_list') {
+      console.log('value', event?.newValue);
+
+      const select_id = event?.colDef?.choice_options.filter((option: any) => {
+        return event?.newValue?.toString() === option?.choice_lib;
+      });
+
+      console.log(select_id);
+
+      saveValueDataGrid(
+        fileId,
+        control.control_id,
+        field_data?.col_elm_id,
+        field_data?.row_num,
+        jwt,
+        select_id[0]?.choice_id.toString(),
+        seterrors,
+        select_id[0]?.choice_id.toString(),
+      );
+    } else {
+      saveValueDataGrid(
+        fileId,
+        control.control_id,
+        field_data?.col_elm_id,
+        field_data?.row_num,
+        jwt,
+        event?.newValue?.toString(),
+        seterrors,
+        event?.newValue,
+      );
+    }
 
     // console.log('editing starts', {
     //   [data]: {
@@ -857,7 +833,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         ref={gridRef}
         rowHeight={40}
         // @ts-ignore
-        columnDefs={GridDetails?.columns}
+        columnDefs={columnDefs}
         defaultColDef={defaultColDef}
         rowData={GridDetails?.rows}
         onGridReady={onGridReady}
