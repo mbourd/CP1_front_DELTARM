@@ -70,9 +70,8 @@ const CustomSelectRenderer: React.FC<any> = ({
               key={option.choice_id}
               value={option.choice_lib}
               className="custom-option"
-              aria-setsize={13}
               style={{
-                fontSize: 14,
+                fontSize: 11,
                 color: option?.choice_font_color
                   ? option?.choice_font_color
                   : 'black',
