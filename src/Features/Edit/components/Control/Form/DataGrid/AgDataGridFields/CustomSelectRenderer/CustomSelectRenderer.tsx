@@ -15,15 +15,13 @@ const CustomSelectRenderer: React.FC<any> = ({
   jwt,
   seterrors,
 }) => {
-  const select_id_to_show = props?.colDef?.choice_options.filter(
-    (option: any) => {
-      return props.value?.toString() === option?.choice_id?.toString();
-    },
-  );
+  const select_id_to_show = field_data?.choice_options.filter((option: any) => {
+    return props.value?.toString() === option?.choice_id?.toString();
+  });
 
   // console.log('defaultValue', select_id_to_show[0]?.choice_lib, props.value);
   const handleChange = (event: any) => {
-    const select_id = props?.colDef?.choice_options?.filter((option: any) => {
+    const select_id = field_data?.choice_options?.filter((option: any) => {
       // console.log('showing before selecting', event?.target?.value, option);
 
       return event?.target?.value === option?.choice_lib;
