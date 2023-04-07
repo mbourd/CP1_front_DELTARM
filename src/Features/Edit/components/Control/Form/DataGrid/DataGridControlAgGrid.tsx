@@ -402,6 +402,15 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             {props.value}
           </div>
         );
+      /* Created new component for comment text */
+      case 'comment':
+        return (
+          <CustomCommentRenderer
+            props={props}
+            field_data={field_data}
+            control={control}
+          />
+        );
       default:
         return props?.value ? props?.value : 'No value';
     }
