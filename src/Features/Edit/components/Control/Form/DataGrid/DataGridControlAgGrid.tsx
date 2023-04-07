@@ -277,22 +277,12 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             return {
               ...g,
               cellEditor: 'agSelectCellEditor',
+              suppressFirstRenderSelect: true,
               cellEditorParams: {
                 values: g?.choice_options?.map((option: any) => {
                   return option?.choice_lib;
                 }),
               },
-              // valueSetter: (params: any) => {
-              //   const choice_label = params?.colDef?.choice_options?.filter(
-              //     (label: any) => {
-              //       return params?.newValue == label?.choice_lib?.toString();
-              //     },
-              //   );
-
-              //   console.log('seeting value', choice_label[0]?.choice_id);
-
-              //   return choice_label[0]?.choice_id;
-              // },
               cellRenderer: (props: any) => {
                 const choice_label = props?.colDef?.choice_options?.filter(
                   (label: any) => {
