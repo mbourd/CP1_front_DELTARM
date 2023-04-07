@@ -19,6 +19,7 @@ export const CustomSelectStyled = styled.select.attrs(
   height: auto;
   border: none !important;
   outline: none !important;
+  padding: 5px !important;
 `;
 
 export const OptionStyled = styled.option``;

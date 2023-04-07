@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled, { css } from 'styled-components/macro';
 
 export const DataGridControlStyled = styled.div`
   ._DataGrid {
@@ -63,5 +63,30 @@ export const DataGridControlStyled = styled.div`
     min-width: 0px;
     overflow: visible !important;
     flex: 1 1 auto;
+  }
+`;
+
+export const AgDataGridStyle = styled.div`
+  background-color: red;
+
+  .my-header-class {
+    background-color: red;
+  }
+
+  .ag-header-cell {
+    display: inline-flex;
+    align-items: center;
+    position: absolute;
+    height: 100%;
+    overflow: hidden;
+    background-color: red !important;
+  }
+
+  .ag-theme-alpine {
+    --ag-header-height: 30px;
+    --ag-header-foreground-color: white;
+    --ag-header-background-color: black;
+    --ag-header-cell-hover-background-color: rgb(80, 40, 140);
+    --ag-header-cell-moving-background-color: rgb(80, 40, 140);
   }
 `;
