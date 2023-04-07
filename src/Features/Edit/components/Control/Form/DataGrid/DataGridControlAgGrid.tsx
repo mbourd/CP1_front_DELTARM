@@ -258,7 +258,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   // }, []);
   useEffect(() => {
     setGridDetails(control?.data_grid_detail);
-    console.log('control', control?.data_grid_detail);
+    // console.log('control', control?.data_grid_detail);
   }, [control?.data_grid_detail]);
   // useEffect(() => {
   //   setRowData(rows);
@@ -276,22 +276,38 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           case 'select_list':
             return {
               ...g,
-              cellEditor: 'agSelectCellEditor',
-              suppressFirstRenderSelect: true,
-              cellEditorParams: {
-                values: g?.choice_options?.map((option: any) => {
-                  return option?.choice_lib;
-                }),
-              },
-              cellRenderer: (props: any) => {
-                const choice_label = props?.colDef?.choice_options?.filter(
-                  (label: any) => {
-                    return props.value === label?.choice_id?.toString();
+              singleClickEdit: false,
+              editable: false,
+              cellStyle: (params: any) => {
+                // console.log(Object.values(params?.data));
+                const data: any = Object.values(params?.data)[0];
+                const select_id = data?.choice_options?.filter(
+                  (option: any) => {
+                    return data?.value === option?.choice_id?.toString();
                   },
                 );
-
-                return <div>{choice_label[0]?.choice_lib ?? props.value}</div>;
+                console.log(select_id);
+                //mark police cells as red
+                return {
+                  backgroundColor: select_id[0]?.option_bg_color,
+                };
               },
+              // cellEditor: 'agSelectCellEditor',
+              // suppressFirstRenderSelect: true,
+              // cellEditorParams: {
+              //   values: g?.choice_options?.map((option: any) => {
+              //     return option?.choice_lib;
+              //   }),
+              // },
+              // cellRenderer: (props: any) => {
+              //   const choice_label = props?.colDef?.choice_options?.filter(
+              //     (label: any) => {
+              //       return props.value === label?.choice_id?.toString();
+              //     },
+              //   );
+
+              //   return <CustomSelectRenderer props={props} />;
+              // },
             };
           case 'comment':
             return {
@@ -344,8 +360,17 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       //       field_data={field_data}
       //     />
       //   );
-      // case 'select_list':
-      //   return <CustomSelectRenderer props={props} field_data={field_data} />;
+      case 'select_list':
+        return (
+          <CustomSelectRenderer
+            props={props}
+            field_data={field_data}
+            control={control}
+            fileId={fileId}
+            jwt={jwt}
+            seterrors={seterrors}
+          />
+        );
       // case 'delete':
       //   return (
       //     <CustomDeleteRenderer props={props} rowData={GridDetails?.rows} />
@@ -479,8 +504,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         return;
       }
     }
-
-    console.log(event);
     if (
       field_data?.component === 'financial' ||
       'decimal' ||
@@ -520,25 +543,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         }
       }
     }
-
-    if (field_data?.component === 'select_list') {
-      console.log('value', event?.newValue);
-
-      const select_id = event?.colDef?.choice_options.filter((option: any) => {
-        return event?.newValue?.toString() === option?.choice_lib;
-      });
-
-      saveValueDataGrid(
-        fileId,
-        control.control_id,
-        field_data?.col_elm_id,
-        field_data?.row_num,
-        jwt,
-        select_id[0]?.choice_id.toString(),
-        seterrors,
-        select_id[0]?.choice_id.toString(),
-      );
-    } else {
+    if (field_data?.component !== 'select_list') {
       saveValueDataGrid(
         fileId,
         control.control_id,
