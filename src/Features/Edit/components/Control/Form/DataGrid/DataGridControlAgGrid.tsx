@@ -265,10 +265,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             return {
               ...g,
               singleClickEdit: false,
-              headerClass: 'my-header-class',
-              headerComponent: (props: any) => (
-                <AgDataGridStyle>{props?.displayName}</AgDataGridStyle>
-              ),
               editable: false,
               cellStyle: (params: any) => {
                 // console.log(Object.values(params?.data));
@@ -278,7 +274,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                     return data?.value === option?.choice_id?.toString();
                   },
                 );
-                console.log(select_id);
+                // console.log(select_id);
                 //mark police cells as red
                 return {
                   backgroundColor: select_id[0]?.option_bg_color,
