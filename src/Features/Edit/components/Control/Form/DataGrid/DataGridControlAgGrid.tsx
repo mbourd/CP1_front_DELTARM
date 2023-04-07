@@ -24,17 +24,9 @@ import {
 } from '../../../../../../Shared/components';
 import { useSecurity } from '../../../../../../Packages/Security';
 import { addRow } from './apiRoutes/addRow';
-import { DataGridDelete } from './DataGridFields/DataGridDelete/DataGridDelete';
-import { DataGridDate } from './DataGridFields/DataGridDate/DataGridDate';
-import { DataGridDecimal } from './DataGridFields/DataGridDecimal/DataGridDecimal';
-import { DataGridPercent } from './DataGridFields/DataGridPercent/DataGridPercent';
-import { DataGridFinancial } from './DataGridFields/DataGridFinancial/DataGridFinancial';
-import { DataGridLongText } from './DataGridFields/DataGridLongText/DataGridLongText';
 import { AgGridReact } from 'ag-grid-react';
 import { useReactToPrint } from 'react-to-print';
 import { Button } from 'Shared/components';
-import { GenericDataGridResearcher } from './GenericDataGridResearcher';
-import { AgDataGridUpload } from './DataGridFields/AgDataGridUpload/AgDataGridUpload';
 import { useTrans } from '../../../../../../Services';
 import './datagrid.css';
 import { useApi, useRouter } from 'Services';
@@ -48,6 +40,7 @@ import { minMax } from 'Packages/Helpers/src/minMax';
 import CustomCommentRenderer from './AgDataGridFields/CustomCommentRenderer/CustomCommentRenderer';
 import CustomCommentAndLongTextRenderer from './AgDataGridFields/CustomCommentAndLongTextRenderer/CustomCommentAndLongTextRenderer';
 import { ValueSetterParams } from 'ag-grid-community';
+import { AgDataGridStyle } from './DataGridControl.style';
 
 const columns = [
   {
@@ -260,6 +253,10 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     gridRef.current.api.applyTransaction({ remove: selectedRows });
   };
 
+  const getHeaderRenderer = (color: any) => {
+    return <AgDataGridStyle />;
+  };
+
   const columnDefs = useMemo(
     () =>
       control?.data_grid_detail?.columns?.map((g: any) => {
@@ -268,6 +265,10 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             return {
               ...g,
               singleClickEdit: false,
+              headerClass: 'my-header-class',
+              headerComponent: (props: any) => (
+                <AgDataGridStyle>{props?.displayName}</AgDataGridStyle>
+              ),
               editable: false,
               cellStyle: (params: any) => {
                 // console.log(Object.values(params?.data));
