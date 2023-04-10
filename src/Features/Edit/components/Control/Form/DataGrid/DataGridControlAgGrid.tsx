@@ -110,7 +110,17 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               },
             };
           default:
-            return g;
+            return {
+              ...g,
+              cellStyle: (params: any) => {
+                console.log(control);
+                return {
+                  backgroundColor: 'red',
+                  fontSize: 20,
+                  fontWeight: 'bold',
+                };
+              },
+            };
         }
       }),
     [control.data_grid_detail?.columns],
