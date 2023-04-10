@@ -1,16 +1,16 @@
 import styled from 'styled-components/macro';
 
 export const CustomSelectRendererStyled = styled.div`
-  select::-ms-expand {
+  /* select::-ms-expand {
     display: none;
-  }
+  } */
 `;
 
 export const CustomSelectStyled = styled.select.attrs(
   (props: { fontWeight: any }) => props,
 )`
-  -webkit-appearance: none;
-  -moz-appearance: none;
+  /* -webkit-appearance: none;
+  -moz-appearance: none; */
   text-indent: 1px;
   text-overflow: '';
   width: 100%;
