@@ -52,7 +52,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   // }, []);
   useEffect(() => {
     setGridDetails(control?.data_grid_detail);
-    // console.log('control', control?.data_grid_detail);
+    console.log('control', control?.data_grid_detail?.datagrid_options);
   }, [control?.data_grid_detail]);
   // useEffect(() => {
   //   setRowData(rows);
@@ -84,6 +84,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                     return data?.value === option?.choice_id?.toString();
                   },
                 );
+
                 return {
                   backgroundColor: select_id[0]?.option_bg_color,
                 };
@@ -399,7 +400,21 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       </BPITooltip> */}
       <h1 style={{ color: 'red', padding: 10 }}>{errors}</h1>
       {errorsMessageAdd && <FormError>{errorsMessageAdd}</FormError>}
-      <div className="ag-theme-alpine">
+
+      <AgDataGridStyle
+        background_color={
+          control?.data_grid_detail?.datagrid_options?.datagrid_header_color
+        }
+        border_color={
+          control?.data_grid_detail?.datagrid_options?.datagrid_border_color
+        }
+        is_border_color={
+          control?.data_grid_detail?.datagrid_options?.datagrid_border
+        }
+        text_color={
+          control?.data_grid_detail?.datagrid_options?.datagrid_text_color
+        }
+      >
         <AgGridReact
           className="ag-theme-alpine"
           domLayout={'autoHeight'}
@@ -422,7 +437,8 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           undoRedoCellEditing={true}
           enableCellChangeFlash={true}
         />
-      </div>
+      </AgDataGridStyle>
+
       {/* </DataGridControlStyled> */}
     </Grid>
   );
