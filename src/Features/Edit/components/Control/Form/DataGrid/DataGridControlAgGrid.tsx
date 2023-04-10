@@ -83,6 +83,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                     return data?.value === option?.choice_id?.toString();
                   },
                 );
+
                 return {
                   backgroundColor: select_id[0]?.option_bg_color,
                 };
