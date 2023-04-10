@@ -183,6 +183,7 @@ export interface DataGridDetail {
     resizable: boolean;
   }[];
   rows: DataGridDetailsRows[];
+  datagrid_options: any;
 }
 
 export interface IDataGridAgGridCol {
