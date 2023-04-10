@@ -71,7 +71,9 @@ export const AgDataGridStyle = styled.div.attrs(
     background_color: string;
     border_color: string;
     is_border_color: boolean;
-    text_color: string;
+    font_color: string;
+    font_size: string;
+    font_weight: string;
   }) => props,
 )`
   /* background-color: red; */
@@ -117,7 +119,9 @@ export const AgDataGridStyle = styled.div.attrs(
     position: absolute;
     height: 100%;
     overflow: hidden;
-    color: ${({ text_color }) => (text_color ? text_color : '#000000')};
+    color: ${({ font_color }) => (font_color ? font_color : '#000000')};
+    font-weight: ${({ font_weight }) => (font_weight ? font_weight : 'normal')};
+    font-size: ${({ font_size }) => (font_size ? `${font_size}px` : '13px')};
     /* background-color: red !important; */
     background-color: ${({ background_color }) =>
       background_color ? background_color : '#ffffff'};

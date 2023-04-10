@@ -411,8 +411,14 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         is_border_color={
           control?.data_grid_detail?.datagrid_options?.datagrid_border
         }
-        text_color={
-          control?.data_grid_detail?.datagrid_options?.datagrid_text_color
+        font_color={
+          control?.data_grid_detail?.datagrid_options?.datagrid_font_color
+        }
+        font_size={
+          control?.data_grid_detail?.datagrid_options?.datagrid_font_size
+        }
+        font_weight={
+          control?.data_grid_detail?.datagrid_options?.datagrid_font_weight
         }
       >
         <AgGridReact
