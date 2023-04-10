@@ -2,6 +2,9 @@ import { ISelectData } from 'Shared/components';
 import { IColor } from '../../../Packages/Design';
 import { RawDraftContentState } from 'draft-js';
 import { IApiFileComment, IFileComment } from '../../Comments';
+import { AgGridRow } from '../../DashboardDynamic/components/types';
+import { CellStyle, CellStyleFunc, IFilterParams } from 'ag-grid-community';
+import { ForwardRefExoticComponent, RefAttributes } from 'react';
 
 export type ControlTypeType =
   | 'text'
@@ -27,6 +30,8 @@ export type ControlTypeType =
   | 'boolean'
   | 'line_break'
   | 'data_grid'
+  | 'ag_datagrid'
+  | 'jodit_rich_text'
   | 'slider';
 
 export type ControlFontSize = 'standard' | 'bold';
@@ -180,6 +185,34 @@ export interface DataGridDetail {
   rows: DataGridDetailsRows[];
 }
 
+export interface IDataGridAgGridCol {
+  border_right: boolean;
+  field: string;
+  headerName: string;
+  width: number;
+  cellStyle: CellStyle | CellStyleFunc | undefined;
+  comparator:
+    | 'StringComparator'
+    | ((
+        valueA: any,
+        valueB: any,
+        nodeA: any,
+        nodeB: any,
+        isInverted: boolean,
+      ) => 0 | 1 | -1);
+  filter:
+    | 'StringFilter'
+    | ForwardRefExoticComponent<IFilterParams & RefAttributes<unknown>>;
+}
+
+export interface DataGridDetailAgGrid {
+  cols: {
+    values: IDataGridAgGridCol[];
+    header_visible: boolean;
+  };
+  lines: AgGridRow[];
+}
+
 export interface DataGridDetailsRows {
   [key: string]: {
     component: DataGridComponent;
@@ -237,7 +270,9 @@ export interface IApiControl {
   upload_detail: IUploadDetail[] | null;
   calculatedValue?: string;
   rich_text_detail: RawDraftContentState | null;
+  jodit_rich_text_detail?: string | null;
   control_rejectable: IAPIControlRejectable | null;
   useRejection?: ControlRejectable;
+  data_grid_detail_ag_grid?: DataGridDetailAgGrid | null;
   data_grid_detail?: DataGridDetail | null;
 }

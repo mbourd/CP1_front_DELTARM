@@ -39,13 +39,6 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
 
-  //   useEffect(() => {
-  //     console.log(data);
-  //       console.log(data?.response?.linkable_files);
-  //     console.log('selected_files', selectedFiles);
-  //       console.log(context);
-  //   }, [selectedFiles, data]);
-
   useEffect(() => {
     if (data?.response?.linkable_files.length > 0) {
       data?.response?.linkable_files?.forEach((e: any) => {

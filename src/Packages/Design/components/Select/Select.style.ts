@@ -15,8 +15,13 @@ export const SelectStyled = styled.section<IProps>`
     border-radius: ${({ bdr }) => '0 0 ' + bdr + ' ' + bdr};
     border-top: none;
     padding: ${({ bdr }) => bdr};
-    position: absolute;
+    position: relative;
     width: 100%;
     z-index: 10;
+  }
+
+  .eKJxUU ._SelectLabelButton {
+    border: none;
+    border-bottom: none;
   }
 `;

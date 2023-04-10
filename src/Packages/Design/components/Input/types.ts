@@ -29,7 +29,7 @@ export interface IInputBase {
   /**
    * Left icon.
    */
-  icon?: false | React.ReactNode;
+  icon?: false | React.ReactNode | any;
 
   /**
    * Input name.

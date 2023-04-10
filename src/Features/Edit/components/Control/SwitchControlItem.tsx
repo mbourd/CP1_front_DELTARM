@@ -25,6 +25,8 @@ import { SliderControl } from './Form/Slider/SliderControl';
 import { Box } from '@mui/material';
 import { useApi, useRouter, getEnv, security, IUser } from 'Services';
 import axios from 'axios';
+import { DataGridControlAgGrid } from './Form/DataGrid/DataGridControlAgGrid';
+import { JoditRichTextControl } from './Form/JoditRichTextControl/JoditRichTextControl';
 
 interface IProps {
   control: IApiControl;
@@ -45,6 +47,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
 
   const jwt = user.getJwt();
   const [get_value_response, setget_value_response] = useState(null);
+
   useEffect(() => {
     const data = formState[0].controls
       .map((c: any) => {
@@ -141,7 +144,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           }
 
           setupdated_form_state((formState: any) => formState.concat(control));
-          //   console.log(control);
+          // console.log('control', control);
         })
         .catch((error: any) => {
           //   console.log(error);
@@ -354,6 +357,16 @@ export const SwitchControlItem: React.FC<IProps> = ({
       );
     case 'data_grid':
       return <DataGridControl control={control} fileId={fileId} />;
+    case 'ag_datagrid':
+      return <DataGridControlAgGrid control={control} fileId={fileId} />;
+    case 'jodit_rich_text':
+      return (
+        <JoditRichTextControl
+          control={control}
+          fileId={fileId}
+          context={context}
+        />
+      );
     case 'rich_text':
       return (
         <RichTextControl control={control} fileId={fileId} context={context} />
