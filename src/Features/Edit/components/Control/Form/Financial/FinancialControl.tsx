@@ -147,9 +147,9 @@ export const FinancialControl: React.FC<IProps> = ({
     }
   }, [error]);
 
-  useEffect(() => {
-    console.log(control);
-  }, []);
+  // useEffect(() => {
+  //   console.log(control);
+  // }, []);
 
   useEffect(() => {
     if (!isRejected) {

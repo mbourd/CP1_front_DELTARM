@@ -66,11 +66,49 @@ export const DataGridControlStyled = styled.div`
   }
 `;
 
-export const AgDataGridStyle = styled.div`
-  background-color: red;
+export const AgDataGridStyle = styled.div.attrs(
+  (props: {
+    background_color: string;
+    border_color: string;
+    is_border_color: boolean;
+    text_color: string;
+  }) => props,
+)`
+  /* background-color: red; */
+
+  /* .ag-header-row {
+    position: absolute;
+    overflow: hidden;
+    background-color: lightgray !important;
+  }
 
   .my-header-class {
     background-color: red;
+  } */
+
+  /* .ag-theme-alpine {
+    --ag-header-column-separator-display: block;
+    --ag-header-column-separator-height: 100%;
+    --ag-header-column-separator-width: 4px;
+    --ag-header-column-separator-color: purple;
+
+    --ag-header-column-resize-handle-display: block;
+    --ag-header-column-resize-handle-height: 100%;
+    --ag-header-column-resize-handle-width: 5px;
+    --ag-header-column-resize-handle-color: ${({ border_color }) =>
+    border_color ? border_color : 'gray'};
+  } */
+
+  .ag-theme-alpine .ag-header-cell-resize::after {
+    position: absolute;
+    z-index: 1;
+    display: block;
+    left: calc(50% - 1px);
+    width: 5px;
+    height: 100% !important;
+    top: 0 !important;
+    background-color: ${({ border_color, is_border_color }) =>
+      is_border_color ? border_color : 'gray'};
   }
 
   .ag-header-cell {
@@ -79,14 +117,11 @@ export const AgDataGridStyle = styled.div`
     position: absolute;
     height: 100%;
     overflow: hidden;
-    background-color: red !important;
-  }
-
-  .ag-theme-alpine {
-    --ag-header-height: 30px;
-    --ag-header-foreground-color: white;
-    --ag-header-background-color: black;
-    --ag-header-cell-hover-background-color: rgb(80, 40, 140);
-    --ag-header-cell-moving-background-color: rgb(80, 40, 140);
+    color: ${({ text_color }) => (text_color ? text_color : '#000000')};
+    /* background-color: red !important; */
+    background-color: ${({ background_color }) =>
+      background_color ? background_color : '#ffffff'};
+    /* border-right-color: ${({ border_color }) =>
+      border_color ? border_color : '#123456'}; */
   }
 `;
