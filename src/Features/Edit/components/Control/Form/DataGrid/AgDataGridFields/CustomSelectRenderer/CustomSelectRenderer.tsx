@@ -81,7 +81,7 @@ const CustomSelectRenderer: React.FC<any> = ({
                   : 'normal',
               }}
             >
-              {option.choice_lib}
+              &nbsp; {option.choice_lib}
             </OptionStyled>
           ))}
         </CustomSelectStyled>
