@@ -408,9 +408,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       default:
         return props?.value ? props?.value : 'No value';
     }
-
-    // return props.value;
-  }, []);
+  };
 
   const defaultColDef = useMemo(
     () => ({

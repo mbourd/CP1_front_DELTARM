@@ -98,15 +98,6 @@ export const FinancialControl: React.FC<IProps> = ({
         return;
       }
 
-      if (!checkIfSameValues(value, currentValue)) {
-        setErrorMessage(null);
-        if (control.mandatory && !value.trim()) {
-          setErrorMessage(trans('mandatoryValue'));
-        }
-
-        return;
-      }
-
       setErrorMessage(null);
 
       if (control.mandatory && !value.trim()) {
