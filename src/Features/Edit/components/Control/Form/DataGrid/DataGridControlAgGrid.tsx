@@ -76,31 +76,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               singleClickEdit: false,
               editable: false,
-              cellStyle: (params: any) => {
-                // console.log(Object.values(params?.data));
-                const data: any = Object.values(params?.data)[0];
-                const select_id = data?.choice_options?.filter(
-                  (option: any) => {
-                    return data?.value === option?.choice_id?.toString();
-                  },
-                );
-
-                return {
-                  // backgroundColor: select_id[0]?.option_bg_color,
-                  fontColor:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_font_color,
-                  fontSize:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_font_size,
-                  fontWeight:
-                    control.data_grid_detail?.datagrid_options
-                      .datagrid_font_weight,
-                  backgroundColor:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_header_color,
-                };
-              },
             };
           case 'comment':
             return {
@@ -110,22 +85,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               cellEditorParams: {
                 rows: 10,
                 cols: 50,
-              },
-              cellStyle: () => {
-                return {
-                  fontColor:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_font_color,
-                  fontSize:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_font_size,
-                  fontWeight:
-                    control.data_grid_detail?.datagrid_options
-                      .datagrid_font_weight,
-                  backgroundColor:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_header_color,
-                };
               },
             };
           case 'long_text':
@@ -137,222 +96,46 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 rows: 10,
                 cols: 50,
               },
-              cellStyle: () => {
-                return {
-                  fontColor:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_font_color,
-                  fontSize:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_font_size,
-                  fontWeight:
-                    control.data_grid_detail?.datagrid_options
-                      .datagrid_font_weight,
-                  backgroundColor:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_header_color,
-                };
-              },
             };
           case 'percent':
             return {
               ...g,
-              cellStyle: () => {
-                return {
-                  fontColor:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_font_color,
-                  fontSize:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_font_size,
-                  fontWeight:
-                    control.data_grid_detail?.datagrid_options
-                      .datagrid_font_weight,
-                  backgroundColor:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_header_color,
-                };
-              },
             };
           case 'radio':
             return {
               ...g,
-              cellStyle: () => {
-                return {
-                  fontColor:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_font_color,
-                  fontSize:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_font_size,
-                  fontWeight:
-                    control.data_grid_detail?.datagrid_options
-                      .datagrid_font_weight,
-                  backgroundColor:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_header_color,
-                };
-              },
             };
           case 'multiple_list':
             return {
               ...g,
-              cellStyle: () => {
-                return {
-                  fontColor:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_font_color,
-                  fontSize:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_font_size,
-                  fontWeight:
-                    control.data_grid_detail?.datagrid_options
-                      .datagrid_font_weight,
-                  backgroundColor:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_header_color,
-                };
-              },
             };
           case 'integer':
             return {
               ...g,
-              cellStyle: () => {
-                return {
-                  fontColor:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_font_color,
-                  fontSize:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_font_size,
-                  fontWeight:
-                    control.data_grid_detail?.datagrid_options
-                      .datagrid_font_weight,
-                  backgroundColor:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_header_color,
-                };
-              },
             };
           case 'decimal':
             return {
               ...g,
-              cellStyle: () => {
-                return {
-                  fontColor:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_font_color,
-                  fontSize:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_font_size,
-                  fontWeight:
-                    control.data_grid_detail?.datagrid_options
-                      .datagrid_font_weight,
-                  backgroundColor:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_header_color,
-                };
-              },
             };
           case 'financial':
             return {
               ...g,
-              cellStyle: () => {
-                return {
-                  fontColor:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_font_color,
-                  fontSize:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_font_size,
-                  fontWeight:
-                    control.data_grid_detail?.datagrid_options
-                      .datagrid_font_weight,
-                  backgroundColor:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_header_color,
-                };
-              },
             };
           case 'checkbox':
             return {
               ...g,
-              cellStyle: () => {
-                return {
-                  fontColor:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_font_color,
-                  fontSize:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_font_size,
-                  fontWeight:
-                    control.data_grid_detail?.datagrid_options
-                      .datagrid_font_weight,
-                  backgroundColor:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_header_color,
-                };
-              },
             };
           case 'text':
             return {
               ...g,
-              cellStyle: () => {
-                return {
-                  fontColor:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_font_color,
-                  fontSize:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_font_size,
-                  fontWeight:
-                    control.data_grid_detail?.datagrid_options
-                      .datagrid_font_weight,
-                  backgroundColor:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_header_color,
-                };
-              },
             };
           case 'boolean':
             return {
               ...g,
-              cellStyle: () => {
-                return {
-                  fontColor:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_font_color,
-                  fontSize:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_font_size,
-                  fontWeight:
-                    control.data_grid_detail?.datagrid_options
-                      .datagrid_font_weight,
-                  backgroundColor:
-                    control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_header_color,
-                };
-              },
             };
           default:
             return {
               ...g,
-              cellStyle: () => {
-                return {
-                  backgroundColor:
-                    control.data_grid_detail?.datagrid_options
-                      .datagrid_header_color,
-                  fontSize:
-                    control.data_grid_detail?.datagrid_options
-                      .datagrid_font_size,
-                  fontWeight:
-                    control.data_grid_detail?.datagrid_options
-                      .datagrid_font_weight,
-                  fontColor:
-                    control.data_grid_detail?.datagrid_options
-                      .datagrid_font_color,
-                };
-              },
             };
         }
       }),
@@ -409,7 +192,17 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           <div style={{ flexDirection: 'row', alignItems: 'center' }}>
             {field_data?.control_options?.currency_symbol ? (
               <>
-                <p style={{ fontSize: 13, fontWeight: 'bolder' }}>
+                <p
+                  style={{
+                    fontSize: 13,
+                    fontWeight: 'bolder',
+                    color: control?.data_grid_detail?.datagrid_options
+                      ?.datagrid_font_size
+                      ? control?.data_grid_detail?.datagrid_options
+                          ?.datagrid_font_size
+                      : 'black',
+                  }}
+                >
                   {field_data?.control_options?.currency_symbol}
                 </p>
               </>
