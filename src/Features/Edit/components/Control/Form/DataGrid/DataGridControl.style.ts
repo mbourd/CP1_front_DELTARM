@@ -128,4 +128,17 @@ export const AgDataGridStyle = styled.div.attrs(
     /* border-right-color: ${({ border_color }) =>
       border_color ? border_color : '#123456'}; */
   }
+
+  .ag-cell {
+    display: inline-block;
+    position: absolute;
+    white-space: nowrap;
+    height: 100%;
+    color: ${({ font_color }) => (font_color ? font_color : '#000000')};
+    font-weight: ${({ font_weight }) => (font_weight ? font_weight : 'normal')};
+    font-size: ${({ font_size }) => (font_size ? `${font_size}px` : '13px')};
+    /* background-color: red !important; */
+    background-color: ${({ background_color }) =>
+      background_color ? background_color : '#ffffff'};
+  }
 `;
