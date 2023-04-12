@@ -27,6 +27,16 @@ import CustomSelectRenderer from './AgDataGridFields/CustomSelectRenderer/Custom
 import { EuroIcon } from 'Styles';
 import { minMax } from 'Packages/Helpers/src/minMax';
 import { AgDataGridStyle } from './DataGridControl.style';
+import { AgDataGridUpload } from './DataGridFields/AgDataGridUpload/AgDataGridUpload';
+import 'ag-grid-enterprise';
+// import 'ag-grid-community/styles/ag-grid.css';
+// import 'ag-grid-community/styles/ag-theme-alpine.css';
+import { IServerSideDatasource } from 'ag-grid-community';
+
+import { LicenseManager } from 'ag-grid-enterprise';
+LicenseManager.setLicenseKey(
+  'Using_this_AG_Grid_Enterprise_key_( AG-040865 )_in_excess_of_the_licence_granted_is_not_permitted___Please_report_misuse_to_( legal@ag-grid.com )___For_help_with_changing_this_key_please_contact_( info@ag-grid.com )___( Delta RM )_is_granted_a_( Single Application )_Developer_License_for_the_application_( DeltaRM )_only_for_( 1 )_Front-End_JavaScript_developer___All_Front-End_JavaScript_developers_working_on_( DeltaRM )_need_to_be_licensed___( DeltaRM )_has_been_granted_a_Deployment_License_Add-on_for_( 1 )_Production_Environment___This_key_works_with_AG_Grid_Enterprise_versions_released_before_( 11 April 2024 )____[v2]_MTcxMjc5MDAwMDAwMA==f0a7e979572bce7bc4376cbdee159586',
+);
 
 interface IProps {
   control: IApiControl;
@@ -157,14 +167,18 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     );
 
     switch (field_data?.component) {
-      // case 'file_upload':
-      //   return (
-      //     <AttachmentCellRenderer
-      //       props={props}
-      //       field_name={data}
-      //       field_data={field_data}
-      //     />
-      //   );
+      case 'file_upload':
+        return (
+          <AgDataGridUpload
+            columnId={field_data?.col_elm_id}
+            rowNum={field_data?.row_num}
+            value={field_data?.upload_detail}
+            fileId={fileId}
+            controlId={control?.control_id}
+            mandatory={field_data?.control_mandatory}
+            editable={field_data?.control_editable}
+          />
+        );
       case 'select_list':
         return (
           <CustomSelectRenderer
@@ -257,11 +271,35 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     };
   }, []);
 
+  const getServerSideDatasource: () => IServerSideDatasource = () => {
+    return {
+      getRows: (params: any) => {
+        console.log('[Datasource] - rows requested by grid: ', params.request);
+        // var response = server.getData(params.request);
+        // adding delay to simulate real server call
+        // setTimeout(function () {
+        //   if (response.success) {
+        // call the success callback
+        params.success({
+          rowData: GridDetails.rows,
+          rowCount: GridDetails?.rows[GridDetails?.rows?.length - 1],
+        });
+        // } else {
+        // inform the grid request failed
+        //     params.fail();
+        //   }
+        // }, 200);
+      },
+    };
+  };
+
   const onGridReady = (params: any) => {
     // Make the currently visible columns fit the screen
     params.api.sizeColumnsToFit();
     params.api.enableVirtualization = true;
     // params.api.hideOverlay();
+    const datasource = getServerSideDatasource();
+    params.api!.setServerSideDatasource(datasource);
   };
 
   const handleClickAddRow = useCallback(() => {
@@ -463,14 +501,15 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           // @ts-ignore
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
-          rowData={GridDetails?.rows}
+          // rowData={GridDetails?.rows}
           onGridReady={onGridReady}
           overlayLoadingTemplate={
             '<span class="ag-overlay-loading-center">Loading..</span>'
           }
-          sideBar={sideBar}
+          rowModelType={'serverSide'}
+          // sideBar={sideBar}
           pagination={true}
-          paginationPageSize={4}
+          paginationPageSize={1}
           rowSelection="multiple"
           // paginationAutoPageSize={true}
           onCellValueChanged={onCellValueChanged}
