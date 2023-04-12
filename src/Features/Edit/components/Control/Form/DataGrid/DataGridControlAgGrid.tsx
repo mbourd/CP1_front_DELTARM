@@ -8,15 +8,7 @@ import React, {
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { IApiControl } from '../../../../types';
 import { Grid } from '@mui/material';
-import { DataGridControlStyled } from './DataGridControl.style';
-import { DataGridBoolean } from './DataGridFields/DataGridBoolean/DataGridBoolean';
-import { DataGridText } from './DataGridFields/DataGridText/DataGridText';
-import { DataGridInteger } from './DataGridFields/DataGridInteger/DataGridInteger';
-import { DataGridSelect } from './DataGridFields/DataGridSelect/DataGridSelect';
 import { ControlLabel } from '../ControlLabel';
-import { AddCircleOutline } from '@mui/icons-material';
-import { CloudUpload } from '@material-ui/icons';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import {
   BPITooltip,
   FormError,
@@ -31,194 +23,11 @@ import { useTrans } from '../../../../../../Services';
 import './datagrid.css';
 import { useApi, useRouter } from 'Services';
 import { saveValueDataGrid } from './apiRoutes/saveValueDataGrid';
-import AttachmentCellRenderer from './AgDataGridFields/AttachementCellRenderer/AttachementCellRenderer';
 import CustomSelectRenderer from './AgDataGridFields/CustomSelectRenderer/CustomSelectRenderer';
-import CustomDeleteRenderer from './AgDataGridFields/CustomDeleteRenderer/CustomDeleteRenderer';
-import CustomDateRenderer from './AgDataGridFields/CustomDateRenderer/CustomDateRenderer';
 import { EuroIcon } from 'Styles';
 import { minMax } from 'Packages/Helpers/src/minMax';
-import CustomCommentRenderer from './AgDataGridFields/CustomCommentRenderer/CustomCommentRenderer';
-import CustomCommentAndLongTextRenderer from './AgDataGridFields/CustomCommentAndLongTextRenderer/CustomCommentAndLongTextRenderer';
-import { ValueSetterParams } from 'ag-grid-community';
 import { AgDataGridStyle } from './DataGridControl.style';
 
-const columns = [
-  {
-    headerName: 'Valeur entière',
-    field: 'Valeur_entière.value',
-    filter: true,
-    sortable: true,
-    resizable: true,
-    floatingFilter: true,
-    pinned: 'left',
-  },
-  {
-    headerName: 'Attachement',
-    field: 'Attachement.value',
-    filter: true,
-    sortable: true,
-    pinned: 'left',
-  },
-  {
-    headerName: 'Texte',
-    field: 'Texte.value',
-    resizable: true,
-    floatingFilter: true,
-  },
-  { headerName: 'Liste de sélection', field: 'Liste_de_sélection.value' },
-  { headerName: 'Date', field: 'date.value' },
-  { headerName: 'Case à cocher', field: 'Case_à_cocher.value' },
-];
-const rows = [
-  {
-    Valeur_entière: {
-      col_elm_id: 870,
-      component: 'integer',
-      control_editable: true,
-      control_mandatory: false,
-      control_regex: '^-?[0-9]\\d*$',
-      control_regex_msg: "La valeur saisie n'est pas une valeur entière",
-      row_num: 5,
-      value: 54645,
-    },
-    Attachement: {
-      col_elm_id: 870,
-      component: 'file_upload',
-      control_editable: true,
-      control_mandatory: false,
-      control_regex: null,
-      control_regex_msg: null,
-      row_num: 5,
-      value: 'first.png',
-    },
-    Texte: {
-      col_elm_id: 870,
-      component: 'boolean',
-      control_editable: true,
-      control_mandatory: false,
-      control_regex: null,
-      control_regex_msg: null,
-      row_num: 5,
-      value: true,
-    },
-    Liste_de_sélection: {
-      col_elm_id: 870,
-      component: 'select_list',
-      control_editable: true,
-      control_mandatory: false,
-      control_regex: null,
-      control_regex_msg: null,
-      row_num: 5,
-      value: '2',
-      answer_choices: [
-        {
-          choice_background_color: 'FFFFFF',
-          choice_font_color: '000000',
-          choice_font_style: 'normal',
-          id: 1,
-          label: 'OK',
-          value: '1',
-        },
-        {
-          choice_background_color: 'FFFFFF',
-          choice_font_color: '000000',
-          choice_font_style: 'normal',
-          id: 2,
-          label: 'KO',
-          value: '2',
-        },
-      ],
-    },
-    Case_à_cocher: {
-      component: 'delete',
-      row_num: 5,
-    },
-    date: {
-      col_elm_id: 870,
-      component: 'date',
-      control_editable: true,
-      control_mandatory: false,
-      control_regex: '^-?[0-9]\\d*$',
-      control_regex_msg: "La valeur saisie n'est pas une valeur entière",
-      row_num: 5,
-      value: '2023-03-14T11:18:01.787Z',
-    },
-  },
-  {
-    Valeur_entière: {
-      col_elm_id: 870,
-      component: 'integer',
-      control_editable: true,
-      control_mandatory: false,
-      control_regex: '^-?[0-9]\\d*$',
-      control_regex_msg: "La valeur saisie n'est pas une valeur entière",
-      row_num: 5,
-      value: 54645,
-    },
-    Attachement: {
-      col_elm_id: 870,
-      component: 'file_upload',
-      control_editable: true,
-      control_mandatory: false,
-      control_regex: null,
-      control_regex_msg: null,
-      row_num: 5,
-      value: 'first.png',
-    },
-    Texte: {
-      col_elm_id: 870,
-      component: 'boolean',
-      control_editable: true,
-      control_mandatory: false,
-      control_regex: null,
-      control_regex_msg: null,
-      row_num: 5,
-      value: false,
-    },
-    Liste_de_sélection: {
-      col_elm_id: 870,
-      component: 'select_list',
-      control_editable: true,
-      control_mandatory: false,
-      control_regex: null,
-      control_regex_msg: null,
-      row_num: 5,
-      value: '1',
-      answer_choices: [
-        {
-          choice_background_color: 'FFFFFF',
-          choice_font_color: '000000',
-          choice_font_style: 'normal',
-          id: 1,
-          label: 'OK',
-          value: '1',
-        },
-        {
-          choice_background_color: 'FFFFFF',
-          choice_font_color: '000000',
-          choice_font_style: 'normal',
-          id: 2,
-          label: 'KO',
-          value: '2',
-        },
-      ],
-    },
-    Case_à_cocher: {
-      component: 'delete',
-      row_num: 5,
-    },
-    date: {
-      col_elm_id: 870,
-      component: 'date',
-      control_editable: true,
-      control_mandatory: false,
-      control_regex: '^-?[0-9]\\d*$',
-      control_regex_msg: "La valeur saisie n'est pas une valeur entière",
-      row_num: 5,
-      value: '2023-03-14T11:18:01.787Z',
-    },
-  },
-];
 interface IProps {
   control: IApiControl;
   fileId: string;
@@ -242,7 +51,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   // }, []);
   useEffect(() => {
     setGridDetails(control?.data_grid_detail);
-    // console.log('control', control?.data_grid_detail);
+    console.log('control', control?.data_grid_detail?.datagrid_options);
   }, [control?.data_grid_detail]);
   // useEffect(() => {
   //   setRowData(rows);
@@ -266,36 +75,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               singleClickEdit: false,
               editable: false,
-              cellStyle: (params: any) => {
-                // console.log(Object.values(params?.data));
-                const data: any = Object.values(params?.data)[0];
-                const select_id = data?.choice_options?.filter(
-                  (option: any) => {
-                    return data?.value === option?.choice_id?.toString();
-                  },
-                );
-                // console.log(select_id);
-                //mark police cells as red
-                return {
-                  backgroundColor: select_id[0]?.option_bg_color,
-                };
-              },
-              // cellEditor: 'agSelectCellEditor',
-              // suppressFirstRenderSelect: true,
-              // cellEditorParams: {
-              //   values: g?.choice_options?.map((option: any) => {
-              //     return option?.choice_lib;
-              //   }),
-              // },
-              // cellRenderer: (props: any) => {
-              //   const choice_label = props?.colDef?.choice_options?.filter(
-              //     (label: any) => {
-              //       return props.value === label?.choice_id?.toString();
-              //     },
-              //   );
-
-              //   return <CustomSelectRenderer props={props} />;
-              // },
             };
           case 'comment':
             return {
@@ -317,8 +96,46 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 cols: 50,
               },
             };
+          case 'percent':
+            return {
+              ...g,
+            };
+          case 'radio':
+            return {
+              ...g,
+            };
+          case 'multiple_list':
+            return {
+              ...g,
+            };
+          case 'integer':
+            return {
+              ...g,
+            };
+          case 'decimal':
+            return {
+              ...g,
+            };
+          case 'financial':
+            return {
+              ...g,
+            };
+          case 'checkbox':
+            return {
+              ...g,
+            };
+          case 'text':
+            return {
+              ...g,
+            };
+          case 'boolean':
+            return {
+              ...g,
+            };
           default:
-            return g;
+            return {
+              ...g,
+            };
         }
       }),
     [control.data_grid_detail?.columns],
@@ -359,14 +176,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             seterrors={seterrors}
           />
         );
-      // case 'delete':
-      //   return (
-      //     <CustomDeleteRenderer props={props} rowData={GridDetails?.rows} />
-      //   );
-      // case 'date':
-      //   return <CustomDateRenderer props={props} field_data={field_data} />;
-      // case 'boolean':
-      //   return <CustomCheckBoxRenderer props={props} />;
       case 'percent':
         return (
           <div style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -377,23 +186,22 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         return props.value;
       case 'long_text':
         return props.value;
-      // return (
-      //   <CustomCommentAndLongTextRenderer
-      //     old_value={props?.value}
-      //     field_data={field_data}
-      //     seterrors={seterrors}
-      //     jwt={jwt}
-      //     fileId={fileId}
-      //     control={control}
-      //     gridRef={gridRef}
-      //   />
-      // );
       case 'financial':
         return (
           <div style={{ flexDirection: 'row', alignItems: 'center' }}>
             {field_data?.control_options?.currency_symbol ? (
               <>
-                <p style={{ fontSize: 13, fontWeight: 'bolder' }}>
+                <p
+                  style={{
+                    fontSize: 13,
+                    fontWeight: 'bolder',
+                    color: control?.data_grid_detail?.datagrid_options
+                      ?.datagrid_font_size
+                      ? control?.data_grid_detail?.datagrid_options
+                          ?.datagrid_font_size
+                      : 'black',
+                  }}
+                >
                   {field_data?.control_options?.currency_symbol}
                 </p>
               </>
@@ -626,28 +434,51 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       </BPITooltip> */}
       <h1 style={{ color: 'red', padding: 10 }}>{errors}</h1>
       {errorsMessageAdd && <FormError>{errorsMessageAdd}</FormError>}
-      <AgGridReact
-        className="ag-theme-alpine"
-        domLayout={'autoHeight'}
-        ref={gridRef}
-        rowHeight={40}
-        // @ts-ignore
-        columnDefs={columnDefs}
-        defaultColDef={defaultColDef}
-        rowData={GridDetails?.rows}
-        onGridReady={onGridReady}
-        overlayLoadingTemplate={
-          '<span class="ag-overlay-loading-center">Loading..</span>'
+
+      <AgDataGridStyle
+        background_color={
+          control?.data_grid_detail?.datagrid_options?.datagrid_header_color
         }
-        sideBar={sideBar}
-        pagination={true}
-        paginationPageSize={4}
-        rowSelection="multiple"
-        // paginationAutoPageSize={true}
-        onCellValueChanged={onCellValueChanged}
-        undoRedoCellEditing={true}
-        enableCellChangeFlash={true}
-      />
+        border_color={
+          control?.data_grid_detail?.datagrid_options?.datagrid_border_color
+        }
+        is_border_color={
+          control?.data_grid_detail?.datagrid_options?.datagrid_border
+        }
+        font_color={
+          control?.data_grid_detail?.datagrid_options?.datagrid_font_color
+        }
+        font_size={
+          control?.data_grid_detail?.datagrid_options?.datagrid_font_size
+        }
+        font_weight={
+          control?.data_grid_detail?.datagrid_options?.datagrid_font_weight
+        }
+      >
+        <AgGridReact
+          className="ag-theme-alpine"
+          domLayout={'autoHeight'}
+          ref={gridRef}
+          rowHeight={40}
+          // @ts-ignore
+          columnDefs={columnDefs}
+          defaultColDef={defaultColDef}
+          rowData={GridDetails?.rows}
+          onGridReady={onGridReady}
+          overlayLoadingTemplate={
+            '<span class="ag-overlay-loading-center">Loading..</span>'
+          }
+          sideBar={sideBar}
+          pagination={true}
+          paginationPageSize={4}
+          rowSelection="multiple"
+          // paginationAutoPageSize={true}
+          onCellValueChanged={onCellValueChanged}
+          undoRedoCellEditing={true}
+          enableCellChangeFlash={true}
+        />
+      </AgDataGridStyle>
+
       {/* </DataGridControlStyled> */}
     </Grid>
   );

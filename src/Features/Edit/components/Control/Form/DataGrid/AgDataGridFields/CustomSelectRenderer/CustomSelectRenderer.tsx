@@ -50,12 +50,15 @@ const CustomSelectRenderer: React.FC<any> = ({
         <CustomSelectStyled
           defaultValue={select_id_to_show[0]?.choice_lib}
           onChange={handleChange}
+          fontSize={
+            control?.data_grid_detail?.datagrid_options?.datagrid_font_size
+          }
           style={{
             borderWidth: 0,
             backgroundColor: 'transparent',
-            fontSize: 14,
-            color: field_data?.choice_font_color
-              ? field_data?.choice_font_color
+            color: control?.data_grid_detail?.datagrid_options
+              ?.datagrid_font_color
+              ? control?.data_grid_detail?.datagrid_options?.datagrid_font_color
               : 'black',
             fontWeight: field_data?.choice_font_weight
               ? field_data?.choice_font_weight
@@ -70,9 +73,7 @@ const CustomSelectRenderer: React.FC<any> = ({
               className="custom-option"
               style={{
                 fontSize: 11,
-                color: option?.choice_font_color
-                  ? option?.choice_font_color
-                  : 'black',
+                color: 'black',
                 backgroundColor: option?.choice_bg_color
                   ? option?.choice_bg_color
                   : 'white',
@@ -81,7 +82,7 @@ const CustomSelectRenderer: React.FC<any> = ({
                   : 'normal',
               }}
             >
-              {option.choice_lib}
+              &nbsp; {option.choice_lib}
             </OptionStyled>
           ))}
         </CustomSelectStyled>
