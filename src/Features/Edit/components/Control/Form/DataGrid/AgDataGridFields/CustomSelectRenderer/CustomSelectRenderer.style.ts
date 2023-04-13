@@ -20,7 +20,7 @@ export const CustomSelectStyled = styled.select.attrs(
     fontSize ? `${fontSize}px` : '13px'} !important;
   border: none !important;
   outline: none !important;
-  padding: 10px 10px -10px -20px !important;
+  /* padding: 10px 10px 0 0 !important; */
   min-width: 150px;
   min-height: 30px;
 `;
