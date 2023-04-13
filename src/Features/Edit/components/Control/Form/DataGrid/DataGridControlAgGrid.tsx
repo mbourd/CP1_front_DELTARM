@@ -71,7 +71,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   const user_grid_language = localStorage.getItem('user_grid_language');
   const [option, setoption]: any = useState(user_grid_language);
   const [local_text, setlocal_text] = useState(
-    user_language === 'en' ? AG_GRID_LOCALE_EN : AG_GRID_LOCALE_FR,
+    user_language?.lang === 'en' ? AG_GRID_LOCALE_EN : AG_GRID_LOCALE_FR,
   );
   // useEffect(() => {
   //   console.log(control.data_grid_detail);
@@ -444,17 +444,17 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     }
   };
 
-  useEffect(() => {
-    // console.log('called');
-    gridRef?.current!.api?.refreshCells();
-    // console.log(local_text);
-    setoption(localStorage.getItem('user_grid_language'));
-    setlocal_text(
-      localStorage.getItem('user_grid_language') === 'en'
-        ? AG_GRID_LOCALE_EN
-        : AG_GRID_LOCALE_FR,
-    );
-  }, [localStorage, local_text]);
+  // useEffect(() => {
+  //   // console.log('called');
+  //   gridRef?.current!.api?.refreshCells();
+  //   // console.log(local_text);
+  //   setoption(localStorage.getItem('user_grid_language'));
+  //   setlocal_text(
+  //     localStorage.getItem('user_grid_language') === 'en'
+  //       ? AG_GRID_LOCALE_EN
+  //       : AG_GRID_LOCALE_FR,
+  //   );
+  // }, [localStorage, local_text]);
 
   const handlePrint = useReactToPrint({
     content: () => gridRef.current,
@@ -482,7 +482,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         }}
       >
         <div>
-          <Button
+          {/* <Button
             style={{
               backgroundColor: '#f50057',
               marginLeft: '10px',
@@ -491,8 +491,8 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             onClick={handlePrint}
           >
             Export PDF
-          </Button>
-          {/* <BPITooltip title={trans('addLine')}>
+          </Button> */}
+          <BPITooltip title={trans('addLine')}>
             <Button
               onClick={handleClickAddRow}
               style={{
@@ -504,9 +504,10 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 marginBottom: 14,
               }}
             >
-              Add Row
+              {user_language?.lang === 'en' ? 'Add Row' : 'Ajouter une ligne'}
+              {/* {user_language?.lang} */}
             </Button>
-          </BPITooltip> */}
+          </BPITooltip>
           {/* <BPITooltip title={'Remove Line'}>
         <Button
           onClick={handleClickRemoveSelectedRow}
@@ -524,7 +525,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} />
       </BPITooltip> */}
         </div>
-        <div>
+        {/* <div>
           <select
             value={option}
             className="language_change"
@@ -539,7 +540,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             <option value="fr">French</option>
             <option value="en">English</option>
           </select>
-        </div>
+        </div> */}
       </div>
       <h1 style={{ color: 'red', padding: 10 }}>{errors}</h1>
       {errorsMessageAdd && <FormError>{errorsMessageAdd}</FormError>}
