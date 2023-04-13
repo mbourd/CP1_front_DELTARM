@@ -19,7 +19,7 @@ import { addRow } from './apiRoutes/addRow';
 import { AgGridReact } from 'ag-grid-react';
 import { useReactToPrint } from 'react-to-print';
 import { Button } from 'Shared/components';
-import { useTrans } from '../../../../../../Services';
+import { useTrans, security } from '../../../../../../Services';
 import './datagrid.css';
 import { useApi, useRouter } from 'Services';
 import { saveValueDataGrid } from './apiRoutes/saveValueDataGrid';
@@ -32,8 +32,11 @@ import 'ag-grid-enterprise';
 // import 'ag-grid-community/styles/ag-grid.css';
 // import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { IServerSideDatasource } from 'ag-grid-community';
+import { DataGridDetail } from '../../../../types';
 
 import { LicenseManager } from 'ag-grid-enterprise';
+import { AG_GRID_LOCALE_FR } from './translations/fr';
+import { AG_GRID_LOCALE_EN } from './translations/en';
 LicenseManager.setLicenseKey(
   'Using_this_AG_Grid_Enterprise_key_( AG-040865 )_in_excess_of_the_licence_granted_is_not_permitted___Please_report_misuse_to_( legal@ag-grid.com )___For_help_with_changing_this_key_please_contact_( info@ag-grid.com )___( Delta RM )_is_granted_a_( Single Application )_Developer_License_for_the_application_( DeltaRM )_only_for_( 1 )_Front-End_JavaScript_developer___All_Front-End_JavaScript_developers_working_on_( DeltaRM )_need_to_be_licensed___( DeltaRM )_has_been_granted_a_Deployment_License_Add-on_for_( 1 )_Production_Environment___This_key_works_with_AG_Grid_Enterprise_versions_released_before_( 11 April 2024 )____[v2]_MTcxMjc5MDAwMDAwMA==f0a7e979572bce7bc4376cbdee159586',
 );
@@ -42,6 +45,11 @@ interface IProps {
   control: IApiControl;
   fileId: string;
 }
+
+const translations = {
+  en: AG_GRID_LOCALE_EN,
+  fr: AG_GRID_LOCALE_FR,
+};
 
 export const DataGridControlAgGrid: React.FC<IProps> = ({
   control,
@@ -56,13 +64,21 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   const [errors, seterrors]: any = useState('');
   const { send, error } = useApi<void>();
   const { currentRoute } = useRouter();
-  const [GridDetails, setGridDetails]: any = useState(null);
+  const [GridDetails, setGridDetails]: any = useState<
+    DataGridDetail | undefined | null
+  >(control.data_grid_detail);
+  const user_language: any = security.decodeJwtToken(jwt ? jwt : '');
+  const user_grid_language = localStorage.getItem('user_grid_language');
+  const [option, setoption]: any = useState(user_grid_language);
+  const [local_text, setlocal_text] = useState(
+    user_language === 'en' ? AG_GRID_LOCALE_EN : AG_GRID_LOCALE_FR,
+  );
   // useEffect(() => {
   //   console.log(control.data_grid_detail);
   // }, []);
   useEffect(() => {
     setGridDetails(control?.data_grid_detail);
-    console.log('control', control?.data_grid_detail?.datagrid_options);
+    // console.log('control', control?.data_grid_detail?.datagrid_options);
   }, [control?.data_grid_detail]);
   // useEffect(() => {
   //   setRowData(rows);
@@ -275,7 +291,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   const getServerSideDatasource: () => IServerSideDatasource = () => {
     return {
       getRows: (params: any) => {
-        console.log('[Datasource] - rows requested by grid: ', params.request);
+        // console.log('[Datasource] - rows requested by grid: ', params.request);
         // var response = server.getData(params.request);
         // adding delay to simulate real server call
         // setTimeout(function () {
@@ -299,11 +315,18 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     params.api.sizeColumnsToFit();
     params.api.enableVirtualization = true;
     // params.api.hideOverlay();
-    const datasource = getServerSideDatasource();
-    params.api!.setServerSideDatasource(datasource);
+    // const datasource = getServerSideDatasource();
+    // params.api!.setServerSideDatasource(datasource);
   };
 
   const handleClickAddRow = useCallback(() => {
+    // console.log(
+    //   fileId,
+    //   control.control_id,
+    //   jwt,
+    //   setGridDetails,
+    //   setErrorMessageAdd,
+    // );
     addRow(fileId, control.control_id, jwt, setGridDetails, setErrorMessageAdd);
   }, [control.control_id, jwt, fileId]);
 
@@ -421,41 +444,70 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     }
   };
 
+  useEffect(() => {
+    // console.log('called');
+    gridRef?.current!.api?.refreshCells();
+    // console.log(local_text);
+    setoption(localStorage.getItem('user_grid_language'));
+    setlocal_text(
+      localStorage.getItem('user_grid_language') === 'en'
+        ? AG_GRID_LOCALE_EN
+        : AG_GRID_LOCALE_FR,
+    );
+  }, [localStorage, local_text]);
+
   const handlePrint = useReactToPrint({
     content: () => gridRef.current,
   });
+
+  // const localeText = useMemo<{
+  //   [key: string]: string;
+  // }>(() => {
+  //   // gridRef.current.api.refreshCells();
+  //   return localStorage.getItem('user_grid_language') === 'en'
+  //     ? AG_GRID_LOCALE_EN
+  //     : AG_GRID_LOCALE_FR;
+  // }, []);
 
   return (
     <Grid item xs={11} style={{ maxWidth: '95%', margin: '0 auto' }}>
       {/* <DataGridControlStyled> */}
       <ControlLabel control={control} />
-      <Button
+      <div
         style={{
-          backgroundColor: '#f50057',
-          marginLeft: '10px',
-          marginBottom: 10,
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
         }}
-        onClick={handlePrint}
       >
-        Export PDF
-      </Button>
-      {/* <BPITooltip title={trans('addLine')}>
-        <Button
-          onClick={handleClickAddRow}
-          style={{
-            backgroundColor: 'teal',
-            border: 0,
-            color: '#fff',
-            margin: 5,
-            borderRadius: 5,
-            marginBottom: 14,
-          }}
-        >
-          Add Row
-        </Button>
-       
-      </BPITooltip> */}
-      {/* <BPITooltip title={'Remove Line'}>
+        <div>
+          <Button
+            style={{
+              backgroundColor: '#f50057',
+              marginLeft: '10px',
+              marginBottom: 10,
+            }}
+            onClick={handlePrint}
+          >
+            Export PDF
+          </Button>
+          {/* <BPITooltip title={trans('addLine')}>
+            <Button
+              onClick={handleClickAddRow}
+              style={{
+                backgroundColor: 'teal',
+                border: 0,
+                color: '#fff',
+                margin: 5,
+                borderRadius: 5,
+                marginBottom: 14,
+              }}
+            >
+              Add Row
+            </Button>
+          </BPITooltip> */}
+          {/* <BPITooltip title={'Remove Line'}>
         <Button
           onClick={handleClickRemoveSelectedRow}
           style={{
@@ -471,6 +523,24 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         </Button>
         <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} />
       </BPITooltip> */}
+        </div>
+        <div>
+          <select
+            value={option}
+            className="language_change"
+            onChange={(e) => {
+              localStorage.setItem('user_grid_language', e.target.value);
+              setoption(localStorage.getItem('user_grid_language'));
+              setlocal_text(
+                e.target.value === 'en' ? AG_GRID_LOCALE_EN : AG_GRID_LOCALE_FR,
+              );
+            }}
+          >
+            <option value="fr">French</option>
+            <option value="en">English</option>
+          </select>
+        </div>
+      </div>
       <h1 style={{ color: 'red', padding: 10 }}>{errors}</h1>
       {errorsMessageAdd && <FormError>{errorsMessageAdd}</FormError>}
 
@@ -502,15 +572,16 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           // @ts-ignore
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
-          // rowData={GridDetails?.rows}
+          rowData={GridDetails?.rows}
           onGridReady={onGridReady}
+          localeText={local_text}
           overlayLoadingTemplate={
             '<span class="ag-overlay-loading-center">Loading..</span>'
           }
-          rowModelType={'serverSide'}
+          // rowModelType={'serverSide'}
           // sideBar={sideBar}
           pagination={true}
-          paginationPageSize={1}
+          paginationPageSize={4}
           rowSelection="multiple"
           // paginationAutoPageSize={true}
           onCellValueChanged={onCellValueChanged}
