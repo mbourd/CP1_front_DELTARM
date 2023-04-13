@@ -34,3 +34,10 @@ textarea:focus {
 /* .my-header-class {
   background-color: lightgreen;
 } */
+
+.language_change {
+  margin-bottom: 10px !important;
+  margin-right: 20px !important;
+  border-radius: 5px !important;
+  padding: 8px !important;
+}
