@@ -73,6 +73,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   const [local_text, setlocal_text] = useState(
     user_language?.lang === 'en' ? AG_GRID_LOCALE_EN : AG_GRID_LOCALE_FR,
   );
+  const paginationPageSize: number =
+    control?.data_grid_detail?.datagrid_options?.pagination_row_size;
+
   // useEffect(() => {
   //   console.log(control.data_grid_detail);
   // }, []);
@@ -100,12 +103,16 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           case 'select_list':
             return {
               ...g,
+              minWidth: 100,
+              width: 'auto',
               singleClickEdit: false,
               editable: false,
             };
           case 'comment':
             return {
               ...g,
+              minWidth: 100,
+              width: 'auto',
               cellEditorPopup: true,
               cellEditor: 'agLargeTextCellEditor',
               cellEditorParams: {
@@ -116,6 +123,8 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           case 'long_text':
             return {
               ...g,
+              minWidth: 100,
+              width: 'auto',
               cellEditorPopup: true,
               cellEditor: 'agLargeTextCellEditor',
               cellEditorParams: {
@@ -126,42 +135,62 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           case 'percent':
             return {
               ...g,
+              minWidth: 100,
+              width: 'auto',
             };
           case 'radio':
             return {
               ...g,
+              minWidth: 100,
+              width: 'auto',
             };
           case 'multiple_list':
             return {
               ...g,
+              minWidth: 100,
+              width: 'auto',
             };
           case 'integer':
             return {
               ...g,
+              minWidth: 100,
+              width: 'auto',
             };
           case 'decimal':
             return {
               ...g,
+              minWidth: 100,
+              width: 'auto',
             };
           case 'financial':
             return {
               ...g,
+              minWidth: 100,
+              width: 'auto',
             };
           case 'checkbox':
             return {
               ...g,
+              minWidth: 100,
+              width: 'auto',
             };
           case 'text':
             return {
               ...g,
+              minWidth: 100,
+              width: 'auto',
             };
           case 'boolean':
             return {
               ...g,
+              minWidth: 100,
+              width: 'auto',
             };
           default:
             return {
               ...g,
+              minWidth: 100,
+              width: 'auto',
             };
         }
       }),
@@ -260,6 +289,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       // cellEditorPopup: true,
       cellEditorPopupPosition: 'center',
       singleClickEdit: true,
+      // minWidth: 'auto' as any, // cast to the any type,
     }),
     [],
   );
@@ -314,6 +344,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     // Make the currently visible columns fit the screen
     params.api.sizeColumnsToFit();
     params.api.enableVirtualization = true;
+
     // params.api.hideOverlay();
     // const datasource = getServerSideDatasource();
     // params.api!.setServerSideDatasource(datasource);
@@ -582,7 +613,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           // rowModelType={'serverSide'}
           // sideBar={sideBar}
           pagination={true}
-          paginationPageSize={4}
+          paginationPageSize={paginationPageSize}
           rowSelection="multiple"
           // paginationAutoPageSize={true}
           onCellValueChanged={onCellValueChanged}
@@ -590,7 +621,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           enableCellChangeFlash={true}
         />
       </AgDataGridStyle>
-
       {/* </DataGridControlStyled> */}
     </Grid>
   );
