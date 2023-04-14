@@ -1,21 +1,42 @@
 import React from 'react';
+import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
 
-const CustomDateRenderer: React.FC<any> = ({ props, field_data }) => {
+const CustomDateRenderer: React.FC<any> = ({
+  props,
+  field_data,
+  control,
+  fileId,
+  jwt,
+  seterrors,
+}) => {
   const checkedHandler = (event: any) => {
     props.setValue(event.target.value);
+    saveValueDataGrid(
+      fileId,
+      control.control_id,
+      field_data?.col_elm_id,
+      field_data?.row_num,
+      jwt,
+      event.target.value,
+      seterrors,
+      event.target.value,
+    );
   };
 
   return (
     <div
       style={{
-        marginTop: 17,
+        marginTop: 0,
       }}
     >
       <input
         type="date"
         onChange={checkedHandler}
-        id="date"
-        style={{ backgroundColor: 'transparent', fontSize: 14 }}
+        // id="date"
+        style={{
+          backgroundColor: 'transparent',
+          fontSize: `${control?.data_grid_detail?.datagrid_options?.datagrid_font_size}px`,
+        }}
         defaultValue={props.value}
         min={
           field_data?.control_options?.min_date
