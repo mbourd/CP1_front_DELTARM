@@ -239,7 +239,9 @@ export type DataGridComponent =
   | 'financial'
   | 'decimal'
   | 'long_text'
-  | 'percent';
+  | 'percent'
+  | 'date'
+  | 'comment';
 
 export interface IApiControl {
   control_desc_1: string | null;
