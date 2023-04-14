@@ -78,10 +78,10 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   // useEffect(() => {
   //   console.log(control.data_grid_detail);
   // }, []);
-  // useEffect(() => {
-  //   setGridDetails(control?.data_grid_detail);
-  //   console.log('control', control?.data_grid_detail);
-  // }, [control?.data_grid_detail]);
+  useEffect(() => {
+    setGridDetails(control?.data_grid_detail);
+    console.log('control', control?.data_grid_detail);
+  }, [control?.data_grid_detail]);
   // useEffect(() => {
   //   setRowData(rows);
   // }, [rowData]);
@@ -118,6 +118,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 rows: 10,
                 cols: 50,
               },
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
             };
           case 'long_text':
             return {
@@ -130,60 +131,70 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 rows: 10,
                 cols: 50,
               },
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
             };
           case 'percent':
             return {
               ...g,
               minWidth: 150,
               width: 'auto',
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
             };
           case 'radio':
             return {
               ...g,
               minWidth: 150,
               width: 'auto',
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
             };
           case 'multiple_list':
             return {
               ...g,
               minWidth: 150,
               width: 'auto',
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
             };
           case 'integer':
             return {
               ...g,
               minWidth: 150,
               width: 'auto',
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
             };
           case 'decimal':
             return {
               ...g,
               minWidth: 150,
               width: 'auto',
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
             };
           case 'financial':
             return {
               ...g,
               minWidth: 150,
               width: 'auto',
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
             };
           case 'checkbox':
             return {
               ...g,
               minWidth: 150,
               width: 'auto',
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
             };
           case 'text':
             return {
               ...g,
               minWidth: 150,
               width: 'auto',
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
             };
           case 'boolean':
             return {
               ...g,
               minWidth: 150,
               width: 'auto',
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
             };
           case 'date':
             return {
@@ -234,9 +245,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   );
 
   const kFormatter: any = (num: any) => {
-    return Math.abs(num) > 999
-      ? (Math.sign(num) * Math.round(Math.abs(num) / 100)) / 10 + 'k'
-      : Math.sign(num) * Math.abs(num);
+    return num.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
   const cellRenderer = (props: any) => {
     // console.log(props);
@@ -314,7 +323,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 style={{ marginBottom: -4, fontSize: 19, marginLeft: 2 }}
               />
             )}
-            {millify(Number(props.value), { precision: 3 })}
+            {kFormatter(props.value)}
           </div>
         );
       // case 'date':
@@ -558,9 +567,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   //     : AG_GRID_LOCALE_FR;
   // }, []);
   const gridOptions = {
-    rowClassRules: {
-      'ag-cell-hover': 'true',
-    },
+    rowClass: 'my-hover-class',
   };
 
   return (
