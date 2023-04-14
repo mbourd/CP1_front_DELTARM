@@ -94,7 +94,13 @@ const CustomSelectRenderer: React.FC<any> = ({
           // displayEmpty
           inputProps={{ 'aria-label': 'Without label' }}
           sx={{
-            fontSize: `${control?.data_grid_detail?.datagrid_options?.datagrid_font_size}px`,
+            fontSize: control?.data_grid_detail?.datagrid_options
+              ?.datagrid_font_size
+              ? Number(
+                  control?.data_grid_detail?.datagrid_options
+                    ?.datagrid_font_size,
+                )
+              : 12,
             borderWidth: 0,
             backgroundColor: 'transparent',
             color: control?.data_grid_detail?.datagrid_options
