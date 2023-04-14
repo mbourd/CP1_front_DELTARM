@@ -586,7 +586,11 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           >
             Export PDF
           </Button> */}
-          <BPITooltip title={trans('addLine')}>
+          <BPITooltip
+            title={
+              user_language?.lang === 'en' ? 'Add Row' : 'Ajouter une ligne'
+            }
+          >
             <Button
               onClick={handleClickAddRow}
               style={{
