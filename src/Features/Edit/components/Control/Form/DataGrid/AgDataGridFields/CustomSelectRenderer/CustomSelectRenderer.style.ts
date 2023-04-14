@@ -26,7 +26,7 @@ export const CustomSelectRendererStyled = styled.div`
 //   min-height: 30px;
 // `;
 export const CustomSelectStyled = styled(Select).attrs((props: any) => {
-  console.log('H#llo', props.fontSize);
+  // console.log('H#llo', props.fontSize);
 
   return {
     style: {
@@ -34,15 +34,19 @@ export const CustomSelectStyled = styled(Select).attrs((props: any) => {
     },
   };
 })`
+  margin-top: -40px !important;
   .MuiOutlinedInput-notchedOutline {
     border: 0;
   }
-  ,
   .MuiSvgIcon-root {
+    /* margin-top: -15px !important; */
+    padding-left: 10px !important;
+    padding-right: -20px !important;
   }
-  ,
   .MuiSelect-select {
     padding-right: 0 !important;
+    margin-left: -20px !important;
+    /* margin-top: -40px !important; */
   }
   /* -webkit-appearance: none;
   -moz-appearance: none; */
@@ -53,7 +57,7 @@ export const CustomSelectStyled = styled(Select).attrs((props: any) => {
   border: none !important;
   outline: none !important;
   /* padding: 10px 10px 0 0 !important; */
-  min-width: 150px;
+  min-width: 120px;
   min-height: 30px;
 `;
 
@@ -65,4 +69,6 @@ export const CustomSelectStyled = styled(Select).attrs((props: any) => {
 export const OptionStyled = styled(MenuItem)`
   padding: 10px !important;
   font-size: 13px !important;
+  /* background-color: green !important; */
+  /* color: white !important; */
 `;

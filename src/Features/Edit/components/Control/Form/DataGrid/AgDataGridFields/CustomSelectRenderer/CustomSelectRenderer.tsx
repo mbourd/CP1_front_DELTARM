@@ -91,7 +91,7 @@ const CustomSelectRenderer: React.FC<any> = ({
         <CustomSelectStyled
           value={select_id_to_show[0]?.choice_lib}
           onChange={handleChange}
-          displayEmpty
+          // displayEmpty
           inputProps={{ 'aria-label': 'Without label' }}
           sx={{
             fontSize: `${control?.data_grid_detail?.datagrid_options?.datagrid_font_size}px`,
@@ -112,18 +112,10 @@ const CustomSelectRenderer: React.FC<any> = ({
             <OptionStyled
               key={option.choice_id}
               value={option.choice_lib}
+              // bg_color={option?.choice_bg_color}
+              // font_weight={option?.choice_font_weight}
+              // font_color={option?.choice_font_color}
               className="custom-option"
-              sx={{
-                padding: 5,
-                fontSize: 10,
-                color: 'black',
-                backgroundColor: option?.choice_bg_color
-                  ? option?.choice_bg_color
-                  : 'white',
-                fontWeight: option?.choice_font_weight
-                  ? option?.choice_font_weight
-                  : 'normal',
-              }}
             >
               {option.choice_lib}
             </OptionStyled>
