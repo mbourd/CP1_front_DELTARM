@@ -4,6 +4,9 @@
   background-color: lightgray !important;
 } */
 
+.ag-theme-alpine .ag-row-hover {
+  background-color: lightblue !important;
+}
 .ag-cell-value,
 .ag-group-value {
   overflow: hidden;

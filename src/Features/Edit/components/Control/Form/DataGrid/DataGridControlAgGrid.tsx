@@ -33,7 +33,7 @@ import 'ag-grid-enterprise';
 // import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { IServerSideDatasource } from 'ag-grid-community';
 import { DataGridDetail } from '../../../../types';
-
+import millify from 'millify';
 import { LicenseManager } from 'ag-grid-enterprise';
 import { AG_GRID_LOCALE_FR } from './translations/fr';
 import { AG_GRID_LOCALE_EN } from './translations/en';
@@ -41,6 +41,8 @@ import CustomDateRenderer from './AgDataGridFields/CustomDateRenderer/CustomDate
 LicenseManager.setLicenseKey(
   'Using_this_AG_Grid_Enterprise_key_( AG-040865 )_in_excess_of_the_licence_granted_is_not_permitted___Please_report_misuse_to_( legal@ag-grid.com )___For_help_with_changing_this_key_please_contact_( info@ag-grid.com )___( Delta RM )_is_granted_a_( Single Application )_Developer_License_for_the_application_( DeltaRM )_only_for_( 1 )_Front-End_JavaScript_developer___All_Front-End_JavaScript_developers_working_on_( DeltaRM )_need_to_be_licensed___( DeltaRM )_has_been_granted_a_Deployment_License_Add-on_for_( 1 )_Production_Environment___This_key_works_with_AG_Grid_Enterprise_versions_released_before_( 11 April 2024 )____[v2]_MTcxMjc5MDAwMDAwMA==f0a7e979572bce7bc4376cbdee159586',
 );
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
 interface IProps {
   control: IApiControl;
@@ -77,10 +79,10 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   // useEffect(() => {
   //   console.log(control.data_grid_detail);
   // }, []);
-  useEffect(() => {
-    setGridDetails(control?.data_grid_detail);
-    // console.log('control', control?.data_grid_detail);
-  }, [control?.data_grid_detail]);
+  // useEffect(() => {
+  //   setGridDetails(control?.data_grid_detail);
+  //   console.log('control', control?.data_grid_detail);
+  // }, [control?.data_grid_detail]);
   // useEffect(() => {
   //   setRowData(rows);
   // }, [rowData]);
@@ -191,6 +193,35 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               singleClickEdit: false,
               editable: false,
+              cellRenderer: (props: any) => {
+                // console.log('date', props);
+                const data = props?.colDef?.field?.split('.')[0];
+                // console.log('field name', data);
+                const field_data = Object.entries(props?.data).reduce(
+                  (accum: any, current: any) => {
+                    const [key, value] = current;
+                    if (key.match(data)) {
+                      return value;
+                    }
+
+                    return accum;
+                  },
+                  [],
+                );
+
+                // console.log(field_data);
+
+                return (
+                  <CustomDateRenderer
+                    props={props}
+                    field_data={field_data}
+                    control={control}
+                    fileId={fileId}
+                    jwt={jwt}
+                    seterrors={seterrors}
+                  />
+                );
+              },
             };
           default:
             return {
@@ -202,6 +233,12 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       }),
     [control.data_grid_detail?.columns],
   );
+
+  const kFormatter: any = (num: any) => {
+    return Math.abs(num) > 999
+      ? (Math.sign(num) * Math.round(Math.abs(num) / 100)) / 10 + 'k'
+      : Math.sign(num) * Math.abs(num);
+  };
   const cellRenderer = (props: any) => {
     // console.log(props);
     const data = props?.colDef?.field?.split('.')[0];
@@ -251,11 +288,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       case 'comment':
         return props?.value;
       case 'text':
-        return (
-          <div style={{ flexDirection: 'row', alignItems: 'center' }}>
-            % {props.value}
-          </div>
-        );
+        return props.value;
       case 'long_text':
         return props?.value;
       case 'financial':
@@ -282,20 +315,20 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 style={{ marginBottom: -4, fontSize: 19, marginLeft: 2 }}
               />
             )}
-            {props.value}
+            {millify(Number(props.value), { precision: 3 })}
           </div>
         );
-      case 'date':
-        return (
-          <CustomDateRenderer
-            props={props}
-            field_data={field_data}
-            control={control}
-            fileId={fileId}
-            jwt={jwt}
-            seterrors={seterrors}
-          />
-        );
+      // case 'date':
+      //   return (
+      //     <CustomDateRenderer
+      //       props={props}
+      //       field_data={field_data}
+      //       control={control}
+      //       fileId={fileId}
+      //       jwt={jwt}
+      //       seterrors={seterrors}
+      //     />
+      //   );
       default:
         return props?.value ? props?.value : 'No value';
     }
@@ -525,6 +558,11 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   //     ? AG_GRID_LOCALE_EN
   //     : AG_GRID_LOCALE_FR;
   // }, []);
+  const gridOptions = {
+    rowClassRules: {
+      'ag-cell-hover': 'true',
+    },
+  };
 
   return (
     <Grid item xs={11} style={{ maxWidth: '95%', margin: '0 auto' }}>
@@ -641,6 +679,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           pagination={true}
           paginationPageSize={paginationPageSize}
           rowSelection="multiple"
+          gridOptions={gridOptions}
           // paginationAutoPageSize={true}
           onCellValueChanged={onCellValueChanged}
           undoRedoCellEditing={true}
