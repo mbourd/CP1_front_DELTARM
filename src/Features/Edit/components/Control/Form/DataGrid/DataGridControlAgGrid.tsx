@@ -78,10 +78,10 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   // useEffect(() => {
   //   console.log(control.data_grid_detail);
   // }, []);
-  // useEffect(() => {
-  //   setGridDetails(control?.data_grid_detail);
-  //   console.log('control', control?.data_grid_detail);
-  // }, [control?.data_grid_detail]);
+  useEffect(() => {
+    setGridDetails(control?.data_grid_detail);
+    console.log('control', control?.data_grid_detail);
+  }, [control?.data_grid_detail]);
   // useEffect(() => {
   //   setRowData(rows);
   // }, [rowData]);
@@ -118,6 +118,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 rows: 10,
                 cols: 50,
               },
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
             };
           case 'long_text':
             return {
@@ -130,60 +131,70 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 rows: 10,
                 cols: 50,
               },
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
             };
           case 'percent':
             return {
               ...g,
               minWidth: 150,
               width: 'auto',
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
             };
           case 'radio':
             return {
               ...g,
               minWidth: 150,
               width: 'auto',
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
             };
           case 'multiple_list':
             return {
               ...g,
               minWidth: 150,
               width: 'auto',
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
             };
           case 'integer':
             return {
               ...g,
               minWidth: 150,
               width: 'auto',
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
             };
           case 'decimal':
             return {
               ...g,
               minWidth: 150,
               width: 'auto',
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
             };
           case 'financial':
             return {
               ...g,
               minWidth: 150,
               width: 'auto',
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
             };
           case 'checkbox':
             return {
               ...g,
               minWidth: 150,
               width: 'auto',
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
             };
           case 'text':
             return {
               ...g,
               minWidth: 150,
               width: 'auto',
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
             };
           case 'boolean':
             return {
               ...g,
               minWidth: 150,
               width: 'auto',
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
             };
           case 'date':
             return {

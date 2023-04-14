@@ -88,6 +88,11 @@ export const AgDataGridStyle = styled.div.attrs(
       is_border_color ? border_color : 'gray'};
   }
 
+  .ag-cell-value,
+  .ag-group-value {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   .ag-header-cell {
     display: inline-flex;
     align-items: left !important;
