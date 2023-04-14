@@ -113,6 +113,10 @@ export const AgDataGridStyle = styled.div.attrs(
       is_border_color ? border_color : 'gray'};
   }
 
+  .ag-theme-alpine .ag-cell-hover {
+    background-color: lightblue !important;
+  }
+
   .ag-header-cell {
     display: inline-flex;
     align-items: center;
