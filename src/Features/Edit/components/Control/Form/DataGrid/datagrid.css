@@ -4,6 +4,9 @@
   background-color: lightgray !important;
 } */
 
+.ag-theme-alpine .ag-row-hover {
+  background-color: lightblue !important;
+}
 .ag-cell-value,
 .ag-group-value {
   overflow: hidden;
@@ -34,3 +37,10 @@ textarea:focus {
 /* .my-header-class {
   background-color: lightgreen;
 } */
+
+.language_change {
+  margin-bottom: 10px !important;
+  margin-right: 20px !important;
+  border-radius: 5px !important;
+  padding: 8px !important;
+}

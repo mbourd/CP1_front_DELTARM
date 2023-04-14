@@ -113,6 +113,10 @@ export const AgDataGridStyle = styled.div.attrs(
       is_border_color ? border_color : 'gray'};
   }
 
+  .ag-theme-alpine .ag-cell-hover {
+    background-color: lightblue !important;
+  }
+
   .ag-header-cell {
     display: inline-flex;
     align-items: center;
@@ -130,15 +134,42 @@ export const AgDataGridStyle = styled.div.attrs(
   }
 
   .ag-cell {
-    display: inline-block;
-    position: absolute;
-    white-space: nowrap;
-    height: 100%;
     color: ${({ font_color }) => (font_color ? font_color : '#000000')};
     font-weight: ${({ font_weight }) => (font_weight ? font_weight : 'normal')};
     font-size: ${({ font_size }) => (font_size ? `${font_size}px` : '13px')};
-    /* background-color: red !important; */
     background-color: ${({ background_color }) =>
       background_color ? background_color : '#ffffff'};
+    border-right-color: ${({ border_color, is_border_color }) =>
+      is_border_color ? border_color : 'gray'};
   }
+
+  .ag-theme-alpine .ag-paging-panel {
+    color: ${({ font_color }) =>
+      font_color ? font_color : '#000000'} !important;
+    background-color: ${({ background_color }) =>
+      background_color ? background_color : '#ffffff'} !important;
+  }
+
+  .ag-center-cols-container {
+    background-color: ${({ background_color }) =>
+      background_color ? background_color : '#ffffff'} !important;
+  }
+
+  /* .ag-header-viewport,
+  .ag-floating-top-viewport,
+  .ag-body-viewport,
+  .ag-center-cols-viewport,
+  .ag-floating-bottom-viewport,
+  .ag-body-horizontal-scroll-viewport,
+  .ag-virtual-list-viewport {
+    position: relative;
+    height: 100%;
+    min-width: 0px;
+    overflow: hidden;
+    flex: 1 1 auto;
+    background-color: ${({ background_color }) =>
+    background_color ? background_color : '#ffffff'} !important;
+    color: ${({ font_color }) =>
+    font_color ? font_color : '#000000'} !important;
+  } */
 `;
