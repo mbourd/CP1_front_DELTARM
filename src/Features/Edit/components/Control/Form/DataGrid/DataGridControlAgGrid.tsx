@@ -235,9 +235,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   );
 
   const kFormatter: any = (num: any) => {
-    return Math.abs(num) > 999
-      ? (Math.sign(num) * Math.round(Math.abs(num) / 100)) / 10 + 'k'
-      : Math.sign(num) * Math.abs(num);
+    return num.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
   const cellRenderer = (props: any) => {
     // console.log(props);
@@ -315,7 +313,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 style={{ marginBottom: -4, fontSize: 19, marginLeft: 2 }}
               />
             )}
-            {millify(Number(props.value), { precision: 3 })}
+            {kFormatter(props.value)}
           </div>
         );
       // case 'date':
@@ -559,9 +557,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   //     : AG_GRID_LOCALE_FR;
   // }, []);
   const gridOptions = {
-    rowClassRules: {
-      'ag-cell-hover': 'true',
-    },
+    rowClass: 'my-hover-class',
   };
 
   return (
