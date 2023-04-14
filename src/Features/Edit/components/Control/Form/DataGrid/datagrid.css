@@ -4,15 +4,19 @@
   background-color: lightgray !important;
 } */
 
-.ag-theme-alpine .ag-row-hover {
+/* .ag-theme-alpine .ag-row-hover {
   background-color: lightblue !important;
+}
+
+.my-hover-class:hover {
+  background-color: #000;
 }
 .ag-cell-value,
 .ag-group-value {
   overflow: hidden;
-  /* text-overflow: ellipsis; */
-  /* padding-bottom: 20px !important; */
-}
+  text-overflow: ellipsis; */
+/* padding-bottom: 20px !important;
+} */
 /* 
 .ag-theme-alpine {
   --ag-foreground-color: rgb(126, 46, 132);

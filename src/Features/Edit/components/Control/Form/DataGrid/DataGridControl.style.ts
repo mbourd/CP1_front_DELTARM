@@ -76,31 +76,6 @@ export const AgDataGridStyle = styled.div.attrs(
     font_weight: string;
   }) => props,
 )`
-  /* background-color: red; */
-
-  /* .ag-header-row {
-    position: absolute;
-    overflow: hidden;
-    background-color: lightgray !important;
-  }
-
-  .my-header-class {
-    background-color: red;
-  } */
-
-  /* .ag-theme-alpine {
-    --ag-header-column-separator-display: block;
-    --ag-header-column-separator-height: 100%;
-    --ag-header-column-separator-width: 4px;
-    --ag-header-column-separator-color: purple;
-
-    --ag-header-column-resize-handle-display: block;
-    --ag-header-column-resize-handle-height: 100%;
-    --ag-header-column-resize-handle-width: 5px;
-    --ag-header-column-resize-handle-color: ${({ border_color }) =>
-    border_color ? border_color : 'gray'};
-  } */
-
   .ag-theme-alpine .ag-header-cell-resize::after {
     position: absolute;
     z-index: 1;
@@ -113,24 +88,22 @@ export const AgDataGridStyle = styled.div.attrs(
       is_border_color ? border_color : 'gray'};
   }
 
-  .ag-theme-alpine .ag-cell-hover {
-    background-color: lightblue !important;
+  .ag-cell-value,
+  .ag-group-value {
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-
   .ag-header-cell {
     display: inline-flex;
-    align-items: center;
+    align-items: left !important;
     position: absolute;
     height: 100%;
     overflow: hidden;
     color: ${({ font_color }) => (font_color ? font_color : '#000000')};
     font-weight: ${({ font_weight }) => (font_weight ? font_weight : 'normal')};
     font-size: ${({ font_size }) => (font_size ? `${font_size}px` : '13px')};
-    /* background-color: red !important; */
     background-color: ${({ background_color }) =>
       background_color ? background_color : '#ffffff'};
-    /* border-right-color: ${({ border_color }) =>
-      border_color ? border_color : '#123456'}; */
   }
 
   .ag-cell {
@@ -138,9 +111,7 @@ export const AgDataGridStyle = styled.div.attrs(
     font-weight: ${({ font_weight }) => (font_weight ? font_weight : 'normal')};
     font-size: ${({ font_size }) => (font_size ? `${font_size}px` : '13px')};
     background-color: ${({ background_color }) =>
-      background_color ? background_color : '#ffffff'};
-    border-right-color: ${({ border_color, is_border_color }) =>
-      is_border_color ? border_color : 'gray'};
+      background_color ? background_color : 'transparent'};
   }
 
   .ag-theme-alpine .ag-paging-panel {
@@ -152,24 +123,6 @@ export const AgDataGridStyle = styled.div.attrs(
 
   .ag-center-cols-container {
     background-color: ${({ background_color }) =>
-      background_color ? background_color : '#ffffff'} !important;
+      background_color ? background_color : 'transparent'} !important;
   }
-
-  /* .ag-header-viewport,
-  .ag-floating-top-viewport,
-  .ag-body-viewport,
-  .ag-center-cols-viewport,
-  .ag-floating-bottom-viewport,
-  .ag-body-horizontal-scroll-viewport,
-  .ag-virtual-list-viewport {
-    position: relative;
-    height: 100%;
-    min-width: 0px;
-    overflow: hidden;
-    flex: 1 1 auto;
-    background-color: ${({ background_color }) =>
-    background_color ? background_color : '#ffffff'} !important;
-    color: ${({ font_color }) =>
-    font_color ? font_color : '#000000'} !important;
-  } */
 `;
