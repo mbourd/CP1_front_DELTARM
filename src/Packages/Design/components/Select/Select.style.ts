@@ -15,7 +15,7 @@ export const SelectStyled = styled.section<IProps>`
     border-radius: ${({ bdr }) => '0 0 ' + bdr + ' ' + bdr};
     border-top: none;
     padding: ${({ bdr }) => bdr};
-    position: relative;
+    position: absolute;
     width: 100%;
     z-index: 10;
   }
