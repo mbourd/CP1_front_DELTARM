@@ -91,6 +91,7 @@ const CustomSelectRenderer: React.FC<any> = ({
         <CustomSelectStyled
           value={select_id_to_show[0]?.choice_lib}
           onChange={handleChange}
+          disabled={field_data?.control_editable === false ? true : false}
           // displayEmpty
           inputProps={{ 'aria-label': 'Without label' }}
           sx={{
