@@ -32,6 +32,7 @@ const CustomDateRenderer: React.FC<any> = ({
       <input
         type="date"
         onChange={checkedHandler}
+        disabled={field_data?.control_editable === false ? true : false}
         // id="date"
         style={{
           backgroundColor: 'transparent',
