@@ -31,7 +31,10 @@ import { AgDataGridUpload } from './DataGridFields/AgDataGridUpload/AgDataGridUp
 import 'ag-grid-enterprise';
 // import 'ag-grid-community/styles/ag-grid.css';
 // import 'ag-grid-community/styles/ag-theme-alpine.css';
-import { IServerSideDatasource } from 'ag-grid-community';
+import {
+  CellEditingStartedEvent,
+  IServerSideDatasource,
+} from 'ag-grid-community';
 import { DataGridDetail } from '../../../../types';
 import millify from 'millify';
 import { LicenseManager } from 'ag-grid-enterprise';
@@ -43,6 +46,7 @@ LicenseManager.setLicenseKey(
 );
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+import CustomCheckboxRender from './AgDataGridFields/CustomCheckboxRenderer/CustomCheckboxRender';
 
 interface IProps {
   control: IApiControl;
@@ -180,7 +184,38 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
+              singleClickEdit: false,
+              editable: false,
               cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              cellRenderer: (props: any) => {
+                // console.log('date', props);
+                const data = props?.colDef?.field?.split('.')[0];
+                // console.log('field name', data);
+                const field_data = Object.entries(props?.data).reduce(
+                  (accum: any, current: any) => {
+                    const [key, value] = current;
+                    if (key.match(data)) {
+                      return value;
+                    }
+
+                    return accum;
+                  },
+                  [],
+                );
+
+                // console.log(field_data);
+
+                return (
+                  <CustomCheckboxRender
+                    props={props}
+                    field_data={field_data}
+                    control={control}
+                    fileId={fileId}
+                    jwt={jwt}
+                    seterrors={seterrors}
+                  />
+                );
+              },
             };
           case 'text':
             return {
@@ -414,6 +449,28 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     // params.api!.setServerSideDatasource(datasource);
   };
 
+  const onCellEditingStarted = useCallback((event: CellEditingStartedEvent) => {
+    const data = event?.colDef?.field?.split('.')[0];
+    // console.log('field name', data);
+    const field_data = Object.entries(event?.data).reduce(
+      (accum: any, current: any) => {
+        const [key, value] = current;
+        if (key.match(data)) {
+          return value;
+        }
+
+        return accum;
+      },
+      [],
+    );
+
+    if (field_data?.control_editable === false) {
+      // gridRef.current.api.undoCellEditing();
+      gridRef.current.api.stopEditing();
+      return;
+    }
+  }, []);
+
   const handleClickAddRow = useCallback(() => {
     // console.log(
     //   fileId,
@@ -441,6 +498,16 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       },
       [],
     );
+
+    // if (field_data?.control_editable === false) {
+    //   seterrors('Non editable field');
+    //   gridRef.current.api.undoCellEditing();
+    //   setTimeout(() => {
+    //     seterrors('');
+    //   }, 3000);
+
+    //   return;
+    // }
     if (field_data?.control_regex && event?.newValue) {
       const regexControl = new RegExp(field_data?.control_regex, 'i');
       if (
@@ -450,6 +517,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         // console.log('error occured');
         seterrors(field_data?.control_regex_msg);
         gridRef.current.api.undoCellEditing();
+        // gridRef.current.api.stopEditing();
         setTimeout(() => {
           seterrors('');
         }, 3000);
@@ -681,6 +749,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           rowData={GridDetails?.rows}
           onGridReady={onGridReady}
           localeText={local_text}
+          onCellEditingStarted={onCellEditingStarted}
           overlayLoadingTemplate={
             '<span class="ag-overlay-loading-center">Loading..</span>'
           }
