@@ -46,6 +46,7 @@ LicenseManager.setLicenseKey(
 );
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+import CustomCheckboxRender from './AgDataGridFields/CustomCheckboxRenderer/CustomCheckboxRender';
 
 interface IProps {
   control: IApiControl;
@@ -183,7 +184,38 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
+              singleClickEdit: false,
+              editable: false,
               cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              cellRenderer: (props: any) => {
+                // console.log('date', props);
+                const data = props?.colDef?.field?.split('.')[0];
+                // console.log('field name', data);
+                const field_data = Object.entries(props?.data).reduce(
+                  (accum: any, current: any) => {
+                    const [key, value] = current;
+                    if (key.match(data)) {
+                      return value;
+                    }
+
+                    return accum;
+                  },
+                  [],
+                );
+
+                // console.log(field_data);
+
+                return (
+                  <CustomCheckboxRender
+                    props={props}
+                    field_data={field_data}
+                    control={control}
+                    fileId={fileId}
+                    jwt={jwt}
+                    seterrors={seterrors}
+                  />
+                );
+              },
             };
           case 'text':
             return {

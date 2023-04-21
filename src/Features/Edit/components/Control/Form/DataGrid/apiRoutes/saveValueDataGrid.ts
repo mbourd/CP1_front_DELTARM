@@ -8,7 +8,7 @@ export const saveValueDataGrid = (
   columnId: number,
   rowNum: number,
   jwt: string | null,
-  setGridDetails: React.Dispatch<SetStateAction<any>>,
+  setGridDetails: any,
   setErrorMessage: any,
   value: string,
 ) => {
