@@ -36,7 +36,7 @@ import {
   IServerSideDatasource,
 } from 'ag-grid-community';
 import { DataGridDetail } from '../../../../types';
-import millify from 'millify';
+// import millify from 'millify';
 import { LicenseManager } from 'ag-grid-enterprise';
 import { AG_GRID_LOCALE_FR } from './translations/fr';
 import { AG_GRID_LOCALE_EN } from './translations/en';
@@ -110,6 +110,29 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               singleClickEdit: false,
               editable: false,
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              // filter: 'agNumberColumnFilter',
+              filterParams: {
+                valueFormatter: (params: any) => {
+                  return 'custom labels';
+                  // console.log(
+                  //   '#############',
+                  //   control?.data_grid_detail?.rows?.map((e: any) =>
+                  //     e?.rdg_1?.choice_options?.map((f: any) =>
+                  //       f?.choice_lib[0]?.map((g: any) => g),
+                  //     ),
+                  //   ),
+                  // );
+                  // console.log(
+                  //   '##### ',
+                  //   control?.data_grid_detail?.rows[0]?.rdg_1?.answer_choices,
+                  // );
+                  // const data = control?.data_grid_detail?.rows?.map((e: any) =>
+                  //   e?.rdg_1?.choice_options?.map((f: any) => f?.choice_lib[0]),
+                  // );
+                  // return data;
+                },
+              },
             };
           case 'comment':
             return {
@@ -467,6 +490,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     if (field_data?.control_editable === false) {
       // gridRef.current.api.undoCellEditing();
       gridRef.current.api.stopEditing();
+
       return;
     }
   }, []);
