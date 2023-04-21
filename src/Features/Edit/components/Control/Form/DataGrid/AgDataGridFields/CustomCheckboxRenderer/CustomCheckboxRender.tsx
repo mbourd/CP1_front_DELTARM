@@ -40,9 +40,9 @@ const CustomCheckboxRender: React.FC<any> = ({
       field_data?.col_elm_id,
       field_data?.row_num,
       jwt,
-      items.toString(),
+      items?.toString(),
       seterrors,
-      items.toString(),
+      items?.toString(),
     );
   }, [items]);
 
