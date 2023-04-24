@@ -93,7 +93,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   // }, []);
   useEffect(() => {
     setGridDetails(control?.data_grid_detail);
-    // console.log('control', control?.data_grid_detail);
+    console.log('control', control?.data_grid_detail);
   }, [control?.data_grid_detail]);
   // useEffect(() => {
   //   setRowData(rows);
@@ -722,26 +722,29 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           >
             Export PDF
           </Button> */}
-          <BPITooltip
-            title={
-              user_language?.lang === 'en' ? 'Add Row' : 'Ajouter une ligne'
-            }
-          >
-            <Button
-              onClick={handleClickAddRow}
-              style={{
-                backgroundColor: 'teal',
-                border: 0,
-                color: '#fff',
-                margin: 5,
-                borderRadius: 5,
-                marginBottom: 14,
-              }}
+          {control?.data_grid_detail?.datagrid_options
+            ?.add_row_button_display === true && (
+            <BPITooltip
+              title={
+                user_language?.lang === 'en' ? 'Add Row' : 'Ajouter une ligne'
+              }
             >
-              {user_language?.lang === 'en' ? 'Add Row' : 'Ajouter une ligne'}
-              {/* {user_language?.lang} */}
-            </Button>
-          </BPITooltip>
+              <Button
+                onClick={handleClickAddRow}
+                style={{
+                  backgroundColor: 'teal',
+                  border: 0,
+                  color: '#fff',
+                  margin: 5,
+                  borderRadius: 5,
+                  marginBottom: 14,
+                }}
+              >
+                {user_language?.lang === 'en' ? 'Add Row' : 'Ajouter une ligne'}
+                {/* {user_language?.lang} */}
+              </Button>
+            </BPITooltip>
+          )}
           {/* <BPITooltip title={'Remove Line'}>
         <Button
           onClick={handleClickRemoveSelectedRow}
