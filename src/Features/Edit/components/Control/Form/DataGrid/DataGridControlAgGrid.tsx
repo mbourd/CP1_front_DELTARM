@@ -19,7 +19,7 @@ import { addRow } from './apiRoutes/addRow';
 import { AgGridReact } from 'ag-grid-react';
 import { useReactToPrint } from 'react-to-print';
 import { Button } from 'Shared/components';
-import { useTrans, security } from '../../../../../../Services';
+import { useTrans, security, isUndefined } from '../../../../../../Services';
 import './datagrid.css';
 import { useApi, useRouter } from 'Services';
 import { saveValueDataGrid } from './apiRoutes/saveValueDataGrid';
@@ -81,10 +81,11 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     : 20;
 
   const kFormatter: any = (num: any) => {
-    if (num === null || undefined) {
-      return 'no value';
-    } else {
+    // console.log(num);
+    if (num !== null || undefined) {
       return num?.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    } else {
+      return 'no value';
     }
   };
 
@@ -239,26 +240,30 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                   <div style={{ flexDirection: 'row', alignItems: 'center' }}>
                     {g?.currency_symbol ? (
                       <>
-                        <p
+                        <span
                           style={{
-                            fontSize: 13,
-                            fontWeight: 'bolder',
-                            color: control?.data_grid_detail?.datagrid_options
-                              ?.datagrid_font_size
+                            fontSize: control?.data_grid_detail
+                              ?.datagrid_options?.datagrid_font_size
                               ? control?.data_grid_detail?.datagrid_options
                                   ?.datagrid_font_size
-                              : 'black',
+                              : '15',
+
+                            marginRight: 2,
                           }}
                         >
                           {g?.currency_symbol}
-                        </p>
+                        </span>
                       </>
                     ) : (
                       <EuroIcon
                         style={{
-                          marginBottom: -4,
-                          fontSize: 19,
+                          fontSize: control?.data_grid_detail?.datagrid_options
+                            ?.datagrid_font_size
+                            ? control?.data_grid_detail?.datagrid_options
+                                ?.datagrid_font_size
+                            : '15',
                           marginLeft: 2,
+                          marginBottom: -1,
                         }}
                       />
                     )}
