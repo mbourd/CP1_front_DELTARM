@@ -9,42 +9,38 @@ const CustomCheckboxRender: React.FC<any> = ({
   jwt,
   seterrors,
 }) => {
-  console.log(field_data);
+  // console.log(field_data);
   const [items, setitems] = useState(field_data?.value?.split(','));
 
   const onChange = (event: any) => {
-    console.log(event.target.checked, event.target.name);
     if (event.target.checked) {
       setitems(items.concat(event.target.name));
+      saveValueDataGrid(
+        fileId,
+        control.control_id,
+        field_data?.col_elm_id,
+        field_data?.row_num,
+        jwt,
+        items.concat(event.target.name)?.toString(),
+        seterrors,
+        items.concat(event.target.name)?.toString(),
+      );
     } else {
       setitems(items.filter((item: any) => item !== event.target.name));
+      saveValueDataGrid(
+        fileId,
+        control.control_id,
+        field_data?.col_elm_id,
+        field_data?.row_num,
+        jwt,
+        items.filter((item: any) => item !== event.target.name)?.toString(),
+        seterrors,
+        items.filter((item: any) => item !== event.target.name)?.toString(),
+      );
     }
-    // saveValueDataGrid(
-    //   fileId,
-    //   control.control_id,
-    //   field_data?.col_elm_id,
-    //   field_data?.row_num,
-    //   jwt,
-    //   items.toString(),
-    //   seterrors,
-    //   items.toString(),
-    // );
   };
 
   const default_value = field_data?.value?.split(',');
-
-  useEffect(() => {
-    saveValueDataGrid(
-      fileId,
-      control.control_id,
-      field_data?.col_elm_id,
-      field_data?.row_num,
-      jwt,
-      items.toString(),
-      seterrors,
-      items.toString(),
-    );
-  }, [items]);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
