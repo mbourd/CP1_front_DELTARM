@@ -178,6 +178,11 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 cols: 50,
               },
               cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              cellRenderer: (props: any) => {
+                return (
+                  <>{props?.value !== null || undefined ? props.value : ''}</>
+                );
+              },
             };
           case 'percent':
             return {
@@ -185,6 +190,13 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               width: 'auto',
               cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              cellRenderer: (props: any) => {
+                return (
+                  <div style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    % {props.value !== null || undefined ? props?.value : ''}
+                  </div>
+                );
+              },
             };
           case 'radio':
             return {
@@ -206,6 +218,11 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               width: 'auto',
               cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              cellRenderer: (props: any) => {
+                return (
+                  <>{props?.value !== null || undefined ? props.value : ''}</>
+                );
+              },
             };
           case 'decimal':
             return {
@@ -213,6 +230,11 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               width: 'auto',
               cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              cellRenderer: (props: any) => {
+                return (
+                  <>{props?.value !== null || undefined ? props.value : ''}</>
+                );
+              },
             };
           case 'financial':
             return {
@@ -267,7 +289,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                         }}
                       />
                     )}
-                    {kFormatter(props.value)}
+                    {props?.value !== null || undefined
+                      ? kFormatter(props.value)
+                      : ''}
                   </div>
                 );
               },
@@ -315,6 +339,11 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               width: 'auto',
               cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              cellRenderer: (props: any) => {
+                return (
+                  <>{props?.value !== null || undefined ? props.value : ''}</>
+                );
+              },
             };
           case 'boolean':
             return {
@@ -363,6 +392,11 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
+              cellRenderer: (props: any) => {
+                return (
+                  <>{props?.value !== null || undefined ? props.value : ''}</>
+                );
+              },
             };
         }
       }),
@@ -386,18 +420,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     );
 
     switch (field_data?.component) {
-      case 'file_upload':
-        return (
-          <AgDataGridUpload
-            columnId={field_data?.col_elm_id}
-            rowNum={field_data?.row_num}
-            value={field_data?.upload_detail}
-            fileId={fileId}
-            controlId={control?.control_id}
-            mandatory={field_data?.control_mandatory}
-            editable={field_data?.control_editable}
-          />
-        );
       case 'select_list':
         return (
           <CustomSelectRenderer
@@ -409,20 +431,8 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             seterrors={seterrors}
           />
         );
-      case 'percent':
-        return (
-          <div style={{ flexDirection: 'row', alignItems: 'center' }}>
-            % {props.value}
-          </div>
-        );
-      case 'comment':
-        return props?.value;
-      case 'text':
-        return props.value;
-      case 'long_text':
-        return props?.value;
       default:
-        return props?.value ? props?.value : 'No value';
+        return props?.value ? props?.value : '';
     }
   };
 
@@ -433,7 +443,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       cellRenderer: cellRenderer,
       // autoHeight: true,
       cellClass: 'grid-cell-centered',
-      editable: true,
+      // editable: true,
       // cellEditorPopup: true,
       cellEditorPopupPosition: 'center',
       singleClickEdit: true,
@@ -515,7 +525,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
 
     if (field_data?.control_editable === false) {
       // gridRef.current.api.undoCellEditing();
-      gridRef.current.api.stopEditing();
+      gridRef?.current?.api?.stopEditing();
 
       return;
     }
@@ -533,7 +543,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   }, [control.control_id, jwt, fileId]);
 
   const onCellValueChanged = useCallback((event) => {
-    const cellDefs = gridRef.current.api.getEditingCells();
+    const cellDefs = gridRef?.current?.api?.getEditingCells();
     // console.log(cellDefs);
     const data = event?.colDef?.field?.split('.')[0];
     // console.log('field name', data);
@@ -558,7 +568,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
 
     //   return;
     // }
-    if (field_data?.control_regex && event?.newValue) {
+    if ((field_data?.control_regex !== null || undefined) && event?.newValue) {
       const regexControl = new RegExp(field_data?.control_regex, 'i');
       if (
         !event?.newValue.match(regexControl) &&
