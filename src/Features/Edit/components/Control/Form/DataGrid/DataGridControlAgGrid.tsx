@@ -80,7 +80,11 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     : 20;
 
   const kFormatter: any = (num: any) => {
-    return num.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    if (num === null || undefined) {
+      return 'no value';
+    } else {
+      return num?.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
   };
 
   // useEffect(() => {
@@ -88,7 +92,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   // }, []);
   useEffect(() => {
     setGridDetails(control?.data_grid_detail);
-    console.log('control', control?.data_grid_detail);
+    // console.log('control', control?.data_grid_detail);
   }, [control?.data_grid_detail]);
   // useEffect(() => {
   //   setRowData(rows);
