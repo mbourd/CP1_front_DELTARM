@@ -443,7 +443,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       cellRenderer: cellRenderer,
       // autoHeight: true,
       cellClass: 'grid-cell-centered',
-      // editable: true,
+      editable: true,
       // cellEditorPopup: true,
       cellEditorPopupPosition: 'center',
       singleClickEdit: true,
