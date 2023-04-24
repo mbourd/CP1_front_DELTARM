@@ -80,6 +80,10 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     ? control?.data_grid_detail?.datagrid_options?.pagination_row_size
     : 20;
 
+  const kFormatter: any = (num: any) => {
+    return num.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
+
   // useEffect(() => {
   //   console.log(control.data_grid_detail);
   // }, []);
@@ -114,24 +118,33 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
               // filter: 'agNumberColumnFilter',
               filterParams: {
-                valueFormatter: (params: any) => {
-                  return 'custom labels';
-                  // console.log(
-                  //   '#############',
-                  //   control?.data_grid_detail?.rows?.map((e: any) =>
-                  //     e?.rdg_1?.choice_options?.map((f: any) =>
-                  //       f?.choice_lib[0]?.map((g: any) => g),
-                  //     ),
-                  //   ),
-                  // );
-                  // console.log(
-                  //   '##### ',
-                  //   control?.data_grid_detail?.rows[0]?.rdg_1?.answer_choices,
-                  // );
-                  // const data = control?.data_grid_detail?.rows?.map((e: any) =>
-                  //   e?.rdg_1?.choice_options?.map((f: any) => f?.choice_lib[0]),
-                  // );
-                  // return data;
+                valueFormatter: (props: any) => {
+                  // // console.log('date', props);
+                  const data = props?.colDef?.field?.split('.')[0];
+                  // // console.log('field name', data);
+
+                  const row_data = Object.assign({}, ...GridDetails?.rows);
+                  const field_data = Object.entries(row_data).reduce(
+                    (accum: any, current: any) => {
+                      const [key, value] = current;
+                      if (key.match(data)) {
+                        return value;
+                      }
+
+                      return accum;
+                    },
+                    [],
+                  );
+                  // console.log(props, Object.assign({}, field_data));
+
+                  const value_to_show = field_data?.choice_options?.filter(
+                    (data: any) => {
+                      return data?.choice_id?.toString() === props?.value;
+                    },
+                  );
+                  // console.log(value_to_show);
+
+                  return value_to_show[0]?.choice_lib;
                 },
               },
             };
@@ -202,19 +215,10 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               width: 'auto',
               cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
-            };
-          case 'checkbox':
-            return {
-              ...g,
-              minWidth: 150,
-              width: 'auto',
-              singleClickEdit: false,
-              editable: false,
-              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
               cellRenderer: (props: any) => {
                 // console.log('date', props);
                 const data = props?.colDef?.field?.split('.')[0];
-                // console.log('field name', data);
+
                 const field_data = Object.entries(props?.data).reduce(
                   (accum: any, current: any) => {
                     const [key, value] = current;
@@ -227,7 +231,62 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                   [],
                 );
 
-                // console.log(field_data);
+                return (
+                  <div style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    {g?.currency_symbol ? (
+                      <>
+                        <p
+                          style={{
+                            fontSize: 13,
+                            fontWeight: 'bolder',
+                            color: control?.data_grid_detail?.datagrid_options
+                              ?.datagrid_font_size
+                              ? control?.data_grid_detail?.datagrid_options
+                                  ?.datagrid_font_size
+                              : 'black',
+                          }}
+                        >
+                          {g?.currency_symbol}
+                        </p>
+                      </>
+                    ) : (
+                      <EuroIcon
+                        style={{
+                          marginBottom: -4,
+                          fontSize: 19,
+                          marginLeft: 2,
+                        }}
+                      />
+                    )}
+                    {kFormatter(props.value)}
+                  </div>
+                );
+              },
+            };
+          case 'checkbox':
+            return {
+              ...g,
+              minWidth: 150,
+              width: 'auto',
+              singleClickEdit: false,
+              editable: false,
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              cellRenderer: (props: any) => {
+                // console.log('date', props);
+                const data = props?.colDef?.field?.split('.')[0];
+
+                const field_data = Object.entries(props?.data).reduce(
+                  (accum: any, current: any) => {
+                    const [key, value] = current;
+                    if (key.match(data)) {
+                      return value;
+                    }
+
+                    return accum;
+                  },
+                  [],
+                );
+                // console.log(props?.data);
 
                 return (
                   <CustomCheckboxRender
@@ -278,8 +337,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                   [],
                 );
 
-                // console.log(field_data);
-
                 return (
                   <CustomDateRenderer
                     props={props}
@@ -303,9 +360,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     [control.data_grid_detail?.columns],
   );
 
-  const kFormatter: any = (num: any) => {
-    return num.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  };
   const cellRenderer = (props: any) => {
     // console.log(props);
     const data = props?.colDef?.field?.split('.')[0];
@@ -358,44 +412,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         return props.value;
       case 'long_text':
         return props?.value;
-      case 'financial':
-        return (
-          <div style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {field_data?.control_options?.currency_symbol ? (
-              <>
-                <p
-                  style={{
-                    fontSize: 13,
-                    fontWeight: 'bolder',
-                    color: control?.data_grid_detail?.datagrid_options
-                      ?.datagrid_font_size
-                      ? control?.data_grid_detail?.datagrid_options
-                          ?.datagrid_font_size
-                      : 'black',
-                  }}
-                >
-                  {field_data?.control_options?.currency_symbol}
-                </p>
-              </>
-            ) : (
-              <EuroIcon
-                style={{ marginBottom: -4, fontSize: 19, marginLeft: 2 }}
-              />
-            )}
-            {kFormatter(props.value)}
-          </div>
-        );
-      // case 'date':
-      //   return (
-      //     <CustomDateRenderer
-      //       props={props}
-      //       field_data={field_data}
-      //       control={control}
-      //       fileId={fileId}
-      //       jwt={jwt}
-      //       seterrors={seterrors}
-      //     />
-      //   );
       default:
         return props?.value ? props?.value : 'No value';
     }
@@ -666,15 +682,17 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   return (
     <Grid item xs={11} style={{ maxWidth: '95%', margin: '0 auto' }}>
       {/* <DataGridControlStyled> */}
-      <ControlLabel control={control} />
+
       <div
         style={{
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-between',
+          marginBottom: -20,
         }}
       >
+        <ControlLabel control={control} />
         <div>
           {/* <Button
             style={{
@@ -719,22 +737,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} />
       </BPITooltip> */}
         </div>
-        {/* <div>
-          <select
-            value={option}
-            className="language_change"
-            onChange={(e) => {
-              localStorage.setItem('user_grid_language', e.target.value);
-              setoption(localStorage.getItem('user_grid_language'));
-              setlocal_text(
-                e.target.value === 'en' ? AG_GRID_LOCALE_EN : AG_GRID_LOCALE_FR,
-              );
-            }}
-          >
-            <option value="fr">French</option>
-            <option value="en">English</option>
-          </select>
-        </div> */}
       </div>
       <h1 style={{ color: 'red', padding: 10 }}>{errors}</h1>
       {errorsMessageAdd && <FormError>{errorsMessageAdd}</FormError>}
