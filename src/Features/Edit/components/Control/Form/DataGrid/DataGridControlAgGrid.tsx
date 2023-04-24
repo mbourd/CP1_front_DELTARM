@@ -94,7 +94,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   // }, []);
   useEffect(() => {
     setGridDetails(control?.data_grid_detail);
-    console.log('control', control?.data_grid_detail);
+    // console.log('control', control?.data_grid_detail);
   }, [control?.data_grid_detail]);
   // useEffect(() => {
   //   setRowData(rows);
@@ -193,7 +193,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               cellRenderer: (props: any) => {
                 return (
                   <div style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    % {props.value !== null || undefined ? props?.value : ''}
+                    {props.value !== null || undefined
+                      ? `% ${props?.value}`
+                      : ''}
                   </div>
                 );
               },
@@ -243,51 +245,40 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
               cellRenderer: (props: any) => {
-                // console.log('date', props);
-                const data = props?.colDef?.field?.split('.')[0];
-
-                const field_data = Object.entries(props?.data).reduce(
-                  (accum: any, current: any) => {
-                    const [key, value] = current;
-                    if (key.match(data)) {
-                      return value;
-                    }
-
-                    return accum;
-                  },
-                  [],
-                );
-
                 return (
                   <div style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    {g?.currency_symbol ? (
+                    {(props?.value !== null || undefined) && (
                       <>
-                        <span
-                          style={{
-                            fontSize: control?.data_grid_detail
-                              ?.datagrid_options?.datagrid_font_size
-                              ? control?.data_grid_detail?.datagrid_options
-                                  ?.datagrid_font_size
-                              : '15',
+                        {g?.currency_symbol ? (
+                          <>
+                            <span
+                              style={{
+                                fontSize: control?.data_grid_detail
+                                  ?.datagrid_options?.datagrid_font_size
+                                  ? control?.data_grid_detail?.datagrid_options
+                                      ?.datagrid_font_size
+                                  : '15',
 
-                            marginRight: 2,
-                          }}
-                        >
-                          {g?.currency_symbol}
-                        </span>
+                                marginRight: 2,
+                              }}
+                            >
+                              {g?.currency_symbol}
+                            </span>
+                          </>
+                        ) : (
+                          <EuroIcon
+                            style={{
+                              fontSize: control?.data_grid_detail
+                                ?.datagrid_options?.datagrid_font_size
+                                ? control?.data_grid_detail?.datagrid_options
+                                    ?.datagrid_font_size
+                                : '15',
+                              marginLeft: 2,
+                              marginBottom: -1,
+                            }}
+                          />
+                        )}
                       </>
-                    ) : (
-                      <EuroIcon
-                        style={{
-                          fontSize: control?.data_grid_detail?.datagrid_options
-                            ?.datagrid_font_size
-                            ? control?.data_grid_detail?.datagrid_options
-                                ?.datagrid_font_size
-                            : '15',
-                          marginLeft: 2,
-                          marginBottom: -1,
-                        }}
-                      />
                     )}
                     {props?.value !== null || undefined
                       ? kFormatter(props.value)
@@ -306,7 +297,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
               cellRenderer: (props: any) => {
                 // console.log('date', props);
-                const data = props?.colDef?.field?.split('.')[0];
+                const data: any = props?.colDef?.field?.split('.')[0];
 
                 const field_data = Object.entries(props?.data).reduce(
                   (accum: any, current: any) => {
@@ -319,7 +310,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                   },
                   [],
                 );
-                // console.log(props?.data);
 
                 return (
                   <CustomCheckboxRender
@@ -359,6 +349,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               singleClickEdit: false,
               editable: false,
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
               cellRenderer: (props: any) => {
                 // console.log('date', props);
                 const data = props?.colDef?.field?.split('.')[0];
@@ -509,21 +500,25 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   };
 
   const onCellEditingStarted = useCallback((event: CellEditingStartedEvent) => {
-    const data = event?.colDef?.field?.split('.')[0];
+    const data: any = event?.colDef?.field?.split('.')[0];
+    // console.log(event?.colDef?.field?.split('.')[0]);
     // console.log('field name', data);
     const field_data = Object.entries(event?.data).reduce(
       (accum: any, current: any) => {
         const [key, value] = current;
         if (key.match(data)) {
+          console.log(value);
           return value;
         }
-
-        return accum;
+        // console.log('vv', accum);
+        return;
       },
       [],
     );
 
-    if (field_data?.control_editable === false) {
+    console.log(event?.data[data]);
+
+    if (event?.data[data]?.control_editable === false) {
       // gridRef.current.api.undoCellEditing();
       gridRef?.current?.api?.stopEditing();
 
@@ -624,20 +619,26 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         }
       }
     }
+
+    // console.log(event?.newValue);
     if (
       field_data?.component !== 'select_list' &&
       field_data?.component !== 'date'
     ) {
-      saveValueDataGrid(
-        fileId,
-        control.control_id,
-        field_data?.col_elm_id,
-        field_data?.row_num,
-        jwt,
-        event?.newValue?.toString(),
-        seterrors,
-        event?.newValue,
-      );
+      if (event?.newValue === undefined) {
+        return;
+      } else {
+        saveValueDataGrid(
+          fileId,
+          control.control_id,
+          field_data?.col_elm_id,
+          field_data?.row_num,
+          jwt,
+          event?.newValue?.toString(),
+          seterrors,
+          event?.newValue,
+        );
+      }
     }
 
     // console.log('editing starts', {
