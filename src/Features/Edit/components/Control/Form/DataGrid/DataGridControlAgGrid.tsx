@@ -85,7 +85,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     if (num !== null || undefined) {
       return num?.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     } else {
-      return 'no value';
+      return '';
     }
   };
 
