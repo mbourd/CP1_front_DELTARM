@@ -19,7 +19,12 @@ import { addRow } from './apiRoutes/addRow';
 import { AgGridReact } from 'ag-grid-react';
 import { useReactToPrint } from 'react-to-print';
 import { Button } from 'Shared/components';
-import { useTrans, security, isUndefined } from '../../../../../../Services';
+import {
+  useTrans,
+  security,
+  isUndefined,
+  getEnv,
+} from '../../../../../../Services';
 import './datagrid.css';
 import { useApi, useRouter } from 'Services';
 import { saveValueDataGrid } from './apiRoutes/saveValueDataGrid';
@@ -47,6 +52,11 @@ LicenseManager.setLicenseKey(
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import CustomCheckboxRender from './AgDataGridFields/CustomCheckboxRenderer/CustomCheckboxRender';
+import { useActionButton } from 'Packages/Helpers/src/useActionButton';
+import { ModalDynamic } from 'Features/ModalDynamic/components/ModalDynamic';
+import { useRecoilValue } from 'recoil';
+import { IDataModal } from 'Features/ModalDynamic/components/types';
+import axios from 'axios';
 
 interface IProps {
   control: IApiControl;
@@ -61,19 +71,20 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   const { user } = useSecurity();
   const gridRef = useRef<any>();
   const jwt = user.getJwt();
-  const errrorMessage = '';
   const [errors, seterrors]: any = useState('');
-  const { send, error } = useApi<void>();
-  const { currentRoute } = useRouter();
   const [GridDetails, setGridDetails]: any = useState<
     DataGridDetail | undefined | null
   >(control.data_grid_detail);
   const user_language: any = security.decodeJwtToken(jwt ? jwt : '');
   const user_grid_language = localStorage.getItem('user_grid_language');
-  const [option, setoption]: any = useState(user_grid_language);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [local_text, setlocal_text] = useState(
     user_language?.lang === 'en' ? AG_GRID_LOCALE_EN : AG_GRID_LOCALE_FR,
   );
+  const [modal_data, setmodal_data]: any = useState(null);
+
+  // const modal: IDataModal = useRecoilValue<any>(modal_data);
+
   const paginationPageSize: number = control?.data_grid_detail?.datagrid_options
     ?.pagination_row_size
     ? control?.data_grid_detail?.datagrid_options?.pagination_row_size
@@ -87,25 +98,14 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       return '';
     }
   };
-
-  // useEffect(() => {
-  //   console.log(control.data_grid_detail);
-  // }, []);
   useEffect(() => {
     setGridDetails(control?.data_grid_detail);
     // console.log('control', control?.data_grid_detail);
   }, [control?.data_grid_detail]);
-  // useEffect(() => {
-  //   setRowData(rows);
-  // }, [rowData]);
 
   const handleClickRemoveSelectedRow = () => {
     const selectedRows = gridRef.current.api.getSelectedRows();
     gridRef.current.api.applyTransaction({ remove: selectedRows });
-  };
-
-  const getHeaderRenderer = (color: any) => {
-    return <AgDataGridStyle />;
   };
 
   const columnDefs = useMemo(
@@ -431,109 +431,55 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       resizable: true,
       sortable: true,
       cellRenderer: cellRenderer,
-      // autoHeight: true,
+
       cellClass: 'grid-cell-centered',
       editable: true,
       // cellEditorPopup: true,
       cellEditorPopupPosition: 'center',
       singleClickEdit: true,
-      // minWidth: 'auto' as any, // cast to the any type,
     }),
     [],
   );
 
-  const sideBar = useMemo(() => {
-    return {
-      toolPanels: [
-        {
-          id: 'columns',
-          labelDefault: 'Columns',
-          labelKey: 'columns',
-          iconKey: 'columns',
-          toolPanel: 'agColumnsToolPanel',
-          toolPanelParams: {
-            suppressValues: true,
-            suppressPivots: true,
-            suppressPivotMode: true,
-            suppressSideButtons: true,
-            suppressColumnFilter: true,
-            suppressColumnSelectAll: true,
-            suppressColumnExpandAll: true,
-          },
-        },
-      ],
-      defaultToolPanel: 'columns',
-    };
-  }, []);
-
-  const getServerSideDatasource: () => IServerSideDatasource = () => {
-    return {
-      getRows: (params: any) => {
-        // console.log('[Datasource] - rows requested by grid: ', params.request);
-        // var response = server.getData(params.request);
-        // adding delay to simulate real server call
-        // setTimeout(function () {
-        //   if (response.success) {
-        // call the success callback
-        params.success({
-          rowData: GridDetails.rows,
-          rowCount: GridDetails?.rows[GridDetails?.rows?.length - 1],
-        });
-        // } else {
-        // inform the grid request failed
-        //     params.fail();
-        //   }
-        // }, 200);
-      },
-    };
-  };
-
   const onGridReady = (params: any) => {
-    // Make the currently visible columns fit the screen
     params.api.sizeColumnsToFit();
     params.api.enableVirtualization = true;
-
-    // params.api.hideOverlay();
-    // const datasource = getServerSideDatasource();
-    // params.api!.setServerSideDatasource(datasource);
   };
 
   const onCellEditingStarted = useCallback((event: CellEditingStartedEvent) => {
     const data: any = event?.colDef?.field?.split('.')[0];
-    // console.log(event?.colDef?.field?.split('.')[0]);
-    // console.log('field name', data);
-    const field_data = Object.entries(event?.data).reduce(
-      (accum: any, current: any) => {
-        const [key, value] = current;
-        if (key.match(data)) {
-          console.log(value);
-          return value;
-        }
-        // console.log('vv', accum);
-        return;
-      },
-      [],
-    );
-
-    console.log(event?.data[data]);
 
     if (event?.data[data]?.control_editable === false) {
-      // gridRef.current.api.undoCellEditing();
       gridRef?.current?.api?.stopEditing();
 
       return;
     }
   }, []);
 
-  const handleClickAddRow = useCallback(() => {
-    // console.log(
-    //   fileId,
-    //   control.control_id,
-    //   jwt,
-    //   setGridDetails,
-    //   setErrorMessageAdd,
-    // );
-    addRow(fileId, control.control_id, jwt, setGridDetails, setErrorMessageAdd);
+  const handleClickAddRow = useCallback(async () => {
+    try {
+      const response = await axios.post(
+        `${getEnv('API_PROTOCOL')}://${getEnv(
+          'API_HOST',
+        )}/control/data_grid/add_row?file_id=${fileId}&elm_id=${
+          control.control_id
+        }`,
+        {},
+        {
+          headers: {
+            Authorization: jwt,
+          },
+          responseType: 'json',
+        },
+      );
+
+      if (response?.data) {
+        setIsModalOpen(true);
+        setmodal_data(response?.data);
+      }
+    } catch (error) {
+      setErrorMessageAdd("Une erreur est survenue lors de l'ajout de la ligne");
+    }
   }, [control.control_id, jwt, fileId]);
 
   const onCellValueChanged = useCallback((event) => {
@@ -553,25 +499,14 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       [],
     );
 
-    // if (field_data?.control_editable === false) {
-    //   seterrors('Non editable field');
-    //   gridRef.current.api.undoCellEditing();
-    //   setTimeout(() => {
-    //     seterrors('');
-    //   }, 3000);
-
-    //   return;
-    // }
     if ((field_data?.control_regex !== null || undefined) && event?.newValue) {
       const regexControl = new RegExp(field_data?.control_regex, 'i');
       if (
         !event?.newValue.match(regexControl) &&
         field_data?.control_regex_msg
       ) {
-        // console.log('error occured');
         seterrors(field_data?.control_regex_msg);
         gridRef.current.api.undoCellEditing();
-        // gridRef.current.api.stopEditing();
         setTimeout(() => {
           seterrors('');
         }, 3000);
@@ -618,8 +553,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         }
       }
     }
-
-    // console.log(event?.newValue);
     if (
       field_data?.component !== 'select_list' &&
       field_data?.component !== 'date'
@@ -639,20 +572,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         );
       }
     }
-
-    // console.log('editing starts', {
-    //   [data]: {
-    //     field_data,
-    //     row_index: event?.rowIndex,
-    //     old_value: event.oldValue,
-    //     value: event?.value,
-    //   },
-    // });
-
-    // console.log(field_data, event, control);
-    // console.log('Data after change is', event);
-    // seterrors('Validation Failed');
-    // gridRef.current.api.undoCellEditing();
   }, []);
 
   const getRowStyle = (params: any) => {
@@ -670,30 +589,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     }
   };
 
-  // useEffect(() => {
-  //   // console.log('called');
-  //   gridRef?.current!.api?.refreshCells();
-  //   // console.log(local_text);
-  //   setoption(localStorage.getItem('user_grid_language'));
-  //   setlocal_text(
-  //     localStorage.getItem('user_grid_language') === 'en'
-  //       ? AG_GRID_LOCALE_EN
-  //       : AG_GRID_LOCALE_FR,
-  //   );
-  // }, [localStorage, local_text]);
-
   const handlePrint = useReactToPrint({
     content: () => gridRef.current,
   });
-
-  // const localeText = useMemo<{
-  //   [key: string]: string;
-  // }>(() => {
-  //   // gridRef.current.api.refreshCells();
-  //   return localStorage.getItem('user_grid_language') === 'en'
-  //     ? AG_GRID_LOCALE_EN
-  //     : AG_GRID_LOCALE_FR;
-  // }, []);
   const gridOptions = {
     rowClass: 'my-hover-class',
   };
@@ -815,6 +713,13 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         />
       </AgDataGridStyle>
       {/* </DataGridControlStyled> */}
+      {isModalOpen && modal_data ? (
+        <ModalDynamic
+          open={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          data={modal_data}
+        />
+      ) : null}
     </Grid>
   );
 };
