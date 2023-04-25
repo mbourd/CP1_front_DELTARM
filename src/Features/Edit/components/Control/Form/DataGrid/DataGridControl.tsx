@@ -24,7 +24,9 @@ import { DataGridDecimal } from './DataGridFields/DataGridDecimal/DataGridDecima
 import { DataGridPercent } from './DataGridFields/DataGridPercent/DataGridPercent';
 import { DataGridFinancial } from './DataGridFields/DataGridFinancial/DataGridFinancial';
 import { DataGridLongText } from './DataGridFields/DataGridLongText/DataGridLongText';
-import { useTrans } from '../../../../../../Services';
+import { getEnv, useTrans } from '../../../../../../Services';
+import { ModalDynamic } from 'Features/ModalDynamic/components/ModalDynamic';
+import axios from 'axios';
 
 interface IProps {
   control: IApiControl;
@@ -39,9 +41,34 @@ export const DataGridControl: React.FC<IProps> = ({ control, fileId }) => {
   const { user } = useSecurity();
   const jwt = user.getJwt();
   const [trans] = useTrans('Edit');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modal_data, setmodal_data]: any = useState(null);
 
-  const handleClickAddRow = useCallback(() => {
-    addRow(fileId, control.control_id, jwt, setGridDetails, setErrorMessageAdd);
+  const handleClickAddRow = useCallback(async () => {
+    try {
+      const response = await axios.post(
+        `${getEnv('API_PROTOCOL')}://${getEnv(
+          'API_HOST',
+        )}/control/data_grid/add_row?file_id=${fileId}&elm_id=${
+          control.control_id
+        }`,
+        {},
+        {
+          headers: {
+            Authorization: jwt,
+          },
+          responseType: 'json',
+        },
+      );
+
+      if (response?.data) {
+        setIsModalOpen(true);
+        setmodal_data(response?.data);
+      }
+    } catch (error) {
+      setErrorMessageAdd("Une erreur est survenue lors de l'ajout de la ligne");
+    }
+    // addRow(fileId, control.control_id, jwt, setGridDetails, setErrorMessageAdd);
   }, [control.control_id, jwt, fileId]);
 
   useEffect(() => {
@@ -276,6 +303,13 @@ export const DataGridControl: React.FC<IProps> = ({ control, fileId }) => {
         <BPITooltip title={trans('addLine')}>
           <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} />
         </BPITooltip>
+        {isModalOpen && modal_data ? (
+          <ModalDynamic
+            open={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
+            data={modal_data}
+          />
+        ) : null}
         {errorMessageAdd && <FormError>{errorMessageAdd}</FormError>}
       </DataGridControlStyled>
     </Grid>
