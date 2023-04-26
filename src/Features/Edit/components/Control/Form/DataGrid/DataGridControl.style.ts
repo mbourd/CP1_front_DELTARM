@@ -81,11 +81,11 @@ export const AgDataGridStyle = styled.div.attrs(
     z-index: 1;
     display: block;
     left: calc(50% - 1px);
-    width: 5px;
+    width: ${({ is_border_color }) => (is_border_color ? '5px' : '0')};
     height: 100% !important;
     top: 0 !important;
     background-color: ${({ border_color, is_border_color }) =>
-      is_border_color ? border_color : 'gray'};
+      is_border_color ? border_color : 'none'};
   }
 
   .ag-cell-value,
