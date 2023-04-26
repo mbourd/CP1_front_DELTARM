@@ -1,0 +1,105 @@
+import { Button } from '@material-ui/core';
+import axios from 'axios';
+import React from 'react';
+import { getEnv } from 'Services';
+
+const CustomActionButtonRenderer: React.FC<any> = ({
+  props,
+  field_data,
+  control,
+  fileId,
+  jwt,
+  seterrors,
+}) => {
+  const onClickAction = async () => {
+    // console.log(field_data?.value?.split(';')[1]);
+    // try {
+    if (field_data?.value?.split(';')[1] === 'GET') {
+      await axios.get(
+        `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}/${
+          field_data?.value?.split(';')[2]
+        }?control_id=${control.control_id}&row_num=${
+          field_data?.row_num
+        }&col_elm_id=${field_data?.col_elm_id}`,
+        {
+          headers: {
+            Authorization: jwt,
+          },
+          responseType: 'json',
+        },
+      );
+      return;
+    } else if (field_data?.value?.split(';')[1] === 'POST') {
+      await axios.post(
+        `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}/${
+          field_data?.value?.split(';')[2]
+        }?control_id=${control.control_id}&row_num=${
+          field_data?.row_num
+        }&col_elm_id=${field_data?.col_elm_id}`,
+        {
+          headers: {
+            Authorization: jwt,
+          },
+          responseType: 'json',
+        },
+      );
+      return;
+    } else {
+      await axios.get(
+        `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}/${
+          field_data?.value?.split(';')[2]
+        }?control_id=${control.control_id}&row_num=${
+          field_data?.row_num
+        }&col_elm_id=${field_data?.col_elm_id}`,
+        {
+          headers: {
+            Authorization: jwt,
+          },
+          responseType: 'json',
+        },
+      );
+      return;
+    }
+    // } catch (error) {
+    //   seterrors("Une erreur est survenue lors de l'ajout de la ligne");
+    //   setTimeout(() => {
+    //     seterrors('');
+    //   }, 3000);
+    // }
+  };
+
+  return (
+    <div style={{ alignItems: 'center', justifyContent: 'center' }}>
+      {field_data?.value?.split(';')[2] ? (
+        <button
+          onClick={onClickAction}
+          style={{
+            // backgroundColor: 'teal',
+            border: 0,
+            color: 'black',
+            borderRadius: 5,
+            fontSize: `${
+              `${control?.data_grid_detail?.datagrid_options?.datagrid_font_size}`
+                ? `${control?.data_grid_detail?.datagrid_options?.datagrid_font_size}px`
+                : '12px'
+            }`,
+            marginBottom: 5,
+            padding: '5px 10px',
+            cursor: `${
+              field_data?.control_editable === false ? 'none' : 'pointer'
+            }`,
+          }}
+          disabled={field_data?.control_editable === false ? true : false}
+        >
+          {field_data?.value?.split(';')[0]
+            ? field_data?.value?.split(';')[0]
+            : 'Action'}
+        </button>
+      ) : (
+        <div></div>
+      )}
+    </div>
+  );
+};
+
+export default CustomActionButtonRenderer;
