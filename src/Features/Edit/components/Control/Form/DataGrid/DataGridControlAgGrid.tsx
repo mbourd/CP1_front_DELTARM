@@ -57,6 +57,8 @@ import { ModalDynamic } from 'Features/ModalDynamic/components/ModalDynamic';
 import { useRecoilValue } from 'recoil';
 import { IDataModal } from 'Features/ModalDynamic/components/types';
 import axios from 'axios';
+import CustomIconRenderer from './AgDataGridFields/CustomIconRenderer/CustomIconRenderer';
+import CustomActionButtonRenderer from './AgDataGridFields/CustomActionButtonRenderer/CustomActionButtonRenderer';
 
 interface IProps {
   control: IApiControl;
@@ -377,6 +379,89 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 );
               },
             };
+          case 'icon':
+            return {
+              ...g,
+              minWidth: 150,
+              width: 'auto',
+              singleClickEdit: false,
+              editable: false,
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              cellRenderer: (props: any) => {
+                // console.log('date', props);
+                const data = props?.colDef?.field?.split('.')[0];
+                // console.log('field name', data);
+                const field_data = Object.entries(props?.data).reduce(
+                  (accum: any, current: any) => {
+                    const [key, value] = current;
+                    if (key.match(data)) {
+                      return value;
+                    }
+
+                    return accum;
+                  },
+                  [],
+                );
+
+                return (
+                  <div>
+                    {props?.value !== null || undefined ? (
+                      <CustomIconRenderer
+                        props={props}
+                        field_data={field_data}
+                        control={control}
+                        fileId={fileId}
+                        jwt={jwt}
+                        seterrors={seterrors}
+                      />
+                    ) : (
+                      <div></div>
+                    )}
+                  </div>
+                );
+              },
+            };
+          case 'action_button':
+            return {
+              ...g,
+              minWidth: 150,
+              width: 'auto',
+              singleClickEdit: false,
+              editable: false,
+              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              cellRenderer: (props: any) => {
+                const data = props?.colDef?.field?.split('.')[0];
+                // console.log('field name', data);
+                const field_data = Object.entries(props?.data).reduce(
+                  (accum: any, current: any) => {
+                    const [key, value] = current;
+                    if (key.match(data)) {
+                      return value;
+                    }
+
+                    return accum;
+                  },
+                  [],
+                );
+
+                return (
+                  <div>
+                    {props?.value !== null || undefined ? (
+                      <CustomActionButtonRenderer
+                        props={props}
+                        field_data={field_data}
+                        control={control}
+                        fileId={fileId}
+                        jwt={jwt}
+                        seterrors={seterrors}
+                      />
+                    ) : (
+                      <div></div>
+                    )}
+                  </div>
+                );
+              },
+            };
           default:
             return {
               ...g,
@@ -555,7 +640,8 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     }
     if (
       field_data?.component !== 'select_list' &&
-      field_data?.component !== 'date'
+      field_data?.component !== 'date' &&
+      field_data?.component !== 'icon'
     ) {
       if (event?.newValue === undefined) {
         return;
