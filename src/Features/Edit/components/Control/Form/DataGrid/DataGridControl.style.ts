@@ -74,8 +74,29 @@ export const AgDataGridStyle = styled.div.attrs(
     font_color: string;
     font_size: string;
     font_weight: string;
+    header_font_color: string;
+    header_bg_color: string;
+    odd_row_bg_color: string;
   }) => props,
 )`
+  .ag-theme-alpine {
+    --ag-foreground-color: ${({ font_color }) =>
+      font_color ? font_color : '#000000'};
+    --ag-background-color: ${({ background_color }) =>
+      background_color ? background_color : '#ffffff'};
+    --ag-header-foreground-color: ${({ header_font_color }) =>
+      header_font_color ? header_font_color : '#000000'};
+    --ag-header-background-color: ${({ header_bg_color }) =>
+      header_bg_color ? header_bg_color : '#ffffff'};
+    --ag-odd-row-background-color: ${({ odd_row_bg_color }) =>
+      odd_row_bg_color ? odd_row_bg_color : '#ffffff'};
+    /* --ag-header-column-resize-handle-color: rgb(126, 46, 132); */
+
+    --ag-font-size: 17px;
+    --ag-font-family: monospace;
+    /* color: #FAF5E3 */
+  }
+
   .ag-theme-alpine .ag-header-cell-resize::after {
     position: absolute;
     z-index: 1;
@@ -93,7 +114,7 @@ export const AgDataGridStyle = styled.div.attrs(
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .ag-header-cell {
+  /* .ag-header-cell {
     display: inline-flex;
     align-items: left !important;
     position: absolute;
@@ -103,26 +124,26 @@ export const AgDataGridStyle = styled.div.attrs(
     font-weight: ${({ font_weight }) => (font_weight ? font_weight : 'normal')};
     font-size: ${({ font_size }) => (font_size ? `${font_size}px` : '13px')};
     background-color: ${({ background_color }) =>
-      background_color ? background_color : '#ffffff'};
-  }
+    background_color ? background_color : '#ffffff'};
+  } */
 
-  .ag-cell {
+  /* .ag-cell {
     color: ${({ font_color }) => (font_color ? font_color : '#000000')};
     font-weight: ${({ font_weight }) => (font_weight ? font_weight : 'normal')};
     font-size: ${({ font_size }) => (font_size ? `${font_size}px` : '13px')};
     background-color: ${({ background_color }) =>
-      background_color ? background_color : 'transparent'};
-  }
+    background_color ? background_color : 'transparent'};
+  } */
 
-  .ag-theme-alpine .ag-paging-panel {
+  /* .ag-theme-alpine .ag-paging-panel {
     color: ${({ font_color }) =>
-      font_color ? font_color : '#000000'} !important;
+    font_color ? font_color : '#000000'} !important;
     background-color: ${({ background_color }) =>
-      background_color ? background_color : '#ffffff'} !important;
+    background_color ? background_color : '#ffffff'} !important;
   }
 
   .ag-center-cols-container {
     background-color: ${({ background_color }) =>
-      background_color ? background_color : 'transparent'} !important;
-  }
+    background_color ? background_color : 'transparent'} !important;
+  } */
 `;
