@@ -102,7 +102,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   };
   useEffect(() => {
     setGridDetails(control?.data_grid_detail);
-    // console.log('control', control?.data_grid_detail);
+    console.log('control', control?.data_grid_detail);
   }, [control?.data_grid_detail]);
 
   const handleClickRemoveSelectedRow = () => {
@@ -753,7 +753,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
 
       <AgDataGridStyle
         background_color={
-          control?.data_grid_detail?.datagrid_options?.datagrid_header_color
+          control?.data_grid_detail?.datagrid_options?.datagrid_bg_color
         }
         border_color={
           control?.data_grid_detail?.datagrid_options?.datagrid_border_color
