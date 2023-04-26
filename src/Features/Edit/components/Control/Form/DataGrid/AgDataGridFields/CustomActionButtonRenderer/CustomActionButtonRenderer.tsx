@@ -78,7 +78,11 @@ const CustomActionButtonRenderer: React.FC<any> = ({
             border: 0,
             color: 'black',
             borderRadius: 5,
-            fontSize: 14,
+            fontSize: `${
+              `${control?.data_grid_detail?.datagrid_options?.datagrid_font_size}`
+                ? `${control?.data_grid_detail?.datagrid_options?.datagrid_font_size}px`
+                : '12px'
+            }`,
             marginBottom: 5,
             padding: '5px 10px',
             cursor: `${

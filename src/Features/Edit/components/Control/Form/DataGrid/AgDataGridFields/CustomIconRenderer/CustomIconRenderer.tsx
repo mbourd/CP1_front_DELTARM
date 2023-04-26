@@ -34,7 +34,7 @@ const CustomIconRenderer: React.FC<any> = ({
       //   );
       // }
 
-      return <Icon style={{ color, fontSize: size }} />;
+      return <Icon style={{ color, fontSize: size, marginTop: 4 }} />;
     },
     [],
   );
@@ -50,7 +50,7 @@ const CustomIconRenderer: React.FC<any> = ({
               : '#000000',
             field_data?.value?.split(';')[2]
               ? Number(field_data?.value?.split(';')[2])
-              : 12,
+              : 32,
             '',
             '',
           )}
