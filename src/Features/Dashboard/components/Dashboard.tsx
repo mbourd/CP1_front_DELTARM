@@ -16,6 +16,7 @@ import { IsLoading } from './IsLoading';
 import { NoData } from './NoData';
 import { DashboardSearch } from './Search/DashboardSearch';
 import { DashboardDynamic } from '../../DashboardDynamic';
+import { AgGridDashboard } from '../../AgGridDashboard';
 
 const Dashboard: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Dashboard');
@@ -39,8 +40,12 @@ const Dashboard: React.FC = (): React.ReactElement => {
   //   }, [context.cli_id, clientInfoSignal, review]);
 
   useEffect(() => {
+    console.log(dataSecurity.context);
     // Temporary if statements behavior
     if (dataSecurity.context === 'contr_perm') {
+      return;
+    }
+    if (dataSecurity.context === 'export') {
       return;
     }
     send('dashboard');
@@ -49,6 +54,10 @@ const Dashboard: React.FC = (): React.ReactElement => {
   // Temporary if statements behavior
   if (dataSecurity.context === 'contr_perm') {
     return <DashboardDynamic />;
+  }
+
+  if (dataSecurity.context === 'export') {
+    return <AgGridDashboard />;
   }
 
   if (!user.isLogged()) {

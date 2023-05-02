@@ -13,11 +13,11 @@ afterAll(() => server?.close());
 
 const AllTheProviders: FC = ({ children }) => {
   return (
-      <I18nextProvider i18n={i18n}>
-        <ThemeProvider theme={BPITheme}>
-          <Suspense fallback={'Loading tests'}>{children}</Suspense>
-        </ThemeProvider>
-      </I18nextProvider>
+    <I18nextProvider i18n={i18n}>
+      <ThemeProvider theme={BPITheme}>
+        <Suspense fallback={'Loading tests'}>{children}</Suspense>
+      </ThemeProvider>
+    </I18nextProvider>
   );
 };
 
