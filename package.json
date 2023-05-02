@@ -162,5 +162,6 @@
   },
   "msw": {
     "workerDirectory": "public"
-  }
+  },
+  "resolutions": {}
 }
