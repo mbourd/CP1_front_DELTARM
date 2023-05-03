@@ -92,7 +92,8 @@ export const AgDataGridStyle = styled.div.attrs(
       odd_row_bg_color ? odd_row_bg_color : '#ffffff'};
     /* --ag-header-column-resize-handle-color: rgb(126, 46, 132); */
 
-    --ag-font-size: 17px;
+    --ag-font-size: ${({ font_size }) =>
+      font_size ? `${font_size}px` : '17px'};
     --ag-font-family: monospace;
     /* color: #FAF5E3 */
   }
@@ -102,7 +103,7 @@ export const AgDataGridStyle = styled.div.attrs(
     z-index: 1;
     display: block;
     left: calc(50% - 1px);
-    width: ${({ is_border_color }) => (is_border_color ? '5px' : '0')};
+    /* width: ${({ is_border_color }) => (is_border_color ? '5px' : '0')}; */
     height: 100% !important;
     top: 0 !important;
     background-color: ${({ border_color, is_border_color }) =>
@@ -114,26 +115,20 @@ export const AgDataGridStyle = styled.div.attrs(
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  /* .ag-header-cell {
+  .ag-header-cell {
     display: inline-flex;
     align-items: left !important;
     position: absolute;
     height: 100%;
     overflow: hidden;
-    color: ${({ font_color }) => (font_color ? font_color : '#000000')};
     font-weight: ${({ font_weight }) => (font_weight ? font_weight : 'normal')};
     font-size: ${({ font_size }) => (font_size ? `${font_size}px` : '13px')};
-    background-color: ${({ background_color }) =>
-    background_color ? background_color : '#ffffff'};
-  } */
+  }
 
-  /* .ag-cell {
-    color: ${({ font_color }) => (font_color ? font_color : '#000000')};
+  .ag-cell {
     font-weight: ${({ font_weight }) => (font_weight ? font_weight : 'normal')};
     font-size: ${({ font_size }) => (font_size ? `${font_size}px` : '13px')};
-    background-color: ${({ background_color }) =>
-    background_color ? background_color : 'transparent'};
-  } */
+  }
 
   /* .ag-theme-alpine .ag-paging-panel {
     color: ${({ font_color }) =>

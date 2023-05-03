@@ -102,7 +102,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   };
   useEffect(() => {
     setGridDetails(control?.data_grid_detail);
-    // console.log('control', control?.data_grid_detail);
+    console.log('control', control?.data_grid_detail);
   }, [control?.data_grid_detail]);
 
   const handleClickRemoveSelectedRow = () => {
@@ -121,7 +121,13 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               singleClickEdit: false,
               editable: false,
-              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              cellStyle: {
+                textAlign: g?.alignment ? g?.alignment : 'left',
+
+                borderRight: g?.borderRight
+                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
+                  : 0,
+              },
               // filter: 'agNumberColumnFilter',
               filterParams: {
                 valueFormatter: (props: any) => {
@@ -165,7 +171,12 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 rows: 10,
                 cols: 50,
               },
-              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              cellStyle: {
+                textAlign: g?.alignment ? g?.alignment : 'left',
+                borderRight: g?.borderRight
+                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
+                  : 0,
+              },
             };
           case 'long_text':
             return {
@@ -178,7 +189,12 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 rows: 10,
                 cols: 50,
               },
-              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              cellStyle: {
+                textAlign: g?.alignment ? g?.alignment : 'left',
+                borderRight: g?.borderRight
+                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
+                  : 0,
+              },
               cellRenderer: (props: any) => {
                 return (
                   <>{props?.value !== null || undefined ? props.value : ''}</>
@@ -206,21 +222,36 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
-              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              cellStyle: {
+                textAlign: g?.alignment ? g?.alignment : 'left',
+                borderRight: g?.borderRight
+                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
+                  : 0,
+              },
             };
           case 'multiple_list':
             return {
               ...g,
               minWidth: 150,
               width: 'auto',
-              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              cellStyle: {
+                textAlign: g?.alignment ? g?.alignment : 'left',
+                borderRight: g?.borderRight
+                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
+                  : 0,
+              },
             };
           case 'integer':
             return {
               ...g,
               minWidth: 150,
               width: 'auto',
-              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              cellStyle: {
+                textAlign: g?.alignment ? g?.alignment : 'left',
+                borderRight: g?.borderRight
+                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
+                  : 0,
+              },
               cellRenderer: (props: any) => {
                 return (
                   <>{props?.value !== null || undefined ? props.value : ''}</>
@@ -232,7 +263,12 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
-              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              cellStyle: {
+                textAlign: g?.alignment ? g?.alignment : 'left',
+                borderRight: g?.borderRight
+                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
+                  : 0,
+              },
               cellRenderer: (props: any) => {
                 return (
                   <>{props?.value !== null || undefined ? props.value : ''}</>
@@ -244,7 +280,12 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
-              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              cellStyle: {
+                textAlign: g?.alignment ? g?.alignment : 'left',
+                borderRight: g?.borderRight
+                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
+                  : 0,
+              },
               cellRenderer: (props: any) => {
                 return (
                   <div style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -295,7 +336,12 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               singleClickEdit: false,
               editable: false,
-              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              cellStyle: {
+                textAlign: g?.alignment ? g?.alignment : 'left',
+                borderRight: g?.borderRight
+                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
+                  : 0,
+              },
               cellRenderer: (props: any) => {
                 // console.log('date', props);
                 const data: any = props?.colDef?.field?.split('.')[0];
@@ -329,7 +375,12 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
-              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              cellStyle: {
+                textAlign: g?.alignment ? g?.alignment : 'left',
+                borderRight: g?.borderRight
+                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
+                  : 0,
+              },
               cellRenderer: (props: any) => {
                 return (
                   <>{props?.value !== null || undefined ? props.value : ''}</>
@@ -341,7 +392,12 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
-              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              cellStyle: {
+                textAlign: g?.alignment ? g?.alignment : 'left',
+                borderRight: g?.borderRight
+                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
+                  : 0,
+              },
             };
           case 'date':
             return {
@@ -350,7 +406,12 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               singleClickEdit: false,
               editable: false,
-              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              cellStyle: {
+                textAlign: g?.alignment ? g?.alignment : 'left',
+                borderRight: g?.borderRight
+                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
+                  : 0,
+              },
               cellRenderer: (props: any) => {
                 // console.log('date', props);
                 const data = props?.colDef?.field?.split('.')[0];
@@ -386,7 +447,12 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               singleClickEdit: false,
               editable: false,
-              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              cellStyle: {
+                textAlign: g?.alignment ? g?.alignment : 'left',
+                borderRight: g?.borderRight
+                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
+                  : 0,
+              },
               cellRenderer: (props: any) => {
                 // console.log('date', props);
                 const data = props?.colDef?.field?.split('.')[0];
@@ -428,7 +494,12 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               singleClickEdit: false,
               editable: false,
-              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              cellStyle: {
+                textAlign: g?.alignment ? g?.alignment : 'left',
+                borderRight: g?.borderRight
+                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
+                  : 0,
+              },
               cellRenderer: (props: any) => {
                 const data = props?.colDef?.field?.split('.')[0];
                 // console.log('field name', data);
@@ -467,6 +538,12 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
+              cellStyle: {
+                textAlign: g?.alignment ? g?.alignment : 'left',
+                borderRight: g?.borderRight
+                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
+                  : 0,
+              },
               cellRenderer: (props: any) => {
                 return (
                   <>{props?.value !== null || undefined ? props.value : ''}</>
