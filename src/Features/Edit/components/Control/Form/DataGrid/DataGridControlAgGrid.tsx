@@ -4,6 +4,8 @@ import React, {
   useMemo,
   useRef,
   useEffect,
+  forwardRef,
+  useImperativeHandle,
 } from 'react';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { IApiControl } from '../../../../types';
@@ -39,6 +41,7 @@ import 'ag-grid-enterprise';
 import {
   CellEditingStartedEvent,
   IServerSideDatasource,
+  ITooltipParams,
 } from 'ag-grid-community';
 import { DataGridDetail } from '../../../../types';
 // import millify from 'millify';
@@ -59,11 +62,27 @@ import { IDataModal } from 'Features/ModalDynamic/components/types';
 import axios from 'axios';
 import CustomIconRenderer from './AgDataGridFields/CustomIconRenderer/CustomIconRenderer';
 import CustomActionButtonRenderer from './AgDataGridFields/CustomActionButtonRenderer/CustomActionButtonRenderer';
-
 interface IProps {
   control: IApiControl;
   fileId: string;
 }
+
+const CustomTooltip = (props: ITooltipParams & { color: string }) => {
+  console.log(props);
+  const data = useMemo(
+    () => props.api.getDisplayedRowAtIndex(props.rowIndex!)!.data,
+    [],
+  );
+
+  return (
+    <div
+      className="custom-tooltip"
+      style={{ backgroundColor: 'wheat', padding: 5 }}
+    >
+      <p>Value: {props?.value}</p>
+    </div>
+  );
+};
 
 export const DataGridControlAgGrid: React.FC<IProps> = ({
   control,
@@ -102,7 +121,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   };
   useEffect(() => {
     setGridDetails(control?.data_grid_detail);
-    console.log('control', control?.data_grid_detail);
+    // console.log('control', control?.data_grid_detail);
   }, [control?.data_grid_detail]);
 
   const handleClickRemoveSelectedRow = () => {
@@ -120,6 +139,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               width: 'auto',
               singleClickEdit: false,
+              tooltipField: g?.field,
               editable: false,
               cellStyle: {
                 textAlign: g?.alignment ? g?.alignment : 'left',
@@ -165,6 +185,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
+              tooltipField: g?.field,
               cellEditorPopup: true,
               cellEditor: 'agLargeTextCellEditor',
               cellEditorParams: {
@@ -183,6 +204,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
+              tooltipField: g?.field,
               cellEditorPopup: true,
               cellEditor: 'agLargeTextCellEditor',
               cellEditorParams: {
@@ -196,6 +218,12 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                   : 0,
               },
               cellRenderer: (props: any) => {
+                // console.log(props);
+                // props.colDef.cellStyle = (p: any) =>
+                //   p.rowIndex.toString() === props.node.id
+                //     ? { backgroundColor: 'green' }
+                //     : {};
+
                 return (
                   <>{props?.value !== null || undefined ? props.value : ''}</>
                 );
@@ -206,6 +234,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
+              tooltipField: g?.field,
               cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
               cellRenderer: (props: any) => {
                 return (
@@ -222,6 +251,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
+              tooltipField: g?.field,
               cellStyle: {
                 textAlign: g?.alignment ? g?.alignment : 'left',
                 borderRight: g?.borderRight
@@ -234,6 +264,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
+              tooltipField: g?.field,
               cellStyle: {
                 textAlign: g?.alignment ? g?.alignment : 'left',
                 borderRight: g?.borderRight
@@ -246,15 +277,35 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
+              tooltipField: g?.field,
               cellStyle: {
+                // backgroundColor: item.value === "54" ? "green" : item.value === ""
                 textAlign: g?.alignment ? g?.alignment : 'left',
                 borderRight: g?.borderRight
                   ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
                   : 0,
               },
               cellRenderer: (props: any) => {
+                // // console.log('date', props);
+                const data = props?.colDef?.field?.split('.')[0];
+                // // console.log('field name', data);
+                const field_data = Object.entries(props?.data).reduce(
+                  (accum: any, current: any) => {
+                    const [key, value] = current;
+                    if (key.match(data)) {
+                      return value;
+                    }
+
+                    return accum;
+                  },
+                  [],
+                );
+                // console.log('integer values', field_data);
+
                 return (
-                  <>{props?.value !== null || undefined ? props.value : ''}</>
+                  <div>
+                    {props?.value !== null || undefined ? props.value : ''}
+                  </div>
                 );
               },
             };
@@ -263,6 +314,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
+              tooltipField: g?.field,
               cellStyle: {
                 textAlign: g?.alignment ? g?.alignment : 'left',
                 borderRight: g?.borderRight
@@ -280,6 +332,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
+              tooltipField: g?.field,
               cellStyle: {
                 textAlign: g?.alignment ? g?.alignment : 'left',
                 borderRight: g?.borderRight
@@ -334,6 +387,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
+              tooltipField: g?.field,
               singleClickEdit: false,
               editable: false,
               cellStyle: {
@@ -375,6 +429,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
+              tooltipField: g?.field,
               cellStyle: {
                 textAlign: g?.alignment ? g?.alignment : 'left',
                 borderRight: g?.borderRight
@@ -392,6 +447,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
+              tooltipField: g?.field,
               cellStyle: {
                 textAlign: g?.alignment ? g?.alignment : 'left',
                 borderRight: g?.borderRight
@@ -403,6 +459,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             return {
               ...g,
               minWidth: 150,
+              tooltipField: g?.field,
               width: 'auto',
               singleClickEdit: false,
               editable: false,
@@ -445,6 +502,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
+
               singleClickEdit: false,
               editable: false,
               cellStyle: {
@@ -599,6 +657,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       // cellEditorPopup: true,
       cellEditorPopupPosition: 'center',
       singleClickEdit: true,
+      tooltipComponent: CustomTooltip,
     }),
     [],
   );
@@ -610,7 +669,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
 
   const onCellEditingStarted = useCallback((event: CellEditingStartedEvent) => {
     const data: any = event?.colDef?.field?.split('.')[0];
-
+    console.log(event?.data[data]);
     if (event?.data[data]?.control_editable === false) {
       gridRef?.current?.api?.stopEditing();
 
@@ -644,68 +703,37 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     }
   }, [control.control_id, jwt, fileId]);
 
-  const onCellValueChanged = useCallback((event) => {
-    const cellDefs = gridRef?.current?.api?.getEditingCells();
-    // console.log(cellDefs);
-    const data = event?.colDef?.field?.split('.')[0];
-    // console.log('field name', data);
-    const field_data = Object.entries(event?.data).reduce(
-      (accum: any, current: any) => {
-        const [key, value] = current;
-        if (key.match(data)) {
-          return value;
-        }
+  const onCellValueChanged = useCallback(
+    (event) => {
+      const cellDefs = gridRef?.current?.api?.getEditingCells();
+      // console.log(cellDefs);
+      const data = event?.colDef?.field?.split('.')[0];
+      // console.log('field name', data);
+      const field_data = event?.data[data];
 
-        return accum;
-      },
-      [],
-    );
+      if (event?.oldValue !== event?.newValue) {
+        event.colDef.cellStyle = (p: any) =>
+          p.rowIndex.toString() === event.node.id
+            ? { backgroundColor: 'red' }
+            : {};
 
-    if ((field_data?.control_regex !== null || undefined) && event?.newValue) {
-      const regexControl = new RegExp(field_data?.control_regex, 'i');
-      if (
-        !event?.newValue.match(regexControl) &&
-        field_data?.control_regex_msg
-      ) {
-        seterrors(field_data?.control_regex_msg);
-        gridRef.current.api.undoCellEditing();
-        setTimeout(() => {
-          seterrors('');
-        }, 3000);
-
-        return;
+        event.api.refreshCells({
+          force: true,
+          columns: [event.column.getId()],
+          rowNodes: [event.node],
+        });
       }
-    }
-    if (
-      field_data?.component === 'financial' ||
-      'decimal' ||
-      'integer' ||
-      'percent'
-    ) {
+
       if (
-        (field_data?.control_options?.min_value ||
-          field_data?.control_options?.max_value) &&
-        event?.newValue.trim()
+        (field_data?.control_regex !== null || undefined) &&
+        event?.newValue
       ) {
+        const regexControl = new RegExp(field_data?.control_regex, 'i');
         if (
-          minMax(
-            event?.newValue,
-            field_data?.control_options?.min_value,
-            field_data.control_options.max_value,
-          )
+          !event?.newValue.match(regexControl) &&
+          field_data?.control_regex_msg
         ) {
-          seterrors(null);
-        }
-        if (
-          !minMax(
-            event?.newValue,
-            field_data.control_options.min_value,
-            field_data.control_options.max_value,
-          )
-        ) {
-          seterrors(
-            'La valeur saisie ne respecte pas les contraintes définies',
-          );
+          seterrors(field_data?.control_regex_msg);
           gridRef.current.api.undoCellEditing();
           setTimeout(() => {
             seterrors('');
@@ -714,28 +742,68 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           return;
         }
       }
-    }
-    if (
-      field_data?.component !== 'select_list' &&
-      field_data?.component !== 'date' &&
-      field_data?.component !== 'icon'
-    ) {
-      if (event?.newValue === undefined) {
-        return;
-      } else {
-        saveValueDataGrid(
-          fileId,
-          control.control_id,
-          field_data?.col_elm_id,
-          field_data?.row_num,
-          jwt,
-          event?.newValue?.toString(),
-          seterrors,
-          event?.newValue,
-        );
+      if (
+        field_data?.component === 'financial' ||
+        'decimal' ||
+        'integer' ||
+        'percent'
+      ) {
+        if (
+          (field_data?.control_options?.min_value ||
+            field_data?.control_options?.max_value) &&
+          event?.newValue.trim()
+        ) {
+          if (
+            minMax(
+              event?.newValue,
+              field_data?.control_options?.min_value,
+              field_data.control_options.max_value,
+            )
+          ) {
+            seterrors(null);
+          }
+          if (
+            !minMax(
+              event?.newValue,
+              field_data.control_options.min_value,
+              field_data.control_options.max_value,
+            )
+          ) {
+            seterrors(
+              'La valeur saisie ne respecte pas les contraintes définies',
+            );
+            gridRef.current.api.undoCellEditing();
+            setTimeout(() => {
+              seterrors('');
+            }, 3000);
+
+            return;
+          }
+        }
       }
-    }
-  }, []);
+      if (
+        field_data?.component !== 'select_list' &&
+        field_data?.component !== 'date' &&
+        field_data?.component !== 'icon'
+      ) {
+        if (event?.newValue === undefined) {
+          return;
+        } else {
+          saveValueDataGrid(
+            fileId,
+            control.control_id,
+            field_data?.col_elm_id,
+            field_data?.row_num,
+            jwt,
+            event?.newValue?.toString(),
+            seterrors,
+            event?.newValue,
+          );
+        }
+      }
+    },
+    [control?.control_id, fileId, jwt],
+  );
 
   const getRowStyle = (params: any) => {
     if (params.data.border_bottom) {
