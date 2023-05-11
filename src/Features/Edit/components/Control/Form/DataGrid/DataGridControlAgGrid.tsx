@@ -67,21 +67,20 @@ interface IProps {
   fileId: string;
 }
 
-const CustomTooltip = (props: ITooltipParams & { color: string }) => {
-  console.log(props);
-  const data = useMemo(
-    () => props.api.getDisplayedRowAtIndex(props.rowIndex!)!.data,
-    [],
-  );
-
-  return (
-    <div
-      className="custom-tooltip"
-      style={{ backgroundColor: 'wheat', padding: 5 }}
-    >
-      <p>Value: {props?.value}</p>
-    </div>
-  );
+const CustomTooltip = (props: any & { tooltip: string }) => {
+  if (props?.colDef?.track_modification_tooltip) {
+    return (
+      <div
+        className="custom-tooltip"
+        style={{ backgroundColor: 'wheat', padding: 5 }}
+        id={`${props?.colDef?.headerName.replace(/ /g, '')}${props.rowIndex}`}
+      >
+        <p>{props.value}</p>
+      </div>
+    );
+  } else {
+    return;
+  }
 };
 
 export const DataGridControlAgGrid: React.FC<IProps> = ({
@@ -94,6 +93,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   const [trans] = useTrans('Edit');
   const jwt = user.getJwt();
   const [errors, seterrors]: any = useState('');
+  const [tooltip_extractor, settooltip_extractor] = useState('');
   const [GridDetails, setGridDetails]: any = useState<
     DataGridDetail | undefined | null
   >(control.data_grid_detail);
@@ -113,7 +113,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     : 20;
 
   const kFormatter: any = (num: any) => {
-    // console.log(num);
     if (num !== null || undefined) {
       return num?.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     } else {
@@ -141,6 +140,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               singleClickEdit: false,
               tooltipField: g?.field,
+              tooltipComponentParams: { tooltip: tooltip_extractor },
               editable: false,
               cellStyle: {
                 textAlign: g?.alignment ? g?.alignment : 'left',
@@ -152,9 +152,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               // filter: 'agNumberColumnFilter',
               filterParams: {
                 valueFormatter: (props: any) => {
-                  // // console.log('date', props);
                   const data = props?.colDef?.field?.split('.')[0];
-                  // // console.log('field name', data);
 
                   const row_data = Object.assign({}, ...GridDetails?.rows);
                   const field_data = Object.entries(row_data).reduce(
@@ -168,14 +166,12 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                     },
                     [],
                   );
-                  // console.log(props, Object.assign({}, field_data));
 
                   const value_to_show = field_data?.choice_options?.filter(
                     (data: any) => {
                       return data?.choice_id?.toString() === props?.value;
                     },
                   );
-                  // console.log(value_to_show);
 
                   return value_to_show[0]?.choice_lib;
                 },
@@ -187,6 +183,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               width: 'auto',
               tooltipField: g?.field,
+              tooltipComponentParams: { tooltip: tooltip_extractor },
               cellEditorPopup: true,
               cellEditor: 'agLargeTextCellEditor',
               cellEditorParams: {
@@ -206,6 +203,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               width: 'auto',
               tooltipField: g?.field,
+              tooltipComponentParams: { tooltip: tooltip_extractor },
               cellEditorPopup: true,
               cellEditor: 'agLargeTextCellEditor',
               cellEditorParams: {
@@ -219,12 +217,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                   : 0,
               },
               cellRenderer: (props: any) => {
-                // console.log(props);
-                // props.colDef.cellStyle = (p: any) =>
-                //   p.rowIndex.toString() === props.node.id
-                //     ? { backgroundColor: 'green' }
-                //     : {};
-
                 return (
                   <>{props?.value !== null || undefined ? props.value : ''}</>
                 );
@@ -236,6 +228,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               width: 'auto',
               tooltipField: g?.field,
+              tooltipComponentParams: { tooltip: tooltip_extractor },
               cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
               cellRenderer: (props: any) => {
                 return (
@@ -253,6 +246,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               width: 'auto',
               tooltipField: g?.field,
+              tooltipComponentParams: { tooltip: tooltip_extractor },
               cellStyle: {
                 textAlign: g?.alignment ? g?.alignment : 'left',
                 borderRight: g?.borderRight
@@ -266,6 +260,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               width: 'auto',
               tooltipField: g?.field,
+              tooltipComponentParams: { tooltip: tooltip_extractor },
               cellStyle: {
                 textAlign: g?.alignment ? g?.alignment : 'left',
                 borderRight: g?.borderRight
@@ -278,6 +273,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
+              tooltipComponentParams: { tooltip: tooltip_extractor },
               tooltipField: g?.field,
               cellStyle: {
                 // backgroundColor: item.value === "54" ? "green" : item.value === ""
@@ -287,9 +283,8 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                   : 0,
               },
               cellRenderer: (props: any) => {
-                // // console.log('date', props);
                 const data = props?.colDef?.field?.split('.')[0];
-                // // console.log('field name', data);
+
                 const field_data = Object.entries(props?.data).reduce(
                   (accum: any, current: any) => {
                     const [key, value] = current;
@@ -301,7 +296,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                   },
                   [],
                 );
-                // console.log('integer values', field_data);
 
                 return (
                   <div>
@@ -316,6 +310,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               width: 'auto',
               tooltipField: g?.field,
+              tooltipComponentParams: { tooltip: tooltip_extractor },
               cellStyle: {
                 textAlign: g?.alignment ? g?.alignment : 'left',
                 borderRight: g?.borderRight
@@ -334,6 +329,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               width: 'auto',
               tooltipField: g?.field,
+              tooltipComponentParams: { tooltip: tooltip_extractor },
               cellStyle: {
                 textAlign: g?.alignment ? g?.alignment : 'left',
                 borderRight: g?.borderRight
@@ -389,6 +385,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               width: 'auto',
               tooltipField: g?.field,
+              tooltipComponentParams: { tooltip: tooltip_extractor },
               singleClickEdit: false,
               editable: false,
               cellStyle: {
@@ -398,7 +395,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                   : 0,
               },
               cellRenderer: (props: any) => {
-                // console.log('date', props);
                 const data: any = props?.colDef?.field?.split('.')[0];
 
                 const field_data = Object.entries(props?.data).reduce(
@@ -431,6 +427,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               width: 'auto',
               tooltipField: g?.field,
+              tooltipComponentParams: { tooltip: tooltip_extractor },
               cellStyle: {
                 textAlign: g?.alignment ? g?.alignment : 'left',
                 borderRight: g?.borderRight
@@ -449,6 +446,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               width: 'auto',
               tooltipField: g?.field,
+              tooltipComponentParams: { tooltip: tooltip_extractor },
               cellStyle: {
                 textAlign: g?.alignment ? g?.alignment : 'left',
                 borderRight: g?.borderRight
@@ -461,6 +459,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               tooltipField: g?.field,
+              tooltipComponentParams: { tooltip: tooltip_extractor },
               width: 'auto',
               singleClickEdit: false,
               editable: false,
@@ -471,9 +470,8 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                   : 0,
               },
               cellRenderer: (props: any) => {
-                // console.log('date', props);
                 const data = props?.colDef?.field?.split('.')[0];
-                // console.log('field name', data);
+
                 const field_data = Object.entries(props?.data).reduce(
                   (accum: any, current: any) => {
                     const [key, value] = current;
@@ -503,7 +501,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
-
               singleClickEdit: false,
               editable: false,
               cellStyle: {
@@ -513,9 +510,8 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                   : 0,
               },
               cellRenderer: (props: any) => {
-                // console.log('date', props);
                 const data = props?.colDef?.field?.split('.')[0];
-                // console.log('field name', data);
+
                 const field_data = Object.entries(props?.data).reduce(
                   (accum: any, current: any) => {
                     const [key, value] = current;
@@ -561,7 +557,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               },
               cellRenderer: (props: any) => {
                 const data = props?.colDef?.field?.split('.')[0];
-                // console.log('field name', data);
+
                 const field_data = Object.entries(props?.data).reduce(
                   (accum: any, current: any) => {
                     const [key, value] = current;
@@ -615,9 +611,8 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   );
 
   const cellRenderer = (props: any) => {
-    // console.log(props);
     const data = props?.colDef?.field?.split('.')[0];
-    // console.log('field name', data);
+
     const field_data = Object.entries(props?.data).reduce(
       (accum: any, current: any) => {
         const [key, value] = current;
@@ -670,7 +665,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
 
   const onCellEditingStarted = useCallback((event: CellEditingStartedEvent) => {
     const data: any = event?.colDef?.field?.split('.')[0];
-    console.log(event?.data[data]);
     if (event?.data[data]?.control_editable === false) {
       gridRef?.current?.api?.stopEditing();
 
@@ -706,23 +700,36 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
 
   const onCellValueChanged = useCallback(
     (event) => {
-      const cellDefs = gridRef?.current?.api?.getEditingCells();
-      // console.log(cellDefs);
       const data = event?.colDef?.field?.split('.')[0];
-      // console.log('field name', data);
+
       const field_data = event?.data[data];
-
       if (event?.oldValue !== event?.newValue) {
-        event.colDef.cellStyle = (p: any) =>
-          p.rowIndex.toString() === event.node.id
-            ? { backgroundColor: 'red' }
-            : {};
+        if (event?.colDef?.track_modification) {
+          const options: any = JSON.parse(
+            event?.colDef?.track_modification_option,
+          );
+          event.colDef.cellStyle = (p: any) =>
+            p.rowIndex.toString() === event.node.id
+              ? {
+                  backgroundColor:
+                    options !== null ? options['background-color'] : '',
+                  color: options !== null ? options?.color : '',
+                }
+              : {};
 
-        event.api.refreshCells({
-          force: true,
-          columns: [event.column.getId()],
-          rowNodes: [event.node],
-        });
+          // window?.onload(() => {
+          // document.getElementById(
+          //   `#${event?.colDef?.headerName.replace(/ /g, '')}${event.rowIndex}`,
+          // )?.value = event?.oldValue;
+
+          // });
+
+          event.api.refreshCells({
+            force: true,
+            columns: [event.column.getId()],
+            rowNodes: [event.node],
+          });
+        }
       }
 
       if (
