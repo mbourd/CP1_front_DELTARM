@@ -72,6 +72,7 @@ const CustomTooltip = (props: any & { tooltip: string }) => {
   const data = props?.data[field_name];
   // console.log(data, props?.colDef?.track_modification_tooltip);
   if (
+    props?.colDef?.track_modification &&
     props?.colDef?.track_modification_tooltip &&
     data?.reference_value !== data?.value
   ) {
@@ -80,7 +81,7 @@ const CustomTooltip = (props: any & { tooltip: string }) => {
         className="custom-tooltip"
         style={{ backgroundColor: 'wheat', padding: 5 }}
       >
-        <p>{data?.reference_value}</p>
+        <p>Previous Value: {data?.reference_value}</p>
       </div>
     );
   } else {
@@ -128,6 +129,30 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     // console.log('control', control?.data_grid_detail);
   }, [control?.data_grid_detail]);
 
+  const cellStyleFunctions = (props: any, g: any) => {
+    const options = JSON.parse(props?.colDef?.track_modification_option);
+
+    const field_name = props?.colDef?.field?.split('.')[0];
+    const data = props?.data[field_name];
+    const background: any =
+      options === null ? null : options['background-color'];
+    const color: any = options === null ? null : options?.color;
+
+    return {
+      textAlign: g?.alignment ? g?.alignment : 'left',
+      borderRight: g?.borderRight
+        ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
+        : 0,
+      backgroundColor:
+        props?.colDef?.track_modification &&
+        background !== null &&
+        data?.reference_value !== data?.value
+          ? background
+          : '',
+      color: props?.colDef?.track_modification && color !== null ? color : '',
+    };
+  };
+
   const handleClickRemoveSelectedRow = () => {
     const selectedRows = gridRef.current.api.getSelectedRows();
     gridRef.current.api.applyTransaction({ remove: selectedRows });
@@ -146,13 +171,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               tooltipField: g?.field,
               tooltipComponentParams: { tooltip: tooltip_extractor },
               editable: false,
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               // filter: 'agNumberColumnFilter',
               filterParams: {
                 valueFormatter: (props: any) => {
@@ -194,12 +213,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 rows: 10,
                 cols: 50,
               },
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
             };
           case 'long_text':
             return {
@@ -214,12 +228,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 rows: 10,
                 cols: 50,
               },
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 return (
                   <>{props?.value !== null || undefined ? props.value : ''}</>
@@ -233,7 +242,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               tooltipField: g?.field,
               tooltipComponentParams: { tooltip: tooltip_extractor },
-              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 return (
                   <div style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -251,12 +260,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               tooltipField: g?.field,
               tooltipComponentParams: { tooltip: tooltip_extractor },
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
             };
           case 'multiple_list':
             return {
@@ -265,12 +269,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               tooltipField: g?.field,
               tooltipComponentParams: { tooltip: tooltip_extractor },
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
             };
           case 'integer':
             return {
@@ -279,13 +278,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               tooltipComponentParams: { tooltip: tooltip_extractor },
               tooltipField: g?.field,
-              cellStyle: {
-                // backgroundColor: item.value === "54" ? "green" : item.value === ""
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 const data = props?.colDef?.field?.split('.')[0];
 
@@ -315,12 +308,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               tooltipField: g?.field,
               tooltipComponentParams: { tooltip: tooltip_extractor },
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 return (
                   <>{props?.value !== null || undefined ? props.value : ''}</>
@@ -334,12 +322,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               tooltipField: g?.field,
               tooltipComponentParams: { tooltip: tooltip_extractor },
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 return (
                   <div style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -392,12 +375,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               tooltipComponentParams: { tooltip: tooltip_extractor },
               singleClickEdit: false,
               editable: false,
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 const data: any = props?.colDef?.field?.split('.')[0];
 
@@ -432,12 +410,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               tooltipField: g?.field,
               tooltipComponentParams: { tooltip: tooltip_extractor },
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 return (
                   <>{props?.value !== null || undefined ? props.value : ''}</>
@@ -451,12 +424,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               tooltipField: g?.field,
               tooltipComponentParams: { tooltip: tooltip_extractor },
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
             };
           case 'date':
             return {
@@ -467,12 +435,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               singleClickEdit: false,
               editable: false,
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 const data = props?.colDef?.field?.split('.')[0];
 
@@ -507,12 +470,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               singleClickEdit: false,
               editable: false,
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 const data = props?.colDef?.field?.split('.')[0];
 
@@ -553,12 +511,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               singleClickEdit: false,
               editable: false,
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 const data = props?.colDef?.field?.split('.')[0];
 
@@ -597,12 +550,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 return (
                   <>{props?.value !== null || undefined ? props.value : ''}</>
