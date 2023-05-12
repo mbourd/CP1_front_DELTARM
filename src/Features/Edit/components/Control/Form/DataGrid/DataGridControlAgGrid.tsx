@@ -68,14 +68,19 @@ interface IProps {
 }
 
 const CustomTooltip = (props: any & { tooltip: string }) => {
-  if (props?.colDef?.track_modification_tooltip) {
+  const field_name = props?.colDef?.field?.split('.')[0];
+  const data = props?.data[field_name];
+  // console.log(data, props?.colDef?.track_modification_tooltip);
+  if (
+    props?.colDef?.track_modification_tooltip &&
+    data?.reference_value !== data?.value
+  ) {
     return (
       <div
         className="custom-tooltip"
         style={{ backgroundColor: 'wheat', padding: 5 }}
-        id={`${props?.colDef?.headerName.replace(/ /g, '')}${props.rowIndex}`}
       >
-        <p>{props.value}</p>
+        <p>{data?.reference_value}</p>
       </div>
     );
   } else {
