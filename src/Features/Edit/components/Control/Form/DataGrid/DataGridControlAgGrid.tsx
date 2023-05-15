@@ -100,6 +100,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   const jwt = user.getJwt();
   const [errors, seterrors]: any = useState('');
   const [tooltip_extractor, settooltip_extractor] = useState('');
+  const [updatedColumnValue, setUpdatedColumnValue] = useState('');
   const [GridDetails, setGridDetails]: any = useState<
     DataGridDetail | undefined | null
   >(control.data_grid_detail);
@@ -150,7 +151,12 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         data?.reference_value !== data?.value
           ? background
           : '',
-      color: props?.colDef?.track_modification && color !== null ? color : '',
+      color:
+        props?.colDef?.track_modification &&
+        data?.reference_value !== data?.value &&
+        color !== null
+          ? color
+          : '',
     };
   };
 
@@ -788,6 +794,26 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     rowClass: 'my-hover-class',
   };
 
+  const handleButtonClick = () => {
+    // Get the current page number.
+    const currentPageNumber = gridRef.current.api.paginationGetCurrentPage();
+
+    // Get the page size.
+    const pageSize = gridRef.current.api.paginationGetPageSize();
+
+    // Calculate the start and end row indexes.
+    const startIndex = currentPageNumber + 1;
+    const endIndex = pageSize - 1;
+
+    console.log(startIndex, endIndex, currentPageNumber, pageSize);
+
+    // Call the getRows() method to fetch the rows for the specified range.
+    gridRef.current.api.getRows(startIndex, endIndex, function (rows: any) {
+      // Do something with the rows.
+      console.log(rows);
+    });
+  };
+
   return (
     <Grid item xs={11} style={{ maxWidth: '95%', margin: '0 auto' }}>
       {/* <DataGridControlStyled> */}
@@ -832,6 +858,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               </Button>
             </BPITooltip>
           )}
+          {/* <button onClick={handleButtonClick}>Get Rows of First Page</button> */}
           {/* <BPITooltip title={'Remove Line'}>
         <Button
           onClick={handleClickRemoveSelectedRow}
