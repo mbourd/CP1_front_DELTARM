@@ -42,6 +42,7 @@ import {
   CellEditingStartedEvent,
   IServerSideDatasource,
   ITooltipParams,
+  RowNode,
 } from 'ag-grid-community';
 import { DataGridDetail } from '../../../../types';
 // import millify from 'millify';
@@ -55,13 +56,11 @@ LicenseManager.setLicenseKey(
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import CustomCheckboxRender from './AgDataGridFields/CustomCheckboxRenderer/CustomCheckboxRender';
-import { useActionButton } from 'Packages/Helpers/src/useActionButton';
 import { ModalDynamic } from 'Features/ModalDynamic/components/ModalDynamic';
-import { useRecoilValue } from 'recoil';
-import { IDataModal } from 'Features/ModalDynamic/components/types';
 import axios from 'axios';
 import CustomIconRenderer from './AgDataGridFields/CustomIconRenderer/CustomIconRenderer';
 import CustomActionButtonRenderer from './AgDataGridFields/CustomActionButtonRenderer/CustomActionButtonRenderer';
+import CustomSingleCheckboxRender from './AgDataGridFields/CustomSingleCheckBoxRenderer/CustomSingleCheckBoxRenderer';
 interface IProps {
   control: IApiControl;
   fileId: string;
@@ -100,13 +99,12 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   const jwt = user.getJwt();
   const [errors, seterrors]: any = useState('');
   const [tooltip_extractor, settooltip_extractor] = useState('');
-  const [updatedColumnValue, setUpdatedColumnValue] = useState('');
   const [GridDetails, setGridDetails]: any = useState<
     DataGridDetail | undefined | null
   >(control.data_grid_detail);
   const user_language: any = security.decodeJwtToken(jwt ? jwt : '');
-  const user_grid_language = localStorage.getItem('user_grid_language');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selected, setselected] = useState(false);
   const [local_text, setlocal_text] = useState(
     user_language?.lang === 'en' ? AG_GRID_LOCALE_EN : AG_GRID_LOCALE_FR,
   );
@@ -160,15 +158,34 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     };
   };
 
-  const handleClickRemoveSelectedRow = () => {
-    const selectedRows = gridRef.current.api.getSelectedRows();
-    gridRef.current.api.applyTransaction({ remove: selectedRows });
-  };
+  // const handleClickRemoveSelectedRow = () => {
+  //   const selectedRows = gridRef.current.api.getSelectedRows();
+  //   gridRef.current.api.applyTransaction({ remove: selectedRows });
+  // };
 
   const columnDefs = useMemo(
     () =>
       control?.data_grid_detail?.columns?.map((g: any) => {
         switch (g?.field_type) {
+          case 'checkbox_select_datagrid':
+            return {
+              ...g,
+              minWidth: 150,
+              width: 'auto',
+              singleClickEdit: false,
+              tooltipField: g?.field,
+              tooltipComponentParams: { tooltip: tooltip_extractor },
+              editable: true,
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
+              cellRenderer: (props: any) => {
+                return (
+                  <CustomSingleCheckboxRender
+                    props={props}
+                    selected={selected}
+                  />
+                );
+              },
+            };
           case 'select_list':
             return {
               ...g,
@@ -624,6 +641,11 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
 
   const onCellEditingStarted = useCallback((event: CellEditingStartedEvent) => {
     const data: any = event?.colDef?.field?.split('.')[0];
+    if (event?.data?.row_editable === false) {
+      gridRef?.current?.api?.stopEditing();
+
+      return;
+    }
     if (event?.data[data]?.control_editable === false) {
       gridRef?.current?.api?.stopEditing();
 
@@ -675,13 +697,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                   color: options !== null ? options?.color : '',
                 }
               : {};
-
-          // window?.onload(() => {
-          // document.getElementById(
-          //   `#${event?.colDef?.headerName.replace(/ /g, '')}${event.rowIndex}`,
-          // )?.value = event?.oldValue;
-
-          // });
 
           event.api.refreshCells({
             force: true,
@@ -751,14 +766,15 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       if (
         field_data?.component !== 'select_list' &&
         field_data?.component !== 'date' &&
-        field_data?.component !== 'icon'
+        field_data?.component !== 'icon' &&
+        field_data?.component !== 'checkbox_select_datagrid'
       ) {
         if (event?.newValue === undefined) {
           return;
         } else {
           saveValueDataGrid(
             fileId,
-            control.control_id,
+            event?.data?.row_uuid,
             field_data?.col_elm_id,
             field_data?.row_num,
             jwt,
@@ -792,25 +808,134 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   });
   const gridOptions = {
     rowClass: 'my-hover-class',
+    rowData: GridDetails?.rows,
   };
 
+  const onPaginationChanged = useCallback(() => {
+    control?.data_grid_detail?.columns?.map((column: any) => {
+      if (
+        column?.field?.split('.')[0] ===
+        control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref
+      ) {
+        if (column?.field_type !== 'checkbox_select_datagrid') {
+          return;
+        } else {
+          gridRef.current.api.forEachNodeAfterFilterAndSort(
+            (rowNode: RowNode) => {
+              rowNode.setDataValue(
+                `${control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref}.value`,
+                '0',
+              );
+            },
+          );
+
+          gridRef.current.api.refreshCells({
+            force: true,
+          });
+        }
+      }
+    });
+  }, [
+    control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref,
+    control?.data_grid_detail?.columns,
+  ]);
+
   const handleButtonClick = () => {
-    // Get the current page number.
-    const currentPageNumber = gridRef.current.api.paginationGetCurrentPage();
-
-    // Get the page size.
+    const currentPage = gridRef.current.api.paginationGetCurrentPage() + 1;
     const pageSize = gridRef.current.api.paginationGetPageSize();
+    const startIndex = currentPage === 0 ? 0 : (currentPage - 1) * pageSize;
+    const endIndex = currentPage === 0 ? pageSize : currentPage * pageSize;
+    const data: any = [];
+    control?.data_grid_detail?.columns?.map((column: any) => {
+      if (
+        column?.field?.split('.')[0] ===
+        control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref
+      ) {
+        if (column?.field_type !== 'checkbox_select_datagrid') {
+          seterrors(`Le champ col_ref n'est pas une case à cocher`);
 
-    // Calculate the start and end row indexes.
-    const startIndex = currentPageNumber + 1;
-    const endIndex = pageSize - 1;
+          setTimeout(() => {
+            seterrors('');
+          }, 3000);
+        } else {
+          gridRef.current.api.forEachNodeAfterFilterAndSort(
+            (rowNode: RowNode) => {
+              data.push(rowNode);
+            },
+          );
+          data.slice(startIndex, endIndex).map((item: any) => {
+            if (item?.data?.row_editable === false) {
+              return;
+            } else {
+              item.setDataValue(
+                `${control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref}.value`,
+                '1',
+              );
+            }
+          });
 
-    console.log(startIndex, endIndex, currentPageNumber, pageSize);
+          gridRef.current.api.refreshCells({
+            force: true,
+          });
+        }
+      }
+    });
+  };
 
-    // Call the getRows() method to fetch the rows for the specified range.
-    gridRef.current.api.getRows(startIndex, endIndex, function (rows: any) {
-      // Do something with the rows.
-      console.log(rows);
+  const UnSelectAllByClick = () => {
+    const currentPage = gridRef.current.api.paginationGetCurrentPage() + 1;
+    const pageSize = gridRef.current.api.paginationGetPageSize();
+    const startIndex = currentPage === 0 ? 0 : (currentPage - 1) * pageSize;
+    const endIndex = currentPage === 0 ? pageSize : currentPage * pageSize;
+    const data: any = [];
+    control?.data_grid_detail?.columns?.map((column: any) => {
+      if (
+        column?.field?.split('.')[0] ===
+        control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref
+      ) {
+        if (column?.field_type !== 'checkbox_select_datagrid') {
+          seterrors(`Le champ col_ref n'est pas une case à cocher`);
+
+          setTimeout(() => {
+            seterrors('');
+          }, 3000);
+        } else {
+          gridRef.current.api.forEachNodeAfterFilterAndSort(
+            (rowNode: RowNode) => {
+              data.push(rowNode);
+            },
+          );
+
+          data.slice(startIndex, endIndex).map((item: any) => {
+            if (item?.data?.read_editable === false) {
+              return;
+            } else {
+              item.setDataValue(
+                `${control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref}.value`,
+                '0',
+              );
+            }
+          });
+          gridRef.current.api.refreshCells({
+            force: true,
+          });
+        }
+      }
+    });
+  };
+
+  const getRowData = () => {
+    const selected_data: any = [];
+    gridOptions.rowData.map((row: any) => {
+      if (
+        row[
+          control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref
+        ]?.value === '1'
+      ) {
+        selected_data.push(row);
+      } else {
+        return;
+      }
     });
   };
 
@@ -828,7 +953,13 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         }}
       >
         <ControlLabel control={control} />
-        <div>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}
+        >
           {/* <Button
             style={{
               backgroundColor: '#f50057',
@@ -858,7 +989,44 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               </Button>
             </BPITooltip>
           )}
-          {/* <button onClick={handleButtonClick}>Get Rows of First Page</button> */}
+          {control?.data_grid_detail?.datagrid_options
+            ?.select_all_button_display === true && (
+            <BPITooltip title={'Sélectionner toutes les lignes'}>
+              <Button
+                onClick={handleButtonClick}
+                style={{
+                  backgroundColor: 'teal',
+                  border: 0,
+                  color: '#fff',
+                  margin: 5,
+                  borderRadius: 5,
+                  marginBottom: 14,
+                }}
+              >
+                Select All
+              </Button>
+            </BPITooltip>
+          )}
+          {control?.data_grid_detail?.datagrid_options
+            ?.unselect_all_button_display === true && (
+            <BPITooltip title={'Désélectionner toutes les lignes'}>
+              <Button
+                onClick={UnSelectAllByClick}
+                style={{
+                  backgroundColor: 'teal',
+                  border: 0,
+                  color: '#fff',
+                  margin: 5,
+                  borderRadius: 5,
+                  marginBottom: 14,
+                }}
+              >
+                Unselect All
+              </Button>
+            </BPITooltip>
+          )}
+
+          {/* <Button onClick={getRowData}>Get Data</Button> */}
           {/* <BPITooltip title={'Remove Line'}>
         <Button
           onClick={handleClickRemoveSelectedRow}
@@ -935,6 +1103,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           onCellValueChanged={onCellValueChanged}
           undoRedoCellEditing={true}
           enableCellChangeFlash={true}
+          onPaginationChanged={onPaginationChanged}
         />
       </AgDataGridStyle>
       {/* </DataGridControlStyled> */}
