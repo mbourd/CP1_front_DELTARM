@@ -9,37 +9,22 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { IApiControl } from '../../../../types';
 import { Grid } from '@mui/material';
 import { ControlLabel } from '../ControlLabel';
-import {
-  BPITooltip,
-  FormError,
-  ISelectData,
-} from '../../../../../../Shared/components';
+import { BPITooltip, FormError } from '../../../../../../Shared/components';
 import { useSecurity } from '../../../../../../Packages/Security';
-import { addRow } from './apiRoutes/addRow';
 import { AgGridReact } from 'ag-grid-react';
 import { useReactToPrint } from 'react-to-print';
 import { Button } from 'Shared/components';
-import {
-  useTrans,
-  security,
-  isUndefined,
-  getEnv,
-} from '../../../../../../Services';
+import { useTrans, security, getEnv } from '../../../../../../Services';
 import './datagrid.css';
-import { useApi, useRouter } from 'Services';
 import { saveValueDataGrid } from './apiRoutes/saveValueDataGrid';
 import CustomSelectRenderer from './AgDataGridFields/CustomSelectRenderer/CustomSelectRenderer';
 import { EuroIcon } from 'Styles';
 import { minMax } from 'Packages/Helpers/src/minMax';
 import { AgDataGridStyle } from './DataGridControl.style';
-import { AgDataGridUpload } from './DataGridFields/AgDataGridUpload/AgDataGridUpload';
 import 'ag-grid-enterprise';
 // import 'ag-grid-community/styles/ag-grid.css';
 // import 'ag-grid-community/styles/ag-theme-alpine.css';
-import {
-  CellEditingStartedEvent,
-  IServerSideDatasource,
-} from 'ag-grid-community';
+import { CellEditingStartedEvent, RowNode } from 'ag-grid-community';
 import { DataGridDetail } from '../../../../types';
 // import millify from 'millify';
 import { LicenseManager } from 'ag-grid-enterprise';
@@ -52,18 +37,37 @@ LicenseManager.setLicenseKey(
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import CustomCheckboxRender from './AgDataGridFields/CustomCheckboxRenderer/CustomCheckboxRender';
-import { useActionButton } from 'Packages/Helpers/src/useActionButton';
 import { ModalDynamic } from 'Features/ModalDynamic/components/ModalDynamic';
-import { useRecoilValue } from 'recoil';
-import { IDataModal } from 'Features/ModalDynamic/components/types';
 import axios from 'axios';
 import CustomIconRenderer from './AgDataGridFields/CustomIconRenderer/CustomIconRenderer';
 import CustomActionButtonRenderer from './AgDataGridFields/CustomActionButtonRenderer/CustomActionButtonRenderer';
-
+import CustomSingleCheckboxRender from './AgDataGridFields/CustomSingleCheckBoxRenderer/CustomSingleCheckBoxRenderer';
 interface IProps {
   control: IApiControl;
   fileId: string;
 }
+
+const CustomTooltip = (props: any & { tooltip: string }) => {
+  const field_name = props?.colDef?.field?.split('.')[0];
+  const data = props?.data[field_name];
+  // console.log(data, props?.colDef?.track_modification_tooltip);
+  if (
+    props?.colDef?.track_modification &&
+    props?.colDef?.track_modification_tooltip &&
+    data?.reference_value !== data?.value
+  ) {
+    return (
+      <div
+        className="custom-tooltip"
+        style={{ backgroundColor: 'wheat', padding: 5 }}
+      >
+        <p>Previous Value: {data?.reference_value}</p>
+      </div>
+    );
+  } else {
+    return;
+  }
+};
 
 export const DataGridControlAgGrid: React.FC<IProps> = ({
   control,
@@ -74,12 +78,13 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   const gridRef = useRef<any>();
   const jwt = user.getJwt();
   const [errors, seterrors]: any = useState('');
+  const [tooltip_extractor, settooltip_extractor] = useState('');
   const [GridDetails, setGridDetails]: any = useState<
     DataGridDetail | undefined | null
   >(control.data_grid_detail);
   const user_language: any = security.decodeJwtToken(jwt ? jwt : '');
-  const user_grid_language = localStorage.getItem('user_grid_language');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selected, setselected] = useState(false);
   const [local_text, setlocal_text] = useState(
     user_language?.lang === 'en' ? AG_GRID_LOCALE_EN : AG_GRID_LOCALE_FR,
   );
@@ -93,7 +98,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     : 20;
 
   const kFormatter: any = (num: any) => {
-    // console.log(num);
     if (num !== null || undefined) {
       return num?.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     } else {
@@ -102,38 +106,80 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   };
   useEffect(() => {
     setGridDetails(control?.data_grid_detail);
-    console.log('control', control?.data_grid_detail);
+    // console.log('control', control?.data_grid_detail);
   }, [control?.data_grid_detail]);
 
-  const handleClickRemoveSelectedRow = () => {
-    const selectedRows = gridRef.current.api.getSelectedRows();
-    gridRef.current.api.applyTransaction({ remove: selectedRows });
+  const cellStyleFunctions = (props: any, g: any) => {
+    const options = JSON.parse(props?.colDef?.track_modification_option);
+
+    const field_name = props?.colDef?.field?.split('.')[0];
+    const data = props?.data[field_name];
+    const background: any =
+      options === null ? null : options['background-color'];
+    const color: any = options === null ? null : options?.color;
+
+    return {
+      textAlign: g?.alignment ? g?.alignment : 'left',
+      borderRight: g?.borderRight
+        ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
+        : 0,
+      backgroundColor:
+        props?.colDef?.track_modification &&
+        background !== null &&
+        data?.reference_value !== data?.value
+          ? background
+          : '',
+      color:
+        props?.colDef?.track_modification &&
+        data?.reference_value !== data?.value &&
+        color !== null
+          ? color
+          : '',
+    };
   };
+
+  // const handleClickRemoveSelectedRow = () => {
+  //   const selectedRows = gridRef.current.api.getSelectedRows();
+  //   gridRef.current.api.applyTransaction({ remove: selectedRows });
+  // };
 
   const columnDefs = useMemo(
     () =>
       control?.data_grid_detail?.columns?.map((g: any) => {
         switch (g?.field_type) {
+          case 'checkbox_select_datagrid':
+            return {
+              ...g,
+              minWidth: 150,
+              width: 'auto',
+              singleClickEdit: false,
+              tooltipField: g?.field,
+              tooltipComponentParams: { tooltip: tooltip_extractor },
+              editable: true,
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
+              cellRenderer: (props: any) => {
+                return (
+                  <CustomSingleCheckboxRender
+                    props={props}
+                    selected={selected}
+                  />
+                );
+              },
+            };
           case 'select_list':
             return {
               ...g,
               minWidth: 150,
               width: 'auto',
               singleClickEdit: false,
+              tooltipField: g?.field,
+              tooltipComponentParams: { tooltip: tooltip_extractor },
               editable: false,
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               // filter: 'agNumberColumnFilter',
               filterParams: {
                 valueFormatter: (props: any) => {
-                  // // console.log('date', props);
                   const data = props?.colDef?.field?.split('.')[0];
-                  // // console.log('field name', data);
 
                   const row_data = Object.assign({}, ...GridDetails?.rows);
                   const field_data = Object.entries(row_data).reduce(
@@ -147,14 +193,12 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                     },
                     [],
                   );
-                  // console.log(props, Object.assign({}, field_data));
 
                   const value_to_show = field_data?.choice_options?.filter(
                     (data: any) => {
                       return data?.choice_id?.toString() === props?.value;
                     },
                   );
-                  // console.log(value_to_show);
 
                   return value_to_show[0]?.choice_lib;
                 },
@@ -165,36 +209,30 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
+              tooltipField: g?.field,
+              tooltipComponentParams: { tooltip: tooltip_extractor },
               cellEditorPopup: true,
               cellEditor: 'agLargeTextCellEditor',
               cellEditorParams: {
                 rows: 10,
                 cols: 50,
               },
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
             };
           case 'long_text':
             return {
               ...g,
               minWidth: 150,
               width: 'auto',
+              tooltipField: g?.field,
+              tooltipComponentParams: { tooltip: tooltip_extractor },
               cellEditorPopup: true,
               cellEditor: 'agLargeTextCellEditor',
               cellEditorParams: {
                 rows: 10,
                 cols: 50,
               },
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 return (
                   <>{props?.value !== null || undefined ? props.value : ''}</>
@@ -206,7 +244,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
-              cellStyle: { textAlign: g?.alignment ? g?.alignment : 'left' },
+              tooltipField: g?.field,
+              tooltipComponentParams: { tooltip: tooltip_extractor },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 return (
                   <div style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -222,39 +262,46 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              tooltipField: g?.field,
+              tooltipComponentParams: { tooltip: tooltip_extractor },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
             };
           case 'multiple_list':
             return {
               ...g,
               minWidth: 150,
               width: 'auto',
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              tooltipField: g?.field,
+              tooltipComponentParams: { tooltip: tooltip_extractor },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
             };
           case 'integer':
             return {
               ...g,
               minWidth: 150,
               width: 'auto',
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              tooltipComponentParams: { tooltip: tooltip_extractor },
+              tooltipField: g?.field,
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
+                const data = props?.colDef?.field?.split('.')[0];
+
+                const field_data = Object.entries(props?.data).reduce(
+                  (accum: any, current: any) => {
+                    const [key, value] = current;
+                    if (key.match(data)) {
+                      return value;
+                    }
+
+                    return accum;
+                  },
+                  [],
+                );
+
                 return (
-                  <>{props?.value !== null || undefined ? props.value : ''}</>
+                  <div>
+                    {props?.value !== null || undefined ? props.value : ''}
+                  </div>
                 );
               },
             };
@@ -263,12 +310,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              tooltipField: g?.field,
+              tooltipComponentParams: { tooltip: tooltip_extractor },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 return (
                   <>{props?.value !== null || undefined ? props.value : ''}</>
@@ -280,12 +324,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              tooltipField: g?.field,
+              tooltipComponentParams: { tooltip: tooltip_extractor },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 return (
                   <div style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -334,16 +375,12 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
+              tooltipField: g?.field,
+              tooltipComponentParams: { tooltip: tooltip_extractor },
               singleClickEdit: false,
               editable: false,
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
-                // console.log('date', props);
                 const data: any = props?.colDef?.field?.split('.')[0];
 
                 const field_data = Object.entries(props?.data).reduce(
@@ -375,12 +412,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              tooltipField: g?.field,
+              tooltipComponentParams: { tooltip: tooltip_extractor },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 return (
                   <>{props?.value !== null || undefined ? props.value : ''}</>
@@ -392,30 +426,23 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              tooltipField: g?.field,
+              tooltipComponentParams: { tooltip: tooltip_extractor },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
             };
           case 'date':
             return {
               ...g,
               minWidth: 150,
+              tooltipField: g?.field,
+              tooltipComponentParams: { tooltip: tooltip_extractor },
               width: 'auto',
               singleClickEdit: false,
               editable: false,
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
-                // console.log('date', props);
                 const data = props?.colDef?.field?.split('.')[0];
-                // console.log('field name', data);
+
                 const field_data = Object.entries(props?.data).reduce(
                   (accum: any, current: any) => {
                     const [key, value] = current;
@@ -447,16 +474,10 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               singleClickEdit: false,
               editable: false,
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
-                // console.log('date', props);
                 const data = props?.colDef?.field?.split('.')[0];
-                // console.log('field name', data);
+
                 const field_data = Object.entries(props?.data).reduce(
                   (accum: any, current: any) => {
                     const [key, value] = current;
@@ -494,15 +515,10 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               singleClickEdit: false,
               editable: false,
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 const data = props?.colDef?.field?.split('.')[0];
-                // console.log('field name', data);
+
                 const field_data = Object.entries(props?.data).reduce(
                   (accum: any, current: any) => {
                     const [key, value] = current;
@@ -538,12 +554,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
-              cellStyle: {
-                textAlign: g?.alignment ? g?.alignment : 'left',
-                borderRight: g?.borderRight
-                  ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-                  : 0,
-              },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 return (
                   <>{props?.value !== null || undefined ? props.value : ''}</>
@@ -556,9 +567,8 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   );
 
   const cellRenderer = (props: any) => {
-    // console.log(props);
     const data = props?.colDef?.field?.split('.')[0];
-    // console.log('field name', data);
+
     const field_data = Object.entries(props?.data).reduce(
       (accum: any, current: any) => {
         const [key, value] = current;
@@ -599,6 +609,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       // cellEditorPopup: true,
       cellEditorPopupPosition: 'center',
       singleClickEdit: true,
+      tooltipComponent: CustomTooltip,
     }),
     [],
   );
@@ -610,7 +621,11 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
 
   const onCellEditingStarted = useCallback((event: CellEditingStartedEvent) => {
     const data: any = event?.colDef?.field?.split('.')[0];
+    if (event?.data?.row_editable === false) {
+      gridRef?.current?.api?.stopEditing();
 
+      return;
+    }
     if (event?.data[data]?.control_editable === false) {
       gridRef?.current?.api?.stopEditing();
 
@@ -644,68 +659,43 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     }
   }, [control.control_id, jwt, fileId]);
 
-  const onCellValueChanged = useCallback((event) => {
-    const cellDefs = gridRef?.current?.api?.getEditingCells();
-    // console.log(cellDefs);
-    const data = event?.colDef?.field?.split('.')[0];
-    // console.log('field name', data);
-    const field_data = Object.entries(event?.data).reduce(
-      (accum: any, current: any) => {
-        const [key, value] = current;
-        if (key.match(data)) {
-          return value;
-        }
+  const onCellValueChanged = useCallback(
+    (event) => {
+      const data = event?.colDef?.field?.split('.')[0];
 
-        return accum;
-      },
-      [],
-    );
-
-    if ((field_data?.control_regex !== null || undefined) && event?.newValue) {
-      const regexControl = new RegExp(field_data?.control_regex, 'i');
-      if (
-        !event?.newValue.match(regexControl) &&
-        field_data?.control_regex_msg
-      ) {
-        seterrors(field_data?.control_regex_msg);
-        gridRef.current.api.undoCellEditing();
-        setTimeout(() => {
-          seterrors('');
-        }, 3000);
-
-        return;
-      }
-    }
-    if (
-      field_data?.component === 'financial' ||
-      'decimal' ||
-      'integer' ||
-      'percent'
-    ) {
-      if (
-        (field_data?.control_options?.min_value ||
-          field_data?.control_options?.max_value) &&
-        event?.newValue.trim()
-      ) {
-        if (
-          minMax(
-            event?.newValue,
-            field_data?.control_options?.min_value,
-            field_data.control_options.max_value,
-          )
-        ) {
-          seterrors(null);
-        }
-        if (
-          !minMax(
-            event?.newValue,
-            field_data.control_options.min_value,
-            field_data.control_options.max_value,
-          )
-        ) {
-          seterrors(
-            'La valeur saisie ne respecte pas les contraintes définies',
+      const field_data = event?.data[data];
+      if (event?.oldValue !== event?.newValue) {
+        if (event?.colDef?.track_modification) {
+          const options: any = JSON.parse(
+            event?.colDef?.track_modification_option,
           );
+          event.colDef.cellStyle = (p: any) =>
+            p.rowIndex.toString() === event.node.id
+              ? {
+                  backgroundColor:
+                    options !== null ? options['background-color'] : '',
+                  color: options !== null ? options?.color : '',
+                }
+              : {};
+
+          event.api.refreshCells({
+            force: true,
+            columns: [event.column.getId()],
+            rowNodes: [event.node],
+          });
+        }
+      }
+
+      if (
+        (field_data?.control_regex !== null || undefined) &&
+        event?.newValue
+      ) {
+        const regexControl = new RegExp(field_data?.control_regex, 'i');
+        if (
+          !event?.newValue.match(regexControl) &&
+          field_data?.control_regex_msg
+        ) {
+          seterrors(field_data?.control_regex_msg);
           gridRef.current.api.undoCellEditing();
           setTimeout(() => {
             seterrors('');
@@ -714,28 +704,69 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           return;
         }
       }
-    }
-    if (
-      field_data?.component !== 'select_list' &&
-      field_data?.component !== 'date' &&
-      field_data?.component !== 'icon'
-    ) {
-      if (event?.newValue === undefined) {
-        return;
-      } else {
-        saveValueDataGrid(
-          fileId,
-          control.control_id,
-          field_data?.col_elm_id,
-          field_data?.row_num,
-          jwt,
-          event?.newValue?.toString(),
-          seterrors,
-          event?.newValue,
-        );
+      if (
+        field_data?.component === 'financial' ||
+        'decimal' ||
+        'integer' ||
+        'percent'
+      ) {
+        if (
+          (field_data?.control_options?.min_value ||
+            field_data?.control_options?.max_value) &&
+          event?.newValue.trim()
+        ) {
+          if (
+            minMax(
+              event?.newValue,
+              field_data?.control_options?.min_value,
+              field_data.control_options.max_value,
+            )
+          ) {
+            seterrors(null);
+          }
+          if (
+            !minMax(
+              event?.newValue,
+              field_data.control_options.min_value,
+              field_data.control_options.max_value,
+            )
+          ) {
+            seterrors(
+              'La valeur saisie ne respecte pas les contraintes définies',
+            );
+            gridRef.current.api.undoCellEditing();
+            setTimeout(() => {
+              seterrors('');
+            }, 3000);
+
+            return;
+          }
+        }
       }
-    }
-  }, []);
+      if (
+        field_data?.component !== 'select_list' &&
+        field_data?.component !== 'date' &&
+        field_data?.component !== 'icon' &&
+        field_data?.component !== 'checkbox_select_datagrid'
+      ) {
+        if (event?.newValue === undefined) {
+          return;
+        } else {
+          saveValueDataGrid(
+            fileId,
+            event?.data?.row_uuid,
+            field_data?.col_elm_id,
+            field_data?.row_num,
+            jwt,
+            event?.newValue?.toString(),
+            seterrors,
+            event?.newValue,
+          );
+        }
+      }
+    },
+    [control?.control_id, fileId, jwt],
+  );
 
   const getRowStyle = (params: any) => {
     if (params.data.border_bottom) {
@@ -757,6 +788,212 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   });
   const gridOptions = {
     rowClass: 'my-hover-class',
+    rowData: GridDetails?.rows,
+  };
+
+  const onPaginationChanged = useCallback(() => {
+    control?.data_grid_detail?.columns?.map((column: any) => {
+      if (
+        column?.field?.split('.')[0] ===
+        control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref
+      ) {
+        if (column?.field_type !== 'checkbox_select_datagrid') {
+          return;
+        } else {
+          gridRef.current.api.forEachNodeAfterFilterAndSort(
+            (rowNode: RowNode) => {
+              rowNode.setDataValue(
+                `${control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref}.value`,
+                '0',
+              );
+            },
+          );
+
+          gridRef.current.api.refreshCells({
+            force: true,
+          });
+        }
+      }
+    });
+  }, [
+    control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref,
+    control?.data_grid_detail?.columns,
+  ]);
+
+  const handleButtonClick = () => {
+    const currentPage = gridRef.current.api.paginationGetCurrentPage() + 1;
+    const pageSize = gridRef.current.api.paginationGetPageSize();
+    const startIndex = currentPage === 0 ? 0 : (currentPage - 1) * pageSize;
+    const endIndex = currentPage === 0 ? pageSize : currentPage * pageSize;
+    const data: any = [];
+    control?.data_grid_detail?.columns?.map((column: any) => {
+      if (
+        column?.field?.split('.')[0] ===
+        control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref
+      ) {
+        if (column?.field_type !== 'checkbox_select_datagrid') {
+          seterrors(`Le champ col_ref n'est pas une case à cocher`);
+
+          setTimeout(() => {
+            seterrors('');
+          }, 3000);
+        } else {
+          gridRef.current.api.forEachNodeAfterFilterAndSort(
+            (rowNode: RowNode) => {
+              data.push(rowNode);
+            },
+          );
+          data.slice(startIndex, endIndex).map((item: any) => {
+            if (item?.data?.row_editable === false) {
+              return;
+            } else {
+              item.setDataValue(
+                `${control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref}.value`,
+                '1',
+              );
+            }
+          });
+
+          gridRef.current.api.refreshCells({
+            force: true,
+          });
+        }
+      }
+    });
+  };
+
+  const UnSelectAllByClick = () => {
+    const currentPage = gridRef.current.api.paginationGetCurrentPage() + 1;
+    const pageSize = gridRef.current.api.paginationGetPageSize();
+    const startIndex = currentPage === 0 ? 0 : (currentPage - 1) * pageSize;
+    const endIndex = currentPage === 0 ? pageSize : currentPage * pageSize;
+    const data: any = [];
+    control?.data_grid_detail?.columns?.map((column: any) => {
+      if (
+        column?.field?.split('.')[0] ===
+        control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref
+      ) {
+        if (column?.field_type !== 'checkbox_select_datagrid') {
+          seterrors(`Le champ col_ref n'est pas une case à cocher`);
+
+          setTimeout(() => {
+            seterrors('');
+          }, 3000);
+        } else {
+          gridRef.current.api.forEachNodeAfterFilterAndSort(
+            (rowNode: RowNode) => {
+              data.push(rowNode);
+            },
+          );
+
+          data.slice(startIndex, endIndex).map((item: any) => {
+            if (item?.data?.read_editable === false) {
+              return;
+            } else {
+              item.setDataValue(
+                `${control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref}.value`,
+                '0',
+              );
+            }
+          });
+          gridRef.current.api.refreshCells({
+            force: true,
+          });
+        }
+      }
+    });
+  };
+
+  const getRowData = useCallback(() => {
+    const selected_data: any = [];
+    gridOptions.rowData.map((row: any) => {
+      if (
+        row[
+          control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref
+        ]?.value === '1'
+      ) {
+        selected_data.push(row);
+      } else {
+        return;
+      }
+    });
+
+    return selected_data;
+  }, [
+    control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref,
+    gridOptions.rowData,
+  ]);
+  const refresh_grid = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        `${getEnv('API_PROTOCOL')}://${getEnv(
+          'API_HOST',
+        )}/control/data_grid/refresh_values?file_id=${fileId}&control_id=${
+          control.control_id
+        }`,
+        {
+          headers: {
+            Authorization: jwt,
+          },
+          responseType: 'json',
+        },
+      );
+
+      if (response) {
+        setGridDetails(response?.data?.data);
+        gridRef.current.api.refreshCells({
+          force: true,
+        });
+      }
+    } catch (error) {
+      setErrorMessageAdd("Une erreur est survenue lors de l'ajout de la ligne");
+    }
+  }, [jwt, control?.control_id, fileId]);
+
+  const callButtonRoute = useCallback(
+    async (method: string, route: string, button_row_selected: boolean) => {
+      try {
+        const response = await axios.post(
+          `${getEnv('API_PROTOCOL')}://${getEnv(
+            'API_HOST',
+          )}/control/data_grid${route}?file_id=${fileId}&control_id=${
+            control.control_id
+          }`,
+          button_row_selected ? { selected_rows: getRowData() } : {},
+          {
+            headers: {
+              Authorization: jwt,
+            },
+            responseType: 'json',
+          },
+        );
+
+        if (response) {
+        }
+      } catch (error) {
+        setErrorMessageAdd(
+          "Une erreur est survenue lors de l'ajout de la ligne",
+        );
+      }
+    },
+    [getRowData, jwt],
+  );
+
+  const DynamicButtonClick = ({
+    button_method,
+    button_route,
+    button_refresh_callback,
+    button_row_selected,
+  }: {
+    button_method: string;
+    button_route: string;
+    button_refresh_callback: boolean;
+    button_row_selected: boolean;
+  }) => {
+    callButtonRoute(button_method, button_route, button_row_selected);
+    if (button_refresh_callback) {
+      refresh_grid();
+    }
   };
 
   return (
@@ -773,7 +1010,13 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         }}
       >
         <ControlLabel control={control} />
-        <div>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}
+        >
           {/* <Button
             style={{
               backgroundColor: '#f50057',
@@ -784,8 +1027,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           >
             Export PDF
           </Button> */}
-          {control?.data_grid_detail?.datagrid_options
-            ?.add_row_button_display === true && (
+          {GridDetails?.datagrid_options?.add_row_button_display === true && (
             <BPITooltip
               title={
                 user_language?.lang === 'en' ? 'Add Row' : 'Ajouter une ligne'
@@ -807,6 +1049,44 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               </Button>
             </BPITooltip>
           )}
+          {GridDetails?.datagrid_options?.select_all_button_display ===
+            true && (
+            <BPITooltip title={'Sélectionner toutes les lignes'}>
+              <Button
+                onClick={handleButtonClick}
+                style={{
+                  backgroundColor: 'teal',
+                  border: 0,
+                  color: '#fff',
+                  margin: 5,
+                  borderRadius: 5,
+                  marginBottom: 14,
+                }}
+              >
+                Select All
+              </Button>
+            </BPITooltip>
+          )}
+          {GridDetails?.datagrid_options?.unselect_all_button_display ===
+            true && (
+            <BPITooltip title={'Désélectionner toutes les lignes'}>
+              <Button
+                onClick={UnSelectAllByClick}
+                style={{
+                  backgroundColor: 'teal',
+                  border: 0,
+                  color: '#fff',
+                  margin: 5,
+                  borderRadius: 5,
+                  marginBottom: 14,
+                }}
+              >
+                Unselect All
+              </Button>
+            </BPITooltip>
+          )}
+
+          {/* <Button onClick={getRowData}>Get Data</Button> */}
           {/* <BPITooltip title={'Remove Line'}>
         <Button
           onClick={handleClickRemoveSelectedRow}
@@ -825,37 +1105,65 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       </BPITooltip> */}
         </div>
       </div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+          marginTop: 15,
+          marginBottom: -15,
+        }}
+      >
+        {GridDetails?.buttons?.length > 0 &&
+          GridDetails?.buttons?.map((button: any, index: number) => {
+            return (
+              <Button
+                key={index}
+                onClick={() =>
+                  DynamicButtonClick({
+                    button_method: button?.button_method,
+                    button_route: button?.button_route,
+                    button_refresh_callback: button?.button_refresh_callback,
+                    button_row_selected: button?.button_row_selected,
+                  })
+                }
+                style={{
+                  backgroundColor: button?.button_bg_color
+                    ? button?.button_bg_color
+                    : 'teal',
+                  border: 0,
+                  color: button?.button_font_color
+                    ? button?.button_font_color
+                    : 'white',
+                  margin: 5,
+                  borderRadius: 5,
+                  marginBottom: 14,
+                }}
+              >
+                {button?.button_label}
+              </Button>
+            );
+          })}
+      </div>
       <h1 style={{ color: 'red', padding: 10 }}>{errors}</h1>
       {errorsMessageAdd && <FormError>{errorsMessageAdd}</FormError>}
 
       <AgDataGridStyle
-        background_color={
-          control?.data_grid_detail?.datagrid_options?.datagrid_bg_color
-        }
-        border_color={
-          control?.data_grid_detail?.datagrid_options?.datagrid_border_color
-        }
-        is_border_color={
-          control?.data_grid_detail?.datagrid_options?.datagrid_border
-        }
-        font_color={
-          control?.data_grid_detail?.datagrid_options?.datagrid_font_color
-        }
-        font_size={
-          control?.data_grid_detail?.datagrid_options?.datagrid_font_size
-        }
-        font_weight={
-          control?.data_grid_detail?.datagrid_options?.datagrid_font_weight
-        }
+        background_color={GridDetails.datagrid_options?.datagrid_bg_color}
+        border_color={GridDetails?.datagrid_options?.datagrid_border_color}
+        is_border_color={GridDetails?.datagrid_options?.datagrid_border}
+        font_color={GridDetails?.datagrid_options?.datagrid_font_color}
+        font_size={GridDetails?.datagrid_options?.datagrid_font_size}
+        font_weight={GridDetails.datagrid_options?.datagrid_font_weight}
         header_bg_color={
-          control?.data_grid_detail?.datagrid_options?.datagrid_header_bg_color
+          GridDetails?.datagrid_options?.datagrid_header_bg_color
         }
         header_font_color={
-          control?.data_grid_detail?.datagrid_options
-            ?.datagrid_header_font_color
+          GridDetails?.datagrid_options?.datagrid_header_font_color
         }
         odd_row_bg_color={
-          control?.data_grid_detail?.datagrid_options?.datagrid_odd_row_bg_color
+          GridDetails?.datagrid_options?.datagrid_odd_row_bg_color
         }
       >
         <AgGridReact
@@ -883,6 +1191,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           onCellValueChanged={onCellValueChanged}
           undoRedoCellEditing={true}
           enableCellChangeFlash={true}
+          onPaginationChanged={onPaginationChanged}
         />
       </AgDataGridStyle>
       {/* </DataGridControlStyled> */}
