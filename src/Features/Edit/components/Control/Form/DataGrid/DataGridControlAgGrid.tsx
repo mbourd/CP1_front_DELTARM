@@ -4,46 +4,27 @@ import React, {
   useMemo,
   useRef,
   useEffect,
-  forwardRef,
-  useImperativeHandle,
 } from 'react';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { IApiControl } from '../../../../types';
 import { Grid } from '@mui/material';
 import { ControlLabel } from '../ControlLabel';
-import {
-  BPITooltip,
-  FormError,
-  ISelectData,
-} from '../../../../../../Shared/components';
+import { BPITooltip, FormError } from '../../../../../../Shared/components';
 import { useSecurity } from '../../../../../../Packages/Security';
-import { addRow } from './apiRoutes/addRow';
 import { AgGridReact } from 'ag-grid-react';
 import { useReactToPrint } from 'react-to-print';
 import { Button } from 'Shared/components';
-import {
-  useTrans,
-  security,
-  isUndefined,
-  getEnv,
-} from '../../../../../../Services';
+import { useTrans, security, getEnv } from '../../../../../../Services';
 import './datagrid.css';
-import { useApi, useRouter } from 'Services';
 import { saveValueDataGrid } from './apiRoutes/saveValueDataGrid';
 import CustomSelectRenderer from './AgDataGridFields/CustomSelectRenderer/CustomSelectRenderer';
 import { EuroIcon } from 'Styles';
 import { minMax } from 'Packages/Helpers/src/minMax';
 import { AgDataGridStyle } from './DataGridControl.style';
-import { AgDataGridUpload } from './DataGridFields/AgDataGridUpload/AgDataGridUpload';
 import 'ag-grid-enterprise';
 // import 'ag-grid-community/styles/ag-grid.css';
 // import 'ag-grid-community/styles/ag-theme-alpine.css';
-import {
-  CellEditingStartedEvent,
-  IServerSideDatasource,
-  ITooltipParams,
-  RowNode,
-} from 'ag-grid-community';
+import { CellEditingStartedEvent, RowNode } from 'ag-grid-community';
 import { DataGridDetail } from '../../../../types';
 // import millify from 'millify';
 import { LicenseManager } from 'ag-grid-enterprise';
@@ -923,7 +904,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     });
   };
 
-  const getRowData = () => {
+  const getRowData = useCallback(() => {
     const selected_data: any = [];
     gridOptions.rowData.map((row: any) => {
       if (
@@ -936,6 +917,83 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         return;
       }
     });
+
+    return selected_data;
+  }, [
+    control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref,
+    gridOptions.rowData,
+  ]);
+  const refresh_grid = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        `${getEnv('API_PROTOCOL')}://${getEnv(
+          'API_HOST',
+        )}/control/data_grid/refresh_values?file_id=${fileId}&control_id=${
+          control.control_id
+        }`,
+        {
+          headers: {
+            Authorization: jwt,
+          },
+          responseType: 'json',
+        },
+      );
+
+      if (response) {
+        setGridDetails(response?.data?.data);
+        gridRef.current.api.refreshCells({
+          force: true,
+        });
+      }
+    } catch (error) {
+      setErrorMessageAdd("Une erreur est survenue lors de l'ajout de la ligne");
+    }
+  }, [jwt, control?.control_id, fileId]);
+
+  const callButtonRoute = useCallback(
+    async (method: string, route: string, button_row_selected: boolean) => {
+      try {
+        const response = await axios.post(
+          `${getEnv('API_PROTOCOL')}://${getEnv(
+            'API_HOST',
+          )}/control/data_grid${route}?file_id=${fileId}&control_id=${
+            control.control_id
+          }`,
+          button_row_selected ? { selected_rows: getRowData() } : {},
+          {
+            headers: {
+              Authorization: jwt,
+            },
+            responseType: 'json',
+          },
+        );
+
+        if (response) {
+        }
+      } catch (error) {
+        setErrorMessageAdd(
+          "Une erreur est survenue lors de l'ajout de la ligne",
+        );
+      }
+    },
+    [getRowData, jwt],
+  );
+
+  const DynamicButtonClick = ({
+    button_method,
+    button_route,
+    button_refresh_callback,
+    button_row_selected,
+  }: {
+    button_method: string;
+    button_route: string;
+    button_refresh_callback: boolean;
+    button_row_selected: boolean;
+  }) => {
+    callButtonRoute(button_method, button_route, button_row_selected);
+    if (button_refresh_callback) {
+      refresh_grid();
+    }
   };
 
   return (
@@ -969,8 +1027,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           >
             Export PDF
           </Button> */}
-          {control?.data_grid_detail?.datagrid_options
-            ?.add_row_button_display === true && (
+          {GridDetails?.datagrid_options?.add_row_button_display === true && (
             <BPITooltip
               title={
                 user_language?.lang === 'en' ? 'Add Row' : 'Ajouter une ligne'
@@ -992,8 +1049,8 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               </Button>
             </BPITooltip>
           )}
-          {control?.data_grid_detail?.datagrid_options
-            ?.select_all_button_display === true && (
+          {GridDetails?.datagrid_options?.select_all_button_display ===
+            true && (
             <BPITooltip title={'Sélectionner toutes les lignes'}>
               <Button
                 onClick={handleButtonClick}
@@ -1010,8 +1067,8 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               </Button>
             </BPITooltip>
           )}
-          {control?.data_grid_detail?.datagrid_options
-            ?.unselect_all_button_display === true && (
+          {GridDetails?.datagrid_options?.unselect_all_button_display ===
+            true && (
             <BPITooltip title={'Désélectionner toutes les lignes'}>
               <Button
                 onClick={UnSelectAllByClick}
@@ -1048,37 +1105,65 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       </BPITooltip> */}
         </div>
       </div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+          marginTop: 15,
+          marginBottom: -15,
+        }}
+      >
+        {GridDetails?.buttons?.length > 0 &&
+          GridDetails?.buttons?.map((button: any, index: number) => {
+            return (
+              <Button
+                key={index}
+                onClick={() =>
+                  DynamicButtonClick({
+                    button_method: button?.button_method,
+                    button_route: button?.button_route,
+                    button_refresh_callback: button?.button_refresh_callback,
+                    button_row_selected: button?.button_row_selected,
+                  })
+                }
+                style={{
+                  backgroundColor: button?.button_bg_color
+                    ? button?.button_bg_color
+                    : 'teal',
+                  border: 0,
+                  color: button?.button_font_color
+                    ? button?.button_font_color
+                    : 'white',
+                  margin: 5,
+                  borderRadius: 5,
+                  marginBottom: 14,
+                }}
+              >
+                {button?.button_label}
+              </Button>
+            );
+          })}
+      </div>
       <h1 style={{ color: 'red', padding: 10 }}>{errors}</h1>
       {errorsMessageAdd && <FormError>{errorsMessageAdd}</FormError>}
 
       <AgDataGridStyle
-        background_color={
-          control?.data_grid_detail?.datagrid_options?.datagrid_bg_color
-        }
-        border_color={
-          control?.data_grid_detail?.datagrid_options?.datagrid_border_color
-        }
-        is_border_color={
-          control?.data_grid_detail?.datagrid_options?.datagrid_border
-        }
-        font_color={
-          control?.data_grid_detail?.datagrid_options?.datagrid_font_color
-        }
-        font_size={
-          control?.data_grid_detail?.datagrid_options?.datagrid_font_size
-        }
-        font_weight={
-          control?.data_grid_detail?.datagrid_options?.datagrid_font_weight
-        }
+        background_color={GridDetails.datagrid_options?.datagrid_bg_color}
+        border_color={GridDetails?.datagrid_options?.datagrid_border_color}
+        is_border_color={GridDetails?.datagrid_options?.datagrid_border}
+        font_color={GridDetails?.datagrid_options?.datagrid_font_color}
+        font_size={GridDetails?.datagrid_options?.datagrid_font_size}
+        font_weight={GridDetails.datagrid_options?.datagrid_font_weight}
         header_bg_color={
-          control?.data_grid_detail?.datagrid_options?.datagrid_header_bg_color
+          GridDetails?.datagrid_options?.datagrid_header_bg_color
         }
         header_font_color={
-          control?.data_grid_detail?.datagrid_options
-            ?.datagrid_header_font_color
+          GridDetails?.datagrid_options?.datagrid_header_font_color
         }
         odd_row_bg_color={
-          control?.data_grid_detail?.datagrid_options?.datagrid_odd_row_bg_color
+          GridDetails?.datagrid_options?.datagrid_odd_row_bg_color
         }
       >
         <AgGridReact
