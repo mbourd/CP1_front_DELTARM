@@ -16,11 +16,11 @@ const CustomSingleCheckboxRender: React.FC<any> = ({ props, selected }) => {
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <div
             style={{
-              marginTop: 0,
               display: 'flex',
               flexDirection: 'row',
               alignItems: 'center',
               marginRight: 10,
+              marginTop: 10,
             }}
           >
             <input
