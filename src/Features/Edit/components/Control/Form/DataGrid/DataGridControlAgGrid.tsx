@@ -248,6 +248,16 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               tooltipField: g?.field,
               tooltipComponentParams: { tooltip: tooltip_extractor },
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
+              comparator: (
+                valueA: any,
+                valueB: any,
+                nodeA: any,
+                nodeB: any,
+                isDescending: any,
+              ) => {
+                if (parseFloat(valueA) == parseFloat(valueB)) return 0;
+                return parseFloat(valueA) > parseFloat(valueB) ? 1 : -1;
+              },
               cellRenderer: (props: any) => {
                 return (
                   <div style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -283,6 +293,17 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               tooltipComponentParams: { tooltip: tooltip_extractor },
               tooltipField: g?.field,
+              comparator: (
+                valueA: any,
+                valueB: any,
+                nodeA: any,
+                nodeB: any,
+                isDescending: any,
+              ) => {
+                if (parseFloat(valueA) == parseFloat(valueB)) return 0;
+
+                return parseFloat(valueA) > parseFloat(valueB) ? 1 : -1;
+              },
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 const data = props?.colDef?.field?.split('.')[0];
@@ -314,6 +335,16 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               tooltipField: g?.field,
               tooltipComponentParams: { tooltip: tooltip_extractor },
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
+              comparator: (
+                valueA: any,
+                valueB: any,
+                nodeA: any,
+                nodeB: any,
+                isDescending: any,
+              ) => {
+                if (parseFloat(valueA) == parseFloat(valueB)) return 0;
+                return parseFloat(valueA) > parseFloat(valueB) ? 1 : -1;
+              },
               cellRenderer: (props: any) => {
                 return (
                   <>{props?.value !== null || undefined ? props.value : ''}</>
@@ -328,6 +359,16 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               tooltipField: g?.field,
               tooltipComponentParams: { tooltip: tooltip_extractor },
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
+              comparator: (
+                valueA: any,
+                valueB: any,
+                nodeA: any,
+                nodeB: any,
+                isDescending: any,
+              ) => {
+                if (parseFloat(valueA) == parseFloat(valueB)) return 0;
+                return parseFloat(valueA) > parseFloat(valueB) ? 1 : -1;
+              },
               cellRenderer: (props: any) => {
                 return (
                   <div style={{ flexDirection: 'row', alignItems: 'center' }}>
