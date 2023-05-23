@@ -50,7 +50,6 @@ interface IProps {
 const CustomTooltip = (props: any & { tooltip: string }) => {
   const field_name = props?.colDef?.field?.split('.')[0];
   const data = props?.data[field_name];
-  // console.log(data, props?.colDef?.track_modification_tooltip);
   if (
     props?.colDef?.track_modification &&
     props?.colDef?.track_modification_tooltip &&
@@ -364,10 +363,25 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 valueB: any,
                 nodeA: any,
                 nodeB: any,
-                isDescending: any,
+                isInverted: any,
               ) => {
-                if (parseFloat(valueA) == parseFloat(valueB)) return 0;
-                return parseFloat(valueA) > parseFloat(valueB) ? 1 : -1;
+                if (parseFloat(valueA) == parseFloat(valueB)) {
+                  return 0;
+                }
+                // for null
+                else if (valueA === null) {
+                  return isInverted ? -1 : 1;
+                } else if (valueB === null) {
+                  return isInverted ? 1 : -1;
+                } else if (parseFloat(valueA) > parseFloat(valueB)) {
+                  return 1;
+                } else {
+                  return -1;
+                }
+
+                // if (parseFloat(valueA) == parseFloat(valueB)) return 0;
+
+                // return a === null ? isInverted : parseFloat(valueA) > parseFloat(valueB) ? 1 : -1;
               },
               cellRenderer: (props: any) => {
                 return (
@@ -706,17 +720,24 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       const data = event?.colDef?.field?.split('.')[0];
 
       const field_data = event?.data[data];
+
       if (event?.oldValue !== event?.newValue) {
         if (event?.colDef?.track_modification) {
           const options: any = JSON.parse(
             event?.colDef?.track_modification_option,
           );
+
           event.colDef.cellStyle = (p: any) =>
             p.rowIndex.toString() === event.node.id
               ? {
                   backgroundColor:
-                    options !== null ? options['background-color'] : '',
-                  color: options !== null ? options?.color : '',
+                    options !== null && event?.newValue !== undefined
+                      ? options['background-color']
+                      : '',
+                  color:
+                    options !== null && event?.newValue !== undefined
+                      ? options?.color
+                      : '',
                 }
               : {};
 
@@ -807,7 +828,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         }
       }
     },
-    [control?.control_id, fileId, jwt],
+    [fileId, jwt],
   );
 
   const getRowStyle = (params: any) => {
@@ -954,7 +975,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref
         ]?.value === '1'
       ) {
-        selected_data.push(row);
+        selected_data.push(row?.row_uuid);
       } else {
         return;
       }
@@ -988,7 +1009,10 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         });
       }
     } catch (error) {
-      setErrorMessageAdd("Une erreur est survenue lors de l'ajout de la ligne");
+      seterrors("Une erreur s'est produite");
+      setTimeout(() => {
+        seterrors('');
+      }, 3000);
     }
   }, [jwt, control?.control_id, fileId]);
 
@@ -1013,12 +1037,13 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         if (response) {
         }
       } catch (error) {
-        setErrorMessageAdd(
-          "Une erreur est survenue lors de l'ajout de la ligne",
-        );
+        seterrors("Une erreur s'est produite");
+        setTimeout(() => {
+          seterrors('');
+        }, 3000);
       }
     },
-    [getRowData, jwt],
+    [getRowData, jwt, control?.control_id, fileId],
   );
 
   const DynamicButtonClick = ({
@@ -1123,6 +1148,36 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               </Button>
             </BPITooltip>
           )}
+          {GridDetails?.buttons?.length > 0 &&
+            GridDetails?.buttons?.map((button: any, index: number) => {
+              return (
+                <Button
+                  key={index}
+                  onClick={() =>
+                    DynamicButtonClick({
+                      button_method: button?.button_method,
+                      button_route: button?.button_route,
+                      button_refresh_callback: button?.button_refresh_callback,
+                      button_row_selected: button?.button_row_selected,
+                    })
+                  }
+                  style={{
+                    backgroundColor: button?.button_bg_color
+                      ? button?.button_bg_color
+                      : 'teal',
+                    border: 0,
+                    color: button?.button_font_color
+                      ? button?.button_font_color
+                      : 'white',
+                    margin: 5,
+                    borderRadius: 5,
+                    marginBottom: 14,
+                  }}
+                >
+                  {button?.button_label}
+                </Button>
+              );
+            })}
 
           {/* <Button onClick={getRowData}>Get Data</Button> */}
           {/* <BPITooltip title={'Remove Line'}>
@@ -1142,47 +1197,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} />
       </BPITooltip> */}
         </div>
-      </div>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'flex-end',
-          marginTop: 15,
-          marginBottom: -15,
-        }}
-      >
-        {GridDetails?.buttons?.length > 0 &&
-          GridDetails?.buttons?.map((button: any, index: number) => {
-            return (
-              <Button
-                key={index}
-                onClick={() =>
-                  DynamicButtonClick({
-                    button_method: button?.button_method,
-                    button_route: button?.button_route,
-                    button_refresh_callback: button?.button_refresh_callback,
-                    button_row_selected: button?.button_row_selected,
-                  })
-                }
-                style={{
-                  backgroundColor: button?.button_bg_color
-                    ? button?.button_bg_color
-                    : 'teal',
-                  border: 0,
-                  color: button?.button_font_color
-                    ? button?.button_font_color
-                    : 'white',
-                  margin: 5,
-                  borderRadius: 5,
-                  marginBottom: 14,
-                }}
-              >
-                {button?.button_label}
-              </Button>
-            );
-          })}
       </div>
       <h1 style={{ color: 'red', padding: 10 }}>{errors}</h1>
       {errorsMessageAdd && <FormError>{errorsMessageAdd}</FormError>}
