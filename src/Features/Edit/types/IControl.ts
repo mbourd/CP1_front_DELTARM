@@ -185,6 +185,7 @@ export interface DataGridDetail {
   rows: DataGridDetailsRows[];
   datagrid_options: any;
   buttons: any;
+  source: any;
 }
 
 export interface IDataGridAgGridCol {
