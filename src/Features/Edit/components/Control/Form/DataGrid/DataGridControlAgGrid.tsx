@@ -105,7 +105,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   };
   useEffect(() => {
     setGridDetails(control?.data_grid_detail);
-    // console.log('control', control?.data_grid_detail);
+    // console.log('control', control, GridDetails?.source);
   }, [control?.data_grid_detail]);
 
   const cellStyleFunctions = (props: any, g: any) => {
@@ -992,7 +992,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           'API_HOST',
         )}/control/data_grid/refresh_values?file_id=${fileId}&control_id=${
           control.control_id
-        }`,
+        }&source=${GridDetails?.source}`,
         {
           headers: {
             Authorization: jwt,
