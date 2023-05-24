@@ -34,7 +34,7 @@ const CustomSelectRenderer: React.FC<any> = ({
 
     saveValueDataGrid(
       fileId,
-      control.control_id,
+      props?.data?.row_uuid,
       field_data?.col_elm_id,
       field_data?.row_num,
       jwt,
@@ -91,7 +91,13 @@ const CustomSelectRenderer: React.FC<any> = ({
         <CustomSelectStyled
           value={select_id_to_show[0]?.choice_lib}
           onChange={handleChange}
-          disabled={field_data?.control_editable === false ? true : false}
+          disabled={
+            props?.data?.row_editable
+              ? false
+              : field_data?.control_editable === false
+              ? true
+              : false
+          }
           // displayEmpty
           inputProps={{ 'aria-label': 'Without label' }}
           sx={{
