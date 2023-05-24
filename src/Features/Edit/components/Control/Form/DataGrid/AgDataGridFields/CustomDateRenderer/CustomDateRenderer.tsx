@@ -13,7 +13,7 @@ const CustomDateRenderer: React.FC<any> = ({
     props.setValue(event.target.value);
     saveValueDataGrid(
       fileId,
-      control.control_id,
+      props?.data?.row_uuid,
       field_data?.col_elm_id,
       field_data?.row_num,
       jwt,
@@ -32,7 +32,13 @@ const CustomDateRenderer: React.FC<any> = ({
       <input
         type="date"
         onChange={checkedHandler}
-        disabled={field_data?.control_editable === false ? true : false}
+        disabled={
+          props?.data?.row_editable
+            ? false
+            : field_data?.control_editable === false
+            ? true
+            : false
+        }
         // id="date"
         style={{
           backgroundColor: 'transparent',
