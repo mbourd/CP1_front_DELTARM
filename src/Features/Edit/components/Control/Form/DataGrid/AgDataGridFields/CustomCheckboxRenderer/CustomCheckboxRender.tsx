@@ -11,13 +11,12 @@ const CustomCheckboxRender: React.FC<any> = ({
 }) => {
   // console.log(field_data);
   const [items, setitems] = useState(field_data?.value?.split(','));
-
   const onChange = (event: any) => {
     if (event.target.checked) {
       setitems(items.concat(event.target.name));
       saveValueDataGrid(
         fileId,
-        control.control_id,
+        props?.data?.row_uuid,
         field_data?.col_elm_id,
         field_data?.row_num,
         jwt,
@@ -29,7 +28,7 @@ const CustomCheckboxRender: React.FC<any> = ({
       setitems(items.filter((item: any) => item !== event.target.name));
       saveValueDataGrid(
         fileId,
-        control.control_id,
+        props?.data?.row_uuid,
         field_data?.col_elm_id,
         field_data?.row_num,
         jwt,
@@ -61,6 +60,13 @@ const CustomCheckboxRender: React.FC<any> = ({
               onChange={onChange}
               defaultChecked={
                 default_value?.includes(option?.choice_id?.toString())
+                  ? true
+                  : false
+              }
+              disabled={
+                props?.data?.row_editable
+                  ? false
+                  : field_data?.control_editable === false
                   ? true
                   : false
               }
