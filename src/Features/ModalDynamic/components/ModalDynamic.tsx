@@ -24,6 +24,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { StyledTableCell } from '../../DashboardDynamic/components/Card/Card.style';
 import { InputModalDynamic } from './InputModalDynamic/InputModalDynamic';
 import { SelectModalDynamic } from './SelectModalDynamic/SelectModalDynamic';
+import { useTrans, security } from '../../../Services';
 
 export const ModalDynamic: FC<IDataModalProps> = ({
   open,
@@ -37,6 +38,8 @@ export const ModalDynamic: FC<IDataModalProps> = ({
   const defaultQueries = useMemo<Record<string, string>>(() => {
     return {};
   }, []);
+  const user_language: any = security.decodeJwtToken(jwt ? jwt : '');
+  console.log(user_language, 'lang');
 
   const footer = (
     <ModalDynamicFooterStyled>
@@ -88,7 +91,11 @@ export const ModalDynamic: FC<IDataModalProps> = ({
         });
 
         if (errorMandatory) {
-          setErrorMessage('Champs obligatoire manquant');
+          setErrorMessage(
+            user_language?.lang === 'en'
+              ? 'Mandatory value'
+              : 'Valeur obligatoire',
+          );
 
           return;
         }
@@ -116,7 +123,8 @@ export const ModalDynamic: FC<IDataModalProps> = ({
       open={open}
       onClose={() => setIsModalOpen(false)}
       footer={footer}
-      maxHeight={'620px'}
+      maxHeight={'720px'}
+      height={'50%'}
     >
       <Heading>{data?.title}</Heading>
       <HeadingTwo>{data?.subtitle}</HeadingTwo>

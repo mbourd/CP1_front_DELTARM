@@ -149,8 +149,8 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           case 'checkbox_select_datagrid':
             return {
               ...g,
-              minWidth: 150,
-              width: 'auto',
+              minWidth: 80,
+              width: 80,
               singleClickEdit: false,
               tooltipField: g?.field,
               tooltipComponentParams: { tooltip: tooltip_extractor },
@@ -208,6 +208,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
+              filterParams: {
+                caseSensitive: true,
+              },
               tooltipField: g?.field,
               tooltipComponentParams: { tooltip: tooltip_extractor },
               cellEditorPopup: true,
@@ -223,6 +226,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
+              filterParams: {
+                caseSensitive: true,
+              },
               tooltipField: g?.field,
               tooltipComponentParams: { tooltip: tooltip_extractor },
               cellEditorPopup: true,
@@ -469,6 +475,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               tooltipField: g?.field,
               tooltipComponentParams: { tooltip: tooltip_extractor },
+              filterParams: {
+                caseSensitive: true,
+              },
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 return (
