@@ -7,6 +7,8 @@ import {
 import { IElementModal } from '../types';
 import { FieldName } from 'react-hook-form/dist/types/fields';
 import { RegisterOptions } from 'react-hook-form/dist/types/validator';
+import { useSecurity } from '../../../../Packages/Security';
+import { security } from '../../../../Services';
 
 interface InputModalDynamicProps {
   element: IElementModal;
@@ -23,17 +25,22 @@ export const SelectModalDynamic: React.FC<InputModalDynamicProps> = ({
   handleChangeValue,
   register,
 }) => {
+  const { user } = useSecurity();
+  const jwt = user.getJwt();
   const [value, setValue] = useState(element.value);
   const [errorMessage, setErrorMessage] = useState('');
+  const user_language: any = security.decodeJwtToken(jwt ? jwt : '');
 
   useEffect(() => {
     if (element.attribute.mandatory && !value) {
-      setErrorMessage('Valeur obligatoire');
+      setErrorMessage(
+        user_language?.lang === 'en' ? 'Mandatory value' : 'Valeur obligatoire',
+      );
     }
     if (element.attribute.mandatory && value) {
       setErrorMessage('');
     }
-  }, [value, element.attribute.mandatory]);
+  }, [value, element.attribute.mandatory, user_language?.lang]);
 
   const checkMandatory = useCallback((value) => {
     setValue(value);
@@ -61,7 +68,9 @@ export const SelectModalDynamic: React.FC<InputModalDynamicProps> = ({
           required: element.attribute?.mandatory,
         })}
       >
-        {'Sélectionner une valeur'}
+        {user_language?.lang === 'en'
+          ? 'Select a value'
+          : 'Sélectionner une valeur'}
       </Select>
       {errorMessage ? <FormError>{errorMessage}</FormError> : null}
     </>
