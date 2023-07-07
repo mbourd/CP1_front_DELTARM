@@ -116,7 +116,7 @@ export const ModalDynamic: FC<IDataModalProps> = ({
 
       actionButton(action);
     },
-    [getValues, actionButton, data?.content, trans],
+    [getValues, actionButton, data?.content, user_language?.lang],
   );
 
   return (
