@@ -1072,7 +1072,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   };
 
   return (
-    <Grid item xs={11} style={{ maxWidth: '95%', margin: '0 auto' }}>
+    <Grid item xs={12} style={{ maxWidth: '100%', margin: '0 auto' }}>
       {/* <DataGridControlStyled> */}
 
       <div
