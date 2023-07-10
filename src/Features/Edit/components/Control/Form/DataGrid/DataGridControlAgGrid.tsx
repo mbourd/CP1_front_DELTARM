@@ -1033,7 +1033,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             'API_HOST',
           )}/control/data_grid${route}?file_id=${fileId}&control_id=${
             control.control_id
-          }`,
+          }&source=${GridDetails?.source}`,
           button_row_selected ? { selected_rows: getRowData() } : {},
           {
             headers: {
