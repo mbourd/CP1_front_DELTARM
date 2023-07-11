@@ -56,7 +56,6 @@ const kFormatter: any = (num: any) => {
 };
 
 const CustomTooltip = (props: any & { tooltip: string }) => {
-  console.log(props);
   const field_name = props?.colDef?.field?.split('.')[0];
   const data = props?.location === 'cell' ? props?.data[field_name] : '';
   if (
@@ -76,7 +75,11 @@ const CustomTooltip = (props: any & { tooltip: string }) => {
           'integer' ||
           'financial' ||
           'percent'
-            ? kFormatter(data?.reference_value)
+            ? data?.component === 'financial'
+              ? `${props?.colDef?.currency_symbol}${kFormatter(
+                  data?.reference_value,
+                )}`
+              : kFormatter(data?.reference_value)
             : data?.reference_value}
         </p>
       </div>
