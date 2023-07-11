@@ -47,21 +47,42 @@ interface IProps {
   fileId: string;
 }
 
+const kFormatter: any = (num: any) => {
+  if (num !== null || undefined) {
+    return num?.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  } else {
+    return '';
+  }
+};
+
 const CustomTooltip = (props: any & { tooltip: string }) => {
   const field_name = props?.colDef?.field?.split('.')[0];
-  const data = props?.data[field_name];
+  const data = props?.location === 'cell' ? props?.data[field_name] : '';
   if (
     props?.colDef?.track_modification &&
     props?.colDef?.track_modification_tooltip &&
-    data?.reference_value !== data?.value
+    data?.reference_value !== data?.value &&
+    props?.location === 'cell'
   ) {
     return (
       <div
         className="custom-tooltip"
         style={{ backgroundColor: 'wheat', padding: 5 }}
       >
-        <p>Previous Value: {data?.reference_value}</p>
+        <p>
+          Previous Value:
+          {data?.component === 'decimal' ||
+          'integer' ||
+          'financial' ||
+          'percent'
+            ? kFormatter(data?.reference_value)
+            : data?.reference_value}
+        </p>
       </div>
+    );
+  } else if (props?.location === 'header') {
+    return (
+      <p style={{ backgroundColor: 'wheat', padding: 5 }}>{props?.value}</p>
     );
   } else {
     return;
@@ -78,7 +99,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   const [trans] = useTrans('Edit');
   const jwt = user.getJwt();
   const [errors, seterrors]: any = useState('');
-  const [tooltip_extractor, settooltip_extractor] = useState('');
   const [GridDetails, setGridDetails]: any = useState<
     DataGridDetail | undefined | null
   >(control.data_grid_detail);
@@ -97,16 +117,8 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     ? control?.data_grid_detail?.datagrid_options?.pagination_row_size
     : 20;
 
-  const kFormatter: any = (num: any) => {
-    if (num !== null || undefined) {
-      return num?.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    } else {
-      return '';
-    }
-  };
   useEffect(() => {
     setGridDetails(control?.data_grid_detail);
-    // console.log('control', control, GridDetails?.source);
   }, [control?.data_grid_detail]);
 
   const cellStyleFunctions = (props: any, g: any) => {
@@ -154,7 +166,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 80,
               singleClickEdit: false,
               tooltipField: g?.field,
-              tooltipComponentParams: { tooltip: tooltip_extractor },
+              headerTooltip: g?.headerName,
               editable: true,
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
@@ -166,14 +178,14 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 );
               },
             };
-          case 'select_list':
+          case 'select_list' || 'dynamic_select_list':
             return {
               ...g,
               minWidth: 150,
               width: 'auto',
               singleClickEdit: false,
               tooltipField: g?.field,
-              tooltipComponentParams: { tooltip: tooltip_extractor },
+              headerTooltip: g?.headerName,
               editable: false,
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               // filter: 'agNumberColumnFilter',
@@ -213,7 +225,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 caseSensitive: true,
               },
               tooltipField: g?.field,
-              tooltipComponentParams: { tooltip: tooltip_extractor },
+              headerTooltip: g?.headerName,
               cellEditorPopup: true,
               cellEditor: 'agLargeTextCellEditor',
               cellEditorParams: {
@@ -231,7 +243,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 caseSensitive: true,
               },
               tooltipField: g?.field,
-              tooltipComponentParams: { tooltip: tooltip_extractor },
+              headerTooltip: g?.headerName,
               cellEditorPopup: true,
               cellEditor: 'agLargeTextCellEditor',
               cellEditorParams: {
@@ -250,8 +262,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
+
               tooltipField: g?.field,
-              tooltipComponentParams: { tooltip: tooltip_extractor },
+              headerTooltip: g?.headerName,
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               comparator: (
                 valueA: any,
@@ -267,7 +280,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 return (
                   <div style={{ flexDirection: 'row', alignItems: 'center' }}>
                     {props.value !== null || undefined
-                      ? `% ${props?.value}`
+                      ? `% ${kFormatter(props.value)}`
                       : ''}
                   </div>
                 );
@@ -279,7 +292,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               width: 'auto',
               tooltipField: g?.field,
-              tooltipComponentParams: { tooltip: tooltip_extractor },
+              headerTooltip: g?.headerName,
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
             };
           case 'multiple_list':
@@ -288,7 +301,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               width: 'auto',
               tooltipField: g?.field,
-              tooltipComponentParams: { tooltip: tooltip_extractor },
+              headerTooltip: g?.headerName,
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
             };
           case 'integer':
@@ -296,7 +309,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
-              tooltipComponentParams: { tooltip: tooltip_extractor },
+              headerTooltip: g?.headerName,
               tooltipField: g?.field,
               comparator: (
                 valueA: any,
@@ -327,7 +340,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
 
                 return (
                   <div>
-                    {props?.value !== null || undefined ? props.value : ''}
+                    {props?.value !== null || undefined
+                      ? kFormatter(props.value)
+                      : ''}
                   </div>
                 );
               },
@@ -338,7 +353,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               width: 'auto',
               tooltipField: g?.field,
-              tooltipComponentParams: { tooltip: tooltip_extractor },
+              headerTooltip: g?.headerName,
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               comparator: (
                 valueA: any,
@@ -352,7 +367,11 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               },
               cellRenderer: (props: any) => {
                 return (
-                  <>{props?.value !== null || undefined ? props.value : ''}</>
+                  <>
+                    {props?.value !== null || undefined
+                      ? kFormatter(props.value)
+                      : ''}
+                  </>
                 );
               },
             };
@@ -362,7 +381,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               width: 'auto',
               tooltipField: g?.field,
-              tooltipComponentParams: { tooltip: tooltip_extractor },
+              headerTooltip: g?.headerName,
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               comparator: (
                 valueA: any,
@@ -438,7 +457,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               width: 'auto',
               tooltipField: g?.field,
-              tooltipComponentParams: { tooltip: tooltip_extractor },
+              headerTooltip: g?.headerName,
               singleClickEdit: false,
               editable: false,
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
@@ -475,7 +494,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               width: 'auto',
               tooltipField: g?.field,
-              tooltipComponentParams: { tooltip: tooltip_extractor },
+              headerTooltip: g?.headerName,
               filterParams: {
                 caseSensitive: true,
               },
@@ -490,9 +509,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             return {
               ...g,
               minWidth: 150,
+              headerTooltip: g?.headerName,
               width: 'auto',
               tooltipField: g?.field,
-              tooltipComponentParams: { tooltip: tooltip_extractor },
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
             };
           case 'date':
@@ -500,7 +519,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               tooltipField: g?.field,
-              tooltipComponentParams: { tooltip: tooltip_extractor },
+              headerTooltip: g?.headerName,
               width: 'auto',
               singleClickEdit: false,
               editable: false,
@@ -538,6 +557,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               width: 'auto',
               singleClickEdit: false,
+              headerTooltip: g?.headerName,
               editable: false,
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
@@ -579,6 +599,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               width: 'auto',
               singleClickEdit: false,
+              headerTooltip: g?.headerName,
               editable: false,
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
@@ -618,6 +639,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             return {
               ...g,
               minWidth: 150,
+              headerTooltip: g?.headerName,
               width: 'auto',
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
@@ -628,7 +650,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             };
         }
       }),
-    [control.data_grid_detail?.columns],
+    [GridDetails?.rows, control, jwt, fileId, selected],
   );
 
   const cellRenderer = (props: any) => {
@@ -647,7 +669,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     );
 
     switch (field_data?.component) {
-      case 'select_list':
+      case 'select_list' || 'dynamic_select_list':
         return (
           <CustomSelectRenderer
             props={props}
@@ -705,7 +727,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           'API_HOST',
         )}/control/data_grid/add_row?file_id=${fileId}&elm_id=${
           control.control_id
-        }`,
+        }&source=${GridDetails?.source}`,
         {},
         {
           headers: {

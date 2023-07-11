@@ -40,7 +40,6 @@ const Dashboard: React.FC = (): React.ReactElement => {
   //   }, [context.cli_id, clientInfoSignal, review]);
 
   useEffect(() => {
-    console.log(dataSecurity.context);
     // Temporary if statements behavior
     if (dataSecurity.context === 'contr_perm') {
       return;
