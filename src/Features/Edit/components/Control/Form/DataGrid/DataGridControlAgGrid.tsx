@@ -56,6 +56,7 @@ const kFormatter: any = (num: any) => {
 };
 
 const CustomTooltip = (props: any & { tooltip: string }) => {
+  console.log(props);
   const field_name = props?.colDef?.field?.split('.')[0];
   const data = props?.location === 'cell' ? props?.data[field_name] : '';
   if (
@@ -80,9 +81,14 @@ const CustomTooltip = (props: any & { tooltip: string }) => {
         </p>
       </div>
     );
-  } else if (props?.location === 'header') {
+  } else if (
+    props?.location === 'header' &&
+    props?.colDef?.col_header_display_tooltip
+  ) {
     return (
-      <p style={{ backgroundColor: 'wheat', padding: 5 }}>{props?.value}</p>
+      <p style={{ backgroundColor: 'wheat', padding: 5 }}>
+        {props?.colDef?.col_header_tooltip}
+      </p>
     );
   } else {
     return;
@@ -118,6 +124,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
 
   useEffect(() => {
     setGridDetails(control?.data_grid_detail);
+    console.log(control?.data_grid_detail);
   }, [control?.data_grid_detail]);
 
   const cellStyleFunctions = (props: any, g: any) => {
