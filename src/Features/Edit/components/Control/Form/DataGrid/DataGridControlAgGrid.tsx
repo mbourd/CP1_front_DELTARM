@@ -124,7 +124,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
 
   useEffect(() => {
     setGridDetails(control?.data_grid_detail);
-    console.log(control?.data_grid_detail);
   }, [control?.data_grid_detail]);
 
   const cellStyleFunctions = (props: any, g: any) => {
