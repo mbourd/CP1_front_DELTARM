@@ -67,7 +67,7 @@ RichText.decorators = [
 const controlDisabled = {
   control_desc1: null,
   control_desc2: null,
-  control_editable: true,
+  control_editable: false,
   editable: false,
   control_family: 'standard',
   control_id: '1931',

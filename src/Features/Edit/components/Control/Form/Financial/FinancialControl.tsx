@@ -59,16 +59,16 @@ export const FinancialControl: React.FC<IProps> = ({
 
         return;
       }
-
       if (
-        (control.control_options?.min || control.control_options?.max) &&
+        (control.control_options?.min_value ||
+          control.control_options?.max_value) &&
         value.trim()
       ) {
         if (
           minMax(
             value,
-            control.control_options.min,
-            control.control_options.max,
+            control.control_options.min_value,
+            control.control_options.max_value,
           )
         ) {
           setErrorMessage(null);
@@ -76,8 +76,8 @@ export const FinancialControl: React.FC<IProps> = ({
         if (
           !minMax(
             value,
-            control.control_options.min,
-            control.control_options.max,
+            control.control_options.min_value,
+            control.control_options.max_value,
           )
         ) {
           setInputFocus();
@@ -147,6 +147,10 @@ export const FinancialControl: React.FC<IProps> = ({
     }
   }, [error]);
 
+  // useEffect(() => {
+  //   console.log(control);
+  // }, []);
+
   useEffect(() => {
     if (!isRejected) {
       setIsRejected(false);
@@ -179,7 +183,13 @@ export const FinancialControl: React.FC<IProps> = ({
           disabled={!control.editable}
           color={control.editable ? 'text' : 'disabled'}
           defaultValue={controlValue ? numberWithSpaces(controlValue) : ''}
-          icon={<EuroIcon />}
+          icon={
+            control?.control_options?.currency_symbol ? (
+              control?.control_options
+            ) : (
+              <EuroIcon />
+            )
+          }
           onBlur={(e) => saveValue(e.currentTarget.value)}
           unit={control.control_options?.unit}
         />

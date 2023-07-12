@@ -19,4 +19,9 @@ export const SelectStyled = styled.section<IProps>`
     width: 100%;
     z-index: 10;
   }
+
+  .eKJxUU ._SelectLabelButton {
+    border: none;
+    border-bottom: none;
+  }
 `;

@@ -30,6 +30,7 @@ export const InputBase: React.FC<IInputBase> = ({
   multilineRows = 2,
   unit,
   inputRef,
+  InputProps,
 }): React.ReactElement => {
   const theme = useTheme();
   const c = theme.color[color];
@@ -51,7 +52,20 @@ export const InputBase: React.FC<IInputBase> = ({
         '_Input ' + (className || '') + (status ? ' _Input-' + status : '')
       }
     >
-      {icon}
+      <div
+        style={{
+          width: icon?.currency_symbol ? 50 : 'auto',
+          marginLeft: icon?.currency_symbol ? 5 : 0,
+        }}
+      >
+        {icon?.currency_symbol ? (
+          <p style={{ fontSize: 13, fontWeight: 'bolder' }}>
+            {icon?.currency_symbol}
+          </p>
+        ) : (
+          icon
+        )}
+      </div>
       <MUIInputBase
         inputRef={inputRef}
         classes={MUIInputBaseClasse}
@@ -68,6 +82,7 @@ export const InputBase: React.FC<IInputBase> = ({
         onKeyPress={onKeyPress}
         onBlur={onBlur}
         multiline={multiline}
+        InputProps={InputProps}
         rows={multiline ? multilineRows : undefined}
       />
       <span style={{ padding: '5px' }}>{unit}</span>

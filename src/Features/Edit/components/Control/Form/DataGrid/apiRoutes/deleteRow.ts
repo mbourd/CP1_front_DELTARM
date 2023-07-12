@@ -24,9 +24,9 @@ export const deleteRow = (
         responseType: 'json',
       },
     )
-    .then((response) => {
+    .then((response: any) => {
       if (response.data) {
-        setGridDetails(response.data);
+        setGridDetails(response.data?.rows);
         setShowModal(false);
         setErrorMessage('');
       }
