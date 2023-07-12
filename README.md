@@ -1,7 +1,5 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## test
-
 ## Local authentication
 
 1. Run `yarn start`
