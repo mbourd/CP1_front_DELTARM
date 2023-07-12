@@ -1,5 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## test
+
 ## Local authentication
 
 1. Run `yarn start`
@@ -61,10 +63,13 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 ### Build image docker
 
 build the image before pushing it
+
 ```bash
 docker build -t ghcr.io/deltarm/cp1-front/[env]:latest -f ci/[env]/Dockerfile .
 ```
+
 pushing image
+
 ```bash
 docker push ghcr.io/deltarm/cp1-front/[env]:latest
 ```
