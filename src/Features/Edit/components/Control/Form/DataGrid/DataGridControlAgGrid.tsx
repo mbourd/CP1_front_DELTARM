@@ -211,6 +211,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               singleClickEdit: false,
               tooltipField: g?.field,
               headerTooltip: g?.headerName,
+
               editable: false,
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               // filter: 'agNumberColumnFilter',
@@ -246,8 +247,19 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
-              filterParams: {
-                caseSensitive: true,
+              sortingOrder: ['desc', 'asc', null],
+              accentedSort: true,
+              comparator: (
+                valueA: any,
+                valueB: any,
+                nodeA: any,
+                nodeB: any,
+                isDescending: any,
+              ) => {
+                if (valueA.toLowerCase() < valueB.toLowerCase()) return -1;
+                if (valueA.toLowerCase() > valueB.toLowerCase()) return 1;
+
+                return 0;
               },
               tooltipField: g?.field,
               headerTooltip: g?.headerName,
@@ -265,8 +277,19 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
-              filterParams: {
-                caseSensitive: true,
+              sortingOrder: ['desc', 'asc', null],
+              accentedSort: true,
+              comparator: (
+                valueA: any,
+                valueB: any,
+                nodeA: any,
+                nodeB: any,
+                isDescending: any,
+              ) => {
+                if (valueA.toLowerCase() < valueB.toLowerCase()) return -1;
+                if (valueA.toLowerCase() > valueB.toLowerCase()) return 1;
+
+                return 0;
               },
               tooltipField: g?.field,
               editable: (props: any) => decide_editable(props),
@@ -526,8 +549,19 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               tooltipField: g?.field,
               headerTooltip: g?.headerName,
               editable: (props: any) => decide_editable(props),
-              filterParams: {
-                caseSensitive: true,
+              sortingOrder: ['desc', 'asc', null],
+              accentedSort: true,
+              comparator: (
+                valueA: any,
+                valueB: any,
+                nodeA: any,
+                nodeB: any,
+                isDescending: any,
+              ) => {
+                if (valueA.toLowerCase() < valueB.toLowerCase()) return -1;
+                if (valueA.toLowerCase() > valueB.toLowerCase()) return 1;
+
+                return 0;
               },
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
