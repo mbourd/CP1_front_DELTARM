@@ -159,6 +159,22 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     };
   };
 
+  const decide_editable = (props: any) => {
+    const data: any = props?.colDef?.field?.split('.')[0];
+    if (props?.data?.row_editable === false) {
+      gridRef?.current?.api?.stopEditing();
+
+      return false;
+    }
+    if (props?.data[data]?.control_editable === false) {
+      gridRef?.current?.api?.stopEditing();
+
+      return false;
+    }
+
+    return true;
+  };
+
   // const handleClickRemoveSelectedRow = () => {
   //   const selectedRows = gridRef.current.api.getSelectedRows();
   //   gridRef.current.api.applyTransaction({ remove: selectedRows });
@@ -236,6 +252,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               tooltipField: g?.field,
               headerTooltip: g?.headerName,
               cellEditorPopup: true,
+              editable: (props: any) => decide_editable(props),
               cellEditor: 'agLargeTextCellEditor',
               cellEditorParams: {
                 rows: 10,
@@ -252,6 +269,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 caseSensitive: true,
               },
               tooltipField: g?.field,
+              editable: (props: any) => decide_editable(props),
               headerTooltip: g?.headerName,
               cellEditorPopup: true,
               cellEditor: 'agLargeTextCellEditor',
@@ -271,8 +289,8 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               ...g,
               minWidth: 150,
               width: 'auto',
-
               tooltipField: g?.field,
+              editable: (props: any) => decide_editable(props),
               headerTooltip: g?.headerName,
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               comparator: (
@@ -320,6 +338,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               headerTooltip: g?.headerName,
               tooltipField: g?.field,
+              editable: (props: any) => decide_editable(props),
               comparator: (
                 valueA: any,
                 valueB: any,
@@ -362,6 +381,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               width: 'auto',
               tooltipField: g?.field,
+              editable: (props: any) => decide_editable(props),
               headerTooltip: g?.headerName,
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               comparator: (
@@ -390,6 +410,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               width: 'auto',
               tooltipField: g?.field,
+              editable: (props: any) => decide_editable(props),
               headerTooltip: g?.headerName,
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               comparator: (
@@ -504,6 +525,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               tooltipField: g?.field,
               headerTooltip: g?.headerName,
+              editable: (props: any) => decide_editable(props),
               filterParams: {
                 caseSensitive: true,
               },
