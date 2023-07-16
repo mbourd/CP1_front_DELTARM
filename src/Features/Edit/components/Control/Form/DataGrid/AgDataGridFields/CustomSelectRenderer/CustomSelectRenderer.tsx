@@ -29,9 +29,6 @@ const CustomSelectRenderer: React.FC<any> = ({
     // console.log('value to save in grid', event?.target?.value, select_id);
     props.setValue(select_id[0]?.choice_id?.toString());
 
-    // console.log('select_list', props, field_data);
-    // field_data.value = event.target.value;
-
     saveValueDataGrid(
       fileId,
       props?.data?.row_uuid,
@@ -47,53 +44,12 @@ const CustomSelectRenderer: React.FC<any> = ({
   return (
     <CustomSelectRendererStyled>
       <div>
-        {/* <CustomSelectStyled
-          defaultValue={select_id_to_show[0]?.choice_lib}
-          onChange={handleChange}
-          fontSize={
-            control?.data_grid_detail?.datagrid_options?.datagrid_font_size
-          }
-          style={{
-            borderWidth: 0,
-            backgroundColor: 'transparent',
-            color: control?.data_grid_detail?.datagrid_options
-              ?.datagrid_font_color
-              ? control?.data_grid_detail?.datagrid_options?.datagrid_font_color
-              : 'black',
-            fontWeight: field_data?.choice_font_weight
-              ? field_data?.choice_font_weight
-              : 'normal',
-            // padding: 10,
-          }}
-        >
-          {field_data?.choice_options?.map((option: any) => (
-            <OptionStyled
-              key={option.choice_id}
-              value={option.choice_lib}
-              className="custom-option"
-              style={{
-                padding: '2px !important',
-                fontSize: 25,
-                color: 'black',
-                // backgroundColor: option?.choice_bg_color
-                //   ? option?.choice_bg_color
-                //   : 'white',
-                backgroundColor: 'red',
-                fontWeight: option?.choice_font_weight
-                  ? option?.choice_font_weight
-                  : 'normal',
-              }}
-            >
-              {option.choice_lib}
-            </OptionStyled>
-          ))}
-        </CustomSelectStyled> */}
         <CustomSelectStyled
           value={select_id_to_show[0]?.choice_lib}
           onChange={handleChange}
           disabled={
-            props?.data?.row_editable
-              ? false
+            !props?.data?.row_editable && field_data?.control_editable === false
+              ? true
               : field_data?.control_editable === false
               ? true
               : false
