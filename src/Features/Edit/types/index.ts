@@ -6,6 +6,7 @@ export * from './IControl';
 export * from './IState';
 export * from './IData';
 export * from './ILinkedFiles';
+export * from './IRdg';
 
 export const CONTENT_TYPE = {
   1: 'INFORMATION',

@@ -6,7 +6,7 @@ import React, {
   useEffect,
 } from 'react';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { IApiControl } from '../../../../types';
+import { IApiControl, IRdg } from '../../../../types';
 import { Grid } from '@mui/material';
 import { ControlLabel } from '../ControlLabel';
 import { BPITooltip, FormError } from '../../../../../../Shared/components';
@@ -42,6 +42,7 @@ import axios from 'axios';
 import CustomIconRenderer from './AgDataGridFields/CustomIconRenderer/CustomIconRenderer';
 import CustomActionButtonRenderer from './AgDataGridFields/CustomActionButtonRenderer/CustomActionButtonRenderer';
 import CustomSingleCheckboxRender from './AgDataGridFields/CustomSingleCheckBoxRenderer/CustomSingleCheckBoxRenderer';
+import { evaluate as mathEval } from 'mathjs';
 interface IProps {
   control: IApiControl;
   fileId: string;
@@ -697,6 +698,54 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                     )}
                   </div>
                 );
+              },
+            };
+          case 'formula':
+            return {
+              ...g,
+              minWidth: 150,
+              width: 'auto',
+              headerTooltip: g?.headerName,
+              tooltipField: g?.field,
+              editable: (props: any) => decide_editable(props),
+              comparator: (
+                valueA: any,
+                valueB: any,
+                nodeA: any,
+                nodeB: any,
+                isDescending: any,
+              ) => {
+                if (parseFloat(valueA) == parseFloat(valueB)) return 0;
+
+                return parseFloat(valueA) > parseFloat(valueB) ? 1 : -1;
+              },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
+              valueGetter: (params: any) => {
+                const [name, fieldValue]: string[] = params.column
+                  .getId()
+                  .split('.');
+                const formula: string = params.data[name][fieldValue];
+                const cellValue = (d: any, id: string) => {
+                  for (const k in d) {
+                    const rdg: IRdg = d[k];
+                    if (rdg.col_elm_id === parseInt(id)) {
+                      return rdg.value;
+                    }
+                  }
+
+                  return '';
+                };
+                const ids = formula.match(/#\d+/gu) || [];
+                let equation = formula;
+
+                for (const id of ids) {
+                  equation = equation.replace(
+                    id,
+                    cellValue(params.data, id.replace('#', '')),
+                  );
+                }
+
+                return mathEval(equation);
               },
             };
           default:
