@@ -432,7 +432,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 // return a === null ? isInverted : parseFloat(valueA) > parseFloat(valueB) ? 1 : -1;
               },
               cellRenderer: (props: any) => {
-                console.log('props', props);
                 return (
                   <CustomFinancialRenderer props={props} control={control} />
                 );
