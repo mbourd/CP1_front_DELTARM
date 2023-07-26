@@ -6,7 +6,7 @@ import React, {
   useEffect,
 } from 'react';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { IApiControl } from '../../../../types';
+import { IApiControl, IRdg } from '../../../../types';
 import { Grid } from '@mui/material';
 import { ControlLabel } from '../ControlLabel';
 import { BPITooltip, FormError } from '../../../../../../Shared/components';
@@ -14,7 +14,12 @@ import { useSecurity } from '../../../../../../Packages/Security';
 import { AgGridReact } from 'ag-grid-react';
 import { useReactToPrint } from 'react-to-print';
 import { Button } from 'Shared/components';
-import { useTrans, security, getEnv } from '../../../../../../Services';
+import {
+  useTrans,
+  security,
+  getEnv,
+  kFormatter,
+} from '../../../../../../Services';
 import './datagrid.css';
 import { saveValueDataGrid } from './apiRoutes/saveValueDataGrid';
 import CustomSelectRenderer from './AgDataGridFields/CustomSelectRenderer/CustomSelectRenderer';
@@ -42,18 +47,15 @@ import axios from 'axios';
 import CustomIconRenderer from './AgDataGridFields/CustomIconRenderer/CustomIconRenderer';
 import CustomActionButtonRenderer from './AgDataGridFields/CustomActionButtonRenderer/CustomActionButtonRenderer';
 import CustomSingleCheckboxRender from './AgDataGridFields/CustomSingleCheckBoxRenderer/CustomSingleCheckBoxRenderer';
+import { evaluate as mathEval } from 'mathjs';
+import { CustomPercentRenderer } from './AgDataGridFields/CustomPercentRenderer/CustomPercentRenderer';
+import { CustomDecimalRenderer } from './AgDataGridFields/CustomDecimalRenderer/CustomDecimalRenderer';
+import { CustomFinancialRenderer } from './AgDataGridFields/CustomFinancialRenderer/CustomFinancialRenderer';
+import { CustomIntegerRenderer } from './AgDataGridFields/CustomIntegerRenderer/CustomIntegerRender';
 interface IProps {
   control: IApiControl;
   fileId: string;
 }
-
-const kFormatter: any = (num: any) => {
-  if (num !== null || undefined) {
-    return num?.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  } else {
-    return '';
-  }
-};
 
 const CustomTooltip = (props: any & { tooltip: string }) => {
   const field_name = props?.colDef?.field?.split('.')[0];
@@ -326,13 +328,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 return parseFloat(valueA) > parseFloat(valueB) ? 1 : -1;
               },
               cellRenderer: (props: any) => {
-                return (
-                  <div style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    {props.value !== null || undefined
-                      ? `% ${kFormatter(props.value)}`
-                      : ''}
-                  </div>
-                );
+                return <CustomPercentRenderer props={props} />;
               },
             };
           case 'radio':
@@ -374,27 +370,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               },
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
-                const data = props?.colDef?.field?.split('.')[0];
-
-                const field_data = Object.entries(props?.data).reduce(
-                  (accum: any, current: any) => {
-                    const [key, value] = current;
-                    if (key.match(data)) {
-                      return value;
-                    }
-
-                    return accum;
-                  },
-                  [],
-                );
-
-                return (
-                  <div>
-                    {props?.value !== null || undefined
-                      ? kFormatter(props.value)
-                      : ''}
-                  </div>
-                );
+                return <CustomIntegerRenderer props={props} />;
               },
             };
           case 'decimal':
@@ -417,13 +393,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 return parseFloat(valueA) > parseFloat(valueB) ? 1 : -1;
               },
               cellRenderer: (props: any) => {
-                return (
-                  <>
-                    {props?.value !== null || undefined
-                      ? kFormatter(props.value)
-                      : ''}
-                  </>
-                );
+                return <CustomDecimalRenderer props={props} />;
               },
             };
           case 'financial':
@@ -462,44 +432,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               },
               cellRenderer: (props: any) => {
                 return (
-                  <div style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    {(props?.value !== null || undefined) && (
-                      <>
-                        {g?.currency_symbol ? (
-                          <>
-                            <span
-                              style={{
-                                fontSize: control?.data_grid_detail
-                                  ?.datagrid_options?.datagrid_font_size
-                                  ? control?.data_grid_detail?.datagrid_options
-                                      ?.datagrid_font_size
-                                  : '15',
-
-                                marginRight: 2,
-                              }}
-                            >
-                              {g?.currency_symbol}
-                            </span>
-                          </>
-                        ) : (
-                          <EuroIcon
-                            style={{
-                              fontSize: control?.data_grid_detail
-                                ?.datagrid_options?.datagrid_font_size
-                                ? control?.data_grid_detail?.datagrid_options
-                                    ?.datagrid_font_size
-                                : '15',
-                              marginLeft: 2,
-                              marginBottom: -1,
-                            }}
-                          />
-                        )}
-                      </>
-                    )}
-                    {props?.value !== null || undefined
-                      ? kFormatter(props.value)
-                      : ''}
-                  </div>
+                  <CustomFinancialRenderer props={props} control={control} />
                 );
               },
             };
@@ -697,6 +630,54 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                     )}
                   </div>
                 );
+              },
+            };
+          case 'formula':
+            return {
+              ...g,
+              minWidth: 150,
+              width: 'auto',
+              headerTooltip: g?.headerName,
+              tooltipField: g?.field,
+              editable: (props: any) => decide_editable(props),
+              comparator: (
+                valueA: any,
+                valueB: any,
+                nodeA: any,
+                nodeB: any,
+                isDescending: any,
+              ) => {
+                if (parseFloat(valueA) == parseFloat(valueB)) return 0;
+
+                return parseFloat(valueA) > parseFloat(valueB) ? 1 : -1;
+              },
+              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
+              valueGetter: (params: any) => {
+                const [name, fieldValue]: string[] = params.column
+                  .getId()
+                  .split('.');
+                const formula: string = params.data[name][fieldValue];
+                const cellValue = (d: any, id: string) => {
+                  for (const k in d) {
+                    const rdg: IRdg = d[k];
+                    if (rdg.col_elm_id === parseInt(id)) {
+                      return rdg.value;
+                    }
+                  }
+
+                  return '';
+                };
+                const ids = formula.match(/#\d+/gu) || [];
+                let equation = formula;
+
+                for (const id of ids) {
+                  equation = equation.replace(
+                    id,
+                    cellValue(params.data, id.replace('#', '')),
+                  );
+                }
+
+                return mathEval(equation);
               },
             };
           default:
