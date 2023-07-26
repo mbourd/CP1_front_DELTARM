@@ -657,21 +657,18 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                   .getId()
                   .split('.');
                 const formula: string = params.data[name][fieldValue];
-                const cellValue = (d: any, id: string) => {
-                  for (const k in d) {
-                    const rdg: IRdg = d[k];
-                    if (rdg.col_elm_id === parseInt(id)) {
-                      return rdg.value;
-                    }
-                  }
-
-                  return '';
+                const cellValue = (d: Record<string, IRdg>, id: string) => {
+                  return (
+                    Object.values(d).find(
+                      (rdg) => rdg.col_elm_id === parseInt(id),
+                    )?.value || ''
+                  );
                 };
-                const ids = formula.match(/#\d+/gu) || [];
+                const ids = [...new Set(formula.match(/#\d+/gu) || [])];
                 let equation = formula;
 
                 for (const id of ids) {
-                  equation = equation.replace(
+                  equation = equation.replaceAll(
                     id,
                     cellValue(params.data, id.replace('#', '')),
                   );
