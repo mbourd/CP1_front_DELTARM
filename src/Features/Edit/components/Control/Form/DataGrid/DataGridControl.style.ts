@@ -66,19 +66,17 @@ export const DataGridControlStyled = styled.div`
   }
 `;
 
-export const AgDataGridStyle = styled.div.attrs(
-  (props: {
-    background_color: string;
-    border_color: string;
-    is_border_color: boolean;
-    font_color: string;
-    font_size: string;
-    font_weight: string;
-    header_font_color: string;
-    header_bg_color: string;
-    odd_row_bg_color: string;
-  }) => props,
-)`
+export const AgDataGridStyle = styled.div<{
+  background_color: string;
+  border_color: string;
+  is_border_color: boolean;
+  font_color: string;
+  font_size: string;
+  font_weight: string;
+  header_font_color: string;
+  header_bg_color: string;
+  odd_row_bg_color: string;
+}>`
   .ag-theme-alpine {
     --ag-foreground-color: ${({ font_color }) =>
       font_color ? font_color : '#000000'};
