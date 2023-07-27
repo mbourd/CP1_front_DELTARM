@@ -6,12 +6,23 @@ import * as icons from '@mui/icons-material';
 
 const CustomIconRenderer: React.FC<any> = ({
   props,
-  field_data,
   control,
   fileId,
   jwt,
   seterrors,
 }) => {
+  const data = props?.colDef?.field?.split('.')[0];
+  const field_data = Object.entries(props?.data).reduce(
+    (accum: any, current: any) => {
+      const [key, value] = current;
+      if (key.match(data)) {
+        return value;
+      }
+
+      return accum;
+    },
+    [],
+  );
   const generateMaterialIcon = useCallback(
     (iconName: any, color, size, action, hint): React.ReactElement | null => {
       // @ts-ignore
