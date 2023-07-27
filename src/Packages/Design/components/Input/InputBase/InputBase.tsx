@@ -44,10 +44,10 @@ export const InputBase: React.FC<IInputBase> = ({
 
   return (
     <InputBaseStyled
-      borderSize={border}
-      bgc={bgc}
-      fontColor={c ? c.main : theme.color.text.main}
-      bdr={bdr || theme.sizing.radius}
+      $borderSize={border}
+      $bgc={bgc}
+      $fontColor={c ? c.main : theme.color.text.main}
+      $bdr={bdr || theme.sizing.radius}
       className={
         '_Input ' + (className || '') + (status ? ' _Input-' + status : '')
       }
