@@ -3,13 +3,24 @@ import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
 
 const CustomCheckboxRender: React.FC<any> = ({
   props,
-  field_data,
   control,
   fileId,
   jwt,
   seterrors,
 }) => {
   // console.log(field_data);
+  const data: any = props?.colDef?.field?.split('.')[0];
+  const field_data = Object.entries(props?.data).reduce(
+    (accum: any, current: any) => {
+      const [key, value] = current;
+      if (key.match(data)) {
+        return value;
+      }
+
+      return accum;
+    },
+    [],
+  );
   const [items, setitems] = useState(field_data?.value?.split(','));
   const onChange = (event: any) => {
     if (event.target.checked) {
