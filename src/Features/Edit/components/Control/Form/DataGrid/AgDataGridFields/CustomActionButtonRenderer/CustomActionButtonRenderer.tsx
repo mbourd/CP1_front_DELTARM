@@ -5,12 +5,23 @@ import { getEnv } from 'Services';
 
 const CustomActionButtonRenderer: React.FC<any> = ({
   props,
-  field_data,
   control,
   fileId,
   jwt,
   seterrors,
 }) => {
+  const data = props?.colDef?.field?.split('.')[0];
+  const field_data = Object.entries(props?.data).reduce(
+    (accum: any, current: any) => {
+      const [key, value] = current;
+      if (key.match(data)) {
+        return value;
+      }
+
+      return accum;
+    },
+    [],
+  );
   const onClickAction = async () => {
     // console.log(field_data?.value?.split(';')[1]);
     // try {

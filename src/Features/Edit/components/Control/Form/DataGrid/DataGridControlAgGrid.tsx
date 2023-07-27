@@ -447,24 +447,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               editable: false,
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
-                const data: any = props?.colDef?.field?.split('.')[0];
-
-                const field_data = Object.entries(props?.data).reduce(
-                  (accum: any, current: any) => {
-                    const [key, value] = current;
-                    if (key.match(data)) {
-                      return value;
-                    }
-
-                    return accum;
-                  },
-                  [],
-                );
-
                 return (
                   <CustomCheckboxRender
                     props={props}
-                    field_data={field_data}
                     control={control}
                     fileId={fileId}
                     jwt={jwt}
@@ -522,24 +507,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               editable: false,
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
-                const data = props?.colDef?.field?.split('.')[0];
-
-                const field_data = Object.entries(props?.data).reduce(
-                  (accum: any, current: any) => {
-                    const [key, value] = current;
-                    if (key.match(data)) {
-                      return value;
-                    }
-
-                    return accum;
-                  },
-                  [],
-                );
-
                 return (
                   <CustomDateRenderer
                     props={props}
-                    field_data={field_data}
                     control={control}
                     fileId={fileId}
                     jwt={jwt}
@@ -558,26 +528,11 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               editable: false,
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
-                const data = props?.colDef?.field?.split('.')[0];
-
-                const field_data = Object.entries(props?.data).reduce(
-                  (accum: any, current: any) => {
-                    const [key, value] = current;
-                    if (key.match(data)) {
-                      return value;
-                    }
-
-                    return accum;
-                  },
-                  [],
-                );
-
                 return (
                   <div>
                     {props?.value !== null || undefined ? (
                       <CustomIconRenderer
                         props={props}
-                        field_data={field_data}
                         control={control}
                         fileId={fileId}
                         jwt={jwt}
@@ -600,26 +555,11 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               editable: false,
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
-                const data = props?.colDef?.field?.split('.')[0];
-
-                const field_data = Object.entries(props?.data).reduce(
-                  (accum: any, current: any) => {
-                    const [key, value] = current;
-                    if (key.match(data)) {
-                      return value;
-                    }
-
-                    return accum;
-                  },
-                  [],
-                );
-
                 return (
                   <div>
                     {props?.value !== null || undefined ? (
                       <CustomActionButtonRenderer
                         props={props}
-                        field_data={field_data}
                         control={control}
                         fileId={fileId}
                         jwt={jwt}
