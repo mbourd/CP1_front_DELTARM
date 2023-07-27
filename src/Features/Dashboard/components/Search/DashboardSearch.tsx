@@ -76,9 +76,9 @@ export const DashboardSearch: React.FC = (): React.ReactElement => {
         </div>
         <Button onClick={onSearch}>{trans('searchButtonLabel')}</Button>
       </div>
-      {isModalOpen ? (
+      {isModalOpen && (
         <SearchModal open={isModalOpen} onClose={() => setIsModalOpen(false)} />
-      ) : null}
+      )}
       {fullSearch && (
         <FullSearchModal
           search={fullSearch}
