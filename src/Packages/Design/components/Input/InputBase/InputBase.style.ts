@@ -2,10 +2,10 @@ import styled from 'styled-components/macro';
 import { makeStyles, Theme } from '@material-ui/core';
 
 interface IProps {
-  borderSize: number;
-  bgc: string;
-  fontColor: string;
-  bdr: string;
+  $borderSize: number;
+  $bgc: string;
+  $fontColor: string;
+  $bdr: string;
 }
 
 interface IUseStylesProps {
@@ -22,14 +22,14 @@ export const useStyles = makeStyles<Theme, IUseStylesProps>({
 
 export const InputBaseStyled = styled.label<IProps>`
   align-items: center;
-  background-color: ${({ bgc }) => bgc};
-  border: ${({ borderSize }) => borderSize}px solid
-    ${({ fontColor }) => fontColor};
-  border-radius: ${({ bdr }) => bdr};
+  background-color: ${({ $bgc }) => $bgc};
+  border: ${({ $borderSize }) => $borderSize}px solid
+    ${({ $fontColor }) => $fontColor};
+  border-radius: ${({ $bdr }) => $bdr};
   display: flex;
 
   .MuiSvgIcon-root {
-    color: ${({ fontColor }) => fontColor};
+    color: ${({ $fontColor }) => $fontColor};
     cursor: pointer;
   }
 
@@ -49,7 +49,7 @@ export const InputBaseStyled = styled.label<IProps>`
       background-color: transparent;
     }
 
-    color: ${({ fontColor }) => fontColor};
+    color: ${({ $fontColor }) => $fontColor};
     padding: 0 ${({ theme }) => theme.spacing.xSmall};
     width: 100%;
   }

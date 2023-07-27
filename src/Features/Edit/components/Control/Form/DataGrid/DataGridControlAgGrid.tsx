@@ -1216,19 +1216,19 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       {errorsMessageAdd && <FormError>{errorsMessageAdd}</FormError>}
 
       <AgDataGridStyle
-        background_color={GridDetails.datagrid_options?.datagrid_bg_color}
-        border_color={GridDetails?.datagrid_options?.datagrid_border_color}
-        is_border_color={GridDetails?.datagrid_options?.datagrid_border}
-        font_color={GridDetails?.datagrid_options?.datagrid_font_color}
-        font_size={GridDetails?.datagrid_options?.datagrid_font_size}
-        font_weight={GridDetails.datagrid_options?.datagrid_font_weight}
-        header_bg_color={
+        $background_color={GridDetails.datagrid_options?.datagrid_bg_color}
+        $border_color={GridDetails?.datagrid_options?.datagrid_border_color}
+        $is_border_color={GridDetails?.datagrid_options?.datagrid_border}
+        $font_color={GridDetails?.datagrid_options?.datagrid_font_color}
+        $font_size={GridDetails?.datagrid_options?.datagrid_font_size}
+        $font_weight={GridDetails.datagrid_options?.datagrid_font_weight}
+        $header_bg_color={
           GridDetails?.datagrid_options?.datagrid_header_bg_color
         }
-        header_font_color={
+        $header_font_color={
           GridDetails?.datagrid_options?.datagrid_header_font_color
         }
-        odd_row_bg_color={
+        $odd_row_bg_color={
           GridDetails?.datagrid_options?.datagrid_odd_row_bg_color
         }
       >
