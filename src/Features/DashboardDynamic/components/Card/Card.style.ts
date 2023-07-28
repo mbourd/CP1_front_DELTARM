@@ -3,7 +3,7 @@ import { cardHeight } from './types';
 import { TableCell, tableCellClasses } from '@mui/material';
 
 interface IProps {
-  cardColor: string;
+  $cardColor: string;
 }
 
 export const CardStyled = styled.section<IProps>`
@@ -13,7 +13,7 @@ export const CardStyled = styled.section<IProps>`
   max-width: ${({ theme }) => theme.breakpoint.md};
   font-family: ${({ theme }) => theme.font.text.main};
   .MuiCard-root {
-    border: ${({ cardColor }) => cardColor};
+    border: ${({ $cardColor }) => $cardColor};
     position: relative;
     height: ${cardHeight}px;
   }

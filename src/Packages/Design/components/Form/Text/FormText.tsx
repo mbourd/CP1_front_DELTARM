@@ -9,7 +9,7 @@ export const FormText: React.FC<IFormText> = ({
 }): React.ReactElement => {
   return (
     <FormTextStyled
-      colorType={color}
+      $colorType={color}
       className={'_FormText' + (className ? ' ' + className : '')}
     >
       {children}
