@@ -29,13 +29,13 @@ const CustomFinancialRenderer: React.FC<any> = ({
         <>
           {column?.currency_symbol ? (
             <CustomFinancialSpanStyled
-              font_size={
+              $font_size={
                 control?.data_grid_detail?.datagrid_options?.datagrid_font_size
                   ? control?.data_grid_detail?.datagrid_options
                       ?.datagrid_font_size + 'px'
                   : '15px'
               }
-              margin_right={2 + 'px'}
+              $margin_right={2 + 'px'}
             >
               {column?.currency_symbol}
             </CustomFinancialSpanStyled>
