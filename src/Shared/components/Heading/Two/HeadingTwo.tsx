@@ -11,5 +11,5 @@ export const HeadingTwo: React.FC<IProps> = ({
   variant = 'main',
   children,
 }): React.ReactElement => {
-  return <HeadingTwoStyled variant={variant}>{children}</HeadingTwoStyled>;
+  return <HeadingTwoStyled $variant={variant}>{children}</HeadingTwoStyled>;
 };

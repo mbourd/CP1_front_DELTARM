@@ -5,8 +5,8 @@ export const StairsLoaderStyled = styled.div<IStairsLoader>`
   height: 100px;
   margin: auto;
   position: relative;
-  transform: ${({ size }) => {
-    switch (size) {
+  transform: ${({ $size }) => {
+    switch ($size) {
       case 'sm':
         return 'scale(0.6)';
       case 'md':
@@ -18,7 +18,7 @@ export const StairsLoaderStyled = styled.div<IStairsLoader>`
   width: 75px;
 
   ._LoaderStairsBar {
-    background: ${({ barsColor }) => barsColor};
+    background: ${({ $barsColor }) => $barsColor};
     bottom: 0;
     height: 50%;
     position: absolute;
@@ -26,33 +26,33 @@ export const StairsLoaderStyled = styled.div<IStairsLoader>`
     width: 10px;
   }
   ._LoaderStairsBar:nth-child(1) {
-    animation: barUp1 ${({ speed }) => speed}s infinite;
+    animation: barUp1 ${({ $speed }) => $speed}s infinite;
     left: 0;
     transform: scale(1, 0.2);
   }
   ._LoaderStairsBar:nth-child(2) {
-    animation: barUp2 ${({ speed }) => speed}s infinite;
+    animation: barUp2 ${({ $speed }) => $speed}s infinite;
     left: 15px;
     transform: scale(1, 0.4);
   }
   ._LoaderStairsBar:nth-child(3) {
-    animation: barUp3 ${({ speed }) => speed}s infinite;
+    animation: barUp3 ${({ $speed }) => $speed}s infinite;
     left: 30px;
     transform: scale(1, 0.6);
   }
   ._LoaderStairsBar:nth-child(4) {
-    animation: barUp4 ${({ speed }) => speed}s infinite;
+    animation: barUp4 ${({ $speed }) => $speed}s infinite;
     left: 45px;
     transform: scale(1, 0.8);
   }
   ._LoaderStairsBar:nth-child(5) {
-    animation: barUp5 ${({ speed }) => speed}s infinite;
+    animation: barUp5 ${({ $speed }) => $speed}s infinite;
     left: 60px;
     transform: scale(1, 1);
   }
   ._LoaderStairsBall {
-    animation: ball ${({ speed }) => speed}s infinite;
-    background: ${({ ballColor }) => ballColor};
+    animation: ball ${({ $speed }) => $speed}s infinite;
+    background: ${({ $ballColor }) => $ballColor};
     border-radius: 50%;
     bottom: 10px;
     height: 10px;

@@ -23,7 +23,7 @@ export const Card: React.FC<ICard> = ({
 }): React.ReactElement => {
   return (
     <CardContext.Provider value={{ context }}>
-      <CardStyled cardColor={header.color}>
+      <CardStyled $cardColor={header.color}>
         <MUICard elevation={0}>
           <Header {...header}>{header.children}</Header>
           <Body {...body} />

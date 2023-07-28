@@ -14,7 +14,7 @@ export const Heading: React.FC<IProps> = ({
   style,
 }): React.ReactElement => {
   return (
-    <HeadingStyled style={style} variant={variant}>
+    <HeadingStyled style={style} $variant={variant}>
       {children}
     </HeadingStyled>
   );
