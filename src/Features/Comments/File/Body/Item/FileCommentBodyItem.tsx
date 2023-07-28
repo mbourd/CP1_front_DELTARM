@@ -22,7 +22,7 @@ export const FileCommentBodyItem: React.FC<IFileCommentBodyItem> = ({
   }
 
   return (
-    <FileCommentBodyItemStyled bgc={randomColor()}>
+    <FileCommentBodyItemStyled $bgc={randomColor()}>
       <Grid container alignItems={'center'} wrap={'nowrap'}>
         <Grid item>
           <Avatar>{firstLetters}</Avatar>

@@ -2,12 +2,12 @@ import styled from 'styled-components';
 import { IColor } from '../../types';
 
 interface IProps {
-  mainColor: keyof IColor;
-  checkedColor: keyof IColor;
-  inputType: 'checkbox' | 'radio';
-  checked: any;
-  font_style: any;
-  font_color: any;
+  $mainColor: keyof IColor;
+  $checkedColor: keyof IColor;
+  $inputType: 'checkbox' | 'radio';
+  $checked: any;
+  $font_style: any;
+  $font_color: any;
 }
 
 export const RadioStyled = styled.label<IProps>`
@@ -17,9 +17,9 @@ export const RadioStyled = styled.label<IProps>`
   flex-wrap: nowrap;
 
   ._CheckboxRadioCheckmark {
-    border: 1px solid ${({ theme, mainColor }) => theme.color[mainColor].main};
-    border-radius: ${({ inputType }) =>
-      inputType === 'checkbox' ? '3px' : '50%'};
+    border: 1px solid ${({ theme, $mainColor }) => theme.color[$mainColor].main};
+    border-radius: ${({ $inputType }) =>
+      $inputType === 'checkbox' ? '3px' : '50%'};
     display: block;
     height: 18px;
     position: relative;
@@ -28,8 +28,8 @@ export const RadioStyled = styled.label<IProps>`
   }
 
   ._CheckboxRadioCheckmark:after {
-    border-radius: ${({ inputType }) =>
-      inputType === 'checkbox' ? '2px' : '50%'};
+    border-radius: ${({ $inputType }) =>
+      $inputType === 'checkbox' ? '2px' : '50%'};
     bottom: 0;
     content: '';
     display: block;
@@ -44,19 +44,19 @@ export const RadioStyled = styled.label<IProps>`
   }
 
   input:checked ~ ._CheckboxRadioCheckmark {
-    border-color: ${({ theme, checkedColor }) =>
-      theme.color[checkedColor].main};
+    border-color: ${({ theme, $checkedColor }) =>
+      theme.color[$checkedColor].main};
   }
 
   input:checked ~ ._CheckboxRadioCheckmark:after {
-    background-color: ${({ theme, checkedColor }) =>
-      theme.color[checkedColor].main};
+    background-color: ${({ theme, $checkedColor }) =>
+      theme.color[$checkedColor].main};
     height: 10px;
     width: 10px;
   }
 
   ._CheckboxRadioLabel {
-    color: ${({ theme, mainColor }) => theme.color[mainColor].main};
+    color: ${({ theme, $mainColor }) => theme.color[$mainColor].main};
     font-family: ${({ theme }) => theme.font.text.main};
     font-size: ${({ theme }) => theme.sizing.normal};
     margin-left: ${({ theme }) => theme.spacing.small};
@@ -64,7 +64,7 @@ export const RadioStyled = styled.label<IProps>`
   }
 
   input:checked ~ ._CheckboxRadioCheckmark ~ ._CheckboxRadioLabel {
-    color: ${({ theme, checkedColor }) => theme.color[checkedColor].main};
+    color: ${({ theme, $checkedColor }) => theme.color[$checkedColor].main};
   }
 
   input {

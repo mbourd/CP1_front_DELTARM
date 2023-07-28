@@ -13,7 +13,7 @@ export const Card: React.FC<ICard> = ({
   context,
 }): React.ReactElement => {
   return (
-    <CardStyled color={color}>
+    <CardStyled $color={color}>
       <MUICard elevation={0}>
         <div className={'state'} />
         <Body data={data} />
