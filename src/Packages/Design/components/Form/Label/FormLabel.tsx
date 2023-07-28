@@ -9,7 +9,7 @@ export const FormLabel: React.FC<IFormLabel> = ({
 }): React.ReactElement => {
   return (
     <FormLabelStyled
-      colorType={color}
+      $colorType={color}
       className={'_FormLabel' + (className ? ' ' + className : '')}
     >
       {children}

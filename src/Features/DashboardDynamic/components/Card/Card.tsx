@@ -198,7 +198,7 @@ export const Card: React.FC<ICardC> = ({
   }, [rows, cache]);
 
   return (
-    <CardStyled cardColor={card.title.bg_color}>
+    <CardStyled $cardColor={card.title.bg_color}>
       <Header color={card.title.bg_color}>
         <span style={{ color: card.title.font_color }}>{card.title.lib}</span>
       </Header>

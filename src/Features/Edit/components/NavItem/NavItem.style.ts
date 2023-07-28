@@ -1,19 +1,19 @@
 import styled from 'styled-components/macro';
 
 interface IProps {
-  locked: boolean;
-  active: boolean;
+  $locked: boolean;
+  $active: boolean;
 }
 
 export const NavItemStyled = styled.span<IProps>`
   align-items: center;
-  background-color: ${({ theme, active }) =>
-    active ? theme.color.white.main : 'transparent'};
+  background-color: ${({ theme, $active }) =>
+    $active ? theme.color.white.main : 'transparent'};
   border-bottom-width: 1px;
   border-color: ${({ theme }) => theme.color.primary.main};
   border-style: dotted;
-  cursor: ${({ active }) => {
-    if (active) {
+  cursor: ${({ $active }) => {
+    if ($active) {
       return 'default';
     }
 
