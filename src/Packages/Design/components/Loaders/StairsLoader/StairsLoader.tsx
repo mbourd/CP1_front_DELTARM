@@ -4,14 +4,14 @@ import { IStairsLoader } from '../types';
 import { useColor } from '../../../hooks';
 
 type StairsLoaderProps = {
-  barsColor?: string;
-  ballColor?: string;
+  barsColor?: IStairsLoader['$barsColor'];
+  ballColor?: IStairsLoader['$ballColor'];
   /**
    * Animation speed in second.
    * @default 4
    */
-  speed?: number;
-  size?: 'sm' | 'md' | 'lg';
+  speed?: IStairsLoader['$speed'];
+  size?: IStairsLoader['$size'];
 };
 
 export const StairsLoader: React.FC<StairsLoaderProps> = ({
