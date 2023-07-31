@@ -15,10 +15,10 @@ export interface ITextShineLoader {
    * Gradient colors. Provide a least two colors.
    * @default ['#000000', '#FFFFFF']
    */
-  colors?: string[];
+  $colors?: string[];
   /**
    * Animation speed in second.
    * @default 4
    */
-  speed?: number;
+  $speed?: number;
 }
