@@ -10,6 +10,7 @@ interface ILinearMetricStyled {
 }
 
 export const CustomLinearProgress = styled(LinearProgress)(
+  // @ts-ignore
   (props: ILinearMetricStyled) => {
     return {
       borderRadius: 10,

@@ -106,7 +106,7 @@ export const SearchModal: React.FC<IProps> = ({
   // Handle different footers between call states
   // TODO find a better solution in this component
   // we don't have the time and bpi wants specific handling for each call state
-  let footer = null;
+  let footer: React.ReactNode | null = null;
   if (callState === 'BAD_REQUEST' && route?.type === 'DRM') {
     if (error?.response?.body.data.btn) {
       error.response.body.data.btn.map((btn: any) => {
