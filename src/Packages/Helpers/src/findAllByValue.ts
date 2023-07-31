@@ -10,6 +10,7 @@ export const findAllByValue = (
 
   for (let i = 0; i < length; i++) {
     if (getByKey(elements[i] as ObjectLiteralType, key) === value) {
+      // @ts-ignore
       values.push(elements[i] as ObjectLiteralType);
     }
   }
