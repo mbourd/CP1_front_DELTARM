@@ -3,7 +3,24 @@ import { ClickAwayListener, Popper as MUIPopper } from '@mui/material';
 import { PopperStyled } from './Popper.style';
 import { IPopper } from './types';
 
-export const Popper: React.FC<IPopper> = ({
+type PopperProps = {
+  element: IPopper['element'];
+  border?: IPopper['$border'];
+  shadow?: IPopper['$shadow'];
+  /**
+   * Background color.
+   */
+  bgc?: IPopper['$bgc'];
+  /**
+   * Border radius.
+   */
+  bdr?: IPopper['$bdr'];
+  placement?: IPopper['placement'];
+  onClickAway?: IPopper['onClickAway'];
+  zIndex?: IPopper['zIndex'];
+};
+
+export const Popper: React.FC<PopperProps> = ({
   children,
   element,
   border,
@@ -24,12 +41,12 @@ export const Popper: React.FC<IPopper> = ({
     >
       {onClickAway ? (
         <ClickAwayListener onClickAway={onClickAway}>
-          <PopperStyled border={border} shadow={shadow} bgc={bgc} bdr={bdr}>
+          <PopperStyled $border={border} $shadow={shadow} $bgc={bgc} $bdr={bdr}>
             {children}
           </PopperStyled>
         </ClickAwayListener>
       ) : (
-        <PopperStyled border={border} shadow={shadow} bgc={bgc} bdr={bdr}>
+        <PopperStyled $border={border} $shadow={shadow} $bgc={bgc} $bdr={bdr}>
           {children}
         </PopperStyled>
       )}
