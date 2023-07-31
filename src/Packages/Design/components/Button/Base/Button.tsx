@@ -45,9 +45,9 @@ export const Button: React.FC<IButton> = ({
   return (
     <ButtonStyled
       className={'_Button'}
-      colorType={theme.color[color]}
-      type={type}
-      disabled={disabled}
+      $colorType={theme.color[color]}
+      $type={type}
+      $disabled={disabled}
     >
       <MUIButton
         size={size}

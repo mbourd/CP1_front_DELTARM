@@ -3,16 +3,16 @@ import { PopperPlacementType } from '@material-ui/core';
 
 export interface IPopper {
   element: null | ReferenceObject | (() => ReferenceObject);
-  border?: string;
-  shadow?: string;
+  $border?: string;
+  $shadow?: string;
   /**
    * Background color.
    */
-  bgc?: string;
+  $bgc?: string;
   /**
    * Border radius.
    */
-  bdr?: string;
+  $bdr?: string;
   placement?: PopperPlacementType;
   onClickAway?: (event: MouseEvent | TouchEvent) => void;
   zIndex?: number;
