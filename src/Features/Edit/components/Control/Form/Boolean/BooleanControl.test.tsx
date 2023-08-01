@@ -5,7 +5,6 @@ import { render, screen } from 'setupTests';
 const { Boolean, BooleanDisabled } = composeStories(stories);
 
 describe('Boolean control tests suite', () => {
-
   test('it should render the boolean control', async () => {
     const result = render(<Boolean />);
     const containerBoolean = result.container.querySelector(

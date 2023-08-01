@@ -6,7 +6,6 @@ const { Modal, ModalWorksite } = composeStories(stories);
 
 describe('ModalDynamic', () => {
   describe('ModalDynamic', () => {
-
     test('Should render the text component', async () => {
       render(<Modal />);
       const text = screen.getByText('Le texte a afficher');
@@ -44,10 +43,9 @@ describe('ModalDynamic', () => {
       expect(text).toBeInTheDocument();
     });
     test('Should show error message when mandates fields are not set', async () => {
-       render(<ModalWorksite />);
+      render(<ModalWorksite />);
       const buttonCreate = screen.getByText('Créer le chantier');
       fireEvent.click(buttonCreate);
-
     });
     test('Should NOT show error message when mandates fields are set', async () => {
       const { getByText, getByPlaceholderText } = render(<ModalWorksite />);
