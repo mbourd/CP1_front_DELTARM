@@ -7,7 +7,7 @@ export const footerHeight = 30;
 
 export interface ICardHeader {
   children: React.ReactNode;
-  color: string;
+  $color: string;
 }
 
 export interface ICardBodyRow {
