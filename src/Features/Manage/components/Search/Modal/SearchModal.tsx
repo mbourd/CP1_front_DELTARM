@@ -82,17 +82,21 @@ export const SearchModal: React.FC<IProps> = ({
     };
   }, [send, file_num, file_avenant, request]);
 
-  if (
+  /** to prevent warning msg while rendering this component and in the same time redirect to route */
+  const isSUCCESStypeDRM =
     callState === 'SUCCESS' &&
     data &&
-    (route?.type === 'DRM' || route?.type === 'DRM_CREATE')
-  ) {
-    router.redirectTo(data.fileContext === 'VALID' ? 'validation' : 'edit', {
-      id: data.fileId,
-    });
+    (route?.type === 'DRM' || route?.type === 'DRM_CREATE');
+  useEffect(() => {
+    if (isSUCCESStypeDRM) {
+      router.redirectTo(data.fileContext === 'VALID' ? 'validation' : 'edit', {
+        id: data.fileId,
+      });
+    }
+  }, [isSUCCESStypeDRM, data]);
+  if (isSUCCESStypeDRM) return null;
+  /** *** */
 
-    return null;
-  }
   if (callState === 'SUCCESS' && data && route?.type === 'KSIOP') {
     if (data.routeForFileCreation) {
       apiRouter.changeRouteUrl('searchFileKSIOP', data.routeForFileCreation);
