@@ -95,7 +95,7 @@ export const SearchModal: React.FC<IProps> = ({
   // Handle different footers between call states
   // TODO find a better solution in this component
   // we don't have the time and bpi wants specific handling for each call state
-  let footer = null;
+  let footer: React.ReactNode | null = null;
   if (callState === 'BAD_REQUEST' && route?.type === 'DRM') {
     // case we don't find the file from search/file, we change the create url by client, ksiop is only for BPI
     if (error?.response?.body.data.btn[1]?.route.url) {

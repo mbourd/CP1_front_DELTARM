@@ -38,12 +38,14 @@ export const AgGridCard: React.FC<ICardC> = ({
   card.cols.values.forEach((column) => {
     if (column.filter) {
       switch (column.filter) {
+        // @ts-ignore
         case 'GenericCardResearcher':
           column.filter = GenericCardResearcher;
       }
     }
     if (column.comparator) {
       switch (column.comparator) {
+        // @ts-ignore
         case 'StrippedHTMLComparator':
           column.comparator = StrippedHTMLComparator;
       }
@@ -172,7 +174,7 @@ export const AgGridCard: React.FC<ICardC> = ({
   };
 
   return (
-    <CardStyled cardColor={card.title.bg_color}>
+    <CardStyled $cardColor={card.title.bg_color}>
       <Header color={card.title.bg_color}>
         <span style={{ color: card.title.font_color }}>{card.title.lib}</span>
       </Header>

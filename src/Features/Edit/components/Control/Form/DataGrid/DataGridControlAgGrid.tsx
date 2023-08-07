@@ -447,24 +447,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               editable: false,
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
-                const data: any = props?.colDef?.field?.split('.')[0];
-
-                const field_data = Object.entries(props?.data).reduce(
-                  (accum: any, current: any) => {
-                    const [key, value] = current;
-                    if (key.match(data)) {
-                      return value;
-                    }
-
-                    return accum;
-                  },
-                  [],
-                );
-
                 return (
                   <CustomCheckboxRender
                     props={props}
-                    field_data={field_data}
                     control={control}
                     fileId={fileId}
                     jwt={jwt}
@@ -522,24 +507,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               editable: false,
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
-                const data = props?.colDef?.field?.split('.')[0];
-
-                const field_data = Object.entries(props?.data).reduce(
-                  (accum: any, current: any) => {
-                    const [key, value] = current;
-                    if (key.match(data)) {
-                      return value;
-                    }
-
-                    return accum;
-                  },
-                  [],
-                );
-
                 return (
                   <CustomDateRenderer
                     props={props}
-                    field_data={field_data}
                     control={control}
                     fileId={fileId}
                     jwt={jwt}
@@ -558,26 +528,11 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               editable: false,
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
-                const data = props?.colDef?.field?.split('.')[0];
-
-                const field_data = Object.entries(props?.data).reduce(
-                  (accum: any, current: any) => {
-                    const [key, value] = current;
-                    if (key.match(data)) {
-                      return value;
-                    }
-
-                    return accum;
-                  },
-                  [],
-                );
-
                 return (
                   <div>
                     {props?.value !== null || undefined ? (
                       <CustomIconRenderer
                         props={props}
-                        field_data={field_data}
                         control={control}
                         fileId={fileId}
                         jwt={jwt}
@@ -600,26 +555,11 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               editable: false,
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
-                const data = props?.colDef?.field?.split('.')[0];
-
-                const field_data = Object.entries(props?.data).reduce(
-                  (accum: any, current: any) => {
-                    const [key, value] = current;
-                    if (key.match(data)) {
-                      return value;
-                    }
-
-                    return accum;
-                  },
-                  [],
-                );
-
                 return (
                   <div>
                     {props?.value !== null || undefined ? (
                       <CustomActionButtonRenderer
                         props={props}
-                        field_data={field_data}
                         control={control}
                         fileId={fileId}
                         jwt={jwt}
@@ -657,21 +597,18 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                   .getId()
                   .split('.');
                 const formula: string = params.data[name][fieldValue];
-                const cellValue = (d: any, id: string) => {
-                  for (const k in d) {
-                    const rdg: IRdg = d[k];
-                    if (rdg.col_elm_id === parseInt(id)) {
-                      return rdg.value;
-                    }
-                  }
-
-                  return '';
+                const cellValue = (d: Record<string, IRdg>, id: string) => {
+                  return (
+                    Object.values(d).find(
+                      (rdg) => rdg.col_elm_id === parseInt(id),
+                    )?.value || ''
+                  );
                 };
-                const ids = formula.match(/#\d+/gu) || [];
+                const ids = [...new Set(formula.match(/#\d+/gu) || [])];
                 let equation = formula;
 
                 for (const id of ids) {
-                  equation = equation.replace(
+                  equation = equation.replaceAll(
                     id,
                     cellValue(params.data, id.replace('#', '')),
                   );
@@ -1282,19 +1219,19 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       {errorsMessageAdd && <FormError>{errorsMessageAdd}</FormError>}
 
       <AgDataGridStyle
-        background_color={GridDetails.datagrid_options?.datagrid_bg_color}
-        border_color={GridDetails?.datagrid_options?.datagrid_border_color}
-        is_border_color={GridDetails?.datagrid_options?.datagrid_border}
-        font_color={GridDetails?.datagrid_options?.datagrid_font_color}
-        font_size={GridDetails?.datagrid_options?.datagrid_font_size}
-        font_weight={GridDetails.datagrid_options?.datagrid_font_weight}
-        header_bg_color={
+        $background_color={GridDetails.datagrid_options?.datagrid_bg_color}
+        $border_color={GridDetails?.datagrid_options?.datagrid_border_color}
+        $is_border_color={GridDetails?.datagrid_options?.datagrid_border}
+        $font_color={GridDetails?.datagrid_options?.datagrid_font_color}
+        $font_size={GridDetails?.datagrid_options?.datagrid_font_size}
+        $font_weight={GridDetails.datagrid_options?.datagrid_font_weight}
+        $header_bg_color={
           GridDetails?.datagrid_options?.datagrid_header_bg_color
         }
-        header_font_color={
+        $header_font_color={
           GridDetails?.datagrid_options?.datagrid_header_font_color
         }
-        odd_row_bg_color={
+        $odd_row_bg_color={
           GridDetails?.datagrid_options?.datagrid_odd_row_bg_color
         }
       >

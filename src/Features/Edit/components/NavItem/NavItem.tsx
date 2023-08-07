@@ -17,8 +17,8 @@ export const NavItem: React.FC<INavItem> = ({
   active = false,
 }): React.ReactElement => {
   let content = (
-    <NavItemStyled className={'item'} locked={item.locked} active={active}>
-      {item.locked ? <LockedIcon /> : null}
+    <NavItemStyled className={'item'} $locked={item.locked} $active={active}>
+      {item.locked && <LockedIcon />}
       <NavItemTextStyled>{item.label}</NavItemTextStyled>
     </NavItemStyled>
   );

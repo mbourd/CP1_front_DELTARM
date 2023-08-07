@@ -64,9 +64,9 @@ export const SelectModalDynamic: React.FC<InputModalDynamicProps> = ({
 
           return value ? value : '';
         }}
-        {...register(`${element.attribute?.id}`, {
+        {...(register(`${element.attribute?.id}`, {
           required: element.attribute?.mandatory,
-        })}
+        }) as any as Record<string | number | symbol, any>)}
       >
         {user_language?.lang === 'en'
           ? 'Select a value'

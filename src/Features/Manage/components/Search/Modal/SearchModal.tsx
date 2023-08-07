@@ -82,17 +82,21 @@ export const SearchModal: React.FC<IProps> = ({
     };
   }, [send, file_num, file_avenant, request]);
 
-  if (
+  /** to prevent warning msg while rendering this component and in the same time redirect to route */
+  const isSUCCESStypeDRM =
     callState === 'SUCCESS' &&
     data &&
-    (route?.type === 'DRM' || route?.type === 'DRM_CREATE')
-  ) {
-    router.redirectTo(data.fileContext === 'VALID' ? 'validation' : 'edit', {
-      id: data.fileId,
-    });
+    (route?.type === 'DRM' || route?.type === 'DRM_CREATE');
+  useEffect(() => {
+    if (isSUCCESStypeDRM) {
+      router.redirectTo(data.fileContext === 'VALID' ? 'validation' : 'edit', {
+        id: data.fileId,
+      });
+    }
+  }, [isSUCCESStypeDRM, data]);
+  if (isSUCCESStypeDRM) return null;
+  /** *** */
 
-    return null;
-  }
   if (callState === 'SUCCESS' && data && route?.type === 'KSIOP') {
     if (data.routeForFileCreation) {
       apiRouter.changeRouteUrl('searchFileKSIOP', data.routeForFileCreation);
@@ -106,7 +110,7 @@ export const SearchModal: React.FC<IProps> = ({
   // Handle different footers between call states
   // TODO find a better solution in this component
   // we don't have the time and bpi wants specific handling for each call state
-  let footer = null;
+  let footer: React.ReactNode | null = null;
   if (callState === 'BAD_REQUEST' && route?.type === 'DRM') {
     if (error?.response?.body.data.btn) {
       error.response.body.data.btn.map((btn: any) => {

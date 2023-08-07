@@ -54,9 +54,9 @@ export const InputModalDynamic: React.FC<InputModalDynamicProps> = ({
           handleChangeValue(e.currentTarget.id, e.currentTarget.value)
         }
         onBlur={(e) => checkMandatory(e.currentTarget.value)}
-        {...register(`${element.attribute?.id}`, {
+        {...(register(`${element.attribute?.id}`, {
           required: element.attribute?.mandatory,
-        })}
+        }) as any as Record<string | number | symbol, any>)}
       />
       {errorMessage ? <FormError>{errorMessage}</FormError> : null}
     </>

@@ -147,7 +147,11 @@ export const Select: React.FC<ISelect> = ({
         onChange: onValueChange,
       }}
     >
-      <SelectStyled className={'_Select'} bdc={bdc} bdr={bdr || sizing.radius}>
+      <SelectStyled
+        className={'_Select'}
+        $bdc={bdc}
+        $bdr={bdr || sizing.radius}
+      >
         <SelectLabel
           bdc={labelBdc}
           color={labelColor}

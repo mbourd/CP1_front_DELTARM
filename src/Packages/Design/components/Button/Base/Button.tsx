@@ -19,17 +19,25 @@ export const Button: React.FC<IButton> = ({
 }): React.ReactElement => {
   const theme = useTheme();
 
-  let startIconCloned = null;
-  let endIconCloned = null;
+  let startIconCloned: React.ReactElement<
+    any,
+    string | React.JSXElementConstructor<any>
+  > | null = null;
+  let endIconCloned: React.ReactElement<
+    any,
+    string | React.JSXElementConstructor<any>
+  > | null = null;
 
   if (React.isValidElement(startIcon)) {
     startIconCloned = React.cloneElement(startIcon, {
+      // @ts-ignore
       className: '_ButtonIcon _ButtonStartIcon',
     });
   }
 
   if (React.isValidElement(endIcon)) {
     endIconCloned = React.cloneElement(endIcon, {
+      // @ts-ignore
       className: '_ButtonIcon _ButtonEndIcon',
     });
   }
@@ -37,9 +45,9 @@ export const Button: React.FC<IButton> = ({
   return (
     <ButtonStyled
       className={'_Button'}
-      colorType={theme.color[color]}
-      type={type}
-      disabled={disabled}
+      $colorType={theme.color[color]}
+      $type={type}
+      $disabled={disabled}
     >
       <MUIButton
         size={size}

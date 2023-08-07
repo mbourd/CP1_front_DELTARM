@@ -20,12 +20,12 @@ export const Radio: React.FC<IRadio> = ({
   return (
     <RadioStyled
       className={'_CheckboxRadio'}
-      mainColor={color}
-      checkedColor={checkedColor}
-      inputType={type}
-      checked={checked}
-      font_color={font_color}
-      font_style={font_style}
+      $mainColor={color}
+      $checkedColor={checkedColor}
+      $inputType={type}
+      $checked={checked}
+      $font_color={font_color}
+      $font_style={font_style}
     >
       <input
         type={type}
