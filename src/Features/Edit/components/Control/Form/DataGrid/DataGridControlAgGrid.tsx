@@ -96,7 +96,7 @@ const CustomTooltip = (props: any & { tooltip: string }) => {
       </p>
     );
   } else {
-    return;
+    return <div className="custom-tooltip" style={{ display: 'none' }}></div>;
   }
 };
 
