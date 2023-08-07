@@ -29,12 +29,6 @@ interface IProps {
   onClose: () => void;
 }
 
-interface SearchReturnProductList {
-  item: {
-    id: any;
-  };
-}
-
 export const SearchModal: React.FC<IProps> = ({
   onClose,
   open,
@@ -100,17 +94,21 @@ export const SearchModal: React.FC<IProps> = ({
     };
   }, [send, file_num, file_avenant, request]);
 
+  /** to prevent warning msg while rendering this component and in the same time redirect to route */
+  const isSUCCESStypeDRM =
+    callState === 'SUCCESS' &&
+    data &&
+    (route?.type === 'DRM' || route?.type === 'DRM_CREATE');
   useEffect(() => {
-    if (
-      callState === 'SUCCESS' &&
-      data &&
-      (route?.type === 'DRM' || route?.type === 'DRM_CREATE')
-    ) {
+    if (isSUCCESStypeDRM) {
       router.redirectTo(data.fileContext === 'VALID' ? 'validation' : 'edit', {
         id: data.fileId,
       });
     }
-  }, [callState, data, route?.type]);
+  }, [isSUCCESStypeDRM, data]);
+  if (isSUCCESStypeDRM) return null;
+  /** *** */
+
   if (callState === 'SUCCESS' && data && route?.type === 'KSIOP') {
     if (data.routeForFileCreation) {
       apiRouter.changeRouteUrl('searchFileKSIOP', data.routeForFileCreation);
