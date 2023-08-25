@@ -9,7 +9,7 @@ export const NoData: React.FC = (): React.ReactElement => {
 
   return (
     <DashboardStyled>
-      <HeadingOne>{trans('dashboard')}</HeadingOne>
+      <HeadingOne>{trans('pageTitle')}</HeadingOne>
       <DashboardSearch />
       <ErrorNoData message={'Aucun dossier disponible'} />
     </DashboardStyled>
