@@ -609,10 +609,13 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 let equation = formula;
 
                 for (const id of ids) {
-                  equation = equation.replaceAll(
-                    id,
-                    cellValue(params.data, id.replace('#', '')),
-                  );
+                  const cellVal = cellValue(params.data, id.replace('#', ''));
+
+                  if (!cellVal) {
+                    return '';
+                  }
+
+                  equation = equation.replaceAll(id, cellVal);
                 }
 
                 return mathEval(equation);
