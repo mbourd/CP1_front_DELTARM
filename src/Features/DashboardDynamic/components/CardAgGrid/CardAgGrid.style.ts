@@ -1,6 +1,10 @@
 import styled, { css } from 'styled-components/macro';
 
-const CardAgGridStyled = styled.div`
+type CardAgGridStyledProps = {
+  // $alignColumnTitle: string;
+};
+
+const CardAgGridStyled = styled.div<CardAgGridStyledProps>`
   height: 415px;
   width: 100%;
 
@@ -8,8 +12,27 @@ const CardAgGridStyled = styled.div`
     display: none;
   } */
 
-  .ag-cell p {
-    line-height: normal;
+  .ag-header-cell {
+    &.left-header .ag-header-cell-label {
+      justify-content: left;
+    }
+    &.center-header .ag-header-cell-label {
+      justify-content: center;
+    }
+    &.right-header .ag-header-cell-label {
+      justify-content: right;
+    }
+  }
+
+  .ag-row {
+    /* height: 140px; */
+  }
+  .ag-cell {
+    p {
+      line-height: normal;
+      /* white-space: pre-line;
+      word-wrap: break-word; */
+    }
   }
 `;
 
