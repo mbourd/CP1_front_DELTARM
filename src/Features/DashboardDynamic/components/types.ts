@@ -83,6 +83,7 @@ interface ICardCol {
   width: number;
   field: string;
   dataKey: string;
+  align: string;
 }
 
 export interface ICard {
