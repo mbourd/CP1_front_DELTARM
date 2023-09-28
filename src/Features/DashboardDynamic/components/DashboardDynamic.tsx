@@ -131,7 +131,7 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
                     <CardAgGrid card={card} triggerAction={actionButton} />
                   </Grid>
                 ))}
-              {/* {response?.data?.ag_cards?.visible &&
+              {response?.data?.ag_cards?.visible &&
                 response?.data.ag_cards.card.map((card, index) => (
                   <Grid
                     item
@@ -146,7 +146,7 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
                       triggerAction={actionButton}
                     />
                   </Grid>
-                ))} */}
+                ))}
             </Grid>
             {isModalOpen && modal ? (
               <ModalDynamic
