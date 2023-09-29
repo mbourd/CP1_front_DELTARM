@@ -54,7 +54,8 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
   const { data: context } = useContext(SecurityContext);
 
   useEffect(() => {
-    if (context.cli_id && clientInfoSignal === false) {
+    if (!context.cli_id) setClientInfoSignal(false);
+    if (context.cli_id && !clientInfoSignal) {
       // checks whether client data came or not
       if (review?.length > 0) {
         setClientInfoSignal(true);
@@ -74,87 +75,85 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
   }, [send]);
 
   return clientInfoSignal ? (
-    <>
-      <SwitchCallState
-        callState={callState}
-        states={{
-          IS_LOADING: <IsLoading />,
-          NO_DATA: <NoData />,
-          SERVER_ERROR: <NoData />,
-        }}
-      >
-        <BreadCrumb values={['Dashboard']} />
-        {response?.data && (
-          <DashboardDynamicStyled>
-            <HeaderDashDynamicFixedStyled>
-              {response?.data.title.visible && (
-                <Heading
-                  style={{
-                    fontSize: response?.data.title.font_size,
-                    color: response?.data.title.font_color,
-                  }}
+    <SwitchCallState
+      callState={callState}
+      states={{
+        NOT_INIT: <IsLoading />,
+        IS_LOADING: <IsLoading />,
+        NO_DATA: <NoData />,
+        SERVER_ERROR: <NoData />,
+      }}
+    >
+      <BreadCrumb values={['Dashboard']} />
+      {response?.data && (
+        <DashboardDynamicStyled>
+          <HeaderDashDynamicFixedStyled>
+            {response?.data.title.visible && (
+              <Heading
+                style={{
+                  fontSize: response?.data.title.font_size,
+                  color: response?.data.title.font_color,
+                }}
+              >
+                {response?.data.title.lib}
+              </Heading>
+            )}
+            {response?.data.subtitle.visible && (
+              <Heading
+                style={{
+                  fontSize: response?.data.subtitle.font_size,
+                  color: response?.data.subtitle.font_color,
+                }}
+              >
+                {response?.data.subtitle.lib}
+              </Heading>
+            )}
+            {response?.data.search_bar.search_bar && (
+              <SearchBar
+                btn_lib={response?.data.search_bar.btn_lib}
+                options={response?.data.search_bar.options}
+                setIsModalOpen={setIsModalOpen}
+              />
+            )}
+            {response && response?.data.btns.length > 0 ? (
+              <ButtonContainerStyled>
+                {response?.data.btns.map((btn, index) => {
+                  return (
+                    <Button
+                      key={index}
+                      onClick={() => actionButton(btn.action)}
+                      style={{ backgroundColor: btn.bg_color }}
+                    >
+                      {btn.btn_lib}
+                    </Button>
+                  );
+                })}
+              </ButtonContainerStyled>
+            ) : null}
+            <MetricsContainerStyled>
+              <Grid container component={'span'} alignItems={'center'}>
+                {response?.data.metrics.visible
+                  ? response?.data.metrics.indicator.map((indicator, index) => (
+                      <SwitchMetric indicator={indicator} key={index} />
+                    ))
+                  : null}
+              </Grid>
+            </MetricsContainerStyled>
+          </HeaderDashDynamicFixedStyled>
+          <Grid container>
+            {response?.data?.cards?.visible &&
+              response?.data.cards.card.map((card, index) => (
+                <Grid
+                  item
+                  xs={12}
+                  md={6}
+                  key={index}
+                  style={{ height: '500px' }}
                 >
-                  {response?.data.title.lib}
-                </Heading>
-              )}
-              {response?.data.subtitle.visible && (
-                <Heading
-                  style={{
-                    fontSize: response?.data.subtitle.font_size,
-                    color: response?.data.subtitle.font_color,
-                  }}
-                >
-                  {response?.data.subtitle.lib}
-                </Heading>
-              )}
-              {response?.data.search_bar.search_bar && (
-                <SearchBar
-                  btn_lib={response?.data.search_bar.btn_lib}
-                  options={response?.data.search_bar.options}
-                  setIsModalOpen={setIsModalOpen}
-                />
-              )}
-              {response && response?.data.btns.length > 0 ? (
-                <ButtonContainerStyled>
-                  {response?.data.btns.map((btn, index) => {
-                    return (
-                      <Button
-                        key={index}
-                        onClick={() => actionButton(btn.action)}
-                        style={{ backgroundColor: btn.bg_color }}
-                      >
-                        {btn.btn_lib}
-                      </Button>
-                    );
-                  })}
-                </ButtonContainerStyled>
-              ) : null}
-              <MetricsContainerStyled>
-                <Grid container component={'span'} alignItems={'center'}>
-                  {response?.data.metrics.visible
-                    ? response?.data.metrics.indicator.map(
-                        (indicator, index) => (
-                          <SwitchMetric indicator={indicator} key={index} />
-                        ),
-                      )
-                    : null}
+                  <CardAgGrid card={card} triggerAction={actionButton} />
                 </Grid>
-              </MetricsContainerStyled>
-            </HeaderDashDynamicFixedStyled>
-            <Grid container>
-              {response?.data?.cards?.visible &&
-                response?.data.cards.card.map((card, index) => (
-                  <Grid
-                    item
-                    xs={12}
-                    md={6}
-                    key={index}
-                    style={{ height: '500px' }}
-                  >
-                    <CardAgGrid card={card} triggerAction={actionButton} />
-                  </Grid>
-                ))}
-              {response?.data?.ag_cards?.visible &&
+              ))}
+            {/* {response?.data?.ag_cards?.visible &&
                 response?.data.ag_cards.card.map((card, index) => (
                   <Grid
                     item
@@ -169,25 +168,24 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
                       triggerAction={actionButton}
                     />
                   </Grid>
-                ))}
-            </Grid>
-            {isModalOpen && modal ? (
-              <ModalDynamic
-                open={isModalOpen}
-                setIsModalOpen={setIsModalOpen}
-                data={modal}
-              />
-            ) : null}
-          </DashboardDynamicStyled>
-        )}
-      </SwitchCallState>
-    </>
+                ))} */}
+          </Grid>
+          {isModalOpen && modal ? (
+            <ModalDynamic
+              open={isModalOpen}
+              setIsModalOpen={setIsModalOpen}
+              data={modal}
+            />
+          ) : null}
+        </DashboardDynamicStyled>
+      )}
+    </SwitchCallState>
+  ) : !context.cli_id ? (
+    <div style={{ marginTop: 40 }}>
+      <ErrorNoData message={trans('noClientFound')} />
+    </div>
   ) : (
-    <>
-      <div style={{ marginTop: 40 }}>
-        <ErrorNoData message={trans('noClientFound')} />
-      </div>
-    </>
+    <IsLoading />
   );
 };
 
