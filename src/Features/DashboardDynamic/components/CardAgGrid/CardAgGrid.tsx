@@ -17,7 +17,7 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import { AG_GRID_LOCALE_EN } from 'Features/Edit/components/Control/Form/DataGrid/translations/en';
 import { AG_GRID_LOCALE_FR } from 'Features/Edit/components/Control/Form/DataGrid/translations/fr';
 
-import { IActionButton, ICard } from '../types';
+import { IActionButton, ICard, ICardRow } from '../types';
 import { CardAgGridStyled } from './CardAgGrid.style';
 import { BPITooltip } from 'Shared/components';
 import DOMPurify from 'dompurify';
@@ -26,6 +26,7 @@ import { Header } from 'Features/Dashboard/components/Card/Header/Header';
 import { useTheme } from 'Packages/Design';
 import { StyledTableCell } from '../Card/Card.style';
 import { useTrans } from 'Services';
+import { GenericCardResearcher } from '../Card/GenericCardResearcher';
 
 type CardAgGridProps = {
   card: ICard;
@@ -33,7 +34,7 @@ type CardAgGridProps = {
 };
 
 const CardAgGrid: React.FC<CardAgGridProps> = ({ card, triggerAction }) => {
-  const [rowHeight, setRowHeight] = useState(100);
+  const [rowHeight, setRowHeight] = useState(96);
   const theme = useTheme();
   const [, , lang] = useTrans('Dashboard');
   // const { user } = useSecurity();
@@ -141,7 +142,7 @@ const CardAgGrid: React.FC<CardAgGridProps> = ({ card, triggerAction }) => {
   const columnDefs = useMemo(() => {
     // eg 29/08/04 gets converted to 20040829
     const monthToComparableNumber = (date: string) => {
-      if (date === undefined || date === null || date.length !== 8) return null;
+      if (date === undefined || date === null || date.length < 8) return null;
       if (isNaN(Number.parseInt(date.substring(6, 8)))) return null;
 
       const yearNumber = Number.parseInt('20' + date.substring(6, 8));
@@ -165,14 +166,15 @@ const CardAgGrid: React.FC<CardAgGridProps> = ({ card, triggerAction }) => {
       const headerClass = col.align ? col.align + '-header' : '';
 
       const CustomCellRenderer = (props: any) => {
+        const dataItem: ICardRow['item'][number] = props.data['item' + i];
         const ref = useRef();
-        const renderIcon = props.data['item' + i].icon
+        const renderIcon = dataItem.icon
           ? generateMaterialIcon(
-              props.data['item' + i].icon.ref,
-              props.data['item' + i].icon.color,
-              props.data['item' + i].icon.size,
-              props.data['item' + i].action,
-              props.data['item' + i].hint,
+              dataItem.icon?.ref + '',
+              dataItem.icon?.color + '',
+              dataItem.icon?.size + '',
+              dataItem.action,
+              dataItem.hint + '',
             )
           : null;
         const content = props.value !== (null || undefined) ? props.value : '';
@@ -182,13 +184,13 @@ const CardAgGrid: React.FC<CardAgGridProps> = ({ card, triggerAction }) => {
               __html: DOMPurify.sanitize(content),
             }}
             style={{
-              cursor: props.data['item' + i].action ? 'pointer' : 'initial',
+              cursor: dataItem.action ? 'pointer' : 'initial',
             }}
-            onClick={() => triggerAction(props.data['item' + i].action)}
+            onClick={() => triggerAction(dataItem.action)}
           />
         );
-        const renderContent = props.data['item' + i].hint ? (
-          <BPITooltip title={props.data['item' + i].hint} placement="top">
+        const renderContent = dataItem.hint ? (
+          <BPITooltip title={dataItem.hint} placement="top">
             {elementContent}
           </BPITooltip>
         ) : (
@@ -226,6 +228,8 @@ const CardAgGrid: React.FC<CardAgGridProps> = ({ card, triggerAction }) => {
         headerName: col.label,
         headerClass: headerClass,
         filter: 'agTextColumnFilter',
+        // filter: GenericCardResearcher,
+        // filter: true,
         filterParams: {
           filterOptions: ['contains'],
         },
