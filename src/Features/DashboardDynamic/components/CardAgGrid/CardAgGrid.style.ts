@@ -28,6 +28,9 @@ const CardAgGridStyled = styled.div<CardAgGridStyledProps>`
     /* height: 140px; */
   }
   .ag-cell {
+    padding-left: 7px;
+    padding-right: 7px;
+
     p {
       line-height: normal;
       /* white-space: pre-line;
