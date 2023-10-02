@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 
 import { AgGridReact } from 'ag-grid-react';
 import { LicenseManager } from 'ag-grid-enterprise';
@@ -26,7 +20,6 @@ import { Header } from 'Features/Dashboard/components/Card/Header/Header';
 import { useTheme } from 'Packages/Design';
 import { StyledTableCell } from '../Card/Card.style';
 import { useTrans } from 'Services';
-import { GenericCardResearcher } from '../Card/GenericCardResearcher';
 
 type CardAgGridProps = {
   card: ICard;
@@ -34,7 +27,7 @@ type CardAgGridProps = {
 };
 
 const CardAgGrid: React.FC<CardAgGridProps> = ({ card, triggerAction }) => {
-  const [rowHeight, setRowHeight] = useState(96);
+  const [rowHeight] = useState(96);
   const theme = useTheme();
   const [, , lang] = useTrans('Dashboard');
   // const { user } = useSecurity();
@@ -59,7 +52,7 @@ const CardAgGrid: React.FC<CardAgGridProps> = ({ card, triggerAction }) => {
     () => ({
       resizable: true,
       sortable: true,
-      // autoHeight: true,
+      autoHeight: true,
       // cellClass: 'grid-cell-centered',
     }),
     [],
@@ -101,10 +94,10 @@ const CardAgGrid: React.FC<CardAgGridProps> = ({ card, triggerAction }) => {
   );
 
   // ensure that the columns of the ag grid automatically adjust their sizes to fit the content when the grid is ready.
-  const onGridReady = (params: GridReadyEvent) => {
+  const onGridReady = useCallback((params: GridReadyEvent) => {
     const gridApi = params.api;
     gridApi.sizeColumnsToFit();
-  };
+  }, []);
 
   // Apply css styles for cells
   const cellStyleFunctions = useCallback(
@@ -138,20 +131,20 @@ const CardAgGrid: React.FC<CardAgGridProps> = ({ card, triggerAction }) => {
     });
   }, [card.lines.values]);
 
-  // Columns definitions
-  const columnDefs = useMemo(() => {
-    // eg 29/08/04 gets converted to 20040829
-    const monthToComparableNumber = (date: string) => {
-      if (date === undefined || date === null || date.length < 8) return null;
-      if (isNaN(Number.parseInt(date.substring(6, 8)))) return null;
+  const monthToComparableNumber = useCallback((date: string) => {
+    if (date === undefined || date === null || date.length < 8) return null;
+    if (isNaN(Number.parseInt(date.substring(6, 8)))) return null;
 
-      const yearNumber = Number.parseInt('20' + date.substring(6, 8));
-      const monthNumber = Number.parseInt(date.substring(3, 5));
-      const dayNumber = Number.parseInt(date.substring(0, 2));
+    const yearNumber = Number.parseInt('20' + date.substring(6, 8));
+    const monthNumber = Number.parseInt(date.substring(3, 5));
+    const dayNumber = Number.parseInt(date.substring(0, 2));
 
-      return yearNumber * 10000 + monthNumber * 100 + dayNumber;
-    };
-    const dateComparator = (date1: string, date2: string) => {
+    return yearNumber * 10000 + monthNumber * 100 + dayNumber;
+  }, []);
+
+  // eg 29/08/04 gets converted to 20040829
+  const dateComparator = useCallback(
+    (date1: string, date2: string) => {
       const date1Number = monthToComparableNumber(date1);
       const date2Number = monthToComparableNumber(date2);
 
@@ -160,46 +153,63 @@ const CardAgGrid: React.FC<CardAgGridProps> = ({ card, triggerAction }) => {
       if (date2Number === null) return 1;
 
       return date1Number - date2Number;
-    };
+    },
+    [monthToComparableNumber],
+  );
 
+  // Columns definitions
+  const columnDefs = useMemo(() => {
     return card.cols.values.map((col, i) => {
       const headerClass = col.align ? col.align + '-header' : '';
 
       const CustomCellRenderer = (props: any) => {
-        const dataItem: ICardRow['item'][number] = props.data['item' + i];
-        const ref = useRef();
-        const renderIcon = dataItem.icon
-          ? generateMaterialIcon(
-              dataItem.icon?.ref + '',
-              dataItem.icon?.color + '',
-              dataItem.icon?.size + '',
-              dataItem.action,
-              dataItem.hint + '',
-            )
-          : null;
-        const content = props.value !== (null || undefined) ? props.value : '';
-        const elementContent: JSX.Element = (
-          <div
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(content),
-            }}
-            style={{
-              cursor: dataItem.action ? 'pointer' : 'initial',
-            }}
-            onClick={() => triggerAction(dataItem.action)}
-          />
+        const dataItem: ICardRow['item'][number] = useMemo(
+          () => props.data['item' + i],
+          [props.data],
         );
-        const renderContent = dataItem.hint ? (
-          <BPITooltip title={dataItem.hint} placement="top">
-            {elementContent}
-          </BPITooltip>
-        ) : (
-          elementContent
+        const renderIcon = useMemo(() => {
+          return dataItem.icon
+            ? generateMaterialIcon(
+                dataItem.icon?.ref + '',
+                dataItem.icon?.color + '',
+                dataItem.icon?.size + '',
+                dataItem.action,
+                dataItem.hint + '',
+              )
+            : null;
+        }, [dataItem.action, dataItem.hint, dataItem.icon]);
+        const content = useMemo(
+          () => (props.value !== (null || undefined) ? props.value : ''),
+          [props.value],
+        );
+        const elementContent: JSX.Element = useMemo(
+          () => (
+            <div
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(content),
+              }}
+              style={{
+                cursor: dataItem.action ? 'pointer' : 'initial',
+              }}
+              onClick={() => triggerAction(dataItem.action)}
+            />
+          ),
+          [content, dataItem.action],
+        );
+        const renderContent = useMemo(
+          () =>
+            dataItem.hint ? (
+              <BPITooltip title={dataItem.hint} placement="top">
+                {elementContent}
+              </BPITooltip>
+            ) : (
+              elementContent
+            ),
+          [dataItem.hint, elementContent],
         );
 
         return (
           <StyledTableCell
-            ref={ref}
             scope="row"
             component={'div'}
             style={{
@@ -256,10 +266,11 @@ const CardAgGrid: React.FC<CardAgGridProps> = ({ card, triggerAction }) => {
     });
   }, [
     card.cols.values,
-    triggerAction,
-    generateMaterialIcon,
-    cellStyleFunctions,
     theme.font.text.main,
+    generateMaterialIcon,
+    triggerAction,
+    dateComparator,
+    cellStyleFunctions,
   ]);
 
   return (
@@ -269,7 +280,7 @@ const CardAgGrid: React.FC<CardAgGridProps> = ({ card, triggerAction }) => {
       </Header>
       <AgGridReact
         ref={gridRef}
-        rowHeight={rowHeight}
+        // rowHeight={rowHeight}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
         rowData={rowData}
@@ -284,7 +295,7 @@ const CardAgGrid: React.FC<CardAgGridProps> = ({ card, triggerAction }) => {
         // // sideBar={sideBar}
         pagination={true}
         // paginationAutoPageSize={true}
-        paginationPageSize={5}
+        paginationPageSize={4}
         // rowSelection="multiple"
         // gridOptions={gridOptions}
         // onCellValueChanged={onCellValueChanged}
