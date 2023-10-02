@@ -6,7 +6,7 @@ import React, {
   useEffect,
 } from 'react';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { IApiControl, IRdg } from '../../../../types';
+import { IApiControl } from '../../../../types';
 import { Grid } from '@mui/material';
 import { ControlLabel } from '../ControlLabel';
 import { BPITooltip, FormError } from '../../../../../../Shared/components';
@@ -47,11 +47,11 @@ import axios from 'axios';
 import CustomIconRenderer from './AgDataGridFields/CustomIconRenderer/CustomIconRenderer';
 import CustomActionButtonRenderer from './AgDataGridFields/CustomActionButtonRenderer/CustomActionButtonRenderer';
 import CustomSingleCheckboxRender from './AgDataGridFields/CustomSingleCheckBoxRenderer/CustomSingleCheckBoxRenderer';
-import { evaluate as mathEval } from 'mathjs';
 import { CustomPercentRenderer } from './AgDataGridFields/CustomPercentRenderer/CustomPercentRenderer';
 import { CustomDecimalRenderer } from './AgDataGridFields/CustomDecimalRenderer/CustomDecimalRenderer';
 import { CustomFinancialRenderer } from './AgDataGridFields/CustomFinancialRenderer/CustomFinancialRenderer';
 import { CustomIntegerRenderer } from './AgDataGridFields/CustomIntegerRenderer/CustomIntegerRender';
+import { ColumnFormulaValueGetter } from './AgDataGridFields/CustomFormulaRenderer';
 interface IProps {
   control: IApiControl;
   fileId: string;
@@ -592,33 +592,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 return parseFloat(valueA) > parseFloat(valueB) ? 1 : -1;
               },
               cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
-              valueGetter: (params: any) => {
-                const [name, fieldValue]: string[] = params.column
-                  .getId()
-                  .split('.');
-                const formula: string = params.data[name][fieldValue];
-                const cellValue = (d: Record<string, IRdg>, id: string) => {
-                  return (
-                    Object.values(d).find(
-                      (rdg) => rdg.col_elm_id === parseInt(id),
-                    )?.value || ''
-                  );
-                };
-                const ids = [...new Set(formula.match(/#\d+/gu) || [])];
-                let equation = formula;
-
-                for (const id of ids) {
-                  const cellVal = cellValue(params.data, id.replace('#', ''));
-
-                  if (!cellVal) {
-                    return '';
-                  }
-
-                  equation = equation.replaceAll(id, cellVal);
-                }
-
-                return mathEval(equation);
-              },
+              valueGetter: ColumnFormulaValueGetter,
             };
           default:
             return {
