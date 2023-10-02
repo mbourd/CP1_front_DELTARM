@@ -54,12 +54,10 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
   const { data: context } = useContext(SecurityContext);
 
   useEffect(() => {
-    if (!context.cli_id) setClientInfoSignal(false);
     if (context.cli_id && !clientInfoSignal) {
       // checks whether client data came or not
       if (review?.length > 0) {
         setClientInfoSignal(true);
-        localStorage.removeItem('client_info');
 
         return;
       } else {
