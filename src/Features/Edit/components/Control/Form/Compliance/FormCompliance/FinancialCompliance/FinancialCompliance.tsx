@@ -25,9 +25,19 @@ export const FinancialCompliance: React.FC<IProps> = ({
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
   const [trans] = useTrans('Edit');
+  const [isMandatory] = useState(compliance.compliance_elm_mandatory);
+  const [currentValue] = useState<string | null>(
+    compliance.compliance_elm_value,
+  );
 
   const saveValue = useCallback(
     (value: string) => {
+      if (!value && isMandatory) {
+        setErrorMessage(trans('mandatoryValue'));
+
+        return;
+      }
+
       if (
         compliance.compliance_elm_regex &&
         !value.match(compliance.compliance_elm_regex)
@@ -59,6 +69,8 @@ export const FinancialCompliance: React.FC<IProps> = ({
       currentRoute,
       compliance.compliance_elm_regex,
       compliance.compliance_elm_regex_msg,
+      isMandatory,
+      trans,
     ],
   );
 
@@ -67,6 +79,12 @@ export const FinancialCompliance: React.FC<IProps> = ({
       setErrorMessage(trans('errorRecording'));
     }
   }, [error, trans]);
+
+  useEffect(() => {
+    if (isMandatory && !currentValue) {
+      setErrorMessage(trans('mandatoryValue'));
+    }
+  }, [isMandatory, currentValue, trans]);
 
   const complianceValue = compliance.compliance_elm_value
     ? numberWithSpaces(compliance.compliance_elm_value)

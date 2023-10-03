@@ -25,9 +25,10 @@ export const BooleanCompliance: React.FC<IProps> = ({
   const [trans] = useTrans('Edit');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
-  const [currentValue, setCurrentValue] = useState(
+  const [currentValue, setCurrentValue] = useState<string | null>(
     compliance.compliance_elm_value,
   );
+  const [isMandatory] = useState(compliance.compliance_elm_mandatory);
 
   const toggleAndSaveValue = useCallback(() => {
     const booleanValue = !stringToBoolean(currentValue);
@@ -35,7 +36,7 @@ export const BooleanCompliance: React.FC<IProps> = ({
     const regexCompliance = new RegExp(compliance.compliance_elm_regex, 'i');
     if (
       compliance.compliance_elm_regex &&
-      !currentValue.match(regexCompliance)
+      !currentValue?.match(regexCompliance)
     ) {
       setErrorMessage(compliance.compliance_elm_regex_msg);
 
@@ -77,6 +78,10 @@ export const BooleanCompliance: React.FC<IProps> = ({
   }, [compliance.compliance_elm_value]);
 
   const booleanValue = stringToBoolean(currentValue);
+
+  useEffect(() => {
+    if (isMandatory && !booleanValue) setErrorMessage(trans('mandatoryValue'));
+  }, [booleanValue, isMandatory, trans]);
 
   return (
     <Grid item xs={6}>
