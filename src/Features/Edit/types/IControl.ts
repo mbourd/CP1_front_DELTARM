@@ -65,6 +65,7 @@ export interface IApiComplianceFields {
   compliance_elm_desc_2: string | null;
   compliance_elm_family: string;
   compliance_elm_lib: string;
+  compliance_elm_mandatory: boolean;
   compliance_elm_regex: RegExp;
   compliance_elm_regex_msg: string | null;
   compliance_elm_type: ControlTypeType;
