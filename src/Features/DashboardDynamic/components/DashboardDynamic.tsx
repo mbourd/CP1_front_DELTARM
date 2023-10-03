@@ -7,7 +7,7 @@ import {
   SecurityContext,
   SwitchCallState,
 } from 'Services';
-import { BreadCrumb, ErrorNoData, Heading } from 'Shared/components';
+import { BreadCrumb, Heading } from 'Shared/components';
 import {
   DashboardDynamicStyled,
   MetricsContainerStyled,
@@ -18,7 +18,7 @@ import { Card } from './Card/Card';
 import { IsLoading } from './IsLoading';
 import { SearchBar } from './Search/SearchBar';
 import { IDashboard } from './types';
-import { Button } from 'Shared/components';
+import { Button, ErrorNoData } from 'Shared/components';
 import { SwitchMetric } from './Metrics/SwitchMetric';
 import { ModalDynamic } from '../../ModalDynamic/components/ModalDynamic';
 import { useActionButton } from '../../../Packages/Helpers/src/useActionButton';
@@ -47,7 +47,7 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
     logout();
   }
 
-  const [clientInfoSignal, setClientInfoSignal] = useState(false);
+  const [clientInfoSignal, setClientInfoSignal] = useState(true);
 
   const client_info: any = localStorage.getItem('client_info');
   const review = JSON.parse(client_info);
