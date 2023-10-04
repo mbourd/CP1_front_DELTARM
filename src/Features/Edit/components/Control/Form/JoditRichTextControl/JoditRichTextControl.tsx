@@ -208,6 +208,11 @@ export const JoditRichTextControl: React.FC<IProps> = ({
     textIcons: false,
   };
 
+  //expose for Cypress
+  if (window?.['Cypress']) {
+    window['Features_Edit_JoditRichTextControl'] = { setMessage };
+  }
+
   return (
     <>
       <JoditEditor

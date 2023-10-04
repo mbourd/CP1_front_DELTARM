@@ -22,5 +22,15 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# untrack 
+# untrack
 package-lock.json
+.vscode
+
+# cypress
+*.cy.tsx.mp4
+*.cy.ts.mp4
+*.cy.jsx.mp4
+*.cy.js.mp4
+cypress.env.json
+/cypress/screenshots
+/cypress/videos

@@ -77,6 +77,13 @@ export const TextCompliance: React.FC<IProps> = ({
     if (isMandatory && !currentValue) setErrorMessage(trans('mandatoryValue'));
   }, [isMandatory, currentValue, trans]);
 
+  //expose for Cypress API
+  if (window?.['Cypress']) {
+    window['Features_Edit_Control_Form_Compliance_TextCompliance'] = {
+      setErrorMessage,
+    };
+  }
+
   return (
     <Grid item xs={6}>
       <TextComplianceStyled>

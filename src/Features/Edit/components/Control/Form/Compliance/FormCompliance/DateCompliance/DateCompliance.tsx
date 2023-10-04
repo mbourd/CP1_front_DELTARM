@@ -82,6 +82,13 @@ export const DateCompliance: React.FC<IProps> = ({
     }
   }, [isMandatory, currentValue, trans]);
 
+  //expose for Cypress API
+  if (window['Cypress']) {
+    window['Features_Edit_Control_Form_Compliance_DateCompliance'] = {
+      setErrorMessage,
+    };
+  }
+
   return (
     <Grid item xs={6}>
       <DateComplianceStyled>
