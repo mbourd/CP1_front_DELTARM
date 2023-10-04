@@ -47,7 +47,7 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
     logout();
   }
 
-  const [clientInfoSignal, setClientInfoSignal] = useState(false);
+  const [clientInfoSignal, setClientInfoSignal] = useState(true);
 
   const client_info: any = localStorage.getItem('client_info');
   const review = JSON.parse(client_info);

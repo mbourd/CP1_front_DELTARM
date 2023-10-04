@@ -4,11 +4,10 @@ import { IApiComplianceFields } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
 import { FinancialComplianceStyled } from './FinancialCompliance.style';
 import { EuroIcon } from 'Styles';
-import { useApi, useRouter } from 'Services';
+import { useApi, useRouter, useTrans } from 'Services';
 import { ComplianceLabel } from '../ComplianceLabel';
 import { ComplianceFooter } from '../ComplianceFooter';
 import { numberWithSpaces } from '../../../../../../../../Packages/Helpers/src/numberWithSpaces';
-import { useTrans } from '../../../../../../../../Services';
 
 interface IProps {
   compliance: IApiComplianceFields;

@@ -2,11 +2,10 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { IApiComplianceFields } from 'Features/Edit/types';
 import { FormError, Select } from 'Shared/components';
-import { storage, useApi, useRouter } from 'Services';
+import { storage, useApi, useRouter, useTrans } from 'Services';
 import { SelectListComplianceStyled } from './SelectListCompliance.style';
 import { ComplianceLabel } from '../ComplianceLabel';
 import { ComplianceFooter } from '../ComplianceFooter';
-import { useTrans } from '../../../../../../../../Services';
 
 interface IProps {
   compliance: IApiComplianceFields;

@@ -3,10 +3,9 @@ import { TextComplianceStyled } from './TextCompliance.style';
 import { Grid } from '@material-ui/core';
 import { IApiComplianceFields } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
-import { useApi, useRouter } from 'Services';
+import { useApi, useRouter, useTrans } from 'Services';
 import { ComplianceLabel } from '../ComplianceLabel';
 import { ComplianceFooter } from '../ComplianceFooter';
-import { useTrans } from '../../../../../../../../Services';
 
 interface IProps {
   compliance: IApiComplianceFields;

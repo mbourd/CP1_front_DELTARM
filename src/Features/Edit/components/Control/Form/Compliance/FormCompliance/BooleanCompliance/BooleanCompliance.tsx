@@ -2,13 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { BooleanComplianceStyled } from './BooleanCompliance.style';
 import { Grid } from '@material-ui/core';
 import { IApiComplianceFields } from 'Features/Edit/types';
-import { FormError } from 'Shared/components';
-import { useApi, useRouter } from 'Services';
+import { FormError, InputBase } from 'Shared/components';
+import { useApi, useRouter, useTrans } from 'Services';
 import { ComplianceLabel } from '../ComplianceLabel';
 import { ComplianceFooter } from '../ComplianceFooter';
 import { Checkbox } from '@mui/material';
 import { stringToBoolean } from '../../../../../../../../Packages/Helpers/src/stringToBoolean';
-import { useTrans } from '../../../../../../../../Services';
 
 interface IProps {
   compliance: IApiComplianceFields;
