@@ -108,6 +108,13 @@ export const ChexboxesCompliance: React.FC<IProps> = ({
     }
   }, [isMandatory, selectedValue, trans]);
 
+  //expose for Cypress API
+  if (window?.['Cypress']) {
+    window['Features_Edit_Control_Form_Compliance_CheckboxCompliance'] = {
+      setErrorMessage,
+    };
+  }
+
   return (
     <Grid item xs={6}>
       <CheckboxesComplianceStyled>

@@ -82,6 +82,13 @@ export const BooleanCompliance: React.FC<IProps> = ({
     if (isMandatory && !booleanValue) setErrorMessage(trans('mandatoryValue'));
   }, [booleanValue, isMandatory, trans]);
 
+  // expose for Cypress
+  if (window?.['Cypress']) {
+    window['Features_Edit_Control_Form_Compliance_BooleanCompliance'] = {
+      setErrorMessage,
+    };
+  }
+
   return (
     <Grid item xs={6}>
       <BooleanComplianceStyled>

@@ -73,6 +73,13 @@ export const FinancialCompliance: React.FC<IProps> = ({
     ],
   );
 
+  //expose for Cypress API
+  if (window?.['Cypress']) {
+    window['Features_Edit_Control_Form_Compliance_FinancialCompliance'] = {
+      setErrorMessage,
+    };
+  }
+
   useEffect(() => {
     if (error) {
       setErrorMessage(trans('errorRecording'));

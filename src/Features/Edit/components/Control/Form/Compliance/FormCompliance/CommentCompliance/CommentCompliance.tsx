@@ -84,6 +84,12 @@ export const CommentCompliance: React.FC<IProps> = ({
     }
   }, [isMandatory, currentValue, trans]);
 
+  if (window?.['Cypress']) {
+    window['Features_Edit_Control_Form_Compliance_CommentCompliance'] = {
+      setErrorMessage,
+    };
+  }
+
   return (
     <Grid item xs={6}>
       <CommentComplianceStyled>
