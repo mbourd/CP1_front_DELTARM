@@ -3,11 +3,10 @@ import { Grid } from '@material-ui/core';
 import { IApiComplianceFields } from 'Features/Edit/types';
 import { FormError } from 'Shared/components';
 import { CheckboxesComplianceStyled } from './CheckboxesCompliance.style';
-import { useApi, useRouter } from 'Services';
+import { useApi, useRouter, useTrans } from 'Services';
 import { ComplianceLabel } from '../ComplianceLabel';
 import { ComplianceFooter } from '../ComplianceFooter';
 import { CheckboxWrapper } from '../../../../../../../../Packages/Design/components/Checkbox/CheckboxWrapper';
-import { useTrans } from '../../../../../../../../Services';
 
 interface IProps {
   compliance: IApiComplianceFields;
