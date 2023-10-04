@@ -107,6 +107,13 @@ export const UploadCompliance: React.FC<IProps> = ({
     }
   }, [isMandatory, currentUploadFile, trans, compliance.compliance_elm_value]);
 
+  //expose for Cypress API
+  if (window?.['Cypress']) {
+    window['Features_Edit_Control_Form_Compliance_UploadCompliance'] = {
+      setErrorMessage,
+    };
+  }
+
   return (
     <Grid item xs={6}>
       <ComplianceLabel compliance={compliance} />

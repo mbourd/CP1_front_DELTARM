@@ -96,6 +96,13 @@ export const SelectListCompliance: React.FC<IProps> = ({
     }
   }, [error, trans]);
 
+  //expose for Cypress API
+  if (window?.['Cypress']) {
+    window['Features_Edit_Control_Form_Compliance_SelectListCompliance'] = {
+      setErrorMessage,
+    };
+  }
+
   const modified_data = compliance?.control_answer_choices
     ?.map((choice: any) => {
       return {

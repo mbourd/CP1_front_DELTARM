@@ -82,6 +82,13 @@ export const PercentCompliance: React.FC<IProps> = ({
     }
   }, [isMandatory, currentValue, trans]);
 
+  //expose for Cypress API
+  if (window?.['Cypress']) {
+    window['Features_Edit_Control_Form_Compliance_PercentCompliance'] = {
+      setErrorMessage,
+    };
+  }
+
   return (
     <Grid item xs={6}>
       <PercentComplianceStyled>
