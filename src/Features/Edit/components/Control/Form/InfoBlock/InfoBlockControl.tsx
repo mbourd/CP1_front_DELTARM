@@ -29,6 +29,13 @@ export const InfoBlockControl: React.FC<IProps> = ({
     }
   }, [isRejected]);
 
+  //expose for Cypress
+  if (window?.['Cypress']) {
+    window['Features_Edit_InfoBlockControl'] = {
+      setIsOpen,
+    };
+  }
+
   return (
     <Grid item xs={12}>
       <InfoBlockControlStyled>
