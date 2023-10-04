@@ -40,7 +40,7 @@ export default defineConfig({
   // video: false, // or from CLI --config video=false
   // screenshotOnRunFailure: false,
   // pageLoadTimeout: 360000,
-  numTestsKeptInMemory: 0,
+  numTestsKeptInMemory: 500,
   // retries: 2,
   // defaultCommandTimeout: 60000,
   experimentalMemoryManagement: true,
