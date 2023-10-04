@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { IApiComplianceFields } from 'Features/Edit/types';
 import { FormError, Select } from 'Shared/components';
-import { storage, useApi, useRouter } from 'Services';
+import { storage, useApi, useRouter, useTrans } from 'Services';
 import { SelectListComplianceStyled } from './SelectListCompliance.style';
 import { ComplianceLabel } from '../ComplianceLabel';
 import { ComplianceFooter } from '../ComplianceFooter';
@@ -21,6 +21,7 @@ export const SelectListCompliance: React.FC<IProps> = ({
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
+  const [trans] = useTrans('Edit');
 
   const value = storage.getData<string>(
     fileId +
@@ -29,12 +30,22 @@ export const SelectListCompliance: React.FC<IProps> = ({
       compliance.compliance_id +
       '.value',
   );
-  const selectedValue: Record<string, true> = {
-    [value || compliance.compliance_elm_value || '']: true,
-  };
+  const selectedValue: Record<string, true> = useMemo(
+    () => ({
+      [value || compliance.compliance_elm_value || '']: true,
+    }),
+    [compliance.compliance_elm_value, value],
+  );
+  const [isMandatory] = useState(compliance.compliance_elm_mandatory);
 
   const saveValue = useCallback(
     (value: string) => {
+      if (!value && isMandatory) {
+        setErrorMessage(trans('mandatoryValue'));
+
+        return;
+      }
+
       if (
         compliance.compliance_elm_regex &&
         !value.match(compliance.compliance_elm_regex)
@@ -43,6 +54,7 @@ export const SelectListCompliance: React.FC<IProps> = ({
 
         return;
       }
+
       setErrorMessage(null);
       storage.setData(
         fileId +
@@ -73,6 +85,8 @@ export const SelectListCompliance: React.FC<IProps> = ({
       compliance.compliance_elm_regex,
       compliance.compliance_id,
       compliance.compliance_elm_regex_msg,
+      isMandatory,
+      trans,
     ],
   );
 
@@ -95,6 +109,12 @@ export const SelectListCompliance: React.FC<IProps> = ({
     .reduce((obj: any, cur: any, i: any) => {
       return { ...obj, [cur?.id]: cur };
     }, {});
+
+  useEffect(() => {
+    if (isMandatory && Object.keys(selectedValue)[0] === '') {
+      setErrorMessage(trans('mandatoryValue'));
+    }
+  }, [isMandatory, selectedValue, trans]);
 
   return (
     <Grid item xs={6}>

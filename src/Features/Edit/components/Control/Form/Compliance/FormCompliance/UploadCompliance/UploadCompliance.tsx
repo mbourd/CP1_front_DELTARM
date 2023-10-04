@@ -4,7 +4,7 @@ import { Grid, Fab } from '@material-ui/core';
 import { CloudUpload } from '@material-ui/icons';
 import { IApiComplianceFields, IUploadDetail } from 'Features/Edit/types';
 import { FormError } from 'Shared/components';
-import { IUser, security } from 'Services';
+import { IUser, security, useTrans } from 'Services';
 import { ComplianceLabel } from '../ComplianceLabel';
 import { ComplianceFooter } from '../ComplianceFooter';
 import { useDropzone } from 'react-dropzone';
@@ -25,6 +25,7 @@ export const UploadCompliance: React.FC<IProps> = ({
   fileId,
   controlId,
 }): React.ReactElement => {
+  const [trans] = useTrans('Edit');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [newUploadFile, setNewUploadFile] = useState<File | null>(null);
   const [currentUploadFile, setCurrentUploadFile] = useState<
@@ -32,12 +33,21 @@ export const UploadCompliance: React.FC<IProps> = ({
   >(compliance.compliance_file_detail);
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
+  const [isMandatory] = useState(compliance.compliance_elm_mandatory);
 
   const saveFileToUpload = useCallback(
     (e) => {
-      setNewUploadFile(e.target.files[0]);
+      const file = e.target.files[0];
+
+      if (!file && isMandatory) {
+        setErrorMessage(trans('mandatoryValue'));
+
+        return;
+      }
+
+      setNewUploadFile(file);
     },
-    [setNewUploadFile],
+    [isMandatory, trans],
   );
 
   const onDrop = useCallback((acceptedFiles) => {
@@ -90,6 +100,12 @@ export const UploadCompliance: React.FC<IProps> = ({
       handleUploadFile();
     }
   }, [newUploadFile, handleUploadFile]);
+
+  useEffect(() => {
+    if (isMandatory && !currentUploadFile && !compliance.compliance_elm_value) {
+      setErrorMessage(trans('mandatoryValue'));
+    }
+  }, [isMandatory, currentUploadFile, trans, compliance.compliance_elm_value]);
 
   return (
     <Grid item xs={6}>
