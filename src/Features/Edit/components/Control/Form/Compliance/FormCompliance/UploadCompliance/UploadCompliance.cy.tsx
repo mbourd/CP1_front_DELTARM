@@ -12,6 +12,8 @@ import { mount } from 'cypress/react18';
 
 import { UploadCompliance } from './UploadCompliance';
 import { IApiComplianceFields } from '../../../../../../types';
+import '../../../../../../../Edit/translations';
+import { _translate } from '../../../../../../../../../cypress/utils';
 
 describe('<UploadCompliance />', () => {
   const compliance: IApiComplianceFields = {
@@ -25,6 +27,7 @@ describe('<UploadCompliance />', () => {
     compliance_elm_value: '',
     compliance_id: 'comp123',
     compliance_file_detail: null,
+    compliance_elm_mandatory: false,
   };
 
   it('should render', () => {
@@ -77,5 +80,30 @@ describe('<UploadCompliance />', () => {
       cy.wait(1);
       cy.get('._FormError').contains(error);
     });
+  });
+  it('should render error message if mandatory', () => {
+    const trans_EN =
+      _translate('en', 'Edit', 'mandatoryValue') ||
+      'mandatoryValue|Valeur obligatoire';
+    const trans_FR =
+      _translate('fr', 'Edit', 'mandatoryValue') ||
+      'mandatoryValue|Valeur obligatoire';
+    const trans_DE =
+      _translate('de', 'Edit', 'mandatoryValue') ||
+      'mandatoryValue|Valeur obligatoire';
+    const translations = [trans_EN, trans_FR, trans_DE];
+    const _compliance: IApiComplianceFields = {
+      ...structuredClone(compliance),
+      compliance_elm_value: '',
+      compliance_elm_mandatory: true,
+    };
+    mount(
+      <SetupTestsComponents>
+        <UploadCompliance compliance={_compliance} fileId={''} controlId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('UploadCompliance').should('exist');
+    cy.get('._FormError').contains(new RegExp(translations.join('|'), 'gu'));
   });
 });
