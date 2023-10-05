@@ -39,6 +39,11 @@ export const PercentCompliance: React.FC<IProps> = ({
       }
 
       setErrorMessage(null);
+
+      if (isMandatory && value == '') {
+        setErrorMessage('Valeur obligatoire');
+      }
+
       send(
         currentRoute?.props?.apiSaveControlRouteName,
         {},
@@ -60,6 +65,7 @@ export const PercentCompliance: React.FC<IProps> = ({
       currentRoute,
       compliance.compliance_elm_regex,
       compliance.compliance_elm_regex_msg,
+      isMandatory,
     ],
   );
 
@@ -70,7 +76,7 @@ export const PercentCompliance: React.FC<IProps> = ({
   }, [error, trans]);
   useEffect(() => {
     if (isMandatory && !currentValue) {
-      setErrorMessage(trans('mandatoryValue'));
+      setErrorMessage('Valeur obligatoire');
     }
   }, [isMandatory, currentValue, trans]);
 
