@@ -35,20 +35,11 @@ export const UploadCompliance: React.FC<IProps> = ({
   const jwt = user.getJwt();
   const [isMandatory] = useState(compliance.compliance_elm_mandatory);
 
-  const saveFileToUpload = useCallback(
-    (e) => {
-      const file = e.target.files[0];
+  const saveFileToUpload = useCallback((e) => {
+    const file = e.target.files[0];
 
-      if (!file && isMandatory) {
-        setErrorMessage(trans('mandatoryValue'));
-
-        return;
-      }
-
-      setNewUploadFile(file);
-    },
-    [isMandatory, trans],
-  );
+    setNewUploadFile(file);
+  }, []);
 
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file: File) => {
@@ -106,6 +97,13 @@ export const UploadCompliance: React.FC<IProps> = ({
       setErrorMessage(trans('mandatoryValue'));
     }
   }, [isMandatory, currentUploadFile, trans, compliance.compliance_elm_value]);
+
+  //expose for Cypress API
+  if (window?.['Cypress']) {
+    window['Features_Edit_Control_Form_Compliance_UploadCompliance'] = {
+      setErrorMessage,
+    };
+  }
 
   return (
     <Grid item xs={6}>

@@ -29,12 +29,6 @@ export const CommentCompliance: React.FC<IProps> = ({
 
   const saveValue = useCallback(
     (value: string) => {
-      if (!value && isMandatory) {
-        setErrorMessage(trans('mandatoryValue'));
-
-        return;
-      }
-
       if (
         compliance.compliance_elm_regex &&
         !value.match(compliance.compliance_elm_regex)
@@ -67,8 +61,6 @@ export const CommentCompliance: React.FC<IProps> = ({
       compliance.compliance_id,
       controlId,
       compliance.compliance_elm_regex_msg,
-      isMandatory,
-      trans,
     ],
   );
 
@@ -83,6 +75,12 @@ export const CommentCompliance: React.FC<IProps> = ({
       setErrorMessage(trans('mandatoryValue'));
     }
   }, [isMandatory, currentValue, trans]);
+
+  if (window?.['Cypress']) {
+    window['Features_Edit_Control_Form_Compliance_CommentCompliance'] = {
+      setErrorMessage,
+    };
+  }
 
   return (
     <Grid item xs={6}>

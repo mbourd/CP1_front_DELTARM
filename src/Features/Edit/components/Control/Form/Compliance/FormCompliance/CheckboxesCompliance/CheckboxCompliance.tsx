@@ -36,12 +36,6 @@ export const ChexboxesCompliance: React.FC<IProps> = ({
 
   const saveValue = useCallback(
     (value: string) => {
-      if (!value && isMandatory) {
-        setErrorMessage(trans('mandatoryValue'));
-
-        return;
-      }
-
       if (
         compliance.compliance_elm_regex &&
         !value.match(compliance.compliance_elm_regex)
@@ -75,8 +69,6 @@ export const ChexboxesCompliance: React.FC<IProps> = ({
       compliance.compliance_elm_regex,
       compliance.compliance_id,
       compliance.compliance_elm_regex_msg,
-      isMandatory,
-      trans,
     ],
   );
 
@@ -107,6 +99,13 @@ export const ChexboxesCompliance: React.FC<IProps> = ({
       setErrorMessage(trans('mandatoryValue'));
     }
   }, [isMandatory, selectedValue, trans]);
+
+  //expose for Cypress API
+  if (window?.['Cypress']) {
+    window['Features_Edit_Control_Form_Compliance_CheckboxCompliance'] = {
+      setErrorMessage,
+    };
+  }
 
   return (
     <Grid item xs={6}>
