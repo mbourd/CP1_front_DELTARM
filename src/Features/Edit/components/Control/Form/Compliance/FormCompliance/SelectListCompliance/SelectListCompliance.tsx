@@ -50,6 +50,11 @@ export const SelectListCompliance: React.FC<IProps> = ({
       }
 
       setErrorMessage(null);
+
+      if (isMandatory && value == '') {
+        setErrorMessage('Valeur obligatoire');
+      }
+
       storage.setData(
         fileId +
           controlId +
@@ -79,6 +84,7 @@ export const SelectListCompliance: React.FC<IProps> = ({
       compliance.compliance_elm_regex,
       compliance.compliance_id,
       compliance.compliance_elm_regex_msg,
+      isMandatory,
     ],
   );
 
@@ -111,7 +117,7 @@ export const SelectListCompliance: React.FC<IProps> = ({
 
   useEffect(() => {
     if (isMandatory && Object.keys(selectedValue)[0] === '') {
-      setErrorMessage(trans('mandatoryValue'));
+      setErrorMessage('Valeur obligatoire');
     }
   }, [isMandatory, selectedValue, trans]);
 

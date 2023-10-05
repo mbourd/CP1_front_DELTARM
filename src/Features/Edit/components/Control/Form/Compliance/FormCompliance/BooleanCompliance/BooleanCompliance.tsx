@@ -79,7 +79,7 @@ export const BooleanCompliance: React.FC<IProps> = ({
   const booleanValue = stringToBoolean(currentValue);
 
   useEffect(() => {
-    if (isMandatory && !booleanValue) setErrorMessage(trans('mandatoryValue'));
+    if (isMandatory && !booleanValue) setErrorMessage('Valeur obligatoire');
   }, [booleanValue, isMandatory, trans]);
 
   // expose for Cypress
