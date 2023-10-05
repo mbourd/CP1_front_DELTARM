@@ -50,6 +50,11 @@ export const RadioCompliance: React.FC<IProps> = ({
       }
 
       setErrorMessage(null);
+
+      if (isMandatory && value == '') {
+        setErrorMessage('Valeur obligatoire');
+      }
+
       send(
         currentRoute?.props?.apiSaveControlRouteName,
         {},
@@ -71,6 +76,7 @@ export const RadioCompliance: React.FC<IProps> = ({
       compliance.compliance_elm_regex,
       compliance.compliance_id,
       compliance.compliance_elm_regex_msg,
+      isMandatory,
     ],
   );
 
@@ -94,7 +100,7 @@ export const RadioCompliance: React.FC<IProps> = ({
 
   useEffect(() => {
     if (isMandatory && Object.keys(selectedValue)[0] === '') {
-      setErrorMessage(trans('mandatoryValue'));
+      setErrorMessage('Valeur obligatoire');
     }
   }, [isMandatory, selectedValue, trans]);
 
