@@ -40,6 +40,10 @@ export const CommentCompliance: React.FC<IProps> = ({
 
       setErrorMessage(null);
 
+      if (isMandatory && value == '') {
+        setErrorMessage('Valeur obligatoire');
+      }
+
       send(
         currentRoute?.props?.apiSaveControlRouteName,
         {},
@@ -61,6 +65,7 @@ export const CommentCompliance: React.FC<IProps> = ({
       compliance.compliance_id,
       controlId,
       compliance.compliance_elm_regex_msg,
+      isMandatory,
     ],
   );
 
@@ -72,7 +77,7 @@ export const CommentCompliance: React.FC<IProps> = ({
 
   useEffect(() => {
     if (isMandatory && !currentValue) {
-      setErrorMessage(trans('mandatoryValue'));
+      setErrorMessage('Valeur obligatoire');
     }
   }, [isMandatory, currentValue, trans]);
 

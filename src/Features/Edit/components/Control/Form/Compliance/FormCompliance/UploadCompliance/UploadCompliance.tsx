@@ -94,7 +94,7 @@ export const UploadCompliance: React.FC<IProps> = ({
 
   useEffect(() => {
     if (isMandatory && !currentUploadFile && !compliance.compliance_elm_value) {
-      setErrorMessage(trans('mandatoryValue'));
+      setErrorMessage('Valeur obligatoire');
     }
   }, [isMandatory, currentUploadFile, trans, compliance.compliance_elm_value]);
 

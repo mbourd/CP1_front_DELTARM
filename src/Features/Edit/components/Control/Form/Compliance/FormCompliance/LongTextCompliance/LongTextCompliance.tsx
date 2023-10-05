@@ -37,6 +37,11 @@ export const LongTextCompliance: React.FC<IProps> = ({
       }
 
       setErrorMessage(null);
+
+      if (isMandatory && value == '') {
+        setErrorMessage('Valeur obligatoire');
+      }
+
       const q: Record<string, string> = {
         file_id: fileId,
         elm_id: controlId,
@@ -56,6 +61,7 @@ export const LongTextCompliance: React.FC<IProps> = ({
       compliance.compliance_elm_regex,
       compliance.compliance_id,
       compliance.compliance_elm_regex_msg,
+      isMandatory,
     ],
   );
 
@@ -66,7 +72,7 @@ export const LongTextCompliance: React.FC<IProps> = ({
   }, [error, trans]);
   useEffect(() => {
     if (isMandatory && !currentValue) {
-      setErrorMessage(trans('mandatoryValue'));
+      setErrorMessage('Valeur obligatoire');
     }
   }, [isMandatory, currentValue, trans]);
 
