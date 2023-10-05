@@ -29,12 +29,6 @@ export const LongTextCompliance: React.FC<IProps> = ({
 
   const saveValue = useCallback(
     (value: string) => {
-      if (!value && isMandatory) {
-        setErrorMessage(trans('mandatoryValue'));
-
-        return;
-      }
-
       const regexCompliance = new RegExp(compliance.compliance_elm_regex, 'i');
       if (compliance.compliance_elm_regex && !value.match(regexCompliance)) {
         setErrorMessage(compliance.compliance_elm_regex_msg);
@@ -62,8 +56,6 @@ export const LongTextCompliance: React.FC<IProps> = ({
       compliance.compliance_elm_regex,
       compliance.compliance_id,
       compliance.compliance_elm_regex_msg,
-      isMandatory,
-      trans,
     ],
   );
 

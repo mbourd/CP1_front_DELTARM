@@ -31,12 +31,6 @@ export const FinancialCompliance: React.FC<IProps> = ({
 
   const saveValue = useCallback(
     (value: string) => {
-      if (!value && isMandatory) {
-        setErrorMessage(trans('mandatoryValue'));
-
-        return;
-      }
-
       if (
         compliance.compliance_elm_regex &&
         !value.match(compliance.compliance_elm_regex)
@@ -68,8 +62,6 @@ export const FinancialCompliance: React.FC<IProps> = ({
       currentRoute,
       compliance.compliance_elm_regex,
       compliance.compliance_elm_regex_msg,
-      isMandatory,
-      trans,
     ],
   );
 
