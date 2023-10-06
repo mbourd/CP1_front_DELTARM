@@ -32,7 +32,7 @@ export default defineConfig({
       framework: 'create-react-app',
       bundler: 'webpack',
     },
-    specPattern: ['cypress/integration/**/*.cy.tsx', 'src/**/*.cy.tsx'],
+    specPattern: ['src/**/*.cy.tsx'],
     experimentalMemoryManagement: true,
   },
 
