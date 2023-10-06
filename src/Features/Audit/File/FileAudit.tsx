@@ -15,6 +15,7 @@ import { FileAuditBody } from './Body/FileAuditBody';
 import { FileAuditStyled, FileAuditHeaderStyled } from './FileAudit.style';
 import { ExcelIcon } from '../../../Packages/Design/icons/ExcelIcon';
 import { downloadAuditExcel } from './downloadAuditExcel';
+import { FileAuditRender } from './FileAuditRender';
 
 export const FileAudit: React.FC = (): React.ReactElement => {
   const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(null);
@@ -44,51 +45,13 @@ export const FileAudit: React.FC = (): React.ReactElement => {
   );
 
   return (
-    <>
-      {data?.is_audit && (
-        <BPIBadge content={data?.audits.length}>
-          <AuditIcon
-            fontSize={'large'}
-            className={
-              'audit-icon open-audits-icon' +
-              (iconRef.current || anchorEl ? ' active' : '')
-            }
-            onClick={(e) => {
-              iconRef.current = null;
-              setAnchorEl(anchorEl ? null : e.currentTarget);
-            }}
-          />
-        </BPIBadge>
-      )}
-      <Popper
-        element={iconRef.current || anchorEl}
-        placement={'bottom-start'}
-        bdr={'0'}
-        border={'0'}
-        onClickAway={() => setAnchorEl(null)}
-        zIndex={2}
-      >
-        <FileAuditStyled>
-          <Card>
-            <FileAuditHeaderStyled>
-              Audit du dossier{' '}
-              {data?.is_audit_xls && (
-                <ExcelIcon
-                  style={{ float: 'right' }}
-                  fontSize={'medium'}
-                  onClick={handleDownloadExcelAudit}
-                />
-              )}
-            </FileAuditHeaderStyled>
-            {data?.audits ? <FileAuditBody audits={data.audits} /> : null}
-          </Card>
-        </FileAuditStyled>
-        {errorMessage ? (
-          <p>
-            <FormError>{errorMessage}</FormError>
-          </p>
-        ) : null}
-      </Popper>
-    </>
+    <FileAuditRender
+      data={data}
+      iconRef={iconRef}
+      anchorEl={anchorEl}
+      setAnchorEl={setAnchorEl}
+      handleDownloadExcelAudit={handleDownloadExcelAudit}
+      errorMessage={errorMessage}
+    />
   );
 };

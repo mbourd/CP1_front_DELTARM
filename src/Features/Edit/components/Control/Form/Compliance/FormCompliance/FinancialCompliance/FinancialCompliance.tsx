@@ -4,7 +4,7 @@ import { IApiComplianceFields } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
 import { FinancialComplianceStyled } from './FinancialCompliance.style';
 import { EuroIcon } from 'Styles';
-import { useApi, useRouter } from 'Services';
+import { useApi, useRouter, useTrans } from 'Services';
 import { ComplianceLabel } from '../ComplianceLabel';
 import { ComplianceFooter } from '../ComplianceFooter';
 import { numberWithSpaces } from '../../../../../../../../Packages/Helpers/src/numberWithSpaces';
@@ -23,6 +23,11 @@ export const FinancialCompliance: React.FC<IProps> = ({
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
+  const [trans] = useTrans('Edit');
+  const [isMandatory] = useState(compliance.compliance_elm_mandatory);
+  const [currentValue] = useState<string | null>(
+    compliance.compliance_elm_value,
+  );
 
   const saveValue = useCallback(
     (value: string) => {
@@ -36,6 +41,11 @@ export const FinancialCompliance: React.FC<IProps> = ({
       }
 
       setErrorMessage(null);
+
+      if (isMandatory && value == '') {
+        setErrorMessage('Valeur obligatoire');
+      }
+
       send(
         currentRoute?.props?.apiSaveControlRouteName,
         {},
@@ -57,14 +67,28 @@ export const FinancialCompliance: React.FC<IProps> = ({
       currentRoute,
       compliance.compliance_elm_regex,
       compliance.compliance_elm_regex_msg,
+      isMandatory,
     ],
   );
+
+  //expose for Cypress API
+  if (window?.['Cypress']) {
+    window['Features_Edit_Control_Form_Compliance_FinancialCompliance'] = {
+      setErrorMessage,
+    };
+  }
 
   useEffect(() => {
     if (error) {
       setErrorMessage("Une erreur s'est produite durant l'enregistrement");
     }
-  }, [error]);
+  }, [error, trans]);
+
+  useEffect(() => {
+    if (isMandatory && !currentValue) {
+      setErrorMessage('Valeur obligatoire');
+    }
+  }, [isMandatory, currentValue, trans]);
 
   const complianceValue = compliance.compliance_elm_value
     ? numberWithSpaces(compliance.compliance_elm_value)

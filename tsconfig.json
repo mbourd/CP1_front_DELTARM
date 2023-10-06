@@ -6,6 +6,12 @@
       "dom.iterable",
       "esnext"
     ],
+    "types": [
+      "node",
+      "cypress",
+      "cypress-react-selector",
+      "cypress-real-events",
+    ],
     "noImplicitAny": false,
     "downlevelIteration": true,
     "allowJs": true,
@@ -27,6 +33,9 @@
     "src"
   ],
   "exclude": [
-    "src/**/*.test.tsx"
+    "src/**/*.test.tsx",
+    "src/**/*.test.ts",
+    "src/**/*.cy.tsx",
+    "src/**/*.cy.ts",
   ]
 }

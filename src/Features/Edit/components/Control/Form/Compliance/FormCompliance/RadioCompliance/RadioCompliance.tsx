@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { IApiComplianceFields } from 'Features/Edit/types';
 import { FormError } from 'Shared/components';
 import { RadioComplianceStyled } from './RadioCompliance.style';
-import { storage, useApi, useRouter } from 'Services';
+import { storage, useApi, useRouter, useTrans } from 'Services';
 import { ComplianceLabel } from '../ComplianceLabel';
 import { ComplianceFooter } from '../ComplianceFooter';
 import { CheckboxWrapper } from '../../../../../../../../Packages/Design/components/Checkbox/CheckboxWrapper';
@@ -22,6 +22,7 @@ export const RadioCompliance: React.FC<IProps> = ({
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
+  const [trans] = useTrans('Edit');
   const value = storage.getData<string>(
     fileId +
       controlId +
@@ -29,9 +30,13 @@ export const RadioCompliance: React.FC<IProps> = ({
       compliance.compliance_id +
       '.value',
   );
-  const selectedValue: Record<string, true> = {
-    [value || compliance.compliance_elm_value || '']: true,
-  };
+  const selectedValue: Record<string, true> = useMemo(
+    () => ({
+      [value || compliance.compliance_elm_value || '']: true,
+    }),
+    [compliance.compliance_elm_value, value],
+  );
+  const [isMandatory] = useState(compliance.compliance_elm_mandatory);
 
   const saveValue = useCallback(
     (value: string) => {
@@ -45,6 +50,11 @@ export const RadioCompliance: React.FC<IProps> = ({
       }
 
       setErrorMessage(null);
+
+      if (isMandatory && value == '') {
+        setErrorMessage('Valeur obligatoire');
+      }
+
       send(
         currentRoute?.props?.apiSaveControlRouteName,
         {},
@@ -66,6 +76,7 @@ export const RadioCompliance: React.FC<IProps> = ({
       compliance.compliance_elm_regex,
       compliance.compliance_id,
       compliance.compliance_elm_regex_msg,
+      isMandatory,
     ],
   );
 
@@ -86,6 +97,19 @@ export const RadioCompliance: React.FC<IProps> = ({
     .reduce((obj: any, cur: any, i: any) => {
       return { ...obj, [cur?.id]: cur };
     }, {});
+
+  useEffect(() => {
+    if (isMandatory && Object.keys(selectedValue)[0] === '') {
+      setErrorMessage('Valeur obligatoire');
+    }
+  }, [isMandatory, selectedValue, trans]);
+
+  //expose for Cypress API
+  if (window?.['Cypress']) {
+    window['Features_Edit_Control_Form_Compliance_RadioCompliance'] = {
+      setErrorMessage,
+    };
+  }
 
   return (
     <Grid item xs={6}>
