@@ -23,7 +23,7 @@ export const DateCompliance: React.FC<IProps> = ({
   const { currentRoute } = useRouter();
   const [trans] = useTrans('Edit');
   const [isMandatory] = useState(compliance.compliance_elm_mandatory);
-  const [currentValue] = useState<string | null>(
+  const [currentValue, setCurrentValue] = useState<string | null>(
     compliance.compliance_elm_value,
   );
 
@@ -37,6 +37,8 @@ export const DateCompliance: React.FC<IProps> = ({
 
         return;
       }
+
+      setErrorMessage(null);
 
       if (isMandatory && value == '') {
         setErrorMessage('Valeur obligatoire');
@@ -86,6 +88,15 @@ export const DateCompliance: React.FC<IProps> = ({
     };
   }
 
+  const handleOnChange = useCallback(
+    (e) => {
+      if (isMandatory && e.currentTarget.value) setErrorMessage(null);
+
+      setCurrentValue(e.currentTarget.value);
+    },
+    [isMandatory],
+  );
+
   return (
     <Grid item xs={6}>
       <DateComplianceStyled>
@@ -100,6 +111,7 @@ export const DateCompliance: React.FC<IProps> = ({
           color={compliance.compliance_elm_lib ? 'text' : 'disabled'}
           defaultValue={currentValue ?? ''}
           onBlur={(e) => saveValue(e.currentTarget.value)}
+          onChange={(e) => handleOnChange(e)}
           type={'date'}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}

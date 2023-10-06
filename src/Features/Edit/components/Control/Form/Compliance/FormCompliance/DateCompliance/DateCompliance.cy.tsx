@@ -104,4 +104,26 @@ describe('<DateCompliance />', () => {
     cy.react('DateCompliance').should('exist');
     cy.get('._FormError').contains(new RegExp(translations.join('|'), 'gu'));
   });
+
+  it('should not render error message when blur input', () => {
+    const _compliance: IApiComplianceFields = {
+      ...structuredClone(compliance),
+      compliance_elm_lib: 'Test date',
+      compliance_elm_value: '',
+      compliance_elm_mandatory: true,
+    };
+    mount(
+      <SetupTestsComponents>
+        <DateCompliance compliance={_compliance} fileId={''} controlId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('DateCompliance').should('exist');
+    cy.react('DateCompliance').find('input[type="date"]').type('2023-03-23');
+    cy.react('DateCompliance')
+      .find('input[type="date"]')
+      .trigger('change')
+      .blur();
+    cy.get('._FormError', { timeout: 1 }).should('not.exist');
+  });
 });
