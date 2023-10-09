@@ -12,7 +12,12 @@ export const CircularMetric: React.FC<ICircularMetric> = ({
 }) => {
   return (
     <BPITooltip title={hint}>
-      <CircularProgress variant={variant} value={value} style={style} />
+      <CircularProgress
+        className="_CustomMetricProgress"
+        variant={variant}
+        value={value}
+        style={style}
+      />
     </BPITooltip>
   );
 };

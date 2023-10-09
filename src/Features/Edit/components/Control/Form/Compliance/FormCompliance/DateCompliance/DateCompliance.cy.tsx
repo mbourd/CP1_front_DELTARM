@@ -126,4 +126,22 @@ describe('<DateCompliance />', () => {
       .blur();
     cy.get('._FormError', { timeout: 1 }).should('not.exist');
   });
+
+  it('should not render error message if value', () => {
+    const _compliance: IApiComplianceFields = {
+      ...structuredClone(compliance),
+      compliance_elm_lib: 'Test date',
+      compliance_elm_value: '2023-03-23',
+      compliance_elm_mandatory: true,
+    };
+    mount(
+      <SetupTestsComponents>
+        <DateCompliance compliance={_compliance} fileId={''} controlId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('DateCompliance').should('exist');
+    cy.react('DateCompliance').find('input[type="date"]');
+    cy.get('._FormError', { timeout: 23 }).should('not.exist');
+  });
 });
