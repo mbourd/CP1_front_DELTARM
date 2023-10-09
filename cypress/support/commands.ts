@@ -7,6 +7,7 @@ import {
   _visitLogin,
 } from '../utils';
 import 'cypress-react-selector';
+import 'cypress-real-events';
 
 // ***********************************************
 // This example commands.ts shows you how to
@@ -39,7 +40,6 @@ declare global {
     interface Chainable {
       login_v2: typeof login_v2;
       waitReactApp: typeof waitReactApp;
-      waitReactAppE2E: typeof waitReactAppE2E;
       clickOutside: typeof clickOutside;
       // login(email: string, password: string): Chainable<void>;
       // drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>;
@@ -89,13 +89,6 @@ function waitReactApp(selector = '#root', timeout = 10000) {
   cy.wait(255);
 }
 Cypress.Commands.add('waitReactApp', waitReactApp);
-
-function waitReactAppE2E(selector = '#root', timeout = 10000) {
-  cy.get(selector as any, { timeout });
-  cy.waitForReact(10000, selector as any);
-  cy.wait(1500);
-}
-Cypress.Commands.add('waitReactAppE2E', waitReactAppE2E);
 
 function clickOutside(): Cypress.Chainable<any> {
   return cy.get('html').click(0, 0);

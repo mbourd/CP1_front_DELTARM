@@ -2,6 +2,7 @@
 // @ts-check
 /// <reference types="cypress" />
 
+import '../support/e2e';
 import JwtDecode from 'jwt-decode';
 import { _getEnv } from '../utils';
 
@@ -12,6 +13,17 @@ describe(
   },
   () => {
     let data: Record<any, any>;
+
+    // before(() => {
+    //   try {
+    //     cy.readFile('cypress/fixtures/token-cp1.txt').then((file) => {
+    //       if (file) cy.fixture('token-cp1.txt').then((data: string) => {});
+    //     });
+    //   } catch (e) {}
+    //   // cy.fixture('token-cp1.txt').then((data: string) => {
+    //   //   cp1Token = data;
+    //   // });
+    // });
 
     before(() => {
       cy.intercept({
@@ -158,6 +170,31 @@ describe(
               cy.get('[role="tooltip"]').should('exist').should('be.visible');
               cy.wrap($el).trigger('mouseout');
               cy.get('[role="tooltip"]').should('not.exist');
+            });
+        }
+      });
+    });
+
+    it('Should render the correct number of <Header/>', () => {
+      cy.getAllLocalStorage().then(function (localStorage) {
+        const jwt: Record<string, any> = JwtDecode(
+          JSON.parse(
+            localStorage[_getEnv('url_cp1_front')]['security'] as string,
+          )._jwt,
+        );
+
+        if (jwt.context !== 'contr_perm') this.skip();
+
+        const { cards } = data;
+
+        if (cards.card.length) {
+          cy.react('DashboardDynamic')
+            .get('header:not(#main-header)')
+            .should('have.length', cards.card.length);
+          cy.react('DashboardDynamic')
+            .get('header:not(#main-header)')
+            .each(($el, i) => {
+              cy.wrap($el).contains(cards.card[i].title.lib);
             });
         }
       });
