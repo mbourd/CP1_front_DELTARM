@@ -25,6 +25,7 @@ export default defineConfig({
 
     specPattern: ['cypress/e2e/**/*.cy.ts'],
     experimentalMemoryManagement: true,
+    watchForFileChanges: false,
     supportFolder: 'cypress/support',
     supportFile: 'cypress/support/e2e.ts',
     pageLoadTimeout: 6 * 60000,

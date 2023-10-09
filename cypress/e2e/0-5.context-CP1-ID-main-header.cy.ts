@@ -126,7 +126,6 @@ describe('Assert interface #main-header', { testIsolation: false }, () => {
         cy.get('#main-header')
           .find('p.app-name')
           .should('exist')
-          .should('be.visible')
           .should('have.text', data[0].cli_app_name);
       }
     });

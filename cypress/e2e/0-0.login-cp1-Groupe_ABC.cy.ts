@@ -7,7 +7,7 @@ import 'cypress-react-selector';
 import { parse } from 'qs';
 import { _getEnv } from '../utils';
 
-describe('Token CP1', () => {
+describe('Token CP1 - Groupe ABC', () => {
   let cp1Token: string;
 
   it('Should get CP1 token', () => {
