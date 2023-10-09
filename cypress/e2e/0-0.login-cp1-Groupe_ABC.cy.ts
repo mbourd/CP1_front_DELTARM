@@ -11,7 +11,7 @@ describe('Token CP1', () => {
   let cp1Token: string;
 
   it('Should get CP1 token', () => {
-    cy.login_v2();
+    cy.login_v2('Groupe ABC');
     cy.get('[data-routename="DeltaRM_Cp1_Index"]').find('a[href="/ada/"]');
     cy.request('GET', _getEnv('url_v2') + '/ada/?ajax=true')
       .its('body')
