@@ -25,7 +25,7 @@ export const FinancialCompliance: React.FC<IProps> = ({
   const { currentRoute } = useRouter();
   const [trans] = useTrans('Edit');
   const [isMandatory] = useState(compliance.compliance_elm_mandatory);
-  const [currentValue] = useState<string | null>(
+  const [currentValue, setCurrentValue] = useState<string | null>(
     compliance.compliance_elm_value,
   );
 
@@ -41,6 +41,7 @@ export const FinancialCompliance: React.FC<IProps> = ({
       }
 
       setErrorMessage(null);
+      setCurrentValue(value);
 
       if (isMandatory && value == '') {
         setErrorMessage('Valeur obligatoire');
