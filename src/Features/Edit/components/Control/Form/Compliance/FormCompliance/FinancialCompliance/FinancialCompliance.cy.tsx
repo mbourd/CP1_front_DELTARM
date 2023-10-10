@@ -122,4 +122,39 @@ describe('<FinancialCompliance />', () => {
     cy.react('FinancialCompliance').should('exist');
     cy.get('._FormError').contains(new RegExp(translations.join('|'), 'gu'));
   });
+
+  it('Should not render mandatoryValue error message when typing a value on blur', () => {
+    const trans_EN =
+      _translate('en', 'Edit', 'mandatoryValue') ||
+      'mandatoryValue|Valeur obligatoire';
+    const trans_FR =
+      _translate('fr', 'Edit', 'mandatoryValue') ||
+      'mandatoryValue|Valeur obligatoire';
+    const trans_DE =
+      _translate('de', 'Edit', 'mandatoryValue') ||
+      'mandatoryValue|Valeur obligatoire';
+    const translations = [trans_EN, trans_FR, trans_DE];
+    const _compliance: IApiComplianceFields = {
+      ...structuredClone(compliance),
+      compliance_elm_value: '',
+      compliance_elm_mandatory: true,
+    };
+    mount(
+      <SetupTestsComponents>
+        <FinancialCompliance
+          compliance={_compliance}
+          fileId={''}
+          controlId={''}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('FinancialCompliance').should('exist');
+    cy.react('FinancialCompliance').find('input').type('555').blur();
+    cy.wait(3000);
+
+    cy.get('._FormError', { timeout: 1 })
+      .invoke('text')
+      .should('not.match', new RegExp(new RegExp(translations.join('|'))));
+  });
 });
