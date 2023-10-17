@@ -14,6 +14,7 @@ import { _translate } from '../../../../../../../cypress/utils';
 import { PercentControl } from './PercentControl';
 import { IApiControl, IChapter } from '../../../../types';
 import '../../../../../Edit/translations';
+import RandExp from 'randexp';
 
 describe('<PercentControl />', () => {
   const control: IApiControl = {
@@ -36,6 +37,11 @@ describe('<PercentControl />', () => {
     upload_detail: null,
     rich_text_detail: null,
     control_rejectable: null,
+  };
+  const fileId = '1234';
+  const formState = [{ controls: [control] }];
+  const setFormState = () => {
+    return undefined;
   };
 
   it('should render', () => {
@@ -269,5 +275,84 @@ describe('<PercentControl />', () => {
     );
     cy.waitReactApp();
     cy.react('PercentControl').react('RejectControl');
+  });
+
+  it('Should match the value with regex', () => {
+    const regex = '^-?[0-9]\\d*(\\.\\d+)?$';
+    const _control = {
+      ...structuredClone(control),
+      editable: true,
+      control_value: null,
+      control_regex: regex,
+      control_regex_msg: 'Value do not match with regex',
+    };
+    const randExp = new RandExp(new RegExp(regex, 'i'));
+    let generated = randExp.gen();
+
+    while (generated === '') {
+      generated = randExp.gen();
+    }
+
+    mount(
+      <SetupTestsComponents>
+        <PercentControl
+          context={'edit'}
+          control={_control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.window().then((w) => {
+      w['Features_Edit_Control_PercentControl'].setCanSendApi(false);
+    });
+    cy.react('PercentControl')
+      .find('input[type="text"]')
+      .type(generated, { parseSpecialCharSequences: false })
+      .blur();
+    cy.wait(255);
+    cy.react('PercentControl')
+      .get('._FormError', { timeout: 1 })
+      .should('not.exist');
+  });
+  it('Should render error message if value do not match with regex', () => {
+    const regex = '^-?[0-9]\\d*(\\.\\d+)?$';
+    const oppositeRegex = new RegExp(`^(?!${regex}).*$`, 'i');
+    const _control = {
+      ...structuredClone(control),
+      editable: true,
+      control_value: null,
+      control_regex: regex,
+      control_regex_msg: 'Value do not match with regex',
+    };
+    const randExpOpposite = new RandExp(oppositeRegex);
+    let generated = randExpOpposite.gen();
+
+    while (generated === '') {
+      generated = randExpOpposite.gen();
+    }
+
+    mount(
+      <SetupTestsComponents>
+        <PercentControl
+          context={'edit'}
+          control={_control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('PercentControl')
+      .find('input[type="text"]')
+      .type(generated, { parseSpecialCharSequences: false })
+      .blur();
+    cy.wait(255);
+    cy.react('PercentControl')
+      .find('._FormError')
+      .should('have.text', _control.control_regex_msg);
   });
 });

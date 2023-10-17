@@ -11,6 +11,8 @@ import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFo
 import { RejectControl } from '../RejectByPointControl/RejectControl';
 import axios from 'axios';
 
+import { useTrans } from '../../../../../../Services';
+
 interface IProps {
   control: IApiControl;
   fileId: string;
@@ -28,7 +30,9 @@ export const TextControl: React.FC<IProps> = ({
   context,
   get_value_response,
 }): React.ReactElement => {
+  const [trans] = useTrans('Edit');
   const { send, error } = useApi<void>();
+  const [canSendApi, setCanSendApi] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);
   const [isRejected, setIsRejected] = useState(
@@ -80,7 +84,7 @@ export const TextControl: React.FC<IProps> = ({
         elm_val: value,
       };
 
-      send(currentRoute?.props?.apiSaveControlRouteName, {}, q);
+      if (canSendApi) send(currentRoute?.props?.apiSaveControlRouteName, {}, q);
     },
     [
       send,
@@ -93,6 +97,8 @@ export const TextControl: React.FC<IProps> = ({
       currentValue,
       setCurrentValue,
       control.mandatory,
+      trans,
+      canSendApi,
     ],
   );
 
@@ -116,6 +122,14 @@ export const TextControl: React.FC<IProps> = ({
       setIsRejected(false);
     }
   }, [isRejected]);
+
+  // expose for Cypress API
+  if (window?.['Cypress']) {
+    window['Features_Edit_Control_TextControl'] = {
+      setErrorMessage,
+      setCanSendApi,
+    };
+  }
 
   return (
     <Grid item xs={6}>
