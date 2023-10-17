@@ -46,6 +46,6 @@ declare global {
 function waitReactAppE2E(selector = '#root', timeout = 10000) {
   cy.get(selector as any, { timeout });
   cy.waitForReact(10000, selector as any);
-  cy.wait(1500);
+  cy.wait(3000);
 }
 Cypress.Commands.add('waitReactAppE2E', waitReactAppE2E);

@@ -8,6 +8,7 @@ import {
 } from '../utils';
 import 'cypress-react-selector';
 import 'cypress-real-events';
+import 'cypress-ag-grid';
 
 // ***********************************************
 // This example commands.ts shows you how to
@@ -41,6 +42,20 @@ declare global {
       login_v2: typeof login_v2;
       waitReactApp: typeof waitReactApp;
       clickOutside: typeof clickOutside;
+      formErrorShouldBeVisible(translations: string[]): void;
+      formErrorMessageShouldNotMatch(translations: string[]): void;
+      typeThenWait(
+        value: string,
+        options?: {
+          typeOptions?: Partial<Cypress.TypeOptions>;
+          triggers?: Partial<
+            Record<
+              'change' | 'blur',
+              { exec: boolean; options?: Record<string, any> }
+            >
+          >;
+        },
+      ): void;
       // login(email: string, password: string): Chainable<void>;
       // drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>;
       // dismiss(
@@ -94,3 +109,78 @@ function clickOutside(): Cypress.Chainable<any> {
   return cy.get('html').click(0, 0);
 }
 Cypress.Commands.add('clickOutside', clickOutside);
+
+function formErrorShouldBeVisible(
+  subject: JQuery<HTMLElement>,
+  translations: string[],
+) {
+  cy.wrap(subject)
+    .find('._FormError')
+    .should('be.visible')
+    .invoke('text')
+    .should('match', new RegExp(translations.join('|'), 'gu'));
+}
+Cypress.Commands.add(
+  'formErrorShouldBeVisible',
+  { prevSubject: true },
+  formErrorShouldBeVisible,
+);
+
+function formErrorMessageShouldNotMatch(
+  subject: JQuery<HTMLElement>,
+  translations: string[],
+) {
+  cy.wrap(subject).within(($compo) => {
+    if ($compo.find('._FormError').length) {
+      cy.wrap($compo)
+        .find('._FormError')
+        .invoke('text')
+        .should('not.match', new RegExp(translations.join('|'), 'gu'));
+    }
+  });
+}
+Cypress.Commands.add(
+  'formErrorMessageShouldNotMatch',
+  { prevSubject: true },
+  formErrorMessageShouldNotMatch,
+);
+
+function typeThenWait(
+  subject: JQuery<HTMLElement>,
+  value: string,
+  options?: {
+    typeOptions?: Partial<Cypress.TypeOptions>;
+    triggers?: Partial<
+      Record<
+        'change' | 'blur',
+        { exec: boolean; options?: Record<string, any> }
+      >
+    >;
+  },
+) {
+  cy.wrap(subject).type(value, options?.typeOptions);
+
+  if (options?.triggers) {
+    for (const trigger in options?.triggers) {
+      switch (trigger) {
+        case 'change':
+          if (options?.triggers[trigger]?.exec)
+            cy.wrap(subject).trigger(
+              trigger,
+              options?.triggers[trigger]?.options,
+            );
+          break;
+        case 'blur':
+          if (options?.triggers[trigger]?.exec)
+            cy.wrap(subject).blur(options?.triggers[trigger]?.options);
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
+  cy.wait(250);
+  cy.wait(250);
+}
+Cypress.Commands.add('typeThenWait', { prevSubject: true }, typeThenWait);
