@@ -29,7 +29,9 @@ export default defineConfig({
     supportFolder: 'cypress/support',
     supportFile: 'cypress/support/e2e.ts',
     pageLoadTimeout: 6 * 60000,
-    numTestsKeptInMemory: 500,
+    numTestsKeptInMemory: 0,
+    viewportWidth: 1920,
+    viewportHeight: 1080,
   },
 
   component: {

@@ -20,6 +20,7 @@ import { IntegerControl } from './IntegerControl';
 import { IApiControl, IChapter } from '../../../../types';
 import '../../../../../Edit/translations';
 import { translation } from '../../../../../../Services';
+import RandExp from 'randexp';
 
 describe('<IntegerControl />', () => {
   const control: IApiControl = {
@@ -42,6 +43,11 @@ describe('<IntegerControl />', () => {
     upload_detail: null,
     rich_text_detail: null,
     control_rejectable: null,
+  };
+  const fileId = '1234';
+  const formState = [{ controls: [control] }];
+  const setFormState = () => {
+    return undefined;
   };
 
   it('should render', () => {
@@ -299,5 +305,74 @@ describe('<IntegerControl />', () => {
     );
     cy.waitReactApp();
     cy.react('IntegerControl').contains('cm');
+  });
+
+  it('Should match the value with regex', () => {
+    const regex = /^-?[0-9]\d*$/;
+    const _control: IApiControl = {
+      ...structuredClone(control),
+      editable: true,
+      control_value: null,
+      control_regex: regex,
+      control_regex_msg: 'Value do not match with regex',
+    };
+    const generated = new RandExp(regex).gen();
+
+    mount(
+      <SetupTestsComponents>
+        <IntegerControl
+          context={'edit'}
+          control={_control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.window().then((w) => {
+      w['Features_Edit_Control_IntegerControl'].setCanSendApi(false);
+    });
+    cy.react('IntegerControl')
+      .find('input[type="text"]')
+      .type(generated, { parseSpecialCharSequences: false })
+      .blur();
+    cy.wait(255);
+    cy.react('IntegerControl')
+      .get('._FormError', { timeout: 1 })
+      .should('not.exist');
+  });
+  it('Should render error message if value do not match with regex', () => {
+    const regex = /^-?[0-9]\d*$/;
+    const oppositeRegex = new RegExp(`^(?!${regex.source}).*$`);
+    const _control: IApiControl = {
+      ...structuredClone(control),
+      editable: true,
+      control_value: null,
+      control_regex: regex,
+      control_regex_msg: 'Value do not match with regex',
+    };
+    const randExpOpposite = new RandExp(oppositeRegex);
+
+    mount(
+      <SetupTestsComponents>
+        <IntegerControl
+          context={'edit'}
+          control={_control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('IntegerControl')
+      .find('input[type="text"]')
+      .type(randExpOpposite.gen(), { parseSpecialCharSequences: false })
+      .blur();
+    cy.wait(255);
+    cy.react('IntegerControl')
+      .find('._FormError')
+      .should('have.text', _control.control_regex_msg);
   });
 });
