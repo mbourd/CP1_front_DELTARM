@@ -11,7 +11,12 @@ export const LinearMetric: React.FC<ILinearMetric> = ({
 }) => {
   return (
     <BPITooltip title={hint}>
-      <CustomLinearProgress variant={variant} value={value} style={style} />
+      <CustomLinearProgress
+        className="_CustomMetricProgress"
+        variant={variant}
+        value={value}
+        style={style}
+      />
     </BPITooltip>
   );
 };

@@ -49,7 +49,7 @@ export const InputModalDynamic: React.FC<InputModalDynamicProps> = ({
             : undefined
         }
         required={element.attribute?.mandatory}
-        defaultValue={element?.value || undefined}
+        defaultValue={(element?.value as string) || undefined}
         onChange={(e) =>
           handleChangeValue(e.currentTarget.id, e.currentTarget.value)
         }

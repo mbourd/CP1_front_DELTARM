@@ -25,6 +25,11 @@ export default defineConfig({
 
     specPattern: ['cypress/e2e/**/*.cy.ts'],
     experimentalMemoryManagement: true,
+    watchForFileChanges: false,
+    supportFolder: 'cypress/support',
+    supportFile: 'cypress/support/e2e.ts',
+    pageLoadTimeout: 6 * 60000,
+    numTestsKeptInMemory: 500,
   },
 
   component: {
@@ -34,6 +39,11 @@ export default defineConfig({
     },
     specPattern: ['src/**/*.cy.tsx'],
     experimentalMemoryManagement: true,
+    watchForFileChanges: false,
+    supportFolder: 'cypress/support',
+    supportFile: 'cypress/support/component.ts',
+    pageLoadTimeout: 10 * 60000,
+    numTestsKeptInMemory: 500,
   },
 
   watchForFileChanges: false,

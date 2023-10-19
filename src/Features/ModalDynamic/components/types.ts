@@ -20,7 +20,7 @@ export interface IDataModal {
   btn: IButtons[];
 }
 
-interface IElementPModal {
+export interface IElementPModal {
   element: 'p';
   attribute: {
     type: string;
@@ -35,7 +35,7 @@ interface IElementPModal {
 }
 
 export interface IElementModal {
-  element: 'input' | 'select';
+  element: 'input' | 'select' | 'p' | 'table';
   attribute: {
     type: string;
     id: string;
@@ -45,8 +45,26 @@ export interface IElementModal {
     multilineRows: number | null;
     option?: ISelectData[];
   };
-  value: string | null;
+  value: ElementTableModalValueType | string | null;
 }
+
+export type ElementTableModalValueType = {
+  row: ElementTableModalRowType;
+};
+type ElementTableModalRowType = {
+  value: {
+    cell: {
+      value: ElementTableModalCellType[];
+    };
+  }[];
+};
+type ElementTableModalCellType = {
+  action: IActionButton;
+  type: string;
+  value: string;
+  bg_color?: string;
+  font_color?: string;
+};
 
 interface IElementTextValueModal {
   cell: {
@@ -72,7 +90,7 @@ interface IElementButtonValueModal {
   };
 }
 
-interface IElementTableModal {
+export interface IElementTableModal {
   element: 'table';
   attribute: null;
   value: {
