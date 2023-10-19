@@ -8,7 +8,13 @@ import {
   Modal,
 } from 'Shared/components';
 import { ModalDynamicFooterStyled } from './ModalDynamic.style';
-import { IDataModalProps } from './types';
+import {
+  ElementTableModalValueType,
+  IDataModalProps,
+  IElementModal,
+  IElementPModal,
+  IElementTableModal,
+} from './types';
 import { useActionButton } from '../../../Packages/Helpers/src/useActionButton';
 import { useSecurity } from '../../../Packages/Security';
 import {
@@ -141,128 +147,153 @@ export const ModalDynamic: FC<IDataModalProps> = ({
         </Container>
       )}
       <Grid container spacing={1}>
-        {data?.content?.map((element: any, index) => {
-          switch (element.element) {
-            case 'p':
-              return (
-                <Grid key={index} item xs={12}>
-                  <p dangerouslySetInnerHTML={{ __html: element.value }}></p>
-                </Grid>
-              );
-            case 'input':
-              // have the defaults value
-              const keyField: Record<string, string> = {
-                [element.attribute.id]: element?.value ? element.value : '',
-              };
-              Object.assign(defaultQueries, keyField);
+        {data?.content?.map(
+          (
+            element: IElementModal | IElementPModal | IElementTableModal,
+            index: number,
+          ) => {
+            switch (element.element) {
+              case 'p':
+                return (
+                  <Grid key={index} item xs={12}>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html: element.value as string,
+                      }}
+                    ></p>
+                  </Grid>
+                );
+              case 'input':
+                // have the defaults value
+                const keyField: Record<string, string> = {
+                  [element.attribute.id]: element?.value
+                    ? (element.value as string)
+                    : '',
+                };
+                Object.assign(defaultQueries, keyField);
 
-              return (
-                <Grid key={index} item xs={8}>
-                  <Controller
-                    defaultValue={element?.value}
-                    control={control}
-                    name={element.attribute.id}
-                    rules={{ required: element.attribute.mandatory }}
-                    render={() => (
-                      <InputModalDynamic
-                        element={element}
-                        index={index}
-                        handleChangeValue={handleChangeValue}
-                        register={register}
-                      />
-                    )}
-                  />
-                </Grid>
-              );
-            case 'select':
-              const selectedValue: Record<string, true> = {
-                [element?.value || '']: true,
-              };
-
-              const keySelectField: Record<string, string> = {
-                [element.attribute.id]: element?.value ? element.value : '',
-              };
-              Object.assign(defaultQueries, keySelectField);
-
-              const options: Record<string, ISelectData> = {};
-              element.attribute?.option?.map((option: any) => {
-                options[option.id] = {
-                  id: '' + option.id,
-                  label: option.label,
-                  value: option.value,
+                return (
+                  <Grid key={index} item xs={8}>
+                    <Controller
+                      defaultValue={element?.value}
+                      control={control}
+                      name={element.attribute.id}
+                      rules={{ required: element.attribute.mandatory }}
+                      render={() => (
+                        <InputModalDynamic
+                          element={element}
+                          index={index}
+                          handleChangeValue={handleChangeValue}
+                          register={register}
+                        />
+                      )}
+                    />
+                  </Grid>
+                );
+              case 'select':
+                const selectedValue: Record<string, true> = {
+                  [(element.value as string) || '']: true,
                 };
 
-                return option;
-              });
+                const keySelectField: Record<string, string> = {
+                  [element.attribute.id]: element?.value
+                    ? (element.value as string)
+                    : '',
+                };
+                Object.assign(defaultQueries, keySelectField);
 
-              return (
-                <Grid key={index} item xs={8}>
-                  <Controller
-                    defaultValue={element?.value}
-                    control={control}
-                    name={element.attribute.id}
-                    rules={{ required: element.attribute.mandatory }}
-                    render={() => (
-                      <SelectModalDynamic
-                        element={element}
-                        options={options}
-                        selectedValue={selectedValue}
-                        handleChangeValue={handleChangeValue}
-                        register={register}
-                      />
-                    )}
-                  />
-                </Grid>
-              );
-            case 'table':
-              return (
-                <Grid key={index} item xs={12}>
-                  <TableContainer>
-                    <Table>
-                      <TableBody>
-                        {element.value.row.value.map((row: any, index: any) => (
-                          <TableRow key={index}>
-                            {row.cell.value.map((cell: any, index: any) => {
-                              switch (cell.type) {
-                                case 'btn':
-                                  return (
-                                    <StyledTableCell scope="row" key={index}>
-                                      <Button
+                const options: Record<string, ISelectData> = {};
+                element.attribute?.option?.map((option: any) => {
+                  options[option.id] = {
+                    id: '' + option.id,
+                    label: option.label,
+                    value: option.value,
+                  };
+
+                  return option;
+                });
+
+                return (
+                  <Grid key={index} item xs={8}>
+                    <Controller
+                      defaultValue={element?.value}
+                      control={control}
+                      name={element.attribute.id}
+                      rules={{ required: element.attribute.mandatory }}
+                      render={() => (
+                        <SelectModalDynamic
+                          element={element}
+                          options={options}
+                          selectedValue={selectedValue}
+                          handleChangeValue={handleChangeValue}
+                          register={register}
+                        />
+                      )}
+                    />
+                  </Grid>
+                );
+              case 'table':
+                return (
+                  <Grid key={index} item xs={12}>
+                    <TableContainer>
+                      <Table>
+                        <TableBody>
+                          {(
+                            element.value as ElementTableModalValueType
+                          )?.row.value.map((row, index: number) => (
+                            <TableRow key={index}>
+                              {row.cell.value.map((cell, index: number) => {
+                                switch (cell.type) {
+                                  case 'btn':
+                                    return (
+                                      <StyledTableCell scope="row" key={index}>
+                                        <Button
+                                          key={index}
+                                          onClick={() =>
+                                            actionButton(cell.action)
+                                          }
+                                          style={{
+                                            backgroundColor: cell.bg_color
+                                              ? cell.bg_color
+                                              : '#FFCD00',
+                                            color: cell.font_color
+                                              ? cell.font_color
+                                              : '#FFFFFF',
+                                          }}
+                                        >
+                                          {cell.value}
+                                        </Button>
+                                      </StyledTableCell>
+                                    );
+                                  case 'text':
+                                    return (
+                                      <StyledTableCell
+                                        style={{
+                                          cursor: cell.action
+                                            ? 'pointer'
+                                            : 'initial',
+                                        }}
+                                        scope="row"
                                         key={index}
                                         onClick={() =>
                                           actionButton(cell.action)
                                         }
                                       >
                                         {cell.value}
-                                      </Button>
-                                    </StyledTableCell>
-                                  );
-                                case 'text':
-                                  return (
-                                    <StyledTableCell
-                                      style={{
-                                        cursor: cell.action
-                                          ? 'pointer'
-                                          : 'initial',
-                                      }}
-                                      scope="row"
-                                      key={index}
-                                      onClick={() => actionButton(cell.action)}
-                                    >
-                                      {cell.value}
-                                    </StyledTableCell>
-                                  );
-                              }
-                            })}
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </Grid>
-              );
-          }
-        })}
+                                      </StyledTableCell>
+                                    );
+                                }
+                              })}
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  </Grid>
+                );
+            }
+          },
+        )}
       </Grid>
     </Modal>
   );
