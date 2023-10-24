@@ -842,6 +842,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   const gridOptions = {
     rowClass: 'my-hover-class',
     rowData: GridDetails?.rows,
+    stopEditingWhenGridLosesFocus: true,
   };
 
   const onPaginationChanged = useCallback(() => {

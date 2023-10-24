@@ -25,6 +25,7 @@ describe('<BooleanCompliance />', () => {
     compliance_elm_value: '',
     compliance_id: 'comp123',
     compliance_file_detail: null,
+    compliance_elm_mandatory: false,
   };
 
   it('should render', () => {
