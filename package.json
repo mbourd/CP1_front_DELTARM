@@ -181,8 +181,10 @@
     "workerDirectory": "public"
   },
   "resolutions": {
+    "@babel/traverse": "7.23.2",
     "async": "3.2.4",
     "browserslist": "4.16.5",
+    "browserify-sign": "4.2.2",
     "cookiejar": "2.1.4",
     "minimist": "1.2.6",
     "eventsource": "1.1.1",
