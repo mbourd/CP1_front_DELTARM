@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../support/e2e" />
 
-import '../support/commands';
 import '../../src/Features/Manage/translations';
 import { translation } from '../../src/Services';
 import { _escapeForRegExp, _getEnv } from '../utils';

@@ -1,14 +1,11 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../support/e2e" />
 
-import '../support/commands';
-
-import 'cypress-react-selector';
-import 'cypress-real-events';
 import { parse } from 'qs';
 import { _getEnv } from '../utils';
 
-describe('Token CP1 - Controle permanent', () => {
+describe('Token CP1 - Klésia - Controle permanent', () => {
   let cp1Token: string;
 
   it('Should get CP1 - ctrl-perm token', () => {
@@ -32,9 +29,25 @@ describe('Token CP1 - Controle permanent', () => {
   });
 
   before(() => {
-    cy.fixture('token-cp1.txt').then((data: string) => {
-      cp1Token = data;
-    });
+    const filePath = './cypress/fixtures/token-cp1.txt';
+
+    cy.exec(`[ -e "${filePath}" ]`, { failOnNonZeroExit: false }).then(
+      (result) => {
+        if (result.code === 0) {
+          // The file exists, so we can read it
+          cy.readFile(filePath).then((fileContent) => {
+            // Perform assertions on the file content or properties here
+            cp1Token = fileContent;
+          });
+        }
+      },
+    );
+    // cy.fsFileExists(filePath).then((exist) => {
+    //   if (exist)
+    //     cy.fixture('token-cp1.txt').then((fileContent: string) => {
+    //       cp1Token = fileContent;
+    //     });
+    // });
   });
 
   it('Should logged to CP1 contr_perm', () => {
@@ -46,19 +59,10 @@ describe('Token CP1 - Controle permanent', () => {
     }).as('getUserInfo');
     cy.wait(1000);
     cy.waitReactApp('#main-content');
-    cy.react('DashboardDynamic');
+    cy.react('DashboardDynamic').should('exist');
     cy.wait('@getUserInfo').then((interception) => {
       const statusCode = interception.response?.statusCode;
       expect(statusCode).to.eq(200);
     });
-
-    // cy.origin(_getEnv('url_cp1_front'), () => {
-    //   cy.get('#main-header', { timeout: 10000 });
-    //   cy.get('#main-content', { timeout: 10000 });
-    //   cy.wait('@getUserInfo').then((interception) => {
-    //     const statusCode = interception.response?.statusCode;
-    //     expect(statusCode).to.eq(200);
-    //   });
-    // });
   });
 });

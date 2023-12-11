@@ -1,10 +1,10 @@
 // @ts-check
 
 import React from 'react';
-
-import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
-import 'cypress-react-selector';
 import { mount } from 'cypress/react18';
+
+import '../../../../../../../cypress/support/component';
+import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
 
 import '../../../../../Edit/translations';
 import { TextControl } from './TextControl';
@@ -273,7 +273,7 @@ describe('<TextControl />', () => {
   });
 
   it('Should match the value with regex', () => {
-    const regex = '^-?((180(\\.\\d*)?)|(((1[0-7]\\d)|(\\d{1,2}))(\\.\\d*)?))$';
+    const regex = '^-?((180(\\.0+)?)|(((1[0-7]\\d)|(\\d{1,2}))(\\.\\d+)?))$';
     const _control = {
       ...structuredClone(control),
       editable: true,
@@ -296,24 +296,21 @@ describe('<TextControl />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    // cy.window().then((w) => {
-    //   w['Features_Edit_Control_TextControl'].setCanSendApi(false);
-    // });
+    cy.window().then((w) => {
+      w['Features_Edit_Control_TextControl'].setCanSendApi(false);
+    });
     cy.react('TextControl')
       .find('input[type="text"]')
       .typeThenWait(generated, {
         typeOptions: { parseSpecialCharSequences: false },
         triggers: { blur: { exec: true } },
       });
-    // cy.react('TextControl')
-    //   .get('._FormError', { timeout: 1 })
-    //   .should('not.exist');
     cy.react('TextControl').formErrorMessageShouldNotMatch(
       translations_mandatoryValue,
     );
   });
   it('Should render error message if value do not match with regex', () => {
-    const regex = '^-?((180(\\.\\d*)?)|(((1[0-7]\\d)|(\\d{1,2}))(\\.\\d*)?))$';
+    const regex = '^-?((180(\\.0+)?)|(((1[0-7]\\d)|(\\d{1,2}))(\\.\\d+)?))$';
     const _control = {
       ...structuredClone(control),
       editable: true,
@@ -321,9 +318,12 @@ describe('<TextControl />', () => {
       control_regex: regex,
       control_regex_msg: 'Value do not match with regex',
     };
-    const oppositeRegex = new RegExp(`^(?!${_control.control_regex}).*$`, 'i');
+    const oppositeRegex = new RegExp(`^(?!.*${_control.control_regex}).*`, 'i');
     const randExpOpposite = new RandExp(oppositeRegex);
-    const generated = randExpOpposite.gen();
+    let generated = randExpOpposite.gen();
+
+    while (generated === '' || !oppositeRegex.test(generated))
+      generated = randExpOpposite.gen();
 
     mount(
       <SetupTestsComponents>
@@ -337,6 +337,9 @@ describe('<TextControl />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
+    cy.window().then((w) => {
+      w['Features_Edit_Control_TextControl'].setCanSendApi(false);
+    });
     cy.react('TextControl')
       .find('input[type="text"]')
       .type(generated, { parseSpecialCharSequences: false })
