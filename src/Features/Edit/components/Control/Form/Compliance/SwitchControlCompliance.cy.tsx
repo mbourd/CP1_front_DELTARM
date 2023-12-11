@@ -1,8 +1,6 @@
 // @ts-check
 /// <reference types="cypress" />
 
-import '../../../../../../../cypress/support/component';
-
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
 
@@ -24,6 +22,7 @@ describe('<SwitchControlCompliance />', () => {
     compliance_elm_value: '',
     compliance_id: '',
     compliance_file_detail: null,
+    compliance_elm_mandatory: false,
   };
 
   it('should render', () => {

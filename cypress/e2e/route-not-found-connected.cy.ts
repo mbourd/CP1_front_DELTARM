@@ -1,9 +1,6 @@
 // @ts-check
 /// <reference types="cypress" />
-
-import '../support/commands';
-
-import 'cypress-react-selector';
+/// <reference types="../support/e2e" />
 
 describe('Page route not found (CONNECTED)', { testIsolation: false }, () => {
   it('Should be redirected to a not found page', () => {

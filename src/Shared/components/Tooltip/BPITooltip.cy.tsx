@@ -42,7 +42,7 @@ describe('<BPITooltip />', () => {
         </BPITooltip>
       </SetupTestsComponents>,
     );
-    cy.waitReactApp('#root');
+    cy.waitReactApp();
     cy.wait(1);
     cy.react('BPITooltip').should('have.attr', 'title', title);
     cy.get('#child').each(($el) => {

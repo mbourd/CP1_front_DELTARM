@@ -177,17 +177,19 @@ export interface ControlRejectable {
 }
 
 export interface DataGridDetail {
-  columns: {
-    key: string;
-    name: string;
-    width?: string | number;
-    resizable: boolean;
-  }[];
-  rows: DataGridDetailsRows[];
-  datagrid_options: any;
+  columns: DataGridDetailsColumnType[];
+  rows: DataGridDetailsRow[];
+  datagrid_options: DataGridDetailOptionsType;
   buttons: any;
   source: any;
 }
+export type DataGridDetailOptionsType = {
+  add_row_button_display: boolean;
+  pagination_row_size: number;
+  select_all_button_col_ref: `rdg_${number}`;
+  select_all_button_display: boolean;
+  unselect_all_button_display: boolean;
+};
 
 export interface IDataGridAgGridCol {
   border_right: boolean;
@@ -217,34 +219,96 @@ export interface DataGridDetailAgGrid {
   lines: AgGridRow[];
 }
 
-export interface DataGridDetailsRows {
-  [key: string]: {
-    component: DataGridComponent;
-    value: string;
-    upload_detail: IUploadDetail[] | null;
-    col_elm_id: number;
-    row_num: number;
-    control_editable: boolean;
-    control_mandatory: boolean;
-    control_regex: RegExp | null;
-    control_regex_msg: string | null;
-    answer_choices: Record<string, ISelectData> | null;
-  };
+export type HexStrType = `#${string}`;
+export type DataGridDetailsColumnType = {
+  alignment: 'left' | 'right' | 'center' | 'justify';
+  borderRight: boolean;
+  borderRightColor: string;
+  borderRightWidth: number | `${number}`;
+  col_header_display_tooltip: boolean;
+  col_header_tooltip: string;
+  currency_symbol: string;
+  decimal_digit: number;
+  field: string;
+  field_type: DataGridComponent;
+  headerColor: HexStrType;
+  headerName: string;
+  hide: boolean;
+  key: string;
+  name: string;
+  lockPinned: boolean;
+  pinned: 'left' | 'right' | null;
+  resizable: boolean;
+  sortable: boolean;
+  thousand_separator: boolean;
+  track_modification: boolean;
+  track_modification_option: string;
+  track_modification_tooltip: boolean;
+  width?: string | number;
+};
+export interface DataGridDetailsRow {
+  row_editable: boolean;
+  row_uuid: string;
+  [key: `rdg_${number}`]: DataGridDetailsRowsCell;
 }
 
+export interface DataGridDetailsRowsCell {
+  choice_options: DataGridDetailsRowsCellChoiceOption[];
+  component: DataGridComponent;
+  value: string;
+  upload_detail: IUploadDetail[] | null;
+  col_elm_id: number;
+  row_num: number;
+  control_editable: boolean;
+  control_mandatory: boolean;
+  control_regex: RegExp | null;
+  control_regex_msg: string | null;
+  answer_choices: Record<string, ISelectData> | null;
+  reference_value: string;
+}
+
+export type DataGridDetailsRowsCellChoiceOption = {
+  choice_bg_color: string;
+  choice_font_color: string;
+  choice_font_weight:
+    | 'normal'
+    | 'bold'
+    | 'boder'
+    | 'lighter'
+    | '100'
+    | '200'
+    | '300'
+    | '400'
+    | '500'
+    | '600'
+    | '700'
+    | '800'
+    | '900';
+  choice_id: number;
+  choice_lib: string;
+};
+
 export type DataGridComponent =
-  | 'integer'
-  | 'select_list'
-  | 'file_upload'
+  | 'action_button'
   | 'boolean'
-  | 'text'
-  | 'delete'
-  | 'financial'
-  | 'decimal'
-  | 'long_text'
-  | 'percent'
+  | 'checkbox'
+  | 'checkbox_select_datagrid'
+  | 'comment'
   | 'date'
-  | 'comment';
+  | 'decimal'
+  | 'delete'
+  | 'dynamic_select_list'
+  | 'file_upload'
+  | 'financial'
+  | 'formula'
+  | 'icon'
+  | 'integer'
+  | 'long_text'
+  | 'multiple_list'
+  | 'percent'
+  | 'radio'
+  | 'select_list'
+  | 'text';
 
 export interface IApiControl {
   control_desc_1: string | null;

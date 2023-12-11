@@ -1,11 +1,8 @@
 // @ts-check
 /// <reference types="cypress" />
-import '../../../../../cypress/support/component';
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
-import { ThemeProvider } from 'styled-components/macro';
-import { BPITheme, BPIGlobalStyle } from '../../../../Packages/Design';
 
 import { mount } from 'cypress/react18';
 import {
@@ -56,14 +53,11 @@ describe('IconsContainer', () => {
 
   it('Should render', () => {
     mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <IconsContainer />
-        </ThemeProvider>
-      </div>,
+      <SetupTestsComponents>
+        <IconsContainer />
+      </SetupTestsComponents>,
     );
-    cy.waitReactApp('#root');
+    cy.waitReactApp();
   });
 
   it('Should have title tooltip for AIV', () => {

@@ -155,6 +155,6 @@ describe('<FinancialCompliance />', () => {
 
     cy.get('._FormError', { timeout: 1 })
       .invoke('text')
-      .should('not.match', new RegExp(new RegExp(translations.join('|'))));
+      .should('not.match', new RegExp(translations.join('|'), 'gu'));
   });
 });

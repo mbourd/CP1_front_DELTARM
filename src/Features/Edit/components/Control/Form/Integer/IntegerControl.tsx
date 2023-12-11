@@ -11,6 +11,7 @@ import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFo
 import { minMax } from '../../../../../../Packages/Helpers/src/minMax';
 import useFocus from '../../../../../../Packages/Helpers/src/useFocus';
 import { RejectControl } from '../RejectByPointControl/RejectControl';
+import { useTrans } from '../../../../../../Services';
 
 interface IProps {
   control: IApiControl;
@@ -28,6 +29,7 @@ export const IntegerControl: React.FC<IProps> = ({
   context,
 }): React.ReactElement => {
   const { send, error } = useApi<void>();
+  const [canSendApi, setCanSendApi] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);
   const [isRejected, setIsRejected] = useState(
@@ -37,6 +39,7 @@ export const IntegerControl: React.FC<IProps> = ({
   );
   const [inputRef, setInputFocus] = useFocus();
   const { currentRoute } = useRouter();
+  const [trans] = useTrans('Edit');
 
   useEffect(() => {
     setCurrentValue(control.control_value);
@@ -104,16 +107,18 @@ export const IntegerControl: React.FC<IProps> = ({
       }
 
       setCurrentValue(value);
-      send(
-        currentRoute?.props?.apiSaveControlRouteName,
-        {},
-        {
-          file_id: fileId,
-          elm_id: control.control_id,
-          elm_val: value,
-          control_family: control.control_family,
-        },
-      );
+
+      if (canSendApi)
+        send(
+          currentRoute?.props?.apiSaveControlRouteName,
+          {},
+          {
+            file_id: fileId,
+            elm_id: control.control_id,
+            elm_val: value,
+            control_family: control.control_family,
+          },
+        );
     },
     [
       send,
@@ -128,6 +133,8 @@ export const IntegerControl: React.FC<IProps> = ({
       control.mandatory,
       control.control_options,
       setInputFocus,
+      trans,
+      canSendApi,
     ],
   );
 
@@ -151,6 +158,13 @@ export const IntegerControl: React.FC<IProps> = ({
       setIsRejected(false);
     }
   }, [isRejected]);
+
+  if (window?.['Cypress']) {
+    window['Features_Edit_Control_IntegerControl'] = {
+      setErrorMessage,
+      setCanSendApi,
+    };
+  }
 
   return (
     <Grid item xs={6}>

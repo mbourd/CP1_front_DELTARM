@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../support/e2e" />
 
 import JwtDecode from 'jwt-decode';
-import '../support/commands';
+
 import '../../src/Features/Manage/translations';
 import '../../src/Features/Dashboard/translations';
 import { translation } from '../../src/Services';
@@ -24,8 +25,6 @@ describe(
     // if (j.context === "") { }
 
     it('Should render <HeadingOne /> at path "/" if context "CP1"', function () {
-      const _this = this;
-
       cy.visit(Cypress.env('url_cp1_front'));
       cy.getAllLocalStorage().then((localStorage) => {
         const jwt: Record<string, any> = JwtDecode(
@@ -34,7 +33,7 @@ describe(
           )._jwt,
         );
 
-        if (jwt.context !== 'CP1') _this.skip();
+        if (jwt.context !== 'CP1') this.skip();
 
         const transEN =
           getResourceTrans('en', 'Dashboard', 'pageTitle') || 'pageTitle';
@@ -52,8 +51,6 @@ describe(
     });
 
     it('Should render <DashboardSearch /> at path "/" if context "CP1"', function () {
-      const _this = this;
-
       cy.visit(Cypress.env('url_cp1_front'));
       cy.getAllLocalStorage().then((localStorage) => {
         const jwt: Record<string, any> = JwtDecode(
@@ -64,12 +61,11 @@ describe(
         if (jwt.context === 'CP1') {
           cy.waitReactApp('#main-content');
           cy.react('DashboardSearch').should('exist').should('be.visible');
-        } else _this.skip();
+        } else this.skip();
       });
     });
 
     it('For <DashboardSearch /> at path "/" if context "CP1" Input placeholder should change if click on radio option', function () {
-      const _this = this;
       cy.intercept({
         method: 'GET',
         url: '/client/info?cli_id=*',
@@ -83,7 +79,7 @@ describe(
           )._jwt,
         );
 
-        if (jwt.context !== 'CP1') _this.skip();
+        if (jwt.context !== 'CP1') this.skip();
 
         cy.waitReactApp('#main-content');
         cy.react('DashboardSearch').should('exist').should('be.visible');

@@ -40,3 +40,4 @@ export { toArray } from './toArray';
 export { toCamelCase } from './toCamelCase';
 export { toSlug } from './toSlug';
 export { getEnv } from './getEnv';
+export { isStringNumeric } from './isStringNumeric';
