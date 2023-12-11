@@ -319,7 +319,7 @@ describe('<PercentControl />', () => {
   });
   it('Should render error message if value do not match with regex', () => {
     const regex = '^-?[0-9]\\d*(\\.\\d+)?$';
-    const oppositeRegex = new RegExp(`^(?!${regex}).*$`, 'i');
+    const oppositeRegex = new RegExp(`^(?!.*${regex}).*`, 'i');
     const _control = {
       ...structuredClone(control),
       editable: true,

@@ -1,9 +1,7 @@
 // @ts-check
 /// <reference types="cypress" />
 
-import '../../../../../cypress/support/commands';
 import React from 'react';
-
 import { mount } from 'cypress/react18';
 
 import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';

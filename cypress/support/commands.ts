@@ -1,14 +1,19 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 /// <reference types="cypress" />
+/// <reference types="./commands.d.ts" />
+
+import 'cypress-fs';
+import 'cypress-react-selector';
+import 'cypress-real-events';
+import 'cypress-ag-grid';
+import 'cypress-wait-until';
 
 import {
+  _captureNameAndContent,
   _chooseAClientAfterLoginForm,
   _fillLoginFormAndSubmit,
   _visitLogin,
 } from '../utils';
-import 'cypress-react-selector';
-import 'cypress-real-events';
-import 'cypress-ag-grid';
 
 // ***********************************************
 // This example commands.ts shows you how to
@@ -36,54 +41,41 @@ import 'cypress-ag-grid';
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 //
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      login_v2: typeof login_v2;
-      waitReactApp: typeof waitReactApp;
-      clickOutside: typeof clickOutside;
-      formErrorShouldBeVisible(translations: string[]): void;
-      formErrorMessageShouldNotMatch(translations: string[]): void;
-      typeThenWait(
-        value: string,
-        options?: {
-          typeOptions?: Partial<Cypress.TypeOptions>;
-          triggers?: Partial<
-            Record<
-              'change' | 'blur',
-              { exec: boolean; options?: Record<string, any> }
-            >
-          >;
-        },
-      ): void;
-      // login(email: string, password: string): Chainable<void>;
-      // drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>;
-      // dismiss(
-      //   subject: string,
-      //   options?: Partial<TypeOptions>,
-      // ): Chainable<Element>;
-      // visit(
-      //   originalFn: CommandOriginalFn,
-      //   url: string,
-      //   options: Partial<VisitOptions>,
-      // ): Chainable<Element>;
-    }
-  }
-}
-
-// const LOCAL_STORAGE_MEMORY = {};
-// // @ts-ignore
-// Cypress.Commands.add('saveLocalStorage', () => {
-//   Object.keys(localStorage).forEach((key) => {
-//     LOCAL_STORAGE_MEMORY[key] = localStorage[key];
-//   });
-// });
-// // @ts-ignore
-// Cypress.Commands.add('restoreLocalStorage', () => {
-//   Object.keys(LOCAL_STORAGE_MEMORY).forEach((key) => {
-//     localStorage.setItem(key, LOCAL_STORAGE_MEMORY[key]);
-//   });
-// });
+// declare global {
+//   namespace Cypress {
+//     interface Chainable {
+//       login_v2: typeof login_v2;
+//       waitReactApp: typeof waitReactApp;
+//       reactChain(componentNames: string): Chainable<JQuery<HTMLElement>>;
+//       clickOutside: typeof clickOutside;
+//       formErrorShouldBeVisible(translations: string[]): void;
+//       formErrorMessageShouldNotMatch(translations: string[]): void;
+//       typeThenWait(
+//         value: string,
+//         options?: {
+//           typeOptions?: Partial<Cypress.TypeOptions>;
+//           triggers?: Partial<
+//             Record<
+//               'change' | 'blur',
+//               { exec: boolean; options?: Record<string, any> }
+//             >
+//           >;
+//         },
+//       ): Chainable<JQuery<HTMLElement>>;
+//       // login(email: string, password: string): Chainable<void>;
+//       // drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>;
+//       // dismiss(
+//       //   subject: string,
+//       //   options?: Partial<TypeOptions>,
+//       // ): Chainable<Element>;
+//       // visit(
+//       //   originalFn: CommandOriginalFn,
+//       //   url: string,
+//       //   options: Partial<VisitOptions>,
+//       // ): Chainable<Element>;
+//     }
+//   }
+// }
 
 function login_v2(
   client = 'Groupe ABC',
@@ -98,27 +90,69 @@ function login_v2(
 }
 Cypress.Commands.add('login_v2', login_v2);
 
-function waitReactApp(selector = '#root', timeout = 10000) {
+function waitReactApp(selector = '#main-content', timeout = 10000) {
   cy.get(selector as any, { timeout });
   cy.waitForReact(10000, selector as any);
   cy.wait(255);
 }
 Cypress.Commands.add('waitReactApp', waitReactApp);
 
-function clickOutside(): Cypress.Chainable<any> {
-  return cy.get('html').click(0, 0);
+function clickOutside() {
+  cy.get('html')
+    .click(0, 0)
+    .then(() => cy.wait(100));
 }
 Cypress.Commands.add('clickOutside', clickOutside);
+
+function reactChain(subject: any, componentChain: string) {
+  let prev = cy.get('main[id="main-content"]');
+
+  if (subject) prev = cy.wrap(subject);
+
+  prev.then(($prev) => {
+    // Start with the body element as the root
+    let rootElement: Cypress.Chainable<any> = cy.wrap($prev);
+
+    // Split the componentChain string into individual components
+    const components = componentChain
+      .trim()
+      .split(' ')
+      .filter((c) => {
+        if (c) return c;
+      });
+
+    if (components.length === 0) throw new Error('');
+
+    // It iterates through the components in the chain, each of which can include a component name and optional methods separated by colons.
+    components.forEach((component) => {
+      const split = component.split(':');
+      const comp = split.shift() as string;
+
+      rootElement = rootElement.react(comp);
+
+      // then processes any additional methods provided
+      for (const method of split) {
+        const { name, content } = _captureNameAndContent(method);
+        rootElement = rootElement[name as string](content);
+      }
+    });
+
+    // Return the final element in the chain
+    return rootElement;
+  });
+}
+Cypress.Commands.add('reactChain', { prevSubject: 'optional' }, reactChain);
 
 function formErrorShouldBeVisible(
   subject: JQuery<HTMLElement>,
   translations: string[],
+  selector = '._FormError',
 ) {
   cy.wrap(subject)
-    .find('._FormError')
+    .find(selector)
     .should('be.visible')
     .invoke('text')
-    .should('match', new RegExp(translations.join('|'), 'gu'));
+    .should('match', new RegExp(translations.join('|'), 'u'));
 }
 Cypress.Commands.add(
   'formErrorShouldBeVisible',
@@ -129,13 +163,14 @@ Cypress.Commands.add(
 function formErrorMessageShouldNotMatch(
   subject: JQuery<HTMLElement>,
   translations: string[],
+  selector = '._FormError',
 ) {
   cy.wrap(subject).within(($compo) => {
-    if ($compo.find('._FormError').length) {
+    if ($compo.find(selector).length) {
       cy.wrap($compo)
-        .find('._FormError')
+        .find(selector)
         .invoke('text')
-        .should('not.match', new RegExp(translations.join('|'), 'gu'));
+        .should('not.match', new RegExp(translations.join('|'), 'u'));
     }
   });
 }
@@ -182,5 +217,7 @@ function typeThenWait(
 
   cy.wait(250);
   cy.wait(250);
+
+  return cy.wrap(subject);
 }
 Cypress.Commands.add('typeThenWait', { prevSubject: true }, typeThenWait);

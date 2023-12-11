@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
 import {
   CustomSelectRendererStyled,
@@ -15,6 +15,7 @@ const CustomSelectRenderer: React.FC<any> = ({
   jwt,
   seterrors,
 }) => {
+  const [canSendApi, setCanSendApi] = useState<boolean>(true);
   const select_id_to_show = field_data?.choice_options.filter((option: any) => {
     return props.value?.toString() === option?.choice_id?.toString();
   });
@@ -29,17 +30,28 @@ const CustomSelectRenderer: React.FC<any> = ({
     // console.log('value to save in grid', event?.target?.value, select_id);
     props.setValue(select_id[0]?.choice_id?.toString());
 
-    saveValueDataGrid(
-      fileId,
-      props?.data?.row_uuid,
-      field_data?.col_elm_id,
-      field_data?.row_num,
-      jwt,
-      select_id[0]?.choice_id.toString(),
-      seterrors,
-      select_id[0]?.choice_id.toString(),
-    );
+    if (canSendApi)
+      saveValueDataGrid(
+        fileId,
+        props?.data?.row_uuid,
+        field_data?.col_elm_id,
+        field_data?.row_num,
+        jwt,
+        select_id[0]?.choice_id.toString(),
+        seterrors,
+        select_id[0]?.choice_id.toString(),
+      );
   };
+
+  // expose for Cypress API
+  if (window?.['Cypress']) {
+    // import('bignumber.js').then((v) => console.log(v));
+    window[
+      `Features_Edit_Control_DataGridControlAgGrid_CustomSelectRenderer${field_data?.row_num}-${field_data?.col_elm_id}`
+    ] = {
+      setCanSendApi,
+    };
+  }
 
   return (
     <CustomSelectRendererStyled>

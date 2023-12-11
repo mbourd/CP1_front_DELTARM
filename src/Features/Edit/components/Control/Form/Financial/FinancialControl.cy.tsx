@@ -369,7 +369,7 @@ describe('<FinancialControl />', () => {
 
   it('Should render error message if value do not match with regex', () => {
     const regex = /^-?[0-9]\d*(\.\d+)?$/;
-    const oppositeRegex = new RegExp(`^(?!${regex.source}).*$`);
+    const oppositeRegex = new RegExp(`^(?!.*${regex.source}).*`);
     const _control: IApiControl = {
       ...structuredClone(control),
       editable: true,
@@ -378,6 +378,9 @@ describe('<FinancialControl />', () => {
       control_regex_msg: 'Value do not match with regex',
     };
     const randExpOpposite = new RandExp(oppositeRegex);
+    let gen = randExpOpposite.gen();
+
+    while (gen === '' || !oppositeRegex.test(gen)) gen = randExpOpposite.gen();
 
     mount(
       <SetupTestsComponents>
@@ -393,12 +396,12 @@ describe('<FinancialControl />', () => {
     cy.waitReactApp();
     cy.react('FinancialControl')
       .find('input[type="text"]')
-      .type(randExpOpposite.gen(), { parseSpecialCharSequences: false })
+      .type(gen, { parseSpecialCharSequences: false })
       .blur();
     cy.wait(255);
-    cy.react('FinancialControl')
-      .find('._FormError')
-      .should('have.text', _control.control_regex_msg);
+    cy.react('FinancialControl').formErrorShouldBeVisible([
+      _escapeForRegExp(_control.control_regex_msg as string),
+    ]);
   });
   it('Should match the value with regex', () => {
     const trans_EN =
@@ -417,6 +420,9 @@ describe('<FinancialControl />', () => {
       control_regex_msg: 'Value do not match with regex',
     };
     const randExp = new RandExp(regex);
+    let generated = randExp.gen();
+
+    while (generated === '') generated = randExp.gen();
 
     mount(
       <SetupTestsComponents>
@@ -432,7 +438,7 @@ describe('<FinancialControl />', () => {
     cy.waitReactApp();
     cy.react('FinancialControl')
       .find('input[type="text"]')
-      .type(randExp.gen(), { parseSpecialCharSequences: false })
+      .type(generated, { parseSpecialCharSequences: false })
       .blur();
     cy.wait(255);
     cy.react('FinancialControl')

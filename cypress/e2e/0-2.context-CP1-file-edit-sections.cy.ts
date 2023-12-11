@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../support/e2e" />
 
 import JwtDecode from 'jwt-decode';
-import '../support/e2e';
 
 import '../../src/Features/Edit/translations';
 import { _translate } from '../utils';
@@ -78,124 +78,124 @@ describe(
       });
     });
 
-    // it('Default section should have the correct number of <ContentTitle /> "chapters"', () => {
-    //   cy.visit(currentUrl);
-    //   cy.getAllLocalStorage().then(function (localStorage) {
-    //     const jwt: Record<string, any> = JwtDecode(
-    //       JSON.parse(
-    //         localStorage[Cypress.env('url_cp1_front')]['security'] as string,
-    //       )._jwt,
-    //     );
+    it('Default section should have the correct number of <ContentTitle /> "chapters"', () => {
+      cy.visit(currentUrl);
+      cy.getAllLocalStorage().then(function (localStorage) {
+        const jwt: Record<string, any> = JwtDecode(
+          JSON.parse(
+            localStorage[Cypress.env('url_cp1_front')]['security'] as string,
+          )._jwt,
+        );
 
-    //     if (jwt.context !== 'CP1') this.skip();
+        if (jwt.context !== 'CP1') this.skip();
 
-    //     cy.waitReactApp('main[id="main-content"]');
-    //     cy.react('ContentBody')
-    //       .react('FormControls')
-    //       .react('ContentTitle')
-    //       .should('have.length', data.current_section.chapters.length);
-    //   });
-    // });
+        cy.waitReactApp('main[id="main-content"]');
+        cy.react('ContentBody')
+          .react('FormControls')
+          .react('ContentTitle')
+          .should('have.length', data.current_section.chapters.length);
+      });
+    });
 
-    // it('Each section should have the correct number of <ContentTitle /> "chapters"', function () {
-    //   cy.visit(currentUrl);
-    //   cy.getAllLocalStorage().then(function (localStorage) {
-    //     const jwt: Record<string, any> = JwtDecode(
-    //       JSON.parse(
-    //         localStorage[Cypress.env('url_cp1_front')]['security'] as string,
-    //       )._jwt,
-    //     );
+    it('Each section should have the correct number of <ContentTitle /> "chapters"', function () {
+      cy.visit(currentUrl);
+      cy.getAllLocalStorage().then(function (localStorage) {
+        const jwt: Record<string, any> = JwtDecode(
+          JSON.parse(
+            localStorage[Cypress.env('url_cp1_front')]['security'] as string,
+          )._jwt,
+        );
 
-    //     if (jwt.context !== 'CP1') this.skip();
-    //     if (data.sections.length <= 1) this.skip();
+        if (jwt.context !== 'CP1') this.skip();
+        if (data.sections.length <= 1) this.skip();
 
-    //     if (data.sections.length > 1) {
-    //       for (let i = 1; i < data.sections.length; ++i) {
-    //         const [alias1, alias2] = ['getFileData' + i, '@getFileData' + i];
+        if (data.sections.length > 1) {
+          for (let i = 1; i < data.sections.length; ++i) {
+            const [alias1, alias2] = ['getFileData' + i, '@getFileData' + i];
 
-    //         cy.intercept({
-    //           method: 'GET',
-    //           url: Cypress.env('url_cp1_back') + '/edit?file_id=*&section_id=*',
-    //         }).as(alias1);
-    //         cy.visit(currentUrl);
+            cy.intercept({
+              method: 'GET',
+              url: Cypress.env('url_cp1_back') + '/edit?file_id=*&section_id=*',
+            }).as(alias1);
+            cy.visit(currentUrl);
 
-    //         cy.waitReactApp('main[id="main-content"]');
-    //         cy.react('NavItem').eq(i).click();
-    //         cy.wait(alias2).then((interception) => {
-    //           data = interception.response?.body.data;
-    //           cy.react('ContentBody')
-    //             .react('FormControls')
-    //             .react('ContentTitle')
-    //             .should('have.length', data.current_section.chapters.length);
-    //         });
-    //       }
-    //     }
-    //   });
-    // });
+            cy.waitReactApp('main[id="main-content"]');
+            cy.react('NavItem').eq(i).click();
+            cy.wait(alias2).then((interception) => {
+              data = interception.response?.body.data;
+              cy.react('ContentBody')
+                .react('FormControls')
+                .react('ContentTitle')
+                .should('have.length', data.current_section.chapters.length);
+            });
+          }
+        }
+      });
+    });
 
-    // it('Each section should have <FileComment /> | <FileAudit />', function () {
-    //   cy.visit(currentUrl);
-    //   cy.getAllLocalStorage().then(function (localStorage) {
-    //     const jwt: Record<string, any> = JwtDecode(
-    //       JSON.parse(
-    //         localStorage[Cypress.env('url_cp1_front')]['security'] as string,
-    //       )._jwt,
-    //     );
+    it('Each section should have <FileComment /> | <FileAudit />', function () {
+      cy.visit(currentUrl);
+      cy.getAllLocalStorage().then(function (localStorage) {
+        const jwt: Record<string, any> = JwtDecode(
+          JSON.parse(
+            localStorage[Cypress.env('url_cp1_front')]['security'] as string,
+          )._jwt,
+        );
 
-    //     if (jwt.context !== 'CP1') this.skip();
-    //     if (data.sections.length === 0) this.skip();
+        if (jwt.context !== 'CP1') this.skip();
+        if (data.sections.length === 0) this.skip();
 
-    //     for (let i = 0; i < data.sections.length; ++i) {
-    //       const [alias1, alias2] = ['getFileData' + i, '@getFileData' + i];
-    //       cy.intercept({
-    //         method: 'GET',
-    //         url:
-    //           Cypress.env('url_cp1_back') +
-    //           `/edit?file_id=*${i === 0 ? '' : '&section_id=*'}`,
-    //       }).as(alias1);
-    //       cy.visit(currentUrl);
+        for (let i = 0; i < data.sections.length; ++i) {
+          const [alias1, alias2] = ['getFileData' + i, '@getFileData' + i];
+          cy.intercept({
+            method: 'GET',
+            url:
+              Cypress.env('url_cp1_back') +
+              `/edit?file_id=*${i === 0 ? '' : '&section_id=*'}`,
+          }).as(alias1);
+          cy.visit(currentUrl);
 
-    //       cy.waitReactApp('main[id="main-content"]');
-    //       cy.react('NavItem').eq(i).click();
-    //       cy.wait(alias2).then((interception) => {
-    //         data = interception.response?.body.data;
-    //         cy.react('ContentBody')
-    //           .get('.icon-container')
-    //           .should('have.length', 2)
-    //           .should('be.visible');
+          cy.waitReactApp('main[id="main-content"]');
+          cy.react('NavItem').eq(i).click();
+          cy.wait(alias2).then((interception) => {
+            data = interception.response?.body.data;
+            cy.react('ContentBody')
+              .get('.icon-container')
+              .should('have.length', 2)
+              .should('be.visible');
 
-    //         if (Cypress.$('.icon-container svg.comment-icon').length) {
-    //           cy.react('ContentBody')
-    //             .get('.icon-container')
-    //             .find('svg.comment-icon')
-    //             .should('be.visible');
+            if (Cypress.$('.icon-container svg.comment-icon').length) {
+              cy.react('ContentBody')
+                .get('.icon-container')
+                .find('svg.comment-icon')
+                .should('be.visible');
 
-    //           cy.react('ContentBody')
-    //             .get('.icon-container')
-    //             .find('svg.comment-icon')
-    //             .click();
-    //           cy.get('[role="tooltip"]._Popper').should('be.visible');
-    //           cy.get('[role="tooltip"]._Popper').clickOutside();
-    //           cy.get('[role="tooltip"]._Popper').should('not.exist');
-    //         }
+              cy.react('ContentBody')
+                .get('.icon-container')
+                .find('svg.comment-icon')
+                .click();
+              cy.get('[role="tooltip"]._Popper').should('be.visible');
+              cy.get('[role="tooltip"]._Popper').clickOutside();
+              cy.get('[role="tooltip"]._Popper').should('not.exist');
+            }
 
-    //         if (Cypress.$('.icon-container svg.audit-icon').length) {
-    //           cy.react('ContentBody')
-    //             .get('.icon-container')
-    //             .find('svg.audit-icon')
-    //             .should('be.visible');
+            if (Cypress.$('.icon-container svg.audit-icon').length) {
+              cy.react('ContentBody')
+                .get('.icon-container')
+                .find('svg.audit-icon')
+                .should('be.visible');
 
-    //           cy.react('ContentBody')
-    //             .get('.icon-container')
-    //             .find('svg.audit-icon')
-    //             .click();
-    //           cy.get('[role="tooltip"]._Popper').should('be.visible');
-    //           cy.get('[role="tooltip"]._Popper').clickOutside();
-    //           cy.get('[role="tooltip"]._Popper').should('not.exist');
-    //         }
-    //       });
-    //     }
-    //   });
-    // });
+              cy.react('ContentBody')
+                .get('.icon-container')
+                .find('svg.audit-icon')
+                .click();
+              cy.get('[role="tooltip"]._Popper').should('be.visible');
+              cy.get('[role="tooltip"]._Popper').clickOutside();
+              cy.get('[role="tooltip"]._Popper').should('not.exist');
+            }
+          });
+        }
+      });
+    });
   },
 );

@@ -284,7 +284,7 @@ describe('<DecimalControl />', () => {
 
   it('Should render error message if value do not match with regex', () => {
     const regex = /^-?[0-9]\d*(\.\d+)?$/;
-    const oppositeRegex = new RegExp(`^(?!${regex.source}).*$`);
+    const oppositeRegex = new RegExp(`^(?!.*${regex.source}).*`);
     const _control: IApiControl = {
       ...structuredClone(control),
       editable: true,

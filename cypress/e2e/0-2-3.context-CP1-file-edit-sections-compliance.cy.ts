@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../support/e2e" />
 
 import JwtDecode from 'jwt-decode';
-import '../support/e2e';
 
 import '../../src/Features/Edit/translations';
 import { _translate } from '../utils';
 import {
   IApiChapter,
   IApiControl,
+  IApiCurrentSection,
   IApiSection,
 } from '../../src/Features/Edit/types';
 
@@ -17,6 +18,7 @@ describe(
   'File - Edition for context "CP1" - Sections : Compliance',
   { testIsolation: false },
   () => {
+    let context: string;
     let data: Record<any, any>;
     let currentUrl: string;
     const translations_mandatoryValue = [
@@ -41,6 +43,7 @@ describe(
             localStorage[Cypress.env('url_cp1_front')]['security'] as string,
           )._jwt,
         );
+        context = jwt.context;
 
         if (jwt.context !== 'CP1') this.skip();
 
@@ -69,153 +72,137 @@ describe(
       });
     });
 
-    it('Assert mandatoryValue for section "Compliance" - PART 1', () => {
+    it('Assert mandatoryValue for section "Compliance" - PART 1', function () {
       const sectionName = 'Compliance';
+      const conditionsToSkip = [
+        context !== 'CP1',
+        !data.sections.some(
+          (section: IApiSection) => section.section_lib === sectionName,
+        ),
+      ];
+
+      if (conditionsToSkip.some((test) => test === true)) this.skip();
+
       cy.visit(currentUrl);
+      cy.waitReactApp('main[id="main-content"]');
+      cy.intercept({
+        method: 'GET',
+        url: '/edit?file_id=*',
+      }).as('getSectionData');
+      cy.react('NavItem').contains(sectionName).click();
+      cy.wait(1500);
 
-      cy.getAllLocalStorage().then(function (localStorage) {
-        const _this = this;
-        const jwt: Record<string, any> = JwtDecode(
-          JSON.parse(
-            localStorage[Cypress.env('url_cp1_front')]['security'] as string,
-          )._jwt,
-        );
-        const conditions = [
-          jwt.context !== 'CP1',
-          !data.sections.some(
-            (section: IApiSection) => section.section_lib === sectionName,
-          ),
-        ];
+      cy.wait('@getSectionData').then((interception) => {
+        const controlName = {
+          select_list: ['SelectListControl', '._Select'],
+        };
+        const complianceName = {
+          comment: ['CommentCompliance', 'textarea', 'aaaa'],
+          financial: ['FinancialCompliance', 'input', '1234'],
+          date: ['DateCompliance', 'input', '2023-03-23'],
+        };
+        const { current_section }: { current_section: IApiCurrentSection } =
+          interception.response?.body.data;
 
-        if (conditions.some((test) => test === true)) _this.skip();
+        if (current_section.chapters.length === 0) this.skip();
 
-        cy.waitReactApp('main[id="main-content"]');
-        if (
-          data.sections.some((section) => section.section_lib === sectionName)
-        ) {
-          cy.intercept({
-            method: 'GET',
-            url: '/edit?file_id=*',
-          }).as('getSectionData');
-          cy.react('NavItem').contains(sectionName).click();
-          cy.wait(1500);
+        for (const indexChapter in current_section.chapters) {
+          const chapter: IApiChapter = current_section.chapters[indexChapter];
 
-          cy.wait('@getSectionData').then((interception) => {
-            const controlName = {
-              ['select_list']: ['SelectListControl', '._Select'],
-            };
-            const complianceName = {
-              comment: ['CommentCompliance', 'textarea', 'aaaa'],
-              financial: ['FinancialCompliance', 'input', '1234'],
-              date: ['DateCompliance', 'input', '2023-03-23'],
-            };
-            const { current_section } = interception.response?.body.data;
+          cy.react('ContentBody')
+            .react('FormControls')
+            .react('ContentTitle')
+            .eq(indexChapter as any as number)
+            .should('have.text', chapter.chap_lib);
 
-            if (current_section.chapters.length === 0) _this.skip();
+          if (chapter.controls.length === 0) continue;
 
-            for (const indexChapter in current_section.chapters) {
-              const chapter: IApiChapter =
-                current_section.chapters[indexChapter];
+          const controls = chapter.controls.reduce(
+            (acc: Record<string, IApiControl[]>, control) => ({
+              ...acc,
+              [control.control_type]: [
+                ...(acc[control.control_type] || []),
+                control,
+              ],
+            }),
+            {},
+          );
 
-              cy.react('ContentBody')
-                .react('FormControls')
-                .react('ContentTitle')
-                .eq(indexChapter as any as number)
-                .should('have.text', chapter.chap_lib);
+          for (const arrayControlType of Object.values(controls)) {
+            for (const indexControl in arrayControlType) {
+              const control: IApiControl = arrayControlType[indexControl];
+              const isResolved = control.compliance?.compliance_resolved
+                ? true
+                : false;
 
-              if (chapter.controls.length === 0) continue;
+              if (!controlName?.[control.control_type]) continue;
 
-              const controls = chapter.controls.reduce((acc, control) => {
-                if (!acc?.[control.control_type])
-                  acc[control.control_type] = [];
-
-                acc[control.control_type].push(control);
-
-                return acc;
-              }, {});
-
-              for (const arrayControlType of Object.values(controls) as any[]) {
-                for (const indexControl in arrayControlType) {
-                  const control: IApiControl = arrayControlType[indexControl];
-                  const isResolved = control.compliance?.compliance_resolved
-                    ? true
-                    : false;
-
-                  if (!controlName?.[control.control_type]) continue;
-
-                  if (!isResolved) {
-                    cy.react(controlName[control.control_type][0])
-                      .react('CheckboxCompliance')
-                      .click();
-                    cy.wait(500);
-                  }
-
-                  cy.intercept({
-                    method: 'GET',
-                    url: '/control/get_compliance_values?file_id=*&elm_id=*',
-                  }).as('getComplianceValues');
-                  cy.react(controlName[control.control_type][0])
-                    .find('.resolved-compliance')
-                    .click();
-                  cy.wait('@getComplianceValues').then((interception) => {
-                    const { compliance_fields } =
-                      interception.response?.body.data;
-
-                    for (const indexComplianceField in compliance_fields) {
-                      const compliancefield =
-                        compliance_fields[indexComplianceField];
-
-                      if (
-                        !complianceName?.[compliancefield.compliance_elm_type]
-                      )
-                        continue;
-
-                      const complianceCompName =
-                        complianceName[compliancefield.compliance_elm_type][0];
-                      const complianceType =
-                        complianceName[compliancefield.compliance_elm_type][1];
-                      const valueToType =
-                        complianceName[compliancefield.compliance_elm_type][2];
-
-                      checkVisibilityMandatoryValueAtFirst(
-                        {
-                          control_mandatory:
-                            compliancefield.compliance_elm_mandatory,
-                          control_value: compliancefield.compliance_elm_value,
-                        },
-                        cy.react(complianceCompName),
-                        translations_mandatoryValue,
-                      );
-
-                      cy.react(complianceCompName)
-                        .find(complianceType)
-                        .then(($el) => {
-                          if (!$el.is(':disabled')) {
-                            cy.react(complianceCompName)
-                              .find(complianceType)
-                              .typeThenWait(valueToType);
-                            cy.react(
-                              complianceCompName,
-                            ).formErrorMessageShouldNotMatch(
-                              translations_mandatoryValue,
-                            );
-                            clearAndBlurCyElement(
-                              cy.react(complianceCompName).find(complianceType),
-                            );
-                            if (compliancefield.compliance_elm_mandatory)
-                              cy.react(
-                                complianceCompName,
-                              ).formErrorShouldBeVisible(
-                                translations_mandatoryValue,
-                              );
-                          }
-                        });
-                    }
-                  });
-                }
+              if (!isResolved) {
+                cy.react(controlName[control.control_type][0])
+                  .react('CheckboxCompliance')
+                  .click();
+                cy.wait(500);
               }
+
+              cy.intercept({
+                method: 'GET',
+                url: '/control/get_compliance_values?file_id=*&elm_id=*',
+              }).as('getComplianceValues');
+              cy.react(controlName[control.control_type][0])
+                .find('.resolved-compliance')
+                .click();
+              cy.wait('@getComplianceValues').then((interception) => {
+                const { compliance_fields } = interception.response?.body.data;
+
+                for (const indexComplianceField in compliance_fields) {
+                  const compliancefield =
+                    compliance_fields[indexComplianceField];
+
+                  if (!complianceName?.[compliancefield.compliance_elm_type])
+                    continue;
+
+                  const complianceCompName =
+                    complianceName[compliancefield.compliance_elm_type][0];
+                  const complianceType =
+                    complianceName[compliancefield.compliance_elm_type][1];
+                  const valueToType =
+                    complianceName[compliancefield.compliance_elm_type][2];
+
+                  checkVisibilityMandatoryValueAtFirst(
+                    {
+                      control_mandatory:
+                        compliancefield.compliance_elm_mandatory,
+                      control_value: compliancefield.compliance_elm_value,
+                    },
+                    cy.react(complianceCompName),
+                    translations_mandatoryValue,
+                  );
+
+                  cy.react(complianceCompName)
+                    .find(complianceType)
+                    .then(($el) => {
+                      if (!$el.is(':disabled')) {
+                        cy.react(complianceCompName)
+                          .find(complianceType)
+                          .typeThenWait(valueToType);
+                        cy.react(
+                          complianceCompName,
+                        ).formErrorMessageShouldNotMatch(
+                          translations_mandatoryValue,
+                        );
+                        clearAndBlurCyElement(
+                          cy.react(complianceCompName).find(complianceType),
+                        );
+                        if (compliancefield.compliance_elm_mandatory)
+                          cy.react(complianceCompName).formErrorShouldBeVisible(
+                            translations_mandatoryValue,
+                          );
+                      }
+                    });
+                }
+              });
             }
-          });
+          }
         }
       });
     });

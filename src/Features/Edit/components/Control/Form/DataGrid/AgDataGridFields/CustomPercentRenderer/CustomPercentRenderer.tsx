@@ -1,6 +1,7 @@
 import React from 'react';
 import { CustomPercentRendererStyled } from './CustomPercentRender.style';
 import { formatDecimalDigit, kFormatter } from 'Services';
+import BigNumber from 'bignumber.js';
 
 const CustomPercentRenderer: React.FC<any> = ({
   props,
@@ -15,17 +16,17 @@ const CustomPercentRenderer: React.FC<any> = ({
   const {
     thousand_separator: hasThousandSeparator = false,
   }: Record<string, boolean> = column;
-  let value =
-    props?.value !== null || undefined
-      ? formatDecimalDigit(props.value, decimalDigit)
-      : '';
-  value = hasThousandSeparator ? kFormatter(value) : value;
+  const [name]: string[] = props.column.getId().split('.');
+  let val = '';
+  const decimalFormat = formatDecimalDigit(props.value, decimalDigit);
 
-  return (
-    <CustomPercentRendererStyled>
-      {props.value !== null || undefined ? `% ${value}` : ''}
-    </CustomPercentRendererStyled>
-  );
+  if (decimalFormat !== 'NaN' && props.value) {
+    val =
+      '% ' + (hasThousandSeparator ? kFormatter(decimalFormat) : decimalFormat);
+    props.data[name]['_computedValueBigNumber'] = new BigNumber(props.value);
+  }
+
+  return <CustomPercentRendererStyled>{val}</CustomPercentRendererStyled>;
 };
 
 export { CustomPercentRenderer };

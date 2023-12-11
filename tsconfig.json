@@ -11,6 +11,7 @@
       "cypress",
       "cypress-react-selector",
       "cypress-real-events",
+      "cypress-wait-until",
     ],
     "noImplicitAny": false,
     "downlevelIteration": true,
