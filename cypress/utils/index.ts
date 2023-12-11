@@ -6,3 +6,6 @@ export * from './_getEnv';
 export * from './_escapeRegExp';
 export * from './_decodeHtmlUnicode';
 export * from './_translate';
+export * from './_hexToRgb';
+export * from './_captureNameAndContent';
+export * from './_geRandomNumberBetween';

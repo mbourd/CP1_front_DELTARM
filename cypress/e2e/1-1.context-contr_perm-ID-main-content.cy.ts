@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../support/e2e" />
 
-import '../support/e2e';
 import JwtDecode from 'jwt-decode';
 import { _getEnv } from '../utils';
 

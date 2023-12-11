@@ -1,3 +1,8 @@
-export const formatDecimalDigit = (num: any, decimal_digit: any): string => {
-  return (Math.round(num * 100) / 100).toFixed(parseInt(decimal_digit));
-};
+import { BigNumber } from 'bignumber.js';
+
+export function formatDecimalDigit(number, decimalDigits: number) {
+  const bigNumber = new BigNumber(number);
+  const formattedNumber = bigNumber.toFixed(decimalDigits);
+
+  return formattedNumber;
+}

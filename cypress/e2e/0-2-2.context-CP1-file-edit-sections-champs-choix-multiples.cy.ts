@@ -1,18 +1,23 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../support/e2e" />
 
 import JwtDecode from 'jwt-decode';
-import '../support/e2e';
 
 import '../../src/Features/Edit/translations';
 import { _translate } from '../utils';
-import { IApiControl, IApiSection } from '../../src/Features/Edit/types';
+import {
+  IApiControl,
+  IApiCurrentSection,
+  IApiSection,
+} from '../../src/Features/Edit/types';
 
 describe(
   'File - Edition for context "CP1" - Sections : Champs Choix Multiples',
   { testIsolation: false },
   () => {
+    let context: string;
     let data: Record<any, any>;
     let currentUrl: string;
     const translations_mandatoryValue = [
@@ -37,6 +42,7 @@ describe(
             localStorage[Cypress.env('url_cp1_front')]['security'] as string,
           )._jwt,
         );
+        context = jwt.context;
 
         if (jwt.context !== 'CP1') this.skip();
 
@@ -65,179 +71,115 @@ describe(
       });
     });
 
-    it('Assert mandatoryValue for section "Champs Choix Multiples"', () => {
+    it('Assert mandatoryValue for section "Champs Choix Multiples"', function () {
       const sectionName = 'Champs Choix Multiples';
+      const conditions = [
+        context !== 'CP1',
+        !data.sections.some(
+          (section: IApiSection) => section.section_lib === sectionName,
+        ),
+      ];
+
+      if (conditions.some((test) => test === true)) this.skip();
+
       cy.visit(currentUrl);
 
-      cy.getAllLocalStorage().then(function (localStorage) {
-        const _this = this;
-        const jwt: Record<string, any> = JwtDecode(
-          JSON.parse(
-            localStorage[Cypress.env('url_cp1_front')]['security'] as string,
-          )._jwt,
-        );
-        const conditions = [
-          jwt.context !== 'CP1',
-          !data.sections.some(
-            (section: IApiSection) => section.section_lib === sectionName,
-          ),
-        ];
+      cy.waitReactApp('main[id="main-content"]');
+      cy.intercept({
+        method: 'GET',
+        url: '/edit?file_id=*',
+      }).as('getSectionData');
+      cy.react('NavItem').contains(sectionName).click();
+      cy.wait(1500);
 
-        if (conditions.some((test) => test === true)) _this.skip();
+      cy.wait('@getSectionData').then((interception) => {
+        const { current_section }: { current_section: IApiCurrentSection } =
+          interception.response?.body.data;
+        const controlName = {
+          checkbox: ['CheckboxControl', '._CheckboxContainer'],
+          multiple_list: ['SelectListControl', '._Select'],
+        };
 
-        cy.waitReactApp('main[id="main-content"]');
+        if (current_section.chapters.length === 0) this.skip();
 
-        if (
-          data.sections.some(
-            (section: IApiSection) => section.section_lib === sectionName,
-          )
-        ) {
-          cy.intercept({
-            method: 'GET',
-            url: '/edit?file_id=*',
-          }).as('getSectionData');
-          cy.react('NavItem').contains(sectionName).click();
-          cy.wait(1500);
+        for (const indexChapter in current_section.chapters) {
+          const chapter = current_section.chapters[indexChapter];
 
-          cy.wait('@getSectionData').then((interception) => {
-            const { current_section } = interception.response?.body.data;
-            const controlName = {
-              checkbox: ['CheckboxControl', '._CheckboxContainer'],
-              multiple_list: ['SelectListControl', '._Select'],
-            };
+          cy.react('ContentBody')
+            .react('FormControls')
+            .react('ContentTitle')
+            .eq(indexChapter as any as number)
+            .should('have.text', chapter.chap_lib);
 
-            if (current_section.chapters.length === 0) _this.skip();
+          if (chapter.controls.length === 0) continue;
 
-            for (const indexChapter in current_section.chapters) {
-              const chapter = current_section.chapters[indexChapter];
+          const controls = chapter.controls.reduce(
+            (acc: Record<string, IApiControl[]>, control) => ({
+              ...acc,
+              [control.control_type]: [
+                ...(acc[control.control_type] || []),
+                control,
+              ],
+            }),
+            {},
+          );
 
-              cy.react('ContentBody')
-                .react('FormControls')
-                .react('ContentTitle')
-                .eq(indexChapter as any as number)
-                .should('have.text', chapter.chap_lib);
+          for (const arrayControlType of Object.values(controls)) {
+            for (const indexControl in arrayControlType) {
+              const control: IApiControl = arrayControlType[indexControl];
 
-              if (chapter.controls.length === 0) continue;
+              if (!controlName?.[control.control_type]) continue;
 
-              const controls = {};
-              for (const control of chapter.controls) {
-                if (!controls?.[control.control_type]) {
-                  controls[control.control_type] = [];
-                }
+              checkVisibilityMandatoryValueAtFirst(
+                control,
+                getCyElementControl(
+                  controlName[control.control_type][0],
+                  indexChapter,
+                  indexControl,
+                ),
+                translations_mandatoryValue,
+              );
 
-                controls[control.control_type].push(control);
-              }
-
-              const valuesControls: any[] = Object.values(controls);
-              for (const arrayControlType of valuesControls) {
-                for (const indexControl in arrayControlType) {
-                  const control: IApiControl = arrayControlType[indexControl];
-
-                  if (!controlName?.[control.control_type]) continue;
-
-                  checkVisibilityMandatoryValueAtFirst(
-                    control,
-                    getCyElementControl(
-                      controlName[control.control_type][0],
-                      indexChapter,
-                      indexControl,
-                    ),
-                    translations_mandatoryValue,
-                  );
-
-                  getCyElementControl(
-                    controlName[control.control_type][0],
-                    indexChapter,
-                    indexControl,
-                  )
-                    .find(controlName[control.control_type][1])
-                    .click()
-                    .find('._CheckboxRadio')
-                    .each(($el) => {
-                      if (
-                        !$el.find('input').is(':disabled') &&
-                        $el.find('input').is(':checked')
-                      ) {
-                        cy.wrap($el).click();
-                        cy.wait(1);
-                        cy.wait(500);
-                      }
-                    });
-                  getCyElementControl(
-                    controlName[control.control_type][0],
-                    indexChapter,
-                    indexControl,
-                  )
-                    .find(controlName[control.control_type][1])
-                    .clickOutside();
-                  cy.wait(1);
-                  cy.wait(500);
-                  getCyElementControl(
-                    controlName[control.control_type][0],
-                    indexChapter,
-                    indexControl,
-                  )
-                    .find(controlName[control.control_type][1])
-                    .click()
-                    .find('._CheckboxRadio')
-                    .each(($el) => {
-                      if (!$el.find('input').is(':disabled')) {
-                        cy.wrap($el).click();
-                        cy.wait(1);
-                        cy.wait(500);
-                        getCyElementControl(
-                          controlName[control.control_type][0],
-                          indexChapter,
-                          indexControl,
-                        ).formErrorMessageShouldNotMatch(
-                          translations_mandatoryValue,
-                        );
-                      }
-                    });
-                  getCyElementControl(
-                    controlName[control.control_type][0],
-                    indexChapter,
-                    indexControl,
-                  )
-                    .find(controlName[control.control_type][1])
-                    .clickOutside();
-                  cy.wait(1);
-                  cy.wait(500);
-
-                  getCyElementControl(
-                    controlName[control.control_type][0],
-                    indexChapter,
-                    indexControl,
-                  )
-                    .find(controlName[control.control_type][1])
-                    .click()
-                    .find('._CheckboxRadio')
-                    .each(($el) => {
-                      if (
-                        !$el.find('input').is(':disabled') &&
-                        $el.find('input').is(':checked')
-                      ) {
-                        cy.wrap($el).click();
-                        cy.wait(1);
-                        cy.wait(500);
-                      }
-                    });
-                  getCyElementControl(
-                    controlName[control.control_type][0],
-                    indexChapter,
-                    indexControl,
-                  )
-                    .find(controlName[control.control_type][1])
-                    .clickOutside();
-                  cy.wait(1);
-                  cy.wait(500);
-                  if (control.control_mandatory) {
-                    getCyElementControl(
-                      controlName[control.control_type][0],
-                      indexChapter,
-                      indexControl,
-                    ).formErrorShouldBeVisible(translations_mandatoryValue);
-                  } else {
+              getCyElementControl(
+                controlName[control.control_type][0],
+                indexChapter,
+                indexControl,
+              )
+                .find(controlName[control.control_type][1])
+                .click()
+                .find('._CheckboxRadio')
+                .each(($el) => {
+                  if (
+                    !$el.find('input').is(':disabled') &&
+                    $el.find('input').is(':checked')
+                  ) {
+                    cy.wrap($el).click();
+                    cy.wait(1);
+                    cy.wait(500);
+                  }
+                });
+              getCyElementControl(
+                controlName[control.control_type][0],
+                indexChapter,
+                indexControl,
+              )
+                .find(controlName[control.control_type][1])
+                .clickOutside();
+              cy.wait(1);
+              cy.wait(500);
+              getCyElementControl(
+                controlName[control.control_type][0],
+                indexChapter,
+                indexControl,
+              )
+                .find(controlName[control.control_type][1])
+                .click()
+                .find('._CheckboxRadio')
+                .each(($el) => {
+                  if (!$el.find('input').is(':disabled')) {
+                    cy.wrap($el).click();
+                    cy.wait(1);
+                    cy.wait(500);
                     getCyElementControl(
                       controlName[control.control_type][0],
                       indexChapter,
@@ -246,17 +188,66 @@ describe(
                       translations_mandatoryValue,
                     );
                   }
-                  getCyElementControl(
-                    controlName[control.control_type][0],
-                    indexChapter,
-                    indexControl,
-                  )
-                    .find(controlName[control.control_type][1])
-                    .clickOutside();
-                }
+                });
+              getCyElementControl(
+                controlName[control.control_type][0],
+                indexChapter,
+                indexControl,
+              )
+                .find(controlName[control.control_type][1])
+                .clickOutside();
+              cy.wait(1);
+              cy.wait(500);
+
+              getCyElementControl(
+                controlName[control.control_type][0],
+                indexChapter,
+                indexControl,
+              )
+                .find(controlName[control.control_type][1])
+                .click()
+                .find('._CheckboxRadio')
+                .each(($el) => {
+                  if (
+                    !$el.find('input').is(':disabled') &&
+                    $el.find('input').is(':checked')
+                  ) {
+                    cy.wrap($el).click();
+                    cy.wait(1);
+                    cy.wait(500);
+                  }
+                });
+              getCyElementControl(
+                controlName[control.control_type][0],
+                indexChapter,
+                indexControl,
+              )
+                .find(controlName[control.control_type][1])
+                .clickOutside();
+              cy.wait(1);
+              cy.wait(500);
+              if (control.control_mandatory) {
+                getCyElementControl(
+                  controlName[control.control_type][0],
+                  indexChapter,
+                  indexControl,
+                ).formErrorShouldBeVisible(translations_mandatoryValue);
+              } else {
+                getCyElementControl(
+                  controlName[control.control_type][0],
+                  indexChapter,
+                  indexControl,
+                ).formErrorMessageShouldNotMatch(translations_mandatoryValue);
               }
+              getCyElementControl(
+                controlName[control.control_type][0],
+                indexChapter,
+                indexControl,
+              )
+                .find(controlName[control.control_type][1])
+                .clickOutside();
             }
-          });
+          }
         }
       });
     });
@@ -268,14 +259,11 @@ function getCyElementControl(
   indexChapter: any,
   indexControl: any,
 ): Cypress.Chainable<JQuery<HTMLElement>> {
-  return cy
-    .react('FormControls')
-    .react('ContentTitle')
-    .eq(indexChapter as number)
-    .next('.control-container')
-    .react(compo)
-    .eq(indexControl as number)
-    .should('be.visible');
+  return cy.reactChain(
+    `FormControls ContentTitle:eq(${
+      indexChapter as number
+    }):next(.control-container) ${compo}:eq(${indexControl as number})`,
+  );
 }
 
 function checkVisibilityMandatoryValueAtFirst(

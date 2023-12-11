@@ -1,31 +1,22 @@
 // @ts-check
 /// <reference types="cypress" />
-
-import '../../../../../cypress/support/commands';
+/// <reference types="../../../../../cypress/support/component" />
 
 import React from 'react';
-import { ThemeProvider } from 'styled-components/macro';
-import { BPITheme, BPIGlobalStyle } from '../../../../Packages/Design';
 
 import 'cypress-react-selector';
 import { mount } from 'cypress/react18';
-import {
-  _requestJWT,
-  _getEnv,
-  _escapeForRegExp,
-} from '../../../../../cypress/utils';
 
 import { TextEllipsis } from './TextEllipsis';
-import { translation } from '../../../../Services';
+import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
 
 describe('<TextEllipsis />', () => {
   it('Should render correctly', () => {
     mount(
-      <ThemeProvider theme={BPITheme}>
-        <BPIGlobalStyle />
+      <SetupTestsComponents>
         <TextEllipsis />
-      </ThemeProvider>,
+      </SetupTestsComponents>,
     );
-    cy.waitReactApp('[data-cy-root]');
+    cy.waitReactApp();
   });
 });

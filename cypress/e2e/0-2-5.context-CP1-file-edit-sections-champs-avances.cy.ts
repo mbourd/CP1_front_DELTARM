@@ -1,18 +1,23 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../support/e2e" />
 
 import JwtDecode from 'jwt-decode';
-import '../support/e2e';
 
 import '../../src/Features/Edit/translations';
 import { _translate } from '../utils';
-import { IApiControl, IApiSection } from '../../src/Features/Edit/types';
+import {
+  IApiControl,
+  IApiCurrentSection,
+  IApiSection,
+} from '../../src/Features/Edit/types';
 
 describe(
   'File - Edition for context "CP1" - Sections : Champs Avancés',
   { testIsolation: false },
   () => {
+    let context: string;
     let data: Record<any, any>;
     let currentUrl: string;
     const translations_mandatoryValue = [
@@ -65,92 +70,79 @@ describe(
       });
     });
 
-    it('Assert mandatoryValue for section "Champs Avancés"', () => {
+    it('Assert mandatoryValue for section "Champs Avancés"', function () {
       const sectionName = 'Champs Avancés';
+      const conditions = [
+        context !== 'CP1',
+        !data.sections.some(
+          (section: IApiSection) => section.section_lib === sectionName,
+        ),
+      ];
+
+      if (conditions.some((test) => test === true)) this.skip();
+
       cy.visit(currentUrl);
+      cy.waitReactApp('main[id="main-content"]');
+      cy.intercept({
+        method: 'GET',
+        url: '/edit?file_id=*',
+      }).as('getSectionData');
+      cy.react('NavItem').contains(sectionName).click();
+      cy.wait(1500);
 
-      cy.getAllLocalStorage().then(function (localStorage) {
-        const _this = this;
-        const jwt: Record<string, any> = JwtDecode(
-          JSON.parse(
-            localStorage[Cypress.env('url_cp1_front')]['security'] as string,
-          )._jwt,
-        );
-        const conditions = [
-          jwt.context !== 'CP1',
-          !data.sections.some(
-            (section: IApiSection) => section.section_lib === sectionName,
-          ),
-        ];
+      cy.wait('@getSectionData').then((interception) => {
+        const { current_section }: { current_section: IApiCurrentSection } =
+          interception.response?.body.data;
+        const controlName = {
+          select_list: ['SelectListControl', '._Select'],
+          radio: ['CheckboxControl'],
+          file_upload: ['UploadControl'],
+          slider: ['SliderControl'],
+          info_block: ['InfoBlockControl'],
+          formula: ['FormulaControl'],
+        };
 
-        if (conditions.some((test) => test === true)) _this.skip();
+        if (current_section.chapters.length === 0) this.skip();
 
-        cy.waitReactApp('main[id="main-content"]');
+        for (const indexChapter in current_section.chapters) {
+          const chapter = current_section.chapters[indexChapter];
 
-        if (
-          data.sections.some(
-            (section: IApiSection) => section.section_lib === sectionName,
-          )
-        ) {
-          cy.intercept({
-            method: 'GET',
-            url: '/edit?file_id=*',
-          }).as('getSectionData');
-          cy.react('NavItem').contains(sectionName).click();
-          cy.wait(1500);
+          cy.react('ContentBody')
+            .react('FormControls')
+            .react('ContentTitle')
+            .eq(indexChapter as any as number)
+            .should('have.text', chapter.chap_lib);
 
-          cy.wait('@getSectionData').then((interception) => {
-            const { current_section } = interception.response?.body.data;
-            const controlName = {
-              select_list: ['SelectListControl', '._Select'],
-              radio: ['CheckboxControl'],
-              file_upload: ['UploadControl'],
-              slider: ['SliderControl'],
-              info_block: ['InfoBlockControl'],
-              formula: ['FormulaControl'],
-            };
+          if (chapter.controls.length === 0) continue;
 
-            if (current_section.chapters.length === 0) _this.skip();
+          const controls = chapter.controls.reduce(
+            (acc: Record<string, IApiControl[]>, control) => ({
+              ...acc,
+              [control.control_type]: [
+                ...(acc[control.control_type] || []),
+                control,
+              ],
+            }),
+            {},
+          );
 
-            for (const indexChapter in current_section.chapters) {
-              const chapter = current_section.chapters[indexChapter];
+          for (const arrayControlType of Object.values(controls)) {
+            for (const indexControl in arrayControlType) {
+              const control: IApiControl = arrayControlType[indexControl];
 
-              cy.react('ContentBody')
-                .react('FormControls')
-                .react('ContentTitle')
-                .eq(indexChapter as any as number)
-                .should('have.text', chapter.chap_lib);
+              if (!controlName?.[control.control_type]) continue;
 
-              if (chapter.controls.length === 0) continue;
-
-              const controls = chapter.controls.reduce((acc, control) => {
-                if (!acc?.[control.control_type])
-                  acc[control.control_type] = [];
-
-                acc[control.control_type].push(control);
-
-                return acc;
-              }, {});
-
-              for (const arrayControlType of Object.values(controls) as any[]) {
-                for (const indexControl in arrayControlType) {
-                  const control: IApiControl = arrayControlType[indexControl];
-
-                  if (!controlName?.[control.control_type]) continue;
-
-                  checkVisibilityMandatoryValueAtFirst(
-                    control,
-                    getCyElementControl(
-                      controlName[control.control_type][0],
-                      indexChapter,
-                      indexControl,
-                    ),
-                    translations_mandatoryValue,
-                  );
-                }
-              }
+              checkVisibilityMandatoryValueAtFirst(
+                control,
+                getCyElementControl(
+                  controlName[control.control_type][0],
+                  indexChapter,
+                  indexControl,
+                ),
+                translations_mandatoryValue,
+              );
             }
-          });
+          }
         }
       });
     });
@@ -162,15 +154,13 @@ function getCyElementControl(
   indexChapter: any,
   indexControl: any,
 ): Cypress.Chainable<JQuery<HTMLElement>> {
-  return cy
-    .react('FormControls')
-    .react('ContentTitle')
-    .eq(indexChapter as number)
-    .next('.control-container')
-    .react(compo)
-    .eq(indexControl as number)
-    .should('be.visible');
+  return cy.reactChain(
+    `FormControls ContentTitle:eq(${
+      indexChapter as number
+    }):next(.control-container) ${compo}:eq(${indexControl as number})`,
+  );
 }
+
 function checkVisibilityMandatoryValueAtFirst(
   control: Record<string, any>,
   cyElementControl: Cypress.Chainable<JQuery<HTMLElement>>,

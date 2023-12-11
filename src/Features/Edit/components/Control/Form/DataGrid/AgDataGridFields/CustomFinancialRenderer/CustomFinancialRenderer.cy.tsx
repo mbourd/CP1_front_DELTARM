@@ -1,18 +1,12 @@
 // @ts-check
 /// <reference types="cypress" />
-
-import '../../../../../../../../../cypress/support/commands';
+/// <reference types="../../../../../../../../../cypress/support/component" />
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../../../cypress/utils/SetupTestsComponents';
 
 import 'cypress-react-selector';
 import { mount } from 'cypress/react18';
-import {
-  _requestJWT,
-  _getEnv,
-  _escapeForRegExp,
-} from '../../../../../../../../../cypress/utils';
 
 import { CustomFinancialRenderer } from './CustomFinancialRenderer';
 
@@ -88,6 +82,7 @@ describe('<CustomFinancialRenderer />', () => {
     const currency = '$';
     const props = {
       column: { colDef: { currency_symbol: currency } },
+      value: '23',
     };
     mount(
       <SetupTestsComponents>
@@ -102,6 +97,7 @@ describe('<CustomFinancialRenderer />', () => {
     const currency = null;
     const props = {
       column: { colDef: { currency_symbol: currency } },
+      value: '23',
     };
     mount(
       <SetupTestsComponents>
@@ -114,6 +110,7 @@ describe('<CustomFinancialRenderer />', () => {
   it('should display the default currency', () => {
     const props = {
       column: { colDef: {} },
+      value: '23',
     };
     mount(
       <SetupTestsComponents>

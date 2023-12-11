@@ -6,7 +6,11 @@ import React, {
   useEffect,
 } from 'react';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { IApiControl } from '../../../../types';
+import {
+  DataGridDetailsRow,
+  DataGridDetailsRowsCell,
+  IApiControl,
+} from '../../../../types';
 import { Grid } from '@mui/material';
 import { ControlLabel } from '../ControlLabel';
 import { BPITooltip, FormError } from '../../../../../../Shared/components';
@@ -23,13 +27,18 @@ import {
 import './datagrid.css';
 import { saveValueDataGrid } from './apiRoutes/saveValueDataGrid';
 import CustomSelectRenderer from './AgDataGridFields/CustomSelectRenderer/CustomSelectRenderer';
-import { EuroIcon } from 'Styles';
 import { minMax } from 'Packages/Helpers/src/minMax';
 import { AgDataGridStyle } from './DataGridControl.style';
 import 'ag-grid-enterprise';
 // import 'ag-grid-community/styles/ag-grid.css';
 // import 'ag-grid-community/styles/ag-theme-alpine.css';
-import { CellEditingStartedEvent, RowNode } from 'ag-grid-community';
+import {
+  CellEditingStartedEvent,
+  CellEditingStoppedEvent,
+  ColumnVisibleEvent,
+  GridApi,
+  RowNode,
+} from 'ag-grid-community';
 import { DataGridDetail } from '../../../../types';
 // import millify from 'millify';
 import { LicenseManager } from 'ag-grid-enterprise';
@@ -52,14 +61,23 @@ import { CustomDecimalRenderer } from './AgDataGridFields/CustomDecimalRenderer/
 import { CustomFinancialRenderer } from './AgDataGridFields/CustomFinancialRenderer/CustomFinancialRenderer';
 import { CustomIntegerRenderer } from './AgDataGridFields/CustomIntegerRenderer/CustomIntegerRender';
 import { ColumnFormulaValueGetter } from './AgDataGridFields/CustomFormulaRenderer';
+import BigNumber from 'bignumber.js';
+
 interface IProps {
   control: IApiControl;
   fileId: string;
 }
 
 const CustomTooltip = (props: any & { tooltip: string }) => {
-  const field_name = props?.colDef?.field?.split('.')[0];
-  const data = props?.location === 'cell' ? props?.data[field_name] : '';
+  const field_name = useMemo(
+    () => props?.colDef?.field?.split('.')[0],
+    [props?.colDef?.field],
+  );
+  const data = useMemo(
+    () => (props?.location === 'cell' ? props?.data[field_name] : ''),
+    [field_name, props?.data, props?.location],
+  );
+
   if (
     props?.colDef?.track_modification &&
     props?.colDef?.track_modification_tooltip &&
@@ -104,28 +122,27 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   control,
   fileId,
 }) => {
-  const [errorsMessageAdd, setErrorMessageAdd] = useState<string>('');
+  const [canSendApi, setCanSendApi] = useState<boolean>(true);
+  const [errorMessageAdd, setErrorMessageAdd] = useState<string>('');
   const { user } = useSecurity();
   const gridRef = useRef<any>();
   const jwt = user.getJwt();
-  const [errors, seterrors]: any = useState('');
+  const [errors, setErrors] = useState<string>('');
   const [GridDetails, setGridDetails]: any = useState<
     DataGridDetail | undefined | null
   >(control.data_grid_detail);
   const user_language: any = security.decodeJwtToken(jwt ? jwt : '');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selected, setselected] = useState(false);
-  const [local_text, setlocal_text] = useState(
+  const [selected] = useState(false);
+  const [local_text] = useState(
     user_language?.lang === 'en' ? AG_GRID_LOCALE_EN : AG_GRID_LOCALE_FR,
   );
   const [modal_data, setmodal_data]: any = useState(null);
 
   // const modal: IDataModal = useRecoilValue<any>(modal_data);
 
-  const paginationPageSize: number = control?.data_grid_detail?.datagrid_options
-    ?.pagination_row_size
-    ? control?.data_grid_detail?.datagrid_options?.pagination_row_size
-    : 20;
+  const paginationPageSize: number =
+    control?.data_grid_detail?.datagrid_options?.pagination_row_size ?? 20;
 
   useEffect(() => {
     setGridDetails(control?.data_grid_detail);
@@ -144,7 +161,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       textAlign: g?.alignment ? g?.alignment : 'left',
       borderRight: g?.borderRight
         ? `${g?.borderRightWidth}px solid ${g?.borderRightColor}`
-        : 0,
+        : '0px none rgb(0, 0, 0)',
       backgroundColor:
         props?.colDef?.track_modification &&
         background !== null &&
@@ -194,7 +211,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               tooltipField: g?.field,
               headerTooltip: g?.headerName,
               editable: true,
-              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
+              cellStyle: (props: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 return (
                   <CustomSingleCheckboxRender
@@ -204,7 +221,8 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 );
               },
             };
-          case 'select_list' || 'dynamic_select_list':
+          case 'dynamic_select_list':
+          case 'select_list':
             return {
               ...g,
               minWidth: 150,
@@ -214,7 +232,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               headerTooltip: g?.headerName,
 
               editable: false,
-              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
+              cellStyle: (props: any) => cellStyleFunctions(props, g),
               // filter: 'agNumberColumnFilter',
               filterParams: {
                 valueFormatter: (props: any) => {
@@ -253,12 +271,15 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               comparator: (
                 valueA: any,
                 valueB: any,
-                nodeA: any,
-                nodeB: any,
-                isDescending: any,
+                // nodeA: any,
+                // nodeB: any,
+                // isDescending: any,
               ) => {
-                if (valueA.toLowerCase() < valueB.toLowerCase()) return -1;
-                if (valueA.toLowerCase() > valueB.toLowerCase()) return 1;
+                const _valA = valueA ? valueA : '';
+                const _valB = valueB ? valueB : '';
+
+                if (_valA.toLowerCase() < _valB.toLowerCase()) return -1;
+                if (_valA.toLowerCase() > _valB.toLowerCase()) return 1;
 
                 return 0;
               },
@@ -271,7 +292,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 rows: 10,
                 cols: 50,
               },
-              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
+              cellStyle: (props: any) => cellStyleFunctions(props, g),
             };
           case 'long_text':
             return {
@@ -283,12 +304,15 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               comparator: (
                 valueA: any,
                 valueB: any,
-                nodeA: any,
-                nodeB: any,
-                isDescending: any,
+                // nodeA: any,
+                // nodeB: any,
+                // isDescending: boolean,
               ) => {
-                if (valueA.toLowerCase() < valueB.toLowerCase()) return -1;
-                if (valueA.toLowerCase() > valueB.toLowerCase()) return 1;
+                const _valA = valueA ? valueA : '';
+                const _valB = valueB ? valueB : '';
+
+                if (_valA.toLowerCase() < _valB.toLowerCase()) return -1;
+                if (_valA.toLowerCase() > _valB.toLowerCase()) return 1;
 
                 return 0;
               },
@@ -301,7 +325,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 rows: 10,
                 cols: 50,
               },
-              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
+              cellStyle: (props: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 return (
                   <>{props?.value !== null || undefined ? props.value : ''}</>
@@ -316,16 +340,40 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               tooltipField: g?.field,
               editable: (props: any) => decide_editable(props),
               headerTooltip: g?.headerName,
-              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
+              cellStyle: (props: any) => cellStyleFunctions(props, g),
               comparator: (
                 valueA: any,
                 valueB: any,
                 nodeA: any,
                 nodeB: any,
-                isDescending: any,
+                // isDescending: boolean,
               ) => {
-                if (parseFloat(valueA) == parseFloat(valueB)) return 0;
-                return parseFloat(valueA) > parseFloat(valueB) ? 1 : -1;
+                if (!nodeA) return;
+
+                const fieldName: string = g.field.split('.')[0];
+                const vA = nodeA?.data[fieldName]?.value;
+                const vB = nodeB?.data[fieldName]?.value;
+
+                // Handling null values
+                if (vA === null || vA === undefined || vA === '')
+                  return vB === null || vB === undefined || vB === '' ? 0 : -1;
+                if (vB === null || vB === undefined || vB === '') return 1;
+
+                if (!nodeA?.data[fieldName]?._computedValueBigNumber)
+                  nodeA.data[fieldName]._computedValueBigNumber = new BigNumber(
+                    vA,
+                  );
+                if (!nodeB?.data[fieldName]?._computedValueBigNumber)
+                  nodeB.data[fieldName]._computedValueBigNumber = new BigNumber(
+                    vB,
+                  );
+
+                const v1: BigNumber =
+                  nodeA?.data[fieldName]._computedValueBigNumber;
+                const v2: BigNumber =
+                  nodeB?.data[fieldName]._computedValueBigNumber;
+
+                return v1.isEqualTo(v2) ? 0 : v1.isLessThan(v2) ? -1 : 1;
               },
               cellRenderer: (props: any) => {
                 return <CustomPercentRenderer props={props} />;
@@ -338,7 +386,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               tooltipField: g?.field,
               headerTooltip: g?.headerName,
-              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
+              cellStyle: (props: any) => cellStyleFunctions(props, g),
             };
           case 'multiple_list':
             return {
@@ -347,7 +395,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               tooltipField: g?.field,
               headerTooltip: g?.headerName,
-              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
+              cellStyle: (props: any) => cellStyleFunctions(props, g),
             };
           case 'integer':
             return {
@@ -362,13 +410,36 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 valueB: any,
                 nodeA: any,
                 nodeB: any,
-                isDescending: any,
+                // isDescending: boolean,
               ) => {
-                if (parseFloat(valueA) == parseFloat(valueB)) return 0;
+                if (!nodeA) return;
 
-                return parseFloat(valueA) > parseFloat(valueB) ? 1 : -1;
+                const fieldName: string = g.field.split('.')[0];
+                const vA = nodeA?.data[fieldName]?.value;
+                const vB = nodeB?.data[fieldName]?.value;
+
+                // Handling null values
+                if (vA === null || vA === undefined || vA === '')
+                  return vB === null || vB === undefined || vB === '' ? 0 : -1;
+                if (vB === null || vB === undefined || vB === '') return 1;
+
+                if (!nodeA?.data[fieldName]?._computedValueBigNumber)
+                  nodeA.data[fieldName]._computedValueBigNumber = new BigNumber(
+                    vA,
+                  );
+                if (!nodeB?.data[fieldName]?._computedValueBigNumber)
+                  nodeB.data[fieldName]._computedValueBigNumber = new BigNumber(
+                    vB,
+                  );
+
+                const v1: BigNumber =
+                  nodeA?.data[fieldName]._computedValueBigNumber;
+                const v2: BigNumber =
+                  nodeB?.data[fieldName]._computedValueBigNumber;
+
+                return v1.isEqualTo(v2) ? 0 : v1.isLessThan(v2) ? -1 : 1;
               },
-              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
+              cellStyle: (props: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 return <CustomIntegerRenderer props={props} />;
               },
@@ -381,16 +452,40 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               tooltipField: g?.field,
               editable: (props: any) => decide_editable(props),
               headerTooltip: g?.headerName,
-              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
+              cellStyle: (props: any) => cellStyleFunctions(props, g),
               comparator: (
                 valueA: any,
                 valueB: any,
                 nodeA: any,
                 nodeB: any,
-                isDescending: any,
+                // isDescending: boolean,
               ) => {
-                if (parseFloat(valueA) == parseFloat(valueB)) return 0;
-                return parseFloat(valueA) > parseFloat(valueB) ? 1 : -1;
+                if (!nodeA) return;
+
+                const fieldName: string = g.field.split('.')[0];
+                const vA = nodeA?.data[fieldName]?.value;
+                const vB = nodeB?.data[fieldName]?.value;
+
+                // Handling null values
+                if (vA === null || vA === undefined || vA === '')
+                  return vB === null || vB === undefined || vB === '' ? 0 : -1;
+                if (vB === null || vB === undefined || vB === '') return 1;
+
+                if (!nodeA?.data[fieldName]?._computedValueBigNumber)
+                  nodeA.data[fieldName]._computedValueBigNumber = new BigNumber(
+                    vA,
+                  );
+                if (!nodeB?.data[fieldName]?._computedValueBigNumber)
+                  nodeB.data[fieldName]._computedValueBigNumber = new BigNumber(
+                    vB,
+                  );
+
+                const v1: BigNumber =
+                  nodeA?.data[fieldName]._computedValueBigNumber;
+                const v2: BigNumber =
+                  nodeB?.data[fieldName]._computedValueBigNumber;
+
+                return v1.isEqualTo(v2) ? 0 : v1.isLessThan(v2) ? -1 : 1;
               },
               cellRenderer: (props: any) => {
                 return <CustomDecimalRenderer props={props} />;
@@ -404,31 +499,40 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               tooltipField: g?.field,
               editable: (props: any) => decide_editable(props),
               headerTooltip: g?.headerName,
-              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
+              cellStyle: (props: any) => cellStyleFunctions(props, g),
               comparator: (
                 valueA: any,
                 valueB: any,
                 nodeA: any,
                 nodeB: any,
-                isInverted: any,
+                // isDescending: boolean,
               ) => {
-                if (parseFloat(valueA) == parseFloat(valueB)) {
-                  return 0;
-                }
-                // for null
-                else if (valueA === null) {
-                  return isInverted ? -1 : 1;
-                } else if (valueB === null) {
-                  return isInverted ? 1 : -1;
-                } else if (parseFloat(valueA) > parseFloat(valueB)) {
-                  return 1;
-                } else {
-                  return -1;
-                }
+                if (!nodeA) return;
 
-                // if (parseFloat(valueA) == parseFloat(valueB)) return 0;
+                const fieldName: string = g.field.split('.')[0];
+                const vA = nodeA?.data[fieldName]?.value;
+                const vB = nodeB?.data[fieldName]?.value;
 
-                // return a === null ? isInverted : parseFloat(valueA) > parseFloat(valueB) ? 1 : -1;
+                // Handling null values
+                if (vA === null || vA === undefined || vA === '')
+                  return vB === null || vB === undefined || vB === '' ? 0 : -1;
+                if (vB === null || vB === undefined || vB === '') return 1;
+
+                if (!nodeA?.data[fieldName]?._computedValueBigNumber)
+                  nodeA.data[fieldName]._computedValueBigNumber = new BigNumber(
+                    vA,
+                  );
+                if (!nodeB?.data[fieldName]?._computedValueBigNumber)
+                  nodeB.data[fieldName]._computedValueBigNumber = new BigNumber(
+                    vB,
+                  );
+
+                const v1: BigNumber =
+                  nodeA?.data[fieldName]._computedValueBigNumber;
+                const v2: BigNumber =
+                  nodeB?.data[fieldName]._computedValueBigNumber;
+
+                return v1.isEqualTo(v2) ? 0 : v1.isLessThan(v2) ? -1 : 1;
               },
               cellRenderer: (props: any) => {
                 return (
@@ -445,7 +549,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               headerTooltip: g?.headerName,
               singleClickEdit: false,
               editable: false,
-              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
+              cellStyle: (props: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 return (
                   <CustomCheckboxRender
@@ -453,7 +557,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                     control={control}
                     fileId={fileId}
                     jwt={jwt}
-                    seterrors={seterrors}
+                    seterrors={setErrors}
                   />
                 );
               },
@@ -471,16 +575,19 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               comparator: (
                 valueA: any,
                 valueB: any,
-                nodeA: any,
-                nodeB: any,
-                isDescending: any,
+                // nodeA: any,
+                // nodeB: any,
+                // isDescending: boolean,
               ) => {
-                if (valueA.toLowerCase() < valueB.toLowerCase()) return -1;
-                if (valueA.toLowerCase() > valueB.toLowerCase()) return 1;
+                const _valA = valueA ? valueA : '';
+                const _valB = valueB ? valueB : '';
+
+                if (_valA.toLowerCase() < _valB.toLowerCase()) return -1;
+                if (_valA.toLowerCase() > _valB.toLowerCase()) return 1;
 
                 return 0;
               },
-              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
+              cellStyle: (props: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 return (
                   <>{props?.value !== null || undefined ? props.value : ''}</>
@@ -494,7 +601,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               headerTooltip: g?.headerName,
               width: 'auto',
               tooltipField: g?.field,
-              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
+              cellStyle: (props: any) => cellStyleFunctions(props, g),
             };
           case 'date':
             return {
@@ -505,7 +612,19 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               width: 'auto',
               singleClickEdit: false,
               editable: false,
-              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
+              cellStyle: (props: any) => cellStyleFunctions(props, g),
+              comparator: (
+                valueA: any,
+                valueB: any,
+                // nodeA: any,
+                // nodeB: any,
+                // isDescending: boolean,
+              ) => {
+                const dateA = new Date(valueA ? valueA : '1970-01-01');
+                const dateB = new Date(valueB ? valueB : '1970-01-01');
+
+                return dateA.getTime() - dateB.getTime();
+              },
               cellRenderer: (props: any) => {
                 return (
                   <CustomDateRenderer
@@ -513,7 +632,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                     control={control}
                     fileId={fileId}
                     jwt={jwt}
-                    seterrors={seterrors}
+                    seterrors={setErrors}
                   />
                 );
               },
@@ -526,7 +645,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               singleClickEdit: false,
               headerTooltip: g?.headerName,
               editable: false,
-              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
+              cellStyle: (props: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 return (
                   <div>
@@ -536,7 +655,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                         control={control}
                         fileId={fileId}
                         jwt={jwt}
-                        seterrors={seterrors}
+                        seterrors={setErrors}
                       />
                     ) : (
                       <div></div>
@@ -553,7 +672,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               singleClickEdit: false,
               headerTooltip: g?.headerName,
               editable: false,
-              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
+              cellStyle: (props: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 return (
                   <div>
@@ -563,7 +682,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                         control={control}
                         fileId={fileId}
                         jwt={jwt}
-                        seterrors={seterrors}
+                        seterrors={setErrors}
                       />
                     ) : (
                       <div></div>
@@ -585,14 +704,28 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 valueB: any,
                 nodeA: any,
                 nodeB: any,
-                isDescending: any,
+                // isDescending: boolean,
               ) => {
-                if (parseFloat(valueA) == parseFloat(valueB)) return 0;
+                if (!nodeA) return;
 
-                return parseFloat(valueA) > parseFloat(valueB) ? 1 : -1;
+                const fieldName: string = g.field.split('.')[0];
+                const vA = valueA;
+                const vB = valueB;
+
+                // Handling null values
+                if (vA === null || vA === undefined || vA === '')
+                  return vB === null || vB === undefined || vB === '' ? 0 : -1;
+                if (vB === null || vB === undefined || vB === '') return 1;
+
+                const v1: BigNumber =
+                  nodeA?.data[fieldName]._computedValueBigNumber;
+                const v2: BigNumber =
+                  nodeB?.data[fieldName]._computedValueBigNumber;
+
+                return v1.isEqualTo(v2) ? 0 : v1.isLessThan(v2) ? -1 : 1;
               },
-              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
-              valueGetter: ColumnFormulaValueGetter,
+              cellStyle: (props: any) => cellStyleFunctions(props, g),
+              valueGetter: (props) => ColumnFormulaValueGetter(props),
             };
           default:
             return {
@@ -600,7 +733,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               minWidth: 150,
               headerTooltip: g?.headerName,
               width: 'auto',
-              cellStyle: (props: any, g: any) => cellStyleFunctions(props, g),
+              cellStyle: (props: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 return (
                   <>{props?.value !== null || undefined ? props.value : ''}</>
@@ -636,7 +769,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             control={control}
             fileId={fileId}
             jwt={jwt}
-            seterrors={seterrors}
+            seterrors={setErrors}
           />
         );
       default:
@@ -676,6 +809,37 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       gridRef?.current?.api?.stopEditing();
 
       return;
+    }
+  }, []);
+
+  const onCellEditingStopped = useCallback((event: CellEditingStoppedEvent) => {
+    const data = event?.colDef?.field?.split('.')[0];
+    const field_data: DataGridDetailsRowsCell = event?.data[data as string];
+
+    if (
+      field_data.component === 'integer' ||
+      field_data.component === 'decimal' ||
+      field_data.component === 'percent' ||
+      field_data.component === 'financial'
+    ) {
+      const newVal = new BigNumber(event.newValue).toFixed();
+
+      if (newVal !== 'NaN') {
+        if (
+          field_data?.control_regex !== null &&
+          field_data?.control_regex !== undefined &&
+          event?.newValue
+        ) {
+          const regexControl = new RegExp(field_data?.control_regex, 'i');
+          if (
+            !regexControl.test(event?.newValue) &&
+            field_data?.control_regex_msg
+          )
+            return;
+        }
+
+        event.node.setDataValue(event.column, newVal);
+      }
     }
   }, []);
 
@@ -740,18 +904,19 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       }
 
       if (
-        (field_data?.control_regex !== null || undefined) &&
+        field_data?.control_regex !== null &&
+        field_data?.control_regex !== undefined &&
         event?.newValue
       ) {
         const regexControl = new RegExp(field_data?.control_regex, 'i');
         if (
-          !event?.newValue.match(regexControl) &&
+          !regexControl.test(event?.newValue) &&
           field_data?.control_regex_msg
         ) {
-          seterrors(field_data?.control_regex_msg);
+          setErrors(field_data?.control_regex_msg);
           gridRef.current.api.undoCellEditing();
           setTimeout(() => {
-            seterrors('');
+            setErrors('');
           }, 3000);
 
           return;
@@ -775,7 +940,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               field_data.control_options.max_value,
             )
           ) {
-            seterrors(null);
+            setErrors('');
           }
           if (
             !minMax(
@@ -784,12 +949,12 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               field_data.control_options.max_value,
             )
           ) {
-            seterrors(
+            setErrors(
               'La valeur saisie ne respecte pas les contraintes définies',
             );
             gridRef.current.api.undoCellEditing();
             setTimeout(() => {
-              seterrors('');
+              setErrors('');
             }, 3000);
 
             return;
@@ -805,20 +970,35 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         if (event?.newValue === undefined) {
           return;
         } else {
-          saveValueDataGrid(
-            fileId,
-            event?.data?.row_uuid,
-            field_data?.col_elm_id,
-            field_data?.row_num,
-            jwt,
-            event?.newValue?.toString(),
-            seterrors,
-            event?.newValue,
-          );
+          let valueToSend = event?.newValue;
+
+          switch (field_data?.component) {
+            case 'integer':
+            case 'decimal':
+            case 'financial':
+            case 'percent':
+              valueToSend = new BigNumber(event?.newValue).toFixed();
+              valueToSend = valueToSend !== 'NaN' ? valueToSend : '';
+              break;
+            default:
+              break;
+          }
+
+          if (canSendApi)
+            saveValueDataGrid(
+              fileId,
+              event?.data?.row_uuid,
+              field_data?.col_elm_id,
+              field_data?.row_num,
+              jwt,
+              event?.newValue?.toString(),
+              setErrors,
+              valueToSend,
+            );
         }
       }
     },
-    [fileId, jwt],
+    [canSendApi, fileId, jwt],
   );
 
   const getRowStyle = (params: any) => {
@@ -886,10 +1066,10 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref
       ) {
         if (column?.field_type !== 'checkbox_select_datagrid') {
-          seterrors(`Le champ col_ref n'est pas une case à cocher`);
+          setErrors(`Le champ col_ref n'est pas une case à cocher`);
 
           setTimeout(() => {
-            seterrors('');
+            setErrors('');
           }, 3000);
         } else {
           gridRef.current.api.forEachNodeAfterFilterAndSort(
@@ -928,10 +1108,10 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref
       ) {
         if (column?.field_type !== 'checkbox_select_datagrid') {
-          seterrors(`Le champ col_ref n'est pas une case à cocher`);
+          setErrors(`Le champ col_ref n'est pas une case à cocher`);
 
           setTimeout(() => {
-            seterrors('');
+            setErrors('');
           }, 3000);
         } else {
           gridRef.current.api.forEachNodeAfterFilterAndSort(
@@ -960,10 +1140,11 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
 
   const getRowData = useCallback(() => {
     const selected_data: any = [];
-    gridOptions.rowData.map((row: any) => {
+    gridOptions.rowData.map((row: DataGridDetailsRow) => {
       if (
         row[
-          control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref
+          control?.data_grid_detail?.datagrid_options
+            ?.select_all_button_col_ref as string
         ]?.value === '1'
       ) {
         selected_data.push(row?.row_uuid);
@@ -1000,9 +1181,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         });
       }
     } catch (error) {
-      seterrors("Une erreur s'est produite");
+      setErrors("Une erreur s'est produite");
       setTimeout(() => {
-        seterrors('');
+        setErrors('');
       }, 3000);
     }
   }, [jwt, control?.control_id, fileId]);
@@ -1028,9 +1209,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         if (response) {
         }
       } catch (error) {
-        seterrors("Une erreur s'est produite");
+        setErrors("Une erreur s'est produite");
         setTimeout(() => {
-          seterrors('');
+          setErrors('');
         }, 3000);
       }
     },
@@ -1053,6 +1234,35 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       refresh_grid();
     }
   };
+
+  const onBodyScroll = useCallback(
+    async (e) => {
+      if (e.direction === 'horizontal') {
+        const headerElements = document.querySelectorAll(
+          '.ag-theme-alpine .ag-header-cell',
+        );
+
+        // change header background color
+        [].forEach.call(headerElements, (headerElement: HTMLElement) => {
+          const colId = headerElement.getAttribute('col-id');
+          headerElement.style.backgroundColor =
+            control.data_grid_detail?.columns.find((col) => col.field === colId)
+              ?.headerColor || '#FFFFFF';
+        });
+      }
+    },
+    [control.data_grid_detail?.columns],
+  );
+
+  // expose for Cypress API
+  if (window?.['Cypress']) {
+    // import('bignumber.js').then((v) => console.log(v));
+    window['Features_Edit_Control_DataGridControlAgGrid' + control.control_id] =
+      {
+        setCanSendApi,
+        gridRef,
+      };
+  }
 
   return (
     <Grid item xs={12} style={{ maxWidth: '100%', margin: '0 auto' }}>
@@ -1193,8 +1403,10 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       </BPITooltip> */}
         </div>
       </div>
-      <h1 style={{ color: 'red', padding: 10 }}>{errors}</h1>
-      {errorsMessageAdd && <FormError>{errorsMessageAdd}</FormError>}
+      <h1 className={'errorsText'} style={{ color: 'red', padding: 10 }}>
+        {errors}
+      </h1>
+      {errorMessageAdd && <FormError>{errorMessageAdd}</FormError>}
 
       <AgDataGridStyle
         $background_color={GridDetails.datagrid_options?.datagrid_bg_color}
@@ -1225,6 +1437,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           onGridReady={onGridReady}
           localeText={local_text}
           onCellEditingStarted={onCellEditingStarted}
+          onCellEditingStopped={onCellEditingStopped}
           overlayLoadingTemplate={
             '<span class="ag-overlay-loading-center">Loading..</span>'
           }
@@ -1239,6 +1452,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           undoRedoCellEditing={true}
           enableCellChangeFlash={true}
           onPaginationChanged={onPaginationChanged}
+          onBodyScroll={onBodyScroll}
         />
       </AgDataGridStyle>
       {/* </DataGridControlStyled> */}

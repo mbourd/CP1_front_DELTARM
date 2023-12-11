@@ -48,7 +48,7 @@ describe('<IconsContainer />', () => {
         <IconsContainerRender interfaceButtons={defaultData} />
       </SetupTestsComponents>,
     );
-    cy.waitReactApp('#root');
+    cy.waitReactApp();
   });
 
   it('Should have title tooltip for AIV', () => {
@@ -70,7 +70,7 @@ describe('<IconsContainer />', () => {
         <IconsContainerRender interfaceButtons={_data} />
       </SetupTestsComponents>,
     );
-    cy.waitReactApp('#root');
+    cy.waitReactApp();
     cy.wait(1);
     cy.react('IconsContainerRender')
       .find('a')
@@ -108,7 +108,7 @@ describe('<IconsContainer />', () => {
         <IconsContainerRender interfaceButtons={_data} />
       </SetupTestsComponents>,
     );
-    cy.waitReactApp('#root');
+    cy.waitReactApp();
     cy.react('IconsContainerRender')
       .find('a')
       .should('have.attr', 'title')
@@ -145,7 +145,7 @@ describe('<IconsContainer />', () => {
         <IconsContainerRender interfaceButtons={_data} />
       </SetupTestsComponents>,
     );
-    cy.waitReactApp('#root');
+    cy.waitReactApp();
     cy.react('IconsContainerRender')
       .react('BPITooltip', { options: { timeout: 1 } })
       .get('a[title="Rapports"]', { timeout: 1 })

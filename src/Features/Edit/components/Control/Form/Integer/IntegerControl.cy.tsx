@@ -316,7 +316,10 @@ describe('<IntegerControl />', () => {
       control_regex: regex,
       control_regex_msg: 'Value do not match with regex',
     };
-    const generated = new RandExp(regex).gen();
+    const randExp = new RandExp(regex);
+    let generated = randExp.gen();
+
+    while (generated === '') generated = randExp.gen();
 
     mount(
       <SetupTestsComponents>
@@ -344,7 +347,7 @@ describe('<IntegerControl />', () => {
   });
   it('Should render error message if value do not match with regex', () => {
     const regex = /^-?[0-9]\d*$/;
-    const oppositeRegex = new RegExp(`^(?!${regex.source}).*$`);
+    const oppositeRegex = new RegExp(`^(?!.*${regex.source}).*`);
     const _control: IApiControl = {
       ...structuredClone(control),
       editable: true,
@@ -353,6 +356,10 @@ describe('<IntegerControl />', () => {
       control_regex_msg: 'Value do not match with regex',
     };
     const randExpOpposite = new RandExp(oppositeRegex);
+    let generated = randExpOpposite.gen();
+
+    while (generated === '' || !oppositeRegex.test(generated))
+      generated = randExpOpposite.gen();
 
     mount(
       <SetupTestsComponents>
@@ -368,7 +375,7 @@ describe('<IntegerControl />', () => {
     cy.waitReactApp();
     cy.react('IntegerControl')
       .find('input[type="text"]')
-      .type(randExpOpposite.gen(), { parseSpecialCharSequences: false })
+      .type(generated, { parseSpecialCharSequences: false })
       .blur();
     cy.wait(255);
     cy.react('IntegerControl')
