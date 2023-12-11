@@ -13,14 +13,14 @@ const SetupTestsComponents: React.FC<SetupTestsComponentProps> = ({
   theme,
 }) => {
   return (
-    <div id="root">
+    <main id="main-content">
       <RecoilRoot>
         <ThemeProvider theme={theme ?? BPITheme}>
           <BPIGlobalStyle />
           {children}
         </ThemeProvider>
       </RecoilRoot>
-    </div>
+    </main>
   );
 };
 

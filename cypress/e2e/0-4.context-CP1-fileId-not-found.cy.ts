@@ -1,10 +1,9 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../support/e2e" />
 
 import JwtDecode from 'jwt-decode';
-import '../support/commands';
 
-import 'cypress-react-selector';
 import '../../src/Features/Manage/translations';
 import { translation } from '../../src/Services';
 import { _escapeForRegExp } from '../utils';

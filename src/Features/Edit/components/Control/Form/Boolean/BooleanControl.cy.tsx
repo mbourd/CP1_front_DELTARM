@@ -132,6 +132,41 @@ describe('<BooleanControl />', () => {
       .invoke('text')
       .and('match', new RegExp(translations.join('|'), 'gu'));
   });
+  it('should render error message if mandatory', () => {
+    const _control: IApiControl = {
+      ...structuredClone(control),
+      mandatory: true,
+      editable: true,
+      control_value: 'false',
+    };
+    const trans_EN =
+      getResourceTrans('en', 'Edit', 'mandatoryValue') ||
+      'mandatoryValue|Valeur obligatoire';
+    const trans_FR =
+      getResourceTrans('fr', 'Edit', 'mandatoryValue') ||
+      'mandatoryValue|Valeur obligatoire';
+    const trans_DE =
+      getResourceTrans('de', 'Edit', 'mandatoryValue') ||
+      'mandatoryValue|Valeur obligatoire';
+    const translations = [trans_EN, trans_FR, trans_DE];
+    mount(
+      <SetupTestsComponents>
+        <BooleanControl
+          control={_control}
+          fileId={''}
+          formState={[]}
+          setFormState={function (
+            value: React.SetStateAction<IChapter[]>,
+          ): void {
+            throw new Error('Function not implemented.');
+          }}
+          context={'edit'}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('BooleanControl').formErrorShouldBeVisible(translations);
+  });
 
   it('should be disabled', () => {
     const _control: IApiControl = {

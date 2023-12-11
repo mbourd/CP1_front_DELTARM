@@ -1,12 +1,12 @@
 // @ts-check
 /// <reference types="cypress" />
-import '../../../../cypress/support/component';
+/// <reference types="../../../../cypress/support/component" />
 
 import React from 'react';
+import { mount } from 'cypress/react18';
+
 import { SetupTestsComponents } from '../../../../cypress/utils/SetupTestsComponents';
 
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
 import { _requestJWT, _getEnv, _translate } from '../../../../cypress/utils';
 
 import { MainNav } from './MainNav';

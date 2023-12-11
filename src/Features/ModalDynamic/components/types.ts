@@ -59,34 +59,22 @@ type ElementTableModalRowType = {
   }[];
 };
 type ElementTableModalCellType = {
-  action: IActionButton;
-  type: string;
+  action: IActionButton | null;
+  type: 'text' | 'btn';
   value: string;
-  bg_color?: string;
-  font_color?: string;
+  bg_color: string;
+  font_color: string;
 };
 
 interface IElementTextValueModal {
   cell: {
-    value: [
-      {
-        type: 'text';
-        value?: string;
-        action: IActionButton | null;
-      },
-    ];
+    value: [ElementTableModalCellType];
   };
 }
 
 interface IElementButtonValueModal {
   cell: {
-    value: [
-      {
-        type: 'btn';
-        value?: string;
-        action: IActionButton | null;
-      },
-    ];
+    value: [ElementTableModalCellType];
   };
 }
 
