@@ -35,10 +35,10 @@ const AgGridDashboard: React.FC = (): React.ReactElement => {
   const jwt = user.getJwt();
   const { send, data: response, callState } = useApi<IDashboard>();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { modalData: recoilData, actionButton } = useActionButton(
+  const { modalData: recoilData, actionButton } = useActionButton({
     jwt,
     setIsModalOpen,
-  );
+  });
   const modal: IDataModal = useRecoilValue<any>(recoilData);
   useEffect(() => {
     send('dashboardControlPermanent');
