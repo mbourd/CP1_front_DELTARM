@@ -1,6 +1,6 @@
 import React, { SetStateAction, useCallback } from 'react';
 import { IActionButton } from '../../../Features/DashboardDynamic/components/types';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { getEnv } from './getEnv';
 import { useSetRecoilState, atom } from 'recoil';
 import { router } from '../../Router';
@@ -16,10 +16,17 @@ const modalData = atom({
   default: null,
 });
 
-export const useActionButton = (
-  jwt: string | null,
-  setIsModalOpen?: React.Dispatch<SetStateAction<boolean>>,
-) => {
+type useActionButtonPropsType = {
+  jwt: string | null;
+  setIsModalOpen?: React.Dispatch<SetStateAction<boolean>>;
+  setErrorMessage?: React.Dispatch<SetStateAction<string | null>>;
+};
+
+export const useActionButton = ({
+  jwt,
+  setIsModalOpen,
+  setErrorMessage,
+}: useActionButtonPropsType) => {
   const setPageData = useSetRecoilState(data);
   const setModalData = useSetRecoilState(modalData);
   const actionButton = useCallback(
@@ -114,13 +121,21 @@ export const useActionButton = (
             .then(async (response) => {
               dispatchActionButton(response.data);
             })
-            .catch(async (error) => {
+            .catch(async (error: AxiosError) => {
               if (error.response) {
+                if (setErrorMessage && error.response.status >= 300)
+                  setErrorMessage(error.response.data.error_msg);
+
                 dispatchActionButton(error.response.data);
 
                 return;
               }
               if (error) {
+                if (setErrorMessage)
+                  setErrorMessage(
+                    typeof error === 'string' ? error : "Impossible d'ajouter",
+                  );
+
                 dispatchActionButton(genericErrorsData);
               }
             });
@@ -191,7 +206,7 @@ export const useActionButton = (
           return;
       }
     },
-    [jwt, setPageData, setModalData, setIsModalOpen],
+    [jwt, setPageData, setModalData, setIsModalOpen, setErrorMessage],
   );
 
   return { actionButton, data, modalData };

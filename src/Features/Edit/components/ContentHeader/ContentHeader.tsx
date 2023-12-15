@@ -32,7 +32,7 @@ export const ContentHeader: React.FC = (): React.ReactElement => {
   const { data } = useContext(EditValidationContext);
   const { user } = useSecurity();
   const jwt = user.getJwt();
-  const { actionButton, modalData } = useActionButton(jwt, setIsModalOpen);
+  const { actionButton, modalData } = useActionButton({ jwt, setIsModalOpen });
   const modal: IDataModal = useRecoilValue<any>(modalData);
 
   return (

@@ -25,7 +25,7 @@ export const SearchBar: React.FC<IProps> = ({
   );
   const { user } = useSecurity();
   const jwt = user.getJwt();
-  const { actionButton } = useActionButton(jwt, setIsModalOpen);
+  const { actionButton } = useActionButton({ jwt, setIsModalOpen });
 
   const handleChangeOption = useCallback(
     (value: string) => {
