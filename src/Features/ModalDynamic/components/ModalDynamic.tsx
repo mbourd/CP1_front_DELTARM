@@ -39,13 +39,16 @@ export const ModalDynamic: FC<IDataModalProps> = ({
 }): React.ReactElement => {
   const { user } = useSecurity();
   const jwt = user.getJwt();
-  const { actionButton } = useActionButton(jwt, setIsModalOpen);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { actionButton } = useActionButton({
+    jwt,
+    setIsModalOpen,
+    setErrorMessage,
+  });
   const defaultQueries = useMemo<Record<string, string>>(() => {
     return {};
   }, []);
   const user_language: any = security.decodeJwtToken(jwt ? jwt : '');
-  console.log(user_language, 'lang');
 
   const footer = (
     <ModalDynamicFooterStyled>

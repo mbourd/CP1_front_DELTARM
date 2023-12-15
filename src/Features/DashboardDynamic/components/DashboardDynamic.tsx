@@ -32,10 +32,10 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user } = useSecurity();
   const jwt = user.getJwt();
-  const { modalData: recoilData, actionButton } = useActionButton(
+  const { modalData: recoilData, actionButton } = useActionButton({
     jwt,
     setIsModalOpen,
-  );
+  });
   const modal: IDataModal = useRecoilValue<any>(recoilData);
 
   const { logout } = useContext(SecurityContext);
