@@ -9,7 +9,7 @@ import { MainNav } from '..';
 
 export const MainHeader: React.FC = (): React.ReactElement => {
   const language = localStorage.getItem('lang');
-  const [option, setoption]: any = useState(language);
+  const [option]: any = useState(language);
   const [trans] = useTrans('MainHeader');
   const dashboardPath = router.generatePath('dashboard');
   const { data: context } = useContext(SecurityContext);

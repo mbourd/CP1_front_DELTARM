@@ -28,7 +28,6 @@ export const SelectListControl: React.FC<IProps> = ({
   formState,
   setFormState,
   context,
-  get_value_response,
 }): React.ReactElement => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);

@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BPITooltip } from 'Shared/components';
 import { FileIcon, PlayerIcon } from 'Styles';
-import { useApi, useTrans } from 'Services';
+import { useTrans } from 'Services';
 import { IconsContainerStyled } from './IconsContainer.style';
 
 type IconsContainerRenderProps = {

@@ -43,7 +43,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
 }): React.ReactElement | null => {
   const { fileId } = useContext(EditValidationContext);
   const [user] = useState<IUser>(security.getUser());
-  const [updated_form_state, setupdated_form_state] = useState([]);
+  const [, setupdated_form_state] = useState([]);
 
   const jwt = user.getJwt();
   const [get_value_response, setget_value_response] = useState(null);
@@ -146,7 +146,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           setupdated_form_state((formState: any) => formState.concat(control));
           // console.log('control', control);
         })
-        .catch((error: any) => {
+        .catch(() => {
           //   console.log(error);
         });
     } else {
