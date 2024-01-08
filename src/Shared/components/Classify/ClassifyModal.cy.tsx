@@ -1,49 +1,44 @@
 // @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../cypress/support/component" />
+
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Shared/components/Classify/ClassifyModal.cy.tsx"
 
 import React from 'react';
-import { ThemeProvider } from 'styled-components/macro';
-import { BPITheme, BPIGlobalStyle } from '../../../Packages/Design';
-
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
+import { SetupTestsComponents } from '../../../../cypress/utils/SetupTestsComponents';
 
 import { ClassifyModal } from './ClassifyModal';
 
 describe('<ClassifyModal />', () => {
   it('Should not render', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <ClassifyModal
-            open={false}
-            onClose={function (): void {
-              throw new Error('Function not implemented.');
-            }}
-            fileId={''}
-          />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <ClassifyModal
+          open={false}
+          onClose={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+          fileId={''}
+        />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('ClassifyModal', { options: { timeout: 1 } }).should('not.exist');
   });
   it('Should render', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <ClassifyModal
-            open={true}
-            onClose={function (): void {
-              throw new Error('Function not implemented.');
-            }}
-            fileId={''}
-          />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <ClassifyModal
+          open={true}
+          onClose={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+          fileId={''}
+        />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('ClassifyModal').should('exist').should('be.visible');
   });
 });

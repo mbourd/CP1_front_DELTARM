@@ -1,18 +1,16 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../../../cypress/support/component" />
 
-import '../../../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/LongText/LongTextControl.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
 import { _translate } from '../../../../../../../cypress/utils';
 
 import { LongTextControl } from './LongTextControl';
-import { IApiControl, IChapter } from '../../../../types';
+import { IApiControl } from '../../../../types';
 import '../../../../../Edit/translations';
 
 describe('<LongTextControl />', () => {
@@ -42,16 +40,14 @@ describe('<LongTextControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <LongTextControl
           control={_control}
           fileId={''}
           context={'edit'}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
         />
@@ -66,15 +62,13 @@ describe('<LongTextControl />', () => {
       ...structuredClone(control),
       editable: false,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <LongTextControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -88,15 +82,13 @@ describe('<LongTextControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <LongTextControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -111,15 +103,13 @@ describe('<LongTextControl />', () => {
       ...structuredClone(control),
       editable: true,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <LongTextControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -134,15 +124,13 @@ describe('<LongTextControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <LongTextControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -170,15 +158,13 @@ describe('<LongTextControl />', () => {
       _translate('de', 'Edit', 'mandatoryValue') ||
       'mandatoryValue|Valeur obligatoire';
     const translations = [trans_EN, trans_FR, trans_DE];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <LongTextControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -198,15 +184,13 @@ describe('<LongTextControl />', () => {
       ...structuredClone(control),
       control_value: value,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <LongTextControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -220,15 +204,13 @@ describe('<LongTextControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <LongTextControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -245,15 +227,13 @@ describe('<LongTextControl />', () => {
       useRejection: { isRejected: true, rejectComments: [] },
       control_rejectable: { is_rejected: true, control_reject_comment: [] },
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <LongTextControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}

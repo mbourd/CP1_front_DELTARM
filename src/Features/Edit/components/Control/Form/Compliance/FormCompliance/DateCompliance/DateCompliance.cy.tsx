@@ -1,12 +1,12 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../../../../../cypress/support/component" />
+
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/Compliance/FormCompliance/DateCompliance/DateCompliance.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
 
 import { DateCompliance } from './DateCompliance';
 import { IApiComplianceFields } from '../../../../../../types';
@@ -32,7 +32,7 @@ describe('<DateCompliance />', () => {
     const _compliance = {
       ...structuredClone(compliance),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DateCompliance compliance={_compliance} fileId={''} controlId={''} />
       </SetupTestsComponents>,
@@ -46,7 +46,7 @@ describe('<DateCompliance />', () => {
     const _compliance = {
       ...structuredClone(compliance),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DateCompliance compliance={_compliance} fileId={''} controlId={''} />
       </SetupTestsComponents>,
@@ -64,7 +64,7 @@ describe('<DateCompliance />', () => {
     const _compliance = {
       ...structuredClone(compliance),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DateCompliance compliance={_compliance} fileId={''} controlId={''} />
       </SetupTestsComponents>,
@@ -95,7 +95,7 @@ describe('<DateCompliance />', () => {
       compliance_elm_value: '',
       compliance_elm_mandatory: true,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DateCompliance compliance={_compliance} fileId={''} controlId={''} />
       </SetupTestsComponents>,
@@ -112,7 +112,7 @@ describe('<DateCompliance />', () => {
       compliance_elm_value: '',
       compliance_elm_mandatory: true,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DateCompliance compliance={_compliance} fileId={''} controlId={''} />
       </SetupTestsComponents>,
@@ -134,7 +134,7 @@ describe('<DateCompliance />', () => {
       compliance_elm_value: '2023-03-23',
       compliance_elm_mandatory: true,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DateCompliance compliance={_compliance} fileId={''} controlId={''} />
       </SetupTestsComponents>,

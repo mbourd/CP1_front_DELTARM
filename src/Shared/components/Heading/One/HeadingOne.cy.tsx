@@ -1,20 +1,19 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../cypress/support/component" />
 
-import '../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Shared/components/Heading/One/HeadingOne.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
 
 import { HeadingOne } from './HeadingOne';
 
 describe('<HeadingOne />', () => {
   it('should render', () => {
     const title = 'Testing';
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <HeadingOne>{title}</HeadingOne>
       </SetupTestsComponents>,

@@ -1,25 +1,17 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../../../cypress/support/component" />
 
-import '../../../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/DateTime/DateTimeControl.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
-import {
-  _requestJWT,
-  _getEnv,
-  _escapeForRegExp,
-  _translate,
-} from '../../../../../../../cypress/utils';
+import { _translate } from '../../../../../../../cypress/utils';
 
 import { DateTimeControl } from './DateTimeControl';
-import { IApiControl, IChapter } from '../../../../types';
+import { IApiControl } from '../../../../types';
 import '../../../../../Edit/translations';
-import { translation } from '../../../../../../Services';
 
 describe('<DateTimeControl />', () => {
   const control: IApiControl = {
@@ -48,15 +40,13 @@ describe('<DateTimeControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DateTimeControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -71,15 +61,13 @@ describe('<DateTimeControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DateTimeControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -96,15 +84,13 @@ describe('<DateTimeControl />', () => {
       ...structuredClone(control),
       editable: false,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DateTimeControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -120,15 +106,13 @@ describe('<DateTimeControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DateTimeControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -145,15 +129,13 @@ describe('<DateTimeControl />', () => {
       ...structuredClone(control),
       editable: true,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DateTimeControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -182,15 +164,13 @@ describe('<DateTimeControl />', () => {
       _translate('de', 'Edit', 'mandatoryValue') ||
       'mandatoryValue|Valeur obligatoire';
     const translations = [trans_EN, trans_FR, trans_DE];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DateTimeControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -210,15 +190,13 @@ describe('<DateTimeControl />', () => {
       ...structuredClone(control),
       control_value: value,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DateTimeControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -234,15 +212,13 @@ describe('<DateTimeControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DateTimeControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -261,15 +237,13 @@ describe('<DateTimeControl />', () => {
       useRejection: { isRejected: true, rejectComments: [] },
       control_rejectable: { is_rejected: true, control_reject_comment: [] },
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DateTimeControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}

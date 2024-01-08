@@ -1,13 +1,15 @@
 // @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../cypress/support/component" />
+
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/DashboardDynamic/components/Metrics/SwitchMetric.cy.tsx"
 
 import React from 'react';
-import { ThemeProvider } from 'styled-components/macro';
 
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
-import { BPITheme, BPIGlobalStyle } from '../../../../Packages/Design';
 import { SwitchMetric } from './SwitchMetric';
 import { IIndicator } from '../types';
+import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
 
 describe('<SwitchMetric />', () => {
   it('Should render linear metric', () => {
@@ -21,15 +23,12 @@ describe('<SwitchMetric />', () => {
       style: 'linear',
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <SwitchMetric indicator={indicator} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <SwitchMetric indicator={indicator} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('LinearMetric').should('exist');
   });
   it('Should render circular metric', () => {
@@ -43,15 +42,12 @@ describe('<SwitchMetric />', () => {
       style: 'circular',
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <SwitchMetric indicator={indicator} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <SwitchMetric indicator={indicator} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('CircularMetric').should('exist');
   });
 
@@ -66,15 +62,12 @@ describe('<SwitchMetric />', () => {
       value: 23,
       style: 'circular',
     };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <SwitchMetric indicator={indicator} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <SwitchMetric indicator={indicator} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('CircularMetric').should('have.attr', 'title', hint);
   });
   it('Should have attribute with message hint', () => {
@@ -88,15 +81,12 @@ describe('<SwitchMetric />', () => {
       value: 23,
       style: 'linear',
     };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <SwitchMetric indicator={indicator} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <SwitchMetric indicator={indicator} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('LinearMetric').should('have.attr', 'title', hint);
   });
 
@@ -111,15 +101,12 @@ describe('<SwitchMetric />', () => {
       value: 23,
       style: 'linear',
     };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <SwitchMetric indicator={indicator} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <SwitchMetric indicator={indicator} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('LinearMetric').should('have.attr', 'title', hint);
     cy.react('LinearMetric').each(($el) => {
       cy.wrap($el).trigger('mouseover');
@@ -139,15 +126,12 @@ describe('<SwitchMetric />', () => {
       value: 23,
       style: 'circular',
     };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <SwitchMetric indicator={indicator} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <SwitchMetric indicator={indicator} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('CircularMetric').should('have.attr', 'title', hint);
     cy.react('CircularMetric').each(($el) => {
       cy.wrap($el).trigger('mouseover');
@@ -167,15 +151,12 @@ describe('<SwitchMetric />', () => {
       value: 23,
       style: 'circular',
     };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <SwitchMetric indicator={indicator} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <SwitchMetric indicator={indicator} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.get('p').should('contain.text', 'anytext');
   });
 
@@ -190,15 +171,12 @@ describe('<SwitchMetric />', () => {
       value: 23,
       style: 'linear',
     };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <SwitchMetric indicator={indicator} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <SwitchMetric indicator={indicator} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('LinearMetric').should('have.css', 'background-color', red);
   });
   it('Should have a bar color applied', () => {
@@ -212,15 +190,12 @@ describe('<SwitchMetric />', () => {
       value: 23,
       style: 'linear',
     };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <SwitchMetric indicator={indicator} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <SwitchMetric indicator={indicator} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('LinearMetric').should('have.css', 'color', red);
   });
 
@@ -235,15 +210,12 @@ describe('<SwitchMetric />', () => {
       value: 23,
       style: 'circular',
     };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <SwitchMetric indicator={indicator} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <SwitchMetric indicator={indicator} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('CircularMetric').should('have.css', 'color', red);
   });
 
@@ -258,15 +230,12 @@ describe('<SwitchMetric />', () => {
       value: 23,
       style: 'linear',
     };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <SwitchMetric indicator={indicator} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <SwitchMetric indicator={indicator} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.get('span._Tooltip').should('have.attr', 'title', info);
     cy.get('span._Tooltip').each(($el) => {
       cy.wrap($el).trigger('mouseover');

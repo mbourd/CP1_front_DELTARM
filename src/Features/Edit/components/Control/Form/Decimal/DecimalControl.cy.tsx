@@ -1,25 +1,17 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../../../cypress/support/component" />
 
-import '../../../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/Decimal/DecimalControl.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
-import {
-  _requestJWT,
-  _getEnv,
-  _escapeForRegExp,
-  _translate,
-} from '../../../../../../../cypress/utils';
+import { _translate } from '../../../../../../../cypress/utils';
 
 import { DecimalControl } from './DecimalControl';
-import { IApiControl, IChapter } from '../../../../types';
+import { IApiControl } from '../../../../types';
 import '../../../../../Edit/translations';
-import { translation } from '../../../../../../Services';
 import RandExp from 'randexp';
 
 describe('<DecimalControl />', () => {
@@ -54,15 +46,13 @@ describe('<DecimalControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DecimalControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -77,15 +67,13 @@ describe('<DecimalControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DecimalControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -102,15 +90,13 @@ describe('<DecimalControl />', () => {
       ...structuredClone(control),
       editable: false,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DecimalControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -124,15 +110,13 @@ describe('<DecimalControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DecimalControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -147,15 +131,13 @@ describe('<DecimalControl />', () => {
       ...structuredClone(control),
       editable: true,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DecimalControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -184,15 +166,13 @@ describe('<DecimalControl />', () => {
       _translate('de', 'Edit', 'mandatoryValue') ||
       'mandatoryValue|Valeur obligatoire';
     const translations = [trans_EN, trans_FR, trans_DE];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DecimalControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -212,15 +192,13 @@ describe('<DecimalControl />', () => {
       ...structuredClone(control),
       control_value: value,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DecimalControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -236,15 +214,13 @@ describe('<DecimalControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DecimalControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -263,15 +239,13 @@ describe('<DecimalControl />', () => {
       useRejection: { isRejected: true, rejectComments: [] },
       control_rejectable: { is_rejected: true, control_reject_comment: [] },
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DecimalControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -294,7 +268,7 @@ describe('<DecimalControl />', () => {
     };
     const randExpOpposite = new RandExp(oppositeRegex);
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DecimalControl
           context={'edit'}
@@ -333,7 +307,7 @@ describe('<DecimalControl />', () => {
     };
     const randExp = new RandExp(regex);
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DecimalControl
           context={'edit'}

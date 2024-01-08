@@ -1,43 +1,38 @@
 // @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../../cypress/support/component" />
+
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Manage/components/Card/Actions/Actions.cy.tsx"
 
 import React from 'react';
-import { ThemeProvider } from 'styled-components/macro';
-import { BPITheme, BPIGlobalStyle } from '../../../../../Packages/Design';
-
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
+import { SetupTestsComponents } from '../../../../../../cypress/utils/SetupTestsComponents';
 
 import { Actions } from './Actions';
 import { BrowserRouter } from 'react-router-dom';
 
 describe('<Actions />', () => {
   it('Should render', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <BrowserRouter>
-            <Actions id={'56'} context={'EDIT'} />
-          </BrowserRouter>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <BrowserRouter>
+          <Actions id={'56'} context={'EDIT'} />
+        </BrowserRouter>
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Actions').should('exist').should('be.visible');
   });
 
   it('Should have the correct border-bottom value for <a>', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <BrowserRouter>
-            <Actions id={'56'} context={'EDIT'} />
-          </BrowserRouter>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <BrowserRouter>
+          <Actions id={'56'} context={'EDIT'} />
+        </BrowserRouter>
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Actions')
       .find('a')
       .should('have.css', 'border-bottom', '1px dotted rgb(255, 205, 0)');

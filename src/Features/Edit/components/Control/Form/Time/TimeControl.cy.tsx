@@ -1,21 +1,15 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../../../cypress/support/component" />
 
-import '../../../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/Time/TimeControl.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
 
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
-import {
-  _requestJWT,
-  _getEnv,
-  _escapeForRegExp,
-} from '../../../../../../../cypress/utils';
-
 import { TimeControl } from './TimeControl';
-import { IApiControl, IChapter } from '../../../../types';
+import { IApiControl } from '../../../../types';
 
 describe('<TimeControl />', () => {
   const control: IApiControl = {
@@ -42,15 +36,13 @@ describe('<TimeControl />', () => {
 
   it('should render', () => {
     const _control: IApiControl = { ...control };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <TimeControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -58,7 +50,7 @@ describe('<TimeControl />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('TimeControl');
+    cy.react('TimeControl').should('exist');
   });
 
   it('should render error message if mandatory', () => {
@@ -67,15 +59,13 @@ describe('<TimeControl />', () => {
       mandatory: true,
       editable: true,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <TimeControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -93,15 +83,13 @@ describe('<TimeControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <TimeControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -116,15 +104,13 @@ describe('<TimeControl />', () => {
       ...structuredClone(control),
       editable: false,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <TimeControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -139,15 +125,13 @@ describe('<TimeControl />', () => {
       ...structuredClone(control),
       editable: true,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <TimeControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -164,15 +148,13 @@ describe('<TimeControl />', () => {
       useRejection: { isRejected: true, rejectComments: [] },
       control_rejectable: { is_rejected: true, control_reject_comment: [] },
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <TimeControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -187,15 +169,13 @@ describe('<TimeControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <TimeControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -212,15 +192,13 @@ describe('<TimeControl />', () => {
       ...structuredClone(control),
       control_title: title,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <TimeControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}

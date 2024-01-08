@@ -1,10 +1,12 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../cypress/support/component" />
+
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Shared/components/MainHeader/IconsContainer/IconsContainer.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
-
-import { mount } from 'cypress/react18';
 import {
   _requestJWT,
   _getEnv,
@@ -52,7 +54,7 @@ describe('IconsContainer', () => {
   });
 
   it('Should render', () => {
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IconsContainer />
       </SetupTestsComponents>,
@@ -87,7 +89,7 @@ describe('IconsContainer', () => {
       getResourceTrans('de', 'MainHeader', 'reports') || 'reports';
     const translations = [trans_EN, trans_FR, trans_DE];
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IconsContainer />
       </SetupTestsComponents>,
@@ -137,7 +139,7 @@ describe('IconsContainer', () => {
       _escapeForRegExp('F.A.Q');
     const translations = [trans_EN, trans_FR, trans_DE];
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IconsContainer />
       </SetupTestsComponents>,

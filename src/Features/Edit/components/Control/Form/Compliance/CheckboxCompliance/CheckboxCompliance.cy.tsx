@@ -1,31 +1,24 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../../../../cypress/support/component" />
 
-import '../../../../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/Compliance/CheckboxCompliance/CheckboxCompliance.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
-import {
-  _requestJWT,
-  _getEnv,
-  _escapeForRegExp,
-} from '../../../../../../../../cypress/utils';
 
 import { CheckboxCompliance } from './CheckboxCompliance';
 
 describe('<CheckboxCompliance />', () => {
   it('should render', () => {
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <CheckboxCompliance
           label={''}
           checked={false}
           controlId={''}
-          setIsResolved={function (value: React.SetStateAction<boolean>): void {
+          setIsResolved={function (): void {
             throw new Error('Function not implemented.');
           }}
           checkedColor={'text'}
@@ -39,13 +32,13 @@ describe('<CheckboxCompliance />', () => {
 
   it('should render with label', () => {
     const label = 'Hello';
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <CheckboxCompliance
           label={label}
           checked={false}
           controlId={''}
-          setIsResolved={function (value: React.SetStateAction<boolean>): void {
+          setIsResolved={function (): void {
             throw new Error('Function not implemented.');
           }}
           checkedColor={'text'}
@@ -61,13 +54,13 @@ describe('<CheckboxCompliance />', () => {
   });
 
   it('should be checked', () => {
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <CheckboxCompliance
           label={''}
           checked={true}
           controlId={''}
-          setIsResolved={function (value: React.SetStateAction<boolean>): void {
+          setIsResolved={function (): void {
             throw new Error('Function not implemented.');
           }}
           checkedColor={'text'}
@@ -81,13 +74,13 @@ describe('<CheckboxCompliance />', () => {
       .should('be.checked');
   });
   it('should not be checked', () => {
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <CheckboxCompliance
           label={''}
           checked={false}
           controlId={''}
-          setIsResolved={function (value: React.SetStateAction<boolean>): void {
+          setIsResolved={function (): void {
             throw new Error('Function not implemented.');
           }}
           checkedColor={'text'}

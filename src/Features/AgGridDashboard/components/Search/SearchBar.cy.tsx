@@ -1,8 +1,11 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../cypress/support/component" />
+
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/AgGridDashboard/components/Search/SearchBar.cy.tsx"
 
 import React from 'react';
-import { mount } from 'cypress/react18';
 
 import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
 
@@ -38,7 +41,7 @@ describe('<SearchBar />', () => {
       },
     ];
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SearchBar
           setIsModalOpen={() => false}
@@ -82,7 +85,7 @@ describe('<SearchBar />', () => {
       },
     ];
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SearchBar
           setIsModalOpen={() => false}
@@ -131,7 +134,7 @@ describe('<SearchBar />', () => {
       },
     ];
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SearchBar
           setIsModalOpen={() => false}

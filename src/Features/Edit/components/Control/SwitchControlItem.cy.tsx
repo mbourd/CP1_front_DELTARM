@@ -2,8 +2,10 @@
 /// <reference types="cypress" />
 /// <reference types="../../../../../cypress/support/component" />
 
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/SwitchControlItem.cy.tsx"
+
 import React from 'react';
-import { mount } from 'cypress/react18';
 
 import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
 
@@ -494,7 +496,7 @@ describe('', () => {
       control_type: 'text',
     };
     const _chapters = [...structuredClone(chapters)];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SwitchControlItem
           control={_control}
@@ -518,7 +520,7 @@ describe('', () => {
       control_type: 'email',
     };
     const _chapters = [...structuredClone(chapters)];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SwitchControlItem
           control={_control}
@@ -543,7 +545,7 @@ describe('', () => {
       control_type: 'auth_num',
     };
     const _chapters = [...structuredClone(chapters)];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SwitchControlItem
           control={_control}
@@ -568,7 +570,7 @@ describe('', () => {
       control_type: 'formula',
     };
     const _chapters = [...structuredClone(chapters)];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SwitchControlItem
           control={_control}
@@ -593,7 +595,7 @@ describe('', () => {
       control_type: 'select_list',
     };
     const _chapters = [...structuredClone(chapters)];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SwitchControlItem
           control={_control}
@@ -617,7 +619,7 @@ describe('', () => {
       control_type: 'multiple_list',
     };
     const _chapters = [...structuredClone(chapters)];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SwitchControlItem
           control={_control}
@@ -641,7 +643,7 @@ describe('', () => {
       control_type: 'radio',
     };
     const _chapters = [...structuredClone(chapters)];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SwitchControlItem
           control={_control}
@@ -665,7 +667,7 @@ describe('', () => {
       control_type: 'checkbox',
     };
     const _chapters = [...structuredClone(chapters)];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SwitchControlItem
           control={_control}
@@ -689,7 +691,7 @@ describe('', () => {
       control_type: 'financial',
     };
     const _chapters = [...structuredClone(chapters)];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SwitchControlItem
           control={_control}
@@ -713,7 +715,7 @@ describe('', () => {
       control_type: 'integer',
     };
     const _chapters = [...structuredClone(chapters)];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SwitchControlItem
           control={_control}
@@ -737,7 +739,7 @@ describe('', () => {
       control_type: 'decimal',
     };
     const _chapters = [...structuredClone(chapters)];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SwitchControlItem
           control={_control}
@@ -761,7 +763,7 @@ describe('', () => {
       control_type: 'date',
     };
     const _chapters = [...structuredClone(chapters)];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SwitchControlItem
           control={_control}
@@ -785,7 +787,7 @@ describe('', () => {
       control_type: 'time',
     };
     const _chapters = [...structuredClone(chapters)];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SwitchControlItem
           control={_control}
@@ -809,7 +811,7 @@ describe('', () => {
       control_type: 'timestamp',
     };
     const _chapters = [...structuredClone(chapters)];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SwitchControlItem
           control={_control}
@@ -833,7 +835,7 @@ describe('', () => {
       control_type: 'comment',
     };
     const _chapters = [...structuredClone(chapters)];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SwitchControlItem
           control={_control}
@@ -857,7 +859,7 @@ describe('', () => {
       control_type: 'long_text',
     };
     const _chapters = [...structuredClone(chapters)];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SwitchControlItem
           control={_control}
@@ -881,7 +883,7 @@ describe('', () => {
       control_type: 'percent',
     };
     const _chapters = [...structuredClone(chapters)];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SwitchControlItem
           control={_control}
@@ -905,7 +907,7 @@ describe('', () => {
       control_type: 'slider',
     };
     const _chapters = [...structuredClone(chapters)];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SwitchControlItem
           control={_control}
@@ -928,7 +930,7 @@ describe('', () => {
       control_type: 'boolean',
     };
     const _chapters = [...structuredClone(chapters)];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SwitchControlItem
           control={_control}
@@ -951,7 +953,7 @@ describe('', () => {
       control_type: 'data_grid',
     };
     const _chapters = [...structuredClone(chapters)];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SwitchControlItem
           control={_control}
@@ -1401,7 +1403,7 @@ describe('', () => {
       control_type: 'ag_datagrid',
     } as any as IApiControl;
     const _chapters = [...structuredClone(chapters)];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SwitchControlItem
           control={_control}
@@ -1421,7 +1423,7 @@ describe('', () => {
       control_type: 'jodit_rich_text',
     };
     const _chapters = [...structuredClone(chapters)];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SwitchControlItem
           control={_control}
@@ -1441,7 +1443,7 @@ describe('', () => {
       control_type: 'rich_text',
     };
     const _chapters = [...structuredClone(chapters)];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SwitchControlItem
           control={_control}
@@ -1464,7 +1466,7 @@ describe('', () => {
       control_type: 'file_upload',
     };
     const _chapters = [...structuredClone(chapters)];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SwitchControlItem
           control={_control}
@@ -1487,7 +1489,7 @@ describe('', () => {
       control_type: 'info_block',
     };
     const _chapters = [...structuredClone(chapters)];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SwitchControlItem
           control={_control}
@@ -1510,7 +1512,7 @@ describe('', () => {
       control_type: 'line_break',
     };
     const _chapters = [...structuredClone(chapters)];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SwitchControlItem
           control={_control}

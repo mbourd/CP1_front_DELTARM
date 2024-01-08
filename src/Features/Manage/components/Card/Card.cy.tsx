@@ -1,49 +1,44 @@
 // @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../cypress/support/component" />
+
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Manage/components/Card/Card.cy.tsx"
 
 import React from 'react';
-import { ThemeProvider } from 'styled-components/macro';
-import { BPITheme, BPIGlobalStyle } from '../../../../Packages/Design';
-
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
+import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
 
 import { Card } from './Card';
 import { BrowserRouter } from 'react-router-dom';
 
 describe('<Card />', () => {
   it('Should render', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <BrowserRouter>
-            <Card id={''} color={''} data={[]} context={undefined} />
-          </BrowserRouter>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <BrowserRouter>
+          <Card id={''} color={''} data={[]} context={undefined} />
+        </BrowserRouter>
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Card').should('exist').should('be.visible');
   });
 
   it('Should render data', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <BrowserRouter>
-            <Card
-              id={''}
-              color={''}
-              data={[{ value: 'value1', label: 'label1' }]}
-              context={undefined}
-              comments={1}
-            />
-          </BrowserRouter>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <BrowserRouter>
+          <Card
+            id={''}
+            color={''}
+            data={[{ value: 'value1', label: 'label1' }]}
+            context={undefined}
+            comments={1}
+          />
+        </BrowserRouter>
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Card')
       .react('Body')
       .react('FormLabel')
@@ -57,27 +52,24 @@ describe('<Card />', () => {
   });
 
   it('Should render the correct number of data', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <BrowserRouter>
-            <Card
-              id={''}
-              color={''}
-              data={[
-                { value: 'value1', label: 'label1' },
-                { value: 'value2', label: 'label2' },
-                { value: 'value3', label: 'label3' },
-              ]}
-              context={undefined}
-              comments={0}
-            />
-          </BrowserRouter>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <BrowserRouter>
+          <Card
+            id={''}
+            color={''}
+            data={[
+              { value: 'value1', label: 'label1' },
+              { value: 'value2', label: 'label2' },
+              { value: 'value3', label: 'label3' },
+            ]}
+            context={undefined}
+            comments={0}
+          />
+        </BrowserRouter>
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Card')
       .react('Body')
       .react('FormLabel')
