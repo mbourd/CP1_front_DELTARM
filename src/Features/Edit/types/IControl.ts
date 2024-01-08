@@ -189,6 +189,7 @@ export type DataGridDetailOptionsType = {
   select_all_button_col_ref: `rdg_${number}`;
   select_all_button_display: boolean;
   unselect_all_button_display: boolean;
+  datagrid_font_size: string;
 };
 
 export interface IDataGridAgGridCol {
@@ -295,6 +296,7 @@ export type DataGridComponent =
   | 'checkbox_select_datagrid'
   | 'comment'
   | 'date'
+  | 'date_string'
   | 'decimal'
   | 'delete'
   | 'dynamic_select_list'
@@ -303,12 +305,14 @@ export type DataGridComponent =
   | 'formula'
   | 'icon'
   | 'integer'
+  | 'innerHTML'
   | 'long_text'
   | 'multiple_list'
   | 'percent'
   | 'radio'
   | 'select_list'
-  | 'text';
+  | 'text'
+  | 'text_alt';
 
 export interface IApiControl {
   control_desc_1: string | null;

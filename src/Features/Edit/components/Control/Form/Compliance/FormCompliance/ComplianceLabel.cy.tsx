@@ -1,19 +1,12 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../../../../cypress/support/component" />
 
-import '../../../../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/DataGrid/DataGridControlAgGrid.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
-import {
-  _requestJWT,
-  _getEnv,
-  _escapeForRegExp,
-} from '../../../../../../../../cypress/utils';
 
 import { ComplianceLabel } from './ComplianceLabel';
 import { IApiComplianceFields } from '../../../../../types';
@@ -30,13 +23,14 @@ describe('ComplianceLabel', () => {
     compliance_elm_value: '',
     compliance_id: '',
     compliance_file_detail: null,
+    compliance_elm_mandatory: false,
   };
 
   it('should render', () => {
     const _compliance = {
       ...structuredClone(compliance),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <ComplianceLabel compliance={_compliance} />
       </SetupTestsComponents>,
@@ -51,7 +45,7 @@ describe('ComplianceLabel', () => {
       ...structuredClone(compliance),
       compliance_elm_desc_1: title,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <ComplianceLabel compliance={_compliance} />
       </SetupTestsComponents>,
@@ -76,7 +70,7 @@ describe('ComplianceLabel', () => {
       ...structuredClone(compliance),
       compliance_elm_lib: title,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <ComplianceLabel compliance={_compliance} />
       </SetupTestsComponents>,

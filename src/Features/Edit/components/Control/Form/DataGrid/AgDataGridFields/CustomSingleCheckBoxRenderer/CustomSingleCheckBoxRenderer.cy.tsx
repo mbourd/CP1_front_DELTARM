@@ -1,15 +1,12 @@
 // @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../../../../../cypress/support/component" />
+
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/DataGrid/AgDataGridFields/CustomSingleCheckBoxRenderer/CustomSingleCheckBoxRenderer.cy.tsx"
 
 import React, { useState } from 'react';
-import { ThemeProvider } from 'styled-components/macro';
-
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
-
-import {
-  BPITheme,
-  BPIGlobalStyle,
-} from '../../../../../../../../Packages/Design';
+import { SetupTestsComponents } from '../../../../../../../../../cypress/utils/SetupTestsComponents';
 import CustomSingleCheckboxRender from './CustomSingleCheckBoxRenderer';
 
 describe('<CustomSingleCheckboxRender />', () => {
@@ -17,40 +14,34 @@ describe('<CustomSingleCheckboxRender />', () => {
     const props = {
       data: { row_editable: true },
       value: '1',
-      setValue: (v: any) => {
+      setValue: () => {
         return undefined;
       },
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <CustomSingleCheckboxRender props={props} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <CustomSingleCheckboxRender props={props} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(10000, '#root');
+    cy.waitReactApp();
     cy.react('CustomSingleCheckboxRender').should('exist');
   });
   it('Should not render', () => {
     const props = {
       data: { row_editable: false },
       value: '1',
-      setValue: (v: any) => {
+      setValue: () => {
         return undefined;
       },
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <CustomSingleCheckboxRender props={props} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <CustomSingleCheckboxRender props={props} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(10000, '#root');
+    cy.waitReactApp();
     cy.react('CustomSingleCheckboxRender', { options: { timeout: 1 } }).should(
       'not.exist',
     );
@@ -60,20 +51,17 @@ describe('<CustomSingleCheckboxRender />', () => {
     const props = {
       data: { row_editable: true },
       value: '1',
-      setValue: (v: any) => {
+      setValue: () => {
         return undefined;
       },
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <CustomSingleCheckboxRender props={props} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <CustomSingleCheckboxRender props={props} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(10000, '#root');
+    cy.waitReactApp();
     cy.react('CustomSingleCheckboxRender')
       .find('input[type="checkbox"]')
       .should('have.attr', 'checked');
@@ -82,20 +70,17 @@ describe('<CustomSingleCheckboxRender />', () => {
     const props = {
       data: { row_editable: true },
       value: '0',
-      setValue: (v: any) => {
+      setValue: () => {
         return undefined;
       },
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <CustomSingleCheckboxRender props={props} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <CustomSingleCheckboxRender props={props} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(10000, '#root');
+    cy.waitReactApp();
     cy.react('CustomSingleCheckboxRender')
       .find('input[type="checkbox"]')
       .should('not.have.attr', 'checked');
@@ -116,28 +101,25 @@ describe('<CustomSingleCheckboxRender />', () => {
       };
 
       return (
-        <div id="root">
-          <ThemeProvider theme={BPITheme}>
-            <BPIGlobalStyle />
-            <CustomSingleCheckboxRender props={props} />
-          </ThemeProvider>
-        </div>
+        <SetupTestsComponents>
+          <CustomSingleCheckboxRender props={props} />
+        </SetupTestsComponents>
       );
     };
 
-    mount(<DummyFC />);
-    cy.waitForReact(10000, '#root');
+    cy.mount(<DummyFC />);
+    cy.waitReactApp();
     cy.react('CustomSingleCheckboxRender')
-      .get('input[type="checkbox"]')
+      .find('input[type="checkbox"]')
       .check()
-      .then(($el) => {
+      .then(() => {
         expect(val).to.equal('1');
       })
       .should('be.checked');
     cy.react('CustomSingleCheckboxRender')
-      .get('input[type="checkbox"]')
+      .find('input[type="checkbox"]')
       .uncheck()
-      .then(($el) => {
+      .then(() => {
         expect(val).to.equal('0');
       })
       .should('not.be.checked');

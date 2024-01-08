@@ -2,8 +2,10 @@
 /// <reference types="cypress" />
 /// <reference types="../../../../../../cypress/support/component" />
 
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Packages/Design/components/Button/Base/Button.cy.tsx"
+
 import React from 'react';
-import { mount } from 'cypress/react18';
 
 import { Button } from './Button';
 import { _hexToRgb } from '../../../../../../cypress/utils';
@@ -11,7 +13,7 @@ import { SetupTestsComponents } from '../../../../../../cypress/utils/SetupTests
 
 describe('<Button />', () => {
   it('Should render', () => {
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <Button />
       </SetupTestsComponents>,
@@ -26,7 +28,7 @@ describe('<Button />', () => {
       bg_color: '#FA2350',
       font_color: '#FFBBFF',
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <Button
           style={{ backgroundColor: cell.bg_color, color: cell.font_color }}
@@ -52,7 +54,7 @@ describe('<Button />', () => {
 
   it('Should render children as text', function () {
     const children = 'HELLO WORLD';
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <Button>{children}</Button>
       </SetupTestsComponents>,

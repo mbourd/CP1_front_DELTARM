@@ -1,17 +1,18 @@
 // @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../cypress/support/component" />
+
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Dashboard/components/Card/Card.cy.tsx"
 
 import React from 'react';
-import { ThemeProvider } from 'styled-components/macro';
-import { BPITheme, BPIGlobalStyle } from '../../../../Packages/Design';
-
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
 
 import { Card } from './Card';
 import { ICardBody, ICardFooter, ICardHeader } from './types';
 import { BrowserRouter } from 'react-router-dom';
 
 import '../../../Manage/routes';
+import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
 
 describe('<Card />', () => {
   it('Should render', () => {
@@ -39,22 +40,14 @@ describe('<Card />', () => {
       children: <>children footer</>,
       role: 0,
     };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <BrowserRouter>
-            <Card
-              header={header}
-              body={body}
-              footer={footer}
-              context={'EDIT'}
-            />
-          </BrowserRouter>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <BrowserRouter>
+          <Card header={header} body={body} footer={footer} context={'EDIT'} />
+        </BrowserRouter>
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Card').should('exist').should('be.visible');
     cy.react('Card')
       .react('Header')
@@ -108,22 +101,14 @@ describe('<Card />', () => {
       children: <>children footer</>,
       role: 0,
     };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <BrowserRouter>
-            <Card
-              header={header}
-              body={body}
-              footer={footer}
-              context={'EDIT'}
-            />
-          </BrowserRouter>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <BrowserRouter>
+          <Card header={header} body={body} footer={footer} context={'EDIT'} />
+        </BrowserRouter>
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Card').should('exist').should('be.visible');
     cy.react('Card').react('Header').should('exist').should('be.visible');
     cy.react('Card').react('Body').should('exist').should('be.visible');
@@ -164,22 +149,14 @@ describe('<Card />', () => {
       children: <>children footer</>,
       role: 0,
     };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <BrowserRouter>
-            <Card
-              header={header}
-              body={body}
-              footer={footer}
-              context={'EDIT'}
-            />
-          </BrowserRouter>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <BrowserRouter>
+          <Card header={header} body={body} footer={footer} context={'EDIT'} />
+        </BrowserRouter>
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Card').should('exist').should('be.visible');
     cy.react('Card').react('Header').should('exist').should('be.visible');
     cy.react('Card')
@@ -218,22 +195,14 @@ describe('<Card />', () => {
       children: <DummyFCFooter />,
       role: 0,
     };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <BrowserRouter>
-            <Card
-              header={header}
-              body={body}
-              footer={footer}
-              context={'EDIT'}
-            />
-          </BrowserRouter>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <BrowserRouter>
+          <Card header={header} body={body} footer={footer} context={'EDIT'} />
+        </BrowserRouter>
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Card').should('exist').should('be.visible');
     cy.react('Card').react('Header').should('exist').should('be.visible');
     cy.react('Card')

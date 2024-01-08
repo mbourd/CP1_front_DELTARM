@@ -1,25 +1,20 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../cypress/support/component" />
 
-import '../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Shared/components/MainHeader/FlagsContainer/FlagsContainer.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
-
-import { mount } from 'cypress/react18';
-import {
-  _requestJWT,
-  _getEnv,
-  _escapeForRegExp,
-  _translate,
-} from '../../../../../cypress/utils';
+import { _translate } from '../../../../../cypress/utils';
 
 import { FlagsContainer } from './FlagsContainer';
 import '../../../../Shared/components/MainHeader/translations';
 
 describe('<FlagsContainer />', () => {
   it('should render', () => {
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <FlagsContainer />
       </SetupTestsComponents>,
@@ -31,7 +26,7 @@ describe('<FlagsContainer />', () => {
   it('Should have title attribute for french and english', () => {
     const langs = ['french', 'english'];
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <FlagsContainer />
       </SetupTestsComponents>,

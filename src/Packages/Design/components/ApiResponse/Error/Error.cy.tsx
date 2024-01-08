@@ -1,39 +1,36 @@
 // @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../../cypress/support/component" />
+
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Packages/Design/components/ApiResponse/Error/Error.cy.tsx"
 
 import React from 'react';
-import { ThemeProvider } from 'styled-components/macro';
 
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
-import { BPITheme, BPIGlobalStyle } from '../../../../../Packages/Design';
+import { BPITheme } from '../../../../../Packages/Design';
+import { SetupTestsComponents } from '../../../../../../cypress/utils/SetupTestsComponents';
 import { Error } from './Error';
 // @ts-ignore
 import icon from '../../../../../Shared/components/NotFoundComponent/error404.svg';
 
-describe('<NotFoundComponent />', () => {
+describe('<Error />', () => {
   it('Should render', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Error />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Error />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Error').should('exist');
   });
 
   it('Should render icon', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Error icon={icon} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Error icon={icon} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Error').should('exist');
     cy.react('Error').find('._ErrorPicture');
   });
@@ -45,15 +42,12 @@ describe('<NotFoundComponent />', () => {
       spacing: { ...BPITheme.spacing, small },
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={_BPITheme}>
-          <BPIGlobalStyle />
-          <Error size="sm" icon={icon} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents theme={_BPITheme}>
+        <Error size="sm" icon={icon} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Error').should('exist');
     cy.react('Error')
       .find('._ErrorIcon')
@@ -67,15 +61,12 @@ describe('<NotFoundComponent />', () => {
       spacing: { ...BPITheme.spacing, normal },
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={_BPITheme}>
-          <BPIGlobalStyle />
-          <Error size="md" icon={icon} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents theme={_BPITheme}>
+        <Error size="md" icon={icon} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Error').should('exist');
     cy.react('Error')
       .find('._ErrorIcon')
@@ -89,15 +80,12 @@ describe('<NotFoundComponent />', () => {
       spacing: { ...BPITheme.spacing, xLarge },
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={_BPITheme}>
-          <BPIGlobalStyle />
-          <Error icon={icon} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents theme={_BPITheme}>
+        <Error icon={icon} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Error').should('exist');
     cy.react('Error')
       .find('._ErrorIcon')
@@ -112,15 +100,12 @@ describe('<NotFoundComponent />', () => {
       spacing: { ...BPITheme.spacing, small },
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={_BPITheme}>
-          <BPIGlobalStyle />
-          <Error icon={icon} size="sm" title={title} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents theme={_BPITheme}>
+        <Error icon={icon} size="sm" title={title} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Error').should('exist');
     cy.react('Error')
       .find('._ErrorIcon')
@@ -135,15 +120,12 @@ describe('<NotFoundComponent />', () => {
       spacing: { ...BPITheme.spacing, normal },
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={_BPITheme}>
-          <BPIGlobalStyle />
-          <Error icon={icon} size="md" title={title} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents theme={_BPITheme}>
+        <Error icon={icon} size="md" title={title} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Error').should('exist');
     cy.react('Error')
       .find('._ErrorIcon')
@@ -158,15 +140,12 @@ describe('<NotFoundComponent />', () => {
       spacing: { ...BPITheme.spacing, xLarge },
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={_BPITheme}>
-          <BPIGlobalStyle />
-          <Error icon={icon} title={title} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents theme={_BPITheme}>
+        <Error icon={icon} title={title} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Error').should('exist');
     cy.react('Error')
       .find('._ErrorIcon')
@@ -182,15 +161,12 @@ describe('<NotFoundComponent />', () => {
       spacing: { ...BPITheme.spacing, small },
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={_BPITheme}>
-          <BPIGlobalStyle />
-          <Error icon={icon} size={'sm'} message={title} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents theme={_BPITheme}>
+        <Error icon={icon} size={'sm'} message={title} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Error').should('exist');
     cy.react('Error')
       .find('._ErrorIcon')
@@ -205,15 +181,12 @@ describe('<NotFoundComponent />', () => {
       spacing: { ...BPITheme.spacing, normal },
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={_BPITheme}>
-          <BPIGlobalStyle />
-          <Error icon={icon} size={'md'} message={title} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents theme={_BPITheme}>
+        <Error icon={icon} size={'md'} message={title} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Error').should('exist');
     cy.react('Error')
       .find('._ErrorIcon')
@@ -228,15 +201,12 @@ describe('<NotFoundComponent />', () => {
       spacing: { ...BPITheme.spacing, xLarge },
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={_BPITheme}>
-          <BPIGlobalStyle />
-          <Error icon={icon} message={title} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents theme={_BPITheme}>
+        <Error icon={icon} message={title} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Error').should('exist');
     cy.react('Error')
       .find('._ErrorIcon')

@@ -1,15 +1,12 @@
 // @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../../../../../cypress/support/component" />
+
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/DataGrid/AgDataGridFields/CustomDateRenderer/CustomDateRenderer.cy.tsx"
 
 import React from 'react';
-import { ThemeProvider } from 'styled-components/macro';
-
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
-
-import {
-  BPITheme,
-  BPIGlobalStyle,
-} from '../../../../../../../../Packages/Design';
+import { SetupTestsComponents } from '../../../../../../../../../cypress/utils/SetupTestsComponents';
 import CustomDateRenderer from './CustomDateRenderer';
 import { _requestJWT } from '../../../../../../../../../cypress/utils';
 
@@ -50,24 +47,21 @@ describe('<CustomDateRenderer />', () => {
         },
       },
       value: '2023-06-28',
-      setValue: (v: string) => undefined,
+      setValue: () => undefined,
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <CustomDateRenderer
-            props={props}
-            control={control}
-            fileId={'18aafcb7-803b-4abb-9045-2e3589864574'}
-            jwt={jwt}
-            seterrors={() => undefined}
-          />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <CustomDateRenderer
+          props={props}
+          control={control}
+          fileId={'18aafcb7-803b-4abb-9045-2e3589864574'}
+          jwt={jwt}
+          seterrors={() => undefined}
+        />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('CustomDateRenderer').should('exist');
     cy.react('CustomDateRenderer')
       .find('input[type="date"]')
@@ -102,24 +96,21 @@ describe('<CustomDateRenderer />', () => {
         },
       },
       value: '2023-06-28',
-      setValue: (v: string) => undefined,
+      setValue: () => undefined,
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <CustomDateRenderer
-            props={props}
-            control={control}
-            fileId={'18aafcb7-803b-4abb-9045-2e3589864574'}
-            jwt={jwt}
-            seterrors={() => undefined}
-          />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <CustomDateRenderer
+          props={props}
+          control={control}
+          fileId={'18aafcb7-803b-4abb-9045-2e3589864574'}
+          jwt={jwt}
+          seterrors={() => undefined}
+        />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('CustomDateRenderer')
       .find('input[type="date"]')
       .should('have.css', 'font-size', fontSize + 'px');
@@ -152,24 +143,21 @@ describe('<CustomDateRenderer />', () => {
         },
       },
       value: defaultValue,
-      setValue: (v: string) => undefined,
+      setValue: () => undefined,
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <CustomDateRenderer
-            props={props}
-            control={control}
-            fileId={'18aafcb7-803b-4abb-9045-2e3589864574'}
-            jwt={jwt}
-            seterrors={() => undefined}
-          />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <CustomDateRenderer
+          props={props}
+          control={control}
+          fileId={'18aafcb7-803b-4abb-9045-2e3589864574'}
+          jwt={jwt}
+          seterrors={() => undefined}
+        />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('CustomDateRenderer')
       .find('input[type="date"]')
       .then(($el) => {
@@ -204,24 +192,21 @@ describe('<CustomDateRenderer />', () => {
         },
       },
       value: '2023-06-28',
-      setValue: (v: string) => undefined,
+      setValue: () => undefined,
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <CustomDateRenderer
-            props={props}
-            control={control}
-            fileId={'18aafcb7-803b-4abb-9045-2e3589864574'}
-            jwt={jwt}
-            seterrors={() => undefined}
-          />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <CustomDateRenderer
+          props={props}
+          control={control}
+          fileId={'18aafcb7-803b-4abb-9045-2e3589864574'}
+          jwt={jwt}
+          seterrors={() => undefined}
+        />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('CustomDateRenderer')
       .find('input[type="date"]')
       .should('have.attr', 'min', minDate);
@@ -253,24 +238,21 @@ describe('<CustomDateRenderer />', () => {
         },
       },
       value: '2023-06-28',
-      setValue: (v: string) => undefined,
+      setValue: () => undefined,
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <CustomDateRenderer
-            props={props}
-            control={control}
-            fileId={'18aafcb7-803b-4abb-9045-2e3589864574'}
-            jwt={jwt}
-            seterrors={() => undefined}
-          />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <CustomDateRenderer
+          props={props}
+          control={control}
+          fileId={'18aafcb7-803b-4abb-9045-2e3589864574'}
+          jwt={jwt}
+          seterrors={() => undefined}
+        />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('CustomDateRenderer')
       .find('input[type="date"]')
       .should('have.attr', 'min', defaultMinDate);
@@ -303,24 +285,21 @@ describe('<CustomDateRenderer />', () => {
         },
       },
       value: '2023-06-28',
-      setValue: (v: string) => undefined,
+      setValue: () => undefined,
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <CustomDateRenderer
-            props={props}
-            control={control}
-            fileId={'18aafcb7-803b-4abb-9045-2e3589864574'}
-            jwt={jwt}
-            seterrors={() => undefined}
-          />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <CustomDateRenderer
+          props={props}
+          control={control}
+          fileId={'18aafcb7-803b-4abb-9045-2e3589864574'}
+          jwt={jwt}
+          seterrors={() => undefined}
+        />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('CustomDateRenderer')
       .find('input[type="date"]')
       .should('have.attr', 'max', maxDate);
@@ -352,31 +331,27 @@ describe('<CustomDateRenderer />', () => {
         },
       },
       value: '2023-06-28',
-      setValue: (v: string) => undefined,
+      setValue: () => undefined,
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <CustomDateRenderer
-            props={props}
-            control={control}
-            fileId={'18aafcb7-803b-4abb-9045-2e3589864574'}
-            jwt={jwt}
-            seterrors={() => undefined}
-          />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <CustomDateRenderer
+          props={props}
+          control={control}
+          fileId={'18aafcb7-803b-4abb-9045-2e3589864574'}
+          jwt={jwt}
+          seterrors={() => undefined}
+        />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('CustomDateRenderer')
       .find('input[type="date"]')
       .should('have.attr', 'max', defaultMaxDate);
   });
 
   it('Should not be disabled', () => {
-    const defaultMaxDate = '2270-05-12';
     const control = {
       data_grid_detail: {
         datagrid_options: {
@@ -402,31 +377,27 @@ describe('<CustomDateRenderer />', () => {
         },
       },
       value: '2023-06-28',
-      setValue: (v: string) => undefined,
+      setValue: () => undefined,
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <CustomDateRenderer
-            props={props}
-            control={control}
-            fileId={'18aafcb7-803b-4abb-9045-2e3589864574'}
-            jwt={jwt}
-            seterrors={() => undefined}
-          />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <CustomDateRenderer
+          props={props}
+          control={control}
+          fileId={'18aafcb7-803b-4abb-9045-2e3589864574'}
+          jwt={jwt}
+          seterrors={() => undefined}
+        />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('CustomDateRenderer')
       .find('input[type="date"]')
       .should('not.have.attr', 'disabled');
   });
 
   it('Should be disabled', () => {
-    const defaultMaxDate = '2270-05-12';
     const control = {
       data_grid_detail: {
         datagrid_options: {
@@ -452,24 +423,21 @@ describe('<CustomDateRenderer />', () => {
         },
       },
       value: '2023-06-28',
-      setValue: (v: string) => undefined,
+      setValue: () => undefined,
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <CustomDateRenderer
-            props={props}
-            control={control}
-            fileId={'18aafcb7-803b-4abb-9045-2e3589864574'}
-            jwt={jwt}
-            seterrors={() => undefined}
-          />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <CustomDateRenderer
+          props={props}
+          control={control}
+          fileId={'18aafcb7-803b-4abb-9045-2e3589864574'}
+          jwt={jwt}
+          seterrors={() => undefined}
+        />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('CustomDateRenderer')
       .find('input[type="date"]')
       .should('have.attr', 'disabled');

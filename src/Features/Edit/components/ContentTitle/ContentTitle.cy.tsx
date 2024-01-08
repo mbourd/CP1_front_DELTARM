@@ -1,33 +1,31 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../cypress/support/component" />
 
-import '../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/ContentTitle/ContentTitle.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
 
 import { ContentTitle } from './ContentTitle';
 
 describe('<ContentTitle />', () => {
   it('should render', () => {
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <ContentTitle></ContentTitle>
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('ContentTitle');
+    cy.react('ContentTitle').should('exist');
   });
 
   it('should render React.FC as children', () => {
     const DummyFC: React.FC = () => {
       return <div id="dummyfcc">Hello world</div>;
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <ContentTitle>
           <DummyFC />
@@ -40,7 +38,7 @@ describe('<ContentTitle />', () => {
 
   it('should render text as children', () => {
     const text = 'Hello world';
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <ContentTitle>{text}</ContentTitle>
       </SetupTestsComponents>,

@@ -1,104 +1,84 @@
 // @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../../cypress/support/component" />
+
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/DashboardDynamic/components/Metrics/LinearMetric/LinearMetric.cy.tsx"
 
 import React from 'react';
-import { ThemeProvider } from 'styled-components/macro';
-
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
-import { BPITheme, BPIGlobalStyle } from '../../../../../Packages/Design';
+import { SetupTestsComponents } from '../../../../../../cypress/utils/SetupTestsComponents';
 import { LinearMetric } from './LinearMetric';
 
 describe('<LinearMetric />', () => {
   it('Should render', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <LinearMetric variant={undefined} value={0} hint={''} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <LinearMetric variant={undefined} value={0} hint={''} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('LinearMetric').should('exist');
   });
 
   it('Should render with variant = determinate', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <LinearMetric variant={'determinate'} value={0} hint={''} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <LinearMetric variant={'determinate'} value={0} hint={''} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('LinearMetric').should('exist');
   });
 
   it('Should render with variant = buffer', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <LinearMetric variant={'buffer'} value={0} hint={''} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <LinearMetric variant={'buffer'} value={0} hint={''} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('LinearMetric').should('exist');
   });
 
   it('Should render with variant = query', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <LinearMetric variant={'query'} value={0} hint={''} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <LinearMetric variant={'query'} value={0} hint={''} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('LinearMetric').should('exist');
   });
 
   it('Should render with variant = indeterminate', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <LinearMetric variant={'indeterminate'} value={0} hint={''} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <LinearMetric variant={'indeterminate'} value={0} hint={''} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('LinearMetric').should('exist');
   });
 
   it('Should have attribute with message', () => {
     const hintMsg = 'hello';
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <LinearMetric variant={undefined} value={0} hint={hintMsg} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <LinearMetric variant={undefined} value={0} hint={hintMsg} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('LinearMetric').should('have.attr', 'title', hintMsg);
   });
 
   it('Should render hint', () => {
     const hintMsg = 'hello';
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <LinearMetric variant={undefined} value={0} hint={hintMsg} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <LinearMetric variant={undefined} value={0} hint={hintMsg} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('LinearMetric').should('exist');
     cy.react('LinearMetric').each(($el) => {
       cy.wrap($el).trigger('mouseover');
@@ -111,15 +91,12 @@ describe('<LinearMetric />', () => {
   it('Should have a background color applied', () => {
     const red = 'rgb(255, 0, 0)';
     const style = { backgroundColor: red };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <LinearMetric variant={undefined} value={0} hint={''} style={style} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <LinearMetric variant={undefined} value={0} hint={''} style={style} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('LinearMetric').should('exist');
     cy.react('LinearMetric').should('have.css', 'background-color', red);
   });
@@ -127,15 +104,12 @@ describe('<LinearMetric />', () => {
   it('Should have a bar color applied', () => {
     const red = 'rgb(255, 0, 0)';
     const style = { color: red };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <LinearMetric variant={undefined} value={0} hint={''} style={style} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <LinearMetric variant={undefined} value={0} hint={''} style={style} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('LinearMetric').should('exist');
     cy.react('LinearMetric').should('have.css', 'color', red);
   });

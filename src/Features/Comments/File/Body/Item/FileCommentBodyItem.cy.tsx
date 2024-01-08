@@ -1,14 +1,12 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../../cypress/support/component" />
 
-import '../../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Comments/File/Body/Item/FileCommentBodyItem.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
 
 import { FileCommentBodyItem } from './FileCommentBodyItem';
 import { IFileComment } from '../../../types';
@@ -24,7 +22,7 @@ describe('<FileCommentBodyItem />', () => {
     const _comment: IFileComment = {
       ...structuredClone(comment),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <FileCommentBodyItem comment={_comment} />
       </SetupTestsComponents>,
@@ -41,7 +39,7 @@ describe('<FileCommentBodyItem />', () => {
       user,
       date,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <FileCommentBodyItem comment={_comment} />
       </SetupTestsComponents>,
@@ -58,7 +56,7 @@ describe('<FileCommentBodyItem />', () => {
       ...structuredClone(comment),
       message,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <FileCommentBodyItem comment={_comment} />
       </SetupTestsComponents>,
@@ -73,7 +71,7 @@ describe('<FileCommentBodyItem />', () => {
       ...structuredClone(comment),
       user,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <FileCommentBodyItem comment={_comment} />
       </SetupTestsComponents>,
