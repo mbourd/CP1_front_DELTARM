@@ -25,7 +25,7 @@ export const CustomSelectRendererStyled = styled.div`
 //   min-width: 150px;
 //   min-height: 30px;
 // `;
-export const CustomSelectStyled = styled(Select).attrs((props: any) => {
+export const CustomSelectStyled = styled(Select).attrs(() => {
   // console.log('H#llo', props.fontSize);
 
   return {

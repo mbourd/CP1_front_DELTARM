@@ -65,31 +65,31 @@ export const DateControl: React.FC<IProps> = ({
       .split('/')[0]
   }`;
 
-  const yesterday_date = `${
-    yesterday
-      .toLocaleString('en-GB', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      })
-      .split('/')[2]
-  }-${
-    yesterday
-      .toLocaleString('en-GB', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      })
-      .split('/')[1]
-  }-${
-    yesterday
-      .toLocaleString('en-GB', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      })
-      .split('/')[0]
-  }`;
+  // const yesterday_date = `${
+  //   yesterday
+  //     .toLocaleString('en-GB', {
+  //       year: 'numeric',
+  //       month: '2-digit',
+  //       day: '2-digit',
+  //     })
+  //     .split('/')[2]
+  // }-${
+  //   yesterday
+  //     .toLocaleString('en-GB', {
+  //       year: 'numeric',
+  //       month: '2-digit',
+  //       day: '2-digit',
+  //     })
+  //     .split('/')[1]
+  // }-${
+  //   yesterday
+  //     .toLocaleString('en-GB', {
+  //       year: 'numeric',
+  //       month: '2-digit',
+  //       day: '2-digit',
+  //     })
+  //     .split('/')[0]
+  // }`;
 
   const tomorrow_date = `${
     tomorrow
@@ -143,31 +143,31 @@ export const DateControl: React.FC<IProps> = ({
       .split('/')[0]
   }`;
 
-  const next_month_date = `${
-    next_month
-      .toLocaleString('en-GB', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      })
-      .split('/')[2]
-  }-${
-    next_month
-      .toLocaleString('en-GB', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      })
-      .split('/')[1]
-  }-${
-    next_month
-      .toLocaleString('en-GB', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      })
-      .split('/')[0]
-  }`;
+  // const next_month_date = `${
+  //   next_month
+  //     .toLocaleString('en-GB', {
+  //       year: 'numeric',
+  //       month: '2-digit',
+  //       day: '2-digit',
+  //     })
+  //     .split('/')[2]
+  // }-${
+  //   next_month
+  //     .toLocaleString('en-GB', {
+  //       year: 'numeric',
+  //       month: '2-digit',
+  //       day: '2-digit',
+  //     })
+  //     .split('/')[1]
+  // }-${
+  //   next_month
+  //     .toLocaleString('en-GB', {
+  //       year: 'numeric',
+  //       month: '2-digit',
+  //       day: '2-digit',
+  //     })
+  //     .split('/')[0]
+  // }`;
 
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);

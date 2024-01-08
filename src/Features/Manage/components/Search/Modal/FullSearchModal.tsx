@@ -25,7 +25,7 @@ export const FullSearchModal: FC<FullSearchModalProps> = ({
   const [trans] = useTrans('Manage');
   useEffect(() => {
     if (search) {
-      console.log('find me');
+      // console.log('find me');
       send('searchFileFull', {}, { search_value: search });
     }
   }, [send, search]);

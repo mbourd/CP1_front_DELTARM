@@ -64,9 +64,9 @@ export const SearchModal: React.FC<IProps> = ({
     // setprod_id(dat);
   }, [data]);
 
-  const setProduct = useCallback((values: Record<string, true>) => {
-    storage.setData('edit.selected.product', values);
-  }, []);
+  // const setProduct = useCallback((values: Record<string, true>) => {
+  //   storage.setData('edit.selected.product', values);
+  // }, []);
 
   const createFile = useCallback(() => {
     // const prod_id = Object.keys(

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
 import { DataGridDetailsRowsCell, IApiControl } from 'Features/Edit/types';
 
