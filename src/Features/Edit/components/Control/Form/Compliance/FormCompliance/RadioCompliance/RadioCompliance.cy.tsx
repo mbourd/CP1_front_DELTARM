@@ -1,14 +1,12 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../../../../../cypress/support/component" />
 
-import '../../../../../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/Compliance/FormCompliance/RadioCompliance/RadioCompliance.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
 
 import { RadioCompliance } from './RadioCompliance';
 import { IApiComplianceFields } from '../../../../../../types';
@@ -34,7 +32,7 @@ describe('<RadioCompliance />', () => {
     const _compliance = {
       ...structuredClone(compliance),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <RadioCompliance compliance={_compliance} fileId={''} controlId={''} />
       </SetupTestsComponents>,
@@ -48,7 +46,7 @@ describe('<RadioCompliance />', () => {
     const _compliance = {
       ...structuredClone(compliance),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <RadioCompliance compliance={_compliance} fileId={''} controlId={''} />
       </SetupTestsComponents>,
@@ -66,7 +64,7 @@ describe('<RadioCompliance />', () => {
     const _compliance = {
       ...structuredClone(compliance),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <RadioCompliance compliance={_compliance} fileId={''} controlId={''} />
       </SetupTestsComponents>,
@@ -97,7 +95,7 @@ describe('<RadioCompliance />', () => {
       compliance_elm_value: '',
       compliance_elm_mandatory: true,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <RadioCompliance compliance={_compliance} fileId={''} controlId={''} />
       </SetupTestsComponents>,

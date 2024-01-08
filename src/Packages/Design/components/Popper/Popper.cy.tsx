@@ -1,14 +1,13 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../cypress/support/component" />
 
-import '../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Packages/Design/components/Popper/Popper.cy.tsx"
 
 import React, { useRef, useState } from 'react';
+
 import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
-
 import { Popper } from './Popper';
 
 describe('<Popper />', () => {
@@ -37,7 +36,7 @@ describe('<Popper />', () => {
       );
     };
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DummyFC />
       </SetupTestsComponents>,
@@ -74,7 +73,7 @@ describe('<Popper />', () => {
       );
     };
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DummyFC />
       </SetupTestsComponents>,
@@ -113,7 +112,7 @@ describe('<Popper />', () => {
       );
     };
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DummyFC />
       </SetupTestsComponents>,
@@ -153,7 +152,7 @@ describe('<Popper />', () => {
       );
     };
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DummyFC />
       </SetupTestsComponents>,

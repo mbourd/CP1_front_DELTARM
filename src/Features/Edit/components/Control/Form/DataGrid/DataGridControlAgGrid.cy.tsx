@@ -6,7 +6,7 @@
 // yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/DataGrid/DataGridControlAgGrid.cy.tsx"
 
 import React from 'react';
-import { mount } from 'cypress/react18';
+import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
 
 import BigNumber from 'bignumber.js';
 import RandExp from 'randexp';
@@ -15,7 +15,6 @@ import { create as mathCreate, all as mathAll } from 'mathjs';
 import { RowNode } from 'ag-grid-community';
 import { keyCodeDefinitions } from 'cypress-real-events/keyCodeDefinitions';
 
-import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
 import { DataGridControlAgGrid } from './DataGridControlAgGrid';
 import {
   DataGridDetailsColumnType,
@@ -29,11 +28,6 @@ import {
   _getRandomNumberBetween,
   _hexToRgb,
 } from '../../../../../../../cypress/utils';
-
-// const assertionsToExecute = {
-//   // _assertCorrectNumberColumns: true,
-//   // _assertRenderExtraButtons: true,
-// };
 
 describe('<DataGridControlAgGrid />', () => {
   // int,dec,fin,perc
@@ -95,7 +89,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -113,7 +107,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     control_rejectable: null,
   //   };
   //   const columns = _control.data_grid_detail?.columns || [];
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid
   //         control={_control as any as IApiControl}
@@ -147,7 +141,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     // failing this test
   //     return false;
   //   });
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid
   //         control={_control as any as IApiControl}
@@ -181,7 +175,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     // failing this test
   //     return false;
   //   });
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid
   //         control={_control as any as IApiControl}
@@ -249,7 +243,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     control_rejectable: null,
   //   };
   //   cy.on('uncaught:exception', () => false);
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid
   //         control={_control as any as IApiControl}
@@ -292,7 +286,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   };
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -327,7 +321,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   };
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid
   //         control={_control as any as IApiControl}
@@ -365,7 +359,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   };
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid
   //         control={_control as any as IApiControl}
@@ -403,7 +397,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   };
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid
   //         control={_control as any as IApiControl}
@@ -441,7 +435,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   };
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid
   //         control={_control as any as IApiControl}
@@ -478,7 +472,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   };
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid
   //         control={_control as any as IApiControl}
@@ -498,7 +492,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid
   //         control={_control as any as IApiControl}
@@ -531,7 +525,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -548,7 +542,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -590,7 +584,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -606,7 +600,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -642,7 +636,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -689,7 +683,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -705,7 +699,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -721,7 +715,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -737,7 +731,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -766,7 +760,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -795,7 +789,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -824,7 +818,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -853,7 +847,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -899,7 +893,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   };
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid
   //         control={_control as any as IApiControl}
@@ -947,7 +941,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   };
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid
   //         control={_control as any as IApiControl}
@@ -967,7 +961,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   };
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid
   //         control={_control as any as IApiControl}
@@ -986,7 +980,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1004,7 +998,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1048,7 +1042,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1082,7 +1076,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1118,7 +1112,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   };
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid
   //         control={_control as any as IApiControl}
@@ -1157,7 +1151,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1202,7 +1196,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1236,7 +1230,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1270,7 +1264,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   };
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid
   //         control={_control as any as IApiControl}
@@ -1290,7 +1284,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1306,7 +1300,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1323,7 +1317,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1353,7 +1347,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1382,7 +1376,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1411,7 +1405,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   };
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid
   //         control={_control as any as IApiControl}
@@ -1449,7 +1443,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1483,7 +1477,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1516,7 +1510,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1546,7 +1540,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1567,7 +1561,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1584,7 +1578,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1600,7 +1594,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1616,7 +1610,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1632,7 +1626,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1649,7 +1643,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1665,7 +1659,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1693,7 +1687,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1720,7 +1714,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1728,6 +1722,24 @@ describe('<DataGridControlAgGrid />', () => {
   //   cy.waitReactApp();
   //   _assertResizableColumns(_control);
   // });
+
+  it('Should have styles applied for select_list choices options', function () {
+    const _control = {
+      ...structuredClone(controlExample5),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertSelectListOptionsStyles(_control);
+  });
+  return;
 
   it('Should have hidden columns by default', function () {
     const _control = {
@@ -1748,7 +1760,7 @@ describe('<DataGridControlAgGrid />', () => {
       rich_text_detail: null,
       control_rejectable: null,
     } as any as IApiControl;
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DataGridControlAgGrid control={_control} fileId={''} />
       </SetupTestsComponents>,
@@ -1765,7 +1777,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1792,7 +1804,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1819,7 +1831,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1846,7 +1858,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1874,7 +1886,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1901,7 +1913,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1929,7 +1941,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1956,7 +1968,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -1983,7 +1995,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -2011,7 +2023,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -2038,7 +2050,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -2067,7 +2079,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -2095,7 +2107,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -2123,7 +2135,7 @@ describe('<DataGridControlAgGrid />', () => {
       rich_text_detail: null,
       control_rejectable: null,
     } as any as IApiControl;
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DataGridControlAgGrid control={_control} fileId={''} />
       </SetupTestsComponents>,
@@ -2150,7 +2162,7 @@ describe('<DataGridControlAgGrid />', () => {
       rich_text_detail: null,
       control_rejectable: null,
     } as any as IApiControl;
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DataGridControlAgGrid control={_control} fileId={''} />
       </SetupTestsComponents>,
@@ -2177,7 +2189,7 @@ describe('<DataGridControlAgGrid />', () => {
       rich_text_detail: null,
       control_rejectable: null,
     } as any as IApiControl;
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DataGridControlAgGrid control={_control} fileId={''} />
       </SetupTestsComponents>,
@@ -2204,7 +2216,7 @@ describe('<DataGridControlAgGrid />', () => {
       rich_text_detail: null,
       control_rejectable: null,
     } as any as IApiControl;
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DataGridControlAgGrid control={_control} fileId={''} />
       </SetupTestsComponents>,
@@ -2231,7 +2243,7 @@ describe('<DataGridControlAgGrid />', () => {
       rich_text_detail: null,
       control_rejectable: null,
     } as any as IApiControl;
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DataGridControlAgGrid control={_control} fileId={''} />
       </SetupTestsComponents>,
@@ -2258,7 +2270,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -2285,7 +2297,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -2312,7 +2324,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -2339,7 +2351,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -2366,7 +2378,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -2418,7 +2430,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -2467,7 +2479,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -2517,7 +2529,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -2568,7 +2580,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -2600,7 +2612,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -2627,7 +2639,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -2653,7 +2665,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -2698,7 +2710,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -2742,7 +2754,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -2786,7 +2798,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -2827,7 +2839,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -2871,7 +2883,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -2915,7 +2927,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -2959,7 +2971,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -3003,7 +3015,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -3047,7 +3059,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -3091,7 +3103,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -3135,7 +3147,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -3179,7 +3191,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -3197,7 +3209,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -3228,7 +3240,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -3259,7 +3271,7 @@ describe('<DataGridControlAgGrid />', () => {
   //     rich_text_detail: null,
   //     control_rejectable: null,
   //   } as any as IApiControl;
-  //   mount(
+  //   cy.mount(
   //     <SetupTestsComponents>
   //       <DataGridControlAgGrid control={_control} fileId={''} />
   //     </SetupTestsComponents>,
@@ -3340,6 +3352,7 @@ function generateRegex(list: string[]): RegExp {
   return new RegExp('^' + regexgen(list).source + '$');
 }
 
+// validate the correctness of formulas in a data grid by simulating user input, recalculating formula cells, and checking the evaluated results against expected values.
 function _assertFormatAndEvalFormula(_control: IApiControl) {
   cy.window().then((w) => {
     w[
@@ -4736,6 +4749,66 @@ function _assertManuallyPinnedPositionColumns(_control: IApiControl) {
       })
       .then(() => {
         _assertPinnedPositionColumns(_control);
+      });
+  });
+}
+
+function _assertSelectListOptionsStyles(_control: IApiControl) {
+  cy.on('uncaught:exception', () => false);
+
+  const withControlData = getData(_control);
+
+  withControlData(1, ({ rowValues, indexRow }) => {
+    cy.react('DataGridControlAgGrid')
+      .react('AgGridReact')
+      .getAgGridElements()
+      .then((elRows) => {
+        cy.wrap(rowValues).each((c, indexCell: number) => {
+          const cell = rowValues[indexCell];
+          const listCells = Object.values(elRows[indexRow]);
+          const elCell: HTMLElement = listCells[indexCell];
+
+          if (cell.control_editable && cell.component === 'select_list') {
+            cy.wrap(elCell).focus().realClick();
+            cy.get('.MuiMenu-paper ul')
+              .then(($ul) => {
+                cy.wrap($ul)
+                  .find('li')
+                  .each(($li, i) => {
+                    if (cell.choice_options[i].choice_font_color) {
+                      expect(
+                        _hexToRgb(cell.choice_options[i].choice_font_color),
+                      ).to.not.null;
+                      cy.wrap($li).should(
+                        'have.css',
+                        'color',
+                        _hexToRgb(cell.choice_options[i].choice_font_color),
+                      );
+                    }
+                    if (cell.choice_options[i].choice_bg_color) {
+                      expect(_hexToRgb(cell.choice_options[i].choice_bg_color))
+                        .to.not.null;
+                      cy.wrap($li).should(
+                        'have.css',
+                        'background-color',
+                        _hexToRgb(cell.choice_options[i].choice_bg_color),
+                      );
+                    }
+                    if (cell.choice_options[i].choice_font_weight) {
+                      expect(
+                        cell.choice_options[i].choice_font_weight,
+                      ).to.be.oneOf(['bold', 'bolder', 'normal', 'lighter']);
+                      cy.wrap($li).should(
+                        'have.css',
+                        'font-weight',
+                        cell.choice_options[i].choice_font_weight,
+                      );
+                    }
+                  });
+              })
+              .clickOutside();
+          }
+        });
       });
   });
 }

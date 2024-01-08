@@ -2,15 +2,17 @@
 /// <reference types="cypress" />
 /// <reference types="../../../../../cypress/support/component" />
 
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Packages/Design/components/Badge/Badge.cy.tsx"
+
 import React from 'react';
-import { mount } from 'cypress/react18';
 
 import { Badge } from './Badge';
 import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
 
 describe('<Badge />', () => {
   it('Should render', () => {
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <Badge />
       </SetupTestsComponents>,
@@ -20,7 +22,7 @@ describe('<Badge />', () => {
   });
 
   it('Should render the text children', () => {
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <Badge>Hello</Badge>
       </SetupTestsComponents>,
@@ -31,7 +33,7 @@ describe('<Badge />', () => {
 
   it('Should render the React.ReactNode children', () => {
     const MyFC = () => <div>Hello</div>;
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <Badge>
           <MyFC />
@@ -43,7 +45,7 @@ describe('<Badge />', () => {
   });
 
   it('Should render the content prop', () => {
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <Badge content={1}>aaa</Badge>
       </SetupTestsComponents>,
@@ -57,7 +59,7 @@ describe('<Badge />', () => {
 
   it('Should render the props content + background-color applied', () => {
     const bgc = 'rgb(0, 0, 0)';
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <Badge content={1} bgc={bgc}>
           Hello
@@ -74,7 +76,7 @@ describe('<Badge />', () => {
 
   it('Should render the props content + color applied', () => {
     const color = 'rgb(255, 0, 0)';
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <Badge content={1} color={color}>
           Hello
@@ -91,7 +93,7 @@ describe('<Badge />', () => {
 
   it('Should render the props content + font-family applied', () => {
     const fontFamily = '"Comic Sans MS", sans-serif';
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <Badge content={1} fontFamily={fontFamily}>
           Hello
@@ -113,7 +115,7 @@ describe('<Badge />', () => {
     const bgc = 'rgb(33, 0, 0)';
     const color = 'rgb(255, 0, 0)';
     const fontFamily = '"Comic Sans MS", sans-serif';
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <Badge
           content={content}

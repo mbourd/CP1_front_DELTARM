@@ -1,9 +1,11 @@
 // @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../../../cypress/support/component" />
+
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/Text/TextControl.cy.tsx"
 
 import React from 'react';
-import { mount } from 'cypress/react18';
-
-import '../../../../../../../cypress/support/component';
 import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
 
 import '../../../../../Edit/translations';
@@ -54,7 +56,7 @@ describe('<TextControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <TextControl
           context={'edit'}
@@ -74,7 +76,7 @@ describe('<TextControl />', () => {
       ...structuredClone(control),
       editable: true,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <TextControl
           context={'edit'}
@@ -95,7 +97,7 @@ describe('<TextControl />', () => {
       ...structuredClone(control),
       editable: false,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <TextControl
           context={'edit'}
@@ -113,7 +115,7 @@ describe('<TextControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <TextControl
           context={'edit'}
@@ -134,7 +136,7 @@ describe('<TextControl />', () => {
       ...structuredClone(control),
       control_value: value,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <TextControl
           context={'edit'}
@@ -157,7 +159,7 @@ describe('<TextControl />', () => {
       control_value: value,
       editable: true,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <TextControl
           context={'edit'}
@@ -179,7 +181,7 @@ describe('<TextControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <TextControl
           context={'edit'}
@@ -217,7 +219,7 @@ describe('<TextControl />', () => {
       'mandatoryValue|Valeur obligatoire';
     const translations = [trans_EN, trans_FR, trans_DE];
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <TextControl
           context={'edit'}
@@ -251,7 +253,7 @@ describe('<TextControl />', () => {
       'mandatoryValue|Valeur obligatoire';
     const translations = [trans_EN, trans_FR, trans_DE];
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <TextControl
           context={'edit'}
@@ -284,7 +286,7 @@ describe('<TextControl />', () => {
     const randExp = new RandExp(new RegExp(_control.control_regex, 'i'));
     const generated = randExp.gen();
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <TextControl
           context={'edit'}
@@ -325,7 +327,7 @@ describe('<TextControl />', () => {
     while (generated === '' || !oppositeRegex.test(generated))
       generated = randExpOpposite.gen();
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <TextControl
           context={'edit'}

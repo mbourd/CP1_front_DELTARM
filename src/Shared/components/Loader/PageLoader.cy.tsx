@@ -1,37 +1,34 @@
 // @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../cypress/support/component" />
+
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Shared/components/Loader/PageLoader.cy.tsx"
 
 import React from 'react';
-import { ThemeProvider } from 'styled-components/macro';
+import { SetupTestsComponents } from '../../../../cypress/utils/SetupTestsComponents';
 
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
-import { BPITheme, BPIGlobalStyle } from '../../../Packages/Design';
+import { BPITheme } from '../../../Packages/Design';
 import { PageLoader } from './PageLoader';
 
 describe('<PageLoader />', () => {
   it('Should render', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <PageLoader text="Loading..." />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <PageLoader text="Loading..." />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('PageLoader').should('exist');
   });
 
   it('Should render StairsLoader & TextShineLoader', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <PageLoader text="Loading..." />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <PageLoader text="Loading..." />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('PageLoader').react('StairsLoader').should('exist');
     cy.react('PageLoader').react('TextShineLoader').should('exist');
   });
@@ -46,15 +43,12 @@ describe('<PageLoader />', () => {
       },
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={_BPITheme}>
-          <BPIGlobalStyle />
-          <PageLoader text="Loading..." />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents theme={_BPITheme}>
+        <PageLoader text="Loading..." />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('PageLoader')
       .react('StairsLoader')
       .find('._LoaderStairsBar')
@@ -70,15 +64,12 @@ describe('<PageLoader />', () => {
       },
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={_BPITheme}>
-          <BPIGlobalStyle />
-          <PageLoader text="Loading..." />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents theme={_BPITheme}>
+        <PageLoader text="Loading..." />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('PageLoader')
       .react('StairsLoader')
       .find('._LoaderStairsBall')

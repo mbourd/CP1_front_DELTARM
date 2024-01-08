@@ -1,18 +1,13 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../../../../../cypress/support/component" />
 
-import '../../../../../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/RejectByPointControl/FormRejectControl/CommentRejectControl/CommentRejectControl.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
-import {
-  _requestJWT,
-  _getEnv,
-  _escapeForRegExp,
-} from '../../../../../../../../../cypress/utils';
+import { _escapeForRegExp } from '../../../../../../../../../cypress/utils';
 
 import { CommentRejectControl } from './CommentRejectControl';
 import '../../../../../../../Edit/translations';
@@ -24,12 +19,10 @@ describe('<CommentRejectControl />', () => {
   };
 
   it('should render', () => {
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <CommentRejectControl
-          setCommentValue={function (
-            value: React.SetStateAction<string | null>,
-          ): void {
+          setCommentValue={function (): void {
             throw new Error('Function not implemented.');
           }}
           errorMessage={null}
@@ -42,12 +35,10 @@ describe('<CommentRejectControl />', () => {
 
   it('should render error message', () => {
     const errorMsg = 'Error msg';
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <CommentRejectControl
-          setCommentValue={function (
-            value: React.SetStateAction<string | null>,
-          ): void {
+          setCommentValue={function (): void {
             throw new Error('Function not implemented.');
           }}
           errorMessage={errorMsg}
@@ -59,12 +50,10 @@ describe('<CommentRejectControl />', () => {
   });
 
   it('should not render error message', () => {
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <CommentRejectControl
-          setCommentValue={function (
-            value: React.SetStateAction<string | null>,
-          ): void {
+          setCommentValue={function (): void {
             throw new Error('Function not implemented.');
           }}
           errorMessage={null}
@@ -94,12 +83,10 @@ describe('<CommentRejectControl />', () => {
         _escapeForRegExp('Expliquer la raison du rejet');
     const translations = [trans_EN, trans_FR, trans_DE];
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <CommentRejectControl
-          setCommentValue={function (
-            value: React.SetStateAction<string | null>,
-          ): void {
+          setCommentValue={function (): void {
             throw new Error('Function not implemented.');
           }}
           errorMessage={null}

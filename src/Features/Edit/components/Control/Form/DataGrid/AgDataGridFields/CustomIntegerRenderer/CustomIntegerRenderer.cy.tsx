@@ -1,36 +1,37 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../../../../../cypress/support/component" />
 
-import '../../../../../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/DataGrid/AgDataGridFields/CustomIntegerRenderer/CustomIntegerRenderer.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
-import {
-  _requestJWT,
-  _getEnv,
-  _escapeForRegExp,
-} from '../../../../../../../../../cypress/utils';
 
 import { CustomIntegerRenderer } from './CustomIntegerRender';
 
 describe('<CustomIntegerRenderer />', () => {
   it('should render', () => {
-    const props = { column: { colDef: {} } };
-    mount(
+    const props = {
+      column: { colDef: {}, getId: () => 'a.b' },
+      data: { a: {} },
+    };
+    cy.mount(
       <SetupTestsComponents>
         <CustomIntegerRenderer props={props} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('CustomIntegerRenderer');
+    cy.react('CustomIntegerRenderer').should('exist');
   });
 
   it('should render the value', () => {
-    const props = { column: { colDef: {} }, value: '6' };
-    mount(
+    const props = {
+      column: { colDef: {}, getId: () => 'a.b' },
+      value: '6',
+      data: { a: {} },
+    };
+    cy.mount(
       <SetupTestsComponents>
         <CustomIntegerRenderer props={props} />
       </SetupTestsComponents>,
@@ -40,8 +41,12 @@ describe('<CustomIntegerRenderer />', () => {
   });
 
   it('should not format thousand separator', () => {
-    const props = { column: { colDef: {} }, value: '6000' };
-    mount(
+    const props = {
+      column: { colDef: {}, getId: () => 'a.b' },
+      value: '6000',
+      data: { a: {} },
+    };
+    cy.mount(
       <SetupTestsComponents>
         <CustomIntegerRenderer props={props} />
       </SetupTestsComponents>,
@@ -51,10 +56,11 @@ describe('<CustomIntegerRenderer />', () => {
   });
   it('should not format thousand separator', () => {
     const props = {
-      column: { colDef: { thousand_separator: false } },
+      column: { colDef: { thousand_separator: false }, getId: () => 'a.b' },
       value: '6000',
+      data: { a: {} },
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <CustomIntegerRenderer props={props} />
       </SetupTestsComponents>,
@@ -65,10 +71,11 @@ describe('<CustomIntegerRenderer />', () => {
 
   it('should format thousand separator', () => {
     const props = {
-      column: { colDef: { thousand_separator: true } },
+      column: { colDef: { thousand_separator: true }, getId: () => 'a.b' },
       value: '6000',
+      data: { a: {} },
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <CustomIntegerRenderer props={props} />
       </SetupTestsComponents>,

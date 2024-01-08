@@ -1,18 +1,18 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../../../cypress/support/component" />
 
-import '../../../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/Date/DateControl.cy.tsx"
 
 import React from 'react';
+import { mount } from 'cypress/react18';
 import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
 
-import 'cypress-react-selector';
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
 import { _translate } from '../../../../../../../cypress/utils';
 
 import { DateControl } from './DateControl';
-import { IApiControl, IChapter } from '../../../../types';
+import { IApiControl } from '../../../../types';
 import '../../../../../Edit/translations';
 
 describe('<DateControl />', () => {
@@ -48,9 +48,7 @@ describe('<DateControl />', () => {
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -58,7 +56,7 @@ describe('<DateControl />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('DateControl');
+    cy.react('DateControl').should('exist');
   });
 
   it('should render <ControlLabel /> and <ControlFooter/>', () => {
@@ -71,9 +69,7 @@ describe('<DateControl />', () => {
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -96,9 +92,7 @@ describe('<DateControl />', () => {
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -118,9 +112,7 @@ describe('<DateControl />', () => {
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -141,9 +133,7 @@ describe('<DateControl />', () => {
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -168,9 +158,7 @@ describe('<DateControl />', () => {
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -203,9 +191,7 @@ describe('<DateControl />', () => {
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -231,9 +217,7 @@ describe('<DateControl />', () => {
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -255,9 +239,7 @@ describe('<DateControl />', () => {
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}

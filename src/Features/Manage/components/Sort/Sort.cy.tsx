@@ -1,26 +1,23 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../cypress/support/component" />
+
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Manage/components/Sort/Sort.cy.tsx"
 
 import React from 'react';
-import { ThemeProvider } from 'styled-components/macro';
-import { BPITheme, BPIGlobalStyle } from '../../../../Packages/Design';
-
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
+import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
 
 import { Sort } from './Sort';
 
 describe('<Sort />', () => {
   it('Should render', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Sort />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Sort />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.get('svg').should('exist').should('be.visible');
   });
 });

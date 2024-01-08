@@ -1,95 +1,80 @@
 // @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../cypress/support/component" />
+
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Packages/Design/components/Radio/Radio.cy.tsx"
 
 import React from 'react';
-import { ThemeProvider } from 'styled-components/macro';
 
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
-import { BPITheme, BPIGlobalStyle } from '../..';
+import { BPITheme } from '../..';
+import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
 import { Radio } from './Radio';
 
 describe('<Radio />', () => {
   it('Should render', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Radio />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Radio />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Radio').should('exist');
   });
 
   it('Should be type radio', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Radio type="radio" />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Radio type="radio" />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Radio')
       .find('input._CheckboxRadioInput')
       .should('have.attr', 'type', 'radio');
   });
   it('Should be type checkbox', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Radio type="checkbox" />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Radio type="checkbox" />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Radio')
       .find('input._CheckboxRadioInput')
       .should('have.attr', 'type', 'checkbox');
   });
 
   it('Should have name = anyName', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Radio name="anyName" />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Radio name="anyName" />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Radio')
       .find('input._CheckboxRadioInput')
       .should('have.attr', 'name', 'anyName');
   });
   it('Should have value = anyName', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Radio value="anyName" />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Radio value="anyName" />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Radio')
       .find('input._CheckboxRadioInput')
       .should('have.attr', 'value', 'anyName');
   });
 
   it('Should be checked', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Radio checked={true} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Radio checked={true} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Radio').find('input._CheckboxRadioInput:checked');
   });
 
@@ -103,15 +88,12 @@ describe('<Radio />', () => {
       },
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={_BPITheme}>
-          <BPIGlobalStyle />
-          <Radio checked={true} checkedColor={'primary'} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents theme={_BPITheme}>
+        <Radio checked={true} checkedColor={'primary'} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Radio')
       .find('input._CheckboxRadioInput:checked ~ ._CheckboxRadioCheckmark')
       .should('have.css', 'border-color', color);
@@ -119,11 +101,11 @@ describe('<Radio />', () => {
       .find('input._CheckboxRadioInput:checked ~ ._CheckboxRadioCheckmark')
       .then(($els) => {
         // get Window reference from element
-        const win = $els[0].ownerDocument.defaultView!;
+        const win = $els[0].ownerDocument.defaultView;
         // use getComputedStyle to read the pseudo selector
-        const after = win.getComputedStyle($els[0], 'after');
+        const after = win?.getComputedStyle($els[0], 'after');
         // read the value of the `content` CSS property
-        const contentValue = after.getPropertyValue('background-color');
+        const contentValue = after?.getPropertyValue('background-color');
         // the returned value will have double quotes around it, but this is correct
         expect(contentValue).to.eq(color);
       });
@@ -131,15 +113,12 @@ describe('<Radio />', () => {
 
   it('Should render label', () => {
     const label = 'Hello';
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Radio label={label} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Radio label={label} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Radio').contains(label);
   });
 
@@ -147,17 +126,14 @@ describe('<Radio />', () => {
     const DummyFC: React.FC = () => {
       return <div>Hello</div>;
     };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Radio>
-            <DummyFC />
-          </Radio>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Radio>
+          <DummyFC />
+        </Radio>
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Radio').react('DummyFC').should('exist');
   });
 
@@ -171,15 +147,12 @@ describe('<Radio />', () => {
       },
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={_BPITheme}>
-          <BPIGlobalStyle />
-          <Radio color="text" />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents theme={_BPITheme}>
+        <Radio color="text" />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Radio')
       .should('have.css', 'color', color)
       .should('have.css', 'border-color', color);

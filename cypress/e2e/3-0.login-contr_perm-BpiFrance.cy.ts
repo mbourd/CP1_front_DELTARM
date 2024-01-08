@@ -4,6 +4,7 @@
 
 import { parse } from 'qs';
 import { _getEnv } from '../utils';
+import JwtDecode from 'jwt-decode';
 
 describe('Token CP1 - BpiFrance - Controle permanent', () => {
   let cp1Token: string;
@@ -62,7 +63,15 @@ describe('Token CP1 - BpiFrance - Controle permanent', () => {
     cy.react('DashboardDynamic');
     cy.wait('@getUserInfo').then((interception) => {
       const statusCode = interception.response?.statusCode;
-      expect(statusCode).to.eq(200);
+      expect(statusCode).to.be.deep.eq(200);
+      cy.getAllLocalStorage().then(function (localStorage) {
+        const jwt: Record<string, any> = JwtDecode(
+          JSON.parse(
+            localStorage[_getEnv('url_cp1_front')]['security'] as string,
+          )._jwt,
+        );
+        expect(jwt.context).to.be.deep.eq('contr_perm');
+      });
     });
   });
 });
