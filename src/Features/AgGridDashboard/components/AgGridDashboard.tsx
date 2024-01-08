@@ -18,7 +18,7 @@ import { Card } from './Card/Card';
 import { IsLoading } from './IsLoading';
 import { SearchBar } from './Search/SearchBar';
 import { IDashboard } from './types';
-import { Button, ErrorNoData } from 'Shared/components';
+import { Button } from 'Shared/components';
 import { SwitchMetric } from './Metrics/SwitchMetric';
 import { ModalDynamic } from '../../ModalDynamic/components/ModalDynamic';
 import { useActionButton } from '../../../Packages/Helpers/src/useActionButton';
@@ -26,11 +26,10 @@ import { useRecoilValue } from 'recoil';
 import { IDataModal } from '../../ModalDynamic/components/types';
 import { NoData } from './NoData';
 import { AgGridCard } from './Card/AgGridCard';
-import { useTrans } from '../../../Services';
 
 const AgGridDashboard: React.FC = (): React.ReactElement => {
-  const [trans] = useTrans('Dashboard');
-  const { data: dataSecurity, logout } = useContext(SecurityContext);
+  // const [trans] = useTrans('Dashboard');
+  const { /*data: dataSecurity,*/ logout } = useContext(SecurityContext);
   const { user } = useSecurity();
   const jwt = user.getJwt();
   const { send, data: response, callState } = useApi<IDashboard>();
