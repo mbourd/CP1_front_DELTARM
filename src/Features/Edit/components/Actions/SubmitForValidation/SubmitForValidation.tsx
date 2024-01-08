@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './apiRoutes';
 import { Button, Popper } from 'Shared/components';
 import { UserCheckedIcon } from 'Styles';

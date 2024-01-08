@@ -3,13 +3,12 @@ import { TextControlStyled } from './TextControl.style';
 import { Grid } from '@material-ui/core';
 import { IApiControl, IChapter } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
-import { useApi, useRouter, getEnv, security, IUser } from 'Services';
+import { useApi, useRouter } from 'Services';
 import { ControlLabel } from '../ControlLabel';
 import { ControlFooter } from '../ControlFooter';
 import { checkIfSameValues } from '../../../../../../Packages/Helpers/src/checkIfSameValues';
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
 import { RejectControl } from '../RejectByPointControl/RejectControl';
-import axios from 'axios';
 
 import { useTrans } from '../../../../../../Services';
 
@@ -28,7 +27,6 @@ export const TextControl: React.FC<IProps> = ({
   formState,
   setFormState,
   context,
-  get_value_response,
 }): React.ReactElement => {
   const [trans] = useTrans('Edit');
   const { send, error } = useApi<void>();

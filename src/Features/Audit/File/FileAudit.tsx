@@ -5,15 +5,9 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Card } from '@material-ui/core';
-import { BPIBadge, FormError, Popper } from 'Shared/components';
-import { AuditIcon } from 'Styles';
 import { IUser, security, useApi } from 'Services';
 import { EditValidationContext } from 'Features/Edit';
 import { IDataFileAudit } from '../types';
-import { FileAuditBody } from './Body/FileAuditBody';
-import { FileAuditStyled, FileAuditHeaderStyled } from './FileAudit.style';
-import { ExcelIcon } from '../../../Packages/Design/icons/ExcelIcon';
 import { downloadAuditExcel } from './downloadAuditExcel';
 import { FileAuditRender } from './FileAuditRender';
 
