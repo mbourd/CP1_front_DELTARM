@@ -1,39 +1,33 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../cypress/support/component" />
 
-import '../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Shared/components/UploadList/UploadList.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
-import {
-  _requestJWT,
-  _getEnv,
-  _escapeForRegExp,
-} from '../../../../cypress/utils';
 
 import { UploadList } from './UploadList';
 import { IUploadDetail } from '../../../Features/Edit/types';
 
 describe('<UploadList />', () => {
   it('Should render', () => {
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <UploadList
           currentUploadFile={null}
-          handleDeleteFile={function (e: any, name: any): void {
+          handleDeleteFile={function (): void {
             throw new Error('Function not implemented.');
           }}
-          handleDownloadFile={function (e: any, id: string, name: any): void {
+          handleDownloadFile={function (): void {
             throw new Error('Function not implemented.');
           }}
         />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('UploadList');
+    cy.react('UploadList').should('exist');
   });
 
   it('Should render the correct number of upload files', () => {
@@ -42,14 +36,14 @@ describe('<UploadList />', () => {
       { file_id: 'b', file_name: 'file B' },
       { file_id: 'c', file_name: 'file C '.repeat(7) },
     ];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <UploadList
           currentUploadFile={currentUploadFile}
-          handleDeleteFile={function (e: any, name: any): void {
+          handleDeleteFile={function (): void {
             throw new Error('Function not implemented.');
           }}
-          handleDownloadFile={function (e: any, id: string, name: any): void {
+          handleDownloadFile={function (): void {
             throw new Error('Function not implemented.');
           }}
         />

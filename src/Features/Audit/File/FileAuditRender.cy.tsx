@@ -1,15 +1,13 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../cypress/support/component" />
 
-import '../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Audit/File/FileAuditRender.cy.tsx"
 
 import React, { useEffect, useRef, useState } from 'react';
 import { SetupTestsComponents } from '../../../../cypress/utils/SetupTestsComponents';
 
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
-
-import { _getEnv, _requestJWT } from '../../../../cypress/utils';
 import { FileAuditRender } from './FileAuditRender';
 import { IDataFileAudit } from '../types';
 
@@ -20,7 +18,7 @@ describe('<FileAuditRender />', () => {
         null,
       );
       const iconRef = useRef<Element | null>(null);
-      const [errorMessage, setErrorMessage] = useState<string | null>(null);
+      const [errorMessage] = useState<string | null>(null);
 
       const data: IDataFileAudit = {
         audits: [],
@@ -34,20 +32,19 @@ describe('<FileAuditRender />', () => {
           iconRef={iconRef}
           anchorEl={anchorEl}
           setAnchorEl={setAnchorEl}
-          handleDownloadExcelAudit={function (e: any): void {
+          handleDownloadExcelAudit={function (): void {
             throw new Error('Function not implemented.');
           }}
           errorMessage={errorMessage}
         />
       );
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DummyFC />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('DummyFC');
   });
 
   it('should render if is_audit', () => {
@@ -56,7 +53,7 @@ describe('<FileAuditRender />', () => {
         null,
       );
       const iconRef = useRef<Element | null>(null);
-      const [errorMessage, setErrorMessage] = useState<string | null>(null);
+      const [errorMessage] = useState<string | null>(null);
 
       const data: IDataFileAudit = {
         audits: [],
@@ -71,7 +68,7 @@ describe('<FileAuditRender />', () => {
             iconRef={iconRef}
             anchorEl={anchorEl}
             setAnchorEl={setAnchorEl}
-            handleDownloadExcelAudit={function (e: any): void {
+            handleDownloadExcelAudit={function (): void {
               throw new Error('Function not implemented.');
             }}
             errorMessage={errorMessage}
@@ -79,13 +76,13 @@ describe('<FileAuditRender />', () => {
         </div>
       );
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DummyFC />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('DummyFC').get('.audit-icon');
+    cy.react('DummyFC').find('.audit-icon');
   });
 
   it('should render if is_audit_xls', () => {
@@ -94,7 +91,7 @@ describe('<FileAuditRender />', () => {
         null,
       );
       const iconRef = useRef<Element | null>(null);
-      const [errorMessage, setErrorMessage] = useState<string | null>(null);
+      const [errorMessage] = useState<string | null>(null);
 
       const data: IDataFileAudit = {
         audits: [],
@@ -109,7 +106,7 @@ describe('<FileAuditRender />', () => {
             iconRef={iconRef}
             anchorEl={anchorEl}
             setAnchorEl={setAnchorEl}
-            handleDownloadExcelAudit={function (e: any): void {
+            handleDownloadExcelAudit={function (): void {
               throw new Error('Function not implemented.');
             }}
             errorMessage={errorMessage}
@@ -117,7 +114,7 @@ describe('<FileAuditRender />', () => {
         </div>
       );
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DummyFC />
       </SetupTestsComponents>,
@@ -151,7 +148,7 @@ describe('<FileAuditRender />', () => {
             iconRef={iconRef}
             anchorEl={anchorEl}
             setAnchorEl={setAnchorEl}
-            handleDownloadExcelAudit={function (e: any): void {
+            handleDownloadExcelAudit={function (): void {
               throw new Error('Function not implemented.');
             }}
             errorMessage={errorMessage}
@@ -159,7 +156,7 @@ describe('<FileAuditRender />', () => {
         </div>
       );
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DummyFC />
       </SetupTestsComponents>,

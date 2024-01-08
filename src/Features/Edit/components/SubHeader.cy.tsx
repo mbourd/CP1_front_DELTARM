@@ -2,10 +2,12 @@
 /// <reference types="cypress" />
 /// <reference types="../../../../cypress/support/component" />
 
-import React from 'react';
-import { _decodeHtmlUnicode } from '../../../../cypress/utils';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/SubHeader.cy.tsx"
 
-import { mount } from 'cypress/react18';
+import React from 'react';
+
+import { _decodeHtmlUnicode } from '../../../../cypress/utils';
 
 import { SubHeader } from './SubHeader';
 import { IData } from '../types';
@@ -29,7 +31,7 @@ describe('<Subheader />', () => {
       valid_mode: 'global',
       context: 'edit',
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SubHeader data={data} />
       </SetupTestsComponents>,
@@ -56,7 +58,7 @@ describe('<Subheader />', () => {
       valid_mode: 'global',
       context: 'edit',
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SubHeader data={data} />
       </SetupTestsComponents>,
@@ -85,7 +87,7 @@ describe('<Subheader />', () => {
       valid_mode: 'global',
       context: 'edit',
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SubHeader data={data} />
       </SetupTestsComponents>,
