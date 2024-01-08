@@ -1,24 +1,23 @@
 // @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../../cypress/support/component" />
+
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Packages/Design/components/Form/Error/FormError.cy.tsx"
 
 import React from 'react';
-import { ThemeProvider } from 'styled-components/macro';
+import { SetupTestsComponents } from '../../../../../../cypress/utils/SetupTestsComponents';
 
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
-import { BPITheme, BPIGlobalStyle } from '../../../../../Packages/Design';
 import { FormError } from './FormError';
 
 describe('<NotFoundComponent />', () => {
   it('Should render', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <FormError />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <FormError />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('FormError').should('exist');
   });
 
@@ -27,32 +26,27 @@ describe('<NotFoundComponent />', () => {
       return <div id="dummyfc">Hello</div>;
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <FormError>
-            <DummyFC />
-          </FormError>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <FormError>
+          <DummyFC />
+        </FormError>
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('FormError').react('DummyFC').should('exist');
     cy.react('FormError').find('#dummyfc').should('exist');
   });
 
   it('Should have class name', () => {
     const className = 'classs';
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <FormError className={className} />
-        </ThemeProvider>
-      </div>,
+
+    cy.mount(
+      <SetupTestsComponents>
+        <FormError className={className} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('FormError')
       .should('have.attr', 'class')
       .and('contain', className);
@@ -61,15 +55,13 @@ describe('<NotFoundComponent />', () => {
   it('Should have a background-color applied', () => {
     const bgc = 'rgb(255, 0, 0)';
     const className = 'classs';
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <FormError className={className} style={{ backgroundColor: bgc }} />
-        </ThemeProvider>
-      </div>,
+
+    cy.mount(
+      <SetupTestsComponents>
+        <FormError className={className} style={{ backgroundColor: bgc }} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('FormError').should('have.css', 'background-color', bgc);
   });
 });

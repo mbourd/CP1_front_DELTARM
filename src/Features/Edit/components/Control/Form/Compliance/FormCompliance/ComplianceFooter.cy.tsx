@@ -1,14 +1,12 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../../../../cypress/support/component" />
 
-import '../../../../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/DataGrid/DataGridControlAgGrid.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
 
 import { ComplianceFooter } from './ComplianceFooter';
 import { IApiComplianceFields } from '../../../../../types';
@@ -25,13 +23,14 @@ describe('<ComplianceFooter />', () => {
     compliance_elm_value: '',
     compliance_id: '',
     compliance_file_detail: null,
+    compliance_elm_mandatory: false,
   };
 
   it('should render', () => {
     const _compliance = {
       ...structuredClone(compliance),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <ComplianceFooter compliance={_compliance} />
       </SetupTestsComponents>,
@@ -46,7 +45,7 @@ describe('<ComplianceFooter />', () => {
       ...structuredClone(compliance),
       compliance_elm_desc_2: title,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <ComplianceFooter compliance={_compliance} />
       </SetupTestsComponents>,

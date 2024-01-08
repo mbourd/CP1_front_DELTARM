@@ -1,7 +1,21 @@
 import React from 'react';
 import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
+import { DataGridDetailsRowsCell, IApiControl } from 'Features/Edit/types';
 
-const CustomCommentAndLongTextRenderer: React.FC<any> = ({
+type CustomCommentAndLongTextRendererPropsType = {
+  props: any;
+  old_value: string;
+  field_data: DataGridDetailsRowsCell;
+  control: IApiControl;
+  fileId: string;
+  jwt: string;
+  seterrors: React.Dispatch<React.SetStateAction<string>>;
+  gridRef: React.MutableRefObject<any>;
+};
+
+const CustomCommentAndLongTextRenderer: React.FC<
+  CustomCommentAndLongTextRendererPropsType
+> = ({
   old_value,
   field_data,
 

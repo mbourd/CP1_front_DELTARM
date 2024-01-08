@@ -1,18 +1,12 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../../cypress/support/component" />
 
-import '../../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/ControlFooter.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
-import {
-  _requestJWT,
-  _getEnv,
-  _escapeForRegExp,
-} from '../../../../../../cypress/utils';
 
 import { ControlFooter } from './ControlFooter';
 import { IApiControl } from './../../../../Edit/types';
@@ -46,7 +40,7 @@ describe('<Controlooter />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <ControlFooter control={_control} />
       </SetupTestsComponents>,
@@ -61,7 +55,7 @@ describe('<Controlooter />', () => {
       ...structuredClone(control),
       control_previous_value: controlPreviousValue,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <ControlFooter control={_control} />
       </SetupTestsComponents>,
@@ -86,7 +80,7 @@ describe('<Controlooter />', () => {
       control_previous_value: controlPreviousValue,
       control_type: 'date',
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <ControlFooter control={_control} />
       </SetupTestsComponents>,
@@ -114,7 +108,7 @@ describe('<Controlooter />', () => {
       ...structuredClone(control),
       control_desc_2: controlTitle,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <ControlFooter control={_control} />
       </SetupTestsComponents>,

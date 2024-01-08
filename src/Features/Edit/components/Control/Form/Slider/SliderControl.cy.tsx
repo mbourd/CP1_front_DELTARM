@@ -1,22 +1,16 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../../../cypress/support/component" />
 
-import '../../../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/Slider/SliderControl.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
-import {
-  _requestJWT,
-  _getEnv,
-  _escapeForRegExp,
-} from '../../../../../../../cypress/utils';
+import { _escapeForRegExp } from '../../../../../../../cypress/utils';
 
 import { SliderControl } from './SliderControl';
-import { IApiControl, IChapter } from '../../../../types';
+import { IApiControl } from '../../../../types';
 import '../../../../../Edit/translations';
 import { translation } from '../../../../../../Services';
 
@@ -50,15 +44,13 @@ describe('<SliderControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SliderControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -75,15 +67,13 @@ describe('<SliderControl />', () => {
       ...structuredClone(control),
       control_title: title,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SliderControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -104,15 +94,13 @@ describe('<SliderControl />', () => {
       useRejection: { isRejected: true, rejectComments: [] },
       control_rejectable: { is_rejected: true, control_reject_comment: [] },
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SliderControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -129,15 +117,13 @@ describe('<SliderControl />', () => {
       ...structuredClone(control),
       control_value: value,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SliderControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -157,15 +143,13 @@ describe('<SliderControl />', () => {
       control_value: value,
       control_options: { disabled: true },
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SliderControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -185,15 +169,13 @@ describe('<SliderControl />', () => {
       control_value: value,
       control_options: { disabled: false },
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SliderControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -212,15 +194,13 @@ describe('<SliderControl />', () => {
       ...structuredClone(control),
       control_value: value,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SliderControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -250,15 +230,13 @@ describe('<SliderControl />', () => {
       getResourceTrans('de', 'Edit', 'mandatoryValue') ||
       'mandatoryValue|Valeur obligatoire';
     const translations = [trans_EN, trans_FR, trans_DE];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SliderControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -291,15 +269,13 @@ describe('<SliderControl />', () => {
       'errorRecording|' +
         _escapeForRegExp("Une erreur s'est produite durant l'enregistrement");
     const translations = [trans_EN, trans_FR, trans_DE];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <SliderControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}

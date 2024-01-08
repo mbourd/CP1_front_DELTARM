@@ -1,15 +1,21 @@
 import { Button } from '@material-ui/core';
 import axios from 'axios';
+import { DataGridDetailsRowsCell, IApiControl } from 'Features/Edit/types';
 import React from 'react';
 import { getEnv } from 'Services';
 
-const CustomActionButtonRenderer: React.FC<any> = ({
-  props,
-  control,
-  fileId,
-  jwt,
-  seterrors,
-}) => {
+type CustomActionButtonRendererPropsType = {
+  props: any;
+  field_data?: DataGridDetailsRowsCell;
+  control?: IApiControl;
+  fileId?: string;
+  jwt?: string | null;
+  seterrors?: React.Dispatch<React.SetStateAction<string>>;
+};
+
+const CustomActionButtonRenderer: React.FC<
+  CustomActionButtonRendererPropsType
+> = ({ props, control, jwt }) => {
   const data = props?.colDef?.field?.split('.')[0];
   const field_data = Object.entries(props?.data).reduce(
     (accum: any, current: any) => {
@@ -29,7 +35,7 @@ const CustomActionButtonRenderer: React.FC<any> = ({
       await axios.get(
         `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}/${
           field_data?.value?.split(';')[2]
-        }?control_id=${control.control_id}&row_num=${
+        }?control_id=${control?.control_id}&row_num=${
           field_data?.row_num
         }&col_elm_id=${field_data?.col_elm_id}`,
         {
@@ -39,12 +45,13 @@ const CustomActionButtonRenderer: React.FC<any> = ({
           responseType: 'json',
         },
       );
+
       return;
     } else if (field_data?.value?.split(';')[1] === 'POST') {
       await axios.post(
         `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}/${
           field_data?.value?.split(';')[2]
-        }?control_id=${control.control_id}&row_num=${
+        }?control_id=${control?.control_id}&row_num=${
           field_data?.row_num
         }&col_elm_id=${field_data?.col_elm_id}`,
         {
@@ -54,12 +61,13 @@ const CustomActionButtonRenderer: React.FC<any> = ({
           responseType: 'json',
         },
       );
+
       return;
     } else {
       await axios.get(
         `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}/${
           field_data?.value?.split(';')[2]
-        }?control_id=${control.control_id}&row_num=${
+        }?control_id=${control?.control_id}&row_num=${
           field_data?.row_num
         }&col_elm_id=${field_data?.col_elm_id}`,
         {
@@ -69,6 +77,7 @@ const CustomActionButtonRenderer: React.FC<any> = ({
           responseType: 'json',
         },
       );
+
       return;
     }
     // } catch (error) {

@@ -1,14 +1,12 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../../../cypress/support/component" />
 
-import '../../../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/RichText/RichTextControl.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
 import { _translate } from '../../../../../../../cypress/utils';
 
 import { RichTextControl } from './RichTextControl';
@@ -43,7 +41,7 @@ describe('<RichTextControl />', () => {
       ...structuredClone(control),
     };
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <RichTextControl control={_control} fileId={''} context={'edit'} />
       </SetupTestsComponents>,
@@ -56,7 +54,7 @@ describe('<RichTextControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <RichTextControl control={_control} fileId={''} context={'edit'} />
       </SetupTestsComponents>,
@@ -81,7 +79,7 @@ describe('<RichTextControl />', () => {
       _translate('de', 'Edit', 'mandatoryValue') ||
       'mandatoryValue|Valeur obligatoire';
     const translations = [trans_EN, trans_FR, trans_DE];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <RichTextControl control={_control} fileId={''} context={'edit'} />
       </SetupTestsComponents>,
@@ -98,7 +96,7 @@ describe('<RichTextControl />', () => {
       ...structuredClone(control),
       editable: false,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <RichTextControl control={_control} fileId={''} context={'edit'} />
       </SetupTestsComponents>,
@@ -126,7 +124,7 @@ describe('<RichTextControl />', () => {
       'rdw-image-control',
       'rdw-remove-control',
     ];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <RichTextControl control={_control} fileId={''} context={'edit'} />
       </SetupTestsComponents>,

@@ -1,13 +1,12 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../cypress/support/component" />
 
-import '../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Shared/components/MainHeader/IconsContainer/IconsContainerRender.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
 import {
   _requestJWT,
   _getEnv,
@@ -43,7 +42,7 @@ describe('<IconsContainer />', () => {
   });
 
   it('Should render', () => {
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IconsContainerRender interfaceButtons={defaultData} />
       </SetupTestsComponents>,
@@ -65,7 +64,7 @@ describe('<IconsContainer />', () => {
       getResourceTrans('de', 'MainHeader', 'reports') || 'reports';
     const titlesAIV = [titleAIV_EN, titleAIV_FR, titleAIV_DE];
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IconsContainerRender interfaceButtons={_data} />
       </SetupTestsComponents>,
@@ -103,7 +102,7 @@ describe('<IconsContainer />', () => {
       _escapeForRegExp('F.A.Q');
     const titlesFAQ = [titleFAQ_EN, titleFAQ_FR, titleFAQ_DE];
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IconsContainerRender interfaceButtons={_data} />
       </SetupTestsComponents>,
@@ -140,7 +139,7 @@ describe('<IconsContainer />', () => {
     const keys = Object.keys(_data);
     const length = keys.length - nbNotVisible;
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IconsContainerRender interfaceButtons={_data} />
       </SetupTestsComponents>,
@@ -185,7 +184,7 @@ describe('<IconsContainer />', () => {
     const keys = Object.keys(_data);
     const length = keys.length - nbNotVisible;
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IconsContainerRender interfaceButtons={_data} />
       </SetupTestsComponents>,

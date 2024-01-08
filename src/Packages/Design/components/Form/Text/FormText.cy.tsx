@@ -1,24 +1,23 @@
 // @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../../cypress/support/component" />
+
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Packages/Design/components/Form/Text/FormText.cy.tsx"
 
 import React from 'react';
-import { ThemeProvider } from 'styled-components/macro';
 
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
-import { BPITheme, BPIGlobalStyle } from '../../../../../Packages/Design';
+import { SetupTestsComponents } from '../../../../../../cypress/utils/SetupTestsComponents';
 import { FormText } from './FormText';
 
 describe('<NotFoundComponent />', () => {
   it('Should render', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <FormText />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <FormText />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('FormText').should('exist');
   });
 
@@ -27,32 +26,26 @@ describe('<NotFoundComponent />', () => {
       return <div id="dummyfc">Hello</div>;
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <FormText>
-            <DummyFC />
-          </FormText>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <FormText>
+          <DummyFC />
+        </FormText>
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('FormText').react('DummyFC').should('exist');
     cy.react('FormText').find('#dummyfc').should('exist');
   });
 
   it('Should have class name', () => {
     const className = 'classs';
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <FormText className={className} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <FormText className={className} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('FormText').should('have.attr', 'class').and('contain', className);
   });
 });

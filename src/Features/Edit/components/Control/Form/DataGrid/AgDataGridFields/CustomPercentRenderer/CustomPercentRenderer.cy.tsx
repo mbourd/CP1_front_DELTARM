@@ -1,25 +1,22 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../../../../../cypress/support/component" />
 
-import '../../../../../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/DataGrid/AgDataGridFields/CustomPercentRenderer/CustomPercentRenderer.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
-import {
-  _requestJWT,
-  _getEnv,
-  _escapeForRegExp,
-} from '../../../../../../../../../cypress/utils';
 
 import { CustomPercentRenderer } from './CustomPercentRenderer';
 
 describe('<CustomPercentRenderer />', () => {
   it('should render', () => {
-    const props = { column: { colDef: {} } };
-    mount(
+    const props = {
+      column: { colDef: {}, getId: () => 'a.b' },
+      data: { a: {} },
+    };
+    cy.mount(
       <SetupTestsComponents>
         <CustomPercentRenderer props={props} />
       </SetupTestsComponents>,
@@ -29,8 +26,12 @@ describe('<CustomPercentRenderer />', () => {
   });
 
   it('Should render the value', () => {
-    const props = { column: { colDef: {} }, value: '6' };
-    mount(
+    const props = {
+      column: { colDef: {}, getId: () => 'a.b' },
+      value: '6',
+      data: { a: {} },
+    };
+    cy.mount(
       <SetupTestsComponents>
         <CustomPercentRenderer props={props} />
       </SetupTestsComponents>,
@@ -40,8 +41,12 @@ describe('<CustomPercentRenderer />', () => {
   });
 
   it('should not format decimal digit', () => {
-    const props = { column: { colDef: {} }, value: '6' };
-    mount(
+    const props = {
+      column: { colDef: {}, getId: () => 'a.b' },
+      value: '6',
+      data: { a: {} },
+    };
+    cy.mount(
       <SetupTestsComponents>
         <CustomPercentRenderer props={props} />
       </SetupTestsComponents>,
@@ -53,8 +58,12 @@ describe('<CustomPercentRenderer />', () => {
   });
 
   it('should not format decimal digit', () => {
-    const props = { column: { colDef: { decimal_digit: 0 } }, value: '6' };
-    mount(
+    const props = {
+      column: { colDef: { decimal_digit: 0 }, getId: () => 'a.b' },
+      value: '6',
+      data: { a: {} },
+    };
+    cy.mount(
       <SetupTestsComponents>
         <CustomPercentRenderer props={props} />
       </SetupTestsComponents>,
@@ -68,10 +77,11 @@ describe('<CustomPercentRenderer />', () => {
   it('should format decimal digit', () => {
     const decimalDigit = 2;
     const props = {
-      column: { colDef: { decimal_digit: decimalDigit } },
+      column: { colDef: { decimal_digit: decimalDigit }, getId: () => 'a.b' },
       value: '6',
+      data: { a: {} },
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <CustomPercentRenderer props={props} />
       </SetupTestsComponents>,
@@ -86,8 +96,12 @@ describe('<CustomPercentRenderer />', () => {
   });
 
   it('should not format thousand separator', () => {
-    const props = { column: { colDef: {} }, value: '6000' };
-    mount(
+    const props = {
+      column: { colDef: {}, getId: () => 'a.b' },
+      value: '6000',
+      data: { a: {} },
+    };
+    cy.mount(
       <SetupTestsComponents>
         <CustomPercentRenderer props={props} />
       </SetupTestsComponents>,
@@ -98,10 +112,11 @@ describe('<CustomPercentRenderer />', () => {
 
   it('should not format thousand separator', () => {
     const props = {
-      column: { colDef: { thousand_separator: false } },
+      column: { colDef: { thousand_separator: false }, getId: () => 'a.b' },
       value: '6000',
+      data: { a: {} },
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <CustomPercentRenderer props={props} />
       </SetupTestsComponents>,
@@ -112,10 +127,11 @@ describe('<CustomPercentRenderer />', () => {
 
   it('should format thousand separator', () => {
     const props = {
-      column: { colDef: { thousand_separator: true } },
+      column: { colDef: { thousand_separator: true }, getId: () => 'a.b' },
       value: '6000',
+      data: { a: {} },
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <CustomPercentRenderer props={props} />
       </SetupTestsComponents>,
@@ -126,10 +142,14 @@ describe('<CustomPercentRenderer />', () => {
 
   it('should format thousand separator + decimal digit', () => {
     const props = {
-      column: { colDef: { thousand_separator: true, decimal_digit: 2 } },
+      column: {
+        colDef: { thousand_separator: true, decimal_digit: 2 },
+        getId: () => 'a.b',
+      },
       value: '6000',
+      data: { a: {} },
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <CustomPercentRenderer props={props} />
       </SetupTestsComponents>,
