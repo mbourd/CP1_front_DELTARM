@@ -1,25 +1,18 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../../../cypress/support/component" />
 
-import '../../../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/Boolean/BooleanControl.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
 
-import 'cypress-react-selector';
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
-import {
-  _requestJWT,
-  _getEnv,
-  _escapeForRegExp,
-} from '../../../../../../../cypress/utils';
-
 import { BooleanControl } from './BooleanControl';
-import { IApiControl, IChapter } from '../../../../types';
+import { IApiControl } from '../../../../types';
 import '../../../../../Edit/translations';
 import { translation } from '../../../../../../Services';
-import { stringToBoolean } from '../../../../../../Packages/Helpers/src/stringToBoolean';
+import { _escapeForRegExp } from '../../../../../../../cypress/utils';
 
 describe('<BooleanControl />', () => {
   const control: IApiControl = {
@@ -51,15 +44,13 @@ describe('<BooleanControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <BooleanControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -67,7 +58,7 @@ describe('<BooleanControl />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('BooleanControl');
+    cy.react('BooleanControl').should('exist');
   });
 
   it('should render <RejectControl /> if useRejection & control_rejectable', () => {
@@ -76,15 +67,13 @@ describe('<BooleanControl />', () => {
       useRejection: { isRejected: true, rejectComments: [] },
       control_rejectable: { is_rejected: true, control_reject_comment: [] },
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <BooleanControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -111,15 +100,13 @@ describe('<BooleanControl />', () => {
       getResourceTrans('de', 'Edit', 'mandatoryValue') ||
       'mandatoryValue|Valeur obligatoire';
     const translations = [trans_EN, trans_FR, trans_DE];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <BooleanControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -132,21 +119,52 @@ describe('<BooleanControl />', () => {
       .invoke('text')
       .and('match', new RegExp(translations.join('|'), 'gu'));
   });
+  it('should render error message if mandatory', () => {
+    const _control: IApiControl = {
+      ...structuredClone(control),
+      mandatory: true,
+      editable: true,
+      control_value: 'false',
+    };
+    const trans_EN =
+      getResourceTrans('en', 'Edit', 'mandatoryValue') ||
+      'mandatoryValue|Valeur obligatoire';
+    const trans_FR =
+      getResourceTrans('fr', 'Edit', 'mandatoryValue') ||
+      'mandatoryValue|Valeur obligatoire';
+    const trans_DE =
+      getResourceTrans('de', 'Edit', 'mandatoryValue') ||
+      'mandatoryValue|Valeur obligatoire';
+    const translations = [trans_EN, trans_FR, trans_DE];
+    cy.mount(
+      <SetupTestsComponents>
+        <BooleanControl
+          control={_control}
+          fileId={''}
+          formState={[]}
+          setFormState={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+          context={'edit'}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('BooleanControl').formErrorShouldBeVisible(translations);
+  });
 
   it('should be disabled', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
       editable: false,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <BooleanControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -163,15 +181,13 @@ describe('<BooleanControl />', () => {
       ...structuredClone(control),
       editable: true,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <BooleanControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -188,15 +204,13 @@ describe('<BooleanControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <BooleanControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -226,15 +240,13 @@ describe('<BooleanControl />', () => {
       'errorRecording|' +
         _escapeForRegExp("Une erreur s'est produite durant l'enregistrement");
     const translations = [trans_EN, trans_FR, trans_DE];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <BooleanControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -258,15 +270,13 @@ describe('<BooleanControl />', () => {
       ...structuredClone(control),
       control_value: 'true',
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <BooleanControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -282,15 +292,13 @@ describe('<BooleanControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <BooleanControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -307,15 +315,13 @@ describe('<BooleanControl />', () => {
       ...structuredClone(control),
       control_value: 'false',
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <BooleanControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}

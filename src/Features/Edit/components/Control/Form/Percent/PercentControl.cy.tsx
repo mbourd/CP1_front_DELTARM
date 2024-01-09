@@ -1,19 +1,18 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../../../cypress/support/component" />
 
-import '../../../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/Percent/PercentControl.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
 import { _translate } from '../../../../../../../cypress/utils';
 
 import { PercentControl } from './PercentControl';
-import { IApiControl, IChapter } from '../../../../types';
+import { IApiControl } from '../../../../types';
 import '../../../../../Edit/translations';
+import RandExp from 'randexp';
 
 describe('<PercentControl />', () => {
   const control: IApiControl = {
@@ -37,22 +36,25 @@ describe('<PercentControl />', () => {
     rich_text_detail: null,
     control_rejectable: null,
   };
+  const fileId = '1234';
+  const formState = [{ controls: [control] }];
+  const setFormState = () => {
+    return undefined;
+  };
 
   it('should render', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <PercentControl
           control={_control}
           fileId={''}
           context={'edit'}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
         />
@@ -66,15 +68,13 @@ describe('<PercentControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <PercentControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -91,15 +91,13 @@ describe('<PercentControl />', () => {
       ...structuredClone(control),
       editable: false,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <PercentControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -113,15 +111,13 @@ describe('<PercentControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <PercentControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -136,15 +132,13 @@ describe('<PercentControl />', () => {
       ...structuredClone(control),
       editable: true,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <PercentControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -173,15 +167,13 @@ describe('<PercentControl />', () => {
       _translate('de', 'Edit', 'mandatoryValue') ||
       'mandatoryValue|Valeur obligatoire';
     const translations = [trans_EN, trans_FR, trans_DE];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <PercentControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -201,15 +193,13 @@ describe('<PercentControl />', () => {
       ...structuredClone(control),
       control_value: value,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <PercentControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -225,15 +215,13 @@ describe('<PercentControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <PercentControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -252,15 +240,13 @@ describe('<PercentControl />', () => {
       useRejection: { isRejected: true, rejectComments: [] },
       control_rejectable: { is_rejected: true, control_reject_comment: [] },
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <PercentControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -269,5 +255,84 @@ describe('<PercentControl />', () => {
     );
     cy.waitReactApp();
     cy.react('PercentControl').react('RejectControl');
+  });
+
+  it('Should match the value with regex', () => {
+    const regex = '^-?[0-9]\\d*(\\.\\d+)?$';
+    const _control = {
+      ...structuredClone(control),
+      editable: true,
+      control_value: null,
+      control_regex: regex,
+      control_regex_msg: 'Value do not match with regex',
+    };
+    const randExp = new RandExp(new RegExp(regex, 'i'));
+    let generated = randExp.gen();
+
+    while (generated === '') {
+      generated = randExp.gen();
+    }
+
+    cy.mount(
+      <SetupTestsComponents>
+        <PercentControl
+          context={'edit'}
+          control={_control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.window().then((w) => {
+      w['Features_Edit_Control_PercentControl'].setCanSendApi(false);
+    });
+    cy.react('PercentControl')
+      .find('input[type="text"]')
+      .type(generated, { parseSpecialCharSequences: false })
+      .blur();
+    cy.wait(255);
+    cy.react('PercentControl')
+      .get('._FormError', { timeout: 1 })
+      .should('not.exist');
+  });
+  it('Should render error message if value do not match with regex', () => {
+    const regex = '^-?[0-9]\\d*(\\.\\d+)?$';
+    const oppositeRegex = new RegExp(`^(?!.*${regex}).*`, 'i');
+    const _control = {
+      ...structuredClone(control),
+      editable: true,
+      control_value: null,
+      control_regex: regex,
+      control_regex_msg: 'Value do not match with regex',
+    };
+    const randExpOpposite = new RandExp(oppositeRegex);
+    let generated = randExpOpposite.gen();
+
+    while (generated === '') {
+      generated = randExpOpposite.gen();
+    }
+
+    cy.mount(
+      <SetupTestsComponents>
+        <PercentControl
+          context={'edit'}
+          control={_control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('PercentControl')
+      .find('input[type="text"]')
+      .type(generated, { parseSpecialCharSequences: false })
+      .blur();
+    cy.wait(255);
+    cy.react('PercentControl')
+      .find('._FormError')
+      .should('have.text', _control.control_regex_msg);
   });
 });

@@ -1,12 +1,12 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../../../cypress/support/component" />
 
-import '../../../../../../../cypress/support/component';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/Compliance/SwitchControlCompliance.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
-
-import { mount } from 'cypress/react18';
 
 import { SwitchControlCompliance } from './SwitchControlCompliance';
 import { EditValidationContext } from '../../../../../../Features/Edit';
@@ -24,6 +24,7 @@ describe('<SwitchControlCompliance />', () => {
     compliance_elm_value: '',
     compliance_id: '',
     compliance_file_detail: null,
+    compliance_elm_mandatory: false,
   };
 
   it('should render', () => {
@@ -31,7 +32,7 @@ describe('<SwitchControlCompliance />', () => {
       ...structuredClone(compliance),
       compliance_elm_type: 'text',
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <EditValidationContext.Provider value={{ data: null, fileId: '' }}>
           <SwitchControlCompliance compliance={_compliance} controlId={''} />
@@ -39,7 +40,7 @@ describe('<SwitchControlCompliance />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('SwitchControlCompliance');
+    cy.react('SwitchControlCompliance').should('exist');
   });
 
   it('should render <TextCompliance />', () => {
@@ -47,7 +48,7 @@ describe('<SwitchControlCompliance />', () => {
       ...structuredClone(compliance),
       compliance_elm_type: 'text',
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <EditValidationContext.Provider value={{ data: null, fileId: '' }}>
           <SwitchControlCompliance compliance={_compliance} controlId={''} />
@@ -55,7 +56,7 @@ describe('<SwitchControlCompliance />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('TextCompliance');
+    cy.react('TextCompliance').should('exist');
   });
 
   it('should render <LongTextCompliance />', () => {
@@ -63,7 +64,7 @@ describe('<SwitchControlCompliance />', () => {
       ...structuredClone(compliance),
       compliance_elm_type: 'long_text',
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <EditValidationContext.Provider value={{ data: null, fileId: '' }}>
           <SwitchControlCompliance compliance={_compliance} controlId={''} />
@@ -71,7 +72,7 @@ describe('<SwitchControlCompliance />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('LongTextCompliance');
+    cy.react('LongTextCompliance').should('exist');
   });
 
   it('should render <SelectListCompliance />', () => {
@@ -79,7 +80,7 @@ describe('<SwitchControlCompliance />', () => {
       ...structuredClone(compliance),
       compliance_elm_type: 'select_list',
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <EditValidationContext.Provider value={{ data: null, fileId: '' }}>
           <SwitchControlCompliance compliance={_compliance} controlId={''} />
@@ -87,7 +88,7 @@ describe('<SwitchControlCompliance />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('SelectListCompliance');
+    cy.react('SelectListCompliance').should('exist');
   });
 
   it('should render <FinancialCompliance />', () => {
@@ -95,7 +96,7 @@ describe('<SwitchControlCompliance />', () => {
       ...structuredClone(compliance),
       compliance_elm_type: 'financial',
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <EditValidationContext.Provider value={{ data: null, fileId: '' }}>
           <SwitchControlCompliance compliance={_compliance} controlId={''} />
@@ -103,7 +104,7 @@ describe('<SwitchControlCompliance />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('FinancialCompliance');
+    cy.react('FinancialCompliance').should('exist');
   });
 
   it('should render <IntegerCompliance />', () => {
@@ -111,7 +112,7 @@ describe('<SwitchControlCompliance />', () => {
       ...structuredClone(compliance),
       compliance_elm_type: 'integer',
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <EditValidationContext.Provider value={{ data: null, fileId: '' }}>
           <SwitchControlCompliance compliance={_compliance} controlId={''} />
@@ -119,7 +120,7 @@ describe('<SwitchControlCompliance />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('IntegerCompliance');
+    cy.react('IntegerCompliance').should('exist');
   });
 
   it('should render <DateCompliance />', () => {
@@ -127,7 +128,7 @@ describe('<SwitchControlCompliance />', () => {
       ...structuredClone(compliance),
       compliance_elm_type: 'date',
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <EditValidationContext.Provider value={{ data: null, fileId: '' }}>
           <SwitchControlCompliance compliance={_compliance} controlId={''} />
@@ -135,7 +136,7 @@ describe('<SwitchControlCompliance />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('DateCompliance');
+    cy.react('DateCompliance').should('exist');
   });
 
   it('should render <CommentCompliance />', () => {
@@ -143,7 +144,7 @@ describe('<SwitchControlCompliance />', () => {
       ...structuredClone(compliance),
       compliance_elm_type: 'comment',
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <EditValidationContext.Provider value={{ data: null, fileId: '' }}>
           <SwitchControlCompliance compliance={_compliance} controlId={''} />
@@ -151,7 +152,7 @@ describe('<SwitchControlCompliance />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('CommentCompliance');
+    cy.react('CommentCompliance').should('exist');
   });
 
   it('should render <PercetCompliance />', () => {
@@ -159,7 +160,7 @@ describe('<SwitchControlCompliance />', () => {
       ...structuredClone(compliance),
       compliance_elm_type: 'percent',
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <EditValidationContext.Provider value={{ data: null, fileId: '' }}>
           <SwitchControlCompliance compliance={_compliance} controlId={''} />
@@ -167,7 +168,7 @@ describe('<SwitchControlCompliance />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('PercentCompliance');
+    cy.react('PercentCompliance').should('exist');
   });
 
   it('should render <UploadCompliance />', () => {
@@ -175,7 +176,7 @@ describe('<SwitchControlCompliance />', () => {
       ...structuredClone(compliance),
       compliance_elm_type: 'file_upload',
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <EditValidationContext.Provider value={{ data: null, fileId: '' }}>
           <SwitchControlCompliance compliance={_compliance} controlId={''} />
@@ -183,7 +184,7 @@ describe('<SwitchControlCompliance />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('UploadCompliance');
+    cy.react('UploadCompliance').should('exist');
   });
 
   it('should render <RadioCompliance />', () => {
@@ -191,7 +192,7 @@ describe('<SwitchControlCompliance />', () => {
       ...structuredClone(compliance),
       compliance_elm_type: 'radio',
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <EditValidationContext.Provider value={{ data: null, fileId: '' }}>
           <SwitchControlCompliance compliance={_compliance} controlId={''} />
@@ -199,7 +200,7 @@ describe('<SwitchControlCompliance />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('RadioCompliance');
+    cy.react('RadioCompliance').should('exist');
   });
 
   it('should render <ChexboxesCompliance />', () => {
@@ -207,7 +208,7 @@ describe('<SwitchControlCompliance />', () => {
       ...structuredClone(compliance),
       compliance_elm_type: 'checkbox',
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <EditValidationContext.Provider value={{ data: null, fileId: '' }}>
           <SwitchControlCompliance compliance={_compliance} controlId={''} />
@@ -215,7 +216,7 @@ describe('<SwitchControlCompliance />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('ChexboxesCompliance');
+    cy.react('ChexboxesCompliance').should('exist');
   });
 
   it('should render <BooleanCompliance />', () => {
@@ -223,7 +224,7 @@ describe('<SwitchControlCompliance />', () => {
       ...structuredClone(compliance),
       compliance_elm_type: 'boolean',
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <EditValidationContext.Provider value={{ data: null, fileId: '' }}>
           <SwitchControlCompliance compliance={_compliance} controlId={''} />
@@ -231,6 +232,6 @@ describe('<SwitchControlCompliance />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('BooleanCompliance');
+    cy.react('BooleanCompliance').should('exist');
   });
 });

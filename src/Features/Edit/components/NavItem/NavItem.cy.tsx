@@ -1,11 +1,14 @@
 // @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../cypress/support/component" />
+
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/NavItem/NavItem.cy.tsx"
 
 import React from 'react';
-import { ThemeProvider } from 'styled-components/macro';
 
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
-import { BPITheme, BPIGlobalStyle } from '../../../../Packages/Design';
+import { BPITheme } from '../../../../Packages/Design';
+import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
 import { NavItem } from './NavItem';
 import { ISection } from '../../types';
 
@@ -18,15 +21,13 @@ describe('<NavItem />', () => {
       locked: false,
       tooltip: '',
     };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <NavItem item={item} active={false} />
-        </ThemeProvider>
-      </div>,
+
+    cy.mount(
+      <SetupTestsComponents>
+        <NavItem item={item} active={false} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('NavItem').should('exist');
   });
 
@@ -39,15 +40,13 @@ describe('<NavItem />', () => {
       locked: false,
       tooltip: '',
     };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <NavItem item={item} active={false} />
-        </ThemeProvider>
-      </div>,
+
+    cy.mount(
+      <SetupTestsComponents>
+        <NavItem item={item} active={false} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('NavItem').find('span').should('contain.text', label);
   });
 
@@ -60,15 +59,13 @@ describe('<NavItem />', () => {
       locked: true,
       tooltip: '',
     };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <NavItem item={item} active={false} />
-        </ThemeProvider>
-      </div>,
+
+    cy.mount(
+      <SetupTestsComponents>
+        <NavItem item={item} active={false} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('NavItem').find('svg');
   });
 
@@ -89,15 +86,13 @@ describe('<NavItem />', () => {
       locked: false,
       tooltip: '',
     };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={_BPITheme}>
-          <BPIGlobalStyle />
-          <NavItem item={item} active={true} />
-        </ThemeProvider>
-      </div>,
+
+    cy.mount(
+      <SetupTestsComponents theme={_BPITheme}>
+        <NavItem item={item} active={true} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('NavItem')
       .find('span')
       .should('have.css', 'background-color', activeColor);

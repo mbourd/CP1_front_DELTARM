@@ -1,37 +1,31 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../cypress/support/component" />
+
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Packages/Design/components/Badge/Badge.cy.tsx"
 
 import React from 'react';
-import { ThemeProvider } from 'styled-components/macro';
 
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
-
-import { BPITheme, BPIGlobalStyle } from '../../../../Packages/Design';
 import { Badge } from './Badge';
+import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
 
 describe('<Badge />', () => {
   it('Should render', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Badge />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Badge />
+      </SetupTestsComponents>,
     );
     cy.waitReactApp();
     cy.react('Badge').should('exist');
   });
 
   it('Should render the text children', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Badge>Hello</Badge>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Badge>Hello</Badge>
+      </SetupTestsComponents>,
     );
     cy.waitReactApp();
     cy.react('Badge').should('contain.text', 'Hello');
@@ -39,28 +33,22 @@ describe('<Badge />', () => {
 
   it('Should render the React.ReactNode children', () => {
     const MyFC = () => <div>Hello</div>;
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Badge>
-            <MyFC />
-          </Badge>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Badge>
+          <MyFC />
+        </Badge>
+      </SetupTestsComponents>,
     );
     cy.waitReactApp();
     cy.react('Badge').react('MyFC').should('contain.text', 'Hello');
   });
 
   it('Should render the content prop', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Badge content={1}>aaa</Badge>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Badge content={1}>aaa</Badge>
+      </SetupTestsComponents>,
     );
     cy.waitReactApp();
     cy.react('Badge')
@@ -71,15 +59,12 @@ describe('<Badge />', () => {
 
   it('Should render the props content + background-color applied', () => {
     const bgc = 'rgb(0, 0, 0)';
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Badge content={1} bgc={bgc}>
-            Hello
-          </Badge>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Badge content={1} bgc={bgc}>
+          Hello
+        </Badge>
+      </SetupTestsComponents>,
     );
     cy.waitReactApp();
     cy.react('Badge')
@@ -91,15 +76,12 @@ describe('<Badge />', () => {
 
   it('Should render the props content + color applied', () => {
     const color = 'rgb(255, 0, 0)';
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Badge content={1} color={color}>
-            Hello
-          </Badge>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Badge content={1} color={color}>
+          Hello
+        </Badge>
+      </SetupTestsComponents>,
     );
     cy.waitReactApp();
     cy.react('Badge')
@@ -111,15 +93,12 @@ describe('<Badge />', () => {
 
   it('Should render the props content + font-family applied', () => {
     const fontFamily = '"Comic Sans MS", sans-serif';
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Badge content={1} fontFamily={fontFamily}>
-            Hello
-          </Badge>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Badge content={1} fontFamily={fontFamily}>
+          Hello
+        </Badge>
+      </SetupTestsComponents>,
     );
     cy.waitReactApp();
     cy.react('Badge')
@@ -136,20 +115,17 @@ describe('<Badge />', () => {
     const bgc = 'rgb(33, 0, 0)';
     const color = 'rgb(255, 0, 0)';
     const fontFamily = '"Comic Sans MS", sans-serif';
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Badge
-            content={content}
-            bgc={bgc}
-            color={color}
-            fontFamily={fontFamily}
-          >
-            Hello
-          </Badge>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Badge
+          content={content}
+          bgc={bgc}
+          color={color}
+          fontFamily={fontFamily}
+        >
+          Hello
+        </Badge>
+      </SetupTestsComponents>,
     );
     cy.waitReactApp();
     cy.react('Badge')

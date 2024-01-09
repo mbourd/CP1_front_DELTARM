@@ -1,17 +1,17 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../cypress/support/component" />
 
-import '../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/SubHeader.cy.tsx"
 
 import React from 'react';
-import { ThemeProvider } from 'styled-components/macro';
-import { BPITheme, BPIGlobalStyle } from '../../../Packages/Design';
-import { _decodeHtmlUnicode } from '../../../../cypress/utils';
 
-import { mount } from 'cypress/react18';
+import { _decodeHtmlUnicode } from '../../../../cypress/utils';
 
 import { SubHeader } from './SubHeader';
 import { IData } from '../types';
+import { SetupTestsComponents } from '../../../../cypress/utils/SetupTestsComponents';
 
 describe('<Subheader />', () => {
   it('should render', () => {
@@ -31,13 +31,10 @@ describe('<Subheader />', () => {
       valid_mode: 'global',
       context: 'edit',
     };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <SubHeader data={data} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <SubHeader data={data} />
+      </SetupTestsComponents>,
     );
     cy.waitReactApp();
     cy.react('SubHeader').should('exist').should('be.visible');
@@ -61,13 +58,10 @@ describe('<Subheader />', () => {
       valid_mode: 'global',
       context: 'edit',
     };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <SubHeader data={data} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <SubHeader data={data} />
+      </SetupTestsComponents>,
     );
     cy.waitReactApp();
     cy.react('SubHeader').should('contain.text', title);
@@ -93,13 +87,10 @@ describe('<Subheader />', () => {
       valid_mode: 'global',
       context: 'edit',
     };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <SubHeader data={data} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <SubHeader data={data} />
+      </SetupTestsComponents>,
     );
     cy.waitReactApp();
     cy.react('SubHeader').should(

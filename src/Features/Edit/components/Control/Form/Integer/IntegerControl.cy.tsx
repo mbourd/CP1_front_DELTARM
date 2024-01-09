@@ -1,25 +1,18 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../../../cypress/support/component" />
 
-import '../../../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/Integer/IntegerControl.cy.tsx"
 
-import React, { useState } from 'react';
+import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
-import {
-  _requestJWT,
-  _getEnv,
-  _escapeForRegExp,
-  _translate,
-} from '../../../../../../../cypress/utils';
+import { _translate } from '../../../../../../../cypress/utils';
 
 import { IntegerControl } from './IntegerControl';
-import { IApiControl, IChapter } from '../../../../types';
+import { IApiControl } from '../../../../types';
 import '../../../../../Edit/translations';
-import { translation } from '../../../../../../Services';
+import RandExp from 'randexp';
 
 describe('<IntegerControl />', () => {
   const control: IApiControl = {
@@ -43,21 +36,24 @@ describe('<IntegerControl />', () => {
     rich_text_detail: null,
     control_rejectable: null,
   };
+  const fileId = '1234';
+  const formState = [{ controls: [control] }];
+  const setFormState = () => {
+    return undefined;
+  };
 
   it('should render', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IntegerControl
           control={_control}
           context={'edit'}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
         />
@@ -71,15 +67,13 @@ describe('<IntegerControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IntegerControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -96,15 +90,13 @@ describe('<IntegerControl />', () => {
       ...structuredClone(control),
       editable: false,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IntegerControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -118,15 +110,13 @@ describe('<IntegerControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IntegerControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -141,15 +131,13 @@ describe('<IntegerControl />', () => {
       ...structuredClone(control),
       editable: true,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IntegerControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -178,15 +166,13 @@ describe('<IntegerControl />', () => {
       _translate('de', 'Edit', 'mandatoryValue') ||
       'mandatoryValue|Valeur obligatoire';
     const translations = [trans_EN, trans_FR, trans_DE];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IntegerControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -206,15 +192,13 @@ describe('<IntegerControl />', () => {
       ...structuredClone(control),
       control_value: value,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IntegerControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -231,15 +215,13 @@ describe('<IntegerControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IntegerControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -258,15 +240,13 @@ describe('<IntegerControl />', () => {
       useRejection: { isRejected: true, rejectComments: [] },
       control_rejectable: { is_rejected: true, control_reject_comment: [] },
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IntegerControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -282,15 +262,13 @@ describe('<IntegerControl />', () => {
       ...structuredClone(control),
       control_options: { unit: 'cm' },
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IntegerControl
           control={_control}
           fileId={''}
           formState={[]}
-          setFormState={function (
-            value: React.SetStateAction<IChapter[]>,
-          ): void {
+          setFormState={function (): void {
             throw new Error('Function not implemented.');
           }}
           context={'edit'}
@@ -299,5 +277,81 @@ describe('<IntegerControl />', () => {
     );
     cy.waitReactApp();
     cy.react('IntegerControl').contains('cm');
+  });
+
+  it('Should match the value with regex', () => {
+    const regex = /^-?[0-9]\d*$/;
+    const _control: IApiControl = {
+      ...structuredClone(control),
+      editable: true,
+      control_value: null,
+      control_regex: regex,
+      control_regex_msg: 'Value do not match with regex',
+    };
+    const randExp = new RandExp(regex);
+    let generated = randExp.gen();
+
+    while (generated === '') generated = randExp.gen();
+
+    cy.mount(
+      <SetupTestsComponents>
+        <IntegerControl
+          context={'edit'}
+          control={_control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.window().then((w) => {
+      w['Features_Edit_Control_IntegerControl'].setCanSendApi(false);
+    });
+    cy.react('IntegerControl')
+      .find('input[type="text"]')
+      .type(generated, { parseSpecialCharSequences: false })
+      .blur();
+    cy.wait(255);
+    cy.react('IntegerControl')
+      .get('._FormError', { timeout: 1 })
+      .should('not.exist');
+  });
+  it('Should render error message if value do not match with regex', () => {
+    const regex = /^-?[0-9]\d*$/;
+    const oppositeRegex = new RegExp(`^(?!.*${regex.source}).*`);
+    const _control: IApiControl = {
+      ...structuredClone(control),
+      editable: true,
+      control_value: null,
+      control_regex: regex,
+      control_regex_msg: 'Value do not match with regex',
+    };
+    const randExpOpposite = new RandExp(oppositeRegex);
+    let generated = randExpOpposite.gen();
+
+    while (generated === '' || !oppositeRegex.test(generated))
+      generated = randExpOpposite.gen();
+
+    cy.mount(
+      <SetupTestsComponents>
+        <IntegerControl
+          context={'edit'}
+          control={_control}
+          fileId={fileId}
+          formState={formState}
+          setFormState={setFormState}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('IntegerControl')
+      .find('input[type="text"]')
+      .type(generated, { parseSpecialCharSequences: false })
+      .blur();
+    cy.wait(255);
+    cy.react('IntegerControl')
+      .find('._FormError')
+      .should('have.text', _control.control_regex_msg);
   });
 });

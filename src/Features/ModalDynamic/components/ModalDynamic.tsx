@@ -30,22 +30,26 @@ import { Controller, useForm } from 'react-hook-form';
 import { StyledTableCell } from '../../DashboardDynamic/components/Card/Card.style';
 import { InputModalDynamic } from './InputModalDynamic/InputModalDynamic';
 import { SelectModalDynamic } from './SelectModalDynamic/SelectModalDynamic';
-import { useTrans, security } from '../../../Services';
+import { security } from '../../../Services';
 
 export const ModalDynamic: FC<IDataModalProps> = ({
   open,
   setIsModalOpen,
   data,
 }): React.ReactElement => {
+  // const [trans] = useTrans('Manage');
   const { user } = useSecurity();
   const jwt = user.getJwt();
-  const { actionButton } = useActionButton(jwt, setIsModalOpen);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { actionButton } = useActionButton({
+    jwt,
+    setIsModalOpen,
+    setErrorMessage,
+  });
   const defaultQueries = useMemo<Record<string, string>>(() => {
     return {};
   }, []);
   const user_language: any = security.decodeJwtToken(jwt ? jwt : '');
-  console.log(user_language, 'lang');
 
   const footer = (
     <ModalDynamicFooterStyled>

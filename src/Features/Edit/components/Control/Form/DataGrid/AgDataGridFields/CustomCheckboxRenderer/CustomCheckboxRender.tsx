@@ -1,9 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
+import { DataGridDetailsRowsCell, IApiControl } from 'Features/Edit/types';
 
-const CustomCheckboxRender: React.FC<any> = ({
+type CustomCheckboxRenderPropsType = {
+  props: any;
+  field_data?: DataGridDetailsRowsCell;
+  control?: IApiControl;
+  fileId: string;
+  jwt: string | null;
+  seterrors: React.Dispatch<React.SetStateAction<string>>;
+};
+
+const CustomCheckboxRender: React.FC<CustomCheckboxRenderPropsType> = ({
   props,
-  control,
   fileId,
   jwt,
   seterrors,

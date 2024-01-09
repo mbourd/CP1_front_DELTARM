@@ -1,65 +1,59 @@
 // @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../../../cypress/support/component" />
 
-import 'cypress-react-selector';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Dashboard/components/Card/Body/Row/Row.cy.tsx"
 
 import React from 'react';
-import { ThemeProvider } from 'styled-components/macro';
-import { BPITheme, BPIGlobalStyle } from '../../../../../../Packages/Design';
-import { mount } from 'cypress/react18';
+import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
 
 import { Row } from './Row';
 
 import '../../../../translations';
-import { translation } from '../../../../../../Services';
 import { BrowserRouter } from 'react-router-dom';
 
 describe('<Row />', () => {
   it('Should render', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <BrowserRouter>
-            <Row
-              count={0}
-              text={''}
-              stage={0}
-              state={0}
-              role={0}
-              stageName={''}
-              color={''}
-              workflow={undefined}
-            />
-          </BrowserRouter>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <BrowserRouter>
+          <Row
+            count={0}
+            text={''}
+            stage={0}
+            state={0}
+            role={0}
+            stageName={''}
+            color={''}
+            workflow={undefined}
+          />
+        </BrowserRouter>
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Row').should('exist').should('be.visible');
   });
 
   it('Should render the count number', () => {
     const count = 1;
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <BrowserRouter>
-            <Row
-              count={count}
-              text={''}
-              stage={0}
-              state={0}
-              role={0}
-              stageName={''}
-              color={''}
-              workflow={undefined}
-            />
-          </BrowserRouter>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <BrowserRouter>
+          <Row
+            count={count}
+            text={''}
+            stage={0}
+            state={0}
+            role={0}
+            stageName={''}
+            color={''}
+            workflow={undefined}
+          />
+        </BrowserRouter>
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Row').should('exist').should('be.visible');
     cy.react('Row')
       .find('span.number')
@@ -71,26 +65,23 @@ describe('<Row />', () => {
   it('Should render the stage name', () => {
     const count = 1;
     const stageName = 'stagename';
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <BrowserRouter>
-            <Row
-              count={count}
-              text={''}
-              stage={0}
-              state={0}
-              role={0}
-              stageName={stageName}
-              color={''}
-              workflow={undefined}
-            />
-          </BrowserRouter>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <BrowserRouter>
+          <Row
+            count={count}
+            text={''}
+            stage={0}
+            state={0}
+            role={0}
+            stageName={stageName}
+            color={''}
+            workflow={undefined}
+          />
+        </BrowserRouter>
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Row').should('exist').should('be.visible');
     cy.react('Row')
       .find('span.number')

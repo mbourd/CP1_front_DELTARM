@@ -1,27 +1,25 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../cypress/support/component" />
 
-import '../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Comments/File/Body/FileCommentBody.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
 
 import { FileCommentBody } from './FileCommentBody';
 import { IFileComment } from '../../types';
 
 describe('<FileCommentBody />', () => {
   it('should render', () => {
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <FileCommentBody comments={[]} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('FileCommentBody');
+    cy.react('FileCommentBody').should('exist');
   });
 
   it('should render the correct number of <FileCommentBodyItem />', () => {
@@ -32,7 +30,7 @@ describe('<FileCommentBody />', () => {
       user: '',
     };
     const comments: IFileComment[] = [comment, comment];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <FileCommentBody comments={comments} />
       </SetupTestsComponents>,

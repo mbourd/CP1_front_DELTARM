@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { FormControlStyled } from './FormControl.style';
 import { IChapter } from 'Features/Edit/types';

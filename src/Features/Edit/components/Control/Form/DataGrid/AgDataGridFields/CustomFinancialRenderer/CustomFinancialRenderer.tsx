@@ -3,29 +3,39 @@ import React from 'react';
 import { CustomFinancialRendererStyled } from './CustomFinancialRenderer.style';
 import { EuroIcon } from 'Styles';
 import { CustomFinancialSpanStyled } from './CustomFinancialRendererSpan.style';
+import BigNumber from 'bignumber.js';
+import { DataGridDetailsRowsCell, IApiControl } from 'Features/Edit/types';
 
-const CustomFinancialRenderer: React.FC<any> = ({
+type CustomFinancialRendererPropsType = {
+  props: any;
+  field_data?: DataGridDetailsRowsCell;
+  control?: IApiControl;
+  fileId?: string;
+  jwt?: string;
+  seterrors?: React.Dispatch<React.SetStateAction<string>>;
+};
+
+const CustomFinancialRenderer: React.FC<CustomFinancialRendererPropsType> = ({
   props,
-  field_data,
   control,
-  fileId,
-  jwt,
-  seterrors,
 }) => {
   const column = props.column.colDef;
   const { decimal_digit: decimalDigit = 0 } = column;
   const {
     thousand_separator: hasThousandSeparator = false,
   }: Record<string, boolean> = column;
-  let value =
-    props?.value !== null || undefined
-      ? formatDecimalDigit(props.value, decimalDigit)
-      : '';
-  value = hasThousandSeparator ? kFormatter(value) : value;
+  const [name]: string[] = props.column.getId().split('.');
+  let val = '';
+  const decimalFormat = formatDecimalDigit(props.value, decimalDigit);
+
+  if (decimalFormat !== 'NaN' && props.value) {
+    val = hasThousandSeparator ? kFormatter(decimalFormat) : decimalFormat;
+    props.data[name]['_computedValueBigNumber'] = new BigNumber(props.value);
+  }
 
   return (
     <CustomFinancialRendererStyled>
-      {(props?.value !== null || undefined) && (
+      {val !== '' && (
         <>
           {column?.currency_symbol ? (
             <CustomFinancialSpanStyled
@@ -54,7 +64,7 @@ const CustomFinancialRenderer: React.FC<any> = ({
           )}
         </>
       )}
-      {props?.value !== null || undefined ? value : ''}
+      {val}
     </CustomFinancialRendererStyled>
   );
 };

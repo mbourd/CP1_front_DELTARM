@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components/macro';
+import styled from 'styled-components/macro';
 
 export const DataGridControlStyled = styled.div`
   ._DataGrid {
@@ -76,7 +76,15 @@ export const AgDataGridStyle = styled.div<{
   $header_font_color: string;
   $header_bg_color: string;
   $odd_row_bg_color: string;
+  $heightGrid?: string | number;
 }>`
+  height: ${({ $heightGrid }) => {
+    if ($heightGrid !== undefined)
+      return typeof $heightGrid === 'string' ? $heightGrid : $heightGrid + 'px';
+
+    return 'auto';
+  }};
+
   .ag-theme-alpine {
     --ag-foreground-color: ${({ $font_color }) =>
       $font_color ? $font_color : '#000000'};

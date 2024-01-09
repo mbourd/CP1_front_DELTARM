@@ -8,7 +8,6 @@ import {
   BadRequest,
   FormLabel,
   FormText,
-  Select,
 } from 'Shared/components';
 import {
   SearchModalBPIContentStyled,
@@ -52,9 +51,9 @@ export const SearchModal: React.FC<IProps> = ({
   const file_num = file[0];
   const file_avenant = file[1];
 
-  const setProduct = useCallback((values: Record<string, true>) => {
-    storage.setData('edit.selected.product', values);
-  }, []);
+  // const setProduct = useCallback((values: Record<string, true>) => {
+  //   storage.setData('edit.selected.product', values);
+  // }, []);
 
   const createFile = useCallback(() => {
     // const prod_id = Object.keys(

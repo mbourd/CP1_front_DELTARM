@@ -1,12 +1,14 @@
 // @ts-check
 /// <reference types="cypress" />
-import '../../../../cypress/support/component';
+/// <reference types="../../../../cypress/support/component" />
+
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Shared/components/MainNav/MainNav.cy.tsx"
 
 import React from 'react';
+
 import { SetupTestsComponents } from '../../../../cypress/utils/SetupTestsComponents';
 
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
 import { _requestJWT, _getEnv, _translate } from '../../../../cypress/utils';
 
 import { MainNav } from './MainNav';
@@ -49,7 +51,7 @@ describe('<MainNav />', () => {
   });
 
   it('Should render', () => {
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <BrowserRouter>
           <MainNav />
@@ -61,7 +63,7 @@ describe('<MainNav />', () => {
   });
 
   it('should display <Popper /> on click menu and hide when click outside', () => {
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <BrowserRouter>
           <SecurityContext.Provider
@@ -96,7 +98,7 @@ describe('<MainNav />', () => {
       'rejectedFiles',
       'allFiles',
     ];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <BrowserRouter>
           <SecurityContext.Provider
@@ -130,7 +132,7 @@ describe('<MainNav />', () => {
   });
 
   it('should display logout', () => {
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <BrowserRouter>
           <SecurityContext.Provider

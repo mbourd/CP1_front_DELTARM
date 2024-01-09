@@ -1,21 +1,19 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../../../../../cypress/support/component" />
 
-import '../../../../../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/Compliance/FormCompliance/IntegerCompliance/IntegerCompliance.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
 
 import { IntegerCompliance } from './IntegerCompliance';
 import { IApiComplianceFields } from '../../../../../../types';
 import '../../../../../../../Edit/translations';
 import { _translate } from '../../../../../../../../../cypress/utils';
 
-// a test case for a React component (ChexboxesCompliance)
+// a test case for a React component (IntegerCompliance)
 describe('<IntegerCompliance />', () => {
   const compliance: IApiComplianceFields = {
     compliance_elm_desc_1: null,
@@ -35,7 +33,7 @@ describe('<IntegerCompliance />', () => {
     const _compliance = {
       ...structuredClone(compliance),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IntegerCompliance
           compliance={_compliance}
@@ -53,7 +51,7 @@ describe('<IntegerCompliance />', () => {
     const _compliance = {
       ...structuredClone(compliance),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IntegerCompliance
           compliance={_compliance}
@@ -75,7 +73,7 @@ describe('<IntegerCompliance />', () => {
     const _compliance = {
       ...structuredClone(compliance),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IntegerCompliance
           compliance={_compliance}
@@ -110,7 +108,7 @@ describe('<IntegerCompliance />', () => {
       compliance_elm_value: '',
       compliance_elm_mandatory: true,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IntegerCompliance
           compliance={_compliance}
@@ -140,7 +138,7 @@ describe('<IntegerCompliance />', () => {
       compliance_elm_value: '',
       compliance_elm_mandatory: true,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IntegerCompliance
           compliance={_compliance}
@@ -151,11 +149,11 @@ describe('<IntegerCompliance />', () => {
     );
     cy.waitReactApp();
     cy.react('IntegerCompliance').should('exist');
-    cy.react('IntegerCompliance').find('input').type('aaa').blur();
+    cy.react('IntegerCompliance').find('input').type('123').blur();
     cy.wait(3000);
 
     cy.get('._FormError', { timeout: 1 })
       .invoke('text')
-      .should('not.match', new RegExp(new RegExp(translations.join('|'))));
+      .should('not.match', new RegExp(translations.join('|'), 'gu'));
   });
 });

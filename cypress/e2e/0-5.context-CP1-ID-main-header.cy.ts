@@ -1,9 +1,7 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../support/e2e" />
 
-import '../support/commands';
-
-import 'cypress-react-selector';
 import '../../src/Shared/components/MainHeader/translations';
 import { translation } from '../../src/Services';
 import { _escapeForRegExp } from '../utils';

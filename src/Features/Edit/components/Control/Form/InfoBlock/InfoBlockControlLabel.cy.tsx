@@ -1,14 +1,12 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../../../cypress/support/component" />
 
-import '../../../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/InfoBlock/InfoBlockControlLabel.cy.tsx"
 
 import React, { useState } from 'react';
 import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
 
 import { InfoBlockControlLabel } from './InfoBlockControlLabel';
 import { IApiControl } from '../../../../types';
@@ -52,7 +50,7 @@ describe('<FormulaControl />', () => {
         />
       );
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <DummyFC />
       </SetupTestsComponents>,
@@ -67,12 +65,12 @@ describe('<FormulaControl />', () => {
       ...structuredClone(control),
       control_desc_1: desc,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <InfoBlockControlLabel
           control={_control}
           isOpen={false}
-          setIsOpen={function (value: React.SetStateAction<boolean>): void {
+          setIsOpen={function (): void {
             throw new Error('Function not implemented.');
           }}
         />
@@ -98,12 +96,12 @@ describe('<FormulaControl />', () => {
       ...structuredClone(control),
       control_title: desc,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <InfoBlockControlLabel
           control={_control}
           isOpen={false}
-          setIsOpen={function (value: React.SetStateAction<boolean>): void {
+          setIsOpen={function (): void {
             throw new Error('Function not implemented.');
           }}
         />

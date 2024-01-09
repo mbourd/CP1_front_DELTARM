@@ -1,7 +1,7 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../support/e2e" />
 
-import '../support/e2e';
 import '../../src/Shared/components/MainHeader/translations';
 import { _escapeForRegExp, _getEnv, _translate } from '../utils';
 

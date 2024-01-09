@@ -1,52 +1,46 @@
 // @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../../cypress/support/component" />
+
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Packages/Design/components/Input/InputBase/InputBase.cy.tsx"
 
 import React from 'react';
-import { ThemeProvider } from 'styled-components/macro';
+import { SetupTestsComponents } from '../../../../../../cypress/utils/SetupTestsComponents';
 
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
-import { BPITheme, BPIGlobalStyle } from '../../../../Design';
+import { BPITheme } from '../../../../Design';
 import { InputBase } from './InputBase';
 
 describe('<InputBase />', () => {
   it('Should render', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <InputBase />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <InputBase />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('InputBase').should('exist');
   });
 
   it('Border radius should be 0px', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <InputBase bdr="0px" />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <InputBase bdr="0px" />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('InputBase')
       .get(`label`)
       .should('have.css', 'border-radius', '0px');
   });
 
   it('Class name should contain "success"', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <InputBase status={'success'} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <InputBase status={'success'} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('InputBase')
       .get(`label`)
       .should('have.attr', 'class')
@@ -55,15 +49,12 @@ describe('<InputBase />', () => {
 
   it('Should render $ from icon props', () => {
     const icon = { currency_symbol: '$' };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <InputBase icon={icon} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <InputBase icon={icon} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('InputBase')
       .get(`label`)
       .get('div')
@@ -75,15 +66,12 @@ describe('<InputBase />', () => {
 
   it('Should render a text from icon props', () => {
     const icon = 'any text';
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <InputBase icon={icon} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <InputBase icon={icon} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('InputBase').get(`label`).get('div').nthNode(0).contains(icon);
   });
 
@@ -92,153 +80,124 @@ describe('<InputBase />', () => {
       return <>hello</>;
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <InputBase icon={<DummyFC />} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <InputBase icon={<DummyFC />} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('InputBase').get('label').find('div').eq(0).react('DummyFC');
   });
 
   it('Input should have a name', () => {
     const name = 'anyName';
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <InputBase name={name} />
-        </ThemeProvider>
-      </div>,
+
+    cy.mount(
+      <SetupTestsComponents>
+        <InputBase name={name} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('InputBase').find(`input`).should('have.attr', 'name', name);
   });
 
   it('Input should have a default value', () => {
     const name = 'anyName';
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <InputBase defaultValue={name} />
-        </ThemeProvider>
-      </div>,
+
+    cy.mount(
+      <SetupTestsComponents>
+        <InputBase defaultValue={name} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('InputBase').find(`input`).should('have.value', name);
   });
 
   it('Input should be disabled', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <InputBase disabled={true} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <InputBase disabled={true} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('InputBase').find(`input`).should('have.attr', 'disabled');
+    cy.react('InputBase').find(`input`).should('be.disabled');
   });
 
   it('Input should not be disabled', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <InputBase disabled={false} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <InputBase disabled={false} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('InputBase').find(`input`).should('not.have.attr', 'disabled');
+    cy.react('InputBase').find(`input`).should('not.be.disabled');
   });
 
   it('Input should have ID', () => {
     const id = 'anyID';
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <InputBase id={id} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <InputBase id={id} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('InputBase').find(`input`).should('have.attr', 'id', id);
   });
 
   it('Input should have placeholder', () => {
     const placeholder = 'any placeholder';
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <InputBase placeholder={placeholder} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <InputBase placeholder={placeholder} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('InputBase')
       .find(`input`)
       .should('have.attr', 'placeholder', placeholder);
   });
 
   it('Input should have required', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <InputBase required={true} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <InputBase required={true} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('InputBase').find(`input`).should('have.attr', 'required');
   });
 
   it('Input should not have required', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <InputBase required={false} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <InputBase required={false} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('InputBase').find(`input`).should('not.have.attr', 'required');
   });
 
   it('Input should be type email', () => {
     const type = 'email';
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <InputBase type={type} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <InputBase type={type} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('InputBase').find(`input`).should('have.attr', 'type', type);
   });
 
   it('Should have background color', () => {
     const bgc = 'rgb(255, 0, 0)';
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <InputBase bgc={bgc} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <InputBase bgc={bgc} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('InputBase')
       .get(`label`)
       .should('have.css', 'background-color', bgc);
@@ -246,36 +205,32 @@ describe('<InputBase />', () => {
 
   it('Should render unit', () => {
     const unit = 'm';
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <InputBase unit={unit} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <InputBase unit={unit} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('InputBase').find(`span`).contains(unit);
   });
 
   it('Input should autofocus', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <InputBase autoFocus={true} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <InputBase autoFocus={true} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
-    cy.react('InputBase')
-      .find(`input`)
-      // .then(($el) => {
-      //   cy.wrap($el.parent()[0])
-      //     .should('have.attr', 'class')
-      //     .and('match', new RegExp('Mui-focused', 'gu'));
-      // })
-      .should('be.focused');
+    cy.waitReactApp();
+    cy.wait(255).then(() => {
+      cy.react('InputBase')
+        .find(`input`)
+        // .then(($el) => {
+        //   cy.wrap($el.parent()[0])
+        //     .should('have.attr', 'class')
+        //     .and('match', new RegExp('Mui-focused', 'gu'));
+        // })
+        .should('be.focused');
+    });
   });
 
   it('Input should autofocus', () => {
@@ -290,18 +245,15 @@ describe('<InputBase />', () => {
         },
       },
     };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={_BPITheme}>
-          <BPIGlobalStyle />
-          <InputBase
-            // @ts-ignore
-            color={'text'}
-          />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents theme={_BPITheme}>
+        <InputBase
+          // @ts-ignore
+          color={'text'}
+        />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('InputBase').get(`label`).should('have.css', 'color', textColor);
   });
 });

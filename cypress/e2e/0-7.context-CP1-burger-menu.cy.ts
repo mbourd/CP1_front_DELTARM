@@ -1,11 +1,9 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../support/e2e" />
 
-import '../support/commands';
-import '../../src/Features/Manage/translations';
-import { translation } from '../../src/Services';
-import { _escapeForRegExp, _getEnv } from '../utils';
+import { _getEnv } from '../utils';
 import JwtDecode from 'jwt-decode';
 
 describe(
@@ -19,8 +17,7 @@ describe(
             localStorage[Cypress.env('url_cp1_front')]['security'] as string,
           )._jwt,
         );
-
-        if (jwt.context === 'contr_perm') this.skip();
+        const visibleOrNot = jwt.context !== 'CP1' ? 'not.exist' : 'be.visible';
 
         cy.visit(_getEnv('url_cp1_front'));
         cy.waitReactApp('#main-header');
@@ -28,19 +25,19 @@ describe(
         cy.get('[role="tooltip"]._Popper')
           .find('svg')
           .eq(2, { timeout: 1 })
-          .should('be.visible'); // <FolderOpenIcon />
+          .should(visibleOrNot); // <FolderOpenIcon />
         cy.get('[role="tooltip"]._Popper')
           .find('svg')
           .eq(3, { timeout: 1 })
-          .should('be.visible'); // <FolderOpenIcon />
+          .should(visibleOrNot); // <FolderWaitingIcon />
         cy.get('[role="tooltip"]._Popper')
           .find('svg')
           .eq(4, { timeout: 1 })
-          .should('be.visible'); // <FolderOpenIcon />
+          .should(visibleOrNot); // <FolderInfoIcon />
         cy.get('[role="tooltip"]._Popper')
           .find('svg')
           .eq(5, { timeout: 1 })
-          .should('be.visible'); // <FolderOpenIcon />
+          .should(visibleOrNot); // <FolderIcon />
       });
     });
   },

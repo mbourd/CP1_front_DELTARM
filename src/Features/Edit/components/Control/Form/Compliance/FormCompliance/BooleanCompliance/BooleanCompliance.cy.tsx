@@ -1,14 +1,12 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../../../../../cypress/support/component" />
 
-import '../../../../../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/Compliance/FormCompliance/BooleanCompliance/BooleanCompliance.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
 
 import { BooleanCompliance } from './BooleanCompliance';
 import { IApiComplianceFields } from '../../../../../../types';
@@ -32,7 +30,7 @@ describe('<BooleanCompliance />', () => {
     const _compliance = {
       ...structuredClone(compliance),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <BooleanCompliance
           compliance={_compliance}
@@ -50,7 +48,7 @@ describe('<BooleanCompliance />', () => {
       ...structuredClone(compliance),
       compliance_elm_value: 'true',
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <BooleanCompliance
           compliance={_compliance}
@@ -69,7 +67,7 @@ describe('<BooleanCompliance />', () => {
       ...structuredClone(compliance),
       compliance_elm_value: 'false',
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <BooleanCompliance
           compliance={_compliance}
@@ -87,7 +85,7 @@ describe('<BooleanCompliance />', () => {
     const _compliance: IApiComplianceFields = {
       ...structuredClone(compliance),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <BooleanCompliance
           compliance={_compliance}
@@ -106,7 +104,7 @@ describe('<BooleanCompliance />', () => {
       ...structuredClone(compliance),
       compliance_elm_value: 'falsee',
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <BooleanCompliance
           compliance={_compliance}
@@ -125,7 +123,7 @@ describe('<BooleanCompliance />', () => {
     const _compliance = {
       ...structuredClone(compliance),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <BooleanCompliance
           compliance={_compliance}
@@ -144,7 +142,7 @@ describe('<BooleanCompliance />', () => {
     const _compliance = {
       ...structuredClone(compliance),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <BooleanCompliance
           compliance={_compliance}

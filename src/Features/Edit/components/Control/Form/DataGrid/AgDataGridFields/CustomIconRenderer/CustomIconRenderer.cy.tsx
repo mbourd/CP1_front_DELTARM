@@ -1,15 +1,13 @@
 // @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../../../../../cypress/support/component" />
+
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/DataGrid/AgDataGridFields/CustomIconRenderer/CustomIconRenderer.cy.tsx"
 
 import React from 'react';
-import { ThemeProvider } from 'styled-components/macro';
+import { SetupTestsComponents } from '../../../../../../../../../cypress/utils/SetupTestsComponents';
 
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
-
-import {
-  BPITheme,
-  BPIGlobalStyle,
-} from '../../../../../../../../Packages/Design';
 import CustomIconRenderer from './CustomIconRenderer';
 
 describe('<CustomIconRenderer', () => {
@@ -25,15 +23,12 @@ describe('<CustomIconRenderer', () => {
       },
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <CustomIconRenderer props={props} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <CustomIconRenderer props={props} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(10000, '#root');
+    cy.waitReactApp();
     cy.react('CustomIconRenderer').should('exist');
   });
 
@@ -51,15 +46,12 @@ describe('<CustomIconRenderer', () => {
       },
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <CustomIconRenderer props={props} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <CustomIconRenderer props={props} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(10000, '#root');
+    cy.waitReactApp();
     cy.react('CustomIconRenderer').find('svg').should('exist');
     cy.react('CustomIconRenderer')
       .find('svg')
@@ -80,15 +72,12 @@ describe('<CustomIconRenderer', () => {
       },
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <CustomIconRenderer props={props} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <CustomIconRenderer props={props} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(10000, '#root');
+    cy.waitReactApp();
     cy.react('CustomIconRenderer').find('svg').should('exist');
     cy.react('CustomIconRenderer')
       .find('svg')
@@ -108,15 +97,12 @@ describe('<CustomIconRenderer', () => {
       },
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <CustomIconRenderer props={props} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <CustomIconRenderer props={props} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(10000, '#root');
+    cy.waitReactApp();
     cy.react('CustomIconRenderer').find('svg').should('exist');
     cy.react('CustomIconRenderer')
       .find('svg')
@@ -136,15 +122,12 @@ describe('<CustomIconRenderer', () => {
       },
     };
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <CustomIconRenderer props={props} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <CustomIconRenderer props={props} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(10000, '#root');
+    cy.waitReactApp();
     cy.react('CustomIconRenderer')
       .find('svg', { timeout: 1 })
       .should('not.exist');

@@ -1,93 +1,77 @@
 // @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../cypress/support/component" />
+
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Packages/Design/components/Modal/Modal.cy.tsx"
 
 import React from 'react';
-import { ThemeProvider } from 'styled-components/macro';
+import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
 
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
-import { BPITheme, BPIGlobalStyle } from '../../../Design';
 import { Modal } from './Modal';
 
 describe('<Modal />', () => {
   it('Should render', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Modal open={true} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Modal open={true} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Modal').should('exist');
   });
   it('Should not render', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Modal open={false} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Modal open={false} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Modal', { options: { timeout: 1 } }).should('not.exist');
   });
 
   it('Should render text children', () => {
     const children = 'hello';
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Modal open={true}>{children}</Modal>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Modal open={true}>{children}</Modal>
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Modal').react('DialogContent').contains(children);
   });
   it('Should render React.ReactNode children', () => {
     const DummyFC: React.FC = () => {
       return <>hello</>;
     };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Modal open={true}>
-            <DummyFC />
-          </Modal>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Modal open={true}>
+          <DummyFC />
+        </Modal>
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Modal').react('DialogContent').react('DummyFC');
     cy.react('Modal').react('DialogContent').contains('hello');
   });
 
   it('Should render the X logo', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Modal open={true} closable={true} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Modal open={true} closable={true} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Modal').react('DialogTitle').react('IconButton').find('svg');
   });
   it('Should not render the X logo', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Modal open={true} closable={false} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Modal open={true} closable={false} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Modal')
       .react('DialogTitle')
       .react('IconButton', { options: { timeout: 1 } })
@@ -98,15 +82,12 @@ describe('<Modal />', () => {
     const DummyFC: React.FC = () => {
       return <>hello</>;
     };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Modal open={true} header={<DummyFC />} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Modal open={true} header={<DummyFC />} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Modal').react('DummyFC');
   });
 
@@ -114,15 +95,12 @@ describe('<Modal />', () => {
     const DummyFC: React.FC = () => {
       return <>hello</>;
     };
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <Modal open={true} footer={<DummyFC />} />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <Modal open={true} footer={<DummyFC />} />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('Modal').react('DummyFC');
   });
 });

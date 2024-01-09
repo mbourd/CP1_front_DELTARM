@@ -1,13 +1,12 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../cypress/support/component" />
 
-import '../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Shared/components/MainHeader/IconsContainer/IconsContainerRender.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
 import {
   _requestJWT,
   _getEnv,
@@ -43,12 +42,12 @@ describe('<IconsContainer />', () => {
   });
 
   it('Should render', () => {
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IconsContainerRender interfaceButtons={defaultData} />
       </SetupTestsComponents>,
     );
-    cy.waitReactApp('#root');
+    cy.waitReactApp();
   });
 
   it('Should have title tooltip for AIV', () => {
@@ -65,12 +64,12 @@ describe('<IconsContainer />', () => {
       getResourceTrans('de', 'MainHeader', 'reports') || 'reports';
     const titlesAIV = [titleAIV_EN, titleAIV_FR, titleAIV_DE];
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IconsContainerRender interfaceButtons={_data} />
       </SetupTestsComponents>,
     );
-    cy.waitReactApp('#root');
+    cy.waitReactApp();
     cy.wait(1);
     cy.react('IconsContainerRender')
       .find('a')
@@ -103,12 +102,12 @@ describe('<IconsContainer />', () => {
       _escapeForRegExp('F.A.Q');
     const titlesFAQ = [titleFAQ_EN, titleFAQ_FR, titleFAQ_DE];
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IconsContainerRender interfaceButtons={_data} />
       </SetupTestsComponents>,
     );
-    cy.waitReactApp('#root');
+    cy.waitReactApp();
     cy.react('IconsContainerRender')
       .find('a')
       .should('have.attr', 'title')
@@ -140,12 +139,12 @@ describe('<IconsContainer />', () => {
     const keys = Object.keys(_data);
     const length = keys.length - nbNotVisible;
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IconsContainerRender interfaceButtons={_data} />
       </SetupTestsComponents>,
     );
-    cy.waitReactApp('#root');
+    cy.waitReactApp();
     cy.react('IconsContainerRender')
       .react('BPITooltip', { options: { timeout: 1 } })
       .get('a[title="Rapports"]', { timeout: 1 })
@@ -185,7 +184,7 @@ describe('<IconsContainer />', () => {
     const keys = Object.keys(_data);
     const length = keys.length - nbNotVisible;
 
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <IconsContainerRender interfaceButtons={_data} />
       </SetupTestsComponents>,

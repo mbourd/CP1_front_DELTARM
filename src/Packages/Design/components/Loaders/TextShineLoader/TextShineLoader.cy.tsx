@@ -1,24 +1,23 @@
 // @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../../cypress/support/component" />
+
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Packages/Design/components/Loaders/TextShineLoader/TextShineLoader.cy.tsx"
 
 import React from 'react';
-import { ThemeProvider } from 'styled-components/macro';
+import { SetupTestsComponents } from '../../../../../../cypress/utils/SetupTestsComponents';
 
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
-import { BPIGlobalStyle, BPITheme } from '../../../../Design';
 import { TextShineLoader } from './TextShineLoader';
 
 describe('<TextShineLoader />', () => {
   it('Should render', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <TextShineLoader text="Loading..." />
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <TextShineLoader text="Loading..." />
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('TextShineLoader').should('exist');
     cy.react('TextShineLoader').contains('Loading...');
   });

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
+import React from 'react';
+// import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
 
-const CustomSingleCheckboxRender: React.FC<any> = ({ props, selected }) => {
-  const onChange = (event: any) => {
+const CustomSingleCheckboxRender: React.FC<any> = ({ props }) => {
+  const onChange = () => {
     if (props.value === '1') {
       props.setValue('0');
     } else {

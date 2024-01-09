@@ -1,6 +1,10 @@
 import { SvgIconComponent } from '@mui/icons-material';
 import { ForwardRefExoticComponent, RefAttributes } from 'react';
 import { CellStyle, CellStyleFunc, IFilterParams } from 'ag-grid-community';
+import {
+  DataGridDetailsColumnType,
+  DataGridDetailsRowsCell,
+} from 'Features/Edit/types';
 
 export interface IButtons {
   bg_color: string;
@@ -40,7 +44,7 @@ interface ICardIcon {
   size: number;
 }
 
-interface ICardValueItem {
+interface ICardValueItem extends DataGridDetailsRowsCell {
   action: IActionButton | null;
   content: string | null;
   hint: string | null;
@@ -77,7 +81,7 @@ export interface ICardAgGrid {
   };
 }
 
-interface ICardCol {
+interface ICardCol extends Omit<DataGridDetailsColumnType, 'key'> {
   border_right: boolean;
   label: string;
   width: number;

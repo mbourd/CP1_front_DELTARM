@@ -1,14 +1,12 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../cypress/support/component" />
 
-import '../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/NotFound/NotFound.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
 import { _escapeForRegExp, _translate } from '../../../../../cypress/utils';
 
 import { NotFound } from './NotFound';
@@ -27,7 +25,7 @@ describe('<NotFound />', () => {
       _translate('de', 'Edit', 'fileNotExists') ||
       'fileNotExists|' + _escapeForRegExp("Le dossier recherché n'existe pas");
     const translations = [trans_EN, trans_FR, trans_DE];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <NotFound />
       </SetupTestsComponents>,
@@ -39,7 +37,7 @@ describe('<NotFound />', () => {
   });
 
   it('should render <HeadingOne /> if title', () => {
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <NotFound title={'Hello'} />
       </SetupTestsComponents>,

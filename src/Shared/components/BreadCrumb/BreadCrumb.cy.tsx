@@ -1,11 +1,12 @@
 // @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../cypress/support/component" />
+
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Shared/components/BreadCrumb/BreadCrumb.cy.tsx"
 
 import React from 'react';
-import { ThemeProvider } from 'styled-components/macro';
-import { BPITheme, BPIGlobalStyle } from '../../../Packages/Design';
-
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
+import { SetupTestsComponents } from '../../../../cypress/utils/SetupTestsComponents';
 
 import '../../../Features/Dashboard/translations';
 
@@ -20,17 +21,14 @@ describe('<BreadCrumb />', () => {
   };
 
   it('Should render', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <BrowserRouter>
-            <BreadCrumb values={[]} />
-          </BrowserRouter>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <BrowserRouter>
+          <BreadCrumb values={[]} />
+        </BrowserRouter>
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('BreadCrumb').should('exist').should('be.visible');
   });
 
@@ -45,33 +43,27 @@ describe('<BreadCrumb />', () => {
       getResourceTrans('de', 'Dashboard', 'pageTitle') ||
       'pageTitle|Tableau de bord';
     const translations = [trans_EN, trans_FR, trans_DE];
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <BrowserRouter>
-            <BreadCrumb values={['Dashboard']} />
-          </BrowserRouter>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <BrowserRouter>
+          <BreadCrumb values={['Dashboard']} />
+        </BrowserRouter>
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('BreadCrumb')
       .invoke('text')
       .and('match', new RegExp(translations.join('|'), 'gu'));
   });
   it('Should render for "Dashboard" + "Edit"', () => {
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <BrowserRouter>
-            <BreadCrumb values={['Dashboard', 'Edit']} />
-          </BrowserRouter>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <BrowserRouter>
+          <BreadCrumb values={['Dashboard', 'Edit']} />
+        </BrowserRouter>
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('BreadCrumb')
       .invoke('text')
       .and('match', new RegExp('Edition', 'gu'));
@@ -85,17 +77,14 @@ describe('<BreadCrumb />', () => {
       getResourceTrans('de', 'Dashboard', 'manage') || 'manage|Gestion';
     const translations = [trans_EN, trans_FR, trans_DE];
 
-    mount(
-      <div id="root">
-        <ThemeProvider theme={BPITheme}>
-          <BPIGlobalStyle />
-          <BrowserRouter>
-            <BreadCrumb values={['Dashboard', 'Manage']} />
-          </BrowserRouter>
-        </ThemeProvider>
-      </div>,
+    cy.mount(
+      <SetupTestsComponents>
+        <BrowserRouter>
+          <BreadCrumb values={['Dashboard', 'Manage']} />
+        </BrowserRouter>
+      </SetupTestsComponents>,
     );
-    cy.waitForReact(1000, '#root');
+    cy.waitReactApp();
     cy.react('BreadCrumb')
       .invoke('text')
       .and('match', new RegExp(translations.join('|'), 'gu'));

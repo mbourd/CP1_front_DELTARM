@@ -1,9 +1,6 @@
 // @ts-check
 /// <reference types="cypress" />
-
-import '../support/commands';
-
-import 'cypress-react-selector';
+/// <reference types="../support/e2e" />
 
 describe('Burger Menu', { testIsolation: false }, () => {
   it('Should display menu on click', () => {
@@ -40,11 +37,8 @@ describe('Burger Menu', { testIsolation: false }, () => {
 
   it('Should be logged out', () => {
     cy.visit(Cypress.env('url_cp1_front'));
-    cy.get('main[id="main-content"]', { timeout: 10000 });
-    cy.wait(1000);
-    cy.waitForReact(10000, '#main-content');
-    cy.react('DashboardSearch');
-    cy.wait(255);
+    cy.waitReactAppE2E('#main-header');
+    cy.waitReactAppE2E('main#main-content');
     cy.get('svg.menu-icon').click();
     cy.get('a[href="/logout"]').click();
 
@@ -56,6 +50,7 @@ describe('Burger Menu', { testIsolation: false }, () => {
     cy.wait('@getDashboard').then((interception) => {
       expect(interception.response?.statusCode).to.equal(401);
     });
+    cy.wait(5000);
     cy.origin(Cypress.env('url_v2'), () => {
       cy.url().then((url) =>
         expect(url).match(new RegExp(/logout_delta\?clear_jwt=1/, 'gu')),

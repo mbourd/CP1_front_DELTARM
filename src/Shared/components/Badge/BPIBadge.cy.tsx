@@ -1,19 +1,18 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../cypress/support/component" />
 
-import '../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Shared/components/Badge/BPIBadge.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-real-events';
-import { mount } from 'cypress/react18';
 
 import { BPIBadge } from './BPIBadge';
 
 describe('<BPIBadge />', () => {
   it('should render', () => {
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <BPIBadge content={undefined} />
       </SetupTestsComponents>,
@@ -24,7 +23,7 @@ describe('<BPIBadge />', () => {
 
   it('should render content', () => {
     const content = 23;
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <BPIBadge content={content}></BPIBadge>
       </SetupTestsComponents>,
@@ -35,7 +34,7 @@ describe('<BPIBadge />', () => {
 
   it('should render children as text', () => {
     const content = 'Hello world';
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <BPIBadge content={undefined}>{content}</BPIBadge>
       </SetupTestsComponents>,
@@ -49,7 +48,7 @@ describe('<BPIBadge />', () => {
     const DummyFC: React.FC = () => {
       return <>{text}</>;
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <BPIBadge content={undefined}>
           <DummyFC />

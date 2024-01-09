@@ -1,13 +1,12 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../../../cypress/support/component" />
 
-import '../../../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/Upload/UploadControl.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
 import {
   _requestJWT,
   _getEnv,
@@ -80,7 +79,7 @@ describe('<UploadControl />', () => {
     const _control = {
       ...structuredClone(control),
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <UploadControl control={_control} fileId={''} context={'edit'} />
       </SetupTestsComponents>,
@@ -104,7 +103,7 @@ describe('<UploadControl />', () => {
       getResourceTrans('de', 'Edit', 'mandatoryValue') ||
       'mandatoryValue|Valeur obligatoire';
     const translations = [trans_EN, trans_FR, trans_DE];
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <UploadControl control={_control} fileId={''} context={'edit'} />
       </SetupTestsComponents>,
@@ -122,7 +121,7 @@ describe('<UploadControl />', () => {
       editable: false,
       control_id: 'btn-file',
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <UploadControl control={_control} fileId={''} context={'edit'} />
       </SetupTestsComponents>,
@@ -139,7 +138,7 @@ describe('<UploadControl />', () => {
       editable: true,
       control_id: 'btn-file',
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <UploadControl control={_control} fileId={''} context={'edit'} />
       </SetupTestsComponents>,
@@ -156,7 +155,7 @@ describe('<UploadControl />', () => {
       useRejection: { isRejected: true, rejectComments: [] },
       control_rejectable: { is_rejected: true, control_reject_comment: [] },
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <UploadControl control={_control} fileId={''} context={'edit'} />
       </SetupTestsComponents>,
@@ -171,7 +170,7 @@ describe('<UploadControl />', () => {
       ...structuredClone(control),
       control_title: title,
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <UploadControl control={_control} fileId={''} context={'edit'} />
       </SetupTestsComponents>,

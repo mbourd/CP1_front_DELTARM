@@ -1,13 +1,12 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../support/e2e" />
 
-import '../support/commands';
-
-import 'cypress-react-selector';
 import { parse } from 'qs';
 import { _getEnv } from '../utils';
+import JwtDecode from 'jwt-decode';
 
-describe('Token CP1 - Groupe ABC', () => {
+describe('Token CP1 - Groupe ABC - CP1', () => {
   let cp1Token: string;
 
   it('Should get CP1 token', () => {
@@ -29,9 +28,25 @@ describe('Token CP1 - Groupe ABC', () => {
   });
 
   before(() => {
-    cy.fixture('token-cp1.txt').then((token) => {
-      cp1Token = token;
-    });
+    const filePath = './cypress/fixtures/token-cp1.txt';
+
+    cy.exec(`[ -e "${filePath}" ]`, { failOnNonZeroExit: false }).then(
+      (result) => {
+        if (result.code === 0) {
+          // The file exists, so we can read it
+          cy.readFile(filePath).then((fileContent) => {
+            // Perform assertions on the file content or properties here
+            cp1Token = fileContent;
+          });
+        }
+      },
+    );
+    // cy.fsFileExists(filePath).then((exist) => {
+    //   if (exist)
+    //     cy.fixture('token-cp1.txt').then((fileContent: string) => {
+    //       cp1Token = fileContent;
+    //     });
+    // });
   });
 
   it('Should logged to CP1', () => {
@@ -45,7 +60,15 @@ describe('Token CP1 - Groupe ABC', () => {
     cy.react('DashboardSearch');
     cy.wait('@getUserInfo').then((interception) => {
       const statusCode = interception.response?.statusCode;
-      expect(statusCode).to.eq(200);
+      expect(statusCode).to.be.deep.eq(200);
+      cy.getAllLocalStorage().then(function (localStorage) {
+        const jwt: Record<string, any> = JwtDecode(
+          JSON.parse(
+            localStorage[_getEnv('url_cp1_front')]['security'] as string,
+          )._jwt,
+        );
+        expect(jwt.context).to.be.deep.eq('CP1');
+      });
     });
     // cy.origin(_getEnv('url_cp1_front'), () => {
     //   cy.get('#main-header', { timeout: 10000 });

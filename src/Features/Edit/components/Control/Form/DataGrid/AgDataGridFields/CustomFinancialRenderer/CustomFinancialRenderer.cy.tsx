@@ -1,36 +1,37 @@
 // @ts-check
 /// <reference types="cypress" />
+/// <reference types="../../../../../../../../../cypress/support/component" />
 
-import '../../../../../../../../../cypress/support/commands';
+// NOTE: Run CLI:
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/DataGrid/AgDataGridFields/CustomFinancialRenderer/CustomFinancialRenderer.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../../../cypress/utils/SetupTestsComponents';
-
-import 'cypress-react-selector';
-import { mount } from 'cypress/react18';
-import {
-  _requestJWT,
-  _getEnv,
-  _escapeForRegExp,
-} from '../../../../../../../../../cypress/utils';
 
 import { CustomFinancialRenderer } from './CustomFinancialRenderer';
 
 describe('<CustomFinancialRenderer />', () => {
   it('should render', () => {
-    const props = { column: { colDef: {} } };
-    mount(
+    const props = {
+      column: { colDef: {}, getId: () => 'a.b' },
+      data: { a: {} },
+    };
+    cy.mount(
       <SetupTestsComponents>
         <CustomFinancialRenderer props={props} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('CustomFinancialRenderer');
+    cy.react('CustomFinancialRenderer').should('exist');
   });
 
   it('should render the value', () => {
-    const props = { column: { colDef: {} }, value: '6' };
-    mount(
+    const props = {
+      column: { colDef: {}, getId: () => 'a.b' },
+      value: '6',
+      data: { a: {} },
+    };
+    cy.mount(
       <SetupTestsComponents>
         <CustomFinancialRenderer props={props} />
       </SetupTestsComponents>,
@@ -40,8 +41,12 @@ describe('<CustomFinancialRenderer />', () => {
   });
 
   it('should not format decimal digit', () => {
-    const props = { column: { colDef: {} }, value: '6' };
-    mount(
+    const props = {
+      column: { colDef: {}, getId: () => 'a.b' },
+      value: '6',
+      data: { a: {} },
+    };
+    cy.mount(
       <SetupTestsComponents>
         <CustomFinancialRenderer props={props} />
       </SetupTestsComponents>,
@@ -53,10 +58,11 @@ describe('<CustomFinancialRenderer />', () => {
   });
   it('should not format decimal digit', () => {
     const props = {
-      column: { colDef: { decimal_digit: 0 } },
+      column: { colDef: { decimal_digit: 0 }, getId: () => 'a.b' },
       value: '6',
+      data: { a: {} },
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <CustomFinancialRenderer props={props} />
       </SetupTestsComponents>,
@@ -70,10 +76,11 @@ describe('<CustomFinancialRenderer />', () => {
   it('should format decimal digit', () => {
     const decimalDigit = 2;
     const props = {
-      column: { colDef: { decimal_digit: decimalDigit } },
+      column: { colDef: { decimal_digit: decimalDigit }, getId: () => 'a.b' },
       value: '6',
+      data: { a: {} },
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <CustomFinancialRenderer props={props} />
       </SetupTestsComponents>,
@@ -87,9 +94,11 @@ describe('<CustomFinancialRenderer />', () => {
   it('should display the currency $', () => {
     const currency = '$';
     const props = {
-      column: { colDef: { currency_symbol: currency } },
+      column: { colDef: { currency_symbol: currency }, getId: () => 'a.b' },
+      value: '23',
+      data: { a: {} },
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <CustomFinancialRenderer props={props} />
       </SetupTestsComponents>,
@@ -101,9 +110,11 @@ describe('<CustomFinancialRenderer />', () => {
   it('should display the default currency', () => {
     const currency = null;
     const props = {
-      column: { colDef: { currency_symbol: currency } },
+      column: { colDef: { currency_symbol: currency }, getId: () => 'a.b' },
+      value: '23',
+      data: { a: {} },
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <CustomFinancialRenderer props={props} />
       </SetupTestsComponents>,
@@ -113,9 +124,11 @@ describe('<CustomFinancialRenderer />', () => {
   });
   it('should display the default currency', () => {
     const props = {
-      column: { colDef: {} },
+      column: { colDef: {}, getId: () => 'a.b' },
+      value: '23',
+      data: { a: {} },
     };
-    mount(
+    cy.mount(
       <SetupTestsComponents>
         <CustomFinancialRenderer props={props} />
       </SetupTestsComponents>,

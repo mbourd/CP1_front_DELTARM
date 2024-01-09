@@ -6,21 +6,23 @@ import { BPITheme, BPIGlobalStyle, ITheme } from '../../src/Packages/Design';
 type SetupTestsComponentProps = {
   children: React.ReactNode;
   theme?: ITheme;
+  style?: React.CSSProperties;
 };
 
 const SetupTestsComponents: React.FC<SetupTestsComponentProps> = ({
   children,
   theme,
+  style,
 }) => {
   return (
-    <div id="root">
+    <main id="main-content" style={style}>
       <RecoilRoot>
         <ThemeProvider theme={theme ?? BPITheme}>
           <BPIGlobalStyle />
           {children}
         </ThemeProvider>
       </RecoilRoot>
-    </div>
+    </main>
   );
 };
 
