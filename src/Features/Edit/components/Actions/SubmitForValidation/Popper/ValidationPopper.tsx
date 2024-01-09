@@ -1,7 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { ValidationPopperStyled } from './ValidationPopper.style';
 import { Card } from '@material-ui/core';
-import { IData } from '../apiRoutes';
 import {
   BadRequest,
   Button,
@@ -10,19 +9,8 @@ import {
   Select,
   StairsLoader,
 } from 'Shared/components';
-import {
-  router,
-  storage,
-  SwitchCallState,
-  useApi,
-  getEnv,
-  IUser,
-  security,
-} from 'Services';
+import { router, storage, SwitchCallState, useApi } from 'Services';
 import { EditValidationContext } from 'Features/Edit';
-import Checkbox from '@mui/material/Checkbox';
-import { fontSize } from '@mui/system';
-import axios from 'axios';
 
 export interface ValidationPopperProps {
   onClose?: () => void;
@@ -36,8 +24,8 @@ export const ValidationPopper: React.FC<ValidationPopperProps> = ({
   const [openFileSelection, setopenFileSelection] = useState(false);
   const [displaySelectedFiles, setdisplaySelectedFiles] = useState(false);
   const [selectedFiles, setselectedFiles] = useState<any>([]);
-  const [user] = useState<IUser>(security.getUser());
-  const jwt = user.getJwt();
+  // const [user] = useState<IUser>(security.getUser());
+  // const jwt = user.getJwt();
 
   useEffect(() => {
     if (data?.response?.linkable_files.length > 0) {

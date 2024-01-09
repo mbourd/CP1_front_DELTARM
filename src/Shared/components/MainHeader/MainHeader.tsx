@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import './translations';
@@ -8,6 +8,8 @@ import { IconsContainer } from './IconsContainer/IconsContainer';
 import { MainNav } from '..';
 
 export const MainHeader: React.FC = (): React.ReactElement => {
+  const language = localStorage.getItem('lang');
+  const [option]: any = useState(language);
   const [trans] = useTrans('MainHeader');
   const dashboardPath = router.generatePath('dashboard');
   const { data: context } = useContext(SecurityContext);

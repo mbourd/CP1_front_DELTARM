@@ -5,11 +5,11 @@ import BigNumber from 'bignumber.js';
 
 const CustomPercentRenderer: React.FC<any> = ({
   props,
-  field_data,
-  control,
-  fileId,
-  jwt,
-  seterrors,
+  // field_data,
+  // control,
+  // fileId,
+  // jwt,
+  // seterrors,
 }) => {
   const column = props.column.colDef;
   const { decimal_digit: decimalDigit = 0 } = column;
