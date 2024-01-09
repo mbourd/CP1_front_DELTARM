@@ -39,7 +39,7 @@ const CustomIconRenderer: React.FC<any> = ({
         <Icon
           style={{
             color,
-            fontSize: size,
+            size: size,
             cursor: action ? 'pointer' : 'initial',
             marginTop: '4px',
           }}
