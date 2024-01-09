@@ -151,6 +151,18 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
                   <CardAgGrid card={card} triggerAction={actionButton} />
                 </Grid>
               ))}
+            {/* {response?.data?.cards?.visible &&
+              response?.data.cards.card.map((card, index) => (
+                <Grid
+                  item
+                  xs={12}
+                  md={6}
+                  key={index}
+                  style={{ height: '400px' }}
+                >
+                  <Card card={card} key={index} triggerAction={actionButton} />
+                </Grid>
+              ))} */}
             {/* {response?.data?.ag_cards?.visible &&
                 response?.data.ag_cards.card.map((card, index) => (
                   <Grid
