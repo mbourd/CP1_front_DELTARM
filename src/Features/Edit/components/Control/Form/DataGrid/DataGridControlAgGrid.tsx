@@ -78,6 +78,7 @@ interface IProps {
   hasControlLabel?: boolean;
   extraStyles?: React.CSSProperties;
   heightGrid?: string | number;
+  hasPagination?: boolean;
 }
 
 const CustomTooltip = (props: any & { tooltip: string }) => {
@@ -143,6 +144,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   hasControlLabel = true,
   extraStyles = {},
   heightGrid,
+  hasPagination = true,
 }) => {
   const [canSendApi, setCanSendApi] = useState<boolean>(true);
   const [errorMessageAdd, setErrorMessageAdd] = useState<string>('');
@@ -1581,7 +1583,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           }
           // rowModelType={'serverSide'}
           // sideBar={sideBar}
-          pagination={true}
+          pagination={hasPagination}
           paginationPageSize={paginationPageSize}
           rowSelection="multiple"
           gridOptions={gridOptions}
