@@ -429,6 +429,9 @@ const CardAgGrid: React.FC<CardAgGridProps> = ({
         suppressAnimationFrame={true}
         suppressCellFocus={true}
         heightGrid={'400px'}
+        hasPagination={
+          rowData.length === 569 || rowData.length === 837 ? true : false
+        }
       />
       {/* <AgGridReact
         className="ag-theme-alpine"
