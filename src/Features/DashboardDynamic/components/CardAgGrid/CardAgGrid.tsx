@@ -1,4 +1,7 @@
-import React, { useMemo /*, useCallback, useRef, useState*/ } from 'react';
+import React, {
+  useCallback,
+  useMemo /*, useCallback, useRef, useState*/,
+} from 'react';
 
 // import { AgGridReact } from 'ag-grid-react';
 // import { LicenseManager } from 'ag-grid-enterprise';
@@ -189,8 +192,6 @@ const CardAgGrid: React.FC<CardAgGridProps> = ({
       return obj;
     });
 
-    // console.log(rows);
-
     return rows;
   }, [card.lines.values]);
   const columns: DataGridDetailsColumnType[] = useMemo(() => {
@@ -221,7 +222,19 @@ const CardAgGrid: React.FC<CardAgGridProps> = ({
         decimal_digit: col?.decimal_digit ?? 0,
         editable: false,
         field: 'rdg_' + i + '.value',
-        field_type: rowData[0]?.['rdg_' + i].component,
+        field_type: (() => {
+          /* a little bit reliable */
+          const firstType = rowData[0]?.['rdg_' + i].component;
+
+          if (firstType === 'text_alt') {
+            for (const row of rowData) {
+              if (row?.['rdg_' + i].component !== firstType)
+                return row?.['rdg_' + i].component;
+            }
+          }
+
+          return firstType;
+        })(),
         filter: false,
         floatingFilter: false,
         headerColor: col?.headerColor ?? '#FFFFFF',
@@ -399,7 +412,7 @@ const CardAgGrid: React.FC<CardAgGridProps> = ({
     columns: columns,
     datagrid_options: {
       add_row_button_display: false,
-      pagination_row_size: 4,
+      pagination_row_size: card?.display?.page_nb_rows,
       select_all_button_col_ref: 'rdg_1',
       select_all_button_display: false,
       unselect_all_button_display: false,
@@ -424,14 +437,12 @@ const CardAgGrid: React.FC<CardAgGridProps> = ({
           paddingLeft: 0,
           paddingRight: 0,
         }}
-        animateRows
+        animateRows={false}
         suppressRowClickSelection={true}
         suppressAnimationFrame={true}
         suppressCellFocus={true}
         heightGrid={'400px'}
-        hasPagination={
-          rowData.length === 569 || rowData.length === 837 ? true : false
-        }
+        hasPagination={card?.display?.type === 'page'}
       />
       {/* <AgGridReact
         className="ag-theme-alpine"
