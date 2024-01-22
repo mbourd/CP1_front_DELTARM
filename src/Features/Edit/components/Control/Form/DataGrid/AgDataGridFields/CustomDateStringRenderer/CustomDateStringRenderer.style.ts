@@ -9,4 +9,5 @@ export const CustomDateStringRendererStyled = styled.div`
   padding: 2px;
   white-space: pre-line;
   word-wrap: break-word;
+  line-height: 17px;
 `;
