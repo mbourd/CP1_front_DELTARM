@@ -103,6 +103,10 @@ export interface ICard {
     font_color: string;
     lib: string;
   };
+  display: {
+    page_nb_rows: number;
+    type: 'page' | 'list';
+  };
 }
 
 export interface IIndicator {

@@ -64,7 +64,7 @@ const CustomIconRenderer: React.FC<any> = ({
 
   return (
     <CustomIconRendererStyled>
-      {field_data?.value?.split(';')[0] !== null || undefined
+      {field_data?.value?.split(';')[0] !== ''
         ? generateMaterialIcon(
             field_data?.value?.split(';')[0],
             field_data?.value?.split(';')[1]
