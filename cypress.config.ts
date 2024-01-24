@@ -43,7 +43,7 @@ export default defineConfig({
       framework: 'create-react-app',
       bundler: 'webpack',
     },
-    specPattern: ['src/**/*.cy.tsx'],
+    specPattern: ['src/**/*.cy.tsx', 'cypress/unit/**/*.cy.ts'],
     experimentalMemoryManagement: true,
     watchForFileChanges: false,
     supportFolder: 'cypress/support',

@@ -232,6 +232,8 @@ export type DataGridDetailsColumnType = {
   decimal_digit: number;
   field: string;
   field_type: DataGridComponent;
+  filter: boolean;
+  floatingFilter: boolean;
   headerColor: HexStrType;
   headerName: string;
   hide: boolean;
