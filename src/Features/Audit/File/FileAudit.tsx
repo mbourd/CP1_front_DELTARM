@@ -10,11 +10,14 @@ import { EditValidationContext } from 'Features/Edit';
 import { IDataFileAudit } from '../types';
 import { downloadAuditExcel } from './downloadAuditExcel';
 import { FileAuditRender } from './FileAuditRender';
+import { AppContext, AppContextType } from 'AppContext';
 
 export const FileAudit: React.FC = (): React.ReactElement => {
+  const appContext: AppContextType & Record<any, any> = useContext(AppContext);
+  const { canSend } = appContext?.ForCompTests?.FileAudit || {};
   const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const { request, send, data } = useApi<IDataFileAudit>();
+  const { request, send, data } = useApi<IDataFileAudit>({ canSend });
   const context = useContext(EditValidationContext);
   const { fileId } = context;
   const [user] = useState<IUser>(security.getUser());

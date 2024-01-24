@@ -15,9 +15,9 @@ apiRouter.registerRoute({
   path: '/file/audit?target=screen',
   method: 'get',
   handler: (response): IDataFileAudit => {
-    const data: IApiFileAudit[] = response.data.audit;
-    const is_audit: boolean = response.data.is_audit;
-    const is_audit_xls: boolean = response.data.is_audit_xls;
+    const data: IApiFileAudit[] = response?.data?.audit ?? [];
+    const is_audit: boolean = response?.data?.is_audit ?? false;
+    const is_audit_xls: boolean = response?.data?.is_audit_xls ?? false;
     const audits: IFileAudit[] = [];
 
     data.map((audit, index) => {
