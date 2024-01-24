@@ -5,11 +5,15 @@ export function _translate(
   lng: string,
   ns: string,
   key: string,
+  defaultStr?: string,
   escapeForRegexp = true,
 ): string {
-  const val = translation.getResource(lng, ns)?.[key];
+  let val = translation.getResource(lng, ns)?.[key];
 
-  if (escapeForRegexp) return _escapeForRegExp(val);
+  if (escapeForRegexp) val = _escapeForRegExp(val);
 
-  return val;
+  return (
+    (val !== undefined ? val : key) +
+    (defaultStr ? '|' + _escapeForRegExp(defaultStr) : '')
+  );
 }

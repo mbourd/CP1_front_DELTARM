@@ -4,11 +4,13 @@ import { getEnv, useSecurity } from 'Services';
 export interface UseApiOptions {
   promise?: boolean;
   waitForAuthenticated?: boolean;
+  canSend?: boolean;
 }
 
 export const useApi = <T>({
   promise = false,
   waitForAuthenticated = false,
+  canSend = true,
 }: UseApiOptions = {}): UseApiReturnType<T> => {
   const { user } = useSecurity();
   const jwt = user.getJwt();
@@ -21,7 +23,7 @@ export const useApi = <T>({
   );
   request.setBearerToken(jwt);
 
-  if (waitForAuthenticated && !request.getBearerToken()) {
+  if ((waitForAuthenticated && !request.getBearerToken()) || !canSend) {
     api.send = noop;
   }
 
