@@ -3,32 +3,32 @@
 /// <reference types="../../../../../../cypress/support/component" />
 
 // NOTE: Run CLI:
-// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/DashboardDynamic/components/Metrics/CircularMetric/CircularMetric.cy.tsx"
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/AgGridDashboard/components/Metrics/LinearMetric/LinearMetric.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../cypress/utils/SetupTestsComponents';
 
-import { CircularMetric } from './CircularMetric';
+import { LinearMetric } from './LinearMetric';
 
-describe('<CircularMetric />', () => {
-  it('Should render', () => {
+describe('<LinearMetric />', function () {
+  it('should render', function () {
     cy.mount(
       <SetupTestsComponents>
-        <CircularMetric variant={undefined} value={0} hint={''} />
+        <LinearMetric variant={undefined} value={0} hint={''} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('CircularMetric').should('exist');
+    cy.react('LinearMetric').should('exist');
   });
 
   it('Should render with variant = determinate', () => {
     cy.mount(
       <SetupTestsComponents>
-        <CircularMetric variant={'determinate'} value={0} hint={''} />
+        <LinearMetric variant={'determinate'} value={0} hint={''} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('CircularMetric')
+    cy.react('LinearMetric')
       .invoke('attr', 'class')
       .then((classes) => {
         const splitClasses = classes?.split(' ') || [];
@@ -39,11 +39,11 @@ describe('<CircularMetric />', () => {
   it('Should render with variant = indeterminate', () => {
     cy.mount(
       <SetupTestsComponents>
-        <CircularMetric variant={'indeterminate'} value={0} hint={''} />
+        <LinearMetric variant={'indeterminate'} value={0} hint={''} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('CircularMetric')
+    cy.react('LinearMetric')
       .invoke('attr', 'class')
       .then((classes) => {
         const splitClasses = classes?.split(' ') || [];
@@ -55,23 +55,23 @@ describe('<CircularMetric />', () => {
     const hintMsg = 'hello';
     cy.mount(
       <SetupTestsComponents>
-        <CircularMetric variant={undefined} value={0} hint={hintMsg} />
+        <LinearMetric variant={undefined} value={0} hint={hintMsg} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('CircularMetric').should('have.attr', 'title', hintMsg);
+    cy.react('LinearMetric').should('have.attr', 'title', hintMsg);
   });
 
-  it('Should render hint', () => {
+  it('Should render hint tooltip', () => {
     const hintMsg = 'hello';
     cy.mount(
       <SetupTestsComponents>
-        <CircularMetric variant={undefined} value={0} hint={hintMsg} />
+        <LinearMetric variant={undefined} value={0} hint={hintMsg} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('CircularMetric').should('exist');
-    cy.react('CircularMetric').each(($el) => {
+    cy.react('LinearMetric').should('exist');
+    cy.react('LinearMetric').each(($el) => {
       cy.wrap($el).trigger('mouseover');
       cy.get('[role="tooltip"]').should('exist').should('be.visible');
       cy.wrap($el).trigger('mouseout');
@@ -84,12 +84,12 @@ describe('<CircularMetric />', () => {
     const style = { backgroundColor: red };
     cy.mount(
       <SetupTestsComponents>
-        <CircularMetric variant={undefined} value={0} hint={''} style={style} />
+        <LinearMetric variant={undefined} value={0} hint={''} style={style} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('CircularMetric').should('exist');
-    cy.react('CircularMetric').should('have.css', 'background-color', red);
+    cy.react('LinearMetric').should('exist');
+    cy.react('LinearMetric').should('have.css', 'background-color', red);
   });
 
   it('Should have a bar color applied', () => {
@@ -97,11 +97,11 @@ describe('<CircularMetric />', () => {
     const style = { color: red };
     cy.mount(
       <SetupTestsComponents>
-        <CircularMetric variant={undefined} value={0} hint={''} style={style} />
+        <LinearMetric variant={undefined} value={0} hint={''} style={style} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('CircularMetric').should('exist');
-    cy.react('CircularMetric').should('have.css', 'color', red);
+    cy.react('LinearMetric').should('exist');
+    cy.react('LinearMetric').should('have.css', 'color', red);
   });
 });

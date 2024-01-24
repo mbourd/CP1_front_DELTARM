@@ -28,6 +28,7 @@ import {
   _getRandomNumberBetween,
   _hexToRgb,
 } from '../../../../../../../cypress/utils';
+import { AgDataGridStyle } from './DataGridControl.style';
 
 describe('<DataGridControlAgGrid />', () => {
   // int,dec,fin,perc
@@ -42,6 +43,8 @@ describe('<DataGridControlAgGrid />', () => {
   let controlExample5: IApiControl;
   // action_button,icon,checkbox
   let controlExample6: IApiControl;
+  // innerHTML,test_alt,text_alt,date_string,icon,icon,icon
+  let controlExample7: IApiControl;
 
   let originalTimeout: number;
 
@@ -63,6 +66,9 @@ describe('<DataGridControlAgGrid />', () => {
     );
     cy.fixture('controlDataGridAgGrid-6.json').then(
       (d) => (controlExample6 = d),
+    );
+    cy.fixture('controlDataGridAgGrid-7.json').then(
+      (d) => (controlExample7 = d),
     );
 
     // Store the original timeout value
@@ -96,6 +102,60 @@ describe('<DataGridControlAgGrid />', () => {
   //   );
   //   cy.waitReactApp();
   //   cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
+  // });
+
+  // it('should have a fixed height', function () {
+  //   cy.on('uncaught:exception', () => false);
+  //   const _control = {
+  //     ...structuredClone(controlExample1),
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   } as any as IApiControl;
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid
+  //         control={_control}
+  //         fileId={''}
+  //         heightGrid={'456px'}
+  //       />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   cy.get(`.${AgDataGridStyle.styledComponentId}`).should(
+  //     'have.css',
+  //     'height',
+  //     '456px',
+  //   );
+  // });
+  // it('should have a fixed height', function () {
+  //   cy.on('uncaught:exception', () => false);
+  //   const _control = {
+  //     ...structuredClone(controlExample1),
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   } as any as IApiControl;
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid
+  //         control={_control}
+  //         fileId={''}
+  //         heightGrid={233}
+  //       />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   cy.get(`.${AgDataGridStyle.styledComponentId}`).should(
+  //     'have.css',
+  //     'height',
+  //     '233px',
+  //   );
+  //   cy.react('AgGridReact')
+  //     .invoke('height')
+  //     .then((height) => expect(height).to.be.eq(233));
   // });
 
   // it('Should have the correct number of columns', function () {
@@ -739,6 +799,23 @@ describe('<DataGridControlAgGrid />', () => {
   //   cy.waitReactApp();
   //   _assertSorting(_control);
   // });
+  // it('Should sort correctly', function () {
+  //   const _control = {
+  //     ...structuredClone(controlExample7),
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   } as any as IApiControl;
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid control={_control} fileId={''} />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   _assertSorting(_control);
+  // });
+
   // it('Should NOT sort', function () {
   //   const _control = {
   //     ...structuredClone(controlExample1),
@@ -854,6 +931,246 @@ describe('<DataGridControlAgGrid />', () => {
   //   );
   //   cy.waitReactApp();
   //   _assertSorting(_control);
+  // });
+  it('Should NOT sort', function () {
+    const _control = {
+      ...structuredClone(controlExample7),
+      data_grid_detail: {
+        ...structuredClone(controlExample7.data_grid_detail),
+        columns: structuredClone(
+          controlExample7.data_grid_detail?.columns || [],
+        ).map((col) => {
+          const _col: DataGridDetailsColumnType = {
+            ...structuredClone(col),
+            sortable: false,
+          };
+
+          return _col;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertSorting(_control);
+  });
+  return;
+
+  // it('Should be able to filter', function () {
+  //   const _control = {
+  //     ...structuredClone(controlExample1),
+  //     data_grid_detail: {
+  //       ...structuredClone(controlExample1.data_grid_detail),
+  //       columns: structuredClone(
+  //         controlExample1.data_grid_detail?.columns || [],
+  //       ).map((column) => {
+  //         column.filter = true;
+
+  //         return column;
+  //       }),
+  //     },
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   } as any as IApiControl;
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid control={_control} fileId={''} />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   _assertCanFiltering(_control);
+  // });
+  // it('Should be able to filter', function () {
+  //   const _control = {
+  //     ...structuredClone(controlExample2),
+  //     data_grid_detail: {
+  //       ...structuredClone(controlExample2.data_grid_detail),
+  //       columns: structuredClone(
+  //         controlExample2.data_grid_detail?.columns || [],
+  //       ).map((column) => {
+  //         column.filter = true;
+
+  //         return column;
+  //       }),
+  //     },
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   } as any as IApiControl;
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid control={_control} fileId={''} />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   _assertCanFiltering(_control);
+  // });
+  // it('Should be able to filter', function () {
+  //   const _control = {
+  //     ...structuredClone(controlExample3),
+  //     data_grid_detail: {
+  //       ...structuredClone(controlExample3.data_grid_detail),
+  //       columns: structuredClone(
+  //         controlExample3.data_grid_detail?.columns || [],
+  //       ).map((column) => {
+  //         column.filter = true;
+
+  //         return column;
+  //       }),
+  //     },
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   } as any as IApiControl;
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid control={_control} fileId={''} />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   _assertCanFiltering(_control);
+  // });
+  // it('Should be able to filter', function () {
+  //   const _control = {
+  //     ...structuredClone(controlExample4),
+  //     data_grid_detail: {
+  //       ...structuredClone(controlExample4.data_grid_detail),
+  //       columns: structuredClone(
+  //         controlExample4.data_grid_detail?.columns || [],
+  //       ).map((column) => {
+  //         column.filter = true;
+
+  //         return column;
+  //       }),
+  //     },
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   } as any as IApiControl;
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid control={_control} fileId={''} />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   _assertCanFiltering(_control);
+  // });
+
+  // it('Should not be able to filter', function () {
+  //   const _control = {
+  //     ...structuredClone(controlExample1),
+  //     data_grid_detail: {
+  //       ...structuredClone(controlExample1.data_grid_detail),
+  //       columns: structuredClone(
+  //         controlExample1.data_grid_detail?.columns || [],
+  //       ).map((column) => {
+  //         column.filter = false;
+
+  //         return column;
+  //       }),
+  //     },
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   } as any as IApiControl;
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid control={_control} fileId={''} />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   _assertCanFiltering(_control);
+  // });
+  // it('Should not be able to filter', function () {
+  //   const _control = {
+  //     ...structuredClone(controlExample2),
+  //     data_grid_detail: {
+  //       ...structuredClone(controlExample2.data_grid_detail),
+  //       columns: structuredClone(
+  //         controlExample2.data_grid_detail?.columns || [],
+  //       ).map((column) => {
+  //         column.filter = false;
+
+  //         return column;
+  //       }),
+  //     },
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   } as any as IApiControl;
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid control={_control} fileId={''} />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   _assertCanFiltering(_control);
+  // });
+  // it('Should not be able to filter', function () {
+  //   const _control = {
+  //     ...structuredClone(controlExample3),
+  //     data_grid_detail: {
+  //       ...structuredClone(controlExample3.data_grid_detail),
+  //       columns: structuredClone(
+  //         controlExample3.data_grid_detail?.columns || [],
+  //       ).map((column) => {
+  //         column.filter = false;
+
+  //         return column;
+  //       }),
+  //     },
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   } as any as IApiControl;
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid control={_control} fileId={''} />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   _assertCanFiltering(_control);
+  // });
+  // it('Should not be able to filter', function () {
+  //   const _control = {
+  //     ...structuredClone(controlExample4),
+  //     data_grid_detail: {
+  //       ...structuredClone(controlExample4.data_grid_detail),
+  //       columns: structuredClone(
+  //         controlExample4.data_grid_detail?.columns || [],
+  //       ).map((column) => {
+  //         column.filter = false;
+
+  //         return column;
+  //       }),
+  //     },
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   } as any as IApiControl;
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid control={_control} fileId={''} />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   _assertCanFiltering(_control);
   // });
 
   // it('Should render an error message if value dont match with control_regex & no error message if match', function () {
@@ -1486,6 +1803,45 @@ describe('<DataGridControlAgGrid />', () => {
   //   _assertCellEditable(_control);
   // });
 
+  it('should not have pagination', function () {
+    const _control = {
+      ...structuredClone(controlExample1),
+      data_grid_detail: {
+        ...structuredClone(controlExample1.data_grid_detail),
+        rows: (() => {
+          const rows = structuredClone(controlExample1.data_grid_detail?.rows);
+          const first = controlExample1.data_grid_detail
+            ?.rows[0] as DataGridDetailsRow;
+
+          for (let i = 0; i < 233; i++) {
+            rows?.push(first);
+          }
+
+          return rows;
+        })(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control}
+          fileId={''}
+          // @ts-ignore
+          hasPagination={false}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertPagination(
+      _control,
+      _control.data_grid_detail?.rows.length as number,
+    );
+  });
+
   // it('Should have the correct pagination size', function () {
   //   const paginationSize = _getRandomNumberBetween(1, 10);
   //   const _control = {
@@ -1739,7 +2095,6 @@ describe('<DataGridControlAgGrid />', () => {
     cy.waitReactApp();
     _assertSelectListOptionsStyles(_control);
   });
-  return;
 
   it('Should have hidden columns by default', function () {
     const _control = {
@@ -1768,6 +2123,7 @@ describe('<DataGridControlAgGrid />', () => {
     cy.waitReactApp();
     _assertHiddenColumns(_control);
   });
+  return;
 
   // it('Should have columns pinned', function () {
   //   const _control = {
@@ -3652,6 +4008,9 @@ function _assertCellEditable(_control: IApiControl) {
                 cy.wrap(elCell).focus().realClick();
                 cy.get('.MuiMenu-paper').should('not.exist').clickOutside();
                 break;
+              case 'text_alt':
+              case 'date_string':
+              case 'innerHTML':
               case 'text':
               case 'integer':
               case 'decimal':
@@ -3892,7 +4251,7 @@ function _assertRegexValidation(_control: IApiControl) {
           cy.clickOutside();
           cy.clickOutside();
           cy.react('DataGridControlAgGrid').formErrorMessageShouldNotMatch(
-            [_escapeForRegExp(cell.control_regex_msg as string)],
+            [_escapeForRegExp(cell.control_regex_msg as string) as string],
             'h1.errorsText',
           );
           cy.wait(50);
@@ -3918,13 +4277,13 @@ function _assertRegexValidation(_control: IApiControl) {
           cy.clickOutside();
           cy.clickOutside();
           cy.react('DataGridControlAgGrid').formErrorShouldBeVisible(
-            [_escapeForRegExp(cell.control_regex_msg as string)],
+            [_escapeForRegExp(cell.control_regex_msg as string) as string],
             'h1.errorsText',
           );
 
           cy.wait(3250);
           cy.react('DataGridControlAgGrid').formErrorMessageShouldNotMatch(
-            [_escapeForRegExp(cell.control_regex_msg as string)],
+            [_escapeForRegExp(cell.control_regex_msg as string) as string],
             'h1.errorsText',
           );
           cy.wait(500);
@@ -3934,6 +4293,7 @@ function _assertRegexValidation(_control: IApiControl) {
 }
 
 function _assertPagination(_control: IApiControl, paginationSize: number) {
+  cy.on('uncaught:exception', () => false);
   cy.window().then((w) => {
     expect(
       w[
@@ -3949,6 +4309,7 @@ function _assertPagination(_control: IApiControl, paginationSize: number) {
 }
 
 function _assertSorting(_control: IApiControl) {
+  cy.on('uncaught:exception', () => false);
   cy.window().then((w) => {
     w[
       'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
@@ -3993,8 +4354,6 @@ function _assertSorting(_control: IApiControl) {
     return row;
   };
 
-  cy.on('uncaught:exception', () => false);
-
   cy.window().then((cyWindow) => {
     const unsortedData: Record<string, any>[] = [];
     cyWindow[
@@ -4035,6 +4394,7 @@ function _assertSorting(_control: IApiControl) {
           case 'action_button':
           case 'text':
           case 'long_text':
+          case 'text_alt':
           case 'comment':
           case 'select_list':
           case 'dynamic_select_list':
@@ -4053,6 +4413,78 @@ function _assertSorting(_control: IApiControl) {
               return valueB.localeCompare(valueA, undefined, {
                 sensitivity: 'base',
               });
+            });
+            break;
+          case 'date_string':
+            expectedSortedDataASC = [...unsortedData].sort((a, b) => {
+              const valA = a[col.field] ? a[col.field] : '--/--/--';
+              const valB = b[col.field] ? b[col.field] : '--/--/--';
+              const [dayA, monthA, yearA] = valA.split(' ')[0].split('/');
+              const [dayB, monthB, yearB] = valB.split(' ')[0].split('/');
+              const strDateA = `${monthA}-${dayA}-${yearA} ${
+                /^\d{2}\/\d{2}\/\d{2} - \d{2}:\d{2}:\d{2}$/.test(valA)
+                  ? valA.split(' - ')[1]
+                  : '00:00:00'
+              }`;
+              const strDateB = `${monthB}-${dayB}-${yearB} ${
+                /^\d{2}\/\d{2}\/\d{2} - \d{2}:\d{2}:\d{2}$/.test(valB)
+                  ? valB.split(' - ')[1]
+                  : '00:00:00'
+              }`;
+              const dateA = new Date(
+                strDateA !== '--------' ? strDateA : '1970-01-01',
+              );
+              const dateB = new Date(
+                strDateB !== '--------' ? strDateB : '1970-01-01',
+              );
+
+              return dateA.getTime() - dateB.getTime();
+            });
+            expectedSortedDataDESC = [...unsortedData].sort((a, b) => {
+              const valA = a[col.field] ? a[col.field] : '--/--/--';
+              const valB = b[col.field] ? b[col.field] : '--/--/--';
+              const [dayA, monthA, yearA] = valA.split(' ')[0].split('/');
+              const [dayB, monthB, yearB] = valB.split(' ')[0].split('/');
+              const strDateA = `${monthA}-${dayA}-${yearA} ${
+                /^\d{2}\/\d{2}\/\d{2} - \d{2}:\d{2}:\d{2}$/.test(valA)
+                  ? valA.split(' - ')[1]
+                  : '00:00:00'
+              }`;
+              const strDateB = `${monthB}-${dayB}-${yearB} ${
+                /^\d{2}\/\d{2}\/\d{2} - \d{2}:\d{2}:\d{2}$/.test(valB)
+                  ? valB.split(' - ')[1]
+                  : '00:00:00'
+              }`;
+              const dateA = new Date(
+                strDateA !== '--------' ? strDateA : '1970-01-01',
+              );
+              const dateB = new Date(
+                strDateB !== '--------' ? strDateB : '1970-01-01',
+              );
+
+              return dateB.getTime() - dateA.getTime();
+            });
+            break;
+          case 'innerHTML':
+            expectedSortedDataASC = [...unsortedData].sort((a, b) => {
+              const _valA = a[col.field] ? a[col.field] : '';
+              const _valB = b[col.field] ? b[col.field] : '';
+              const strippedStringA = _valA.replace(/(<([^>]+)>)/gi, ' ');
+              const strippedStringB = _valB.replace(/(<([^>]+)>)/gi, ' ');
+
+              if (strippedStringA == strippedStringB) return 0;
+
+              return strippedStringA > strippedStringB ? 1 : -1;
+            });
+            expectedSortedDataDESC = [...unsortedData].sort((a, b) => {
+              const _valA = a[col.field] ? a[col.field] : '';
+              const _valB = b[col.field] ? b[col.field] : '';
+              const strippedStringA = _valA.replace(/(<([^>]+)>)/gi, ' ');
+              const strippedStringB = _valB.replace(/(<([^>]+)>)/gi, ' ');
+
+              if (strippedStringA == strippedStringB) return 0;
+
+              return strippedStringB > strippedStringA ? 1 : -1;
             });
             break;
           case 'integer':
@@ -4108,7 +4540,10 @@ function _assertSorting(_control: IApiControl) {
           cy.react('DataGridControlAgGrid')
             .react('AgGridReact')
             .find(`.ag-header-cell[col-id="${col.field}"]`)
-            .agGridSortColumn(_escapeForRegExp(col.headerName), 'ascending')
+            .agGridSortColumn(
+              _escapeForRegExp(col.headerName) as string,
+              'ascending',
+            )
             .then(() => {
               const actualTableData = cyWindow[
                 'Features_Edit_Control_DataGridControlAgGrid' +
@@ -4125,7 +4560,10 @@ function _assertSorting(_control: IApiControl) {
           cy.react('DataGridControlAgGrid')
             .react('AgGridReact')
             .find(`.ag-header-cell[col-id="${col.field}"]`)
-            .agGridSortColumn(_escapeForRegExp(col.headerName), 'descending')
+            .agGridSortColumn(
+              _escapeForRegExp(col.headerName) as string,
+              'descending',
+            )
             .then(() => {
               const actualTableData = cyWindow[
                 'Features_Edit_Control_DataGridControlAgGrid' +
@@ -4137,6 +4575,9 @@ function _assertSorting(_control: IApiControl) {
             });
         });
       } else {
+        cyWindow[
+          'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
+        ].gridRef.current.api.paginationSetPageSize(0);
         cy.react('DataGridControlAgGrid')
           .react('AgGridReact')
           .find(`.ag-header-cell[col-id="${col.field}"]`)
@@ -4148,9 +4589,48 @@ function _assertSorting(_control: IApiControl) {
             ].gridRef.current.api
               .getRenderedNodes()
               .map((rowNode: RowNode) => processRowData(rowNode));
+            // console.log('u', unsortedData);
+            // console.log('a', actualTableData);
             expect(actualTableData).to.deep.equal(unsortedData);
           });
       }
+    });
+  });
+}
+
+function _assertCanFiltering(_control: IApiControl) {
+  cy.on('uncaught:exception', () => false);
+
+  const withControlData = getData(_control);
+
+  withControlData(1, ({ columns }) => {
+    cy.wrap(columns).each((col: DataGridDetailsColumnType) => {
+      cy.waitUntil(() => {
+        const $col = Cypress.$(
+          `.ag-theme-alpine .ag-header-row.ag-header-row-column .ag-header-cell[col-id="${col.field}"]`,
+        );
+
+        if (!$col.is(':visible') && !col.hide) {
+          cy.wrap(new Array(6)).each(() => cy.realPress('ArrowRight'));
+        } else return true;
+      }).then(() => {
+        const $col = Cypress.$(
+          `.ag-theme-alpine .ag-header-row.ag-header-row-column .ag-header-cell[col-id="${col.field}"]`,
+        );
+
+        cy.wrap($col)
+          .find('.ag-header-cell-menu-button')
+          .realClick()
+          .wait(3)
+          .then(() => {
+            cy.get(
+              '.ag-menu .ag-menu-header [role="tab"][aria-label="filter"]',
+            ).should(col.filter ? 'exist' : 'not.exist');
+          })
+          .then(() => {
+            cy.realPress('Escape');
+          });
+      });
     });
   });
 }

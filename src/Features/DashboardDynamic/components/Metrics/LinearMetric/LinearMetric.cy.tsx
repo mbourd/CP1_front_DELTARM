@@ -27,7 +27,12 @@ describe('<LinearMetric />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('LinearMetric').should('exist');
+    cy.react('LinearMetric')
+      .invoke('attr', 'class')
+      .then((classes) => {
+        const splitClasses = classes?.split(' ') || [];
+        expect(splitClasses.some((c) => /(determinate)$/.test(c))).to.be.true;
+      });
   });
 
   it('Should render with variant = buffer', () => {
@@ -37,7 +42,12 @@ describe('<LinearMetric />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('LinearMetric').should('exist');
+    cy.react('LinearMetric')
+      .invoke('attr', 'class')
+      .then((classes) => {
+        const splitClasses = classes?.split(' ') || [];
+        expect(splitClasses.some((c) => /(buffer)$/.test(c))).to.be.true;
+      });
   });
 
   it('Should render with variant = query', () => {
@@ -47,7 +57,12 @@ describe('<LinearMetric />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('LinearMetric').should('exist');
+    cy.react('LinearMetric')
+      .invoke('attr', 'class')
+      .then((classes) => {
+        const splitClasses = classes?.split(' ') || [];
+        expect(splitClasses.some((c) => /(query)$/.test(c))).to.be.true;
+      });
   });
 
   it('Should render with variant = indeterminate', () => {
@@ -57,7 +72,12 @@ describe('<LinearMetric />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('LinearMetric').should('exist');
+    cy.react('LinearMetric')
+      .invoke('attr', 'class')
+      .then((classes) => {
+        const splitClasses = classes?.split(' ') || [];
+        expect(splitClasses.some((c) => /(indeterminate)$/.test(c))).to.be.true;
+      });
   });
 
   it('Should have attribute with message', () => {

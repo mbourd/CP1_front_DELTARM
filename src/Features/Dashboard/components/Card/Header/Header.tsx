@@ -6,5 +6,5 @@ export const Header: React.FC<ICardHeader> = ({
   children,
   color,
 }): React.ReactElement => {
-  return <HeaderStyled color={color}>{children}</HeaderStyled>;
+  return <HeaderStyled $backgroundColor={color}>{children}</HeaderStyled>;
 };
