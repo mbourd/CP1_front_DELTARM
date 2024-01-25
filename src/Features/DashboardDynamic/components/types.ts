@@ -1,6 +1,11 @@
 import { SvgIconComponent } from '@mui/icons-material';
 import { ForwardRefExoticComponent, RefAttributes } from 'react';
-import { CellStyle, CellStyleFunc, IFilterParams } from 'ag-grid-community';
+import {
+  CellStyle,
+  CellStyleFunc,
+  IFilterComp,
+  IFilterParams,
+} from 'ag-grid-community';
 import {
   DataGridDetailsColumnType,
   DataGridDetailsRowsCell,
@@ -87,6 +92,16 @@ interface ICardCol extends Omit<DataGridDetailsColumnType, 'key'> {
   width: number;
   field: string;
   dataKey: string;
+  align: string;
+  filter:
+    | boolean
+    | 'agTextColumnFilter'
+    | 'agNumberColumnFilter'
+    | 'agDateColumnFilter'
+    | 'agSetColumnFilter'
+    | 'agMultiColumnFilter'
+    | IFilterComp;
+  floating_filter: boolean;
 }
 
 export interface ICard {

@@ -235,8 +235,8 @@ const CardAgGrid: React.FC<CardAgGridProps> = ({
 
           return firstType;
         })(),
-        filter: false,
-        floatingFilter: false,
+        filter: col?.filter ? 'agTextColumnFilter' : false,
+        floatingFilter: col?.floating_filter ?? false,
         headerColor: col?.headerColor ?? '#FFFFFF',
         headerName: col?.label ?? '',
         headerClass: headerClass,
@@ -421,6 +421,15 @@ const CardAgGrid: React.FC<CardAgGridProps> = ({
     buttons: [],
     source: '',
   };
+
+  if (window?.['Cypress']) {
+    window[
+      'Features_DashboardDynamic_components_CardAgGrid_CardAgGrid|' +
+        card.title.lib
+    ] = {
+      control,
+    };
+  }
 
   return (
     <CardAgGridStyled>
