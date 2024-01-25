@@ -637,10 +637,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           case 'text_alt':
             return {
               ...g,
-              filter: 'agTextColumnFilter',
-              filterParams: {
-                filterOptions: ['contains'],
-              },
               editable: (props: any) => decide_editable(props),
               sortingOrder: ['desc', 'asc', null],
               accentedSort: true,
@@ -805,10 +801,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           case 'innerHTML':
             return {
               ...g,
-              filter: 'agTextColumnFilter',
-              filterParams: {
-                filterOptions: ['contains'],
-              },
               comparator: (valueA: any, valueB: any) => {
                 const _valA = valueA ? valueA : '';
                 const _valB = valueB ? valueB : '';
@@ -832,10 +824,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           case 'date_string':
             return {
               ...g,
-              filter: 'agTextColumnFilter',
-              filterParams: {
-                filterOptions: ['contains'],
-              },
               comparator: (valueA: any, valueB: any) => {
                 const valA = valueA ? valueA : '--/--/--';
                 const valB = valueB ? valueB : '--/--/--';
