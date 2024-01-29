@@ -45,6 +45,8 @@ describe('<DataGridControlAgGrid />', () => {
   let controlExample6: IApiControl;
   // innerHTML,test_alt,text_alt,date_string,icon,icon,icon
   let controlExample7: IApiControl;
+  // innerHTML,test_alt,date_string,icon,icon,icon
+  let controlExample8: IApiControl;
 
   let originalTimeout: number;
 
@@ -69,6 +71,9 @@ describe('<DataGridControlAgGrid />', () => {
     );
     cy.fixture('controlDataGridAgGrid-7.json').then(
       (d) => (controlExample7 = d),
+    );
+    cy.fixture('controlDataGridAgGrid-8.json').then(
+      (d) => (controlExample8 = d),
     );
 
     // Store the original timeout value
@@ -815,6 +820,22 @@ describe('<DataGridControlAgGrid />', () => {
   //   cy.waitReactApp();
   //   _assertSorting(_control);
   // });
+  // it('Should sort correctly', function () {
+  //   const _control = {
+  //     ...structuredClone(controlExample8),
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   } as any as IApiControl;
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid control={_control} fileId={''} />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   _assertSorting(_control);
+  // });
 
   // it('Should NOT sort', function () {
   //   const _control = {
@@ -939,6 +960,35 @@ describe('<DataGridControlAgGrid />', () => {
         ...structuredClone(controlExample7.data_grid_detail),
         columns: structuredClone(
           controlExample7.data_grid_detail?.columns || [],
+        ).map((col) => {
+          const _col: DataGridDetailsColumnType = {
+            ...structuredClone(col),
+            sortable: false,
+          };
+
+          return _col;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertSorting(_control);
+  });
+  it('Should NOT sort', function () {
+    const _control = {
+      ...structuredClone(controlExample8),
+      data_grid_detail: {
+        ...structuredClone(controlExample8.data_grid_detail),
+        columns: structuredClone(
+          controlExample8.data_grid_detail?.columns || [],
         ).map((col) => {
           const _col: DataGridDetailsColumnType = {
             ...structuredClone(col),
@@ -4432,13 +4482,16 @@ function _assertSorting(_control: IApiControl) {
                   : '00:00:00'
               }`;
               const dateA = new Date(
-                strDateA !== '--------' ? strDateA : '1970-01-01',
+                valA !== '--/--/--' ? strDateA : '1970-01-01',
               );
               const dateB = new Date(
-                strDateB !== '--------' ? strDateB : '1970-01-01',
+                valB !== '--/--/--' ? strDateB : '1970-01-01',
               );
 
-              return dateA.getTime() - dateB.getTime();
+              if (dateA.getTime() > dateB.getTime()) return 1;
+              if (dateA.getTime() < dateB.getTime()) return -1;
+
+              return 0;
             });
             expectedSortedDataDESC = [...unsortedData].sort((a, b) => {
               const valA = a[col.field] ? a[col.field] : '--/--/--';
@@ -4456,13 +4509,16 @@ function _assertSorting(_control: IApiControl) {
                   : '00:00:00'
               }`;
               const dateA = new Date(
-                strDateA !== '--------' ? strDateA : '1970-01-01',
+                valA !== '--/--/--' ? strDateA : '1970-01-01',
               );
               const dateB = new Date(
-                strDateB !== '--------' ? strDateB : '1970-01-01',
+                valB !== '--/--/--' ? strDateB : '1970-01-01',
               );
 
-              return dateB.getTime() - dateA.getTime();
+              if (dateA.getTime() > dateB.getTime()) return -1;
+              if (dateA.getTime() < dateB.getTime()) return 1;
+
+              return 0;
             });
             break;
           case 'innerHTML':
@@ -4577,7 +4633,10 @@ function _assertSorting(_control: IApiControl) {
       } else {
         cyWindow[
           'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
-        ].gridRef.current.api.paginationSetPageSize(0);
+        ].gridRef.current.api.paginationSetPageSize(
+          _control.data_grid_detail?.datagrid_options?.pagination_row_size ??
+            9999,
+        );
         cy.react('DataGridControlAgGrid')
           .react('AgGridReact')
           .find(`.ag-header-cell[col-id="${col.field}"]`)
@@ -4591,7 +4650,13 @@ function _assertSorting(_control: IApiControl) {
               .map((rowNode: RowNode) => processRowData(rowNode));
             // console.log('u', unsortedData);
             // console.log('a', actualTableData);
-            expect(actualTableData).to.deep.equal(unsortedData);
+            expect(actualTableData).to.deep.equal(
+              unsortedData.slice(
+                0,
+                _control.data_grid_detail?.datagrid_options
+                  ?.pagination_row_size ?? 9999,
+              ),
+            );
           });
       }
     });
