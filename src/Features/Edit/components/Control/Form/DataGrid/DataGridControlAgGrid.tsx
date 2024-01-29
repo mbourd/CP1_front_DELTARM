@@ -840,13 +840,16 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                     : '00:00:00'
                 }`;
                 const dateA = new Date(
-                  strDateA !== '--------' ? strDateA : '1970-01-01',
+                  valA !== '--/--/--' ? strDateA : '1970-01-01',
                 );
                 const dateB = new Date(
-                  strDateB !== '--------' ? strDateB : '1970-01-01',
+                  valB !== '--/--/--' ? strDateB : '1970-01-01',
                 );
 
-                return dateA.getTime() - dateB.getTime();
+                if (dateA.getTime() > dateB.getTime()) return 1;
+                if (dateA.getTime() < dateB.getTime()) return -1;
+
+                return 0;
               },
               cellStyle: (props) => cellStyleFunctions(props, g),
               cellRenderer: (props) => {
