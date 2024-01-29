@@ -58,6 +58,7 @@ const FileAuditRender: React.FC<FileAuditRenderProps> = ({
                   style={{ float: 'right' }}
                   fontSize={'medium'}
                   onClick={handleDownloadExcelAudit}
+                  className="excel-icon"
                 />
               )}
             </FileAuditHeaderStyled>

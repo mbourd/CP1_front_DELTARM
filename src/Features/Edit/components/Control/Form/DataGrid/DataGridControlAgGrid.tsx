@@ -636,10 +636,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           case 'text_alt':
             return {
               ...g,
-              filter: 'agTextColumnFilter',
-              filterParams: {
-                filterOptions: ['contains'],
-              },
               editable: (props: any) => decide_editable(props),
               sortingOrder: ['desc', 'asc', null],
               accentedSort: true,
@@ -804,10 +800,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           case 'innerHTML':
             return {
               ...g,
-              filter: 'agTextColumnFilter',
-              filterParams: {
-                filterOptions: ['contains'],
-              },
               comparator: (valueA: any, valueB: any) => {
                 const _valA = valueA ? valueA : '';
                 const _valB = valueB ? valueB : '';
@@ -831,17 +823,21 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           case 'date_string':
             return {
               ...g,
-              filter: 'agTextColumnFilter',
-              filterParams: {
-                filterOptions: ['contains'],
-              },
               comparator: (valueA: any, valueB: any) => {
                 const valA = valueA ? valueA : '--/--/--';
                 const valB = valueB ? valueB : '--/--/--';
-                const [dayA, monthA, yearA] = valA.split('/');
-                const [dayB, monthB, yearB] = valB.split('/');
-                const strDateA = `${monthA}-${dayA}-${yearA}`;
-                const strDateB = `${monthB}-${dayB}-${yearB}`;
+                const [dayA, monthA, yearA] = valA.split(' ')[0].split('/');
+                const [dayB, monthB, yearB] = valB.split(' ')[0].split('/');
+                const strDateA = `${monthA}-${dayA}-${yearA} ${
+                  /^\d{2}\/\d{2}\/\d{2} - \d{2}:\d{2}:\d{2}$/.test(valA)
+                    ? valA.split(' - ')[1]
+                    : '00:00:00'
+                }`;
+                const strDateB = `${monthB}-${dayB}-${yearB} ${
+                  /^\d{2}\/\d{2}\/\d{2} - \d{2}:\d{2}:\d{2}$/.test(valB)
+                    ? valB.split(' - ')[1]
+                    : '00:00:00'
+                }`;
                 const dateA = new Date(
                   strDateA !== '--------' ? strDateA : '1970-01-01',
                 );
@@ -1002,7 +998,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     } catch (error) {
       setErrorMessageAdd("Une erreur est survenue lors de l'ajout de la ligne");
     }
-  }, [control.control_id, jwt, fileId]);
+  }, [control.control_id, jwt, fileId, GridDetails?.source]);
 
   const onCellValueChanged = useCallback(
     (event) => {
@@ -1321,7 +1317,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         setErrors('');
       }, 3000);
     }
-  }, [jwt, control?.control_id, fileId]);
+  }, [jwt, control?.control_id, fileId, GridDetails?.source]);
 
   const callButtonRoute = useCallback(
     async (method: string, route: string, button_row_selected: boolean) => {
@@ -1350,7 +1346,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         }, 3000);
       }
     },
-    [getRowData, jwt, control?.control_id, fileId],
+    [getRowData, jwt, control?.control_id, fileId, GridDetails?.source],
   );
 
   const DynamicButtonClick = ({

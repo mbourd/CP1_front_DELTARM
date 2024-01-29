@@ -3,7 +3,12 @@ import { IColor } from '../../../Packages/Design';
 import { RawDraftContentState } from 'draft-js';
 import { IApiFileComment, IFileComment } from '../../Comments';
 import { AgGridRow } from '../../DashboardDynamic/components/types';
-import { CellStyle, CellStyleFunc, IFilterParams } from 'ag-grid-community';
+import {
+  CellStyle,
+  CellStyleFunc,
+  IFilterComp,
+  IFilterParams,
+} from 'ag-grid-community';
 import { ForwardRefExoticComponent, RefAttributes } from 'react';
 
 export type ControlTypeType =
@@ -232,6 +237,15 @@ export type DataGridDetailsColumnType = {
   decimal_digit: number;
   field: string;
   field_type: DataGridComponent;
+  filter:
+    | boolean
+    | 'agTextColumnFilter'
+    | 'agNumberColumnFilter'
+    | 'agDateColumnFilter'
+    | 'agSetColumnFilter'
+    | 'agMultiColumnFilter'
+    | IFilterComp;
+  floatingFilter: boolean;
   headerColor: HexStrType;
   headerName: string;
   hide: boolean;

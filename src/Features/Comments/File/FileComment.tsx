@@ -11,12 +11,15 @@ import {
   FileCommentHeaderStyled,
 } from './FileComment.style';
 import { FileCommentFooter } from './Footer/FileCommentFooter';
+import { AppContext, AppContextType } from 'AppContext';
 
 export const FileComment: React.FC = (): React.ReactElement => {
+  const appContext: AppContextType & Record<any, any> = useContext(AppContext);
+  const { canSend } = appContext?.ForCompTests?.FileComment || {};
   const [anchorEl, setAnchorEl] = React.useState<
     SVGSVGElement | Element | null
   >(null);
-  const { request, send, data } = useApi<IFileComment[]>();
+  const { request, send, data } = useApi<IFileComment[]>({ canSend });
   const context = useContext(EditValidationContext);
 
   const queries = router.getQueries();
@@ -39,7 +42,7 @@ export const FileComment: React.FC = (): React.ReactElement => {
   }, [send, fileId]);
 
   return (
-    <>
+    <div>
       <BPIBadge content={data?.length}>
         <CommentIcon
           fontSize={'large'}
@@ -69,6 +72,6 @@ export const FileComment: React.FC = (): React.ReactElement => {
           </Card>
         </FileCommentStyled>
       </Popper>
-    </>
+    </div>
   );
 };
