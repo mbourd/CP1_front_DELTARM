@@ -28,8 +28,11 @@ import { NoData } from './NoData';
 import { AgGridCard } from './Card/AgGridCard';
 import { useTrans } from '../../../Services';
 import { CardAgGrid } from './CardAgGrid/CardAgGrid';
+import { useDashboardDynamicReducer } from '../dashboardDynamic.reducer';
 
 const DashboardDynamic: React.FC = (): React.ReactElement => {
+  const { dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent } =
+    useDashboardDynamicReducer();
   const [trans] = useTrans('Dashboard');
   const { send, data: response, callState } = useApi<IDashboard>();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -52,6 +55,13 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
   const client_info: any = localStorage.getItem('client_info');
   const review = JSON.parse(client_info);
   const { data: context } = useContext(SecurityContext);
+
+  useEffect(() => {
+    dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent(response);
+  }, [
+    dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent,
+    response,
+  ]);
 
   useEffect(() => {
     if (context.cli_id && !clientInfoSignal) {

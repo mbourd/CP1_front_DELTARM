@@ -5,23 +5,61 @@
 // NOTE: Run CLI:
 // yarn cypress:run:component --browser chrome --config video=false --spec "src/Shared/components/MainNav/MainNav.cy.tsx"
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { SetupTestsComponents } from '../../../../cypress/utils/SetupTestsComponents';
 
-import { _requestJWT, _getEnv, _translate } from '../../../../cypress/utils';
+import {
+  // _requestJWT,
+  _getEnv,
+  _translate,
+  _getRandomNumberBetween,
+} from '../../../../cypress/utils';
 
 import { MainNav } from './MainNav';
 import { BrowserRouter } from 'react-router-dom';
 import '../../apiRoutes';
 import '../../../Shared/translations/default';
-import { SecurityContext } from '../../../Services';
 import { security } from '../../../Packages/Security';
 
+import { useDashboardDynamicReducer } from '../../../../src/Features/DashboardDynamic/dashboardDynamic.reducer';
+import '../../../../src/Features/DashboardDynamic/reducer';
+import { IDashboard } from '../../../Features/DashboardDynamic/components/types';
+
 describe('<MainNav />', () => {
-  before(() => {
-    _requestJWT();
-  });
+  const menus = [
+    {
+      action: {
+        endpoint: '/dashboard/contr_perm',
+        method: 'GET',
+        params: null,
+      },
+      menu_lib: 'Test 1 AA',
+      menu_order: 1,
+    },
+    {
+      action: {
+        endpoint: '/dashboard/contr_perm',
+        method: 'GET',
+        params: null,
+      },
+      menu_lib: 'Test 2 BB',
+      menu_order: 2,
+    },
+    {
+      action: {
+        endpoint: '/dashboard/contr_perm',
+        method: 'GET',
+        params: null,
+      },
+      menu_lib: 'Test 3 CC',
+      menu_order: 3,
+    },
+  ];
+
+  // before(() => {
+  //   _requestJWT();
+  // });
 
   beforeEach(() => {
     const client_info = [
@@ -52,7 +90,15 @@ describe('<MainNav />', () => {
 
   it('Should render', () => {
     cy.mount(
-      <SetupTestsComponents>
+      <SetupTestsComponents
+        securityContextValue={{
+          user: security.getUser(),
+          jwt: security.getUser().getJwt(),
+          data: { context: 'CP1' },
+          login: () => undefined,
+          logout: () => undefined,
+        }}
+      >
         <BrowserRouter>
           <MainNav />
         </BrowserRouter>
@@ -64,19 +110,17 @@ describe('<MainNav />', () => {
 
   it('should display <Popper /> on click menu and hide when click outside', () => {
     cy.mount(
-      <SetupTestsComponents>
+      <SetupTestsComponents
+        securityContextValue={{
+          user: security.getUser(),
+          jwt: security.getUser().getJwt(),
+          data: { context: 'CP1' },
+          login: () => undefined,
+          logout: () => undefined,
+        }}
+      >
         <BrowserRouter>
-          <SecurityContext.Provider
-            value={{
-              user: security.getUser(),
-              jwt: security.getUser().getJwt(),
-              data: { context: 'CP1' },
-              login: () => undefined,
-              logout: () => undefined,
-            }}
-          >
-            <MainNav />
-          </SecurityContext.Provider>
+          <MainNav />
         </BrowserRouter>
       </SetupTestsComponents>,
     );
@@ -91,7 +135,7 @@ describe('<MainNav />', () => {
     });
   });
 
-  it('should display <ListItem /> if context "CP1"', () => {
+  it('should display <ListItem /> if context "CP1" or != contr_perm', () => {
     const transListKey = [
       'filesToBeProcessed',
       'filesInValidation',
@@ -99,53 +143,49 @@ describe('<MainNav />', () => {
       'allFiles',
     ];
     cy.mount(
-      <SetupTestsComponents>
+      <SetupTestsComponents
+        securityContextValue={{
+          user: security.getUser(),
+          jwt: security.getUser().getJwt(),
+          data: { context: 'CP1' },
+          login: () => undefined,
+          logout: () => undefined,
+        }}
+      >
         <BrowserRouter>
-          <SecurityContext.Provider
-            value={{
-              user: security.getUser(),
-              jwt: security.getUser().getJwt(),
-              data: { context: 'CP1' },
-              login: () => undefined,
-              logout: () => undefined,
-            }}
-          >
-            <MainNav />
-          </SecurityContext.Provider>
+          <MainNav />
         </BrowserRouter>
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
     cy.get('.menu-icon').each(($el) => {
       cy.wrap($el).realClick();
-      cy.wait(255);
+      cy.wait(255).then(() => {
+        cy.wrap(transListKey).each((v: string) => {
+          const en = _translate('en', 'Default', v) || v;
+          const fr = _translate('fr', 'Default', v) || v;
+          const de = _translate('de', 'Default', v) || v;
+          const transes = [en, fr, de];
 
-      for (const v of transListKey) {
-        const en = _translate('en', 'Default', v) || v;
-        const fr = _translate('fr', 'Default', v) || v;
-        const de = _translate('de', 'Default', v) || v;
-        const transes = [en, fr, de];
-
-        cy.react('Popper').contains(new RegExp(transes.join('|'), 'gu'));
-      }
+          cy.react('Popper').contains(new RegExp(transes.join('|'), 'gu'));
+        });
+      });
     });
   });
 
   it('should display logout', () => {
     cy.mount(
-      <SetupTestsComponents>
+      <SetupTestsComponents
+        securityContextValue={{
+          user: security.getUser(),
+          jwt: security.getUser().getJwt(),
+          data: { context: 'CP1' },
+          login: () => undefined,
+          logout: () => undefined,
+        }}
+      >
         <BrowserRouter>
-          <SecurityContext.Provider
-            value={{
-              user: security.getUser(),
-              jwt: security.getUser().getJwt(),
-              data: { context: 'CP1' },
-              login: () => undefined,
-              logout: () => undefined,
-            }}
-          >
-            <MainNav />
-          </SecurityContext.Provider>
+          <MainNav />
         </BrowserRouter>
       </SetupTestsComponents>,
     );
@@ -159,6 +199,155 @@ describe('<MainNav />', () => {
       cy.wrap($el).realClick();
       cy.wait(255);
       cy.react('Popper').contains(new RegExp(transes.join('|'), 'gu'));
+    });
+  });
+
+  it('should have aditional menus if context=contr_perm', function () {
+    const DummyFC: React.FC = () => {
+      const {
+        dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent,
+      } = useDashboardDynamicReducer();
+
+      useEffect(() => {
+        dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent({
+          data: {
+            menus,
+          },
+        } as any as IDashboard);
+      }, [dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent]);
+
+      return (
+        <BrowserRouter>
+          <MainNav />
+        </BrowserRouter>
+      );
+    };
+
+    cy.mount(
+      <SetupTestsComponents
+        securityContextValue={{
+          user: security.getUser(),
+          jwt: security.getUser().getJwt(),
+          data: { context: 'contr_perm' },
+          login: () => undefined,
+          logout: () => undefined,
+        }}
+      >
+        <DummyFC />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.get('.menu-icon').each(($el) => {
+      cy.wrap($el).realClick();
+      cy.wrap(menus).each((menu: Record<any, any>) => {
+        cy.react('Popper').contains(menu.menu_lib);
+      });
+    });
+  });
+  it('should NOT have aditional menus if context!=contr_perm', function () {
+    const DummyFC: React.FC = () => {
+      const {
+        dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent,
+      } = useDashboardDynamicReducer();
+
+      useEffect(() => {
+        dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent({
+          data: {
+            menus,
+          },
+        } as any as IDashboard);
+      }, [dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent]);
+
+      return (
+        <BrowserRouter>
+          <MainNav />
+        </BrowserRouter>
+      );
+    };
+
+    cy.mount(
+      <SetupTestsComponents
+        securityContextValue={{
+          user: security.getUser(),
+          jwt: security.getUser().getJwt(),
+          data: { context: 'CP1' },
+          login: () => undefined,
+          logout: () => undefined,
+        }}
+      >
+        <DummyFC />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.get('.menu-icon').each(($el) => {
+      cy.wrap($el).realClick();
+      cy.wrap(menus).each((menu: Record<any, any>) => {
+        cy.react('Popper').should('not.have.text', menu.menu_lib);
+      });
+    });
+  });
+
+  it('should have the correct order for additional menus if context=contr_perm', function () {
+    const _menus = Array.from({ length: _getRandomNumberBetween(6, 12) }).map(
+      (v, i) => {
+        return {
+          action: {
+            endpoint: '/dashboard/contr_perm',
+            method: 'GET',
+            params: null,
+          },
+          menu_lib: 'Test ' + i,
+          menu_order: _getRandomNumberBetween(1, 12),
+        };
+      },
+    );
+    const sortedMenus = [..._menus].sort((m1, m2) => {
+      if (m1.menu_order < m2.menu_order) return -1;
+      if (m1.menu_order > m2.menu_order) return 1;
+
+      return 0;
+    });
+    const DummyFC: React.FC = () => {
+      const {
+        dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent,
+      } = useDashboardDynamicReducer();
+
+      useEffect(() => {
+        dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent({
+          data: {
+            menus: _menus,
+          },
+        } as any as IDashboard);
+      }, [dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent]);
+
+      return (
+        <BrowserRouter>
+          <MainNav />
+        </BrowserRouter>
+      );
+    };
+
+    cy.mount(
+      <SetupTestsComponents
+        securityContextValue={{
+          user: security.getUser(),
+          jwt: security.getUser().getJwt(),
+          data: { context: 'contr_perm' },
+          login: () => undefined,
+          logout: () => undefined,
+        }}
+      >
+        <DummyFC />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.get('.menu-icon').each(($el) => {
+      cy.wrap($el).realClick();
+      cy.wait(255).then(() => {
+        cy.get('.contr_perm_menus').each(($menu, i) => {
+          expect($menu.text()).to.be.eq(sortedMenus[i].menu_lib);
+        });
+      });
     });
   });
 });
