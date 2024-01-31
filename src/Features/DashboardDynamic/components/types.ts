@@ -156,6 +156,11 @@ interface ITitle {
   visible: boolean;
 }
 
+export type DashboardContrPermMenuType = {
+  action: { endpoint: string; method: 'GET'; params: any };
+  menu_lib: string;
+  menu_order: number;
+};
 export interface IDashboard {
   target: string;
   route_front: string;
@@ -165,6 +170,7 @@ export interface IDashboard {
       card: ICard[];
       visible: boolean;
     };
+    menus: DashboardContrPermMenuType[];
     ag_cards?: {
       card: ICardAgGrid[];
       visible: boolean;
