@@ -53,22 +53,32 @@ export const ModalDynamic: FC<IDataModalProps> = ({
 
   const footer = (
     <ModalDynamicFooterStyled>
-      {errorMessage ? (
-        <FormError className={'_Message'}>{errorMessage}</FormError>
-      ) : null}
-      {data?.btn?.map((btn, index) => {
-        return (
-          <Button
-            key={index}
-            onClick={() =>
-              handleCLickActionsBeforeSendToActionButtons(btn.action)
-            }
-            style={{ backgroundColor: btn.bg_color }}
-          >
-            {btn.btn_lib}
-          </Button>
-        );
-      })}
+      <Grid container spacing={0.5}>
+        <Grid item xs={12}>
+          <FormError className={'_Message'}>
+            {errorMessage ? errorMessage : ' '}
+          </FormError>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          style={{ display: 'flex', justifyContent: 'flex-end' }}
+        >
+          {data?.btn?.map((btn, index) => {
+            return (
+              <Button
+                key={index}
+                onClick={() =>
+                  handleCLickActionsBeforeSendToActionButtons(btn.action)
+                }
+                style={{ backgroundColor: btn.bg_color }}
+              >
+                {btn.btn_lib}
+              </Button>
+            );
+          })}
+        </Grid>
+      </Grid>
     </ModalDynamicFooterStyled>
   );
 
