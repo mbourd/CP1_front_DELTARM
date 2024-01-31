@@ -8,28 +8,23 @@ import {
 const name = 'dashboardDynamic';
 // declare type of state
 type DashboardDynamicStateType = {
-  message: string;
+  dataApi_dashboardControlPermanent: IDashboard | null;
 };
 // declare actions
 type ReducersActionsType = {
-  setMessage: (
+  updateDataApi_dashboardControlPermanent: (
     state: DashboardDynamicStateType,
-    action: PayloadAction<string>,
+    action: PayloadAction<IDashboard | null>,
   ) => any;
-  clearMessage: () => any;
 };
 
 // declare initiale state
 const initialState: DashboardDynamicStateType = {
-  message: 'HELLO WORLD',
+  dataApi_dashboardControlPermanent: null,
 };
 const reducers: ReducersActionsType = {
-  setMessage: (state, action) => {
-    state.message = action.payload;
-    // return { message: action.payload };
-  },
-  clearMessage: () => {
-    return { message: '' };
+  updateDataApi_dashboardControlPermanent: (state, action) => {
+    state.dataApi_dashboardControlPermanent = action.payload;
   },
 };
 const extraReducers: (
@@ -52,29 +47,28 @@ const dashboardDynamicSlice: Slice<
 export type { DashboardDynamicStateType };
 export type DashboardDynamicActionsType = keyof ReducersActionsType;
 export { name as dashboardDynamicReducerName };
-export const { setMessage, clearMessage } = dashboardDynamicSlice.actions;
+export const { updateDataApi_dashboardControlPermanent } =
+  dashboardDynamicSlice.actions;
 export default dashboardDynamicSlice.reducer;
 
 import { useReduxToolkit } from 'Services';
 import { useCallback } from 'react';
+import { IDashboard } from './components/types';
 export const useDashboardDynamicReducer = () => {
   const { selected: stateDashboardDynamic, dispatch } = useReduxToolkit<
     DashboardDynamicStateType,
     DashboardDynamicActionsType
   >(name);
-  const dispatchDashboardDynamicSetMessage = useCallback(
-    (payload: string) => {
-      dispatch('setMessage', payload);
-    },
-    [dispatch],
-  );
-  const dispatchDashboardDynamicClearMessage = useCallback(() => {
-    dispatch('clearMessage');
-  }, [dispatch]);
+  const dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent =
+    useCallback(
+      (payload: IDashboard | null) => {
+        dispatch('updateDataApi_dashboardControlPermanent', payload);
+      },
+      [dispatch],
+    );
 
   return {
     stateDashboardDynamic,
-    dispatchDashboardDynamicSetMessage,
-    dispatchDashboardDynamicClearMessage,
+    dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent,
   };
 };
