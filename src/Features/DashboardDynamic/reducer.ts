@@ -1,7 +1,6 @@
 import dashboardDynamicReducer, {
   dashboardDynamicReducerName,
-  clearMessage,
-  setMessage,
+  updateDataApi_dashboardControlPermanent,
 } from './dashboardDynamic.reducer';
 import { appReducer } from 'Services';
 
@@ -9,7 +8,6 @@ appReducer.registerReducer(
   dashboardDynamicReducerName,
   dashboardDynamicReducer,
   {
-    setMessage,
-    clearMessage,
+    updateDataApi_dashboardControlPermanent,
   },
 );
