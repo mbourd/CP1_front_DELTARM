@@ -273,7 +273,7 @@ describe('<CardAgGrid />', function () {
     cy.waitReactApp();
     cy.react('AgGridReact')
       .find('.ag-header-container')
-      .should('have.css', 'height', '48px');
+      .should('have.css', 'height', '53px');
   });
 });
 
