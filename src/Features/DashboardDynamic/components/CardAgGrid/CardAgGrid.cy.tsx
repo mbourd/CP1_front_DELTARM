@@ -244,6 +244,37 @@ describe('<CardAgGrid />', function () {
       );
     });
   });
+
+  it('should have the header compacted if col.floating_filter=true', function () {
+    cy.on('uncaught:exception', () => false);
+    cy.viewport(800, 750);
+    const _card = {
+      ...card,
+      cols: {
+        ...card.cols,
+        values: [...card.cols.values].map((col) => {
+          col.filter = true;
+          col.floating_filter = true;
+
+          return col;
+        }),
+      },
+    };
+    cy.mount(
+      <SetupTestsComponents>
+        <CardAgGrid
+          card={_card}
+          triggerAction={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('AgGridReact')
+      .find('.ag-header-container')
+      .should('have.css', 'height', '48px');
+  });
 });
 
 function _assertPagination(_card: ICard, paginationSize: number) {
