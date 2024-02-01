@@ -15,8 +15,10 @@ import {
 import { MainNavStyled } from './MainNav.style';
 import { Popper } from 'Shared/components';
 import { router, SecurityContext, useApi, useTrans } from 'Services';
+import { useDashboardDynamicReducer } from 'Features/DashboardDynamic/dashboardDynamic.reducer';
 
 export const MainNav: React.FC = (): React.ReactElement => {
+  const { stateDashboardDynamic } = useDashboardDynamicReducer();
   const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(null);
   const theme = useTheme();
   const [trans] = useTrans('Default');
@@ -113,6 +115,36 @@ export const MainNav: React.FC = (): React.ReactElement => {
                 </ListItem>
               </>
             )}
+            {dataSecurity.context === 'contr_perm'
+              ? (() => {
+                  const reorderedMenus = [
+                    ...(stateDashboardDynamic?.dataApi_dashboardControlPermanent
+                      ?.data.menus ?? []),
+                  ];
+
+                  reorderedMenus.sort((m1, m2) => {
+                    if (m1.menu_order < m2.menu_order) return -1;
+                    if (m1.menu_order > m2.menu_order) return 1;
+
+                    return 0;
+                  });
+
+                  return reorderedMenus.map((m, i) => {
+                    return (
+                      <ListItem
+                        key={'menu-contr_perm' + i}
+                        component={Link}
+                        to={m.action.endpoint}
+                        onClick={hideNav}
+                        className={'contr_perm_menus'}
+                      >
+                        <FolderIcon />
+                        <ListItemText>{m.menu_lib}</ListItemText>
+                      </ListItem>
+                    );
+                  });
+                })()
+              : null}
             <ListItem
               component={Link}
               to={router.generatePath('logout') || '/logout'}

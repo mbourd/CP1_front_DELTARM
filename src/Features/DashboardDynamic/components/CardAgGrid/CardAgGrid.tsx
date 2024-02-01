@@ -264,6 +264,23 @@ const CardAgGrid: React.FC<CardAgGridProps> = ({
     triggerAction,
   ]);
 
+  const onGridReady = (params: any) => {
+    params.api.sizeColumnsToFit();
+    params.api.enableVirtualization = true;
+
+    if (columns.some((col) => col.floatingFilter !== false)) {
+      if (columns.some((col) => col.filter === false)) {
+        params.api.setHeaderHeight(48);
+        params.api.setFloatingFiltersHeight(0);
+
+        return;
+      }
+
+      params.api.setHeaderHeight(24);
+      params.api.setFloatingFiltersHeight(29);
+    }
+  };
+
   // const monthToComparableNumber = useCallback((date: string) => {
   //   if (date === undefined || date === null || date.length < 8) return null;
   //   if (isNaN(Number.parseInt(date.substring(6, 8)))) return null;
@@ -452,6 +469,7 @@ const CardAgGrid: React.FC<CardAgGridProps> = ({
         suppressCellFocus={true}
         heightGrid={'400px'}
         hasPagination={card?.display?.type === 'page'}
+        onGridReadyAlt={onGridReady}
       />
       {/* <AgGridReact
         className="ag-theme-alpine"
