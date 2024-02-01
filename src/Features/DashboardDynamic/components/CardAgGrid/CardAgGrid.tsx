@@ -277,7 +277,7 @@ const CardAgGrid: React.FC<CardAgGridProps> = ({
       }
 
       params.api.setHeaderHeight(24);
-      params.api.setFloatingFiltersHeight(24);
+      params.api.setFloatingFiltersHeight(29);
     }
   };
 
