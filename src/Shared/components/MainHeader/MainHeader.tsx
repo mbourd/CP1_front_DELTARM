@@ -5,12 +5,11 @@ import './translations';
 import { MainHeaderStyled } from './MainHeader.style';
 import { router, SecurityContext, useApi, useTrans } from 'Services';
 import { IconsContainer } from './IconsContainer/IconsContainer';
-import { MainNav } from '..';
+import { MainNav, useTransMainHeader } from '..';
 
 export const MainHeader: React.FC = (): React.ReactElement => {
-  const language = localStorage.getItem('lang');
-  const [option]: any = useState(language);
-  const [trans] = useTrans('MainHeader');
+  const { trans, currentLang, changeLang } = useTransMainHeader();
+  const [optionValue, setOptionValue] = useState(currentLang);
   const dashboardPath = router.generatePath('dashboard');
   const { data: context } = useContext(SecurityContext);
   const { send: clientInfos, data: dataClientInfos } = useApi<any>();
@@ -41,11 +40,12 @@ export const MainHeader: React.FC = (): React.ReactElement => {
       )}
       <IconsContainer />
       <select
-        value={option}
+        value={optionValue}
         className={'language-option'}
         onChange={(e) => {
           localStorage.setItem('lang', e.target.value);
-          location.reload();
+          setOptionValue(e.target.value);
+          changeLang(e.target.value);
         }}
       >
         <option value="fr">French</option>
