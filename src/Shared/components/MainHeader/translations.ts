@@ -37,18 +37,23 @@ const transMainHeader = {
 translation.addBatchResource({
   MainHeader: transMainHeader,
 });
-type UseTransMainHeaderReturnType = [
-  (key: keyof typeof transMainHeader, options?: any) => string,
-  typeof transMainHeader,
-];
+type UseTransMainHeaderReturnType = {
+  trans: (
+    key: keyof typeof transMainHeader,
+    options?: Record<any, any>,
+  ) => string;
+  transMainHeader: typeof transMainHeader;
+  currentLang: string | undefined;
+  changeLang: (lang: string) => void;
+};
 export const useTransMainHeader = (): UseTransMainHeaderReturnType => {
-  const [trans, changeLang, lang] = useTrans(namespace);
-  const _trans = useCallback(
+  const [trans, changeLang, currentLang] = useTrans(namespace);
+  const translate = useCallback(
     (key: keyof typeof transMainHeader, options?: any): string => {
       return trans(key, options);
     },
     [trans],
   );
 
-  return [_trans, transMainHeader];
+  return { trans: translate, transMainHeader, currentLang, changeLang };
 };

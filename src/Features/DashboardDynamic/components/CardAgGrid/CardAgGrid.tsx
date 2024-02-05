@@ -434,6 +434,7 @@ const CardAgGrid: React.FC<CardAgGridProps> = ({
       select_all_button_display: false,
       unselect_all_button_display: false,
       datagrid_font_size: '',
+      delete_row_button_display: false,
     },
     buttons: [],
     source: '',
