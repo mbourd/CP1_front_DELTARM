@@ -138,6 +138,11 @@ const transEdit = {
     fr: 'Supprimer la ligne',
     de: 'Zeile löschen',
   },
+  deleteRows: {
+    en: 'Delete row(s)',
+    fr: 'Supprimer ligne(s)',
+    de: 'Zeile(n) löschen',
+  },
   deleteConfirmation: {
     en: 'Are you sure you want to delete the line?',
     fr: 'Souhaitez-vous vraiment supprimer la ligne ?',

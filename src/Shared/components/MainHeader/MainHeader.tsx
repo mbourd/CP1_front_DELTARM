@@ -5,12 +5,11 @@ import './translations';
 import { MainHeaderStyled } from './MainHeader.style';
 import { router, SecurityContext, useApi, useTrans } from 'Services';
 import { IconsContainer } from './IconsContainer/IconsContainer';
-import { MainNav } from '..';
+import { MainNav, useTransMainHeader } from '..';
 
 export const MainHeader: React.FC = (): React.ReactElement => {
-  const language = localStorage.getItem('lang');
-  const [option]: any = useState(language);
-  const [trans] = useTrans('MainHeader');
+  const { trans, currentLang, changeLang } = useTransMainHeader();
+  const [optionValue, setOptionValue] = useState(currentLang);
   const dashboardPath = router.generatePath('dashboard');
   const { data: context } = useContext(SecurityContext);
   const { send: clientInfos, data: dataClientInfos } = useApi<any>();

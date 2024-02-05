@@ -1,14 +1,42 @@
-import React from 'react';
+import { RowNode } from 'ag-grid-community';
+import React, { useCallback, useEffect, useState } from 'react';
 // import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
 
-const CustomSingleCheckboxRender: React.FC<any> = ({ props }) => {
-  const onChange = () => {
+type CustomSingleCheckboxRenderPropsType = {
+  props: Record<any, any>;
+  selectedRows: RowNode[];
+  setSelectedRows: React.Dispatch<React.SetStateAction<RowNode[]>>;
+};
+
+const CustomSingleCheckboxRender: React.FC<
+  CustomSingleCheckboxRenderPropsType
+> = ({ props, selectedRows, setSelectedRows }) => {
+  const [isChecked, setIsChecked] = useState(selectedRows.includes(props.node));
+  const onChange = useCallback(() => {
     if (props.value === '1') {
       props.setValue('0');
     } else {
       props.setValue('1');
     }
-  };
+
+    setSelectedRows((selected) => {
+      const foundIndex = selected.indexOf(props.node);
+      const n: RowNode[] = [];
+
+      if (foundIndex !== -1) {
+        n.push(...selected);
+        n.splice(foundIndex, 1);
+
+        return n;
+      }
+
+      return [...selected, props.node];
+    });
+  }, [props, setSelectedRows]);
+
+  useEffect(() => {
+    setIsChecked(selectedRows.includes(props.node));
+  }, [props.node, selectedRows]);
 
   return (
     <>
@@ -26,8 +54,7 @@ const CustomSingleCheckboxRender: React.FC<any> = ({ props }) => {
             <input
               type="checkbox"
               onChange={onChange}
-              checked={props.value === '1' ? true : false}
-              // id="date"
+              checked={isChecked}
               style={{ height: 14, width: 15, borderRadius: 0, borderWidth: 1 }}
             />
           </div>
