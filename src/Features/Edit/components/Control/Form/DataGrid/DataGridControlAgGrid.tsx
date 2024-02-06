@@ -932,7 +932,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       if (
         node.data[
           control.data_grid_detail?.datagrid_options
-            .select_all_button_col_ref as string
+            ?.select_all_button_col_ref as string
         ]?.value === '1'
       ) {
         setSelectedRows((selected) => [...selected, node]);
