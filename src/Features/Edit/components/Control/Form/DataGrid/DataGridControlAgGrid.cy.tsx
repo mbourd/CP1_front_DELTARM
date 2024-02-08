@@ -27,6 +27,7 @@ import {
   _escapeForRegExp,
   _getRandomNumberBetween,
   _hexToRgb,
+  _translate,
 } from '../../../../../../../cypress/utils';
 import { AgDataGridStyle } from './DataGridControl.style';
 
@@ -341,6 +342,143 @@ describe('<DataGridControlAgGrid />', () => {
   //       }
   //     });
   // });
+
+  it('should render delete rows button', function () {
+    cy.on('uncaught:exception', () => false);
+    const trans_FR = _translate('fr', 'Edit', 'deleteRows');
+    const trans_EN = _translate('en', 'Edit', 'deleteRows');
+    const trans_DE = _translate('de', 'Edit', 'deleteRows');
+    const translations = [trans_FR, trans_EN, trans_DE];
+    const _control = {
+      ...structuredClone(controlExample2),
+      data_grid_detail: {
+        ...structuredClone(controlExample2.data_grid_detail),
+        datagrid_options: {
+          ...structuredClone(
+            controlExample2.data_grid_detail?.datagrid_options || {},
+          ),
+          delete_row_button_display: true,
+        },
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.get('._Button').contains(new RegExp(translations.join('|')));
+  });
+
+  it('should delete selected rows', function () {
+    cy.on('uncaught:exception', () => false);
+
+    const trans_FR = _translate('fr', 'Edit', 'deleteRows');
+    const trans_EN = _translate('en', 'Edit', 'deleteRows');
+    const trans_DE = _translate('de', 'Edit', 'deleteRows');
+    const translations = [trans_FR, trans_EN, trans_DE];
+    const _control = {
+      ...structuredClone(controlExample2),
+      data_grid_detail: {
+        ...structuredClone(controlExample2.data_grid_detail),
+        datagrid_options: {
+          ...structuredClone(
+            controlExample2.data_grid_detail?.datagrid_options || {},
+          ),
+          delete_row_button_display: true,
+        },
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.contains('Select All').click();
+    cy.wait(100).then(() => {
+      cy.intercept('POST', '/control/data_grid/delete_row?file_id=*', {
+        statusCode: 204,
+        body: {},
+      });
+      cy.get('._Button')
+        .contains(new RegExp(translations.join('|')))
+        .click();
+      cy.window().then((w) => {
+        expect(
+          w[
+            'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
+          ].gridRef.current.api.getDisplayedRowCount(),
+        ).to.eq(0);
+      });
+    });
+  });
+  it('should display an error message if delete rows failed', function () {
+    cy.on('uncaught:exception', () => false);
+
+    const trans_FR = _translate('fr', 'Edit', 'deleteRows');
+    const trans_EN = _translate('en', 'Edit', 'deleteRows');
+    const trans_DE = _translate('de', 'Edit', 'deleteRows');
+    const translations = [trans_FR, trans_EN, trans_DE];
+    const _control = {
+      ...structuredClone(controlExample2),
+      data_grid_detail: {
+        ...structuredClone(controlExample2.data_grid_detail),
+        datagrid_options: {
+          ...structuredClone(
+            controlExample2.data_grid_detail?.datagrid_options || {},
+          ),
+          delete_row_button_display: true,
+        },
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={'abcdefg'} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.contains('Select All').click();
+    cy.wait(100).then(() => {
+      const error_msg = 'Erreur de suppression';
+      cy.intercept('POST', '/control/data_grid/delete_row?file_id=*', {
+        statusCode: 500,
+        body: { error_msg },
+        delay: 233,
+      }).as('responseDeleteRows');
+      cy.window().then((w) => {
+        const intialCountRow =
+          w[
+            'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
+          ].gridRef.current.api.getDisplayedRowCount();
+        cy.get('._Button')
+          .contains(new RegExp(translations.join('|')))
+          .click();
+        cy.react('DataGridControlAgGrid').formErrorShouldBeVisible([error_msg]);
+        cy.then(() => {
+          expect(
+            w[
+              'Features_Edit_Control_DataGridControlAgGrid' +
+                _control.control_id
+            ].gridRef.current.api.getDisplayedRowCount(),
+          ).to.eq(intialCountRow);
+        });
+      });
+    });
+  });
+  return;
 
   // it('Should evaluate and format formula type correctly', function () {
   //   // @ts-ignore

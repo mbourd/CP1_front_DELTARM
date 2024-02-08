@@ -283,7 +283,7 @@
     ],
     "datagrid_options": {
       "add_row_button_display": true,
-      "pagination_row_size": 10,
+      "pagination_row_size": 4,
       "select_all_button_col_ref": "rdg_1",
       "select_all_button_display": true,
       "unselect_all_button_display": true
@@ -837,7 +837,1932 @@
           "value": "3082315"
         },
         "row_editable": true,
-        "row_uuid": "90c6e08b-7f82-47e8-aeae-13195647b6b4"
+        "row_uuid": "90c6e08b-7f82-47e8-aeae-13195647b6b41"
+      },
+      {
+        "rdg_1": {
+          "choice_options": null,
+          "col_elm_id": 7808,
+          "component": "checkbox_select_datagrid",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 3,
+          "value": null
+        },
+        "rdg_10": {
+          "choice_options": [
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 1,
+              "choice_lib": "Estimation by Engineering"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 2,
+              "choice_lib": "Inflation"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 3,
+              "choice_lib": "No change"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 4,
+              "choice_lib": "Operator Value"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 5,
+              "choice_lib": "Subsidiary Value"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 6,
+              "choice_lib": "Policy Value"
+            }
+          ],
+          "col_elm_id": 7859,
+          "component": "select_list",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "2",
+          "row_num": 3,
+          "value": "2"
+        },
+        "rdg_11": {
+          "choice_options": null,
+          "col_elm_id": 7861,
+          "component": "long_text",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_12": {
+          "choice_options": null,
+          "col_elm_id": 7830,
+          "component": "timestamp",
+          "control_editable": false,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_2": {
+          "choice_options": null,
+          "col_elm_id": 7806,
+          "component": "text",
+          "control_editable": false,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "EXPLO II",
+          "row_num": 2,
+          "value": "EXPLO II"
+        },
+        "rdg_3": {
+          "choice_options": null,
+          "col_elm_id": 7852,
+          "component": "text",
+          "control_editable": false,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "KHAN ASPARUH DRILLING LLI'S",
+          "row_num": 2,
+          "value": "KHAN ASPARUH DRILLING LLI'S"
+        },
+        "rdg_4": {
+          "choice_options": [
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 1,
+              "choice_lib": "Onshore"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 2,
+              "choice_lib": "Offshore"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 3,
+              "choice_lib": "Deep Offshore"
+            }
+          ],
+          "col_elm_id": 7853,
+          "component": "select_list",
+          "control_editable": true,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_5": {
+          "choice_options": [
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 1,
+              "choice_lib": "Drilling & Completion"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 2,
+              "choice_lib": "Chemicals"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 3,
+              "choice_lib": "Operating"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 4,
+              "choice_lib": "Subsea capital spares SURF"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 5,
+              "choice_lib": "Subsea capital spares SPS"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 6,
+              "choice_lib": "Topsides capital spares"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 7,
+              "choice_lib": "Capital spares"
+            }
+          ],
+          "col_elm_id": 7854,
+          "component": "select_list",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_6": {
+          "choice_options": null,
+          "col_elm_id": 7855,
+          "component": "text",
+          "control_editable": true,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "BULGARIA",
+          "row_num": 2,
+          "value": "BULGARIA"
+        },
+        "rdg_7": {
+          "choice_options": null,
+          "col_elm_id": 7856,
+          "component": "long_text",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_8": {
+          "choice_options": null,
+          "col_elm_id": 7857,
+          "component": "financial",
+          "control_editable": false,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": "^-?[0-9]\\d*(\\.\\d+)?$",
+          "control_regex_msg": "La valeur saisie n'est pas une valeur autorisée pour ce champ",
+          "reference_value": "4369911",
+          "row_num": 2,
+          "value": "4369911"
+        },
+        "rdg_9": {
+          "choice_options": null,
+          "col_elm_id": 7858,
+          "component": "financial",
+          "control_editable": true,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": "^-?[0-9]\\d*(\\.\\d+)?$",
+          "control_regex_msg": "La valeur saisie n'est pas une valeur autorisée pour ce champ",
+          "reference_value": "3082315",
+          "row_num": 2,
+          "value": "3082315"
+        },
+        "row_editable": true,
+        "row_uuid": "90c6e08b-7f82-47e8-aeae-13195647b6b42"
+      },
+      {
+        "rdg_1": {
+          "choice_options": null,
+          "col_elm_id": 7808,
+          "component": "checkbox_select_datagrid",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_10": {
+          "choice_options": [
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 1,
+              "choice_lib": "Estimation by Engineering"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 2,
+              "choice_lib": "Inflation"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 3,
+              "choice_lib": "No change"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 4,
+              "choice_lib": "Operator Value"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 5,
+              "choice_lib": "Subsidiary Value"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 6,
+              "choice_lib": "Policy Value"
+            }
+          ],
+          "col_elm_id": 7859,
+          "component": "select_list",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "2",
+          "row_num": 2,
+          "value": "2"
+        },
+        "rdg_11": {
+          "choice_options": null,
+          "col_elm_id": 7861,
+          "component": "long_text",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_12": {
+          "choice_options": null,
+          "col_elm_id": 7830,
+          "component": "timestamp",
+          "control_editable": false,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_2": {
+          "choice_options": null,
+          "col_elm_id": 7806,
+          "component": "text",
+          "control_editable": false,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "EXPLO II",
+          "row_num": 2,
+          "value": "EXPLO II"
+        },
+        "rdg_3": {
+          "choice_options": null,
+          "col_elm_id": 7852,
+          "component": "text",
+          "control_editable": false,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "KHAN ASPARUH DRILLING LLI'S",
+          "row_num": 2,
+          "value": "KHAN ASPARUH DRILLING LLI'S"
+        },
+        "rdg_4": {
+          "choice_options": [
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 1,
+              "choice_lib": "Onshore"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 2,
+              "choice_lib": "Offshore"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 3,
+              "choice_lib": "Deep Offshore"
+            }
+          ],
+          "col_elm_id": 7853,
+          "component": "select_list",
+          "control_editable": true,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_5": {
+          "choice_options": [
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 1,
+              "choice_lib": "Drilling & Completion"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 2,
+              "choice_lib": "Chemicals"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 3,
+              "choice_lib": "Operating"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 4,
+              "choice_lib": "Subsea capital spares SURF"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 5,
+              "choice_lib": "Subsea capital spares SPS"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 6,
+              "choice_lib": "Topsides capital spares"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 7,
+              "choice_lib": "Capital spares"
+            }
+          ],
+          "col_elm_id": 7854,
+          "component": "select_list",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_6": {
+          "choice_options": null,
+          "col_elm_id": 7855,
+          "component": "text",
+          "control_editable": true,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "BULGARIA",
+          "row_num": 2,
+          "value": "BULGARIA"
+        },
+        "rdg_7": {
+          "choice_options": null,
+          "col_elm_id": 7856,
+          "component": "long_text",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_8": {
+          "choice_options": null,
+          "col_elm_id": 7857,
+          "component": "financial",
+          "control_editable": false,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": "^-?[0-9]\\d*(\\.\\d+)?$",
+          "control_regex_msg": "La valeur saisie n'est pas une valeur autorisée pour ce champ",
+          "reference_value": "4369911",
+          "row_num": 2,
+          "value": "4369911"
+        },
+        "rdg_9": {
+          "choice_options": null,
+          "col_elm_id": 7858,
+          "component": "financial",
+          "control_editable": true,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": "^-?[0-9]\\d*(\\.\\d+)?$",
+          "control_regex_msg": "La valeur saisie n'est pas une valeur autorisée pour ce champ",
+          "reference_value": "3082315",
+          "row_num": 2,
+          "value": "3082315"
+        },
+        "row_editable": true,
+        "row_uuid": "90c6e08b-7f82-47e8-aeae-13195647b6b43"
+      },
+      {
+        "rdg_1": {
+          "choice_options": null,
+          "col_elm_id": 7808,
+          "component": "checkbox_select_datagrid",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_10": {
+          "choice_options": [
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 1,
+              "choice_lib": "Estimation by Engineering"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 2,
+              "choice_lib": "Inflation"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 3,
+              "choice_lib": "No change"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 4,
+              "choice_lib": "Operator Value"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 5,
+              "choice_lib": "Subsidiary Value"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 6,
+              "choice_lib": "Policy Value"
+            }
+          ],
+          "col_elm_id": 7859,
+          "component": "select_list",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "2",
+          "row_num": 2,
+          "value": "2"
+        },
+        "rdg_11": {
+          "choice_options": null,
+          "col_elm_id": 7861,
+          "component": "long_text",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_12": {
+          "choice_options": null,
+          "col_elm_id": 7830,
+          "component": "timestamp",
+          "control_editable": false,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_2": {
+          "choice_options": null,
+          "col_elm_id": 7806,
+          "component": "text",
+          "control_editable": false,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "EXPLO II",
+          "row_num": 2,
+          "value": "EXPLO II"
+        },
+        "rdg_3": {
+          "choice_options": null,
+          "col_elm_id": 7852,
+          "component": "text",
+          "control_editable": false,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "KHAN ASPARUH DRILLING LLI'S",
+          "row_num": 2,
+          "value": "KHAN ASPARUH DRILLING LLI'S"
+        },
+        "rdg_4": {
+          "choice_options": [
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 1,
+              "choice_lib": "Onshore"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 2,
+              "choice_lib": "Offshore"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 3,
+              "choice_lib": "Deep Offshore"
+            }
+          ],
+          "col_elm_id": 7853,
+          "component": "select_list",
+          "control_editable": true,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_5": {
+          "choice_options": [
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 1,
+              "choice_lib": "Drilling & Completion"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 2,
+              "choice_lib": "Chemicals"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 3,
+              "choice_lib": "Operating"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 4,
+              "choice_lib": "Subsea capital spares SURF"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 5,
+              "choice_lib": "Subsea capital spares SPS"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 6,
+              "choice_lib": "Topsides capital spares"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 7,
+              "choice_lib": "Capital spares"
+            }
+          ],
+          "col_elm_id": 7854,
+          "component": "select_list",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_6": {
+          "choice_options": null,
+          "col_elm_id": 7855,
+          "component": "text",
+          "control_editable": true,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "BULGARIA",
+          "row_num": 2,
+          "value": "BULGARIA"
+        },
+        "rdg_7": {
+          "choice_options": null,
+          "col_elm_id": 7856,
+          "component": "long_text",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_8": {
+          "choice_options": null,
+          "col_elm_id": 7857,
+          "component": "financial",
+          "control_editable": false,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": "^-?[0-9]\\d*(\\.\\d+)?$",
+          "control_regex_msg": "La valeur saisie n'est pas une valeur autorisée pour ce champ",
+          "reference_value": "4369911",
+          "row_num": 2,
+          "value": "4369911"
+        },
+        "rdg_9": {
+          "choice_options": null,
+          "col_elm_id": 7858,
+          "component": "financial",
+          "control_editable": true,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": "^-?[0-9]\\d*(\\.\\d+)?$",
+          "control_regex_msg": "La valeur saisie n'est pas une valeur autorisée pour ce champ",
+          "reference_value": "3082315",
+          "row_num": 2,
+          "value": "3082315"
+        },
+        "row_editable": true,
+        "row_uuid": "90c6e08b-7f82-47e8-aeae-13195647b6b44"
+      },
+      {
+        "rdg_1": {
+          "choice_options": null,
+          "col_elm_id": 7808,
+          "component": "checkbox_select_datagrid",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_10": {
+          "choice_options": [
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 1,
+              "choice_lib": "Estimation by Engineering"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 2,
+              "choice_lib": "Inflation"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 3,
+              "choice_lib": "No change"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 4,
+              "choice_lib": "Operator Value"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 5,
+              "choice_lib": "Subsidiary Value"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 6,
+              "choice_lib": "Policy Value"
+            }
+          ],
+          "col_elm_id": 7859,
+          "component": "select_list",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "2",
+          "row_num": 2,
+          "value": "2"
+        },
+        "rdg_11": {
+          "choice_options": null,
+          "col_elm_id": 7861,
+          "component": "long_text",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_12": {
+          "choice_options": null,
+          "col_elm_id": 7830,
+          "component": "timestamp",
+          "control_editable": false,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_2": {
+          "choice_options": null,
+          "col_elm_id": 7806,
+          "component": "text",
+          "control_editable": false,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "EXPLO II",
+          "row_num": 2,
+          "value": "EXPLO II"
+        },
+        "rdg_3": {
+          "choice_options": null,
+          "col_elm_id": 7852,
+          "component": "text",
+          "control_editable": false,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "KHAN ASPARUH DRILLING LLI'S",
+          "row_num": 2,
+          "value": "KHAN ASPARUH DRILLING LLI'S"
+        },
+        "rdg_4": {
+          "choice_options": [
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 1,
+              "choice_lib": "Onshore"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 2,
+              "choice_lib": "Offshore"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 3,
+              "choice_lib": "Deep Offshore"
+            }
+          ],
+          "col_elm_id": 7853,
+          "component": "select_list",
+          "control_editable": true,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_5": {
+          "choice_options": [
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 1,
+              "choice_lib": "Drilling & Completion"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 2,
+              "choice_lib": "Chemicals"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 3,
+              "choice_lib": "Operating"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 4,
+              "choice_lib": "Subsea capital spares SURF"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 5,
+              "choice_lib": "Subsea capital spares SPS"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 6,
+              "choice_lib": "Topsides capital spares"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 7,
+              "choice_lib": "Capital spares"
+            }
+          ],
+          "col_elm_id": 7854,
+          "component": "select_list",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_6": {
+          "choice_options": null,
+          "col_elm_id": 7855,
+          "component": "text",
+          "control_editable": true,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "BULGARIA",
+          "row_num": 2,
+          "value": "BULGARIA"
+        },
+        "rdg_7": {
+          "choice_options": null,
+          "col_elm_id": 7856,
+          "component": "long_text",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_8": {
+          "choice_options": null,
+          "col_elm_id": 7857,
+          "component": "financial",
+          "control_editable": false,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": "^-?[0-9]\\d*(\\.\\d+)?$",
+          "control_regex_msg": "La valeur saisie n'est pas une valeur autorisée pour ce champ",
+          "reference_value": "4369911",
+          "row_num": 2,
+          "value": "4369911"
+        },
+        "rdg_9": {
+          "choice_options": null,
+          "col_elm_id": 7858,
+          "component": "financial",
+          "control_editable": true,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": "^-?[0-9]\\d*(\\.\\d+)?$",
+          "control_regex_msg": "La valeur saisie n'est pas une valeur autorisée pour ce champ",
+          "reference_value": "3082315",
+          "row_num": 2,
+          "value": "3082315"
+        },
+        "row_editable": true,
+        "row_uuid": "90c6e08b-7f82-47e8-aeae-13195647b6b45"
+      },
+      {
+        "rdg_1": {
+          "choice_options": null,
+          "col_elm_id": 7808,
+          "component": "checkbox_select_datagrid",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_10": {
+          "choice_options": [
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 1,
+              "choice_lib": "Estimation by Engineering"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 2,
+              "choice_lib": "Inflation"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 3,
+              "choice_lib": "No change"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 4,
+              "choice_lib": "Operator Value"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 5,
+              "choice_lib": "Subsidiary Value"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 6,
+              "choice_lib": "Policy Value"
+            }
+          ],
+          "col_elm_id": 7859,
+          "component": "select_list",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "2",
+          "row_num": 2,
+          "value": "2"
+        },
+        "rdg_11": {
+          "choice_options": null,
+          "col_elm_id": 7861,
+          "component": "long_text",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_12": {
+          "choice_options": null,
+          "col_elm_id": 7830,
+          "component": "timestamp",
+          "control_editable": false,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_2": {
+          "choice_options": null,
+          "col_elm_id": 7806,
+          "component": "text",
+          "control_editable": false,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "EXPLO II",
+          "row_num": 2,
+          "value": "EXPLO II"
+        },
+        "rdg_3": {
+          "choice_options": null,
+          "col_elm_id": 7852,
+          "component": "text",
+          "control_editable": false,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "KHAN ASPARUH DRILLING LLI'S",
+          "row_num": 2,
+          "value": "KHAN ASPARUH DRILLING LLI'S"
+        },
+        "rdg_4": {
+          "choice_options": [
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 1,
+              "choice_lib": "Onshore"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 2,
+              "choice_lib": "Offshore"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 3,
+              "choice_lib": "Deep Offshore"
+            }
+          ],
+          "col_elm_id": 7853,
+          "component": "select_list",
+          "control_editable": true,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_5": {
+          "choice_options": [
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 1,
+              "choice_lib": "Drilling & Completion"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 2,
+              "choice_lib": "Chemicals"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 3,
+              "choice_lib": "Operating"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 4,
+              "choice_lib": "Subsea capital spares SURF"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 5,
+              "choice_lib": "Subsea capital spares SPS"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 6,
+              "choice_lib": "Topsides capital spares"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 7,
+              "choice_lib": "Capital spares"
+            }
+          ],
+          "col_elm_id": 7854,
+          "component": "select_list",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_6": {
+          "choice_options": null,
+          "col_elm_id": 7855,
+          "component": "text",
+          "control_editable": true,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "BULGARIA",
+          "row_num": 2,
+          "value": "BULGARIA"
+        },
+        "rdg_7": {
+          "choice_options": null,
+          "col_elm_id": 7856,
+          "component": "long_text",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_8": {
+          "choice_options": null,
+          "col_elm_id": 7857,
+          "component": "financial",
+          "control_editable": false,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": "^-?[0-9]\\d*(\\.\\d+)?$",
+          "control_regex_msg": "La valeur saisie n'est pas une valeur autorisée pour ce champ",
+          "reference_value": "4369911",
+          "row_num": 2,
+          "value": "4369911"
+        },
+        "rdg_9": {
+          "choice_options": null,
+          "col_elm_id": 7858,
+          "component": "financial",
+          "control_editable": true,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": "^-?[0-9]\\d*(\\.\\d+)?$",
+          "control_regex_msg": "La valeur saisie n'est pas une valeur autorisée pour ce champ",
+          "reference_value": "3082315",
+          "row_num": 2,
+          "value": "3082315"
+        },
+        "row_editable": true,
+        "row_uuid": "90c6e08b-7f82-47e8-aeae-13195647b6b46"
+      },
+      {
+        "rdg_1": {
+          "choice_options": null,
+          "col_elm_id": 7808,
+          "component": "checkbox_select_datagrid",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_10": {
+          "choice_options": [
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 1,
+              "choice_lib": "Estimation by Engineering"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 2,
+              "choice_lib": "Inflation"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 3,
+              "choice_lib": "No change"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 4,
+              "choice_lib": "Operator Value"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 5,
+              "choice_lib": "Subsidiary Value"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 6,
+              "choice_lib": "Policy Value"
+            }
+          ],
+          "col_elm_id": 7859,
+          "component": "select_list",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "2",
+          "row_num": 2,
+          "value": "2"
+        },
+        "rdg_11": {
+          "choice_options": null,
+          "col_elm_id": 7861,
+          "component": "long_text",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_12": {
+          "choice_options": null,
+          "col_elm_id": 7830,
+          "component": "timestamp",
+          "control_editable": false,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_2": {
+          "choice_options": null,
+          "col_elm_id": 7806,
+          "component": "text",
+          "control_editable": false,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "EXPLO II",
+          "row_num": 2,
+          "value": "EXPLO II"
+        },
+        "rdg_3": {
+          "choice_options": null,
+          "col_elm_id": 7852,
+          "component": "text",
+          "control_editable": false,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "KHAN ASPARUH DRILLING LLI'S",
+          "row_num": 2,
+          "value": "KHAN ASPARUH DRILLING LLI'S"
+        },
+        "rdg_4": {
+          "choice_options": [
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 1,
+              "choice_lib": "Onshore"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 2,
+              "choice_lib": "Offshore"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 3,
+              "choice_lib": "Deep Offshore"
+            }
+          ],
+          "col_elm_id": 7853,
+          "component": "select_list",
+          "control_editable": true,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_5": {
+          "choice_options": [
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 1,
+              "choice_lib": "Drilling & Completion"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 2,
+              "choice_lib": "Chemicals"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 3,
+              "choice_lib": "Operating"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 4,
+              "choice_lib": "Subsea capital spares SURF"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 5,
+              "choice_lib": "Subsea capital spares SPS"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 6,
+              "choice_lib": "Topsides capital spares"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 7,
+              "choice_lib": "Capital spares"
+            }
+          ],
+          "col_elm_id": 7854,
+          "component": "select_list",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_6": {
+          "choice_options": null,
+          "col_elm_id": 7855,
+          "component": "text",
+          "control_editable": true,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "BULGARIA",
+          "row_num": 2,
+          "value": "BULGARIA"
+        },
+        "rdg_7": {
+          "choice_options": null,
+          "col_elm_id": 7856,
+          "component": "long_text",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_8": {
+          "choice_options": null,
+          "col_elm_id": 7857,
+          "component": "financial",
+          "control_editable": false,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": "^-?[0-9]\\d*(\\.\\d+)?$",
+          "control_regex_msg": "La valeur saisie n'est pas une valeur autorisée pour ce champ",
+          "reference_value": "4369911",
+          "row_num": 2,
+          "value": "4369911"
+        },
+        "rdg_9": {
+          "choice_options": null,
+          "col_elm_id": 7858,
+          "component": "financial",
+          "control_editable": true,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": "^-?[0-9]\\d*(\\.\\d+)?$",
+          "control_regex_msg": "La valeur saisie n'est pas une valeur autorisée pour ce champ",
+          "reference_value": "3082315",
+          "row_num": 2,
+          "value": "3082315"
+        },
+        "row_editable": true,
+        "row_uuid": "90c6e08b-7f82-47e8-aeae-13195647b6b47"
+      },
+      {
+        "rdg_1": {
+          "choice_options": null,
+          "col_elm_id": 7808,
+          "component": "checkbox_select_datagrid",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_10": {
+          "choice_options": [
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 1,
+              "choice_lib": "Estimation by Engineering"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 2,
+              "choice_lib": "Inflation"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 3,
+              "choice_lib": "No change"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 4,
+              "choice_lib": "Operator Value"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 5,
+              "choice_lib": "Subsidiary Value"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 6,
+              "choice_lib": "Policy Value"
+            }
+          ],
+          "col_elm_id": 7859,
+          "component": "select_list",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "2",
+          "row_num": 2,
+          "value": "2"
+        },
+        "rdg_11": {
+          "choice_options": null,
+          "col_elm_id": 7861,
+          "component": "long_text",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_12": {
+          "choice_options": null,
+          "col_elm_id": 7830,
+          "component": "timestamp",
+          "control_editable": false,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_2": {
+          "choice_options": null,
+          "col_elm_id": 7806,
+          "component": "text",
+          "control_editable": false,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "EXPLO II",
+          "row_num": 2,
+          "value": "EXPLO II"
+        },
+        "rdg_3": {
+          "choice_options": null,
+          "col_elm_id": 7852,
+          "component": "text",
+          "control_editable": false,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "KHAN ASPARUH DRILLING LLI'S",
+          "row_num": 2,
+          "value": "KHAN ASPARUH DRILLING LLI'S"
+        },
+        "rdg_4": {
+          "choice_options": [
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 1,
+              "choice_lib": "Onshore"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 2,
+              "choice_lib": "Offshore"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 3,
+              "choice_lib": "Deep Offshore"
+            }
+          ],
+          "col_elm_id": 7853,
+          "component": "select_list",
+          "control_editable": true,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_5": {
+          "choice_options": [
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 1,
+              "choice_lib": "Drilling & Completion"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 2,
+              "choice_lib": "Chemicals"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 3,
+              "choice_lib": "Operating"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 4,
+              "choice_lib": "Subsea capital spares SURF"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 5,
+              "choice_lib": "Subsea capital spares SPS"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 6,
+              "choice_lib": "Topsides capital spares"
+            },
+            {
+              "choice_bg_color": "FFFFFF",
+              "choice_font_color": "000000",
+              "choice_font_weight": "normal",
+              "choice_id": 7,
+              "choice_lib": "Capital spares"
+            }
+          ],
+          "col_elm_id": 7854,
+          "component": "select_list",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_6": {
+          "choice_options": null,
+          "col_elm_id": 7855,
+          "component": "text",
+          "control_editable": true,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": "BULGARIA",
+          "row_num": 2,
+          "value": "BULGARIA"
+        },
+        "rdg_7": {
+          "choice_options": null,
+          "col_elm_id": 7856,
+          "component": "long_text",
+          "control_editable": true,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": null,
+          "control_regex_msg": null,
+          "reference_value": null,
+          "row_num": 2,
+          "value": null
+        },
+        "rdg_8": {
+          "choice_options": null,
+          "col_elm_id": 7857,
+          "component": "financial",
+          "control_editable": false,
+          "control_mandatory": false,
+          "control_options": null,
+          "control_regex": "^-?[0-9]\\d*(\\.\\d+)?$",
+          "control_regex_msg": "La valeur saisie n'est pas une valeur autorisée pour ce champ",
+          "reference_value": "4369911",
+          "row_num": 2,
+          "value": "4369911"
+        },
+        "rdg_9": {
+          "choice_options": null,
+          "col_elm_id": 7858,
+          "component": "financial",
+          "control_editable": true,
+          "control_mandatory": true,
+          "control_options": null,
+          "control_regex": "^-?[0-9]\\d*(\\.\\d+)?$",
+          "control_regex_msg": "La valeur saisie n'est pas une valeur autorisée pour ce champ",
+          "reference_value": "3082315",
+          "row_num": 2,
+          "value": "3082315"
+        },
+        "row_editable": true,
+        "row_uuid": "90c6e08b-7f82-47e8-aeae-13195647b6b48"
       }
     ],
     "source": "TE_tobedeclared"
