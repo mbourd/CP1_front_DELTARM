@@ -29,7 +29,11 @@ export const DecimalControl: React.FC<IProps> = ({
   context,
 }): React.ReactElement => {
   const { send, error } = useApi<void>();
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(
+    control.mandatory && control.editable && !control.control_value
+      ? 'Valeur obligatoire'
+      : '',
+  );
   const [currentValue, setCurrentValue] = useState(control.control_value);
   const [isRejected, setIsRejected] = useState(
     control.control_rejectable?.is_rejected
@@ -133,15 +137,6 @@ export const DecimalControl: React.FC<IProps> = ({
       trans,
     ],
   );
-
-  useEffect(() => {
-    if (control.mandatory && control.editable && !currentValue) {
-      setErrorMessage('Valeur obligatoire');
-    }
-    if (!control.mandatory) {
-      setErrorMessage(null);
-    }
-  }, [control.mandatory, control.editable, currentValue, trans]);
 
   useEffect(() => {
     if (error) {

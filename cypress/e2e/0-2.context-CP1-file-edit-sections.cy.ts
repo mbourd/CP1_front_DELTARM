@@ -6,6 +6,7 @@
 import JwtDecode from 'jwt-decode';
 
 import '../../src/Features/Edit/translations';
+import '../../src/Features/Manage/translations';
 import { _translate } from '../utils';
 
 describe(
