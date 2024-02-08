@@ -11,6 +11,8 @@ import { Checkbox } from '@mui/material';
 import { stringToBoolean } from '../../../../../../Packages/Helpers/src/stringToBoolean';
 import { RejectControl } from '../RejectByPointControl/RejectControl';
 
+import { useTrans } from '../../../../../../Services';
+
 interface IProps {
   control: IApiControl;
   fileId: string;
@@ -26,6 +28,7 @@ export const BooleanControl: React.FC<IProps> = ({
   setFormState,
   context,
 }): React.ReactElement => {
+  const [trans] = useTrans('Edit');
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);
@@ -47,9 +50,9 @@ export const BooleanControl: React.FC<IProps> = ({
   const toogleAndSaveValue = useCallback(() => {
     const booleanValue = !stringToBoolean(currentValue);
 
-    setErrorMessage(null);
+    if (booleanValue === true) setErrorMessage(null);
 
-    if (control.mandatory && currentValue !== null) {
+    if (control.mandatory && booleanValue === false) {
       setErrorMessage('Valeur obligatoire');
     }
 
@@ -71,16 +74,18 @@ export const BooleanControl: React.FC<IProps> = ({
     control.control_family,
     setCurrentValue,
     control.mandatory,
+    trans,
   ]);
 
   useEffect(() => {
-    if (control.mandatory && control.editable && !currentValue) {
-      setErrorMessage('Valeur obligatoire');
+    if (
+      control.mandatory &&
+      control.editable &&
+      !stringToBoolean(control.control_value)
+    ) {
+      setErrorMessage(trans('mandatoryValue'));
     }
-    if (!control.mandatory) {
-      setErrorMessage(null);
-    }
-  }, [control.mandatory, control.editable, currentValue]);
+  }, [control.control_value, control.editable, control.mandatory, trans]);
 
   useEffect(() => {
     if (!isRejected) {
@@ -90,9 +95,9 @@ export const BooleanControl: React.FC<IProps> = ({
 
   useEffect(() => {
     if (error) {
-      setErrorMessage("Une erreur s'est produite durant l'enregistrement");
+      setErrorMessage(trans('errorRecording'));
     }
-  }, [error]);
+  }, [error, trans]);
 
   const booleanValue = stringToBoolean(currentValue);
 
@@ -104,6 +109,7 @@ export const BooleanControl: React.FC<IProps> = ({
           id={`checkbox-boolean${control.control_id}`}
           style={{ display: 'block', paddingLeft: '0' }}
           disableRipple
+          // @ts-ignore
           placeholder={
             control.editable
               ? control.control_title

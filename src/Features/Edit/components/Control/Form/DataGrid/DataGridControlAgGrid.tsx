@@ -244,7 +244,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               singleClickEdit: false,
               tooltipField: g?.field,
               headerTooltip: g?.headerName,
-              editable: true,
+              editable: false,
               cellStyle: (props: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 return (

@@ -6,7 +6,8 @@
 import JwtDecode from 'jwt-decode';
 
 import '../../src/Features/Edit/translations';
-import { _escapeForRegExp, _getEnv, _translate } from '../utils';
+import '../../src/Features/Manage/translations';
+import { _escapeForRegExp, _translate } from '../utils';
 import {
   IApiChapter,
   IApiControl,
@@ -23,12 +24,9 @@ describe(
     let data: Record<any, any>;
     let currentUrl: string;
     const translations_mandatoryValue = [
-      _translate('en', 'Edit', 'mandatoryValue') ||
-        'mandatoryValue|Valeur obligatoire',
-      _translate('fr', 'Edit', 'mandatoryValue') ||
-        'mandatoryValue|Valeur obligatoire',
-      _translate('de', 'Edit', 'mandatoryValue') ||
-        'mandatoryValue|Valeur obligatoire',
+      _translate('en', 'Edit', 'mandatoryValue', 'Valeur obligatoire'),
+      _translate('fr', 'Edit', 'mandatoryValue', 'Valeur obligatoire'),
+      _translate('de', 'Edit', 'mandatoryValue', 'Valeur obligatoire'),
     ];
 
     before(() => {
@@ -102,77 +100,81 @@ describe(
 
         if (current_section.chapters.length === 0) this.skip();
 
-        for (const indexChapter in current_section.chapters) {
-          const chapter: IApiChapter = current_section.chapters[indexChapter];
+        cy.wrap(current_section.chapters).each(
+          (chapter: IApiChapter, indexChapter) => {
+            cy.reactChain('ContentBody FormControls ContentTitle')
+              .eq(indexChapter as any as number)
+              .should('have.text', chapter.chap_lib);
 
-          cy.reactChain('ContentBody FormControls ContentTitle')
-            .eq(indexChapter as any as number)
-            .should('have.text', chapter.chap_lib);
+            if (chapter.controls.length === 0) return;
 
-          if (chapter.controls.length === 0) continue;
+            const controls = chapter.controls.reduce(
+              (acc: Record<string, IApiControl[]>, control) => ({
+                ...acc,
+                [control.control_type]: [
+                  ...(acc[control.control_type] || []),
+                  control,
+                ],
+              }),
+              {},
+            );
 
-          const controls = chapter.controls.reduce(
-            (acc: Record<string, IApiControl[]>, control) => ({
-              ...acc,
-              [control.control_type]: [
-                ...(acc[control.control_type] || []),
-                control,
-              ],
-            }),
-            {},
-          );
+            cy.wrap(Object.values(controls)).each(
+              (arrayControlType: IApiControl[]) => {
+                cy.wrap(arrayControlType).each(
+                  (control: IApiControl, indexControl) => {
+                    if (!controlName?.[control.control_type]) return;
 
-          for (const arrayControlType of Object.values(controls)) {
-            for (const indexControl in arrayControlType) {
-              const control: IApiControl = arrayControlType[indexControl];
-
-              if (!controlName?.[control.control_type]) continue;
-
-              checkVisibilityFormErrorAtFirst(
-                control,
-                getCyElementControl(
-                  controlName[control.control_type][0],
-                  indexChapter,
-                  indexControl,
-                ),
-                translations_mandatoryValue,
-              );
-
-              getCyElementControl(
-                controlName[control.control_type][0],
-                indexChapter,
-                indexControl,
-              )
-                .find(controlName[control.control_type][1])
-                .then(($el) => {
-                  if (!$el.is(':disabled')) {
-                    if (control.control_value)
-                      clearAndBlurCyElement(cy.wrap($el));
-
-                    cy.wrap($el).typeThenWait(
-                      controlName[control.control_type][2],
-                      { triggers: { blur: { exec: true } } },
-                    );
-                    getCyElementControl(
-                      controlName[control.control_type][0],
-                      indexChapter,
-                      indexControl,
-                    ).formErrorMessageShouldNotMatch(
-                      translations_mandatoryValue,
-                    );
-                    clearAndBlurCyElement(cy.wrap($el));
-
-                    if (control.control_mandatory)
+                    checkVisibilityFormErrorAtFirst(
+                      control,
                       getCyElementControl(
                         controlName[control.control_type][0],
                         indexChapter,
                         indexControl,
-                      ).formErrorShouldBeVisible(translations_mandatoryValue);
-                  }
-                });
-            }
-          }
-        }
+                      ),
+                      translations_mandatoryValue,
+                    );
+
+                    getCyElementControl(
+                      controlName[control.control_type][0],
+                      indexChapter,
+                      indexControl,
+                    )
+                      .find(controlName[control.control_type][1])
+                      .then(($el) => {
+                        if (!$el.is(':disabled')) {
+                          if (control.control_value)
+                            clearAndBlurCyElement(cy.wrap($el));
+
+                          cy.wrap($el).typeThenWait(
+                            controlName[control.control_type][2],
+                            { triggers: { blur: { exec: true } } },
+                          );
+                          getCyElementControl(
+                            controlName[control.control_type][0],
+                            indexChapter,
+                            indexControl,
+                          ).formErrorMessageShouldNotMatch(
+                            translations_mandatoryValue,
+                          );
+                          clearAndBlurCyElement(cy.wrap($el));
+
+                          if (control.control_mandatory)
+                            getCyElementControl(
+                              controlName[control.control_type][0],
+                              indexChapter,
+                              indexControl,
+                            ).formErrorShouldBeVisible(
+                              translations_mandatoryValue,
+                            );
+                        }
+                      });
+                  },
+                );
+              },
+            );
+          },
+        );
       });
     });
 
@@ -208,151 +210,162 @@ describe(
 
         if (current_section.chapters.length === 0) this.skip();
 
-        for (const indexChapter in current_section.chapters) {
-          const chapter: IApiChapter = current_section.chapters[indexChapter];
+        cy.wrap(current_section.chapters).each(
+          (chapter: IApiChapter, indexChapter) => {
+            if (chapter.controls.length === 0) return;
 
-          if (chapter.controls.length === 0) continue;
+            const controls = chapter.controls.reduce(
+              (acc: Record<string, IApiControl[]>, control) => ({
+                ...acc,
+                [control.control_type]: [
+                  ...(acc[control.control_type] || []),
+                  control,
+                ],
+              }),
+              {},
+            );
 
-          const controls = chapter.controls.reduce(
-            (acc: Record<string, IApiControl[]>, control) => ({
-              ...acc,
-              [control.control_type]: [
-                ...(acc[control.control_type] || []),
-                control,
-              ],
-            }),
-            {},
-          );
+            cy.wrap(Object.values(controls)).each(
+              (arrayControlType: IApiControl[]) => {
+                cy.wrap(arrayControlType).each(
+                  (control: IApiControl, indexControl) => {
+                    if (!controlName?.[control.control_type]) return;
 
-          for (const arrayControlType of Object.values(controls)) {
-            for (const indexControl in arrayControlType) {
-              const control: IApiControl = arrayControlType[indexControl];
-
-              if (!controlName?.[control.control_type]) continue;
-
-              checkVisibilityFormErrorAtFirst(
-                control,
-                getCyElementControl(
-                  controlName[control.control_type][0],
-                  indexChapter,
-                  indexControl,
-                ),
-                translations_mandatoryValue,
-              );
-              getCyElementControl(
-                controlName[control.control_type][0],
-                indexChapter,
-                indexControl,
-              )
-                .find(controlName[control.control_type][1])
-                .then(($el) => {
-                  if (!$el.is(':disabled')) {
-                    const regex = new RegExp(
-                      control.control_regex as any as string,
-                    );
-                    const oppositeRegex = new RegExp(
-                      `^(?!${control.control_regex as any as string}).*$`,
-                    );
-                    const randExp = generateRandExp(regex);
-                    const randExpOpposite = generateRandExp(oppositeRegex);
-
-                    if (control.control_value)
-                      clearAndBlurCyElement(cy.wrap($el));
-
-                    cy.wrap($el).typeThenWait(
-                      controlName[control.control_type][2],
-                      { triggers: { blur: { exec: true } } },
-                    );
-                    getCyElementControl(
-                      controlName[control.control_type][0],
-                      indexChapter,
-                      indexControl,
-                    ).formErrorMessageShouldNotMatch(
-                      translations_mandatoryValue,
-                    );
-                    clearAndBlurCyElement(cy.wrap($el));
-
-                    cy.wrap($el).typeThenWait('value', {
-                      triggers: { blur: { exec: true } },
-                    });
-                    getCyElementControl(
-                      controlName[control.control_type][0],
-                      indexChapter,
-                      indexControl,
-                    ).formErrorShouldBeVisible([
-                      _escapeForRegExp(control.control_regex_msg as string),
-                    ]);
-                    clearAndBlurCyElement(cy.wrap($el));
-
-                    cy.wrap($el).typeThenWait(randExp, {
-                      typeOptions: { parseSpecialCharSequences: false },
-                      triggers: { blur: { exec: true } },
-                    });
-                    getCyElementControl(
-                      controlName[control.control_type][0],
-                      indexChapter,
-                      indexControl,
-                    ).formErrorMessageShouldNotMatch(
-                      translations_mandatoryValue,
-                    );
-                    clearAndBlurCyElement(cy.wrap($el));
-
-                    cy.wrap($el).typeThenWait(randExpOpposite, {
-                      typeOptions: { parseSpecialCharSequences: false },
-                      triggers: { blur: { exec: true } },
-                    });
-                    getCyElementControl(
-                      controlName[control.control_type][0],
-                      indexChapter,
-                      indexControl,
-                    ).formErrorShouldBeVisible([
-                      _escapeForRegExp(control.control_regex_msg as string),
-                    ]);
-                    clearAndBlurCyElement(cy.wrap($el));
-
-                    switch (control.control_type) {
-                      case 'integer':
-                        cy.wrap($el).typeThenWait('1234.5', {
-                          triggers: { blur: { exec: true } },
-                        });
-                        getCyElementControl(
-                          controlName[control.control_type][0],
-                          indexChapter,
-                          indexControl,
-                        ).formErrorShouldBeVisible([
-                          _escapeForRegExp(control.control_regex_msg as string),
-                        ]);
-                        break;
-                      case 'financial':
-                      case 'percent':
-                      case 'decimal':
-                        cy.wrap($el).typeThenWait('123.5', {
-                          triggers: { blur: { exec: true } },
-                        });
-                        getCyElementControl(
-                          controlName[control.control_type][0],
-                          indexChapter,
-                          indexControl,
-                        ).formErrorMessageShouldNotMatch(
-                          translations_mandatoryValue,
-                        );
-                        break;
-                      default:
-                        break;
-                    }
-
-                    clearAndBlurCyElement(cy.wrap($el));
-                    if (control.control_mandatory)
+                    checkVisibilityFormErrorAtFirst(
+                      control,
                       getCyElementControl(
                         controlName[control.control_type][0],
                         indexChapter,
                         indexControl,
-                      ).formErrorShouldBeVisible(translations_mandatoryValue);
-                  }
-                });
-            }
-          }
-        }
+                      ),
+                      translations_mandatoryValue,
+                    );
+                    getCyElementControl(
+                      controlName[control.control_type][0],
+                      indexChapter,
+                      indexControl,
+                    )
+                      .find(controlName[control.control_type][1])
+                      .then(($el) => {
+                        if (!$el.is(':disabled')) {
+                          const regex = new RegExp(
+                            control.control_regex as any as string,
+                          );
+                          const oppositeRegex = new RegExp(
+                            `^(?!${control.control_regex as any as string}).*$`,
+                          );
+                          const randExp = generateRandExp(regex);
+                          const randExpOpposite =
+                            generateRandExp(oppositeRegex);
+
+                          if (control.control_value)
+                            clearAndBlurCyElement(cy.wrap($el));
+
+                          cy.wrap($el).typeThenWait(
+                            controlName[control.control_type][2],
+                            { triggers: { blur: { exec: true } } },
+                          );
+                          getCyElementControl(
+                            controlName[control.control_type][0],
+                            indexChapter,
+                            indexControl,
+                          ).formErrorMessageShouldNotMatch(
+                            translations_mandatoryValue,
+                          );
+                          clearAndBlurCyElement(cy.wrap($el));
+
+                          cy.wrap($el).typeThenWait('value', {
+                            triggers: { blur: { exec: true } },
+                          });
+                          getCyElementControl(
+                            controlName[control.control_type][0],
+                            indexChapter,
+                            indexControl,
+                          ).formErrorShouldBeVisible([
+                            _escapeForRegExp(
+                              control.control_regex_msg as string,
+                            ) as string,
+                          ]);
+                          clearAndBlurCyElement(cy.wrap($el));
+
+                          cy.wrap($el).typeThenWait(randExp, {
+                            typeOptions: { parseSpecialCharSequences: false },
+                            triggers: { blur: { exec: true } },
+                          });
+                          getCyElementControl(
+                            controlName[control.control_type][0],
+                            indexChapter,
+                            indexControl,
+                          ).formErrorMessageShouldNotMatch(
+                            translations_mandatoryValue,
+                          );
+                          clearAndBlurCyElement(cy.wrap($el));
+
+                          cy.wrap($el).typeThenWait(randExpOpposite, {
+                            typeOptions: { parseSpecialCharSequences: false },
+                            triggers: { blur: { exec: true } },
+                          });
+                          getCyElementControl(
+                            controlName[control.control_type][0],
+                            indexChapter,
+                            indexControl,
+                          ).formErrorShouldBeVisible([
+                            _escapeForRegExp(
+                              control.control_regex_msg as string,
+                            ) as string,
+                          ]);
+                          clearAndBlurCyElement(cy.wrap($el));
+
+                          switch (control.control_type) {
+                            case 'integer':
+                              cy.wrap($el).typeThenWait('1234.5', {
+                                triggers: { blur: { exec: true } },
+                              });
+                              getCyElementControl(
+                                controlName[control.control_type][0],
+                                indexChapter,
+                                indexControl,
+                              ).formErrorShouldBeVisible([
+                                _escapeForRegExp(
+                                  control.control_regex_msg as string,
+                                ) as string,
+                              ]);
+                              break;
+                            case 'financial':
+                            case 'percent':
+                            case 'decimal':
+                              cy.wrap($el).typeThenWait('123.5', {
+                                triggers: { blur: { exec: true } },
+                              });
+                              getCyElementControl(
+                                controlName[control.control_type][0],
+                                indexChapter,
+                                indexControl,
+                              ).formErrorMessageShouldNotMatch(
+                                translations_mandatoryValue,
+                              );
+                              break;
+                            default:
+                              break;
+                          }
+
+                          clearAndBlurCyElement(cy.wrap($el));
+                          if (control.control_mandatory)
+                            getCyElementControl(
+                              controlName[control.control_type][0],
+                              indexChapter,
+                              indexControl,
+                            ).formErrorShouldBeVisible(
+                              translations_mandatoryValue,
+                            );
+                        }
+                      });
+                  },
+                );
+              },
+            );
+          },
+        );
       });
     });
 
@@ -388,74 +401,78 @@ describe(
 
         if (current_section.chapters.length === 0) this.skip();
 
-        for (const indexChapter in current_section.chapters) {
-          const chapter = current_section.chapters[indexChapter];
+        cy.wrap(current_section.chapters).each(
+          (chapter: IApiChapter, indexChapter) => {
+            if (chapter.controls.length === 0) return;
 
-          if (chapter.controls.length === 0) continue;
+            const controls = chapter.controls.reduce(
+              (acc: Record<string, IApiControl[]>, control) => ({
+                ...acc,
+                [control.control_type]: [
+                  ...(acc[control.control_type] || []),
+                  control,
+                ],
+              }),
+              {},
+            );
 
-          const controls = chapter.controls.reduce(
-            (acc: Record<string, IApiControl[]>, control) => ({
-              ...acc,
-              [control.control_type]: [
-                ...(acc[control.control_type] || []),
-                control,
-              ],
-            }),
-            {},
-          );
+            cy.wrap(Object.values(controls)).each(
+              (arrayControlType: IApiControl[]) => {
+                cy.wrap(arrayControlType).each(
+                  (control: IApiControl, indexControl) => {
+                    if (!controlName?.[control.control_type]) return;
 
-          for (const arrayControlType of Object.values(controls)) {
-            for (const indexControl in arrayControlType) {
-              const control: IApiControl = arrayControlType[indexControl];
-
-              if (!controlName?.[control.control_type]) continue;
-
-              checkVisibilityFormErrorAtFirst(
-                control,
-                getCyElementControl(
-                  controlName[control.control_type][0],
-                  indexChapter,
-                  indexControl,
-                ),
-                translations_mandatoryValue,
-              );
-
-              getCyElementControl(
-                controlName[control.control_type][0],
-                indexChapter,
-                indexControl,
-              )
-                .find(controlName[control.control_type][1])
-                .then(($el) => {
-                  if (!$el.is(':disabled')) {
-                    if (control.control_value)
-                      clearAndBlurCyElement(cy.wrap($el));
-
-                    cy.wrap($el).typeThenWait(
-                      controlName[control.control_type][2],
-                      { triggers: { blur: { exec: true } } },
+                    checkVisibilityFormErrorAtFirst(
+                      control,
+                      getCyElementControl(
+                        controlName[control.control_type][0],
+                        indexChapter,
+                        indexControl,
+                      ),
+                      translations_mandatoryValue,
                     );
-                    if (control.control_mandatory) {
-                      getCyElementControl(
-                        controlName[control.control_type][0],
-                        indexChapter,
-                        indexControl,
-                      ).formErrorMessageShouldNotMatch(
-                        translations_mandatoryValue,
-                      );
-                    }
-                    clearAndBlurCyElement(cy.wrap($el));
-                    if (control.control_mandatory)
-                      getCyElementControl(
-                        controlName[control.control_type][0],
-                        indexChapter,
-                        indexControl,
-                      ).formErrorShouldBeVisible(translations_mandatoryValue);
-                  }
-                });
-            }
-          }
-        }
+
+                    getCyElementControl(
+                      controlName[control.control_type][0],
+                      indexChapter,
+                      indexControl,
+                    )
+                      .find(controlName[control.control_type][1])
+                      .then(($el) => {
+                        if (!$el.is(':disabled')) {
+                          if (control.control_value)
+                            clearAndBlurCyElement(cy.wrap($el));
+
+                          cy.wrap($el).typeThenWait(
+                            controlName[control.control_type][2],
+                            { triggers: { blur: { exec: true } } },
+                          );
+                          if (control.control_mandatory) {
+                            getCyElementControl(
+                              controlName[control.control_type][0],
+                              indexChapter,
+                              indexControl,
+                            ).formErrorMessageShouldNotMatch(
+                              translations_mandatoryValue,
+                            );
+                          }
+                          clearAndBlurCyElement(cy.wrap($el));
+                          if (control.control_mandatory)
+                            getCyElementControl(
+                              controlName[control.control_type][0],
+                              indexChapter,
+                              indexControl,
+                            ).formErrorShouldBeVisible(
+                              translations_mandatoryValue,
+                            );
+                        }
+                      });
+                  },
+                );
+              },
+            );
+          },
+        );
       });
     });
 
