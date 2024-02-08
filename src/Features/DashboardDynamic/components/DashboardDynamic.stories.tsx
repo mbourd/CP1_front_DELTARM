@@ -11,15 +11,21 @@ import {
 } from '../../../mocks/fixtures/dashboard/dashboard';
 import { data as MODAL } from '../../../mocks/fixtures/modal/modal';
 import { RecoilRoot } from 'recoil';
+import { Provider } from 'react-redux';
+import { appStore } from 'Services';
+
+import '../reducer';
 
 export default {
   title: 'DashboardDynamic',
   component: DashboardDynamic,
   decorators: [
     (story: any) => (
-      <RecoilRoot>
-        <div className="p-6">{story()}</div>
-      </RecoilRoot>
+      <Provider store={appStore}>
+        <RecoilRoot>
+          <div className="p-6">{story()}</div>
+        </RecoilRoot>
+      </Provider>
     ),
   ],
 };

@@ -1,6 +1,11 @@
 import { SvgIconComponent } from '@mui/icons-material';
 import { ForwardRefExoticComponent, RefAttributes } from 'react';
-import { CellStyle, CellStyleFunc, IFilterParams } from 'ag-grid-community';
+import {
+  CellStyle,
+  CellStyleFunc,
+  IFilterComp,
+  IFilterParams,
+} from 'ag-grid-community';
 import {
   DataGridDetailsColumnType,
   DataGridDetailsRowsCell,
@@ -87,6 +92,16 @@ interface ICardCol extends Omit<DataGridDetailsColumnType, 'key'> {
   width: number;
   field: string;
   dataKey: string;
+  align: string;
+  filter:
+    | boolean
+    | 'agTextColumnFilter'
+    | 'agNumberColumnFilter'
+    | 'agDateColumnFilter'
+    | 'agSetColumnFilter'
+    | 'agMultiColumnFilter'
+    | IFilterComp;
+  floating_filter: boolean;
 }
 
 export interface ICard {
@@ -102,6 +117,10 @@ export interface ICard {
     bg_color: string;
     font_color: string;
     lib: string;
+  };
+  display: {
+    page_nb_rows: number;
+    type: 'page' | 'list';
   };
 }
 
@@ -137,6 +156,11 @@ interface ITitle {
   visible: boolean;
 }
 
+export type DashboardContrPermMenuType = {
+  action: { endpoint: string; method: 'GET'; params: any };
+  menu_lib: string;
+  menu_order: number;
+};
 export interface IDashboard {
   target: string;
   route_front: string;
@@ -146,6 +170,7 @@ export interface IDashboard {
       card: ICard[];
       visible: boolean;
     };
+    menus: DashboardContrPermMenuType[];
     ag_cards?: {
       card: ICardAgGrid[];
       visible: boolean;

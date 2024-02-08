@@ -28,7 +28,12 @@ describe('<CircularMetric />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('CircularMetric').should('exist');
+    cy.react('CircularMetric')
+      .invoke('attr', 'class')
+      .then((classes) => {
+        const splitClasses = classes?.split(' ') || [];
+        expect(splitClasses.some((c) => /(determinate)$/.test(c))).to.be.true;
+      });
   });
 
   it('Should render with variant = indeterminate', () => {
@@ -38,7 +43,12 @@ describe('<CircularMetric />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('CircularMetric').should('exist');
+    cy.react('CircularMetric')
+      .invoke('attr', 'class')
+      .then((classes) => {
+        const splitClasses = classes?.split(' ') || [];
+        expect(splitClasses.some((c) => /(indeterminate)$/.test(c))).to.be.true;
+      });
   });
 
   it('Should have attribute with message', () => {

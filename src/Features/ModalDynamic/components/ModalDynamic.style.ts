@@ -11,6 +11,7 @@ export const ModalDynamicFooterStyled = styled.div`
 
   ._Message {
     margin-right: ${({ theme }) => theme.spacing.medium};
+    font-size: 0.9rem;
   }
 
   ._Button {

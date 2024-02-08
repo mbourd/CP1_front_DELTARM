@@ -1,0 +1,982 @@
+{
+  "control_desc_1": null,
+  "control_desc_2": null,
+  "control_editable": false,
+  "control_conditional": false,
+  "control_id": "",
+  "control_mandatory": false,
+  "mandatory": false,
+  "control_previous_value": null,
+  "control_title": "",
+  "control_type": "boolean",
+  "control_value": null,
+  "control_family": "",
+  "control_regex": null,
+  "control_regex_msg": null,
+  "control_manage_compliance": false,
+  "upload_detail": null,
+  "rich_text_detail": null,
+  "control_rejectable": null,
+  "data_grid_detail": {
+    "columns": [
+      {
+        "border_right": true,
+        "dataKey": "Contrôle",
+        "header": "Contrôle",
+        "label": "Contrôle",
+        "width": 450,
+        "alignment": "left",
+        "autoSize": true,
+        "borderRight": true,
+        "borderRightColor": "#B12B67",
+        "borderRightWidth": 1,
+        "borderBottom": true,
+        "borderBottomColor": "#B12B67",
+        "borderBottomWidth": 1,
+        "cellStyle": {
+          "display": "flex",
+          "flexDirection": "row",
+          "alignItems": "center",
+          "justifyContent": "center"
+        },
+        "col_header_display_tooltip": false,
+        "col_header_tooltip": "Contrôle",
+        "currency_symbol": "",
+        "decimal_digit": 0,
+        "editable": false,
+        "field": "rdg_0.value",
+        "field_type": "innerHTML",
+        "filter": false,
+        "floatingFilter": false,
+        "headerColor": "#FFFFFF",
+        "headerName": "Contrôle",
+        "headerClass": "",
+        "headerTooltip": "Contrôle",
+        "hide": false,
+        "lockPinned": true,
+        "pinned": null,
+        "resizable": true,
+        "sortable": true,
+        "thousand_separator": false,
+        "track_modification": false,
+        "track_modification_option": null,
+        "track_modification_tooltip": false,
+        "key": "",
+        "name": ""
+      },
+      {
+        "border_right": true,
+        "dataKey": "Période",
+        "header": "Période",
+        "label": "Période",
+        "width": 150,
+        "alignment": "left",
+        "autoSize": true,
+        "borderRight": true,
+        "borderRightColor": "#B12B67",
+        "borderRightWidth": 1,
+        "borderBottom": true,
+        "borderBottomColor": "#B12B67",
+        "borderBottomWidth": 1,
+        "cellStyle": {
+          "display": "flex",
+          "flexDirection": "row",
+          "alignItems": "center",
+          "justifyContent": "center"
+        },
+        "col_header_display_tooltip": false,
+        "col_header_tooltip": "Période",
+        "currency_symbol": "",
+        "decimal_digit": 0,
+        "editable": false,
+        "field": "rdg_1.value",
+        "field_type": "text_alt",
+        "filter": false,
+        "floatingFilter": false,
+        "headerColor": "#FFFFFF",
+        "headerName": "Période",
+        "headerClass": "",
+        "headerTooltip": "Période",
+        "hide": false,
+        "lockPinned": true,
+        "pinned": null,
+        "resizable": true,
+        "sortable": true,
+        "thousand_separator": false,
+        "track_modification": false,
+        "track_modification_option": null,
+        "track_modification_tooltip": false,
+        "key": "",
+        "name": ""
+      },
+      {
+        "border_right": true,
+        "dataKey": "Occurrence",
+        "header": "Occurrence",
+        "label": "Occurrence",
+        "width": 120,
+        "alignment": "left",
+        "autoSize": true,
+        "borderRight": true,
+        "borderRightColor": "#B12B67",
+        "borderRightWidth": 1,
+        "borderBottom": true,
+        "borderBottomColor": "#B12B67",
+        "borderBottomWidth": 1,
+        "cellStyle": {
+          "display": "flex",
+          "flexDirection": "row",
+          "alignItems": "center",
+          "justifyContent": "center"
+        },
+        "col_header_display_tooltip": false,
+        "col_header_tooltip": "Occurrence",
+        "currency_symbol": "",
+        "decimal_digit": 0,
+        "editable": false,
+        "field": "rdg_2.value",
+        "field_type": "text_alt",
+        "filter": false,
+        "floatingFilter": false,
+        "headerColor": "#FFFFFF",
+        "headerName": "Occurrence",
+        "headerClass": "",
+        "headerTooltip": "Occurrence",
+        "hide": false,
+        "lockPinned": true,
+        "pinned": null,
+        "resizable": true,
+        "sortable": true,
+        "thousand_separator": false,
+        "track_modification": false,
+        "track_modification_option": null,
+        "track_modification_tooltip": false,
+        "key": "",
+        "name": ""
+      },
+      {
+        "border_right": true,
+        "dataKey": "Rejeté",
+        "header": "Rejeté",
+        "label": "Rejeté",
+        "width": 120,
+        "alignment": "left",
+        "autoSize": true,
+        "borderRight": true,
+        "borderRightColor": "#B12B67",
+        "borderRightWidth": 1,
+        "borderBottom": true,
+        "borderBottomColor": "#B12B67",
+        "borderBottomWidth": 1,
+        "cellStyle": {
+          "display": "flex",
+          "flexDirection": "row",
+          "alignItems": "center",
+          "justifyContent": "center"
+        },
+        "col_header_display_tooltip": false,
+        "col_header_tooltip": "Rejeté",
+        "currency_symbol": "",
+        "decimal_digit": 0,
+        "editable": false,
+        "field": "rdg_3.value",
+        "field_type": "date_string",
+        "filter": false,
+        "floatingFilter": false,
+        "headerColor": "#FFFFFF",
+        "headerName": "Rejeté",
+        "headerClass": "",
+        "headerTooltip": "Rejeté",
+        "hide": false,
+        "lockPinned": true,
+        "pinned": null,
+        "resizable": true,
+        "sortable": true,
+        "thousand_separator": false,
+        "track_modification": false,
+        "track_modification_option": null,
+        "track_modification_tooltip": false,
+        "key": "",
+        "name": ""
+      },
+      {
+        "border_right": false,
+        "dataKey": "Statut",
+        "header": "Statut",
+        "label": "Statut",
+        "width": 90,
+        "alignment": "left",
+        "autoSize": true,
+        "borderRight": false,
+        "borderRightColor": "#B12B67",
+        "borderRightWidth": 1,
+        "borderBottom": true,
+        "borderBottomColor": "#B12B67",
+        "borderBottomWidth": 1,
+        "cellStyle": {
+          "display": "flex",
+          "flexDirection": "row",
+          "alignItems": "center",
+          "justifyContent": "center"
+        },
+        "col_header_display_tooltip": false,
+        "col_header_tooltip": "Statut",
+        "currency_symbol": "",
+        "decimal_digit": 0,
+        "editable": false,
+        "field": "rdg_4.value",
+        "field_type": "icon",
+        "filter": false,
+        "floatingFilter": false,
+        "headerColor": "#FFFFFF",
+        "headerName": "Statut",
+        "headerClass": "",
+        "headerTooltip": "Statut",
+        "hide": false,
+        "lockPinned": true,
+        "pinned": null,
+        "resizable": true,
+        "sortable": true,
+        "thousand_separator": false,
+        "track_modification": false,
+        "track_modification_option": null,
+        "track_modification_tooltip": false,
+        "key": "",
+        "name": ""
+      },
+      {
+        "border_right": false,
+        "dataKey": "Visualiser",
+        "header": "Visualiser",
+        "label": "Visualiser",
+        "width": 90,
+        "alignment": "left",
+        "autoSize": true,
+        "borderRight": false,
+        "borderRightColor": "#B12B67",
+        "borderRightWidth": 1,
+        "borderBottom": true,
+        "borderBottomColor": "#B12B67",
+        "borderBottomWidth": 1,
+        "cellStyle": {
+          "display": "flex",
+          "flexDirection": "row",
+          "alignItems": "center",
+          "justifyContent": "center"
+        },
+        "col_header_display_tooltip": false,
+        "col_header_tooltip": "Visualiser",
+        "currency_symbol": "",
+        "decimal_digit": 0,
+        "editable": false,
+        "field": "rdg_5.value",
+        "field_type": "icon",
+        "filter": false,
+        "floatingFilter": false,
+        "headerColor": "#FFFFFF",
+        "headerName": "Visualiser",
+        "headerClass": "",
+        "headerTooltip": "Visualiser",
+        "hide": false,
+        "lockPinned": true,
+        "pinned": null,
+        "resizable": true,
+        "sortable": true,
+        "thousand_separator": false,
+        "track_modification": false,
+        "track_modification_option": null,
+        "track_modification_tooltip": false,
+        "key": "",
+        "name": ""
+      }
+    ],
+    "rows": [
+      {
+        "rdg_0": {
+          "action": {
+            "endpoint": "/edit",
+            "method": "GET",
+            "params": {
+              "file_id": "28f90286-e2d5-4ac6-b03d-98a37918ba9f"
+            }
+          },
+          "content": "<p style=\"color:#5a4749; font-weight:bold;\">DIRECTION DU RESEAU DIGITAL</p>CP-00008-Contrôle de la correcte gestion des réclamations (M) (M)",
+          "hint": "Contrôle de la correcte gestion des réclamations (M)",
+          "icon": null,
+          "value": "<p style=\"color:#5a4749; font-weight:bold;\">DIRECTION DU RESEAU DIGITAL</p>CP-00008-Contrôle de la correcte gestion des réclamations (M) (M)",
+          "row_num": 1,
+          "component": "innerHTML",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_1": {
+          "action": null,
+          "content": "M7 - 2022",
+          "hint": null,
+          "icon": null,
+          "value": "M7 - 2022",
+          "row_num": 1,
+          "component": "text_alt",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_2": {
+          "action": null,
+          "content": null,
+          "hint": null,
+          "icon": null,
+          "value": null,
+          "row_num": 1,
+          "component": "text_alt",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_3": {
+          "action": null,
+          "content": "13/07/22 - 10:36:49",
+          "hint": "Rejeté le 21/10/22 - 16:22:01 par Elodie Yabas",
+          "icon": null,
+          "value": "13/07/22 - 10:36:49",
+          "row_num": 1,
+          "component": "date_string",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_4": {
+          "action": {
+            "endpoint": "/edit",
+            "method": "GET",
+            "params": {
+              "file_id": "28f90286-e2d5-4ac6-b03d-98a37918ba9f"
+            }
+          },
+          "content": null,
+          "hint": "Non satisfaisant (0%)",
+          "icon": {
+            "color": "#FF0000",
+            "ref": "MoodBad",
+            "size": 12
+          },
+          "value": "MoodBad;#FF0000;12;;Non satisfaisant (0%)",
+          "row_num": 1,
+          "component": "icon",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_5": {
+          "action": {
+            "endpoint": "/edit",
+            "method": "GET",
+            "params": {
+              "file_id": "28f90286-e2d5-4ac6-b03d-98a37918ba9f"
+            }
+          },
+          "content": null,
+          "hint": "Visualiser",
+          "icon": {
+            "color": "#B12B67",
+            "ref": "FmdBad",
+            "size": 12
+          },
+          "value": "FmdBad;#B12B67;12;;Visualiser",
+          "row_num": 1,
+          "component": "icon",
+          "control_editable": false,
+          "control_mandatory": false
+        }
+      },
+      {
+        "rdg_0": {
+          "action": {
+            "endpoint": "/edit",
+            "method": "GET",
+            "params": {
+              "file_id": "583a44d5-7fde-4dec-9ad5-77fedf26aa23"
+            }
+          },
+          "content": "<p style=\"color:#5a4749; font-weight:bold;\">Activité de Marché</p>CP-00013-Contrôle de la correcte application de la procédure KYC (T) (T)",
+          "hint": "Contrôle de la correcte application de la procédure KYC (T)",
+          "icon": null,
+          "value": "<p style=\"color:#5a4749; font-weight:bold;\">Activité de Marché</p>CP-00013-Contrôle de la correcte application de la procédure KYC (T) (T)",
+          "row_num": 2,
+          "component": "innerHTML",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_1": {
+          "action": null,
+          "content": "T2 - 2022",
+          "hint": null,
+          "icon": null,
+          "value": "T2 - 2022",
+          "row_num": 2,
+          "component": "text_alt",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_2": {
+          "action": null,
+          "content": null,
+          "hint": null,
+          "icon": null,
+          "value": null,
+          "row_num": 2,
+          "component": "text_alt",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_3": {
+          "action": null,
+          "content": "11/07/22 - 10:05:56",
+          "hint": "Rejeté le 03/11/22 - 17:04:13 par Elodie Yabas",
+          "icon": null,
+          "value": "11/07/22 - 10:05:56",
+          "row_num": 2,
+          "component": "date_string",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_4": {
+          "action": {
+            "endpoint": "/edit",
+            "method": "GET",
+            "params": {
+              "file_id": "583a44d5-7fde-4dec-9ad5-77fedf26aa23"
+            }
+          },
+          "content": null,
+          "hint": "A améliorer (60%)",
+          "icon": {
+            "color": "#F1AA00",
+            "ref": "SentimentDissatisfied",
+            "size": 12
+          },
+          "value": "SentimentDissatisfied;#F1AA00;12;;A améliorer (60%)",
+          "row_num": 2,
+          "component": "icon",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_5": {
+          "action": {
+            "endpoint": "/edit",
+            "method": "GET",
+            "params": {
+              "file_id": "583a44d5-7fde-4dec-9ad5-77fedf26aa23"
+            }
+          },
+          "content": null,
+          "hint": "Visualiser",
+          "icon": {
+            "color": "#B12B67",
+            "ref": "FmdBad",
+            "size": 12
+          },
+          "value": "FmdBad;#B12B67;12;;Visualiser",
+          "row_num": 2,
+          "component": "icon",
+          "control_editable": false,
+          "control_mandatory": false
+        }
+      },
+      {
+        "rdg_0": {
+          "action": {
+            "endpoint": "/edit",
+            "method": "GET",
+            "params": {
+              "file_id": "491f905e-49e5-4f4d-805a-c33c75ebba70"
+            }
+          },
+          "content": "<p style=\"color:#5a4749; font-weight:bold;\">DIRECTION PLATEFORMES DIGITALES</p>CP-00027-Contrôle des appels de fonds Création (M) (M)",
+          "hint": "Contrôle des appels de fonds Création (M)",
+          "icon": null,
+          "value": "<p style=\"color:#5a4749; font-weight:bold;\">DIRECTION PLATEFORMES DIGITALES</p>CP-00027-Contrôle des appels de fonds Création (M) (M)",
+          "row_num": 3,
+          "component": "innerHTML",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_1": {
+          "action": null,
+          "content": "M6 - 2022",
+          "hint": null,
+          "icon": null,
+          "value": "M6 - 2022",
+          "row_num": 3,
+          "component": "text_alt",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_2": {
+          "action": null,
+          "content": null,
+          "hint": null,
+          "icon": null,
+          "value": null,
+          "row_num": 3,
+          "component": "text_alt",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_3": {
+          "action": null,
+          "content": "11/07/22 - 10:08:33",
+          "hint": "Rejeté le 11/01/23 - 16:03:01 par Chantal CARNEL",
+          "icon": null,
+          "value": "11/07/22 - 10:08:33",
+          "row_num": 3,
+          "component": "date_string",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_4": {
+          "action": {
+            "endpoint": "/edit",
+            "method": "GET",
+            "params": {
+              "file_id": "491f905e-49e5-4f4d-805a-c33c75ebba70"
+            }
+          },
+          "content": null,
+          "hint": "Très Satisfaisant (100%)",
+          "icon": {
+            "color": "#00B456",
+            "ref": "SentimentVerySatisfied",
+            "size": 12
+          },
+          "value": "SentimentVerySatisfied;#00B456;12;;Très Satisfaisant (100%)",
+          "row_num": 3,
+          "component": "icon",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_5": {
+          "action": {
+            "endpoint": "/edit",
+            "method": "GET",
+            "params": {
+              "file_id": "491f905e-49e5-4f4d-805a-c33c75ebba70"
+            }
+          },
+          "content": null,
+          "hint": "Visualiser",
+          "icon": {
+            "color": "#B12B67",
+            "ref": "FmdBad",
+            "size": 12
+          },
+          "value": "FmdBad;#B12B67;12;;Visualiser",
+          "row_num": 3,
+          "component": "icon",
+          "control_editable": false,
+          "control_mandatory": false
+        }
+      },
+      {
+        "rdg_0": {
+          "action": {
+            "endpoint": "/edit",
+            "method": "GET",
+            "params": {
+              "file_id": "3c97f829-64fd-45f5-845e-09ae911dcd5f"
+            }
+          },
+          "content": "<p style=\"color:#5a4749; font-weight:bold;\">DIRECTION DU FINANCEMENT</p>CP-00137-Contrôle de la création / mise à jour des supports Métier internes et ... ",
+          "hint": "Contrôle de la création / mise à jour des supports Métier internes et externes",
+          "icon": null,
+          "value": "<p style=\"color:#5a4749; font-weight:bold;\">DIRECTION DU FINANCEMENT</p>CP-00137-Contrôle de la création / mise à jour des supports Métier internes et ... ",
+          "row_num": 4,
+          "component": "innerHTML",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_1": {
+          "action": null,
+          "content": "A la demande",
+          "hint": null,
+          "icon": null,
+          "value": "A la demande",
+          "row_num": 4,
+          "component": "text_alt",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_2": {
+          "action": {
+            "endpoint": "/edit",
+            "method": "GET",
+            "params": {
+              "file_id": "3c97f829-64fd-45f5-845e-09ae911dcd5f"
+            }
+          },
+          "content": "CP-00137/2022-000003",
+          "hint": null,
+          "icon": null,
+          "value": "CP-00137/2022-000003",
+          "row_num": 4,
+          "component": "text_alt",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_3": {
+          "action": null,
+          "content": "21/10/22 - 09:13:08",
+          "hint": "Rejeté le 21/10/22 - 09:22:51 par Elodie Yabas",
+          "icon": null,
+          "value": "21/10/22 - 09:13:08",
+          "row_num": 4,
+          "component": "date_string",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_4": {
+          "action": {
+            "endpoint": "/edit",
+            "method": "GET",
+            "params": {
+              "file_id": "3c97f829-64fd-45f5-845e-09ae911dcd5f"
+            }
+          },
+          "content": null,
+          "hint": "Très Satisfaisant (100%)",
+          "icon": {
+            "color": "#00B456",
+            "ref": "SentimentVerySatisfied",
+            "size": 12
+          },
+          "value": "SentimentVerySatisfied;#00B456;12;;Très Satisfaisant (100%)",
+          "row_num": 4,
+          "component": "icon",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_5": {
+          "action": {
+            "endpoint": "/edit",
+            "method": "GET",
+            "params": {
+              "file_id": "3c97f829-64fd-45f5-845e-09ae911dcd5f"
+            }
+          },
+          "content": null,
+          "hint": "Visualiser",
+          "icon": {
+            "color": "#B12B67",
+            "ref": "FmdBad",
+            "size": 12
+          },
+          "value": "FmdBad;#B12B67;12;;Visualiser",
+          "row_num": 4,
+          "component": "icon",
+          "control_editable": false,
+          "control_mandatory": false
+        }
+      },
+      {
+        "rdg_0": {
+          "action": {
+            "endpoint": "/edit",
+            "method": "GET",
+            "params": {
+              "file_id": "6d60e808-21cb-4d49-b7ea-d443e16ad12f"
+            }
+          },
+          "content": "<p style=\"color:#5a4749; font-weight:bold;\">DIRECTION DU FINANCEMENT</p>CP-00137-Contrôle de la création / mise à jour des supports Métier internes et ... ",
+          "hint": "Contrôle de la création / mise à jour des supports Métier internes et externes",
+          "icon": null,
+          "value": "<p style=\"color:#5a4749; font-weight:bold;\">DIRECTION DU FINANCEMENT</p>CP-00137-Contrôle de la création / mise à jour des supports Métier internes et ... ",
+          "row_num": 5,
+          "component": "innerHTML",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_1": {
+          "action": null,
+          "content": "A la demande",
+          "hint": null,
+          "icon": null,
+          "value": "A la demande",
+          "row_num": 5,
+          "component": "text_alt",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_2": {
+          "action": {
+            "endpoint": "/edit",
+            "method": "GET",
+            "params": {
+              "file_id": "6d60e808-21cb-4d49-b7ea-d443e16ad12f"
+            }
+          },
+          "content": "CP-00137/2022-000004",
+          "hint": null,
+          "icon": null,
+          "value": "CP-00137/2022-000004",
+          "row_num": 5,
+          "component": "text_alt",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_3": {
+          "action": null,
+          "content": "21/10/22 - 09:16:47",
+          "hint": "Rejeté le 21/10/22 - 09:20:45 par Elodie Yabas",
+          "icon": null,
+          "value": "21/10/22 - 09:16:47",
+          "row_num": 5,
+          "component": "date_string",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_4": {
+          "action": {
+            "endpoint": "/edit",
+            "method": "GET",
+            "params": {
+              "file_id": "6d60e808-21cb-4d49-b7ea-d443e16ad12f"
+            }
+          },
+          "content": null,
+          "hint": "Très Satisfaisant (100%)",
+          "icon": {
+            "color": "#00B456",
+            "ref": "SentimentVerySatisfied",
+            "size": 12
+          },
+          "value": "SentimentVerySatisfied;#00B456;12;;Très Satisfaisant (100%)",
+          "row_num": 5,
+          "component": "icon",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_5": {
+          "action": {
+            "endpoint": "/edit",
+            "method": "GET",
+            "params": {
+              "file_id": "6d60e808-21cb-4d49-b7ea-d443e16ad12f"
+            }
+          },
+          "content": null,
+          "hint": "Visualiser",
+          "icon": {
+            "color": "#B12B67",
+            "ref": "FmdBad",
+            "size": 12
+          },
+          "value": "FmdBad;#B12B67;12;;Visualiser",
+          "row_num": 5,
+          "component": "icon",
+          "control_editable": false,
+          "control_mandatory": false
+        }
+      },
+      {
+        "rdg_0": {
+          "action": {
+            "endpoint": "/edit",
+            "method": "GET",
+            "params": {
+              "file_id": "14cf8db5-a19b-47fa-9aff-5ee5718f65eb"
+            }
+          },
+          "content": "<p style=\"color:#5a4749; font-weight:bold;\">DIRECTION DU PILOTAGE DES COUTS ET REPORTING</p>CP-00037-Contrôle de la conformité des délégations ",
+          "hint": "Contrôle de la conformité des délégations",
+          "icon": null,
+          "value": "<p style=\"color:#5a4749; font-weight:bold;\">DIRECTION DU PILOTAGE DES COUTS ET REPORTING</p>CP-00037-Contrôle de la conformité des délégations ",
+          "row_num": 6,
+          "component": "innerHTML",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_1": {
+          "action": null,
+          "content": "A la demande",
+          "hint": null,
+          "icon": null,
+          "value": "A la demande",
+          "row_num": 6,
+          "component": "text_alt",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_2": {
+          "action": {
+            "endpoint": "/edit",
+            "method": "GET",
+            "params": {
+              "file_id": "14cf8db5-a19b-47fa-9aff-5ee5718f65eb"
+            }
+          },
+          "content": "CP-00037/2022-000002",
+          "hint": null,
+          "icon": null,
+          "value": "CP-00037/2022-000002",
+          "row_num": 6,
+          "component": "text_alt",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_3": {
+          "action": null,
+          "content": "21/10/22 - 17:18:24",
+          "hint": "Rejeté le 21/10/22 - 17:18:44 par Elodie Yabas",
+          "icon": null,
+          "value": "21/10/22 - 17:18:24",
+          "row_num": 6,
+          "component": "date_string",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_4": {
+          "action": {
+            "endpoint": "/edit",
+            "method": "GET",
+            "params": {
+              "file_id": "14cf8db5-a19b-47fa-9aff-5ee5718f65eb"
+            }
+          },
+          "content": null,
+          "hint": "Non satisfaisant (0%)",
+          "icon": {
+            "color": "#FF0000",
+            "ref": "MoodBad",
+            "size": 12
+          },
+          "value": "MoodBad;#FF0000;12;;Non satisfaisant (0%)",
+          "row_num": 6,
+          "component": "icon",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_5": {
+          "action": {
+            "endpoint": "/edit",
+            "method": "GET",
+            "params": {
+              "file_id": "14cf8db5-a19b-47fa-9aff-5ee5718f65eb"
+            }
+          },
+          "content": null,
+          "hint": "Visualiser",
+          "icon": {
+            "color": "#B12B67",
+            "ref": "FmdBad",
+            "size": 12
+          },
+          "value": "FmdBad;#B12B67;12;;Visualiser",
+          "row_num": 6,
+          "component": "icon",
+          "control_editable": false,
+          "control_mandatory": false
+        }
+      },
+      {
+        "rdg_0": {
+          "action": {
+            "endpoint": "/edit",
+            "method": "GET",
+            "params": {
+              "file_id": "cc85599c-cc84-41c8-8ad8-3bb102400335"
+            }
+          },
+          "content": "<p style=\"color:#5a4749; font-weight:bold;\">DIRECTION DU RESEAU DIGITAL</p>CP-00009-Contrôle du respect des critères d'éligibilité/de risques dans le cadr... (M)",
+          "hint": "Contrôle du respect des critères d'éligibilité/de risques dans le cadre de la gestion des opérations de financement digitalisés (Plan action Climat & Transformation numérique) (M)",
+          "icon": null,
+          "value": "<p style=\"color:#5a4749; font-weight:bold;\">DIRECTION DU RESEAU DIGITAL</p>CP-00009-Contrôle du respect des critères d'éligibilité/de risques dans le cadr... (M)",
+          "row_num": 7,
+          "component": "innerHTML",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_1": {
+          "action": null,
+          "content": "M12 - 2022",
+          "hint": null,
+          "icon": null,
+          "value": "M12 - 2022",
+          "row_num": 7,
+          "component": "text_alt",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_2": {
+          "action": null,
+          "content": null,
+          "hint": null,
+          "icon": null,
+          "value": null,
+          "row_num": 7,
+          "component": "text_alt",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_3": {
+          "action": null,
+          "content": "28/11/22 - 14:25:03",
+          "hint": "Rejeté le 28/11/22 - 14:25:34 par Elodie Yabas",
+          "icon": null,
+          "value": "28/11/22 - 14:25:03",
+          "row_num": 7,
+          "component": "date_string",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_4": {
+          "action": {
+            "endpoint": "/edit",
+            "method": "GET",
+            "params": {
+              "file_id": "cc85599c-cc84-41c8-8ad8-3bb102400335"
+            }
+          },
+          "content": null,
+          "hint": "A améliorer (60%)",
+          "icon": {
+            "color": "#F1AA00",
+            "ref": "SentimentDissatisfied",
+            "size": 12
+          },
+          "value": "SentimentDissatisfied;#F1AA00;12;;A améliorer (60%)",
+          "row_num": 7,
+          "component": "icon",
+          "control_editable": false,
+          "control_mandatory": false
+        },
+        "rdg_5": {
+          "action": {
+            "endpoint": "/edit",
+            "method": "GET",
+            "params": {
+              "file_id": "cc85599c-cc84-41c8-8ad8-3bb102400335"
+            }
+          },
+          "content": null,
+          "hint": "Visualiser",
+          "icon": {
+            "color": "#B12B67",
+            "ref": "FmdBad",
+            "size": 12
+          },
+          "value": "FmdBad;#B12B67;12;;Visualiser",
+          "row_num": 7,
+          "component": "icon",
+          "control_editable": false,
+          "control_mandatory": false
+        }
+      }
+    ],
+    "datagrid_options": {
+      "add_row_button_display": false,
+      "pagination_row_size": 4,
+      "select_all_button_col_ref": "rdg_1",
+      "select_all_button_display": false,
+      "unselect_all_button_display": false,
+      "datagrid_font_size": ""
+    },
+    "buttons": [],
+    "source": ""
+  }
+}

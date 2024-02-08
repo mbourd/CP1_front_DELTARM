@@ -96,7 +96,7 @@ export const Card: React.FC<ICardC> = ({
     rowIndex,
   }) => {
     if (indexCellColumnBorderRight.includes(columnIndex)) {
-      rowData[columnIndex].border_right = true;
+      // rowData[columnIndex].border_right = true;
     }
 
     return (

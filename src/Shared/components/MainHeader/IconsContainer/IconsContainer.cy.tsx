@@ -7,21 +7,12 @@
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
-import {
-  _requestJWT,
-  _getEnv,
-  _escapeForRegExp,
-} from '../../../../../cypress/utils';
+import { _requestJWT, _getEnv, _translate } from '../../../../../cypress/utils';
 
 import { IconsContainer } from './IconsContainer';
-import { translation } from '../../../../Services';
 import '../../../../Shared/apiRoutes';
 
 describe('IconsContainer', () => {
-  const getResourceTrans = (lng: string, ns: string, key: string): string => {
-    return _escapeForRegExp(translation.getResource(lng, ns)?.[key]);
-  };
-
   before(() => {
     _requestJWT();
   });
@@ -81,12 +72,9 @@ describe('IconsContainer', () => {
         });
       },
     ).as('defaultData');
-    const trans_EN =
-      getResourceTrans('en', 'MainHeader', 'reports') || 'reports';
-    const trans_FR =
-      getResourceTrans('fr', 'MainHeader', 'reports') || 'reports';
-    const trans_DE =
-      getResourceTrans('de', 'MainHeader', 'reports') || 'reports';
+    const trans_EN = _translate('en', 'MainHeader', 'reports');
+    const trans_FR = _translate('fr', 'MainHeader', 'reports');
+    const trans_DE = _translate('de', 'MainHeader', 'reports');
     const translations = [trans_EN, trans_FR, trans_DE];
 
     cy.mount(
@@ -128,15 +116,9 @@ describe('IconsContainer', () => {
         });
       },
     ).as('defaultData');
-    const trans_EN =
-      getResourceTrans('en', 'MainHeader', 'F.A.Q') ||
-      _escapeForRegExp('F.A.Q');
-    const trans_FR =
-      getResourceTrans('fr', 'MainHeader', 'F.A.Q') ||
-      _escapeForRegExp('F.A.Q');
-    const trans_DE =
-      getResourceTrans('de', 'MainHeader', 'F.A.Q') ||
-      _escapeForRegExp('F.A.Q');
+    const trans_EN = _translate('en', 'MainHeader', 'F.A.Q');
+    const trans_FR = _translate('fr', 'MainHeader', 'F.A.Q');
+    const trans_DE = _translate('de', 'MainHeader', 'F.A.Q');
     const translations = [trans_EN, trans_FR, trans_DE];
 
     cy.mount(
