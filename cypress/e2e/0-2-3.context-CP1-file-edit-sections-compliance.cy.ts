@@ -6,6 +6,7 @@
 import JwtDecode from 'jwt-decode';
 
 import '../../src/Features/Edit/translations';
+import '../../src/Features/Manage/translations';
 import { _translate } from '../utils';
 import {
   IApiChapter,
@@ -184,7 +185,9 @@ describe(
                       if (!$el.is(':disabled')) {
                         cy.react(complianceCompName)
                           .find(complianceType)
-                          .typeThenWait(valueToType);
+                          .typeThenWait(valueToType, {
+                            triggers: { blur: { exec: true } },
+                          });
                         cy.react(
                           complianceCompName,
                         ).formErrorMessageShouldNotMatch(

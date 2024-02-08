@@ -50,9 +50,9 @@ export const BooleanControl: React.FC<IProps> = ({
   const toogleAndSaveValue = useCallback(() => {
     const booleanValue = !stringToBoolean(currentValue);
 
-    setErrorMessage(null);
+    if (booleanValue === true) setErrorMessage(null);
 
-    if (control.mandatory && currentValue !== null) {
+    if (control.mandatory && booleanValue === false) {
       setErrorMessage(trans('mandatoryValue'));
     }
 
@@ -78,13 +78,14 @@ export const BooleanControl: React.FC<IProps> = ({
   ]);
 
   useEffect(() => {
-    if (control.mandatory && control.editable && !currentValue) {
+    if (
+      control.mandatory &&
+      control.editable &&
+      !stringToBoolean(control.control_value)
+    ) {
       setErrorMessage(trans('mandatoryValue'));
     }
-    if (!control.mandatory) {
-      setErrorMessage(null);
-    }
-  }, [control.mandatory, control.editable, currentValue, trans]);
+  }, [control.control_value, control.editable, control.mandatory, trans]);
 
   useEffect(() => {
     if (!isRejected) {

@@ -84,11 +84,7 @@ const CustomCheckboxRender: React.FC<CustomCheckboxRenderPropsType> = ({
                   : false
               }
               disabled={
-                props?.data?.row_editable
-                  ? false
-                  : field_data?.control_editable === false
-                  ? true
-                  : false
+                !props?.data?.row_editable || !field_data?.control_editable
               }
               name={option?.choice_id}
               // id="date"
