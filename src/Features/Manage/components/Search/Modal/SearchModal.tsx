@@ -111,8 +111,8 @@ export const SearchModal: React.FC<IProps> = ({
   // we don't have the time and bpi wants specific handling for each call state
   let footer: React.ReactNode | null = null;
   if (callState === 'BAD_REQUEST' && route?.type === 'DRM') {
-    if (error?.response?.body.data.btn) {
-      error.response.body.data.btn.map((btn: any) => {
+    if (error?.response?.body.data?.btn) {
+      error.response.body.data?.btn.map((btn: any) => {
         // case we don't find the file from search/file, we change the create url by client, ksiop is only for BPI
         if (btn.route.url) {
           apiRouter.changeRouteUrl('searchFileKSIOP', btn.route.url);
@@ -121,19 +121,19 @@ export const SearchModal: React.FC<IProps> = ({
     }
     footer = (
       <SearchModalFooterStyled>
-        {error?.response?.body.data.btn[0] !== undefined && (
+        {error?.response?.body.data?.btn[0] !== undefined && (
           <Button color={'error'} onClick={onClose}>
-            {error?.response?.body.data.btn[0].label}
+            {error?.response?.body.data?.btn[0].label}
           </Button>
         )}
-        {error?.response?.body.data.btn[1] !== undefined ? (
+        {error?.response?.body.data?.btn[1] !== undefined ? (
           <Button
             color={'success'}
             onClick={() =>
               send('searchFileKSIOP', {}, { file_num, file_avenant })
             }
           >
-            {error?.response?.body.data.btn[1].label}
+            {error?.response?.body.data?.btn[1].label}
           </Button>
         ) : null}
       </SearchModalFooterStyled>
@@ -155,13 +155,13 @@ export const SearchModal: React.FC<IProps> = ({
 
   // Handle 503 from KSIOP, missing fields
   if (callState === 'BAD_REQUEST' && error?.status === 503) {
-    if (error?.response?.body.data.btn[1]?.action) {
+    if (error?.response?.body.data?.btn[1]?.action) {
       apiRouter.changeRouteUrl(
         'KSIOPManualInput',
-        error?.response?.body.data.btn[1].action,
+        error?.response?.body.data?.btn[1].action,
       );
     }
-    const params = error?.response?.body.data.btn[1].params;
+    const params = error?.response?.body.data?.btn[1].params;
 
     const paramsObject: Record<string, string> = {};
 
@@ -172,12 +172,12 @@ export const SearchModal: React.FC<IProps> = ({
     const typedossier = paramsObject.typedossier;
     footer = (
       <SearchModalFooterStyled>
-        {error?.response?.body.data.btn[0] !== undefined && (
+        {error?.response?.body.data?.btn[0] !== undefined && (
           <Button color={'error'} onClick={onClose}>
-            {error?.response?.body.data.btn[0].label}
+            {error?.response?.body.data?.btn[0].label}
           </Button>
         )}
-        {error?.response?.body.data.btn[1] !== undefined ? (
+        {error?.response?.body.data?.btn[1] !== undefined ? (
           <Button
             color={'success'}
             onClick={() =>
@@ -189,7 +189,7 @@ export const SearchModal: React.FC<IProps> = ({
               )
             }
           >
-            {error?.response?.body.data.btn[1].label}
+            {error?.response?.body.data?.btn[1].label}
           </Button>
         ) : null}
       </SearchModalFooterStyled>
@@ -224,7 +224,7 @@ export const SearchModal: React.FC<IProps> = ({
     );
   }
 
-  return (
+  return callState !== 'NOT_INIT' ? (
     <Modal open={open} onClose={onClose} footer={footer} height={'560px'}>
       <SwitchCallState
         callState={callState}
@@ -291,5 +291,5 @@ export const SearchModal: React.FC<IProps> = ({
         ) : null}
       </SwitchCallState>
     </Modal>
-  );
+  ) : null;
 };
