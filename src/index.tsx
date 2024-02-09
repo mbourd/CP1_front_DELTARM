@@ -48,7 +48,11 @@ if (root) {
           <ThemeProvider theme={BPITheme}>
             <BPIGlobalStyle />
             <Suspense fallback={<PageLoader text={'...'} />}>
-              <App isEmbedded={isEmbedded} />
+              {maintenanceMode ? (
+                <AppMaintenance />
+              ) : (
+                <App isEmbedded={isEmbedded} />
+              )}
             </Suspense>
           </ThemeProvider>
         </Router>
