@@ -177,7 +177,7 @@ export const ModalDynamic: FC<IDataModalProps> = ({
                     ></p>
                   </Grid>
                 );
-              case 'input':
+              case 'input': {
                 // have the defaults value
                 const keyField: Record<string, string> = {
                   [element.attribute.id]: element?.value
@@ -204,7 +204,8 @@ export const ModalDynamic: FC<IDataModalProps> = ({
                     />
                   </Grid>
                 );
-              case 'select':
+              }
+              case 'select': {
                 const selectedValue: Record<string, true> = {
                   [(element.value as string) || '']: true,
                 };
@@ -246,6 +247,7 @@ export const ModalDynamic: FC<IDataModalProps> = ({
                     />
                   </Grid>
                 );
+              }
               case 'table':
                 return (
                   <Grid key={index} item xs={12}>

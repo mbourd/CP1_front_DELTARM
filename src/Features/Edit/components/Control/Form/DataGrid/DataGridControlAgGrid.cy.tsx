@@ -4211,7 +4211,7 @@ function generateRandExp<T = string>(regex: RegExp, max?: number): T {
   if (max) reg.max = max;
 
   let randExp = reg.gen();
-  while (randExp === '' /*|| !regex.test(randExp)*/) randExp = reg.gen();
+  while (randExp === '' || !regex.test(randExp)) randExp = reg.gen();
 
   return randExp as T;
 }
@@ -4293,7 +4293,7 @@ function _assertFormatAndEvalFormula(_control: IApiControl) {
               case 'integer':
               case 'percent':
               case 'decimal':
-              case 'financial':
+              case 'financial': {
                 if (!cell.control_editable) continue;
 
                 const strMatch = emptyCell
@@ -4318,6 +4318,7 @@ function _assertFormatAndEvalFormula(_control: IApiControl) {
                   next: emptyCell ? '@' : next,
                 };
                 break;
+              }
               default:
                 break;
             }
@@ -4409,7 +4410,7 @@ function _assertFormat(_control: IApiControl) {
               case 'integer':
               case 'decimal':
               case 'financial':
-              case 'percent':
+              case 'percent': {
                 const {
                   decimal_digit: decimalDigit,
                   currency_symbol: currencySymbol,
@@ -4441,6 +4442,7 @@ function _assertFormat(_control: IApiControl) {
                     expect(t).to.be.equal(result);
                   });
                 break;
+              }
               default:
                 break;
             }
@@ -4461,7 +4463,7 @@ function _assertFormat(_control: IApiControl) {
               case 'integer':
               case 'decimal':
               case 'financial':
-              case 'percent':
+              case 'percent': {
                 const {
                   decimal_digit: decimalDigit,
                   currency_symbol: currencySymbol,
@@ -4507,6 +4509,7 @@ function _assertFormat(_control: IApiControl) {
                     });
                 }
                 break;
+              }
               default:
                 break;
             }
@@ -4668,7 +4671,6 @@ function _assertCellEditable(_control: IApiControl) {
             case 'radio':
             case 'multiple_list':
             case 'boolean':
-            case 'action_button':
             case 'formula':
             case 'icon':
               cy.wrap(elCell).focus().realType('1');
@@ -5253,7 +5255,7 @@ function _assertCellStyle(_control: IApiControl) {
 
             switch (cell.component) {
               case 'select_list':
-              case 'dynamic_select_list':
+              case 'dynamic_select_list': {
                 const elCellText = Cypress.$(elCell).text();
 
                 cy.window().then((w) => {
@@ -5274,6 +5276,7 @@ function _assertCellStyle(_control: IApiControl) {
                     }
                   });
                 break;
+              }
               case 'text':
               case 'integer':
               case 'decimal':
@@ -5384,7 +5387,7 @@ function _assertTrackModifTooltip(_control: IApiControl) {
 
               switch (cell.component) {
                 case 'select_list':
-                case 'dynamic_select_list':
+                case 'dynamic_select_list': {
                   const elCellText = Cypress.$(elCell).text();
 
                   cy.window().then((w) => {
@@ -5405,6 +5408,7 @@ function _assertTrackModifTooltip(_control: IApiControl) {
                       }
                     });
                   break;
+                }
                 case 'text':
                 case 'integer':
                 case 'decimal':
