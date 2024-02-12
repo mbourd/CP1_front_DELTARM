@@ -22,7 +22,7 @@ const AppMaintenance = (): React.ReactElement => {
   return (
     <SecurityProvider security={security}>
       {jwt ? null : <Login />}
-      {!!isAdmin ? (
+      {isAdmin !== undefined ? (
         <>
           <MainHeader />
           <MainContent />

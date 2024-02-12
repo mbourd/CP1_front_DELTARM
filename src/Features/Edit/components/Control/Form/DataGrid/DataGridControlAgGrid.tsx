@@ -100,9 +100,9 @@ const CustomTooltip = (props: any & { tooltip: string }) => {
         <p>
           Previous Value:
           {data?.component === 'decimal' ||
-          'integer' ||
-          'financial' ||
-          'percent'
+          data?.component === 'integer' ||
+          data?.component === 'financial' ||
+          data?.component === 'percent'
             ? data?.component === 'financial'
               ? `${props?.colDef?.currency_symbol}${kFormatter(
                   data?.reference_value,
@@ -1099,9 +1099,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       }
       if (
         field_data?.component === 'financial' ||
-        'decimal' ||
-        'integer' ||
-        'percent'
+        field_data?.component === 'decimal' ||
+        field_data?.component === 'integer' ||
+        field_data?.component === 'percent'
       ) {
         if (
           (field_data?.control_options?.min_value ||
@@ -1386,9 +1386,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             responseType: 'json',
           },
         );
-
-        if (response) {
-        }
       } catch (error) {
         setErrors("Une erreur s'est produite");
         setTimeout(() => {

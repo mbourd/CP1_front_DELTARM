@@ -180,7 +180,9 @@ export const Close: React.FC = (): React.ReactElement => {
                 setIsModalOpen(false);
               }}
             >
-              {callState === 'SUCCESS' || 'SERVER_ERROR' ? 'Fermer' : 'Annuler'}
+              {callState === 'SUCCESS' || callState === 'SERVER_ERROR'
+                ? 'Fermer'
+                : 'Annuler'}
             </Button>
           </GenericActionModalStyled>
         }
