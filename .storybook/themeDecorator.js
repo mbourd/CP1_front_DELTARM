@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { BPITheme, BPIGlobalStyle } from '../src/Packages/Design';
-import { ThemeProvider } from 'styled-components/macro';
+import { ThemeProvider } from 'styled-components';
 
 const ThemeDecorator = (storyFn) => (
   <ThemeProvider theme={BPITheme}>

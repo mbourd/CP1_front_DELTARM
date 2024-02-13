@@ -11,7 +11,7 @@ interface INavItem {
   onClick?: (id: string) => void;
 }
 
-export const NavItem: React.FC<INavItem> = ({
+export const NavItem: React.FC<React.PropsWithChildren<INavItem>> = ({
   item,
   onClick,
   active = false,

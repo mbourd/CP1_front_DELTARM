@@ -4,7 +4,7 @@ import { ButtonStyled } from './Button.style';
 import { useTheme } from 'Styles';
 import { IButton } from '../types';
 
-export const Button: React.FC<IButton> = ({
+export const Button: React.FC<React.PropsWithChildren<IButton>> = ({
   children,
   color = 'primary',
   size = 'small',

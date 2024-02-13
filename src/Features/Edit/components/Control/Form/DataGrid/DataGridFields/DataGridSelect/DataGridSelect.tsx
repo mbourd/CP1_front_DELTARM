@@ -18,7 +18,7 @@ interface IProps {
   mandatory: boolean;
 }
 
-export const DataGridSelect: React.FC<IProps> = ({
+export const DataGridSelect: React.FC<React.PropsWithChildren<IProps>> = ({
   value,
   answerChoices,
   fileId,
@@ -44,7 +44,7 @@ export const DataGridSelect: React.FC<IProps> = ({
   };
 
   const saveValue = useCallback(
-    (value) => {
+    (value: any) => {
       if (regex && value) {
         const regexControl = new RegExp(regex, 'i');
         if (!value.match(regexControl) && regexMsg) {

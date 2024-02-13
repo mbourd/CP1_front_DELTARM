@@ -2,13 +2,9 @@ import React from 'react';
 import { ErrorMediumStyled } from './ErrorMedium.style';
 import { IError } from '../../types';
 
-export const ErrorMedium: React.FC<Omit<IError, 'size'>> = ({
-  title,
-  children,
-  message,
-  icon,
-  validate,
-}): React.ReactElement => {
+export const ErrorMedium: React.FC<
+  React.PropsWithChildren<Omit<IError, 'size'>>
+> = ({ title, children, message, icon, validate }): React.ReactElement => {
   return (
     <ErrorMediumStyled
       className={'_Error'}

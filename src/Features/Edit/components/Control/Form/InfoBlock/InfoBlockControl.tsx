@@ -12,7 +12,7 @@ interface IProps {
   context: 'edit' | 'validate';
 }
 
-export const InfoBlockControl: React.FC<IProps> = ({
+export const InfoBlockControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   context,
 }): React.ReactElement => {

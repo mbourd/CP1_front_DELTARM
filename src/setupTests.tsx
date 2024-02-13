@@ -1,4 +1,4 @@
-import { ThemeProvider } from 'styled-components/macro';
+import { ThemeProvider } from 'styled-components';
 import { BPITheme } from 'Packages/Design';
 import { render, RenderOptions } from '@testing-library/react';
 import React, { FC, ReactElement, Suspense } from 'react';
@@ -11,7 +11,9 @@ beforeAll(() => server?.listen({ onUnhandledRequest: 'warn' }));
 afterEach(() => server?.resetHandlers());
 afterAll(() => server?.close());
 
-const AllTheProviders: FC = ({ children }) => {
+const AllTheProviders: FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   return (
     <I18nextProvider i18n={i18n}>
       <ThemeProvider theme={BPITheme}>

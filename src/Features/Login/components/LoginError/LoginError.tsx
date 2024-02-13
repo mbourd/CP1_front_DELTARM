@@ -4,7 +4,9 @@ import { Button, HeadingOne } from 'Shared/components';
 import { LoginStyled } from '../Login.style';
 import { LoginErrorButtonWrapperStyled } from './LoginError.style';
 
-const LoginError: React.FC = (): React.ReactElement => {
+const LoginError: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
   const [trans] = useTrans('Login');
 
   return (

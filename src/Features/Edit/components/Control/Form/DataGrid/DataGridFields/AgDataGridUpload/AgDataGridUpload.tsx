@@ -23,7 +23,7 @@ interface IProps {
   mandatory: boolean;
 }
 
-export const AgDataGridUpload: React.FC<IProps> = ({
+export const AgDataGridUpload: React.FC<React.PropsWithChildren<IProps>> = ({
   value,
   fileId,
   controlId,
@@ -45,13 +45,13 @@ export const AgDataGridUpload: React.FC<IProps> = ({
   const jwt = user.getJwt();
 
   const saveFileToUpload = useCallback(
-    (e) => {
+    (e: any) => {
       setNewUploadFile(e.target.files[0]);
     },
     [setNewUploadFile],
   );
 
-  const onDrop = useCallback((acceptedFiles) => {
+  const onDrop = useCallback((acceptedFiles: any) => {
     acceptedFiles.forEach((file: File) => {
       setNewUploadFile(file);
     });
@@ -92,7 +92,7 @@ export const AgDataGridUpload: React.FC<IProps> = ({
   ]);
 
   const handleDeleteFile = useCallback(
-    (e, name) => {
+    (e: any, name: any) => {
       e.preventDefault();
       deleteFile(
         fileId,
@@ -109,7 +109,7 @@ export const AgDataGridUpload: React.FC<IProps> = ({
   );
 
   const handleDownloadFile = useCallback(
-    (e, id, name) => {
+    (e: any, id: any, name: any) => {
       e.preventDefault();
       downloadFile(id, name, jwt, setErrorMessage);
     },

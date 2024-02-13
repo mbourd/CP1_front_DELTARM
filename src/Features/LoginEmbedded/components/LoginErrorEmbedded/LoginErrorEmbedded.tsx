@@ -4,7 +4,9 @@ import { Button, HeadingOne } from 'Shared/components';
 import { LoginEmbeddedStyled } from '../LoginEmbedded.style';
 import { LoginErrorButtonWrapperStyled } from './LoginErrorEmbedded.style';
 
-const LoginErrorEmbedded: React.FC = (): React.ReactElement => {
+const LoginErrorEmbedded: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
   const [trans] = useTrans('Login');
 
   return (

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 import './polyfills';
-import React, { Suspense, StrictMode } from 'react';
-import ReactDOM from 'react-dom';
-import { ThemeProvider } from 'styled-components/macro';
+import React, { Suspense } from 'react';
+import { createRoot } from 'react-dom/client';
+import { ThemeProvider } from 'styled-components';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { App } from './App';
 import { PageLoader } from './Shared/components';
@@ -24,7 +24,9 @@ if (process.env.REACT_APP_ENV !== 'staging') {
   });
 }
 
-const root = document.getElementById('root');
+const container = document.getElementById('root') as HTMLElement;
+const root = createRoot(container);
+
 let isEmbedded = false;
 
 // to know if we are embedded or not
@@ -40,24 +42,19 @@ if (inIframe()) {
   isEmbedded = true;
 }
 
-if (root) {
-  ReactDOM.render(
-    <StrictMode>
-      <RecoilRoot>
-        <Router>
-          <ThemeProvider theme={BPITheme}>
-            <BPIGlobalStyle />
-            <Suspense fallback={<PageLoader text={'...'} />}>
-              {maintenanceMode ? (
-                <AppMaintenance />
-              ) : (
-                <App isEmbedded={isEmbedded} />
-              )}
-            </Suspense>
-          </ThemeProvider>
-        </Router>
-      </RecoilRoot>
-    </StrictMode>,
-    root,
-  );
-}
+root.render(
+  <RecoilRoot>
+    <Router>
+      <ThemeProvider theme={BPITheme}>
+        <BPIGlobalStyle />
+        <Suspense fallback={<PageLoader text={'...'} />}>
+          {maintenanceMode ? (
+            <AppMaintenance />
+          ) : (
+            <App isEmbedded={isEmbedded} />
+          )}
+        </Suspense>
+      </ThemeProvider>
+    </Router>
+  </RecoilRoot>,
+);

@@ -8,9 +8,9 @@ type IconsContainerRenderProps = {
   interfaceButtons: Record<any, any>;
 };
 
-export const IconsContainerRender: React.FC<IconsContainerRenderProps> = ({
-  interfaceButtons,
-}): React.ReactElement => {
+export const IconsContainerRender: React.FC<
+  React.PropsWithChildren<IconsContainerRenderProps>
+> = ({ interfaceButtons }): React.ReactElement => {
   const [trans] = useTrans('MainHeader');
 
   return (

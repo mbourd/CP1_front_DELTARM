@@ -30,7 +30,9 @@ import { useTrans } from '../../../Services';
 import { CardAgGrid } from './CardAgGrid/CardAgGrid';
 import { useDashboardDynamicReducer } from '../dashboardDynamic.reducer';
 
-const DashboardDynamic: React.FC = (): React.ReactElement => {
+const DashboardDynamic: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
   const { dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent } =
     useDashboardDynamicReducer();
   const [trans] = useTrans('Dashboard');

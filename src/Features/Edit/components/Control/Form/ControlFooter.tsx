@@ -8,7 +8,7 @@ interface IProps {
   control: IApiControl;
 }
 
-export const ControlFooter: React.FC<IProps> = ({
+export const ControlFooter: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
 }): React.ReactElement => {
   const prev =

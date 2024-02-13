@@ -5,7 +5,9 @@ import { Error } from '../../../Packages/Design/components';
 import icon from './error404.svg';
 import { useTrans } from '../../../Services';
 
-export const NotFoundComponent: React.FC = () => {
+export const NotFoundComponent: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const [trans] = useTrans('SharedComponents');
 
   return (

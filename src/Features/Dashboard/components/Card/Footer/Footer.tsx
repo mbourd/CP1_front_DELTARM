@@ -5,12 +5,9 @@ import { FooterStyled } from './Footer.style';
 import { ICardFooter } from '../types';
 import { router } from 'Services';
 
-export const Footer: React.FC<ICardFooter> = ({
-  children,
-  color,
-  state,
-  role,
-}): React.ReactElement => {
+export const Footer: React.FC<
+  React.PropsWithChildren<Omit<ICardFooter, 'children'>>
+> = ({ children, color, state, role }): React.ReactElement => {
   const path = router.generatePath(
     'manage',
     {},

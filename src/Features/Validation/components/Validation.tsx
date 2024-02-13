@@ -7,7 +7,9 @@ interface IProps {
   apiRouteName: string;
 }
 
-export const Validation: React.FC<IProps> = (props): React.ReactElement => {
+export const Validation: React.FC<React.PropsWithChildren<IProps>> = (
+  props,
+): React.ReactElement => {
   storage.removeData('validation');
 
   return <EditValidation {...props} />;

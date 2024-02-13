@@ -1,5 +1,5 @@
 import { TableCell } from '@mui/material';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 // export const CustomTextAltRendererStyled = styled(TableCell)`
 //   width: 100%;

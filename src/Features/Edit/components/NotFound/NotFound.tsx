@@ -8,7 +8,9 @@ interface IProps {
   title?: string | null;
 }
 
-export const NotFound: React.FC<IProps> = ({ title }): React.ReactElement => {
+export const NotFound: React.FC<React.PropsWithChildren<IProps>> = ({
+  title,
+}): React.ReactElement => {
   const [trans] = useTrans('Edit');
 
   return (

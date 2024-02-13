@@ -32,7 +32,7 @@ import { InputModalDynamic } from './InputModalDynamic/InputModalDynamic';
 import { SelectModalDynamic } from './SelectModalDynamic/SelectModalDynamic';
 import { security } from '../../../Services';
 
-export const ModalDynamic: FC<IDataModalProps> = ({
+export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
   open,
   setIsModalOpen,
   data,
@@ -87,7 +87,7 @@ export const ModalDynamic: FC<IDataModalProps> = ({
   });
 
   const handleChangeValue = useCallback(
-    (id, value) => {
+    (id: any, value: any) => {
       setValue(id, value);
     },
     [setValue],

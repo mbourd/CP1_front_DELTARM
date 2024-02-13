@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { ICardBodyRow } from '../../types';
 
 export const RowStyled = styled.div<Pick<ICardBodyRow, 'color'>>`

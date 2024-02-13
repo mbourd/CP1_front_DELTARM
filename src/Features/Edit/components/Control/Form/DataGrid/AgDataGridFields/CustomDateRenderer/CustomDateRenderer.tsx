@@ -1,7 +1,7 @@
 import React from 'react';
 import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
 
-const CustomDateRenderer: React.FC<any> = ({
+const CustomDateRenderer: React.FC<React.PropsWithChildren<any>> = ({
   props,
   control,
   fileId,

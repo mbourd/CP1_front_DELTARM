@@ -6,7 +6,9 @@ import { useTrans } from 'Services';
 import { SubmitForValidationStyled } from './SubmitForValidation.style';
 import { ValidationPopper } from './Popper/ValidationPopper';
 
-export const SubmitForValidation: React.FC = (): React.ReactElement => {
+export const SubmitForValidation: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
   const [trans] = useTrans('Edit');
   const [anchorEl, setAnchorEl] = React.useState<Element | null>(null);
 

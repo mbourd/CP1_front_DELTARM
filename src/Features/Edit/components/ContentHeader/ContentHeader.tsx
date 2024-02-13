@@ -26,7 +26,9 @@ import { useRecoilValue } from 'recoil';
 import { Alert } from '@material-ui/lab';
 import { useTrans } from '../../../../Services';
 
-export const ContentHeader: React.FC = (): React.ReactElement => {
+export const ContentHeader: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
   const [trans] = useTrans('Edit');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data } = useContext(EditValidationContext);

@@ -22,7 +22,9 @@ interface IRejectedProps {
   controlRejectable: ControlRejectable;
 }
 
-export const RejectControl: React.FC<IRejectedProps> = ({
+export const RejectControl: React.FC<
+  React.PropsWithChildren<IRejectedProps>
+> = ({
   controlId,
   setIsRejected,
   isRejected,

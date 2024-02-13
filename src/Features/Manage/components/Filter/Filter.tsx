@@ -19,7 +19,7 @@ interface IProps {
   initRoles?: Record<number, true>;
 }
 
-export const Filter: React.FC<IProps> = ({
+export const Filter: React.FC<React.PropsWithChildren<IProps>> = ({
   initStages = {},
   initStates = {},
   initRoles = {},

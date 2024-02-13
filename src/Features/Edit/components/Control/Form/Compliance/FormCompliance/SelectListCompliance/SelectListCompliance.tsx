@@ -13,11 +13,9 @@ interface IProps {
   controlId: string;
 }
 
-export const SelectListCompliance: React.FC<IProps> = ({
-  compliance,
-  fileId,
-  controlId,
-}): React.ReactElement => {
+export const SelectListCompliance: React.FC<
+  React.PropsWithChildren<IProps>
+> = ({ compliance, fileId, controlId }): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();

@@ -18,13 +18,9 @@ interface InputModalDynamicProps {
   register: (name: FieldName<any>, rules?: RegisterOptions) => void;
 }
 
-export const SelectModalDynamic: React.FC<InputModalDynamicProps> = ({
-  element,
-  options,
-  selectedValue,
-  handleChangeValue,
-  register,
-}) => {
+export const SelectModalDynamic: React.FC<
+  React.PropsWithChildren<InputModalDynamicProps>
+> = ({ element, options, selectedValue, handleChangeValue, register }) => {
   const { user } = useSecurity();
   const jwt = user.getJwt();
   const [value, setValue] = useState(element.value);
@@ -42,7 +38,7 @@ export const SelectModalDynamic: React.FC<InputModalDynamicProps> = ({
     }
   }, [value, element.attribute.mandatory, user_language?.lang]);
 
-  const checkMandatory = useCallback((value) => {
+  const checkMandatory = useCallback((value: any) => {
     setValue(value);
   }, []);
 

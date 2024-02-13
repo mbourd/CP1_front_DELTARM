@@ -21,7 +21,7 @@ interface IProps {
   context: 'edit' | 'validate';
 }
 
-export const IntegerControl: React.FC<IProps> = ({
+export const IntegerControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   formState,

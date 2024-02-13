@@ -6,7 +6,7 @@ type HeaderProps = {
   color: ICardHeader['$color'];
 };
 
-export const Header: React.FC<HeaderProps> = ({
+export const Header: React.FC<React.PropsWithChildren<HeaderProps>> = ({
   children,
   color,
 }): React.ReactElement => {

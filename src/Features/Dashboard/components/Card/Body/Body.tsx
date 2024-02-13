@@ -3,7 +3,9 @@ import { BodyStyled } from './Body.style';
 import { ICardBody } from '../types';
 import { Row } from './Row/Row';
 
-export const Body: React.FC<ICardBody> = ({ data }): React.ReactElement => {
+export const Body: React.FC<React.PropsWithChildren<ICardBody>> = ({
+  data,
+}): React.ReactElement => {
   return (
     <BodyStyled>
       {data.map((datum, index) => {

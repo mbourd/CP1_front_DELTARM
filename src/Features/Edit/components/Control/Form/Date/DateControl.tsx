@@ -21,7 +21,7 @@ interface IProps {
   context: 'edit' | 'validate';
 }
 
-export const DateControl: React.FC<IProps> = ({
+export const DateControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   formState,

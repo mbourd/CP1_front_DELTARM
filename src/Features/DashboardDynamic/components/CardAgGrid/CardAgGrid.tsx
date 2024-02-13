@@ -36,7 +36,7 @@ type CardAgGridProps = {
   triggerAction: (action: IActionButton | null) => void;
 };
 
-const CardAgGrid: React.FC<CardAgGridProps> = ({
+const CardAgGrid: React.FC<React.PropsWithChildren<CardAgGridProps>> = ({
   card,
   triggerAction,
 }): JSX.Element => {

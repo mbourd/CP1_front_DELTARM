@@ -334,6 +334,8 @@ describe('<BooleanControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
       control_value: 'false',
+      control_title: 'ok',
+      control_editable: true,
     };
     cy.mount(
       <SetupTestsComponents>

@@ -12,7 +12,7 @@ export interface IProps {
   context: 'edit' | 'validate';
 }
 
-export const FormControls: React.FC<IProps> = ({
+export const FormControls: React.FC<React.PropsWithChildren<IProps>> = ({
   chapters,
   context,
 }): React.ReactElement => {

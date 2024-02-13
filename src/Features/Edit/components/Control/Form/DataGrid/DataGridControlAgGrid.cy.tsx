@@ -5731,7 +5731,7 @@ function _assertManuallyPinnedPositionColumns(_control: IApiControl) {
             const l = Cypress.$(
               '.ag-header-viewport .ag-header-cell:not(.ag-floating-filter)',
             ).length;
-            cy.wrap(new Array(l < 6 ? 6 : l)).each(() =>
+            cy.wrap(new Array(l < 7 ? 7 : l)).each(() =>
               cy.realPress('ArrowRight'),
             );
           } else return true;

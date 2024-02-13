@@ -13,7 +13,7 @@ interface IProps {
   controlId: string;
 }
 
-export const DateCompliance: React.FC<IProps> = ({
+export const DateCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
   compliance,
   fileId,
   controlId,
@@ -89,7 +89,7 @@ export const DateCompliance: React.FC<IProps> = ({
   }
 
   const handleOnChange = useCallback(
-    (e) => {
+    (e: any) => {
       if (isMandatory && e.currentTarget.value) setErrorMessage(null);
 
       setCurrentValue(e.currentTarget.value);

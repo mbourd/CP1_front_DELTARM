@@ -8,7 +8,7 @@ interface IProps {
   fileId: string;
 }
 
-export const ClassifyModal: React.FC<IProps> = ({
+export const ClassifyModal: React.FC<React.PropsWithChildren<IProps>> = ({
   open,
   onClose,
   fileId,

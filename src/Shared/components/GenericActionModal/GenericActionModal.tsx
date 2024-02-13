@@ -36,7 +36,7 @@ interface IProps {
   body?: any;
 }
 
-export const GenericActionModal: React.FC<IProps> = ({
+export const GenericActionModal: React.FC<React.PropsWithChildren<IProps>> = ({
   open,
   onClose,
   fileId,

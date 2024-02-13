@@ -6,7 +6,7 @@ import 'Services/Api/registerCallState';
 import { security, SecurityProvider, useSecurity } from 'Services';
 import { MainContent, MainHeader } from './Shared/components';
 import { BPITheme } from 'Styles';
-import { ThemeProvider } from 'styled-components/macro';
+import { ThemeProvider } from 'styled-components';
 import { appStore } from 'Services';
 import { Provider } from 'react-redux';
 

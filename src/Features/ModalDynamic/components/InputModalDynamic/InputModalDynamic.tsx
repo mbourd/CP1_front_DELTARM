@@ -11,12 +11,9 @@ interface InputModalDynamicProps {
   register: (name: FieldName<any>, rules?: RegisterOptions) => void;
 }
 
-export const InputModalDynamic: React.FC<InputModalDynamicProps> = ({
-  element,
-  index,
-  handleChangeValue,
-  register,
-}) => {
+export const InputModalDynamic: React.FC<
+  React.PropsWithChildren<InputModalDynamicProps>
+> = ({ element, index, handleChangeValue, register }) => {
   const [value, setValue] = useState(element.value);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -29,7 +26,7 @@ export const InputModalDynamic: React.FC<InputModalDynamicProps> = ({
     }
   }, [value, element.attribute.mandatory]);
 
-  const checkMandatory = useCallback((value) => {
+  const checkMandatory = useCallback((value: any) => {
     setValue(value);
   }, []);
 

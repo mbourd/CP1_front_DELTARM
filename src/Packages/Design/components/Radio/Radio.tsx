@@ -2,7 +2,7 @@ import React from 'react';
 import { IRadio } from './types';
 import { RadioStyled } from './Radio.style';
 
-export const Radio: React.FC<IRadio> = ({
+export const Radio: React.FC<React.PropsWithChildren<IRadio>> = ({
   checked = false,
   color = 'text',
   checkedColor = 'primary',

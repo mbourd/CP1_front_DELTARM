@@ -24,7 +24,7 @@ interface IProps {
   apiRouteName: string;
 }
 
-export const EditValidation: React.FC<IProps> = ({
+export const EditValidation: React.FC<React.PropsWithChildren<IProps>> = ({
   title,
   apiRouteName,
 }): React.ReactElement => {

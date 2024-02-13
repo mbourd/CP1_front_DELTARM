@@ -9,12 +9,11 @@ interface IProps {
   errorMessage: string | null;
 }
 
-export const CommentRejectControl: React.FC<IProps> = ({
-  setCommentValue,
-  errorMessage,
-}): React.ReactElement => {
+export const CommentRejectControl: React.FC<
+  React.PropsWithChildren<IProps>
+> = ({ setCommentValue, errorMessage }): React.ReactElement => {
   const handleChangeValue = useCallback(
-    (value) => {
+    (value: any) => {
       setCommentValue(value);
     },
     [setCommentValue],
