@@ -3,7 +3,9 @@ import { Button, GenericActionModal, Modal } from 'Shared/components';
 import { EditValidationContext } from 'Features/Edit';
 import { AcceptValidationStyled } from './AcceptValidation.style';
 
-export const AcceptValidation: React.FC = (): React.ReactElement => {
+export const AcceptValidation: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { fileId, data } = useContext(EditValidationContext);
   const [openFileSelection, setopenFileSelection] = useState(false);

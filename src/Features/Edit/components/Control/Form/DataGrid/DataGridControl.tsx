@@ -33,7 +33,10 @@ interface IProps {
   fileId: string;
 }
 
-export const DataGridControl: React.FC<IProps> = ({ control, fileId }) => {
+export const DataGridControl: React.FC<React.PropsWithChildren<IProps>> = ({
+  control,
+  fileId,
+}) => {
   const [gridDetails, setGridDetails] = useState<
     DataGridDetail | undefined | null
   >(control.data_grid_detail);

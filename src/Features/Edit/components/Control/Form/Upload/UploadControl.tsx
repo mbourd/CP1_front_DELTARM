@@ -22,7 +22,7 @@ interface IProps {
   context: 'edit' | 'validate';
 }
 
-export const UploadControl: React.FC<IProps> = ({
+export const UploadControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   context,
@@ -42,7 +42,7 @@ export const UploadControl: React.FC<IProps> = ({
   const jwt = user.getJwt();
 
   const saveFileToUpload = useCallback(
-    (e) => {
+    (e: any) => {
       setNewUploadFile(e.target.files[0]);
     },
     [setNewUploadFile],
@@ -60,7 +60,7 @@ export const UploadControl: React.FC<IProps> = ({
     }
   }, [control, newUploadFile, trans, currentUploadFile]);
 
-  const onDrop = useCallback((acceptedFiles) => {
+  const onDrop = useCallback((acceptedFiles: any) => {
     acceptedFiles.forEach((file: File) => {
       setNewUploadFile(file);
     });
@@ -88,7 +88,7 @@ export const UploadControl: React.FC<IProps> = ({
   }, [fileId, control, newUploadFile, jwt, trans]);
 
   const handleDeleteFile = useCallback(
-    (e, name) => {
+    (e: any, name: any) => {
       e.preventDefault();
       deleteFile(
         fileId,
@@ -103,7 +103,7 @@ export const UploadControl: React.FC<IProps> = ({
   );
 
   const handleDownloadFile = useCallback(
-    (e, id, name) => {
+    (e: any, id: any, name: any) => {
       e.preventDefault();
       downloadFile(id, name, jwt, setErrorMessage);
     },

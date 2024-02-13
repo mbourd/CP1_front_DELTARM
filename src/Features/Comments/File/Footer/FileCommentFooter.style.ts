@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 export const FileCommentFooterStyled = styled.div`
   box-shadow: 0 -2px 4px -5px #333;

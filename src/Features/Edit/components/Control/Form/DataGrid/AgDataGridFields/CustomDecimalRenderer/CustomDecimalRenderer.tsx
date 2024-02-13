@@ -13,9 +13,9 @@ type CustomDecimalRendererPropsType = {
   seterrors?: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const CustomDecimalRenderer: React.FC<CustomDecimalRendererPropsType> = ({
-  props,
-}) => {
+const CustomDecimalRenderer: React.FC<
+  React.PropsWithChildren<CustomDecimalRendererPropsType>
+> = ({ props }) => {
   const column = props.column.colDef;
   const { decimal_digit: decimalDigit = 0 } = column;
   const {

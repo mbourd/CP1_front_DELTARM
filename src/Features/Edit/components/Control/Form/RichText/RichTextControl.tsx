@@ -18,7 +18,7 @@ interface IProps {
   context: 'edit' | 'validate';
 }
 
-export const RichTextControl: React.FC<IProps> = ({
+export const RichTextControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   context,

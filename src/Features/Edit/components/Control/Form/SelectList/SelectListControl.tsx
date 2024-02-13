@@ -21,7 +21,7 @@ interface IProps {
   get_value_response?: any;
 }
 
-export const SelectListControl: React.FC<IProps> = ({
+export const SelectListControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   multiple,

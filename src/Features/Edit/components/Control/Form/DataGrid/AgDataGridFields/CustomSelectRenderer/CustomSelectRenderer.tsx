@@ -7,7 +7,7 @@ import {
 } from './CustomSelectRenderer.style';
 import './style.css';
 
-const CustomSelectRenderer: React.FC<any> = ({
+const CustomSelectRenderer: React.FC<React.PropsWithChildren<any>> = ({
   props,
   field_data,
   control,

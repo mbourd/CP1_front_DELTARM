@@ -27,7 +27,9 @@ import { IDataModal } from '../../ModalDynamic/components/types';
 import { NoData } from './NoData';
 import { AgGridCard } from './Card/AgGridCard';
 
-const AgGridDashboard: React.FC = (): React.ReactElement => {
+const AgGridDashboard: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
   // const [trans] = useTrans('Dashboard');
   const { /*data: dataSecurity,*/ logout } = useContext(SecurityContext);
   const { user } = useSecurity();

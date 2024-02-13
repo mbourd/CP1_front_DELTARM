@@ -24,7 +24,7 @@ interface IBreadCrumb {
   values: BreadCrumbType[];
 }
 
-export const BreadCrumb: React.FC<IBreadCrumb> = ({
+export const BreadCrumb: React.FC<React.PropsWithChildren<IBreadCrumb>> = ({
   values,
 }): React.ReactElement => {
   const queries = router.getQueries();

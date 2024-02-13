@@ -16,7 +16,7 @@ interface FileCommentRejectionFooter {
 }
 
 export const FileCommentRejectionFooter: React.FC<
-  FileCommentRejectionFooter
+  React.PropsWithChildren<FileCommentRejectionFooter>
 > = ({ controlId, setRejectComments }) => {
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();

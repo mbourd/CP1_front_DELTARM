@@ -7,7 +7,9 @@ import { SearchModal } from 'Features/Manage/components/Search/Modal/SearchModal
 import { SecurityContext, storage, useApi, useTrans } from 'Services';
 import { FullSearchModal } from 'Features/Manage/components/Search/Modal/FullSearchModal';
 
-export const DashboardSearch: React.FC = (): React.ReactElement => {
+export const DashboardSearch: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchMode, setSearchMode] = useState('fileNum');

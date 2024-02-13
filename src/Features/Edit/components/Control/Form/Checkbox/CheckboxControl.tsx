@@ -21,7 +21,7 @@ interface IProps {
   context: 'edit' | 'validate';
 }
 
-export const CheckboxControl: React.FC<IProps> = ({
+export const CheckboxControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   multiple,

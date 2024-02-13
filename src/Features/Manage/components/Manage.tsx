@@ -27,7 +27,9 @@ import { IsLoading } from './IsLoading';
 import { NoData } from './NoData';
 import { FullSearchModal } from './Search/Modal/FullSearchModal';
 
-export const Manage: React.FC = (): React.ReactElement => {
+export const Manage: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
   const [trans] = useTrans('Manage');
   const { request, callState, send, data } = useApi<ICard[]>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);

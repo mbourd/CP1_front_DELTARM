@@ -12,7 +12,9 @@ import { downloadAuditExcel } from './downloadAuditExcel';
 import { FileAuditRender } from './FileAuditRender';
 import { AppContext, AppContextType } from 'AppContext';
 
-export const FileAudit: React.FC = (): React.ReactElement => {
+export const FileAudit: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
   const appContext: AppContextType & Record<any, any> = useContext(AppContext);
   const { canSend } = appContext?.ForCompTests?.FileAudit || {};
   const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(null);
@@ -34,7 +36,7 @@ export const FileAudit: React.FC = (): React.ReactElement => {
   }, [send, fileId, request]);
 
   const handleDownloadExcelAudit = useCallback(
-    (e) => {
+    (e: any) => {
       e.preventDefault();
       downloadAuditExcel(fileId, jwt, setErrorMessage);
     },

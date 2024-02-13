@@ -21,7 +21,7 @@ interface IProps {
   context: 'edit' | 'validate';
 }
 
-export const PercentControl: React.FC<IProps> = ({
+export const PercentControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   formState,

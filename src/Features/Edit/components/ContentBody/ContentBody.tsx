@@ -3,7 +3,9 @@ import { ContentBodyStyled } from './ContentBody.styled';
 import { EditValidationContext } from 'Features';
 import { ContentHeader } from '../ContentHeader/ContentHeader';
 import { FormControls } from '../Control';
-export const ContentBody: React.FC = (): React.ReactElement | null => {
+export const ContentBody: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement | null => {
   const { data } = useContext(EditValidationContext);
 
   if (!data) {

@@ -21,7 +21,7 @@ interface IProps {
   context: 'edit' | 'validate';
 }
 
-export const BooleanControl: React.FC<IProps> = ({
+export const BooleanControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   formState,
@@ -109,6 +109,7 @@ export const BooleanControl: React.FC<IProps> = ({
           id={`checkbox-boolean${control.control_id}`}
           style={{ display: 'block', paddingLeft: '0' }}
           disableRipple
+          // @ts-ignore
           placeholder={
             control.editable
               ? control.control_title

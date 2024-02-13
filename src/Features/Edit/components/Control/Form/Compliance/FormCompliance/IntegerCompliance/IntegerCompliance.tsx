@@ -13,7 +13,7 @@ interface IProps {
   controlId: string;
 }
 
-export const IntegerCompliance: React.FC<IProps> = ({
+export const IntegerCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
   compliance,
   fileId,
   controlId,

@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components/macro';
+import { createGlobalStyle } from 'styled-components';
 
 import '../../reset.css';
 import '../../fonts/helvetica-neue.css';

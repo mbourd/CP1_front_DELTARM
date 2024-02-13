@@ -13,7 +13,7 @@ interface IProps {
   controlId: string;
 }
 
-export const LongTextCompliance: React.FC<IProps> = ({
+export const LongTextCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
   compliance,
   fileId,
   controlId,

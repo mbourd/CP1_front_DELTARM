@@ -10,7 +10,7 @@ interface ISwitchMetric {
   indicator: IIndicator;
 }
 
-export const SwitchMetric: React.FC<ISwitchMetric> = ({
+export const SwitchMetric: React.FC<React.PropsWithChildren<ISwitchMetric>> = ({
   indicator,
 }): React.ReactElement => {
   switch (indicator.style) {

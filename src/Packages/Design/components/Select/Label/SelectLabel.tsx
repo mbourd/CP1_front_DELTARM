@@ -6,7 +6,7 @@ import { useSizing } from '../../../hooks';
 import { SelectIcon } from '../../../icons';
 import { TextEllipsis } from '../../TextEllipsis';
 
-export const SelectLabel: React.FC<ISelectLabel> = ({
+export const SelectLabel: React.FC<React.PropsWithChildren<ISelectLabel>> = ({
   color = 'text',
   bdc = 'disabled',
   bgc = 'transparent',

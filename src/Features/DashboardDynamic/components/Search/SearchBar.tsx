@@ -14,7 +14,7 @@ interface IProps {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const SearchBar: React.FC<IProps> = ({
+export const SearchBar: React.FC<React.PropsWithChildren<IProps>> = ({
   btn_lib,
   options,
   setIsModalOpen,

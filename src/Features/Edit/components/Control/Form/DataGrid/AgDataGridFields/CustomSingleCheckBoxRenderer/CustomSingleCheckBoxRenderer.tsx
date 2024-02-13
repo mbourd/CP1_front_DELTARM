@@ -9,7 +9,7 @@ type CustomSingleCheckboxRenderPropsType = {
 };
 
 const CustomSingleCheckboxRender: React.FC<
-  CustomSingleCheckboxRenderPropsType
+  React.PropsWithChildren<CustomSingleCheckboxRenderPropsType>
 > = ({ props, selectedRows, setSelectedRows }) => {
   const [isChecked, setIsChecked] = useState(selectedRows.includes(props.node));
   const onChange = useCallback(() => {

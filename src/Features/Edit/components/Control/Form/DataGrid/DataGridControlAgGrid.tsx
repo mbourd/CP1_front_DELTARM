@@ -126,7 +126,9 @@ const CustomTooltip = (props: any & { tooltip: string }) => {
   }
 };
 
-export const DataGridControlAgGrid: React.FC<IProps> = ({
+export const DataGridControlAgGrid: React.FC<
+  React.PropsWithChildren<IProps>
+> = ({
   control,
   fileId,
   rowHeight,
@@ -150,7 +152,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   const [errors, setErrors] = useState<string>('');
   const [GridDetails, setGridDetails] = useState(control.data_grid_detail);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selected] = useState(false);
   const [local_text] = useState(
     currentLang === 'en' ? AG_GRID_LOCALE_EN : AG_GRID_LOCALE_FR,
   );
@@ -1045,7 +1046,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   }, [GridDetails?.source, control.control_id, fileId, jwt, selectedRows]);
 
   const onCellValueChanged = useCallback(
-    (event) => {
+    (event: any) => {
       const data = event?.colDef?.field?.split('.')[0];
 
       const field_data = event?.data[data];
@@ -1209,7 +1210,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         if (column?.field_type !== 'checkbox_select_datagrid') {
           return;
         } else {
-          gridRef.current.api.forEachNodeAfterFilterAndSort(
+          gridRef.current.api?.forEachNodeAfterFilterAndSort(
             (rowNode: RowNode) => {
               rowNode.setDataValue(
                 `${control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref}.value`,
@@ -1218,7 +1219,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             },
           );
 
-          gridRef.current.api.refreshCells({
+          gridRef.current.api?.refreshCells({
             force: true,
           });
         }
@@ -1414,7 +1415,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   };
 
   const onBodyScroll = useCallback(
-    async (e) => {
+    async (e: any) => {
       if (e.direction === 'horizontal') {
         const headerElements = document.querySelectorAll(
           '.ag-theme-alpine .ag-header-cell',

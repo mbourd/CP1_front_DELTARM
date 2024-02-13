@@ -9,7 +9,7 @@ interface ITabHeader {
   chapters: IChapter[];
 }
 
-export const TabHeader: React.FC<ITabHeader> = ({
+export const TabHeader: React.FC<React.PropsWithChildren<ITabHeader>> = ({
   chapters,
   index,
   setCurrentContent,

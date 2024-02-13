@@ -12,11 +12,9 @@ interface IProps {
   context: 'edit' | 'validate';
 }
 
-export const JoditRichTextControl: React.FC<IProps> = ({
-  control,
-  fileId,
-  context,
-}) => {
+export const JoditRichTextControl: React.FC<
+  React.PropsWithChildren<IProps>
+> = ({ control, fileId, context }) => {
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
   const editor = useRef(null);
@@ -31,7 +29,7 @@ export const JoditRichTextControl: React.FC<IProps> = ({
   );
 
   const handleBlurContent = useCallback(
-    (newContent) => {
+    (newContent: any) => {
       saveJoditEditor(fileId, control, newContent, jwt, setMessage);
     },
     [control, fileId, jwt],

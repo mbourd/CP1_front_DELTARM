@@ -14,7 +14,7 @@ interface IProps {
   controlId: string;
 }
 
-export const ChexboxesCompliance: React.FC<IProps> = ({
+export const ChexboxesCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
   compliance,
   fileId,
   controlId,

@@ -19,7 +19,7 @@ interface IProps {
   context: 'edit' | 'validate';
 }
 
-export const LongTextControl: React.FC<IProps> = ({
+export const LongTextControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   formState,

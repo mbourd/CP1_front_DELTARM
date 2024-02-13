@@ -23,7 +23,7 @@ interface IProps {
   context: 'edit' | 'validate';
 }
 
-export const FinancialControl: React.FC<IProps> = ({
+export const FinancialControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   formState,

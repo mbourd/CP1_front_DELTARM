@@ -21,7 +21,7 @@ interface IProps {
   context: 'edit' | 'validate';
 }
 
-export const DecimalControl: React.FC<IProps> = ({
+export const DecimalControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   formState,

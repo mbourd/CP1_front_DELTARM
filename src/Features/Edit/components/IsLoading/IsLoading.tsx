@@ -7,7 +7,9 @@ interface IProps {
   title?: string | null;
 }
 
-export const IsLoading: React.FC<IProps> = ({ title }): React.ReactElement => {
+export const IsLoading: React.FC<React.PropsWithChildren<IProps>> = ({
+  title,
+}): React.ReactElement => {
   const [trans] = useTrans('Edit');
 
   return (

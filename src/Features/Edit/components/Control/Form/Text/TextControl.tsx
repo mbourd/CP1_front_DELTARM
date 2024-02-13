@@ -21,7 +21,7 @@ interface IProps {
   get_value_response?: any;
 }
 
-export const TextControl: React.FC<IProps> = ({
+export const TextControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   formState,

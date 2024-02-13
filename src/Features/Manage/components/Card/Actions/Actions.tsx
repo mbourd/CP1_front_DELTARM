@@ -6,11 +6,9 @@ import { BPIBadge, BPITooltip } from 'Shared/components';
 import { CommentIcon, EditIcon, UserCheckedIcon } from 'Styles';
 import { router, useTrans } from 'Services';
 
-export const Actions: React.FC<Pick<ICard, 'id' | 'comments' | 'context'>> = ({
-  id,
-  comments,
-  context,
-}): React.ReactElement => {
+export const Actions: React.FC<
+  React.PropsWithChildren<Pick<ICard, 'id' | 'comments' | 'context'>>
+> = ({ id, comments, context }): React.ReactElement => {
   const [trans] = useTrans('Manage');
   //   console.log(id);
 

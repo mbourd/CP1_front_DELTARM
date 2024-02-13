@@ -14,7 +14,7 @@ interface IProps {
   controlId: string;
 }
 
-export const RadioCompliance: React.FC<IProps> = ({
+export const RadioCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
   compliance,
   fileId,
   controlId,
