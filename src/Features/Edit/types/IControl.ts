@@ -185,9 +185,20 @@ export interface DataGridDetail {
   columns: DataGridDetailsColumnType[];
   rows: DataGridDetailsRow[];
   datagrid_options: DataGridDetailOptionsType;
-  buttons: any;
+  buttons: DataGridDetailButtonsType[];
   source: any;
 }
+export type DataGridDetailButtonsType = {
+  button_bg_color: string;
+  button_font_color: string;
+  button_id: number;
+  button_label: string;
+  button_method: 'POST' | 'GET';
+  button_order: number;
+  button_refresh_callback: boolean;
+  button_route: string;
+  button_row_selected: boolean;
+};
 export type DataGridDetailOptionsType = {
   datagrid_bg_color?: string;
   datagrid_border_color?: string;
