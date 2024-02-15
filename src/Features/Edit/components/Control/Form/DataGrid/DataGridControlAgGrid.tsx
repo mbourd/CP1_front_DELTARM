@@ -1535,36 +1535,48 @@ export const DataGridControlAgGrid: React.FC<
               </Button>
             </BPITooltip>
           )}
-          {GridDetails?.buttons?.length > 0 &&
-            GridDetails?.buttons?.map((button: any, index: number) => {
-              return (
-                <Button
-                  key={index}
-                  onClick={() =>
-                    DynamicButtonClick({
-                      button_method: button?.button_method,
-                      button_route: button?.button_route,
-                      button_refresh_callback: button?.button_refresh_callback,
-                      button_row_selected: button?.button_row_selected,
-                    })
-                  }
-                  style={{
-                    backgroundColor: button?.button_bg_color
-                      ? button?.button_bg_color
-                      : 'teal',
-                    border: 0,
-                    color: button?.button_font_color
-                      ? button?.button_font_color
-                      : 'white',
-                    margin: 5,
-                    borderRadius: 5,
-                    marginBottom: 14,
-                  }}
-                >
-                  {button?.button_label}
-                </Button>
-              );
-            })}
+          {(GridDetails?.buttons ?? []).length > 0 &&
+            (() => {
+              const reorderedDatagridBtns = [...(GridDetails?.buttons || [])];
+
+              reorderedDatagridBtns.sort((btn1, btn2) => {
+                if (btn1.button_order < btn2.button_order) return -1;
+                if (btn1.button_order > btn2.button_order) return 1;
+
+                return 0;
+              });
+
+              return reorderedDatagridBtns.map((button: any, index: number) => {
+                return (
+                  <Button
+                    key={index}
+                    onClick={() =>
+                      DynamicButtonClick({
+                        button_method: button?.button_method,
+                        button_route: button?.button_route,
+                        button_refresh_callback:
+                          button?.button_refresh_callback,
+                        button_row_selected: button?.button_row_selected,
+                      })
+                    }
+                    style={{
+                      backgroundColor: button?.button_bg_color
+                        ? button?.button_bg_color
+                        : 'teal',
+                      border: 0,
+                      color: button?.button_font_color
+                        ? button?.button_font_color
+                        : 'white',
+                      margin: 5,
+                      borderRadius: 5,
+                      marginBottom: 14,
+                    }}
+                  >
+                    {button?.button_label}
+                  </Button>
+                );
+              });
+            })()}
 
           {GridDetails?.datagrid_options?.delete_row_button_display ===
             true && (

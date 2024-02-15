@@ -17,6 +17,7 @@ import { keyCodeDefinitions } from 'cypress-real-events/keyCodeDefinitions';
 
 import { DataGridControlAgGrid } from './DataGridControlAgGrid';
 import {
+  DataGridDetailButtonsType,
   DataGridDetailsColumnType,
   DataGridDetailsRow,
   DataGridDetailsRowsCell,
@@ -414,6 +415,92 @@ describe('<DataGridControlAgGrid />', () => {
             .should('have.css', 'color', _hexToRgb(btn.button_font_color))
             .contains(btn.button_label);
         }
+      });
+  });
+
+  it('Should render extra buttons in the right order - controlExample2', function () {
+    const _buttons: DataGridDetailButtonsType[] = [
+      {
+        button_bg_color: '#2EB82E',
+        button_font_color: '#FFFFFF',
+        button_id: 1,
+        button_label: 'Declare Values',
+        button_method: 'POST',
+        button_order: 3,
+        button_refresh_callback: false,
+        button_route: '/total_energies/declare_values',
+        button_row_selected: true,
+      },
+      {
+        button_bg_color: '#2E54AA',
+        button_font_color: '#FFEEBF',
+        button_id: 1,
+        button_label: 'Other button1',
+        button_method: 'POST',
+        button_order: 1,
+        button_refresh_callback: false,
+        button_route: '/total_energies/declare_values',
+        button_row_selected: true,
+      },
+      {
+        button_bg_color: '#FD59AA',
+        button_font_color: '#FFEABF',
+        button_id: 1,
+        button_label: 'Other button2',
+        button_method: 'POST',
+        button_order: 6,
+        button_refresh_callback: false,
+        button_route: '/total_energies/declare_values',
+        button_row_selected: true,
+      },
+    ];
+    const reorderedBtns = [..._buttons];
+    const _control = {
+      ...structuredClone(controlExample2),
+      data_grid_detail: {
+        ...structuredClone(controlExample2.data_grid_detail),
+        buttons: _buttons,
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as IApiControl;
+
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    reorderedBtns.sort((btn1, btn2) => {
+      if (btn1.button_order < btn2.button_order) return -1;
+      if (btn1.button_order > btn2.button_order) return 1;
+
+      return 0;
+    });
+
+    cy.react('DataGridControlAgGrid')
+      .react('ControlLabel')
+      .next('div')
+      .within(($elDiv) => {
+        const totalButton = $elDiv.find('button').length;
+
+        cy.wrap(reorderedBtns).each(
+          (btn: DataGridDetailButtonsType, indexBtn) => {
+            cy.wrap($elDiv)
+              .react('Button')
+              .find('button')
+              .eq(totalButton - reorderedBtns.length + indexBtn)
+              .should(
+                'have.css',
+                'background-color',
+                _hexToRgb(btn.button_bg_color),
+              )
+              .should('have.css', 'color', _hexToRgb(btn.button_font_color))
+              .contains(btn.button_label);
+          },
+        );
       });
   });
 
