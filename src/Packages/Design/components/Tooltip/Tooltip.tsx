@@ -4,7 +4,7 @@ import { Tooltip as MUITooltip } from '@material-ui/core';
 import { useStyles } from './Tooltip.style';
 import { ITooltip } from './types';
 
-export const Tooltip: React.FC<ITooltip> = ({
+export const Tooltip: React.FC<React.PropsWithChildren<ITooltip>> = ({
   children,
   color = '#000000',
   bgc = '#FFFFFF',

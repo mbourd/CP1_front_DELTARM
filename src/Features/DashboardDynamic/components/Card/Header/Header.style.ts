@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { headerHeight, ICardHeader } from '../types';
 
 export const HeaderStyled = styled.header<Omit<ICardHeader, 'children'>>`

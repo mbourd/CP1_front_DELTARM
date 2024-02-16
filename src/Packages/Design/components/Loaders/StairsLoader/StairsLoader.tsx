@@ -14,7 +14,9 @@ type StairsLoaderProps = {
   size?: IStairsLoader['$size'];
 };
 
-export const StairsLoader: React.FC<StairsLoaderProps> = ({
+export const StairsLoader: React.FC<
+  React.PropsWithChildren<StairsLoaderProps>
+> = ({
   barsColor,
   ballColor,
   speed = 3.2,

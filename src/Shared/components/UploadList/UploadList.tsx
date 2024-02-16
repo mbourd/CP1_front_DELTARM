@@ -12,7 +12,7 @@ interface IProps {
   style?: React.CSSProperties;
 }
 
-export const UploadList: React.FC<IProps> = ({
+export const UploadList: React.FC<React.PropsWithChildren<IProps>> = ({
   currentUploadFile,
   handleDeleteFile,
   handleDownloadFile,

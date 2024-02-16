@@ -5,7 +5,7 @@ interface IProps {
   mode: string;
 }
 
-export const EmbeddedContent: React.FC<IProps> = ({
+export const EmbeddedContent: React.FC<React.PropsWithChildren<IProps>> = ({
   mode,
 }): React.ReactElement | null => {
   switch (mode) {

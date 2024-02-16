@@ -15,7 +15,7 @@ export const CardContext = React.createContext<ICardContext>({
   context: 'EDIT',
 });
 
-export const Card: React.FC<ICard> = ({
+export const Card: React.FC<React.PropsWithChildren<ICard>> = ({
   header,
   body,
   footer,

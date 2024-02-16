@@ -18,7 +18,7 @@ const useStyles = makeStyles<
   }),
 });
 
-export const ControlLabel: React.FC<IProps> = ({
+export const ControlLabel: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
 }): React.ReactElement => {
   const classes = useStyles({

@@ -8,10 +8,9 @@ type CustomInnerHTMLRendererPropsType = {
   fieldName: string;
 };
 
-const CustomInnerHTMLRenderer: React.FC<CustomInnerHTMLRendererPropsType> = ({
-  props,
-  fieldName,
-}) => {
+const CustomInnerHTMLRenderer: React.FC<
+  React.PropsWithChildren<CustomInnerHTMLRendererPropsType>
+> = ({ props, fieldName }) => {
   const content = (
     <div
       dangerouslySetInnerHTML={{

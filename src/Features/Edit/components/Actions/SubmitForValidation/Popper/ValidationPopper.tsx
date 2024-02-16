@@ -16,9 +16,9 @@ export interface ValidationPopperProps {
   onClose?: () => void;
 }
 
-export const ValidationPopper: React.FC<ValidationPopperProps> = ({
-  onClose,
-}): React.ReactElement => {
+export const ValidationPopper: React.FC<
+  React.PropsWithChildren<ValidationPopperProps>
+> = ({ onClose }): React.ReactElement => {
   const { request, error, callState, send, data } = useApi<any>();
   const context = useContext(EditValidationContext);
   const [openFileSelection, setopenFileSelection] = useState(false);

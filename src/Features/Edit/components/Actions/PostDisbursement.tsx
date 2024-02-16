@@ -12,7 +12,9 @@ import {
   BadRequest,
 } from 'Shared/components';
 import { GenericActionModalStyled } from '../../../../Shared/components/GenericActionModal/GenericActionModal.style';
-export const PostDisbursement: React.FC = (): React.ReactElement => {
+export const PostDisbursement: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { fileId, data } = useContext(EditValidationContext);
   const [openFileSelection, setopenFileSelection] = useState(false);

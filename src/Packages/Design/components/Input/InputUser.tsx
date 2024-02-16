@@ -3,9 +3,9 @@ import { AccountCircle } from '@material-ui/icons';
 import { IInputBase } from './types';
 import { InputBase } from './InputBase';
 
-export const InputUser: React.FC<Omit<IInputBase, 'type' | 'icon'>> = (
-  props,
-): React.ReactElement => {
+export const InputUser: React.FC<
+  React.PropsWithChildren<Omit<IInputBase, 'type' | 'icon'>>
+> = (props): React.ReactElement => {
   return (
     <InputBase
       {...props}

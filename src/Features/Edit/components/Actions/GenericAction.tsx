@@ -16,7 +16,7 @@ export interface GenericActionProps extends IButton {
   commentParam?: string;
 }
 
-export const GenericAction: FC<GenericActionProps> = ({
+export const GenericAction: FC<React.PropsWithChildren<GenericActionProps>> = ({
   action,
   color = 'info',
   type = 'alt',

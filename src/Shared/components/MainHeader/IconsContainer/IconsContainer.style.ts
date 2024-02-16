@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 export const IconsContainerStyled = styled.div`
   bottom: 0;

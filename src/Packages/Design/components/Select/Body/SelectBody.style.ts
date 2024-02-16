@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 export const SelectBodyStyled = styled.ul`
   background-color: ${({ theme }) => theme.color.white.main};

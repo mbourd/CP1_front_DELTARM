@@ -8,7 +8,7 @@ interface IProps {
   compliance: IApiComplianceFields;
 }
 
-export const ComplianceFooter: React.FC<IProps> = ({
+export const ComplianceFooter: React.FC<React.PropsWithChildren<IProps>> = ({
   compliance,
 }): React.ReactElement => {
   return (

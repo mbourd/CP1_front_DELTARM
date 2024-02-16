@@ -8,7 +8,7 @@ interface IProps {
   addComment: () => void;
 }
 
-export const FileCommentFooter: React.FC<IProps> = ({
+export const FileCommentFooter: React.FC<React.PropsWithChildren<IProps>> = ({
   addComment,
 }): React.ReactElement => {
   const addCommentApi = useApi({ promise: true });

@@ -18,7 +18,7 @@ interface IProps {
   context: 'edit' | 'validate';
 }
 
-export const SliderControl: React.FC<IProps> = ({
+export const SliderControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   formState,

@@ -2,7 +2,7 @@ import React from 'react';
 import { FormErrorStyled } from './FormError.style';
 import { IFormError } from '../types';
 
-export const FormError: React.FC<IFormError> = ({
+export const FormError: React.FC<React.PropsWithChildren<IFormError>> = ({
   children,
   className,
   style,

@@ -5,7 +5,7 @@ import { Body } from './Body/Body';
 import { Actions } from './Actions/Actions';
 import { ICard } from './types';
 
-export const Card: React.FC<ICard> = ({
+export const Card: React.FC<React.PropsWithChildren<ICard>> = ({
   id,
   color,
   comments,

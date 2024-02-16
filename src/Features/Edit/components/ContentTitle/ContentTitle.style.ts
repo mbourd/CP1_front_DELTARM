@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 export const ContentTitleStyled = styled.h2`
   background-color: ${({ theme }) => theme.color.primary.main};

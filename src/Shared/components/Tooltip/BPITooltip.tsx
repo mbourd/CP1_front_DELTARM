@@ -3,7 +3,7 @@ import { ITooltip, Tooltip } from 'Shared/components';
 import { useTheme } from 'Styles';
 
 export const BPITooltip: React.FC<
-  Pick<ITooltip, 'title' | 'placement' | 'children'>
+  React.PropsWithChildren<Pick<ITooltip, 'title' | 'placement'>>
 > = ({ title, placement, children }): React.ReactElement => {
   const theme = useTheme();
 

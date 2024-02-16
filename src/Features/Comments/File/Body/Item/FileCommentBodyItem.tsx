@@ -8,9 +8,9 @@ interface IFileCommentBodyItem {
   comment: IFileComment;
 }
 
-export const FileCommentBodyItem: React.FC<IFileCommentBodyItem> = ({
-  comment,
-}): React.ReactElement => {
+export const FileCommentBodyItem: React.FC<
+  React.PropsWithChildren<IFileCommentBodyItem>
+> = ({ comment }): React.ReactElement => {
   const lastFirst = comment.user.split(' ');
   let firstLetters = '';
   if (lastFirst.length > 0) {

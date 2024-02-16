@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 export const TabHeaderStyled = styled.div`
   margin-top: ${({ theme }) => theme.spacing.large};

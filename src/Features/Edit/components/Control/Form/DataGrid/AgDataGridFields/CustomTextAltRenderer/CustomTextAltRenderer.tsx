@@ -7,10 +7,9 @@ type CustomTextAltRendererPropsType = {
   fieldName: string;
 };
 
-const CustomTextAltRenderer: React.FC<CustomTextAltRendererPropsType> = ({
-  props,
-  fieldName,
-}) => {
+const CustomTextAltRenderer: React.FC<
+  React.PropsWithChildren<CustomTextAltRendererPropsType>
+> = ({ props, fieldName }) => {
   const content = (
     <div
       style={{

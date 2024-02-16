@@ -22,7 +22,7 @@ interface IProps {
   onClose: () => void;
 }
 
-export const SearchModal: React.FC<IProps> = ({
+export const SearchModal: React.FC<React.PropsWithChildren<IProps>> = ({
   onClose,
   open,
 }): React.ReactElement | null => {

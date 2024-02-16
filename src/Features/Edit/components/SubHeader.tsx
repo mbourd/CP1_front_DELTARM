@@ -7,7 +7,9 @@ interface IProps {
   data: IData;
 }
 
-export const SubHeader: React.FC<IProps> = ({ data }): React.ReactElement => {
+export const SubHeader: React.FC<React.PropsWithChildren<IProps>> = ({
+  data,
+}): React.ReactElement => {
   return (
     <div style={{ width: '50%', margin: 'auto' }}>
       <EditTitleFileStyled>

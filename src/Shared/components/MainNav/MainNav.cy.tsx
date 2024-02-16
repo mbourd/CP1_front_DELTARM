@@ -203,7 +203,7 @@ describe('<MainNav />', () => {
   });
 
   it('should have aditional menus if context=contr_perm', function () {
-    const DummyFC: React.FC = () => {
+    const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
       const {
         dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent,
       } = useDashboardDynamicReducer();
@@ -245,7 +245,7 @@ describe('<MainNav />', () => {
     });
   });
   it('should NOT have aditional menus if context!=contr_perm', function () {
-    const DummyFC: React.FC = () => {
+    const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
       const {
         dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent,
       } = useDashboardDynamicReducer();
@@ -307,7 +307,7 @@ describe('<MainNav />', () => {
 
       return 0;
     });
-    const DummyFC: React.FC = () => {
+    const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
       const {
         dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent,
       } = useDashboardDynamicReducer();

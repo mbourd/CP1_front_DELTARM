@@ -14,7 +14,9 @@ interface ICheckboxComplianceProps {
   uncheckedColor: keyof IColor;
 }
 
-export const CheckboxCompliance: React.FC<ICheckboxComplianceProps> = ({
+export const CheckboxCompliance: React.FC<
+  React.PropsWithChildren<ICheckboxComplianceProps>
+> = ({
   label,
   checked,
   controlId,

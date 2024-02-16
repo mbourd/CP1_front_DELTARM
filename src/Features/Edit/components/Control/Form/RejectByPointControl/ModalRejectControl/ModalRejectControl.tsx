@@ -20,7 +20,7 @@ interface IProps {
   setRejectComments: React.Dispatch<React.SetStateAction<IFileComment[]>>;
 }
 
-export const ModalRejectControl: React.FC<IProps> = ({
+export const ModalRejectControl: React.FC<React.PropsWithChildren<IProps>> = ({
   open,
   onClose,
   controlId,

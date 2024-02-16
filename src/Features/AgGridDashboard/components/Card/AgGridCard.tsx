@@ -18,7 +18,7 @@ interface ICardC {
   triggerAction: (action: IActionButton | null) => void;
 }
 
-export const AgGridCard: React.FC<ICardC> = ({
+export const AgGridCard: React.FC<React.PropsWithChildren<ICardC>> = ({
   card,
   triggerAction,
 }): React.ReactElement => {
@@ -56,10 +56,10 @@ export const AgGridCard: React.FC<ICardC> = ({
   const generateMaterialIcon = useCallback(
     (
       iconName: SvgIconComponent,
-      color,
-      size,
-      action,
-      hint,
+      color: any,
+      size: any,
+      action: any,
+      hint: any,
     ): React.ReactElement | null => {
       // @ts-ignore
       const Icon = icons[iconName];

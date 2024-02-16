@@ -7,7 +7,7 @@ export type RouterQueriesType = Record<string, any>;
 export interface IDispatchRoute {
   url: string;
   router: IRouter;
-  notFoundComponent: React.ReactNode;
+  notFoundComponent: React.FC<any>;
 }
 
 export interface IRouter {
@@ -74,7 +74,7 @@ export interface IRouteDef {
   /**
    * Component to render if path value matches. Null value can be set.
    */
-  component: React.ReactNode;
+  component: React.FC<any>;
   /**
    * @see https://reactrouter.com/web/api/Route/exact-bool
    */

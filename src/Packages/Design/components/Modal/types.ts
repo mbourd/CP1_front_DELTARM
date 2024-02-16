@@ -30,10 +30,6 @@ export interface IModal {
    */
   onClose?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   /**
-   * Modal content.
-   */
-  children?: NonNullable<ReactNode>;
-  /**
    * Open / close modal.
    */
   open?: boolean;

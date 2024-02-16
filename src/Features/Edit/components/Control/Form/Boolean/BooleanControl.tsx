@@ -21,7 +21,7 @@ interface IProps {
   context: 'edit' | 'validate';
 }
 
-export const BooleanControl: React.FC<IProps> = ({
+export const BooleanControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   formState,

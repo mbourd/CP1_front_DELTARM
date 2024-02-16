@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { footerHeight, ICardFooter } from '../types';
 
 export const FooterStyled = styled.footer<Pick<ICardFooter, 'color'>>`
