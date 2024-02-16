@@ -4,7 +4,7 @@ import { BodyStyled } from './Body.style';
 import { ICard } from '../types';
 import { FormLabel, FormText } from 'Shared/components';
 
-export const Body: React.FC<Pick<ICard, 'data'>> = ({
+export const Body: React.FC<React.PropsWithChildren<Pick<ICard, 'data'>>> = ({
   data,
 }): React.ReactElement => {
   return (

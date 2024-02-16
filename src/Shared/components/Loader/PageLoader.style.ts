@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 export const PageLoaderStyled = styled.div`
   font-family: ${({ theme }) => theme.font.medium.italic};

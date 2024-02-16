@@ -12,7 +12,7 @@ import { Popper } from './Popper';
 
 describe('<Popper />', () => {
   it('Should render', () => {
-    const DummyFC: React.FC = () => {
+    const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
       const ref = useRef<Element | null>(null);
       const [anchorEl, setAnchorEl] = useState<HTMLSpanElement | null>(null);
 
@@ -49,7 +49,7 @@ describe('<Popper />', () => {
 
   it('Should render children as text', () => {
     const children = 'Popper Body';
-    const DummyFC: React.FC = () => {
+    const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
       const ref = useRef<Element | null>(null);
       const [anchorEl, setAnchorEl] = useState<HTMLSpanElement | null>(null);
 
@@ -85,10 +85,10 @@ describe('<Popper />', () => {
   });
   it('Should render children as React.FC', () => {
     const content = 'Dummy Children';
-    const Children: React.FC = () => {
+    const Children: React.FC<React.PropsWithChildren<unknown>> = () => {
       return <>{content}</>;
     };
-    const DummyFC: React.FC = () => {
+    const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
       const ref = useRef<Element | null>(null);
       const [anchorEl, setAnchorEl] = useState<HTMLSpanElement | null>(null);
 
@@ -125,10 +125,10 @@ describe('<Popper />', () => {
 
   it('Should be visible and not visible on click away', () => {
     const content = 'Dummy Children';
-    const Children: React.FC = () => {
+    const Children: React.FC<React.PropsWithChildren<unknown>> = () => {
       return <>{content}</>;
     };
-    const DummyFC: React.FC = () => {
+    const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
       const ref = useRef<Element | null>(null);
       const [anchorEl, setAnchorEl] = useState<HTMLSpanElement | null>(null);
 

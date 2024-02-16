@@ -1,6 +1,6 @@
 import React from 'react';
 import { RecoilRoot } from 'recoil';
-import { ThemeProvider } from 'styled-components/macro';
+import { ThemeProvider } from 'styled-components';
 import { BPITheme, BPIGlobalStyle, ITheme } from '../../src/Packages/Design';
 import { AppContext, AppContextType } from '../../src/AppContext';
 import { Provider } from 'react-redux';
@@ -11,14 +11,15 @@ import {
 } from '../../src/Services';
 
 type SetupTestsComponentProps = {
-  children: React.ReactNode;
   theme?: ITheme;
   style?: React.CSSProperties;
   appContextValue?: AppContextType & Record<'ForCompTests', Record<any, any>>;
   securityContextValue?: ISecurityProviderContext;
 };
 
-const SetupTestsComponents: React.FC<SetupTestsComponentProps> = ({
+const SetupTestsComponents: React.FC<
+  React.PropsWithChildren<SetupTestsComponentProps>
+> = ({
   children,
   theme,
   style,

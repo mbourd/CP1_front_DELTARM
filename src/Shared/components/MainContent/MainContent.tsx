@@ -4,7 +4,9 @@ import { DispatchRoute, router } from 'Services';
 import { MainContentStyled } from './MainContent.style';
 import { NotFoundComponent } from '../NotFoundComponent/NotFoundComponent';
 
-export const MainContent: React.FC = (): React.ReactElement => {
+export const MainContent: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
   return (
     <MainContentStyled id={'main-content'}>
       <Route

@@ -4,7 +4,9 @@ import { Error } from '../Error';
 import icon from './success.svg';
 import { RequestSuccessTitleStyled } from './RequestSuccess.style';
 
-export const RequestSuccess: React.FC<IError> = (props): React.ReactElement => {
+export const RequestSuccess: React.FC<React.PropsWithChildren<IError>> = (
+  props,
+): React.ReactElement => {
   const title = (
     <RequestSuccessTitleStyled>{props.title}</RequestSuccessTitleStyled>
   );

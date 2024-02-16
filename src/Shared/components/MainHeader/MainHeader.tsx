@@ -7,7 +7,9 @@ import { router, SecurityContext, useApi, useTrans } from 'Services';
 import { IconsContainer } from './IconsContainer/IconsContainer';
 import { MainNav, useTransMainHeader } from '..';
 
-export const MainHeader: React.FC = (): React.ReactElement => {
+export const MainHeader: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
   const { trans, currentLang, changeLang } = useTransMainHeader();
   const [optionValue, setOptionValue] = useState(currentLang);
   const dashboardPath = router.generatePath('dashboard');

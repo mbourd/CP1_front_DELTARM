@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 const CustomFinancialSpanStyled = styled.span<{
   $font_size: string;

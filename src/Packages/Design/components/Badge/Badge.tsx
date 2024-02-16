@@ -3,7 +3,7 @@ import { Badge as MUIBadge } from '@material-ui/core';
 import { IBadge } from './types';
 import { useStyles } from './Badge.style';
 
-export const Badge: React.FC<IBadge> = ({
+export const Badge: React.FC<React.PropsWithChildren<IBadge>> = ({
   children,
   showZero = false,
   content,

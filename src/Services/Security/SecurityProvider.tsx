@@ -25,10 +25,9 @@ export interface ISecurityProviderProps {
   security: ISecurity;
 }
 
-export const SecurityProvider: React.FC<ISecurityProviderProps> = ({
-  security,
-  children,
-}): React.ReactElement => {
+export const SecurityProvider: React.FC<
+  React.PropsWithChildren<ISecurityProviderProps>
+> = ({ security, children }): React.ReactElement => {
   const [user, setUser] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
 

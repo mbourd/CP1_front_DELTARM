@@ -4,7 +4,7 @@ import * as icons from '@mui/icons-material';
 import { IActionButton } from 'Features/DashboardDynamic/components/types';
 import { CustomIconRendererStyled } from './CustomIconRenderer.style';
 
-const CustomIconRenderer: React.FC<any> = ({
+const CustomIconRenderer: React.FC<React.PropsWithChildren<any>> = ({
   props,
   // control,
   // fileId,

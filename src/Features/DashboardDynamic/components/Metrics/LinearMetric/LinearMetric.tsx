@@ -3,7 +3,7 @@ import { ILinearMetric } from './types';
 import { BPITooltip } from '../../../../../Shared/components';
 import { CustomLinearProgress } from './LinearMetric.style';
 
-export const LinearMetric: React.FC<ILinearMetric> = ({
+export const LinearMetric: React.FC<React.PropsWithChildren<ILinearMetric>> = ({
   variant,
   value,
   hint,

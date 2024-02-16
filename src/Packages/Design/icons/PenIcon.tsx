@@ -1,7 +1,9 @@
 import React from 'react';
 import { SvgIcon, SvgIconProps } from '@material-ui/core';
 
-export const PenIcon: React.FC<SvgIconProps> = (props) => {
+export const PenIcon: React.FC<React.PropsWithChildren<SvgIconProps>> = (
+  props,
+) => {
   return (
     <SvgIcon viewBox={'0 0 24 24'} {...props}>
       <path d="M1.915,17.329L1.02,21.804c-0.066,0.328,0.037,0.667,0.273,0.903C1.482,22.896,1.737,23,2,23 c0.065,0,0.131-0.006,0.196-0.02l4.475-0.895L1.915,17.329z" />

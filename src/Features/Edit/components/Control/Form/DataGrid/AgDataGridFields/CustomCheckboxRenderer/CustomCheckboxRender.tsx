@@ -11,12 +11,9 @@ type CustomCheckboxRenderPropsType = {
   seterrors: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const CustomCheckboxRender: React.FC<CustomCheckboxRenderPropsType> = ({
-  props,
-  fileId,
-  jwt,
-  seterrors,
-}) => {
+const CustomCheckboxRender: React.FC<
+  React.PropsWithChildren<CustomCheckboxRenderPropsType>
+> = ({ props, fileId, jwt, seterrors }) => {
   // console.log(field_data);
   const data: any = props?.colDef?.field?.split('.')[0];
   const field_data = Object.entries(props?.data).reduce(

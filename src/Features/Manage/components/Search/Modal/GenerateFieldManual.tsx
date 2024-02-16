@@ -9,7 +9,7 @@ interface IProps {
   setListMissingField: (values: Record<string, true>, key: any) => void;
   control: Control<Record<string, any>>;
 }
-export const GenerateFieldManual: React.FC<IProps> = ({
+export const GenerateFieldManual: React.FC<React.PropsWithChildren<IProps>> = ({
   field,
   handleLeaveField,
   setListMissingField,

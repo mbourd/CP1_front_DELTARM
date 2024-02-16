@@ -7,7 +7,9 @@ interface IProps {
   text: string;
 }
 
-export const PageLoader: React.FC<IProps> = ({ text }): React.ReactElement => {
+export const PageLoader: React.FC<React.PropsWithChildren<IProps>> = ({
+  text,
+}): React.ReactElement => {
   const theme = useTheme();
 
   return (

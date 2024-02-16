@@ -20,7 +20,7 @@ type PopperProps = {
   zIndex?: IPopper['zIndex'];
 };
 
-export const Popper: React.FC<PopperProps> = ({
+export const Popper: React.FC<React.PropsWithChildren<PopperProps>> = ({
   children,
   element,
   border,
@@ -38,6 +38,7 @@ export const Popper: React.FC<PopperProps> = ({
       anchorEl={element}
       placement={placement}
       style={{ zIndex: zIndex }}
+      placeholder={''}
     >
       {onClickAway ? (
         <ClickAwayListener onClickAway={onClickAway}>

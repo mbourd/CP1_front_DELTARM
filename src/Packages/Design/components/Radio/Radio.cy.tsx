@@ -123,7 +123,7 @@ describe('<Radio />', () => {
   });
 
   it('Should render children', () => {
-    const DummyFC: React.FC = () => {
+    const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
       return <div>Hello</div>;
     };
     cy.mount(
