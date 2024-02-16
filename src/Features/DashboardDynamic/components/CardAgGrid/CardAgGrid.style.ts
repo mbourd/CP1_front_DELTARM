@@ -24,6 +24,14 @@ const CardAgGridStyled = styled.div<CardAgGridStyledProps>`
     }
   }
 
+  .ag-floating-filter {
+    border-top: none !important;
+    border-right: solid 1px rgba(186, 191, 199, 0.5) !important;
+  }
+  .ag-floating-filter-body {
+    top: -0.172rem !important;
+  }
+
   .ag-row {
     /* height: 140px; */
   }

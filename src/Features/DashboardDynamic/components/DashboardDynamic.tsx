@@ -25,7 +25,6 @@ import { useActionButton } from '../../../Packages/Helpers/src/useActionButton';
 import { useRecoilValue } from 'recoil';
 import { IDataModal } from '../../ModalDynamic/components/types';
 import { NoData } from './NoData';
-import { AgGridCard } from './Card/AgGridCard';
 import { useTrans } from '../../../Services';
 import { CardAgGrid } from './CardAgGrid/CardAgGrid';
 import { useDashboardDynamicReducer } from '../dashboardDynamic.reducer';
@@ -156,27 +155,19 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
                   xs={12}
                   md={6}
                   key={index}
-                  style={{ height: '400px' }}
+                  style={{ height: '500px' }}
                 >
-                  <Card card={card} key={index} triggerAction={actionButton} />
-                </Grid>
-              ))}
-            {/* {response?.data?.ag_cards?.visible &&
-                response?.data.ag_cards.card.map((card, index) => (
-                  <Grid
-                    item
-                    xs={12}
-                    md={6}
-                    key={index}
-                    style={{ height: '400px' }}
-                  >
-                    <AgGridCard
+                  {card.version === 1 ? (
+                    <CardAgGrid card={card} triggerAction={actionButton} />
+                  ) : (
+                    <Card
                       card={card}
                       key={index}
                       triggerAction={actionButton}
                     />
-                  </Grid>
-                ))} */}
+                  )}
+                </Grid>
+              ))}
           </Grid>
           {isModalOpen && modal ? (
             <ModalDynamic
