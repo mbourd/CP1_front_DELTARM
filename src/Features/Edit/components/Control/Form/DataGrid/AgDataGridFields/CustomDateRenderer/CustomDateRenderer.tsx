@@ -1,7 +1,7 @@
 import React from 'react';
 import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
 
-const CustomDateRenderer: React.FC<any> = ({
+const CustomDateRenderer: React.FC<React.PropsWithChildren<any>> = ({
   props,
   control,
   fileId,
@@ -43,14 +43,7 @@ const CustomDateRenderer: React.FC<any> = ({
       <input
         type="date"
         onChange={checkedHandler}
-        disabled={
-          props?.data?.row_editable
-            ? false
-            : field_data?.control_editable === false
-            ? true
-            : false
-        }
-        // id="date"
+        disabled={!props?.data?.row_editable || !field_data?.control_editable}
         style={{
           backgroundColor: 'transparent',
           fontSize: `${control?.data_grid_detail?.datagrid_options?.datagrid_font_size}px`,

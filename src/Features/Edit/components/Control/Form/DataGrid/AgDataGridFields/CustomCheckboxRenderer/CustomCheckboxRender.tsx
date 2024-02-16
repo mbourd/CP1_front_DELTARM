@@ -11,12 +11,9 @@ type CustomCheckboxRenderPropsType = {
   seterrors: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const CustomCheckboxRender: React.FC<CustomCheckboxRenderPropsType> = ({
-  props,
-  fileId,
-  jwt,
-  seterrors,
-}) => {
+const CustomCheckboxRender: React.FC<
+  React.PropsWithChildren<CustomCheckboxRenderPropsType>
+> = ({ props, fileId, jwt, seterrors }) => {
   // console.log(field_data);
   const data: any = props?.colDef?.field?.split('.')[0];
   const field_data = Object.entries(props?.data).reduce(
@@ -84,11 +81,7 @@ const CustomCheckboxRender: React.FC<CustomCheckboxRenderPropsType> = ({
                   : false
               }
               disabled={
-                props?.data?.row_editable
-                  ? false
-                  : field_data?.control_editable === false
-                  ? true
-                  : false
+                !props?.data?.row_editable || !field_data?.control_editable
               }
               name={option?.choice_id}
               // id="date"

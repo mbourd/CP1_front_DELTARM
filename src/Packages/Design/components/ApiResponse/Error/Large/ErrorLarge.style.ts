@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 export const ErrorLargeStyled = styled.div`
   text-align: center;

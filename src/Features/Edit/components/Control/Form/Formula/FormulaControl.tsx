@@ -18,7 +18,7 @@ interface IProps {
   context: 'edit' | 'validate';
 }
 
-export const FormulaControl: React.FC<IProps> = ({
+export const FormulaControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   formState,

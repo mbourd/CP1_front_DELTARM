@@ -13,6 +13,7 @@ import { minMax } from '../../../../../../Packages/Helpers/src/minMax';
 import useFocus from '../../../../../../Packages/Helpers/src/useFocus';
 import { RejectControl } from '../RejectByPointControl/RejectControl';
 import { numberWithSpaces } from '../../../../../../Packages/Helpers/src/numberWithSpaces';
+import { useTrans } from '../../../../../../Services';
 
 interface IProps {
   control: IApiControl;
@@ -22,7 +23,7 @@ interface IProps {
   context: 'edit' | 'validate';
 }
 
-export const FinancialControl: React.FC<IProps> = ({
+export const FinancialControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   formState,
@@ -30,7 +31,11 @@ export const FinancialControl: React.FC<IProps> = ({
   context,
 }): React.ReactElement => {
   const { send, error } = useApi<void>();
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(
+    control.mandatory && control.editable && !control.control_value
+      ? 'Valeur obligatoire'
+      : '',
+  );
   const [currentValue, setCurrentValue] = useState(control.control_value);
   const [isRejected, setIsRejected] = useState(
     control.control_rejectable?.is_rejected
@@ -39,6 +44,7 @@ export const FinancialControl: React.FC<IProps> = ({
   );
   const [inputRef, setInputFocus] = useFocus();
   const { currentRoute } = useRouter();
+  const [trans] = useTrans('Edit');
 
   useEffect(() => {
     setCurrentValue(control.control_value);
@@ -98,6 +104,15 @@ export const FinancialControl: React.FC<IProps> = ({
         return;
       }
 
+      if (!checkIfSameValues(value, currentValue)) {
+        setErrorMessage(null);
+        if (control.mandatory && !value.trim()) {
+          setErrorMessage('Valeur obligatoire');
+        }
+
+        return;
+      }
+
       setErrorMessage(null);
 
       if (control.mandatory && !value.trim()) {
@@ -129,17 +144,9 @@ export const FinancialControl: React.FC<IProps> = ({
       setCurrentValue,
       control.control_options,
       setInputFocus,
+      trans,
     ],
   );
-
-  useEffect(() => {
-    if (control.mandatory && control.editable && !currentValue) {
-      setErrorMessage('Valeur obligatoire');
-    }
-    if (!control.mandatory) {
-      setErrorMessage(null);
-    }
-  }, [control.mandatory, control.editable, currentValue]);
 
   useEffect(() => {
     if (error) {

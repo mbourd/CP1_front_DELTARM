@@ -13,7 +13,9 @@ import {
 } from 'Shared/components';
 import { GenericActionModalStyled } from '../../../../Shared/components/GenericActionModal/GenericActionModal.style';
 
-export const NewDisbursement: React.FC = (): React.ReactElement => {
+export const NewDisbursement: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { fileId, data } = useContext(EditValidationContext);
   const [openFileSelection, setopenFileSelection] = useState(false);

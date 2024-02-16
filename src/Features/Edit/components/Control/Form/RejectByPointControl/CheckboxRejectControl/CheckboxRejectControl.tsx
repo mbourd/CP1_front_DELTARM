@@ -15,7 +15,9 @@ interface ICheckboxRejectedProps {
   setRejectComments: React.Dispatch<React.SetStateAction<IFileComment[]>>;
 }
 
-export const CheckboxRejectControl: React.FC<ICheckboxRejectedProps> = ({
+export const CheckboxRejectControl: React.FC<
+  React.PropsWithChildren<ICheckboxRejectedProps>
+> = ({
   isRejected,
   setIsRejected,
   controlId,

@@ -17,10 +17,9 @@ export interface FullSearchModalProps {
   onClose?: () => void;
 }
 
-export const FullSearchModal: FC<FullSearchModalProps> = ({
-  search,
-  onClose,
-}): React.ReactElement => {
+export const FullSearchModal: FC<
+  React.PropsWithChildren<FullSearchModalProps>
+> = ({ search, onClose }): React.ReactElement => {
   const { send, data } = useApi<IFileSearchFullResult[]>();
 
   useEffect(() => {

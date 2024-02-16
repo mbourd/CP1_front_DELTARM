@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 export const BreadCrumbStyled = styled.div`
   background-color: ${({ theme }) => theme.color.background.main};

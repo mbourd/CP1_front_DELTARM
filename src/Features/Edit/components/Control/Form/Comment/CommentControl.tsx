@@ -18,7 +18,7 @@ interface IProps {
   context: 'edit' | 'validate';
 }
 
-export const CommentControl: React.FC<IProps> = ({
+export const CommentControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   formState,

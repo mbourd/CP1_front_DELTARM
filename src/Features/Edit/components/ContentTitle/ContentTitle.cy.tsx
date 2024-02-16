@@ -22,7 +22,7 @@ describe('<ContentTitle />', () => {
   });
 
   it('should render React.FC as children', () => {
-    const DummyFC: React.FC = () => {
+    const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
       return <div id="dummyfcc">Hello world</div>;
     };
     cy.mount(

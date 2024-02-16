@@ -18,7 +18,7 @@ interface IProps {
   mandatory: boolean;
 }
 
-export const DataGridBoolean: React.FC<IProps> = ({
+export const DataGridBoolean: React.FC<React.PropsWithChildren<IProps>> = ({
   value,
   fileId,
   controlId,

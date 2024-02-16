@@ -100,9 +100,9 @@ const CustomTooltip = (props: any & { tooltip: string }) => {
         <p>
           Previous Value:
           {data?.component === 'decimal' ||
-          'integer' ||
-          'financial' ||
-          'percent'
+          data?.component === 'integer' ||
+          data?.component === 'financial' ||
+          data?.component === 'percent'
             ? data?.component === 'financial'
               ? `${props?.colDef?.currency_symbol}${kFormatter(
                   data?.reference_value,
@@ -126,7 +126,9 @@ const CustomTooltip = (props: any & { tooltip: string }) => {
   }
 };
 
-export const DataGridControlAgGrid: React.FC<IProps> = ({
+export const DataGridControlAgGrid: React.FC<
+  React.PropsWithChildren<IProps>
+> = ({
   control,
   fileId,
   rowHeight,
@@ -150,7 +152,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   const [errors, setErrors] = useState<string>('');
   const [GridDetails, setGridDetails] = useState(control.data_grid_detail);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selected] = useState(false);
   const [local_text] = useState(
     currentLang === 'en' ? AG_GRID_LOCALE_EN : AG_GRID_LOCALE_FR,
   );
@@ -244,7 +245,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               singleClickEdit: false,
               tooltipField: g?.field,
               headerTooltip: g?.headerName,
-              editable: true,
+              editable: false,
               cellStyle: (props: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 return (
@@ -1045,7 +1046,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   }, [GridDetails?.source, control.control_id, fileId, jwt, selectedRows]);
 
   const onCellValueChanged = useCallback(
-    (event) => {
+    (event: any) => {
       const data = event?.colDef?.field?.split('.')[0];
 
       const field_data = event?.data[data];
@@ -1099,9 +1100,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       }
       if (
         field_data?.component === 'financial' ||
-        'decimal' ||
-        'integer' ||
-        'percent'
+        field_data?.component === 'decimal' ||
+        field_data?.component === 'integer' ||
+        field_data?.component === 'percent'
       ) {
         if (
           (field_data?.control_options?.min_value ||
@@ -1209,7 +1210,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         if (column?.field_type !== 'checkbox_select_datagrid') {
           return;
         } else {
-          gridRef.current.api.forEachNodeAfterFilterAndSort(
+          gridRef.current.api?.forEachNodeAfterFilterAndSort(
             (rowNode: RowNode) => {
               rowNode.setDataValue(
                 `${control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref}.value`,
@@ -1218,7 +1219,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             },
           );
 
-          gridRef.current.api.refreshCells({
+          gridRef.current.api?.refreshCells({
             force: true,
           });
         }
@@ -1386,9 +1387,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             responseType: 'json',
           },
         );
-
-        if (response) {
-        }
       } catch (error) {
         setErrors("Une erreur s'est produite");
         setTimeout(() => {
@@ -1417,7 +1415,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   };
 
   const onBodyScroll = useCallback(
-    async (e) => {
+    async (e: any) => {
       if (e.direction === 'horizontal') {
         const headerElements = document.querySelectorAll(
           '.ag-theme-alpine .ag-header-cell',
@@ -1537,36 +1535,48 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               </Button>
             </BPITooltip>
           )}
-          {GridDetails?.buttons?.length > 0 &&
-            GridDetails?.buttons?.map((button: any, index: number) => {
-              return (
-                <Button
-                  key={index}
-                  onClick={() =>
-                    DynamicButtonClick({
-                      button_method: button?.button_method,
-                      button_route: button?.button_route,
-                      button_refresh_callback: button?.button_refresh_callback,
-                      button_row_selected: button?.button_row_selected,
-                    })
-                  }
-                  style={{
-                    backgroundColor: button?.button_bg_color
-                      ? button?.button_bg_color
-                      : 'teal',
-                    border: 0,
-                    color: button?.button_font_color
-                      ? button?.button_font_color
-                      : 'white',
-                    margin: 5,
-                    borderRadius: 5,
-                    marginBottom: 14,
-                  }}
-                >
-                  {button?.button_label}
-                </Button>
-              );
-            })}
+          {(GridDetails?.buttons ?? []).length > 0 &&
+            (() => {
+              const reorderedDatagridBtns = [...(GridDetails?.buttons || [])];
+
+              reorderedDatagridBtns.sort((btn1, btn2) => {
+                if (btn1.button_order < btn2.button_order) return -1;
+                if (btn1.button_order > btn2.button_order) return 1;
+
+                return 0;
+              });
+
+              return reorderedDatagridBtns.map((button: any, index: number) => {
+                return (
+                  <Button
+                    key={index}
+                    onClick={() =>
+                      DynamicButtonClick({
+                        button_method: button?.button_method,
+                        button_route: button?.button_route,
+                        button_refresh_callback:
+                          button?.button_refresh_callback,
+                        button_row_selected: button?.button_row_selected,
+                      })
+                    }
+                    style={{
+                      backgroundColor: button?.button_bg_color
+                        ? button?.button_bg_color
+                        : 'teal',
+                      border: 0,
+                      color: button?.button_font_color
+                        ? button?.button_font_color
+                        : 'white',
+                      margin: 5,
+                      borderRadius: 5,
+                      marginBottom: 14,
+                    }}
+                  >
+                    {button?.button_label}
+                  </Button>
+                );
+              });
+            })()}
 
           {GridDetails?.datagrid_options?.delete_row_button_display ===
             true && (

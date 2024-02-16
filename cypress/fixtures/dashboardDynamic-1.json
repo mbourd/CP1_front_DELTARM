@@ -1,0 +1,158 @@
+{
+  "data": {
+    "btns": [
+      {
+        "action": {
+          "endpoint": "/total_energies/init_db",
+          "method": "POST",
+          "params": null
+        },
+        "bg_color": "#AD6910",
+        "btn_lib": "Init DB",
+        "font_color": "#3D3117",
+        "hover_color": "#3D3117"
+      }
+    ],
+    "cards": {
+      "card": [
+        {
+          "cols": {
+            "header_visible": false,
+            "values": [
+              {
+                "border_right": true,
+                "dataKey": "Block - Company",
+                "filter": true,
+                "floating_filter": false,
+                "header": "Block - Company",
+                "label": "Block - Company",
+                "width": 350
+              },
+              {
+                "border_right": true,
+                "dataKey": "Country",
+                "filter": true,
+                "floating_filter": false,
+                "header": "Country",
+                "label": "Country",
+                "width": 150
+              },
+              {
+                "border_right": true,
+                "dataKey": "Declaration Period",
+                "filter": true,
+                "floating_filter": false,
+                "header": "Declaration Period",
+                "label": "Declaration Period",
+                "width": 120
+              },
+              {
+                "border_right": false,
+                "dataKey": " ",
+                "filter": true,
+                "floating_filter": false,
+                "header": " ",
+                "label": " ",
+                "width": 60
+              }
+            ]
+          },
+          "display": {
+            "page_nb_rows": null,
+            "type": "list"
+          },
+          "lines": {
+            "border_bottom": true,
+            "values": []
+          },
+          "title": {
+            "bg_color": "#2ECC71",
+            "font_color": "#FFFFFF",
+            "lib": "0 VALUE TO BE DECLARED"
+          },
+          "version": 1
+        }
+      ],
+      "visible": true
+    },
+    "menus": [
+      {
+        "action": {
+          "endpoint": "/modal/TE_import_level_6",
+          "method": "GET",
+          "params": null
+        },
+        "menu_lib": "Import Objects",
+        "menu_order": 1
+      }
+    ],
+    "metrics": {
+      "indicator": [],
+      "visible": false
+    },
+    "search_bar": {
+      "btn_lib": "Search",
+      "options": [
+        {
+          "action": {
+            "endpoint": "/contr_perm/get_search_total_all?value=",
+            "method": "GET",
+            "params": null
+          },
+          "lib": "All",
+          "placeholder": "Search for Field / Block / Company",
+          "regex": null,
+          "regex_msg": null
+        },
+        {
+          "action": {
+            "endpoint": "/contr_perm/get_search_total_field?value=",
+            "method": "GET",
+            "params": null
+          },
+          "lib": "Field",
+          "placeholder": "Search for Field",
+          "regex": null,
+          "regex_msg": null
+        },
+        {
+          "action": {
+            "endpoint": "/contr_perm/get_search_total_block?value=",
+            "method": "GET",
+            "params": null
+          },
+          "lib": "Block",
+          "placeholder": "Search for Block",
+          "regex": null,
+          "regex_msg": null
+        },
+        {
+          "action": {
+            "endpoint": "/contr_perm/get_search_total_company?value=",
+            "method": "GET",
+            "params": null
+          },
+          "lib": "Company",
+          "placeholder": "Search for Company",
+          "regex": null,
+          "regex_msg": null
+        }
+      ],
+      "search_bar": true
+    },
+    "subtitle": {
+      "font-color": null,
+      "font-size": null,
+      "lib": null,
+      "visible": false
+    },
+    "title": {
+      "font-color": null,
+      "font-size": null,
+      "lib": null,
+      "visible": false
+    }
+  },
+  "route_front": "/",
+  "target": "main"
+}

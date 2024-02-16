@@ -6,7 +6,6 @@ export const headerHeight = 50;
 export const footerHeight = 30;
 
 export interface ICardHeader {
-  children: React.ReactNode;
   color: string;
 }
 
@@ -25,7 +24,6 @@ export interface ICardBody {
 }
 
 export interface ICardFooter {
-  children: React.ReactNode;
   color: string;
   state: number;
   role: number;

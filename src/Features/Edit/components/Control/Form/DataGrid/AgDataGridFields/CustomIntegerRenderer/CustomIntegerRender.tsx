@@ -3,7 +3,7 @@ import { CustomIntegerRendererStyled } from './CustomIntegerRenderer.style';
 import { formatDecimalDigit, kFormatter } from 'Services';
 import BigNumber from 'bignumber.js';
 
-const CustomIntegerRenderer: React.FC<any> = ({
+const CustomIntegerRenderer: React.FC<React.PropsWithChildren<any>> = ({
   props,
   // field_data,
   // control,

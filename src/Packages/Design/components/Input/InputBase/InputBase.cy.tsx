@@ -76,7 +76,7 @@ describe('<InputBase />', () => {
   });
 
   it('Should render a ReactNode from icon props', () => {
-    const DummyFC: React.FC = () => {
+    const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
       return <>hello</>;
     };
 

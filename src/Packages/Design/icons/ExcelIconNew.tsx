@@ -1,7 +1,9 @@
 import React from 'react';
 import { SvgIcon, SvgIconProps } from '@material-ui/core';
 
-export const ExcelIconNew: React.FC<SvgIconProps> = (props) => {
+export const ExcelIconNew: React.FC<React.PropsWithChildren<SvgIconProps>> = (
+  props,
+) => {
   return (
     <SvgIcon viewBox={'0 0 48 48'} {...props}>
       <path

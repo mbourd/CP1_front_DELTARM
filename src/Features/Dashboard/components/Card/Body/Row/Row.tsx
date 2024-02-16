@@ -5,7 +5,7 @@ import { RowStyled } from './Row.style';
 import { ICardBodyRow } from '../../types';
 import { router, useTrans } from 'Services';
 
-export const Row: React.FC<ICardBodyRow> = ({
+export const Row: React.FC<React.PropsWithChildren<ICardBodyRow>> = ({
   count,
   text,
   stage,

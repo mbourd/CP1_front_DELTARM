@@ -21,7 +21,7 @@ interface IProps {
   get_value_response?: any;
 }
 
-export const TextControl: React.FC<IProps> = ({
+export const TextControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   formState,
@@ -31,7 +31,11 @@ export const TextControl: React.FC<IProps> = ({
   const [trans] = useTrans('Edit');
   const { send, error } = useApi<void>();
   const [canSendApi, setCanSendApi] = useState(true);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(
+    control.mandatory && control.editable && !control.control_value
+      ? trans('mandatoryValue')
+      : '',
+  );
   const [currentValue, setCurrentValue] = useState(control.control_value);
   const [isRejected, setIsRejected] = useState(
     control.control_rejectable?.is_rejected
@@ -62,7 +66,7 @@ export const TextControl: React.FC<IProps> = ({
       if (!checkIfSameValues(value, currentValue)) {
         setErrorMessage(null);
         if (control.mandatory && !value.trim()) {
-          setErrorMessage('Valeur obligatoire');
+          setErrorMessage(trans('mandatoryValue'));
         }
 
         return;
@@ -71,7 +75,7 @@ export const TextControl: React.FC<IProps> = ({
       setErrorMessage(null);
 
       if (control.mandatory && !value.trim()) {
-        setErrorMessage('Valeur obligatoire');
+        setErrorMessage(trans('mandatoryValue'));
       }
 
       setCurrentValue(value);
@@ -101,19 +105,10 @@ export const TextControl: React.FC<IProps> = ({
   );
 
   useEffect(() => {
-    if (control.mandatory && control.editable && !currentValue) {
-      setErrorMessage('Valeur obligatoire');
-    }
-    if (!control.mandatory) {
-      setErrorMessage(null);
-    }
-  }, [control.mandatory, control.editable, currentValue]);
-
-  useEffect(() => {
     if (error) {
-      setErrorMessage("Une erreur s'est produite durant l'enregistrement");
+      setErrorMessage(trans('errorRecording'));
     }
-  }, [error]);
+  }, [error, trans]);
 
   useEffect(() => {
     if (!isRejected) {

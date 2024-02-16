@@ -1,7 +1,9 @@
 import React from 'react';
 import { SvgIcon, SvgIconProps } from '@material-ui/core';
 
-export const SortIcon: React.FC<SvgIconProps> = (props) => {
+export const SortIcon: React.FC<React.PropsWithChildren<SvgIconProps>> = (
+  props,
+) => {
   return (
     <SvgIcon viewBox={'0 0 24 24'} {...props}>
       <svg

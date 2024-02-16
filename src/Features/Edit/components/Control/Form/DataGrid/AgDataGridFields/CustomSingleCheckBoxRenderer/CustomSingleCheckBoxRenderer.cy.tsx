@@ -5,9 +5,10 @@
 // NOTE: Run CLI:
 // yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/DataGrid/AgDataGridFields/CustomSingleCheckBoxRenderer/CustomSingleCheckBoxRenderer.cy.tsx"
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SetupTestsComponents } from '../../../../../../../../../cypress/utils/SetupTestsComponents';
 import CustomSingleCheckboxRender from './CustomSingleCheckBoxRenderer';
+import { RowNode } from 'ag-grid-community';
 
 describe('<CustomSingleCheckboxRender />', () => {
   it('Should render', () => {
@@ -21,7 +22,13 @@ describe('<CustomSingleCheckboxRender />', () => {
 
     cy.mount(
       <SetupTestsComponents>
-        <CustomSingleCheckboxRender props={props} />
+        <CustomSingleCheckboxRender
+          props={props}
+          selectedRows={[]}
+          setSelectedRows={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
@@ -38,7 +45,13 @@ describe('<CustomSingleCheckboxRender />', () => {
 
     cy.mount(
       <SetupTestsComponents>
-        <CustomSingleCheckboxRender props={props} />
+        <CustomSingleCheckboxRender
+          props={props}
+          selectedRows={[]}
+          setSelectedRows={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
@@ -48,17 +61,25 @@ describe('<CustomSingleCheckboxRender />', () => {
   });
 
   it('Should be checked', () => {
+    const node = {} as RowNode;
     const props = {
       data: { row_editable: true },
       value: '1',
       setValue: () => {
         return undefined;
       },
+      node,
     };
 
     cy.mount(
       <SetupTestsComponents>
-        <CustomSingleCheckboxRender props={props} />
+        <CustomSingleCheckboxRender
+          props={props}
+          selectedRows={[node]}
+          setSelectedRows={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
@@ -77,7 +98,13 @@ describe('<CustomSingleCheckboxRender />', () => {
 
     cy.mount(
       <SetupTestsComponents>
-        <CustomSingleCheckboxRender props={props} />
+        <CustomSingleCheckboxRender
+          props={props}
+          selectedRows={[]}
+          setSelectedRows={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
@@ -86,10 +113,13 @@ describe('<CustomSingleCheckboxRender />', () => {
       .should('not.have.attr', 'checked');
   });
 
-  it('Should change value', () => {
+  it('Should be able to change to checked/unchecked', () => {
     let val = '1';
-    const DummyFC: React.FC = () => {
+    let selected: RowNode[] = [];
+    const node = {} as RowNode;
+    const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
       const [value, setValue] = useState(val);
+      const [selectedRows, setSelectedRows] = useState<RowNode[]>([node]);
       const props = {
         data: { row_editable: true },
         value: value,
@@ -98,11 +128,20 @@ describe('<CustomSingleCheckboxRender />', () => {
 
           return setValue(v);
         },
+        node,
       };
+
+      useEffect(() => {
+        selected = selectedRows;
+      }, [selectedRows]);
 
       return (
         <SetupTestsComponents>
-          <CustomSingleCheckboxRender props={props} />
+          <CustomSingleCheckboxRender
+            props={props}
+            selectedRows={selectedRows}
+            setSelectedRows={setSelectedRows}
+          />
         </SetupTestsComponents>
       );
     };
@@ -113,14 +152,14 @@ describe('<CustomSingleCheckboxRender />', () => {
       .find('input[type="checkbox"]')
       .check()
       .then(() => {
-        expect(val).to.equal('1');
+        expect(selected).to.include(node);
       })
       .should('be.checked');
     cy.react('CustomSingleCheckboxRender')
       .find('input[type="checkbox"]')
       .uncheck()
       .then(() => {
-        expect(val).to.equal('0');
+        expect(selected).to.not.include(node);
       })
       .should('not.be.checked');
   });

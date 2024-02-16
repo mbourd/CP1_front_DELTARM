@@ -17,7 +17,7 @@ interface IProps {
   mandatory: boolean;
 }
 
-export const DataGridPercent: React.FC<IProps> = ({
+export const DataGridPercent: React.FC<React.PropsWithChildren<IProps>> = ({
   value,
   fileId,
   controlId,
@@ -43,7 +43,7 @@ export const DataGridPercent: React.FC<IProps> = ({
   }, [value]);
 
   const saveValue = useCallback(
-    (value) => {
+    (value: any) => {
       if (regex && value) {
         const regexControl = new RegExp(regex, 'i');
         if (!value.match(regexControl) && regexMsg) {

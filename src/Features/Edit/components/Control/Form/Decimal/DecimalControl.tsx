@@ -11,6 +11,7 @@ import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFo
 import { minMax } from '../../../../../../Packages/Helpers/src/minMax';
 import useFocus from '../../../../../../Packages/Helpers/src/useFocus';
 import { RejectControl } from '../RejectByPointControl/RejectControl';
+import { useTrans } from '../../../../../../Services';
 
 interface IProps {
   control: IApiControl;
@@ -20,7 +21,7 @@ interface IProps {
   context: 'edit' | 'validate';
 }
 
-export const DecimalControl: React.FC<IProps> = ({
+export const DecimalControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   formState,
@@ -28,7 +29,11 @@ export const DecimalControl: React.FC<IProps> = ({
   context,
 }): React.ReactElement => {
   const { send, error } = useApi<void>();
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(
+    control.mandatory && control.editable && !control.control_value
+      ? 'Valeur obligatoire'
+      : '',
+  );
   const [currentValue, setCurrentValue] = useState(control.control_value);
   const [isRejected, setIsRejected] = useState(
     control.control_rejectable?.is_rejected
@@ -37,6 +42,7 @@ export const DecimalControl: React.FC<IProps> = ({
   );
   const [inputRef, setInputFocus] = useFocus();
   const { currentRoute } = useRouter();
+  const [trans] = useTrans('Edit');
 
   useEffect(() => {
     setCurrentValue(control.control_value);
@@ -128,23 +134,15 @@ export const DecimalControl: React.FC<IProps> = ({
       control.mandatory,
       control.control_options,
       setInputFocus,
+      trans,
     ],
   );
-
-  useEffect(() => {
-    if (control.mandatory && control.editable && !currentValue) {
-      setErrorMessage('Valeur obligatoire');
-    }
-    if (!control.mandatory) {
-      setErrorMessage(null);
-    }
-  }, [control.mandatory, control.editable, currentValue]);
 
   useEffect(() => {
     if (error) {
       setErrorMessage("Une erreur s'est produite durant l'enregistrement");
     }
-  }, [error]);
+  }, [error, trans]);
 
   useEffect(() => {
     if (!isRejected) {

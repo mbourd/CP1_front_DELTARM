@@ -4,7 +4,9 @@ import { ErrorNoData, HeadingOne } from 'Shared/components';
 import { DashboardStyled } from './Dashboard.style';
 import { DashboardSearch } from './Search/DashboardSearch';
 
-export const NoData: React.FC = (): React.ReactElement => {
+export const NoData: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
   const [trans] = useTrans('Dashboard');
 
   return (

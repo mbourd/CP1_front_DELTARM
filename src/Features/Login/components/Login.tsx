@@ -7,7 +7,9 @@ import { LoginStyled } from './Login.style';
 import { HeadingOne, PageLoader } from 'Shared/components';
 import { useTrans, SecurityContext, router } from 'Services';
 
-const Login: React.FC = (): React.ReactElement => {
+const Login: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
   const [trans] = useTrans('Login');
   const { login } = useContext(SecurityContext);
 

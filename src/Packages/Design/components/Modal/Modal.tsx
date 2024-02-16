@@ -10,7 +10,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { useStyles } from './Modal.style';
 import { IModal } from './types';
 
-export const Modal: React.FC<IModal> = ({
+export const Modal: React.FC<React.PropsWithChildren<IModal>> = ({
   children,
   className,
   open = false,

@@ -25,12 +25,13 @@ import { useActionButton } from '../../../Packages/Helpers/src/useActionButton';
 import { useRecoilValue } from 'recoil';
 import { IDataModal } from '../../ModalDynamic/components/types';
 import { NoData } from './NoData';
-import { AgGridCard } from './Card/AgGridCard';
 import { useTrans } from '../../../Services';
 import { CardAgGrid } from './CardAgGrid/CardAgGrid';
 import { useDashboardDynamicReducer } from '../dashboardDynamic.reducer';
 
-const DashboardDynamic: React.FC = (): React.ReactElement => {
+const DashboardDynamic: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
   const { dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent } =
     useDashboardDynamicReducer();
   const [trans] = useTrans('Dashboard');
@@ -158,37 +159,17 @@ const DashboardDynamic: React.FC = (): React.ReactElement => {
                   key={index}
                   style={{ height: '500px' }}
                 >
-                  <CardAgGrid card={card} triggerAction={actionButton} />
-                </Grid>
-              ))}
-            {/* {response?.data?.cards?.visible &&
-              response?.data.cards.card.map((card, index) => (
-                <Grid
-                  item
-                  xs={12}
-                  md={6}
-                  key={index}
-                  style={{ height: '400px' }}
-                >
-                  <Card card={card} key={index} triggerAction={actionButton} />
-                </Grid>
-              ))} */}
-            {/* {response?.data?.ag_cards?.visible &&
-                response?.data.ag_cards.card.map((card, index) => (
-                  <Grid
-                    item
-                    xs={12}
-                    md={6}
-                    key={index}
-                    style={{ height: '400px' }}
-                  >
-                    <AgGridCard
+                  {card.version === 1 ? (
+                    <CardAgGrid card={card} triggerAction={actionButton} />
+                  ) : (
+                    <Card
                       card={card}
                       key={index}
                       triggerAction={actionButton}
                     />
-                  </Grid>
-                ))} */}
+                  )}
+                </Grid>
+              ))}
           </Grid>
           {isModalOpen && modal ? (
             <ModalDynamic

@@ -8,7 +8,7 @@ export interface SearchProps {
   placeholder?: string;
 }
 
-export const Search: React.FC<SearchProps> = ({
+export const Search: React.FC<React.PropsWithChildren<SearchProps>> = ({
   placeholder,
 }): React.ReactElement => {
   const theme = useTheme();

@@ -15,7 +15,9 @@ interface IComplianceProps {
   compliance: ICompliance;
 }
 
-export const Compliance: React.FC<IComplianceProps> = ({
+export const Compliance: React.FC<
+  React.PropsWithChildren<IComplianceProps>
+> = ({
   choiceIsKo,
   controlId,
   fileId,

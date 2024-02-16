@@ -3,7 +3,9 @@ import { useTrans } from 'Services';
 import { HeadingOne, PageLoader } from 'Shared/components';
 import { ManageStyled } from './Manage.style';
 
-export const IsLoading: React.FC = (): React.ReactElement => {
+export const IsLoading: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
   const [trans] = useTrans('Dashboard');
 
   return (

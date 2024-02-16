@@ -39,7 +39,7 @@ describe('<FormulaControl />', () => {
     const _control: IApiControl = {
       ...structuredClone(control),
     };
-    const DummyFC: React.FC = () => {
+    const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
       const [isOpen, setIsOpen] = useState(false);
 
       return (

@@ -14,7 +14,7 @@ type CustomCommentAndLongTextRendererPropsType = {
 };
 
 const CustomCommentAndLongTextRenderer: React.FC<
-  CustomCommentAndLongTextRendererPropsType
+  React.PropsWithChildren<CustomCommentAndLongTextRendererPropsType>
 > = ({
   old_value,
   field_data,

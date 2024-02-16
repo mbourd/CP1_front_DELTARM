@@ -16,7 +16,9 @@ type FileAuditRenderProps = {
   errorMessage: string | null;
 };
 
-const FileAuditRender: React.FC<FileAuditRenderProps> = ({
+const FileAuditRender: React.FC<
+  React.PropsWithChildren<FileAuditRenderProps>
+> = ({
   data,
   iconRef,
   anchorEl,

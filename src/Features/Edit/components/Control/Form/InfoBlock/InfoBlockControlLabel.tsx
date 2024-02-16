@@ -24,11 +24,9 @@ const useStyles = makeStyles<Theme>({
   }),
 });
 
-export const InfoBlockControlLabel: React.FC<IProps> = ({
-  control,
-  isOpen,
-  setIsOpen,
-}): React.ReactElement => {
+export const InfoBlockControlLabel: React.FC<
+  React.PropsWithChildren<IProps>
+> = ({ control, isOpen, setIsOpen }): React.ReactElement => {
   const classes = useStyles();
 
   return (

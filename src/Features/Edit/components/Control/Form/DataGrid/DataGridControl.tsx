@@ -33,7 +33,10 @@ interface IProps {
   fileId: string;
 }
 
-export const DataGridControl: React.FC<IProps> = ({ control, fileId }) => {
+export const DataGridControl: React.FC<React.PropsWithChildren<IProps>> = ({
+  control,
+  fileId,
+}) => {
   const [gridDetails, setGridDetails] = useState<
     DataGridDetail | undefined | null
   >(control.data_grid_detail);
@@ -165,7 +168,7 @@ export const DataGridControl: React.FC<IProps> = ({ control, fileId }) => {
           );
 
           return <Row {...props} />;
-        case 'select_list':
+        case 'select_list': {
           const answerChoices: Record<string, ISelectData> = {};
           props.row[column].answer_choices.map(
             (answer: {
@@ -200,6 +203,7 @@ export const DataGridControl: React.FC<IProps> = ({ control, fileId }) => {
           );
 
           return <Row {...props} />;
+        }
         case 'delete':
           props.row[column] = (
             <DataGridDelete

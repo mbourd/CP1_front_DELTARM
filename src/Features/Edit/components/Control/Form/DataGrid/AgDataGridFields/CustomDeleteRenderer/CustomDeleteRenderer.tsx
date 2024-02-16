@@ -1,7 +1,10 @@
 import React from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const CustomDeleteRenderer: React.FC<any> = ({ props, rowData }) => {
+const CustomDeleteRenderer: React.FC<React.PropsWithChildren<any>> = ({
+  props,
+  rowData,
+}) => {
   /* SINGLE DELETE */
   const handleDelete = () => {
     const updatedData = [...rowData];

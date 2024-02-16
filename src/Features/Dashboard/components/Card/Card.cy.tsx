@@ -122,7 +122,7 @@ describe('<Card />', () => {
   });
 
   it('Should render the React.ReactNode for header', () => {
-    const DummyFCHeader: React.FC = () => {
+    const DummyFCHeader: React.FC<React.PropsWithChildren<unknown>> = () => {
       return <div id="dummy-cy-header">children header</div>;
     };
     const header: ICardHeader = {
@@ -168,7 +168,7 @@ describe('<Card />', () => {
   });
 
   it('Should render the React.ReactNode for footer', () => {
-    const DummyFCFooter: React.FC = () => {
+    const DummyFCFooter: React.FC<React.PropsWithChildren<unknown>> = () => {
       return <div id="dummy-cy-footer">children footer</div>;
     };
     const header: ICardHeader = {

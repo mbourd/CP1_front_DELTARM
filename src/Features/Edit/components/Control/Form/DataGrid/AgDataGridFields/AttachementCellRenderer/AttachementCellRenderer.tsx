@@ -1,7 +1,11 @@
 import { CloudUpload } from '@material-ui/icons';
 import React, { FC, useState } from 'react';
 
-const AttachmentCellRenderer: FC<any> = ({ props, field_data, field_name }) => {
+const AttachmentCellRenderer: FC<React.PropsWithChildren<any>> = ({
+  props,
+  field_data,
+  field_name,
+}) => {
   const [file, setFile] = useState<any>(null);
   const [errors, setErrors] = useState<string>('');
 

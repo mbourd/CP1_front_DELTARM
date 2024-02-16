@@ -1,7 +1,9 @@
 import React from 'react';
 import { SvgIcon, SvgIconProps } from '@material-ui/core';
 
-export const SelectIcon: React.FC<SvgIconProps> = (props) => {
+export const SelectIcon: React.FC<React.PropsWithChildren<SvgIconProps>> = (
+  props,
+) => {
   return (
     <SvgIcon viewBox={'0 0 24 24'} {...props}>
       <polygon points="12 1 18 9 6 9 12 1" />

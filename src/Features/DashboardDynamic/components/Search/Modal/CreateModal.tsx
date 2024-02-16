@@ -29,7 +29,7 @@ interface IProps {
   dataManualInput: IKSIOPManualInput | null;
 }
 
-export const CreateModal: React.FC<IProps> = ({
+export const CreateModal: React.FC<React.PropsWithChildren<IProps>> = ({
   onClose,
   open,
   dataManualInput,
@@ -102,7 +102,7 @@ export const CreateModal: React.FC<IProps> = ({
   );
 
   const setListMissingField = useCallback(
-    (values: Record<string, true>, key) => {
+    (values: Record<string, true>, key: any) => {
       const newValue = Object.keys(values).toString();
       queries.current = {
         ...queries.current,
