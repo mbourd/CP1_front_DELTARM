@@ -122,6 +122,7 @@ export interface ICard {
     page_nb_rows: number;
     type: 'page' | 'list';
   };
+  version: 0 | 1;
 }
 
 export interface IIndicator {
