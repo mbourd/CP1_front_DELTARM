@@ -81,7 +81,6 @@ export const UploadControl: React.FC<React.PropsWithChildren<IProps>> = ({
       jwt,
       setCurrentUploadFile,
       setErrorMessage,
-      setNewUploadFile,
     );
     setTimeout(() => {
       setNewUploadFile(null);
