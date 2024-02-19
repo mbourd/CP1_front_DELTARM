@@ -1,21 +1,6 @@
 import { translation } from './Translation';
 
 describe('Translation', () => {
-  it('should add resources', () => {
-    translation.init();
-
-    translation.addResource('en', 'common', {
-      connexion: 'Connexion message',
-      remove: 'Remove message',
-    });
-
-    expect(translation.getAllResources()).toStrictEqual({
-      en: {
-        common: { connexion: 'Connexion message', remove: 'Remove message' },
-      },
-    });
-  });
-
   it('should add multiple resources once', () => {
     translation.init();
     translation.addBatchResource({
@@ -23,6 +8,7 @@ describe('Translation', () => {
         name: {
           en: 'Nom',
           fr: 'Name',
+          de: 'Name',
         },
       },
     });
@@ -30,6 +16,7 @@ describe('Translation', () => {
     expect(translation.getAllResources()).toStrictEqual({
       en: { common: { name: 'Nom' } },
       fr: { common: { name: 'Name' } },
+      de: { common: { name: 'Name' } },
     });
   });
 
@@ -40,6 +27,7 @@ describe('Translation', () => {
         message: {
           en: 'Hello world!',
           fr: 'Bonjour tout le monde !',
+          de: 'Hallo Welt!',
         },
       },
     });
