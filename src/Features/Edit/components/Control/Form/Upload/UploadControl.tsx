@@ -70,6 +70,8 @@ export const UploadControl: React.FC<React.PropsWithChildren<IProps>> = ({
   const handleUploadFile = useCallback(() => {
     if (control.mandatory && !newUploadFile) {
       setErrorMessage(trans('mandatoryValue'));
+
+      return;
     }
     if (!control.mandatory) {
       setErrorMessage(null);
