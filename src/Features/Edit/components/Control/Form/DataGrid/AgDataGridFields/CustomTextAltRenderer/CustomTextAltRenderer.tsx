@@ -14,10 +14,10 @@ const CustomTextAltRenderer: React.FC<CustomTextAltRendererPropsType> = ({
   const content = (
     <div
       style={{
-        cursor: props?.data?.[fieldName].action ? 'pointer' : 'initial',
+        cursor: props?.data?.[fieldName]?.action ? 'pointer' : 'initial',
       }}
       onClick={() =>
-        props?.data?.[fieldName].action
+        props?.data?.[fieldName]?.action
           ? props?.colDef?.triggerAction(props?.data?.[fieldName].action)
           : undefined
       }
@@ -28,7 +28,7 @@ const CustomTextAltRenderer: React.FC<CustomTextAltRendererPropsType> = ({
 
   return (
     <CustomTextAltRendererStyled>
-      {props?.data?.[fieldName].hint ? (
+      {props?.data?.[fieldName]?.hint ? (
         <BPITooltip title={props?.data?.[fieldName].hint} placement="top">
           {content}
         </BPITooltip>
