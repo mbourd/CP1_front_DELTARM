@@ -224,16 +224,20 @@ const CardAgGrid: React.FC<CardAgGridProps> = ({
         field: 'rdg_' + i + '.value',
         field_type: (() => {
           /* a little bit reliable */
-          const firstType = rowData[0]?.['rdg_' + i].component;
+          try {
+            const firstType = rowData[0]?.['rdg_' + i].component;
 
-          if (firstType === 'text_alt') {
-            for (const row of rowData) {
-              if (row?.['rdg_' + i].component !== firstType)
-                return row?.['rdg_' + i].component;
+            if (firstType === 'text_alt') {
+              for (const row of rowData) {
+                if (row?.['rdg_' + i].component !== firstType)
+                  return row?.['rdg_' + i].component;
+              }
             }
-          }
 
-          return firstType;
+            return firstType;
+          } catch (error) {
+            return 'text_alt';
+          }
         })(),
         filter: col?.filter ? 'agTextColumnFilter' : false,
         floatingFilter: col?.floating_filter ?? false,

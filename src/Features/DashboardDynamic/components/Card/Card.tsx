@@ -120,19 +120,19 @@ export const Card: React.FC<ICardC> = ({
               padding: '2px',
             }}
           >
-            {rowData[columnIndex].content ? (
-              rowData[columnIndex].hint ? (
+            {rowData[columnIndex]?.content ? (
+              rowData[columnIndex]?.hint ? (
                 <BPITooltip title={rowData[columnIndex].hint}>
                   <p
                     dangerouslySetInnerHTML={{
                       __html: DOMPurify.sanitize(rowData[columnIndex].content),
                     }}
                     style={{
-                      cursor: rowData[columnIndex].action
+                      cursor: rowData[columnIndex]?.action
                         ? 'pointer'
                         : 'initial',
                     }}
-                    onClick={() => triggerAction(rowData[columnIndex].action)}
+                    onClick={() => triggerAction(rowData[columnIndex]?.action)}
                   />
                 </BPITooltip>
               ) : (
@@ -141,19 +141,21 @@ export const Card: React.FC<ICardC> = ({
                     __html: DOMPurify.sanitize(rowData[columnIndex].content),
                   }}
                   style={{
-                    cursor: rowData[columnIndex].action ? 'pointer' : 'initial',
+                    cursor: rowData[columnIndex]?.action
+                      ? 'pointer'
+                      : 'initial',
                   }}
-                  onClick={() => triggerAction(rowData[columnIndex].action)}
+                  onClick={() => triggerAction(rowData[columnIndex]?.action)}
                 />
               )
             ) : null}
-            {rowData[columnIndex].icon
+            {rowData[columnIndex]?.icon
               ? generateMaterialIcon(
-                  rowData[columnIndex].icon.ref,
-                  rowData[columnIndex].icon.color,
-                  rowData[columnIndex].icon.size,
-                  rowData[columnIndex].action,
-                  rowData[columnIndex].hint,
+                  rowData[columnIndex].icon?.ref ?? '',
+                  rowData[columnIndex].icon?.color ?? '',
+                  rowData[columnIndex].icon?.size ?? '',
+                  rowData[columnIndex]?.action ?? '',
+                  rowData[columnIndex]?.hint ?? '',
                 )
               : null}
           </StyledTableCell>
