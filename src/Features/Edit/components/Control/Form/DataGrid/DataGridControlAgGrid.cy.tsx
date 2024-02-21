@@ -94,7 +94,6 @@ describe('<DataGridControlAgGrid />', () => {
   });
 
   it('should render - controlExample1', function () {
-    cy.on('uncaught:exception', () => false);
     const _control = {
       ...structuredClone(controlExample1),
       mandatory: false,
@@ -110,9 +109,120 @@ describe('<DataGridControlAgGrid />', () => {
     cy.waitReactApp();
     cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
   });
+  it('should render - controlExample2', function () {
+    const _control = {
+      ...structuredClone(controlExample2),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
+  });
+  it('should render - controlExample3', function () {
+    const _control = {
+      ...structuredClone(controlExample3),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
+  });
+  it('should render - controlExample4', function () {
+    const _control = {
+      ...structuredClone(controlExample4),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
+  });
+  it('should render - controlExample5', function () {
+    const _control = {
+      ...structuredClone(controlExample5),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
+  });
+  it('should render - controlExample6', function () {
+    const _control = {
+      ...structuredClone(controlExample6),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
+  });
+  it('should render - controlExample7', function () {
+    const _control = {
+      ...structuredClone(controlExample7),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
+  });
+  it('should render - controlExample8', function () {
+    const _control = {
+      ...structuredClone(controlExample8),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
+  });
 
   it('should have a fixed height - controlExample1', function () {
-    cy.on('uncaught:exception', () => false);
     const _control = {
       ...structuredClone(controlExample1),
       mandatory: false,
@@ -137,7 +247,6 @@ describe('<DataGridControlAgGrid />', () => {
     );
   });
   it('should have a fixed height - controlExample1', function () {
-    cy.on('uncaught:exception', () => false);
     const _control = {
       ...structuredClone(controlExample1),
       mandatory: false,
@@ -166,7 +275,6 @@ describe('<DataGridControlAgGrid />', () => {
   });
 
   it('Should have the correct number of columns - controlExample1', function () {
-    cy.on('uncaught:exception', () => false);
     const _control = {
       ...structuredClone(controlExample1),
       mandatory: false,
@@ -196,7 +304,6 @@ describe('<DataGridControlAgGrid />', () => {
       });
   });
   it('Should have the correct number of columns - controlExample2', function () {
-    cy.on('uncaught:exception', () => false);
     const _control = {
       ...structuredClone(controlExample2),
       mandatory: false,
@@ -205,11 +312,6 @@ describe('<DataGridControlAgGrid />', () => {
       control_rejectable: null,
     };
     const columns = _control.data_grid_detail?.columns || [];
-    cy.on('uncaught:exception', () => {
-      // return false to prevent the error from the application
-      // failing this test
-      return false;
-    });
     cy.mount(
       <SetupTestsComponents>
         <DataGridControlAgGrid
@@ -232,7 +334,7 @@ describe('<DataGridControlAgGrid />', () => {
   });
   it('Should have the correct number of columns - controlExample3', function () {
     cy.viewport(3500, 720);
-    cy.on('uncaught:exception', () => false);
+
     const _control = {
       ...structuredClone(controlExample3),
       mandatory: false,
@@ -241,11 +343,6 @@ describe('<DataGridControlAgGrid />', () => {
       control_rejectable: null,
     };
     const columns = _control.data_grid_detail?.columns || [];
-    cy.on('uncaught:exception', () => {
-      // return false to prevent the error from the application
-      // failing this test
-      return false;
-    });
     cy.mount(
       <SetupTestsComponents>
         <DataGridControlAgGrid
@@ -267,7 +364,7 @@ describe('<DataGridControlAgGrid />', () => {
   });
   it('Should have the correct number of columns - controlExample4', function () {
     cy.viewport(3500, 720);
-    cy.on('uncaught:exception', () => false);
+
     const _control = {
       ...structuredClone(controlExample4),
       mandatory: false,
@@ -276,11 +373,6 @@ describe('<DataGridControlAgGrid />', () => {
       control_rejectable: null,
     };
     const columns = _control.data_grid_detail?.columns || [];
-    cy.on('uncaught:exception', () => {
-      // return false to prevent the error from the application
-      // failing this test
-      return false;
-    });
     cy.mount(
       <SetupTestsComponents>
         <DataGridControlAgGrid
@@ -302,7 +394,7 @@ describe('<DataGridControlAgGrid />', () => {
   });
   it('Should have the correct number of columns - controlExample5', function () {
     cy.viewport(3500, 720);
-    cy.on('uncaught:exception', () => false);
+
     const _control = {
       ...structuredClone(controlExample5),
       mandatory: false,
@@ -311,11 +403,6 @@ describe('<DataGridControlAgGrid />', () => {
       control_rejectable: null,
     };
     const columns = _control.data_grid_detail?.columns || [];
-    cy.on('uncaught:exception', () => {
-      // return false to prevent the error from the application
-      // failing this test
-      return false;
-    });
     cy.mount(
       <SetupTestsComponents>
         <DataGridControlAgGrid
@@ -383,7 +470,7 @@ describe('<DataGridControlAgGrid />', () => {
       rich_text_detail: null,
       control_rejectable: null,
     };
-    cy.on('uncaught:exception', () => false);
+
     cy.mount(
       <SetupTestsComponents>
         <DataGridControlAgGrid
@@ -505,7 +592,6 @@ describe('<DataGridControlAgGrid />', () => {
   });
 
   it('should render delete rows button - controlExample2', function () {
-    cy.on('uncaught:exception', () => false);
     const trans_FR = _translate('fr', 'Edit', 'deleteRows');
     const trans_EN = _translate('en', 'Edit', 'deleteRows');
     const trans_DE = _translate('de', 'Edit', 'deleteRows');
@@ -536,8 +622,6 @@ describe('<DataGridControlAgGrid />', () => {
   });
 
   it('should delete selected rows - controlExample2', function () {
-    cy.on('uncaught:exception', () => false);
-
     const trans_FR = _translate('fr', 'Edit', 'deleteRows');
     const trans_EN = _translate('en', 'Edit', 'deleteRows');
     const trans_DE = _translate('de', 'Edit', 'deleteRows');
@@ -583,8 +667,6 @@ describe('<DataGridControlAgGrid />', () => {
     });
   });
   it('should display an error message if delete rows failed - controlExample2', function () {
-    cy.on('uncaught:exception', () => false);
-
     const trans_FR = _translate('fr', 'Edit', 'deleteRows');
     const trans_EN = _translate('en', 'Edit', 'deleteRows');
     const trans_DE = _translate('de', 'Edit', 'deleteRows');
@@ -1653,7 +1735,7 @@ describe('<DataGridControlAgGrid />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.on('uncaught:exception', () => false);
+
     _assertCellEditable(_control);
   });
   it('Should be able to edit cell or not - controlExample5', function () {
@@ -1749,7 +1831,7 @@ describe('<DataGridControlAgGrid />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.on('uncaught:exception', () => false);
+
     _assertCellEditable(_control);
   });
   it('Should not be able to edit cell if control_editable=false - controlExample4', function () {
@@ -2572,6 +2654,8 @@ describe('<DataGridControlAgGrid />', () => {
           structuredClone(controlExample7.data_grid_detail?.columns || []).map(
             (col) => {
               col.resizable = false;
+              // @ts-ignore
+              col.triggerAction = () => undefined;
 
               return col;
             },
@@ -4337,7 +4421,6 @@ function generateRegex(list: string[]): RegExp {
 
 // validate the correctness of formulas in a data grid by simulating user input, recalculating formula cells, and checking the evaluated results against expected values.
 function _assertFormatAndEvalFormula(_control: IApiControl) {
-  cy.on('uncaught:exception', () => false);
   cy.window().then((w) => {
     w[
       'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
@@ -4470,7 +4553,6 @@ function _assertFormatAndEvalFormula(_control: IApiControl) {
 }
 
 function _assertFormat(_control: IApiControl) {
-  cy.on('uncaught:exception', () => false);
   cy.window().then((w) => {
     w[
       'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
@@ -4607,7 +4689,6 @@ function _assertFormat(_control: IApiControl) {
 }
 
 function _assertCellEditable(_control: IApiControl) {
-  cy.on('uncaught:exception', () => false);
   cy.window().then((w) => {
     w[
       'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
@@ -4777,7 +4858,6 @@ function _assertCellEditable(_control: IApiControl) {
   });
 }
 function _assertUnfocusCellClickAway(_control: IApiControl) {
-  cy.on('uncaught:exception', () => false);
   cy.window().then((w) => {
     w[
       'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
@@ -4827,7 +4907,6 @@ function _assertUnfocusCellClickAway(_control: IApiControl) {
 }
 
 function _assertRegexValidation(_control: IApiControl) {
-  cy.on('uncaught:exception', () => false);
   // Set the temporary timeout for this test (e.g., 100 milliseconds)
   Cypress.config('defaultCommandTimeout', 100);
   cy.window().then((w) => {
@@ -4925,7 +5004,6 @@ function _assertRegexValidation(_control: IApiControl) {
 }
 
 function _assertPagination(_control: IApiControl, paginationSize: number) {
-  cy.on('uncaught:exception', () => false);
   cy.window().then((w) => {
     expect(
       w[
@@ -4941,7 +5019,6 @@ function _assertPagination(_control: IApiControl, paginationSize: number) {
 }
 
 function _assertSorting(_control: IApiControl) {
-  cy.on('uncaught:exception', () => false);
   cy.window().then((w) => {
     w[
       'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
@@ -5249,8 +5326,6 @@ function _assertSorting(_control: IApiControl) {
 }
 
 function _assertCanFiltering(_control: IApiControl) {
-  cy.on('uncaught:exception', () => false);
-
   const withControlData = getData(_control);
 
   withControlData(1, ({ columns }) => {
@@ -5291,7 +5366,7 @@ function _assertCanFiltering(_control: IApiControl) {
 
 function _assertCellStyle(_control: IApiControl) {
   Cypress.config('defaultCommandTimeout', 6000);
-  cy.on('uncaught:exception', () => false);
+
   cy.window().then((w) => {
     w[
       'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
@@ -5406,8 +5481,6 @@ function _assertCellStyle(_control: IApiControl) {
 }
 
 function _assertColumnHeaderStyle(_control: IApiControl) {
-  cy.on('uncaught:exception', () => false);
-
   const withControlData = getData(_control);
 
   withControlData(1, ({ columns }) => {
@@ -5450,7 +5523,7 @@ function _assertColumnHeaderStyle(_control: IApiControl) {
 
 function _assertTrackModifTooltip(_control: IApiControl) {
   Cypress.config('defaultCommandTimeout', 6000);
-  cy.on('uncaught:exception', () => false);
+
   cy.window().then((w) => {
     w[
       'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
@@ -5570,7 +5643,6 @@ function _assertTrackModifTooltip(_control: IApiControl) {
 
 function _assertColHeaderTooltip(_control: IApiControl) {
   Cypress.config('defaultCommandTimeout', 6000);
-  cy.on('uncaught:exception', () => false);
 
   const withControlData = getData(_control);
 
@@ -5603,8 +5675,6 @@ function _assertColHeaderTooltip(_control: IApiControl) {
 }
 
 function _assertResizableColumns(_control: IApiControl) {
-  cy.on('uncaught:exception', () => false);
-
   const withControlData = getData(_control);
 
   withControlData(1, ({ columns }) => {
@@ -5681,8 +5751,6 @@ function _assertResizableColumns(_control: IApiControl) {
 }
 
 function _assertHiddenColumns(_control: IApiControl) {
-  cy.on('uncaught:exception', () => false);
-
   const withControlData = getData(_control);
 
   withControlData(1, ({ columns }) => {
@@ -5704,8 +5772,6 @@ function _assertHiddenColumns(_control: IApiControl) {
 }
 
 function _assertPinnedPositionColumns(_control: IApiControl) {
-  cy.on('uncaught:exception', () => false);
-
   const classHeaderCellSelector =
     '.ag-header-row.ag-header-row-column .ag-header-cell';
   const withControlData = getData(_control);
@@ -5802,8 +5868,6 @@ function _assertPinnedPositionColumns(_control: IApiControl) {
 }
 
 function _assertManuallyPinnedPositionColumns(_control: IApiControl) {
-  cy.on('uncaught:exception', () => false);
-
   const withControlData = getData(_control);
 
   withControlData(1, ({ columns, indexRow, getJqueryRowElement }) => {
@@ -5907,8 +5971,6 @@ function _assertManuallyPinnedPositionColumns(_control: IApiControl) {
 }
 
 function _assertSelectListOptionsStyles(_control: IApiControl) {
-  cy.on('uncaught:exception', () => false);
-
   const withControlData = getData(_control);
 
   withControlData(1, ({ rowValues, indexRow }) => {
