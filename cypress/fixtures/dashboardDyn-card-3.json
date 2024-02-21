@@ -1,0 +1,211 @@
+{
+  "cols": {
+    "header_visible": false,
+    "values": [
+      {
+        "border_right": true,
+        "dataKey": "Contrôle",
+        "filter": true,
+        "floating_filter": false,
+        "label": "Contrôle",
+        "width": 650
+      },
+      {
+        "border_right": true,
+        "dataKey": "Support",
+        "filter": true,
+        "floating_filter": false,
+        "label": "Support",
+        "width": 250
+      },
+      {
+        "border_right": false,
+        "dataKey": "Consulter",
+        "filter": true,
+        "floating_filter": false,
+        "label": "Consulter",
+        "width": 100
+      }
+    ]
+  },
+  "display": {
+    "page_nb_rows": null,
+    "type": "list"
+  },
+  "lines": {
+    "border_bottom": true,
+    "values": [
+      {
+        "id": "7718f5af-50ed-4c7d-9452-680d65ef0fee",
+        "item": [
+          {
+            "action": null,
+            "content": "<p style=\"color:#5a4749; font-weight:bold;\">R06-01-02 CG Liquidation</p><p>CP1.1_C00299 - [FRAUDE]-Contrôler la validité des droits AGIRC-ARRCO mis en paiement ...</p><p>M6 - 2023</p>",
+            "hint": "R06-01-02 CG Liquidation => [FRAUDE]-Contrôler la validité des droits AGIRC-ARRCO mis en paiement (double validation)",
+            "icon": null
+          },
+          {
+            "action": null,
+            "content": "SCL 1930858 BLEYNIE Pascale 2601276540052 ",
+            "hint": "Référence du Support",
+            "icon": null
+          },
+          {
+            "action": {
+              "endpoint": "/edit",
+              "method": "GET",
+              "params": {
+                "file_id": "7718f5af-50ed-4c7d-9452-680d65ef0fee"
+              }
+            },
+            "content": null,
+            "hint": "Ouvrir le contrôle rejeté",
+            "icon": {
+              "color": "#28A586",
+              "ref": "Grading",
+              "size": 12
+            }
+          }
+        ]
+      },
+      {
+        "id": "73bed00d-7764-4dfb-b9a8-9a34bce6fe0a",
+        "item": [
+          {
+            "action": null,
+            "content": "<p style=\"color:#5a4749; font-weight:bold;\">R06-01-02 CG Liquidation</p><p>CP1.1_C00299 - [FRAUDE]-Contrôler la validité des droits AGIRC-ARRCO mis en paiement ...</p><p>M6 - 2023</p>",
+            "hint": "R06-01-02 CG Liquidation => [FRAUDE]-Contrôler la validité des droits AGIRC-ARRCO mis en paiement (double validation)",
+            "icon": null
+          },
+          {
+            "action": null,
+            "content": "PRC 554801947 LOUMO Edmundo 1551199139280",
+            "hint": "Référence du Support",
+            "icon": null
+          },
+          {
+            "action": {
+              "endpoint": "/edit",
+              "method": "GET",
+              "params": {
+                "file_id": "73bed00d-7764-4dfb-b9a8-9a34bce6fe0a"
+              }
+            },
+            "content": null,
+            "hint": "Ouvrir le contrôle rejeté",
+            "icon": {
+              "color": "#28A586",
+              "ref": "Grading",
+              "size": 12
+            }
+          }
+        ]
+      },
+      {
+        "id": "2780de2e-218e-46a2-95e1-d79b39cbec3a",
+        "item": [
+          {
+            "action": null,
+            "content": "<p style=\"color:#5a4749; font-weight:bold;\">R06-01-02 CG Liquidation</p><p>CP1.1_C00299 - [FRAUDE]-Contrôler la validité des droits AGIRC-ARRCO mis en paiement ...</p><p>M6 - 2023</p>",
+            "hint": "R06-01-02 CG Liquidation => [FRAUDE]-Contrôler la validité des droits AGIRC-ARRCO mis en paiement (double validation)",
+            "icon": null
+          },
+          {
+            "action": null,
+            "content": "SCL 957459 SOUDRY Maxime 1580499350871",
+            "hint": "Référence du Support",
+            "icon": null
+          },
+          {
+            "action": {
+              "endpoint": "/edit",
+              "method": "GET",
+              "params": {
+                "file_id": "2780de2e-218e-46a2-95e1-d79b39cbec3a"
+              }
+            },
+            "content": null,
+            "hint": "Ouvrir le contrôle rejeté",
+            "icon": {
+              "color": "#28A586",
+              "ref": "Grading",
+              "size": 12
+            }
+          }
+        ]
+      },
+      {
+        "id": "4734203c-ad1f-421c-9130-2d979f185e46",
+        "item": [
+          {
+            "action": null,
+            "content": "<p style=\"color:#5a4749; font-weight:bold;\">R03B-01-01 Klesia Mut Gestion des adhésions / affiliations et radiations des individus</p><p>CP1.1_C00920 - MCDef-Contrôler la conformité de l'enregistrement d'une nouvelle adhés...</p><p>T2 - 2023</p>",
+            "hint": "R03B-01-01 Klesia Mut Gestion des adhésions / affiliations et radiations des individus => MCDef-Contrôler la conformité de l'enregistrement d'une nouvelle adhésion collectif",
+            "icon": null
+          },
+          {
+            "action": null,
+            "content": "20277825",
+            "hint": "Référence du Support",
+            "icon": null
+          },
+          {
+            "action": {
+              "endpoint": "/edit",
+              "method": "GET",
+              "params": {
+                "file_id": "4734203c-ad1f-421c-9130-2d979f185e46"
+              }
+            },
+            "content": null,
+            "hint": "Ouvrir le contrôle rejeté",
+            "icon": {
+              "color": "#28A586",
+              "ref": "Grading",
+              "size": 12
+            }
+          }
+        ]
+      },
+      {
+        "id": "74732977-57e2-453a-9f4c-f8cf8d99780d",
+        "item": [
+          {
+            "action": null,
+            "content": "<p style=\"color:#5a4749; font-weight:bold;\">R04B-01-01 Klesia Mut  Frais de santé Pôle mutualiste</p><p>CP1.1_C00918 - KMUT (hors MCDEF/FORTEGO) -Contrôler les dossiers liquidés manuellemen...</p><p>T3 - 2023</p>",
+            "hint": "R04B-01-01 Klesia Mut  Frais de santé Pôle mutualiste => KMUT (hors MCDEF/FORTEGO) -Contrôler les dossiers liquidés manuellement",
+            "icon": null
+          },
+          {
+            "action": null,
+            "content": "TERMACIC FRANJO 20123513 ko arianne",
+            "hint": "Référence du Support",
+            "icon": null
+          },
+          {
+            "action": {
+              "endpoint": "/edit",
+              "method": "GET",
+              "params": {
+                "file_id": "74732977-57e2-453a-9f4c-f8cf8d99780d"
+              }
+            },
+            "content": null,
+            "hint": "Ouvrir le contrôle rejeté",
+            "icon": {
+              "color": "#28A586",
+              "ref": "Grading",
+              "size": 12
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "title": {
+    "bg_color": "#B12B67",
+    "font_color": "#FFFFFF",
+    "lib": "5 Contrôles Rejetés"
+  },
+  "version": 1
+}

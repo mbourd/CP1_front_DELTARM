@@ -21,7 +21,6 @@ describe('<DashboardDynamic />', function () {
   });
 
   it('Should render', function () {
-    cy.on('uncaught:exception', () => false);
     cy.intercept('GET', '/dashboard/contr_perm', {
       statusCode: 200,
       body: {},
@@ -54,7 +53,6 @@ describe('<DashboardDynamic />', function () {
         },
       },
     };
-    cy.on('uncaught:exception', () => false);
     // cy.intercept(
     //   {
     //     method: 'GET',
@@ -98,7 +96,6 @@ describe('<DashboardDynamic />', function () {
         },
       },
     };
-    cy.on('uncaught:exception', () => false);
     cy.intercept('GET', '/dashboard/contr_perm*', {
       statusCode: 200,
       body: _dashboard,
