@@ -23,15 +23,57 @@ import {
 } from '../../../Edit/types';
 
 describe('<CardAgGrid />', function () {
-  let card: ICard;
+  let card1: ICard;
+  let card2: ICard;
+  let card3: ICard;
 
   before(() => {
-    cy.fixture('card-aggrid-1.json').then((d) => (card = d));
+    cy.fixture('dashboardDyn-card-1.json').then((d) => (card1 = d));
+    cy.fixture('dashboardDyn-card-2.json').then((d) => (card2 = d));
+    cy.fixture('dashboardDyn-card-3.json').then((d) => (card3 = d));
   });
 
-  it('should render', function () {
+  it('should render - card1', function () {
     const _card = {
-      ...card,
+      ...structuredClone(card1),
+    };
+
+    cy.mount(
+      <SetupTestsComponents>
+        <CardAgGrid
+          card={_card}
+          triggerAction={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('CardAgGrid').should('exist');
+    cy.react('CardAgGrid').react('AgGridReact').should('exist');
+  });
+  it('should render - card2', function () {
+    const _card = {
+      ...structuredClone(card2),
+    };
+
+    cy.mount(
+      <SetupTestsComponents>
+        <CardAgGrid
+          card={_card}
+          triggerAction={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('CardAgGrid').should('exist');
+    cy.react('CardAgGrid').react('AgGridReact').should('exist');
+  });
+  it('should render - card3', function () {
+    const _card = {
+      ...structuredClone(card3),
     };
 
     cy.mount(
@@ -49,11 +91,11 @@ describe('<CardAgGrid />', function () {
     cy.react('CardAgGrid').react('AgGridReact').should('exist');
   });
 
-  it('should render the <Header/> with its title.lib', function () {
+  it('should render the <Header/> with its title.lib - card3', function () {
     const _card: ICard = {
-      ...card,
+      ...structuredClone(card3),
       title: {
-        ...card.title,
+        ...structuredClone(card3.title),
         lib: 'Hello word Card',
       },
     };
@@ -72,11 +114,11 @@ describe('<CardAgGrid />', function () {
     cy.react('CardAgGrid').react('Header').should('exist');
     cy.react('CardAgGrid').react('Header').should('have.text', _card.title.lib);
   });
-  it('should render the <Header/> with bg_color/font_color', function () {
+  it('should render the <Header/> with bg_color/font_color - card3', function () {
     const _card: ICard = {
-      ...card,
+      ...structuredClone(card3),
       title: {
-        ...card.title,
+        ...structuredClone(card3.title),
         bg_color: '#419645',
         font_color: '#987654',
       },
@@ -102,9 +144,9 @@ describe('<CardAgGrid />', function () {
       .should('have.css', 'color', _hexToRgb(_card.title.font_color));
   });
 
-  it('should have pagination size if type=page', function () {
+  it('should have pagination size if type=page - card3', function () {
     const _card: ICard = {
-      ...card,
+      ...structuredClone(card3),
       display: {
         type: 'page',
         page_nb_rows: _getRandomNumberBetween(4, 15),
@@ -125,9 +167,9 @@ describe('<CardAgGrid />', function () {
     _assertPagination(_card, _card.display.page_nb_rows);
   });
 
-  it('should not have pagination if type=list', function () {
+  it('should not have pagination if type=list - card3', function () {
     const _card: ICard = {
-      ...card,
+      ...structuredClone(card3),
       display: {
         type: 'list',
         page_nb_rows: 8,
@@ -150,7 +192,7 @@ describe('<CardAgGrid />', function () {
 
   it('should have fixed height', function () {
     const _card = {
-      ...card,
+      ...structuredClone(card3),
     };
 
     cy.mount(
@@ -171,14 +213,83 @@ describe('<CardAgGrid />', function () {
     );
   });
 
-  it('should be able to filter from the menu burger', function () {
-    cy.on('uncaught:exception', () => false);
+  it('should be able to filter from the menu burger - card1', function () {
+    cy.viewport(1600, 750);
+    const _card = {
+      ...structuredClone(card1),
+      cols: {
+        ...structuredClone(card1.cols),
+        values: [...structuredClone(card1.cols.values)].map((col) => {
+          col.filter = true;
+          col.floating_filter = false;
+
+          return col;
+        }),
+      },
+    };
+
+    cy.mount(
+      <SetupTestsComponents>
+        <CardAgGrid
+          card={_card}
+          triggerAction={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.window().then((w) => {
+      _assertCanFiltering(
+        w[
+          'Features_DashboardDynamic_components_CardAgGrid_CardAgGrid|' +
+            _card.title.lib
+        ].control,
+      );
+    });
+  });
+  it('should be able to filter from the menu burger - card2', function () {
     cy.viewport(800, 750);
     const _card = {
-      ...card,
+      ...structuredClone(card2),
       cols: {
-        ...card.cols,
-        values: [...card.cols.values].map((col) => {
+        ...structuredClone(card2.cols),
+        values: [...structuredClone(card2.cols.values)].map((col) => {
+          col.filter = true;
+          col.floating_filter = false;
+
+          return col;
+        }),
+      },
+    };
+
+    cy.mount(
+      <SetupTestsComponents>
+        <CardAgGrid
+          card={_card}
+          triggerAction={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.window().then((w) => {
+      _assertCanFiltering(
+        w[
+          'Features_DashboardDynamic_components_CardAgGrid_CardAgGrid|' +
+            _card.title.lib
+        ].control,
+      );
+    });
+  });
+  it('should be able to filter from the menu burger - card3', function () {
+    cy.viewport(800, 750);
+    const _card = {
+      ...structuredClone(card3),
+      cols: {
+        ...structuredClone(card3.cols),
+        values: [...structuredClone(card3.cols.values)].map((col) => {
           col.filter = true;
           col.floating_filter = false;
 
@@ -208,14 +319,83 @@ describe('<CardAgGrid />', function () {
     });
   });
 
-  it('should be able to filter from the floating filter', function () {
-    cy.on('uncaught:exception', () => false);
+  it('should be able to filter from the floating filter - card1', function () {
+    cy.viewport(1600, 750);
+    const _card = {
+      ...structuredClone(card1),
+      cols: {
+        ...structuredClone(card1).cols,
+        values: [...structuredClone(card1.cols.values)].map((col) => {
+          col.filter = true;
+          col.floating_filter = true;
+
+          return col;
+        }),
+      },
+    };
+
+    cy.mount(
+      <SetupTestsComponents>
+        <CardAgGrid
+          card={_card}
+          triggerAction={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.window().then((w) => {
+      _assertCanFiltering(
+        w[
+          'Features_DashboardDynamic_components_CardAgGrid_CardAgGrid|' +
+            _card.title.lib
+        ].control,
+      );
+    });
+  });
+  it('should be able to filter from the floating filter - card2', function () {
     cy.viewport(800, 750);
     const _card = {
-      ...card,
+      ...structuredClone(card2),
       cols: {
-        ...card.cols,
-        values: [...card.cols.values].map((col) => {
+        ...structuredClone(card2.cols),
+        values: [...structuredClone(card2.cols.values)].map((col) => {
+          col.filter = true;
+          col.floating_filter = true;
+
+          return col;
+        }),
+      },
+    };
+
+    cy.mount(
+      <SetupTestsComponents>
+        <CardAgGrid
+          card={_card}
+          triggerAction={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.window().then((w) => {
+      _assertCanFiltering(
+        w[
+          'Features_DashboardDynamic_components_CardAgGrid_CardAgGrid|' +
+            _card.title.lib
+        ].control,
+      );
+    });
+  });
+  it('should be able to filter from the floating filter - card3', function () {
+    cy.viewport(800, 750);
+    const _card = {
+      ...structuredClone(card3),
+      cols: {
+        ...structuredClone(card3.cols),
+        values: [...structuredClone(card3.cols.values)].map((col) => {
           col.filter = true;
           col.floating_filter = true;
 
@@ -245,14 +425,13 @@ describe('<CardAgGrid />', function () {
     });
   });
 
-  it('should have the header compacted if col.floating_filter=true', function () {
-    cy.on('uncaught:exception', () => false);
+  it('should have the header compacted if col.floating_filter=true - card3', function () {
     cy.viewport(800, 750);
     const _card = {
-      ...card,
+      ...structuredClone(card3),
       cols: {
-        ...card.cols,
-        values: [...card.cols.values].map((col) => {
+        ...structuredClone(card3.cols),
+        values: [...structuredClone(card3.cols.values)].map((col) => {
           col.filter = true;
           col.floating_filter = true;
 
