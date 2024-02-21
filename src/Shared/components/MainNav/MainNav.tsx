@@ -16,8 +16,11 @@ import { MainNavStyled } from './MainNav.style';
 import { Popper } from 'Shared/components';
 import { router, SecurityContext, useApi, useTrans } from 'Services';
 import { useDashboardDynamicReducer } from 'Features/DashboardDynamic/dashboardDynamic.reducer';
+import { RoundFilledIcon } from 'Packages/Design/icons/RoundFilledIcon';
 
-export const MainNav: React.FC = (): React.ReactElement => {
+export const MainNav: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
   const { stateDashboardDynamic } = useDashboardDynamicReducer();
   const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(null);
   const theme = useTheme();
@@ -138,7 +141,7 @@ export const MainNav: React.FC = (): React.ReactElement => {
                         onClick={hideNav}
                         className={'contr_perm_menus'}
                       >
-                        <FolderIcon />
+                        <RoundFilledIcon />
                         <ListItemText>{m.menu_lib}</ListItemText>
                       </ListItem>
                     );

@@ -2,12 +2,9 @@ import React from 'react';
 import { ErrorSmallStyled } from './ErrorSmall.style';
 import { IError } from '../../types';
 
-export const ErrorSmall: React.FC<Omit<IError, 'size'>> = ({
-  title,
-  children,
-  message,
-  icon,
-}): React.ReactElement => {
+export const ErrorSmall: React.FC<
+  React.PropsWithChildren<Omit<IError, 'size'>>
+> = ({ title, children, message, icon }): React.ReactElement => {
   return (
     <ErrorSmallStyled className={'_Error'}>
       {title ? <div className={'_ErrorTitle'}>{title}</div> : null}

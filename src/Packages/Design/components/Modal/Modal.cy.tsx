@@ -41,7 +41,7 @@ describe('<Modal />', () => {
     cy.react('Modal').react('DialogContent').contains(children);
   });
   it('Should render React.ReactNode children', () => {
-    const DummyFC: React.FC = () => {
+    const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
       return <>hello</>;
     };
     cy.mount(
@@ -79,7 +79,7 @@ describe('<Modal />', () => {
   });
 
   it('Should render React.ReactNode header', () => {
-    const DummyFC: React.FC = () => {
+    const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
       return <>hello</>;
     };
     cy.mount(
@@ -92,7 +92,7 @@ describe('<Modal />', () => {
   });
 
   it('Should render React.ReactNode footer', () => {
-    const DummyFC: React.FC = () => {
+    const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
       return <>hello</>;
     };
     cy.mount(

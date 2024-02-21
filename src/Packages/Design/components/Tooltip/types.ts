@@ -1,7 +1,7 @@
 import React from 'react';
 
 export interface ITooltip {
-  children: React.ReactElement;
+  children: any;
   bgc?: string;
   color?: string;
   fontFamily?: string;

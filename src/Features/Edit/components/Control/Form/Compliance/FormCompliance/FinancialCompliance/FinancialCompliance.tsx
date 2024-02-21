@@ -15,7 +15,7 @@ interface IProps {
   controlId: string;
 }
 
-export const FinancialCompliance: React.FC<IProps> = ({
+export const FinancialCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
   compliance,
   fileId,
   controlId,

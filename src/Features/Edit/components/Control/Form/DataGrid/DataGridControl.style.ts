@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 export const DataGridControlStyled = styled.div`
   ._DataGrid {
@@ -67,15 +67,15 @@ export const DataGridControlStyled = styled.div`
 `;
 
 export const AgDataGridStyle = styled.div<{
-  $background_color: string;
-  $border_color: string;
-  $is_border_color: boolean;
-  $font_color: string;
-  $font_size: string;
-  $font_weight: string;
-  $header_font_color: string;
-  $header_bg_color: string;
-  $odd_row_bg_color: string;
+  $background_color?: string;
+  $border_color?: string;
+  $is_border_color?: boolean;
+  $font_color?: string;
+  $font_size?: string;
+  $font_weight?: string;
+  $header_font_color?: string;
+  $header_bg_color?: string;
+  $odd_row_bg_color?: string;
   $heightGrid?: string | number;
 }>`
   height: ${({ $heightGrid }) => {

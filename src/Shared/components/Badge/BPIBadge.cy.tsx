@@ -45,7 +45,7 @@ describe('<BPIBadge />', () => {
 
   it('should render children as React.FC', () => {
     const text = 'Hello world';
-    const DummyFC: React.FC = () => {
+    const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
       return <>{text}</>;
     };
     cy.mount(

@@ -13,7 +13,9 @@ import {
 import { FileCommentFooter } from './Footer/FileCommentFooter';
 import { AppContext, AppContextType } from 'AppContext';
 
-export const FileComment: React.FC = (): React.ReactElement => {
+export const FileComment: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
   const appContext: AppContextType & Record<any, any> = useContext(AppContext);
   const { canSend } = appContext?.ForCompTests?.FileComment || {};
   const [anchorEl, setAnchorEl] = React.useState<

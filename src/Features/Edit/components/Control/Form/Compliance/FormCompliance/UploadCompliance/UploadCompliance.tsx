@@ -20,7 +20,7 @@ interface IProps {
   controlId: string;
 }
 
-export const UploadCompliance: React.FC<IProps> = ({
+export const UploadCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
   compliance,
   fileId,
   controlId,
@@ -35,13 +35,13 @@ export const UploadCompliance: React.FC<IProps> = ({
   const jwt = user.getJwt();
   const [isMandatory] = useState(compliance.compliance_elm_mandatory);
 
-  const saveFileToUpload = useCallback((e) => {
+  const saveFileToUpload = useCallback((e: any) => {
     const file = e.target.files[0];
 
     setNewUploadFile(file);
   }, []);
 
-  const onDrop = useCallback((acceptedFiles) => {
+  const onDrop = useCallback((acceptedFiles: any) => {
     acceptedFiles.forEach((file: File) => {
       setNewUploadFile(file);
     });
@@ -63,7 +63,7 @@ export const UploadCompliance: React.FC<IProps> = ({
   }, [fileId, compliance, newUploadFile, jwt, controlId]);
 
   const handleDeleteFile = useCallback(
-    (e, name) => {
+    (e: any, name: any) => {
       e.preventDefault();
       deleteComplianceFile(
         fileId,
@@ -79,7 +79,7 @@ export const UploadCompliance: React.FC<IProps> = ({
   );
 
   const handleDownloadFile = useCallback(
-    (e, id, name) => {
+    (e: any, id: any, name: any) => {
       e.preventDefault();
       downloadFile(id, name, jwt, setErrorMessage);
     },

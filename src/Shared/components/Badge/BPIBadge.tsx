@@ -2,10 +2,9 @@ import React from 'react';
 import { Badge, IBadge } from 'Shared/components';
 import { useTheme } from 'Styles';
 
-export const BPIBadge: React.FC<Pick<IBadge, 'content'>> = ({
-  children,
-  content,
-}): React.ReactElement => {
+export const BPIBadge: React.FC<
+  React.PropsWithChildren<Pick<IBadge, 'content'>>
+> = ({ children, content }): React.ReactElement => {
   const theme = useTheme();
 
   return (

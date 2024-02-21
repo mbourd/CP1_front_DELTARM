@@ -22,7 +22,7 @@ describe('<NotFoundComponent />', () => {
   });
 
   it('Should render a React.ReactNode as children', () => {
-    const DummyFC: React.FC = () => {
+    const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
       return <div id="dummyfc">Hello</div>;
     };
 

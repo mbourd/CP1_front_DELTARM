@@ -18,12 +18,7 @@ import { useSecurity } from '../../../../../../Packages/Security';
 import { AgGridReact } from 'ag-grid-react';
 // import { useReactToPrint } from 'react-to-print';
 import { Button } from 'Shared/components';
-import {
-  useTrans,
-  security,
-  getEnv,
-  kFormatter,
-} from '../../../../../../Services';
+import { getEnv, kFormatter } from '../../../../../../Services';
 import './datagrid.css';
 import { saveValueDataGrid } from './apiRoutes/saveValueDataGrid';
 import CustomSelectRenderer from './AgDataGridFields/CustomSelectRenderer/CustomSelectRenderer';
@@ -38,7 +33,6 @@ import {
   GridReadyEvent,
   RowNode,
 } from 'ag-grid-community';
-import { DataGridDetail } from '../../../../types';
 // import millify from 'millify';
 import { LicenseManager } from 'ag-grid-enterprise';
 import { AG_GRID_LOCALE_FR } from './translations/fr';
@@ -51,7 +45,7 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import CustomCheckboxRender from './AgDataGridFields/CustomCheckboxRenderer/CustomCheckboxRender';
 import { ModalDynamic } from 'Features/ModalDynamic/components/ModalDynamic';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import CustomIconRenderer from './AgDataGridFields/CustomIconRenderer/CustomIconRenderer';
 import CustomActionButtonRenderer from './AgDataGridFields/CustomActionButtonRenderer/CustomActionButtonRenderer';
 import CustomSingleCheckboxRender from './AgDataGridFields/CustomSingleCheckBoxRenderer/CustomSingleCheckBoxRenderer';
@@ -64,6 +58,7 @@ import BigNumber from 'bignumber.js';
 import { CustomInnerHTMLRenderer } from './AgDataGridFields/CustomInnerHTMLRenderer/CustomInnerHTMLRenderer';
 import { CustomDateStringRenderer } from './AgDataGridFields/CustomDateStringRenderer/CustomDateStringRenderer';
 import { CustomTextAltRenderer } from './AgDataGridFields/CustomTextAltRenderer/CustomTextAltRenderer';
+import { useTransEdit } from 'Features/Edit/translations';
 
 interface IProps {
   control: IApiControl;
@@ -105,9 +100,9 @@ const CustomTooltip = (props: any & { tooltip: string }) => {
         <p>
           Previous Value:
           {data?.component === 'decimal' ||
-          'integer' ||
-          'financial' ||
-          'percent'
+          data?.component === 'integer' ||
+          data?.component === 'financial' ||
+          data?.component === 'percent'
             ? data?.component === 'financial'
               ? `${props?.colDef?.currency_symbol}${kFormatter(
                   data?.reference_value,
@@ -131,7 +126,9 @@ const CustomTooltip = (props: any & { tooltip: string }) => {
   }
 };
 
-export const DataGridControlAgGrid: React.FC<IProps> = ({
+export const DataGridControlAgGrid: React.FC<
+  React.PropsWithChildren<IProps>
+> = ({
   control,
   fileId,
   rowHeight,
@@ -150,19 +147,17 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   const [errorMessageAdd, setErrorMessageAdd] = useState<string>('');
   const { user } = useSecurity();
   const gridRef = useRef<any>();
+  const { trans, currentLang } = useTransEdit();
   const jwt = user.getJwt();
   const [errors, setErrors] = useState<string>('');
-  const [GridDetails, setGridDetails]: any = useState<
-    DataGridDetail | undefined | null
-  >(control.data_grid_detail);
-  const user_language: any = security.decodeJwtToken(jwt ? jwt : '');
+  const [GridDetails, setGridDetails] = useState(control.data_grid_detail);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selected] = useState(false);
   const [local_text] = useState(
-    user_language?.lang === 'en' ? AG_GRID_LOCALE_EN : AG_GRID_LOCALE_FR,
+    currentLang === 'en' ? AG_GRID_LOCALE_EN : AG_GRID_LOCALE_FR,
   );
   const [modal_data, setmodal_data]: any = useState(null);
-
+  const [selectedRows, setSelectedRows] = useState<RowNode[]>([]);
+  const [isDeletingRows, setIsDeletingRows] = useState<boolean>(false);
   // const modal: IDataModal = useRecoilValue<any>(modal_data);
 
   const paginationPageSize: number =
@@ -250,13 +245,14 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               singleClickEdit: false,
               tooltipField: g?.field,
               headerTooltip: g?.headerName,
-              editable: true,
+              editable: false,
               cellStyle: (props: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 return (
                   <CustomSingleCheckboxRender
                     props={props}
-                    selected={selected}
+                    selectedRows={selectedRows}
+                    setSelectedRows={setSelectedRows}
                   />
                 );
               },
@@ -277,7 +273,10 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                 valueFormatter: (props: any) => {
                   const data = props?.colDef?.field?.split('.')[0];
 
-                  const row_data = Object.assign({}, ...GridDetails?.rows);
+                  const row_data = Object.assign(
+                    {},
+                    ...(GridDetails?.rows ?? []),
+                  );
                   const field_data = Object.entries(row_data).reduce(
                     (accum: any, current: any) => {
                       const [key, value] = current;
@@ -875,7 +874,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             };
         }
       }),
-    [control, selected, GridDetails?.rows, fileId, jwt],
+    [control, selectedRows, GridDetails?.rows, fileId, jwt],
   );
 
   const cellRenderer = useCallback(
@@ -930,6 +929,16 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   const onGridReady = (params: any) => {
     params.api.sizeColumnsToFit();
     params.api.enableVirtualization = true;
+    params.api.forEachNode((node) => {
+      if (
+        node.data[
+          control.data_grid_detail?.datagrid_options
+            ?.select_all_button_col_ref as string
+        ]?.value === '1'
+      ) {
+        setSelectedRows((selected) => [...selected, node]);
+      }
+    });
   };
 
   const onCellEditingStarted = useCallback((event: CellEditingStartedEvent) => {
@@ -1002,9 +1011,42 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       setErrorMessageAdd("Une erreur est survenue lors de l'ajout de la ligne");
     }
   }, [control.control_id, jwt, fileId, GridDetails?.source]);
+  const handleClickDeleteSelectedRows = useCallback(async () => {
+    setIsDeletingRows(true);
+    await axios
+      .post(
+        `${getEnv('API_PROTOCOL')}://${getEnv(
+          'API_HOST',
+        )}/control/data_grid/delete_row?file_id=${fileId}&elm_id=${
+          control.control_id
+        }&source=${GridDetails?.source}`,
+        { rows: selectedRows.map((rowNode) => rowNode?.data?.row_uuid) },
+        {
+          headers: {
+            Authorization: jwt,
+          },
+          responseType: 'json',
+        },
+      )
+      .then(() => {
+        gridRef.current.api.applyTransaction({
+          remove: selectedRows.map((node) => node.data),
+        });
+        setSelectedRows([]);
+      })
+      .catch(async (error: AxiosError) => {
+        setErrorMessageAdd(error.response?.data.error_msg ?? '');
+        setTimeout(() => {
+          setErrorMessageAdd('');
+        }, 3000);
+      })
+      .finally(() => {
+        setIsDeletingRows(false);
+      });
+  }, [GridDetails?.source, control.control_id, fileId, jwt, selectedRows]);
 
   const onCellValueChanged = useCallback(
-    (event) => {
+    (event: any) => {
       const data = event?.colDef?.field?.split('.')[0];
 
       const field_data = event?.data[data];
@@ -1058,9 +1100,9 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       }
       if (
         field_data?.component === 'financial' ||
-        'decimal' ||
-        'integer' ||
-        'percent'
+        field_data?.component === 'decimal' ||
+        field_data?.component === 'integer' ||
+        field_data?.component === 'percent'
       ) {
         if (
           (field_data?.control_options?.min_value ||
@@ -1168,7 +1210,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
         if (column?.field_type !== 'checkbox_select_datagrid') {
           return;
         } else {
-          gridRef.current.api.forEachNodeAfterFilterAndSort(
+          gridRef.current.api?.forEachNodeAfterFilterAndSort(
             (rowNode: RowNode) => {
               rowNode.setDataValue(
                 `${control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref}.value`,
@@ -1177,7 +1219,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             },
           );
 
-          gridRef.current.api.refreshCells({
+          gridRef.current.api?.refreshCells({
             force: true,
           });
         }
@@ -1193,7 +1235,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
     const pageSize = gridRef.current.api.paginationGetPageSize();
     const startIndex = currentPage === 0 ? 0 : (currentPage - 1) * pageSize;
     const endIndex = currentPage === 0 ? pageSize : currentPage * pageSize;
-    const data: any = [];
+    const data: RowNode[] = [];
     control?.data_grid_detail?.columns?.map((column: any) => {
       if (
         column?.field?.split('.')[0] ===
@@ -1211,7 +1253,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               data.push(rowNode);
             },
           );
-          data.slice(startIndex, endIndex).map((item: any) => {
+          data.slice(startIndex, endIndex).map((item) => {
             if (item?.data?.row_editable === false) {
               return;
             } else {
@@ -1223,14 +1265,16 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           });
 
           gridRef.current.api.refreshCells({
+            rowNodes: data,
             force: true,
           });
+          setSelectedRows([...data]);
         }
       }
     });
   };
 
-  const UnSelectAllByClick = () => {
+  const UnSelectAllByClick = useCallback(() => {
     const currentPage = gridRef.current.api.paginationGetCurrentPage() + 1;
     const pageSize = gridRef.current.api.paginationGetPageSize();
     const startIndex = currentPage === 0 ? 0 : (currentPage - 1) * pageSize;
@@ -1267,14 +1311,18 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
           gridRef.current.api.refreshCells({
             force: true,
           });
+          setSelectedRows([]);
         }
       }
     });
-  };
+  }, [
+    control?.data_grid_detail?.columns,
+    control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref,
+  ]);
 
   const getRowData = useCallback(() => {
     const selected_data: any = [];
-    gridOptions.rowData.map((row: DataGridDetailsRow) => {
+    gridOptions.rowData?.map((row: DataGridDetailsRow) => {
       if (
         row[
           control?.data_grid_detail?.datagrid_options
@@ -1339,9 +1387,6 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             responseType: 'json',
           },
         );
-
-        if (response) {
-        }
       } catch (error) {
         setErrors("Une erreur s'est produite");
         setTimeout(() => {
@@ -1370,7 +1415,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
   };
 
   const onBodyScroll = useCallback(
-    async (e) => {
+    async (e: any) => {
       if (e.direction === 'horizontal') {
         const headerElements = document.querySelectorAll(
           '.ag-theme-alpine .ag-header-cell',
@@ -1438,11 +1483,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
             Export PDF
           </Button> */}
           {GridDetails?.datagrid_options?.add_row_button_display === true && (
-            <BPITooltip
-              title={
-                user_language?.lang === 'en' ? 'Add Row' : 'Ajouter une ligne'
-              }
-            >
+            <BPITooltip title={trans('addLine')}>
               <Button
                 onClick={handleClickAddRow}
                 style={{
@@ -1454,8 +1495,7 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
                   marginBottom: 14,
                 }}
               >
-                {user_language?.lang === 'en' ? 'Add Row' : 'Ajouter une ligne'}
-                {/* {user_language?.lang} */}
+                {trans('addLine')}
               </Button>
             </BPITooltip>
           )}
@@ -1495,54 +1535,67 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
               </Button>
             </BPITooltip>
           )}
-          {GridDetails?.buttons?.length > 0 &&
-            GridDetails?.buttons?.map((button: any, index: number) => {
-              return (
-                <Button
-                  key={index}
-                  onClick={() =>
-                    DynamicButtonClick({
-                      button_method: button?.button_method,
-                      button_route: button?.button_route,
-                      button_refresh_callback: button?.button_refresh_callback,
-                      button_row_selected: button?.button_row_selected,
-                    })
-                  }
-                  style={{
-                    backgroundColor: button?.button_bg_color
-                      ? button?.button_bg_color
-                      : 'teal',
-                    border: 0,
-                    color: button?.button_font_color
-                      ? button?.button_font_color
-                      : 'white',
-                    margin: 5,
-                    borderRadius: 5,
-                    marginBottom: 14,
-                  }}
-                >
-                  {button?.button_label}
-                </Button>
-              );
-            })}
+          {(GridDetails?.buttons ?? []).length > 0 &&
+            (() => {
+              const reorderedDatagridBtns = [...(GridDetails?.buttons || [])];
 
+              reorderedDatagridBtns.sort((btn1, btn2) => {
+                if (btn1.button_order < btn2.button_order) return -1;
+                if (btn1.button_order > btn2.button_order) return 1;
+
+                return 0;
+              });
+
+              return reorderedDatagridBtns.map((button: any, index: number) => {
+                return (
+                  <Button
+                    key={index}
+                    onClick={() =>
+                      DynamicButtonClick({
+                        button_method: button?.button_method,
+                        button_route: button?.button_route,
+                        button_refresh_callback:
+                          button?.button_refresh_callback,
+                        button_row_selected: button?.button_row_selected,
+                      })
+                    }
+                    style={{
+                      backgroundColor: button?.button_bg_color
+                        ? button?.button_bg_color
+                        : 'teal',
+                      border: 0,
+                      color: button?.button_font_color
+                        ? button?.button_font_color
+                        : 'white',
+                      margin: 5,
+                      borderRadius: 5,
+                      marginBottom: 14,
+                    }}
+                  >
+                    {button?.button_label}
+                  </Button>
+                );
+              });
+            })()}
+
+          {GridDetails?.datagrid_options?.delete_row_button_display ===
+            true && (
+            <Button
+              disabled={isDeletingRows}
+              onClick={handleClickDeleteSelectedRows}
+              style={{
+                backgroundColor: 'crimson',
+                border: 0,
+                color: '#fff',
+                margin: 5,
+                borderRadius: 5,
+                marginBottom: 14,
+              }}
+            >
+              {trans('deleteRows')}
+            </Button>
+          )}
           {/* <Button onClick={getRowData}>Get Data</Button> */}
-          {/* <BPITooltip title={'Remove Line'}>
-        <Button
-          onClick={handleClickRemoveSelectedRow}
-          style={{
-            backgroundColor: 'crimson',
-            border: 0,
-            color: '#fff',
-            margin: 5,
-            borderRadius: 5,
-            marginBottom: 14,
-          }}
-        >
-          Delete Selected Rows
-        </Button>
-        <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} />
-      </BPITooltip> */}
         </div>
       </div>
       <h1 className={'errorsText'} style={{ color: 'red', padding: 10 }}>
@@ -1551,12 +1604,12 @@ export const DataGridControlAgGrid: React.FC<IProps> = ({
       {errorMessageAdd && <FormError>{errorMessageAdd}</FormError>}
 
       <AgDataGridStyle
-        $background_color={GridDetails.datagrid_options?.datagrid_bg_color}
+        $background_color={GridDetails?.datagrid_options?.datagrid_bg_color}
         $border_color={GridDetails?.datagrid_options?.datagrid_border_color}
         $is_border_color={GridDetails?.datagrid_options?.datagrid_border}
         $font_color={GridDetails?.datagrid_options?.datagrid_font_color}
         $font_size={GridDetails?.datagrid_options?.datagrid_font_size}
-        $font_weight={GridDetails.datagrid_options?.datagrid_font_weight}
+        $font_weight={GridDetails?.datagrid_options?.datagrid_font_weight}
         $header_bg_color={
           GridDetails?.datagrid_options?.datagrid_header_bg_color
         }

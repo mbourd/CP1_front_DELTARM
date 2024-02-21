@@ -29,7 +29,7 @@ interface ICardC {
   card: ICard;
   triggerAction: (action: IActionButton | null) => void;
 }
-export const Card: React.FC<ICardC> = ({
+export const Card: React.FC<React.PropsWithChildren<ICardC>> = ({
   card,
   triggerAction,
 }): React.ReactElement => {
@@ -50,10 +50,10 @@ export const Card: React.FC<ICardC> = ({
   const generateMaterialIcon = useCallback(
     (
       iconName: SvgIconComponent,
-      color,
-      size,
-      action,
-      hint,
+      color: any,
+      size: any,
+      action: any,
+      hint: any,
     ): React.ReactElement | null => {
       // @ts-ignore
       const Icon = icons[iconName];
@@ -95,9 +95,9 @@ export const Card: React.FC<ICardC> = ({
     parent,
     rowIndex,
   }) => {
-    if (indexCellColumnBorderRight.includes(columnIndex)) {
-      rowData[columnIndex].border_right = true;
-    }
+    // if (indexCellColumnBorderRight.includes(columnIndex)) {
+    //   rowData[columnIndex].border_right = true;
+    // }
 
     return (
       <CellMeasurer

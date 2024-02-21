@@ -7,7 +7,7 @@ import { useSizing } from '../../hooks';
 import { SelectContainer } from './Container/SelectContainer';
 import { SelectContext } from './SelectContext';
 
-export const Select: React.FC<ISelect> = ({
+export const Select: React.FC<React.PropsWithChildren<ISelect>> = ({
   labelColor = 'text',
   labelBdc = 'disabled',
   labelBgc = 'transparent',

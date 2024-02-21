@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 export const FileAuditBodyStyled = styled.section`
   font-family: ${({ theme }) => theme.font.text.main};

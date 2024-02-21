@@ -35,7 +35,7 @@ interface IProps {
   context: 'edit' | 'validate';
 }
 
-export const SwitchControlItem: React.FC<IProps> = ({
+export const SwitchControlItem: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   formState,
   setFormState,

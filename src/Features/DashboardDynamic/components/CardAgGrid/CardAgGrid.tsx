@@ -36,7 +36,7 @@ type CardAgGridProps = {
   triggerAction: (action: IActionButton | null) => void;
 };
 
-const CardAgGrid: React.FC<CardAgGridProps> = ({
+const CardAgGrid: React.FC<React.PropsWithChildren<CardAgGridProps>> = ({
   card,
   triggerAction,
 }): JSX.Element => {
@@ -438,6 +438,7 @@ const CardAgGrid: React.FC<CardAgGridProps> = ({
       select_all_button_display: false,
       unselect_all_button_display: false,
       datagrid_font_size: '',
+      delete_row_button_display: false,
     },
     buttons: [],
     source: '',

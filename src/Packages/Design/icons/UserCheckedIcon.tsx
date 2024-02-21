@@ -1,7 +1,9 @@
 import React from 'react';
 import { SvgIcon, SvgIconProps } from '@material-ui/core';
 
-export const UserCheckedIcon: React.FC<SvgIconProps> = (props) => {
+export const UserCheckedIcon: React.FC<
+  React.PropsWithChildren<SvgIconProps>
+> = (props) => {
   return (
     <SvgIcon viewBox={'0 0 24 24'} {...props}>
       <path d="M9,12L9,12c-2.761,0-5-3.239-5-6V5c0-2.761,2.239-5,5-5h0c2.761,0,5,2.239,5,5v1C14,8.761,11.761,12,9,12z" />

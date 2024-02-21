@@ -4,7 +4,9 @@ import { ErrorLarge } from './Large/ErrorLarge';
 import { ErrorSmall } from './Small/ErrorSmall';
 import { ErrorMedium } from './Medium/ErrorMedium';
 
-export const Error: React.FC<IError> = (props): React.ReactElement => {
+export const Error: React.FC<React.PropsWithChildren<IError>> = (
+  props,
+): React.ReactElement => {
   switch (props.size) {
     case 'sm':
       return <ErrorSmall {...props} />;

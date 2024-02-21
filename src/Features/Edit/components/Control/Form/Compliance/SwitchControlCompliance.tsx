@@ -19,10 +19,9 @@ interface IProps {
   controlId: string;
 }
 
-export const SwitchControlCompliance: React.FC<IProps> = ({
-  compliance,
-  controlId,
-}): React.ReactElement | null => {
+export const SwitchControlCompliance: React.FC<
+  React.PropsWithChildren<IProps>
+> = ({ compliance, controlId }): React.ReactElement | null => {
   const { fileId } = useContext(EditValidationContext);
 
   switch (compliance.compliance_elm_type) {

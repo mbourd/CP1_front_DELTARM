@@ -7,7 +7,7 @@ import {
 } from './CustomSelectRenderer.style';
 import './style.css';
 
-const CustomSelectRenderer: React.FC<any> = ({
+const CustomSelectRenderer: React.FC<React.PropsWithChildren<any>> = ({
   props,
   field_data,
   control,
@@ -59,13 +59,7 @@ const CustomSelectRenderer: React.FC<any> = ({
         <CustomSelectStyled
           value={select_id_to_show[0]?.choice_lib}
           onChange={handleChange}
-          disabled={
-            !props?.data?.row_editable && field_data?.control_editable === false
-              ? true
-              : field_data?.control_editable === false
-              ? true
-              : false
-          }
+          disabled={!props?.data?.row_editable || !field_data?.control_editable}
           // displayEmpty
           inputProps={{ 'aria-label': 'Without label' }}
           sx={{

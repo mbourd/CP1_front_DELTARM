@@ -15,7 +15,7 @@ interface IProps {
   controlId: string;
 }
 
-export const BooleanCompliance: React.FC<IProps> = ({
+export const BooleanCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
   compliance,
   fileId,
   controlId,
@@ -97,6 +97,7 @@ export const BooleanCompliance: React.FC<IProps> = ({
           id={`checkbox-boolean${compliance.compliance_id}`}
           style={{ display: 'block', paddingLeft: '0' }}
           disableRipple
+          // @ts-ignore
           placeholder={compliance.compliance_elm_lib}
           checked={booleanValue ? booleanValue : false}
           onClick={() => toggleAndSaveValue()}

@@ -13,7 +13,7 @@ type CustomActionButtonRendererPropsType = {
 };
 
 const CustomActionButtonRenderer: React.FC<
-  CustomActionButtonRendererPropsType
+  React.PropsWithChildren<CustomActionButtonRendererPropsType>
 > = ({ props, control, jwt }) => {
   const data = props?.colDef?.field?.split('.')[0];
   const field_data = Object.entries(props?.data).reduce(

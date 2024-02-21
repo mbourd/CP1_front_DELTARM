@@ -5,7 +5,9 @@ import { CheckboxContext } from './CheckboxContext';
 import { CheckboxContainer } from './Container/CheckboxContainer';
 import { Button } from '@material-ui/core';
 
-export const CheckboxWrapper: React.FC<ICheckboxWrapper> = ({
+export const CheckboxWrapper: React.FC<
+  React.PropsWithChildren<ICheckboxWrapper>
+> = ({
   data,
   multiple = true,
   name,

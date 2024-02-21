@@ -21,7 +21,7 @@ jobs:
             -   name: setup node
                 uses: actions/setup-node@v3
                 with:
-                    node-version: 16.13.1
+                    node-version: 16.18.0
 
             -   name: yarn install
                 run: yarn install
@@ -66,6 +66,3 @@ jobs:
                         docker login ghcr.io/deltarm/cp1-front/github-prod:latest -u ${{ github.repository_owner }} -p ${{ secrets.GITHUB_TOKEN }}
                         docker-compose -f /home/deltarm/client/docker-compose.prod_github.yml pull
                         docker-compose -f /home/deltarm/client/docker-compose.prod_github.yml up -d --remove-orphans
-
-
-

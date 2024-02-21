@@ -6,6 +6,7 @@
 import JwtDecode from 'jwt-decode';
 
 import '../../src/Features/Edit/translations';
+import '../../src/Features/Manage/translations';
 import { _translate } from '../utils';
 import {
   IApiControl,
@@ -42,6 +43,7 @@ describe(
             localStorage[Cypress.env('url_cp1_front')]['security'] as string,
           )._jwt,
         );
+        context = jwt.context;
 
         if (jwt.context !== 'CP1') this.skip();
 

@@ -16,7 +16,9 @@ type TextShineLoaderProps = {
   speed?: ITextShineLoader['$speed'];
 };
 
-export const TextShineLoader: React.FC<TextShineLoaderProps> = ({
+export const TextShineLoader: React.FC<
+  React.PropsWithChildren<TextShineLoaderProps>
+> = ({
   children,
   text,
   speed = 4,

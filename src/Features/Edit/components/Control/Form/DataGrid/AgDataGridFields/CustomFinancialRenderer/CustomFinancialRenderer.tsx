@@ -15,10 +15,9 @@ type CustomFinancialRendererPropsType = {
   seterrors?: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const CustomFinancialRenderer: React.FC<CustomFinancialRendererPropsType> = ({
-  props,
-  control,
-}) => {
+const CustomFinancialRenderer: React.FC<
+  React.PropsWithChildren<CustomFinancialRendererPropsType>
+> = ({ props, control }) => {
   const column = props.column.colDef;
   const { decimal_digit: decimalDigit = 0 } = column;
   const {

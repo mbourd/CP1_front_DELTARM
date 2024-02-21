@@ -185,16 +185,36 @@ export interface DataGridDetail {
   columns: DataGridDetailsColumnType[];
   rows: DataGridDetailsRow[];
   datagrid_options: DataGridDetailOptionsType;
-  buttons: any;
+  buttons: DataGridDetailButtonsType[];
   source: any;
 }
+export type DataGridDetailButtonsType = {
+  button_bg_color: string;
+  button_font_color: string;
+  button_id: number;
+  button_label: string;
+  button_method: 'POST' | 'GET';
+  button_order: number;
+  button_refresh_callback: boolean;
+  button_route: string;
+  button_row_selected: boolean;
+};
 export type DataGridDetailOptionsType = {
+  datagrid_bg_color?: string;
+  datagrid_border_color?: string;
+  datagrid_border?: boolean;
+  datagrid_font_color?: string;
+  datagrid_font_weight?: string;
+  datagrid_header_bg_color?: string;
+  datagrid_header_font_color?: string;
+  datagrid_odd_row_bg_color?: string;
   add_row_button_display: boolean;
+  delete_row_button_display: boolean;
   pagination_row_size: number;
   select_all_button_col_ref: `rdg_${number}`;
   select_all_button_display: boolean;
   unselect_all_button_display: boolean;
-  datagrid_font_size: string;
+  datagrid_font_size?: string;
 };
 
 export interface IDataGridAgGridCol {

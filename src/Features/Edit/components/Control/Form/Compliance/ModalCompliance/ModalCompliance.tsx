@@ -15,7 +15,7 @@ interface IProps {
   fileId: string;
 }
 
-export const ModalCompliance: React.FC<IProps> = ({
+export const ModalCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
   open,
   onClose,
   controlId,

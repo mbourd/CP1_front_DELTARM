@@ -17,6 +17,7 @@ import { keyCodeDefinitions } from 'cypress-real-events/keyCodeDefinitions';
 
 import { DataGridControlAgGrid } from './DataGridControlAgGrid';
 import {
+  DataGridDetailButtonsType,
   DataGridDetailsColumnType,
   DataGridDetailsRow,
   DataGridDetailsRowsCell,
@@ -27,6 +28,7 @@ import {
   _escapeForRegExp,
   _getRandomNumberBetween,
   _hexToRgb,
+  _translate,
 } from '../../../../../../../cypress/utils';
 import { AgDataGridStyle } from './DataGridControl.style';
 
@@ -91,869 +93,1168 @@ describe('<DataGridControlAgGrid />', () => {
     Cypress.config('defaultCommandTimeout', originalTimeout);
   });
 
-  // it('should render', function () {
-  //   cy.on('uncaught:exception', () => false);
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
-  // });
+  it('should render - controlExample1', function () {
+    cy.on('uncaught:exception', () => false);
+    const _control = {
+      ...structuredClone(controlExample1),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
+  });
 
-  // it('should have a fixed height', function () {
-  //   cy.on('uncaught:exception', () => false);
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid
-  //         control={_control}
-  //         fileId={''}
-  //         heightGrid={'456px'}
-  //       />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   cy.get(`.${AgDataGridStyle.styledComponentId}`).should(
-  //     'have.css',
-  //     'height',
-  //     '456px',
-  //   );
-  // });
-  // it('should have a fixed height', function () {
-  //   cy.on('uncaught:exception', () => false);
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid
-  //         control={_control}
-  //         fileId={''}
-  //         heightGrid={233}
-  //       />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   cy.get(`.${AgDataGridStyle.styledComponentId}`).should(
-  //     'have.css',
-  //     'height',
-  //     '233px',
-  //   );
-  //   cy.react('AgGridReact')
-  //     .invoke('height')
-  //     .then((height) => expect(height).to.be.eq(233));
-  // });
+  it('should have a fixed height - controlExample1', function () {
+    cy.on('uncaught:exception', () => false);
+    const _control = {
+      ...structuredClone(controlExample1),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control}
+          fileId={''}
+          heightGrid={'456px'}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.get(`.${AgDataGridStyle.styledComponentId}`).should(
+      'have.css',
+      'height',
+      '456px',
+    );
+  });
+  it('should have a fixed height - controlExample1', function () {
+    cy.on('uncaught:exception', () => false);
+    const _control = {
+      ...structuredClone(controlExample1),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control}
+          fileId={''}
+          heightGrid={233}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.get(`.${AgDataGridStyle.styledComponentId}`).should(
+      'have.css',
+      'height',
+      '233px',
+    );
+    cy.react('AgGridReact')
+      .invoke('height')
+      .then((height) => expect(height).to.be.eq(233));
+  });
 
-  // it('Should have the correct number of columns', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   };
-  //   const columns = _control.data_grid_detail?.columns || [];
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid
-  //         control={_control as any as IApiControl}
-  //         fileId={''}
-  //       />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   cy.react('DataGridControlAgGrid')
-  //     .react('AgGridReact')
-  //     .find('.ag-header-row.ag-header-row-column .ag-header-cell')
-  //     .should('be.visible')
-  //     .should('have.length', columns.length)
-  //     .each(($el, i) => {
-  //       cy.wrap($el)
-  //         .find('.ag-header-cell-text')
-  //         .should('have.text', columns[i].headerName);
-  //     });
-  // });
-  // it('Should have the correct number of columns', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample2),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   };
-  //   const columns = _control.data_grid_detail?.columns || [];
-  //   cy.on('uncaught:exception', () => {
-  //     // return false to prevent the error from the application
-  //     // failing this test
-  //     return false;
-  //   });
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid
-  //         control={_control as any as IApiControl}
-  //         fileId={''}
-  //       />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   cy.react('DataGridControlAgGrid')
-  //     .react('AgGridReact')
-  //     .find('.ag-header-row.ag-header-row-column .ag-header-cell')
-  //     .should('be.visible')
-  //     .should('have.length', columns.length)
-  //     .each(($el, i) => {
-  //       cy.wrap($el)
-  //         .find('.ag-header-cell-text')
-  //         .should('have.text', columns[i].headerName);
-  //     });
-  // });
-  // it('Should have the correct number of columns', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample5),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   };
-  //   const columns = _control.data_grid_detail?.columns || [];
-  //   cy.on('uncaught:exception', () => {
-  //     // return false to prevent the error from the application
-  //     // failing this test
-  //     return false;
-  //   });
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid
-  //         control={_control as any as IApiControl}
-  //         fileId={''}
-  //       />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   cy.react('DataGridControlAgGrid')
-  //     .react('AgGridReact')
-  //     .find('.ag-header-row.ag-header-row-column .ag-header-cell')
-  //     .should('have.length', columns.length)
-  //     .each(($el, i) => {
-  //       cy.wrap($el)
-  //         .find('.ag-header-cell-text')
-  //         .should('have.text', columns[i].headerName);
-  //     });
-  // });
+  it('Should have the correct number of columns - controlExample1', function () {
+    cy.on('uncaught:exception', () => false);
+    const _control = {
+      ...structuredClone(controlExample1),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    };
+    const columns = _control.data_grid_detail?.columns || [];
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control as any as IApiControl}
+          fileId={''}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('DataGridControlAgGrid')
+      .react('AgGridReact')
+      .find('.ag-header-row.ag-header-row-column .ag-header-cell')
+      .should('be.visible')
+      .should('have.length', columns.length)
+      .each(($el, i) => {
+        cy.wrap($el)
+          .find('.ag-header-cell-text')
+          .should('have.text', columns[i].headerName);
+      });
+  });
+  it('Should have the correct number of columns - controlExample2', function () {
+    cy.on('uncaught:exception', () => false);
+    const _control = {
+      ...structuredClone(controlExample2),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    };
+    const columns = _control.data_grid_detail?.columns || [];
+    cy.on('uncaught:exception', () => {
+      // return false to prevent the error from the application
+      // failing this test
+      return false;
+    });
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control as any as IApiControl}
+          fileId={''}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('DataGridControlAgGrid')
+      .react('AgGridReact')
+      .find('.ag-header-row.ag-header-row-column .ag-header-cell')
+      .should('be.visible')
+      .should('have.length', columns.length)
+      .each(($el, i) => {
+        cy.wrap($el)
+          .find('.ag-header-cell-text')
+          .should('have.text', columns[i].headerName);
+      });
+  });
+  it('Should have the correct number of columns - controlExample3', function () {
+    cy.viewport(3500, 720);
+    cy.on('uncaught:exception', () => false);
+    const _control = {
+      ...structuredClone(controlExample3),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    };
+    const columns = _control.data_grid_detail?.columns || [];
+    cy.on('uncaught:exception', () => {
+      // return false to prevent the error from the application
+      // failing this test
+      return false;
+    });
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control as any as IApiControl}
+          fileId={''}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('DataGridControlAgGrid')
+      .react('AgGridReact')
+      .find('.ag-header-row.ag-header-row-column .ag-header-cell')
+      .should('have.length', columns.length)
+      .each(($el, i) => {
+        cy.wrap($el)
+          .find('.ag-header-cell-text')
+          .should('have.text', columns[i].headerName);
+      });
+  });
+  it('Should have the correct number of columns - controlExample4', function () {
+    cy.viewport(3500, 720);
+    cy.on('uncaught:exception', () => false);
+    const _control = {
+      ...structuredClone(controlExample4),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    };
+    const columns = _control.data_grid_detail?.columns || [];
+    cy.on('uncaught:exception', () => {
+      // return false to prevent the error from the application
+      // failing this test
+      return false;
+    });
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control as any as IApiControl}
+          fileId={''}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('DataGridControlAgGrid')
+      .react('AgGridReact')
+      .find('.ag-header-row.ag-header-row-column .ag-header-cell')
+      .should('have.length', columns.length)
+      .each(($el, i) => {
+        cy.wrap($el)
+          .find('.ag-header-cell-text')
+          .should('have.text', columns[i].headerName);
+      });
+  });
+  it('Should have the correct number of columns - controlExample5', function () {
+    cy.viewport(3500, 720);
+    cy.on('uncaught:exception', () => false);
+    const _control = {
+      ...structuredClone(controlExample5),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    };
+    const columns = _control.data_grid_detail?.columns || [];
+    cy.on('uncaught:exception', () => {
+      // return false to prevent the error from the application
+      // failing this test
+      return false;
+    });
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control as any as IApiControl}
+          fileId={''}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('DataGridControlAgGrid')
+      .react('AgGridReact')
+      .find('.ag-header-row.ag-header-row-column .ag-header-cell')
+      .should('have.length', columns.length)
+      .each(($el, i) => {
+        cy.wrap($el)
+          .find('.ag-header-cell-text')
+          .should('have.text', columns[i].headerName);
+      });
+  });
 
-  // it('Should render extra buttons', function () {
-  //   const _buttons = [
-  //     {
-  //       button_bg_color: '#2EB82E',
-  //       button_font_color: '#FFFFFF',
-  //       button_id: 1,
-  //       button_label: 'Declare Values',
-  //       button_method: 'POST',
-  //       button_order: 1,
-  //       button_refresh_callback: false,
-  //       button_route: '/total_energies/declare_values',
-  //       button_row_selected: true,
-  //     },
-  //     {
-  //       button_bg_color: '#2E54AA',
-  //       button_font_color: '#FFEEBF',
-  //       button_id: 1,
-  //       button_label: 'Other button1',
-  //       button_method: 'POST',
-  //       button_order: 1,
-  //       button_refresh_callback: false,
-  //       button_route: '/total_energies/declare_values',
-  //       button_row_selected: true,
-  //     },
-  //     {
-  //       button_bg_color: '#FD59AA',
-  //       button_font_color: '#FFEABF',
-  //       button_id: 1,
-  //       button_label: 'Other button2',
-  //       button_method: 'POST',
-  //       button_order: 1,
-  //       button_refresh_callback: false,
-  //       button_route: '/total_energies/declare_values',
-  //       button_row_selected: true,
-  //     },
-  //   ];
-  //   const _control = {
-  //     ...structuredClone(controlExample2),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample2.data_grid_detail),
-  //       buttons: _buttons,
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   };
-  //   cy.on('uncaught:exception', () => false);
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid
-  //         control={_control as any as IApiControl}
-  //         fileId={''}
-  //       />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
+  it('Should render extra buttons - controlExample2', function () {
+    const _buttons = [
+      {
+        button_bg_color: '#2EB82E',
+        button_font_color: '#FFFFFF',
+        button_id: 1,
+        button_label: 'Declare Values',
+        button_method: 'POST',
+        button_order: 1,
+        button_refresh_callback: false,
+        button_route: '/total_energies/declare_values',
+        button_row_selected: true,
+      },
+      {
+        button_bg_color: '#2E54AA',
+        button_font_color: '#FFEEBF',
+        button_id: 1,
+        button_label: 'Other button1',
+        button_method: 'POST',
+        button_order: 1,
+        button_refresh_callback: false,
+        button_route: '/total_energies/declare_values',
+        button_row_selected: true,
+      },
+      {
+        button_bg_color: '#FD59AA',
+        button_font_color: '#FFEABF',
+        button_id: 1,
+        button_label: 'Other button2',
+        button_method: 'POST',
+        button_order: 1,
+        button_refresh_callback: false,
+        button_route: '/total_energies/declare_values',
+        button_row_selected: true,
+      },
+    ];
+    const _control = {
+      ...structuredClone(controlExample2),
+      data_grid_detail: {
+        ...structuredClone(controlExample2.data_grid_detail),
+        buttons: _buttons,
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    };
+    cy.on('uncaught:exception', () => false);
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control as any as IApiControl}
+          fileId={''}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
 
-  //   cy.react('DataGridControlAgGrid')
-  //     .react('ControlLabel')
-  //     .next('div')
-  //     .within(($elDiv) => {
-  //       const totalButton = $elDiv.find('button').length;
+    cy.react('DataGridControlAgGrid')
+      .react('ControlLabel')
+      .next('div')
+      .within(($elDiv) => {
+        const totalButton = $elDiv.find('button').length;
 
-  //       for (const indexBtn in _buttons) {
-  //         const btn = _buttons[indexBtn];
+        for (const indexBtn in _buttons) {
+          const btn = _buttons[indexBtn];
 
-  //         cy.wrap($elDiv)
-  //           .react('Button')
-  //           .find('button')
-  //           .eq(totalButton - _buttons.length + parseInt(indexBtn))
-  //           .should(
-  //             'have.css',
-  //             'background-color',
-  //             _hexToRgb(btn.button_bg_color),
-  //           )
-  //           .should('have.css', 'color', _hexToRgb(btn.button_font_color))
-  //           .contains(btn.button_label);
-  //       }
-  //     });
-  // });
+          cy.wrap($elDiv)
+            .react('Button')
+            .find('button')
+            .eq(totalButton - _buttons.length + parseInt(indexBtn))
+            .should(
+              'have.css',
+              'background-color',
+              _hexToRgb(btn.button_bg_color),
+            )
+            .should('have.css', 'color', _hexToRgb(btn.button_font_color))
+            .contains(btn.button_label);
+        }
+      });
+  });
 
-  // it('Should evaluate and format formula type correctly', function () {
-  //   // @ts-ignore
-  //   const _control: IApiControl = {
-  //     ...structuredClone(controlExample3),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   };
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertFormatAndEvalFormula(_control);
-  // });
-  // it('Should evaluate and format formula type correctly', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample3),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample3.data_grid_detail),
-  //       rows: (() => {
-  //         return structuredClone(
-  //           controlExample3.data_grid_detail
-  //             ?.rows as any as DataGridDetailsRow[],
-  //         ).map((row) => {
-  //           for (const index in Object.keys(row))
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]]) &&
-  //               [0].includes(parseInt(index))
-  //             )
-  //               row[Object.keys(row)[index]].control_editable = false;
+  it('Should render extra buttons in the right order - controlExample2', function () {
+    const _buttons: DataGridDetailButtonsType[] = [
+      {
+        button_bg_color: '#2EB82E',
+        button_font_color: '#FFFFFF',
+        button_id: 1,
+        button_label: 'Declare Values',
+        button_method: 'POST',
+        button_order: 3,
+        button_refresh_callback: false,
+        button_route: '/total_energies/declare_values',
+        button_row_selected: true,
+      },
+      {
+        button_bg_color: '#2E54AA',
+        button_font_color: '#FFEEBF',
+        button_id: 1,
+        button_label: 'Other button1',
+        button_method: 'POST',
+        button_order: 1,
+        button_refresh_callback: false,
+        button_route: '/total_energies/declare_values',
+        button_row_selected: true,
+      },
+      {
+        button_bg_color: '#FD59AA',
+        button_font_color: '#FFEABF',
+        button_id: 1,
+        button_label: 'Other button2',
+        button_method: 'POST',
+        button_order: 6,
+        button_refresh_callback: false,
+        button_route: '/total_energies/declare_values',
+        button_row_selected: true,
+      },
+    ];
+    const reorderedBtns = [..._buttons];
+    const _control = {
+      ...structuredClone(controlExample2),
+      data_grid_detail: {
+        ...structuredClone(controlExample2.data_grid_detail),
+        buttons: _buttons,
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as IApiControl;
 
-  //           return row;
-  //         });
-  //       })(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   };
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid
-  //         control={_control as any as IApiControl}
-  //         fileId={''}
-  //       />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertFormatAndEvalFormula(_control as any as IApiControl);
-  // });
-  // it('Should evaluate and format formula type correctly', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample3),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample3.data_grid_detail),
-  //       rows: (() => {
-  //         return structuredClone(
-  //           controlExample3.data_grid_detail
-  //             ?.rows as any as DataGridDetailsRow[],
-  //         ).map((row) => {
-  //           for (const index in Object.keys(row))
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]]) &&
-  //               [0, 1].includes(parseInt(index))
-  //             )
-  //               row[Object.keys(row)[index]].control_editable = false;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    reorderedBtns.sort((btn1, btn2) => {
+      if (btn1.button_order < btn2.button_order) return -1;
+      if (btn1.button_order > btn2.button_order) return 1;
 
-  //           return row;
-  //         });
-  //       })(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   };
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid
-  //         control={_control as any as IApiControl}
-  //         fileId={''}
-  //       />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertFormatAndEvalFormula(_control as any as IApiControl);
-  // });
-  // it('Should evaluate and format formula type correctly', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample3),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample3.data_grid_detail),
-  //       rows: (() => {
-  //         return structuredClone(
-  //           controlExample3.data_grid_detail
-  //             ?.rows as any as DataGridDetailsRow[],
-  //         ).map((row) => {
-  //           for (const index in Object.keys(row))
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]]) &&
-  //               [0, 2].includes(parseInt(index))
-  //             )
-  //               row[Object.keys(row)[index]].control_editable = false;
+      return 0;
+    });
 
-  //           return row;
-  //         });
-  //       })(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   };
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid
-  //         control={_control as any as IApiControl}
-  //         fileId={''}
-  //       />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertFormatAndEvalFormula(_control as any as IApiControl);
-  // });
-  // it('Should evaluate and format formula type correctly', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample3),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample3.data_grid_detail),
-  //       rows: (() => {
-  //         return structuredClone(
-  //           controlExample3.data_grid_detail
-  //             ?.rows as any as DataGridDetailsRow[],
-  //         ).map((row) => {
-  //           for (const index in Object.keys(row))
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]]) &&
-  //               [2].includes(parseInt(index))
-  //             )
-  //               row[Object.keys(row)[index]].control_editable = false;
+    cy.react('DataGridControlAgGrid')
+      .react('ControlLabel')
+      .next('div')
+      .within(($elDiv) => {
+        const totalButton = $elDiv.find('button').length;
 
-  //           return row;
-  //         });
-  //       })(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   };
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid
-  //         control={_control as any as IApiControl}
-  //         fileId={''}
-  //       />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertFormatAndEvalFormula(_control as any as IApiControl);
-  // });
-  // it('Should FAIL (until fix)', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample3),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample3.data_grid_detail),
-  //       rows: (() => {
-  //         return structuredClone(
-  //           controlExample3.data_grid_detail
-  //             ?.rows as any as DataGridDetailsRow[],
-  //         ).map((row) => {
-  //           for (const index in Object.keys(row))
-  //             if (
-  //               row[Object.keys(row)[index]].component === 'formula' &&
-  //               [3].includes(parseInt(index))
-  //             )
-  //               row[Object.keys(row)[index]].value = '(# * #7925)';
+        cy.wrap(reorderedBtns).each(
+          (btn: DataGridDetailButtonsType, indexBtn) => {
+            cy.wrap($elDiv)
+              .react('Button')
+              .find('button')
+              .eq(totalButton - reorderedBtns.length + indexBtn)
+              .should(
+                'have.css',
+                'background-color',
+                _hexToRgb(btn.button_bg_color),
+              )
+              .should('have.css', 'color', _hexToRgb(btn.button_font_color))
+              .contains(btn.button_label);
+          },
+        );
+      });
+  });
 
-  //           return row;
-  //         });
-  //       })(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   };
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid
-  //         control={_control as any as IApiControl}
-  //         fileId={''}
-  //       />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertFormatAndEvalFormula(_control as any as IApiControl);
-  // });
+  it('should render delete rows button - controlExample2', function () {
+    cy.on('uncaught:exception', () => false);
+    const trans_FR = _translate('fr', 'Edit', 'deleteRows');
+    const trans_EN = _translate('en', 'Edit', 'deleteRows');
+    const trans_DE = _translate('de', 'Edit', 'deleteRows');
+    const translations = [trans_FR, trans_EN, trans_DE];
+    const _control = {
+      ...structuredClone(controlExample2),
+      data_grid_detail: {
+        ...structuredClone(controlExample2.data_grid_detail),
+        datagrid_options: {
+          ...structuredClone(
+            controlExample2.data_grid_detail?.datagrid_options || {},
+          ),
+          delete_row_button_display: true,
+        },
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.get('._Button').contains(new RegExp(translations.join('|')));
+  });
 
-  // it('Should format correctly', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid
-  //         control={_control as any as IApiControl}
-  //         fileId={''}
-  //       />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertFormat(_control);
-  // });
-  // it('Should format correctly', function () {
-  //   // @ts-ignore
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample1.data_grid_detail),
-  //       columns: (() =>
-  //         structuredClone(
-  //           controlExample1.data_grid_detail
-  //             ?.columns as any as DataGridDetailsColumnType[],
-  //         ).map((col, i) => {
-  //           col.decimal_digit += i + 2;
-  //           col.thousand_separator = true;
+  it('should delete selected rows - controlExample2', function () {
+    cy.on('uncaught:exception', () => false);
 
-  //           return col;
-  //         }))(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertFormat(_control);
-  // });
+    const trans_FR = _translate('fr', 'Edit', 'deleteRows');
+    const trans_EN = _translate('en', 'Edit', 'deleteRows');
+    const trans_DE = _translate('de', 'Edit', 'deleteRows');
+    const translations = [trans_FR, trans_EN, trans_DE];
+    const _control = {
+      ...structuredClone(controlExample2),
+      data_grid_detail: {
+        ...structuredClone(controlExample2.data_grid_detail),
+        datagrid_options: {
+          ...structuredClone(
+            controlExample2.data_grid_detail?.datagrid_options || {},
+          ),
+          delete_row_button_display: true,
+        },
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.contains('Select All').click();
+    cy.wait(100).then(() => {
+      cy.intercept('POST', '/control/data_grid/delete_row?file_id=*', {
+        statusCode: 204,
+        body: {},
+      });
+      cy.get('._Button')
+        .contains(new RegExp(translations.join('|')))
+        .click();
+      cy.window().then((w) => {
+        expect(
+          w[
+            'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
+          ].gridRef.current.api.getDisplayedRowCount(),
+        ).to.eq(0);
+      });
+    });
+  });
+  it('should display an error message if delete rows failed - controlExample2', function () {
+    cy.on('uncaught:exception', () => false);
 
-  // it('Should sort correctly', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertSorting(_control);
-  // });
-  // it('Should sort correctly with big numbers', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample1.data_grid_detail),
-  //       rows: (() => {
-  //         return structuredClone(
-  //           controlExample1.data_grid_detail
-  //             ?.rows as any as DataGridDetailsRow[],
-  //         ).map((row) => {
-  //           for (const index in Object.keys(row))
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             )
-  //               row[Object.keys(row)[index]].value = `${BigNumber(
-  //                 '900719925474099100000',
-  //               )
-  //                 .plus(_getRandomNumberBetween(1, 40000))
-  //                 .toString()}${
-  //                 row[Object.keys(row)[index]].component !== 'integer'
-  //                   ? `.${_getRandomNumberBetween(1, 99999)}`
-  //                   : ''
-  //               }`;
+    const trans_FR = _translate('fr', 'Edit', 'deleteRows');
+    const trans_EN = _translate('en', 'Edit', 'deleteRows');
+    const trans_DE = _translate('de', 'Edit', 'deleteRows');
+    const translations = [trans_FR, trans_EN, trans_DE];
+    const _control = {
+      ...structuredClone(controlExample2),
+      data_grid_detail: {
+        ...structuredClone(controlExample2.data_grid_detail),
+        datagrid_options: {
+          ...structuredClone(
+            controlExample2.data_grid_detail?.datagrid_options || {},
+          ),
+          delete_row_button_display: true,
+        },
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={'abcdefg'} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.contains('Select All').click();
+    cy.wait(100).then(() => {
+      const error_msg = 'Erreur de suppression';
+      cy.intercept('POST', '/control/data_grid/delete_row?file_id=*', {
+        statusCode: 500,
+        body: { error_msg },
+        delay: 233,
+      }).as('responseDeleteRows');
+      cy.window().then((w) => {
+        const intialCountRow =
+          w[
+            'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
+          ].gridRef.current.api.getDisplayedRowCount();
+        cy.get('._Button')
+          .contains(new RegExp(translations.join('|')))
+          .click();
+        cy.react('DataGridControlAgGrid').formErrorShouldBeVisible([error_msg]);
+        cy.then(() => {
+          expect(
+            w[
+              'Features_Edit_Control_DataGridControlAgGrid' +
+                _control.control_id
+            ].gridRef.current.api.getDisplayedRowCount(),
+          ).to.eq(intialCountRow);
+        });
+      });
+    });
+  });
 
-  //           return row;
-  //         });
-  //       })(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertSorting(_control);
-  // });
-  // it('Should sort correctly', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample3),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertSorting(_control);
-  // });
-  // it('Should sort correctly with empty cells', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample3),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample3.data_grid_detail),
-  //       rows: (() => {
-  //         return structuredClone(
-  //           controlExample3.data_grid_detail
-  //             ?.rows as any as DataGridDetailsRow[],
-  //         ).map((row, indexRow) => {
-  //           if (indexRow === 0 || indexRow === 4)
-  //             for (const index in Object.keys(row))
-  //               if (
-  //                 typeof row[Object.keys(row)[index]] === 'object' &&
-  //                 !Array.isArray(row[Object.keys(row)[index]]) &&
-  //                 [0].includes(parseInt(index))
-  //               )
-  //                 row[Object.keys(row)[index]].value = null;
+  it('Should evaluate and format formula type correctly - controlExample3', function () {
+    // @ts-ignore
+    const _control: IApiControl = {
+      ...structuredClone(controlExample3),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    };
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertFormatAndEvalFormula(_control);
+  });
+  it('Should evaluate and format formula type correctly - controlExample3', function () {
+    const _control = {
+      ...structuredClone(controlExample3),
+      data_grid_detail: {
+        ...structuredClone(controlExample3.data_grid_detail),
+        rows: (() => {
+          return structuredClone(
+            controlExample3.data_grid_detail
+              ?.rows as any as DataGridDetailsRow[],
+          ).map((row) => {
+            for (const index in Object.keys(row))
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]]) &&
+                [0].includes(parseInt(index))
+              )
+                row[Object.keys(row)[index]].control_editable = false;
 
-  //           return row;
-  //         });
-  //       })(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertSorting(_control);
-  // });
-  // it('Should sort correctly with empty cells & big numbers', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample3),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample3.data_grid_detail),
-  //       rows: (() => {
-  //         return structuredClone(
-  //           controlExample3.data_grid_detail
-  //             ?.rows as any as DataGridDetailsRow[],
-  //         ).map((row, indexRow) => {
-  //           if (indexRow === 0 || indexRow === 4)
-  //             for (const index in Object.keys(row))
-  //               if (
-  //                 typeof row[Object.keys(row)[index]] === 'object' &&
-  //                 !Array.isArray(row[Object.keys(row)[index]]) &&
-  //                 row[Object.keys(row)[index]].component !== 'formula'
-  //               )
-  //                 if ([0].includes(parseInt(index)))
-  //                   row[Object.keys(row)[index]].value = null;
-  //                 else
-  //                   row[Object.keys(row)[index]].value = `${BigNumber(
-  //                     '900719925474099100000',
-  //                   )
-  //                     .plus(_getRandomNumberBetween(1, 40000))
-  //                     .toString()}${
-  //                     row[Object.keys(row)[index]].component !== 'integer'
-  //                       ? `.${_getRandomNumberBetween(1, 99999)}`
-  //                       : ''
-  //                   }`;
+            return row;
+          });
+        })(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    };
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control as any as IApiControl}
+          fileId={''}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertFormatAndEvalFormula(_control as any as IApiControl);
+  });
+  it('Should evaluate and format formula type correctly - controlExample3', function () {
+    const _control = {
+      ...structuredClone(controlExample3),
+      data_grid_detail: {
+        ...structuredClone(controlExample3.data_grid_detail),
+        rows: (() => {
+          return structuredClone(
+            controlExample3.data_grid_detail
+              ?.rows as any as DataGridDetailsRow[],
+          ).map((row) => {
+            for (const index in Object.keys(row))
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]]) &&
+                [0, 1].includes(parseInt(index))
+              )
+                row[Object.keys(row)[index]].control_editable = false;
 
-  //           return row;
-  //         });
-  //       })(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertSorting(_control);
-  // });
-  // it('Should sort correctly', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample4),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertSorting(_control);
-  // });
-  // it('Should sort correctly', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample5),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertSorting(_control);
-  // });
-  // it('Should sort correctly', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample6),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertSorting(_control);
-  // });
-  // it('Should sort correctly', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample7),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertSorting(_control);
-  // });
-  // it('Should sort correctly', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample8),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertSorting(_control);
-  // });
+            return row;
+          });
+        })(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    };
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control as any as IApiControl}
+          fileId={''}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertFormatAndEvalFormula(_control as any as IApiControl);
+  });
+  it('Should evaluate and format formula type correctly - controlExample3', function () {
+    const _control = {
+      ...structuredClone(controlExample3),
+      data_grid_detail: {
+        ...structuredClone(controlExample3.data_grid_detail),
+        rows: (() => {
+          return structuredClone(
+            controlExample3.data_grid_detail
+              ?.rows as any as DataGridDetailsRow[],
+          ).map((row) => {
+            for (const index in Object.keys(row))
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]]) &&
+                [0, 2].includes(parseInt(index))
+              )
+                row[Object.keys(row)[index]].control_editable = false;
 
-  // it('Should NOT sort', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample1.data_grid_detail),
-  //       columns: structuredClone(
-  //         controlExample1.data_grid_detail?.columns || [],
-  //       ).map((col) => {
-  //         const _col: DataGridDetailsColumnType = {
-  //           ...structuredClone(col),
-  //           sortable: false,
-  //         };
+            return row;
+          });
+        })(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    };
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control as any as IApiControl}
+          fileId={''}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertFormatAndEvalFormula(_control as any as IApiControl);
+  });
+  it('Should evaluate and format formula type correctly - controlExample3', function () {
+    const _control = {
+      ...structuredClone(controlExample3),
+      data_grid_detail: {
+        ...structuredClone(controlExample3.data_grid_detail),
+        rows: (() => {
+          return structuredClone(
+            controlExample3.data_grid_detail
+              ?.rows as any as DataGridDetailsRow[],
+          ).map((row) => {
+            for (const index in Object.keys(row))
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]]) &&
+                [2].includes(parseInt(index))
+              )
+                row[Object.keys(row)[index]].control_editable = false;
 
-  //         return _col;
-  //       }),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertSorting(_control);
-  // });
-  // it('Should NOT sort', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample2),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample2.data_grid_detail),
-  //       columns: structuredClone(
-  //         controlExample2.data_grid_detail?.columns || [],
-  //       ).map((col) => {
-  //         const _col: DataGridDetailsColumnType = {
-  //           ...structuredClone(col),
-  //           sortable: false,
-  //         };
+            return row;
+          });
+        })(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    };
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control as any as IApiControl}
+          fileId={''}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertFormatAndEvalFormula(_control as any as IApiControl);
+  });
+  // NOTE: FAIL because the formula is not correct therefore the component bugs TODO: prevent bug, display empty string ?
+  it('Should FAIL (until fix) - controlExample3', function () {
+    const _control = {
+      ...structuredClone(controlExample3),
+      data_grid_detail: {
+        ...structuredClone(controlExample3.data_grid_detail),
+        rows: (() => {
+          return structuredClone(
+            controlExample3.data_grid_detail
+              ?.rows as any as DataGridDetailsRow[],
+          ).map((row) => {
+            for (const index in Object.keys(row))
+              if (
+                row[Object.keys(row)[index]].component === 'formula' &&
+                [3].includes(parseInt(index))
+              )
+                row[Object.keys(row)[index]].value = '(# * #7925)';
 
-  //         return _col;
-  //       }),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertSorting(_control);
-  // });
-  // it('Should NOT sort', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample3),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample3.data_grid_detail),
-  //       columns: structuredClone(
-  //         controlExample3.data_grid_detail?.columns || [],
-  //       ).map((col) => {
-  //         const _col: DataGridDetailsColumnType = {
-  //           ...structuredClone(col),
-  //           sortable: false,
-  //         };
+            return row;
+          });
+        })(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    };
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control as any as IApiControl}
+          fileId={''}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertFormatAndEvalFormula(_control as any as IApiControl);
+  });
 
-  //         return _col;
-  //       }),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertSorting(_control);
-  // });
-  // it('Should NOT sort', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample4),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample4.data_grid_detail),
-  //       columns: structuredClone(
-  //         controlExample4.data_grid_detail?.columns || [],
-  //       ).map((col) => {
-  //         const _col: DataGridDetailsColumnType = {
-  //           ...structuredClone(col),
-  //           sortable: false,
-  //         };
+  it('Should format correctly - controlExample1', function () {
+    const _control = {
+      ...structuredClone(controlExample1),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control as any as IApiControl}
+          fileId={''}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertFormat(_control);
+  });
+  it('Should format correctly - controlExample1', function () {
+    // @ts-ignore
+    const _control = {
+      ...structuredClone(controlExample1),
+      data_grid_detail: {
+        ...structuredClone(controlExample1.data_grid_detail),
+        columns: (() =>
+          structuredClone(
+            controlExample1.data_grid_detail
+              ?.columns as any as DataGridDetailsColumnType[],
+          ).map((col, i) => {
+            col.decimal_digit += i + 2;
+            col.thousand_separator = true;
 
-  //         return _col;
-  //       }),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertSorting(_control);
-  // });
-  it('Should NOT sort', function () {
+            return col;
+          }))(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertFormat(_control);
+  });
+
+  it('Should sort correctly - controlExample1', function () {
+    const _control = {
+      ...structuredClone(controlExample1),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertSorting(_control);
+  });
+  it('Should sort correctly with big numbers - controlExample1', function () {
+    const _control = {
+      ...structuredClone(controlExample1),
+      data_grid_detail: {
+        ...structuredClone(controlExample1.data_grid_detail),
+        rows: (() => {
+          return structuredClone(
+            controlExample1.data_grid_detail
+              ?.rows as any as DataGridDetailsRow[],
+          ).map((row) => {
+            for (const index in Object.keys(row))
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              )
+                row[Object.keys(row)[index]].value = `${BigNumber(
+                  '900719925474099100000',
+                )
+                  .plus(_getRandomNumberBetween(1, 40000))
+                  .toString()}${
+                  row[Object.keys(row)[index]].component !== 'integer'
+                    ? `.${_getRandomNumberBetween(1, 99999)}`
+                    : ''
+                }`;
+
+            return row;
+          });
+        })(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertSorting(_control);
+  });
+  it('Should sort correctly - controlExample3', function () {
+    const _control = {
+      ...structuredClone(controlExample3),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertSorting(_control);
+  });
+  it('Should sort correctly with empty cells - controlExample3', function () {
+    const _control = {
+      ...structuredClone(controlExample3),
+      data_grid_detail: {
+        ...structuredClone(controlExample3.data_grid_detail),
+        rows: (() => {
+          return structuredClone(
+            controlExample3.data_grid_detail
+              ?.rows as any as DataGridDetailsRow[],
+          ).map((row, indexRow) => {
+            if (indexRow === 0 || indexRow === 4)
+              for (const index in Object.keys(row))
+                if (
+                  typeof row[Object.keys(row)[index]] === 'object' &&
+                  !Array.isArray(row[Object.keys(row)[index]]) &&
+                  [0].includes(parseInt(index))
+                )
+                  row[Object.keys(row)[index]].value = null;
+
+            return row;
+          });
+        })(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertSorting(_control);
+  });
+  it('Should sort correctly with empty cells & big numbers - controlExample3', function () {
+    const _control = {
+      ...structuredClone(controlExample3),
+      data_grid_detail: {
+        ...structuredClone(controlExample3.data_grid_detail),
+        rows: (() => {
+          return structuredClone(
+            controlExample3.data_grid_detail
+              ?.rows as any as DataGridDetailsRow[],
+          ).map((row, indexRow) => {
+            if (indexRow === 0 || indexRow === 4)
+              for (const index in Object.keys(row))
+                if (
+                  typeof row[Object.keys(row)[index]] === 'object' &&
+                  !Array.isArray(row[Object.keys(row)[index]]) &&
+                  row[Object.keys(row)[index]].component !== 'formula'
+                )
+                  if ([0].includes(parseInt(index)))
+                    row[Object.keys(row)[index]].value = null;
+                  else
+                    row[Object.keys(row)[index]].value = `${BigNumber(
+                      '900719925474099100000',
+                    )
+                      .plus(_getRandomNumberBetween(1, 40000))
+                      .toString()}${
+                      row[Object.keys(row)[index]].component !== 'integer'
+                        ? `.${_getRandomNumberBetween(1, 99999)}`
+                        : ''
+                    }`;
+
+            return row;
+          });
+        })(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertSorting(_control);
+  });
+  it('Should sort correctly - controlExample4', function () {
+    const _control = {
+      ...structuredClone(controlExample4),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertSorting(_control);
+  });
+  it('Should sort correctly - controlExample5', function () {
+    cy.viewport(3500, 750);
+    const _control = {
+      ...structuredClone(controlExample5),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertSorting(_control);
+  });
+  it('Should sort correctly - controlExample6', function () {
+    cy.viewport(3500, 750);
+    const _control = {
+      ...structuredClone(controlExample6),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertSorting(_control);
+  });
+  it('Should sort correctly - controlExample7', function () {
+    const _control = {
+      ...structuredClone(controlExample7),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertSorting(_control);
+  });
+  it('Should sort correctly - controlExample8', function () {
+    const _control = {
+      ...structuredClone(controlExample8),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertSorting(_control);
+  });
+
+  it('Should NOT sort - controlExample1', function () {
+    const _control = {
+      ...structuredClone(controlExample1),
+      data_grid_detail: {
+        ...structuredClone(controlExample1.data_grid_detail),
+        columns: structuredClone(
+          controlExample1.data_grid_detail?.columns || [],
+        ).map((col) => {
+          const _col: DataGridDetailsColumnType = {
+            ...structuredClone(col),
+            sortable: false,
+          };
+
+          return _col;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertSorting(_control);
+  });
+  it('Should NOT sort - controlExample2', function () {
+    const _control = {
+      ...structuredClone(controlExample2),
+      data_grid_detail: {
+        ...structuredClone(controlExample2.data_grid_detail),
+        columns: structuredClone(
+          controlExample2.data_grid_detail?.columns || [],
+        ).map((col) => {
+          const _col: DataGridDetailsColumnType = {
+            ...structuredClone(col),
+            sortable: false,
+          };
+
+          return _col;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertSorting(_control);
+  });
+  it('Should NOT sort - controlExample3', function () {
+    const _control = {
+      ...structuredClone(controlExample3),
+      data_grid_detail: {
+        ...structuredClone(controlExample3.data_grid_detail),
+        columns: structuredClone(
+          controlExample3.data_grid_detail?.columns || [],
+        ).map((col) => {
+          const _col: DataGridDetailsColumnType = {
+            ...structuredClone(col),
+            sortable: false,
+          };
+
+          return _col;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertSorting(_control);
+  });
+  it('Should NOT sort - controlExample4', function () {
+    const _control = {
+      ...structuredClone(controlExample4),
+      data_grid_detail: {
+        ...structuredClone(controlExample4.data_grid_detail),
+        columns: structuredClone(
+          controlExample4.data_grid_detail?.columns || [],
+        ).map((col) => {
+          const _col: DataGridDetailsColumnType = {
+            ...structuredClone(col),
+            sortable: false,
+          };
+
+          return _col;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertSorting(_control);
+  });
+  it('Should NOT sort - controlExample7', function () {
     const _control = {
       ...structuredClone(controlExample7),
       data_grid_detail: {
@@ -982,7 +1283,7 @@ describe('<DataGridControlAgGrid />', () => {
     cy.waitReactApp();
     _assertSorting(_control);
   });
-  it('Should NOT sort', function () {
+  it('Should NOT sort - controlExample8', function () {
     const _control = {
       ...structuredClone(controlExample8),
       data_grid_detail: {
@@ -1011,849 +1312,848 @@ describe('<DataGridControlAgGrid />', () => {
     cy.waitReactApp();
     _assertSorting(_control);
   });
-  return;
 
-  // it('Should be able to filter', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample1.data_grid_detail),
-  //       columns: structuredClone(
-  //         controlExample1.data_grid_detail?.columns || [],
-  //       ).map((column) => {
-  //         column.filter = true;
+  it('Should be able to filter - controlExample1', function () {
+    const _control = {
+      ...structuredClone(controlExample1),
+      data_grid_detail: {
+        ...structuredClone(controlExample1.data_grid_detail),
+        columns: structuredClone(
+          controlExample1.data_grid_detail?.columns || [],
+        ).map((column) => {
+          column.filter = true;
 
-  //         return column;
-  //       }),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCanFiltering(_control);
-  // });
-  // it('Should be able to filter', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample2),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample2.data_grid_detail),
-  //       columns: structuredClone(
-  //         controlExample2.data_grid_detail?.columns || [],
-  //       ).map((column) => {
-  //         column.filter = true;
+          return column;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCanFiltering(_control);
+  });
+  it('Should be able to filter - controlExample2', function () {
+    const _control = {
+      ...structuredClone(controlExample2),
+      data_grid_detail: {
+        ...structuredClone(controlExample2.data_grid_detail),
+        columns: structuredClone(
+          controlExample2.data_grid_detail?.columns || [],
+        ).map((column) => {
+          column.filter = true;
 
-  //         return column;
-  //       }),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCanFiltering(_control);
-  // });
-  // it('Should be able to filter', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample3),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample3.data_grid_detail),
-  //       columns: structuredClone(
-  //         controlExample3.data_grid_detail?.columns || [],
-  //       ).map((column) => {
-  //         column.filter = true;
+          return column;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCanFiltering(_control);
+  });
+  it('Should be able to filter - controlExample3', function () {
+    const _control = {
+      ...structuredClone(controlExample3),
+      data_grid_detail: {
+        ...structuredClone(controlExample3.data_grid_detail),
+        columns: structuredClone(
+          controlExample3.data_grid_detail?.columns || [],
+        ).map((column) => {
+          column.filter = true;
 
-  //         return column;
-  //       }),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCanFiltering(_control);
-  // });
-  // it('Should be able to filter', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample4),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample4.data_grid_detail),
-  //       columns: structuredClone(
-  //         controlExample4.data_grid_detail?.columns || [],
-  //       ).map((column) => {
-  //         column.filter = true;
+          return column;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCanFiltering(_control);
+  });
+  it('Should be able to filter - controlExample4', function () {
+    const _control = {
+      ...structuredClone(controlExample4),
+      data_grid_detail: {
+        ...structuredClone(controlExample4.data_grid_detail),
+        columns: structuredClone(
+          controlExample4.data_grid_detail?.columns || [],
+        ).map((column) => {
+          column.filter = true;
 
-  //         return column;
-  //       }),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCanFiltering(_control);
-  // });
+          return column;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCanFiltering(_control);
+  });
 
-  // it('Should not be able to filter', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample1.data_grid_detail),
-  //       columns: structuredClone(
-  //         controlExample1.data_grid_detail?.columns || [],
-  //       ).map((column) => {
-  //         column.filter = false;
+  it('Should not be able to filter - controlExample1', function () {
+    const _control = {
+      ...structuredClone(controlExample1),
+      data_grid_detail: {
+        ...structuredClone(controlExample1.data_grid_detail),
+        columns: structuredClone(
+          controlExample1.data_grid_detail?.columns || [],
+        ).map((column) => {
+          column.filter = false;
 
-  //         return column;
-  //       }),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCanFiltering(_control);
-  // });
-  // it('Should not be able to filter', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample2),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample2.data_grid_detail),
-  //       columns: structuredClone(
-  //         controlExample2.data_grid_detail?.columns || [],
-  //       ).map((column) => {
-  //         column.filter = false;
+          return column;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCanFiltering(_control);
+  });
+  it('Should not be able to filter - controlExample2', function () {
+    const _control = {
+      ...structuredClone(controlExample2),
+      data_grid_detail: {
+        ...structuredClone(controlExample2.data_grid_detail),
+        columns: structuredClone(
+          controlExample2.data_grid_detail?.columns || [],
+        ).map((column) => {
+          column.filter = false;
 
-  //         return column;
-  //       }),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCanFiltering(_control);
-  // });
-  // it('Should not be able to filter', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample3),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample3.data_grid_detail),
-  //       columns: structuredClone(
-  //         controlExample3.data_grid_detail?.columns || [],
-  //       ).map((column) => {
-  //         column.filter = false;
+          return column;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCanFiltering(_control);
+  });
+  it('Should not be able to filter - controlExample3', function () {
+    const _control = {
+      ...structuredClone(controlExample3),
+      data_grid_detail: {
+        ...structuredClone(controlExample3.data_grid_detail),
+        columns: structuredClone(
+          controlExample3.data_grid_detail?.columns || [],
+        ).map((column) => {
+          column.filter = false;
 
-  //         return column;
-  //       }),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCanFiltering(_control);
-  // });
-  // it('Should not be able to filter', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample4),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample4.data_grid_detail),
-  //       columns: structuredClone(
-  //         controlExample4.data_grid_detail?.columns || [],
-  //       ).map((column) => {
-  //         column.filter = false;
+          return column;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCanFiltering(_control);
+  });
+  it('Should not be able to filter - controlExample4', function () {
+    const _control = {
+      ...structuredClone(controlExample4),
+      data_grid_detail: {
+        ...structuredClone(controlExample4.data_grid_detail),
+        columns: structuredClone(
+          controlExample4.data_grid_detail?.columns || [],
+        ).map((column) => {
+          column.filter = false;
 
-  //         return column;
-  //       }),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCanFiltering(_control);
-  // });
+          return column;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCanFiltering(_control);
+  });
 
-  // it('Should render an error message if value dont match with control_regex & no error message if match', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample4),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample4.data_grid_detail),
-  //       rows: (() => {
-  //         return structuredClone(
-  //           controlExample4.data_grid_detail?.rows || [],
-  //         ).map((row) => {
-  //           for (const index in Object.keys(row)) {
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             ) {
-  //               if ([0, 1].includes(parseInt(index))) {
-  //                 row[Object.keys(row)[index]].control_regex = new RegExp(
-  //                   '^-?((180(\\.0+)?)|(((1[0-7]\\d)|(\\d{1,2}))(\\.\\d+)?))$',
-  //                 );
-  //               } else
-  //                 row[Object.keys(row)[index]].control_regex = new RegExp(
-  //                   '^-?(90(\\.0+)?|[1-8]?\\d(\\.\\d+)?)$',
-  //                 );
+  it('Should render an error message if value dont match with control_regex & no error message if match - controlExample4', function () {
+    const _control = {
+      ...structuredClone(controlExample4),
+      data_grid_detail: {
+        ...structuredClone(controlExample4.data_grid_detail),
+        rows: (() => {
+          return structuredClone(
+            controlExample4.data_grid_detail?.rows || [],
+          ).map((row) => {
+            for (const index in Object.keys(row)) {
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              ) {
+                if ([0, 1].includes(parseInt(index))) {
+                  row[Object.keys(row)[index]].control_regex = new RegExp(
+                    '^-?((180(\\.0+)?)|(((1[0-7]\\d)|(\\d{1,2}))(\\.\\d+)?))$',
+                  );
+                } else
+                  row[Object.keys(row)[index]].control_regex = new RegExp(
+                    '^-?(90(\\.0+)?|[1-8]?\\d(\\.\\d+)?)$',
+                  );
 
-  //               row[Object.keys(row)[index]].control_regex_msg =
-  //                 'The value dont match with the regex';
-  //             }
-  //           }
+                row[Object.keys(row)[index]].control_regex_msg =
+                  'The value dont match with the regex';
+              }
+            }
 
-  //           return row;
-  //         });
-  //       })(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   };
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid
-  //         control={_control as any as IApiControl}
-  //         fileId={''}
-  //       />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertRegexValidation(_control as any as IApiControl);
-  // });
-  // it('Should render an error message if value dont match with control_regex & no error message if match', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample4),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample4.data_grid_detail),
-  //       rows: (() => {
-  //         return structuredClone(
-  //           controlExample4.data_grid_detail?.rows || [],
-  //         ).map((row) => {
-  //           for (const index in Object.keys(row)) {
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             ) {
-  //               row[Object.keys(row)[index]].control_regex = generateRegex(
-  //                 Array.from({
-  //                   length: _getRandomNumberBetween(3, 23),
-  //                 }).map(() =>
-  //                   listChars(_getRandomNumberBetween(30, 2333))(
-  //                     _getRandomNumberBetween(6, 23),
-  //                   ),
-  //                 ),
-  //               );
+            return row;
+          });
+        })(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    };
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control as any as IApiControl}
+          fileId={''}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertRegexValidation(_control as any as IApiControl);
+  });
+  it('Should render an error message if value dont match with control_regex & no error message if match - controlExample4', function () {
+    const _control = {
+      ...structuredClone(controlExample4),
+      data_grid_detail: {
+        ...structuredClone(controlExample4.data_grid_detail),
+        rows: (() => {
+          return structuredClone(
+            controlExample4.data_grid_detail?.rows || [],
+          ).map((row) => {
+            for (const index in Object.keys(row)) {
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              ) {
+                row[Object.keys(row)[index]].control_regex = generateRegex(
+                  Array.from({
+                    length: _getRandomNumberBetween(3, 23),
+                  }).map(() =>
+                    listChars(_getRandomNumberBetween(30, 2333))(
+                      _getRandomNumberBetween(6, 23),
+                    ),
+                  ),
+                );
 
-  //               row[Object.keys(row)[index]].control_regex_msg = 'Not valid';
-  //             }
-  //           }
+                row[Object.keys(row)[index]].control_regex_msg = 'Not valid';
+              }
+            }
 
-  //           return row;
-  //         });
-  //       })(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   };
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid
-  //         control={_control as any as IApiControl}
-  //         fileId={''}
-  //       />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertRegexValidation(_control as any as IApiControl);
-  // });
+            return row;
+          });
+        })(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    };
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control as any as IApiControl}
+          fileId={''}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertRegexValidation(_control as any as IApiControl);
+  });
 
-  // it('Should be able to edit cell or not', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   };
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid
-  //         control={_control as any as IApiControl}
-  //         fileId={''}
-  //       />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCellEditable(_control as any as IApiControl);
-  // });
-  // it('Should be able to edit cell or not', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample2),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   cy.on('uncaught:exception', () => false);
-  //   _assertCellEditable(_control);
-  // });
-  // it('Should be able to edit cell or not', function () {
-  //   cy.viewport(3500, 720);
-  //   const _control = {
-  //     ...structuredClone(controlExample5),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCellEditable(_control);
-  // });
-  // it('Should be able to edit or not', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample6),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample6.data_grid_detail),
-  //       rows: (() => {
-  //         return structuredClone(
-  //           controlExample6.data_grid_detail?.rows || [],
-  //         ).map((row) => {
-  //           for (const index in Object.keys(row)) {
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             ) {
-  //               row[Object.keys(row)[index]].choice_options = [
-  //                 ...(row[Object.keys(row)[index]].choice_options || []),
-  //                 {
-  //                   choice_bg_color: 'FFFFFF',
-  //                   choice_font_color: '000000',
-  //                   choice_font_weight: 'normal',
-  //                   choice_id: 2,
-  //                   choice_lib: 'Checkbox 2',
-  //                 },
-  //               ];
-  //             }
-  //           }
+  it('Should be able to edit cell or not - controlExample1', function () {
+    const _control = {
+      ...structuredClone(controlExample1),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    };
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control as any as IApiControl}
+          fileId={''}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCellEditable(_control as any as IApiControl);
+  });
+  it('Should be able to edit cell or not - controlExample2', function () {
+    const _control = {
+      ...structuredClone(controlExample2),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.on('uncaught:exception', () => false);
+    _assertCellEditable(_control);
+  });
+  it('Should be able to edit cell or not - controlExample5', function () {
+    cy.viewport(3500, 720);
+    const _control = {
+      ...structuredClone(controlExample5),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCellEditable(_control);
+  });
+  it('Should be able to edit or not - controlExample6', function () {
+    const _control = {
+      ...structuredClone(controlExample6),
+      data_grid_detail: {
+        ...structuredClone(controlExample6.data_grid_detail),
+        rows: (() => {
+          return structuredClone(
+            controlExample6.data_grid_detail?.rows || [],
+          ).map((row) => {
+            for (const index in Object.keys(row)) {
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              ) {
+                row[Object.keys(row)[index]].choice_options = [
+                  ...(row[Object.keys(row)[index]].choice_options || []),
+                  {
+                    choice_bg_color: 'FFFFFF',
+                    choice_font_color: '000000',
+                    choice_font_weight: 'normal',
+                    choice_id: 2,
+                    choice_lib: 'Checkbox 2',
+                  },
+                ];
+              }
+            }
 
-  //           return row;
-  //         });
-  //       })(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCellEditable(_control);
-  // });
-  // it('Should not be able to edit cell if control_editable=false', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample2),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample2.data_grid_detail),
-  //       rows: (() => {
-  //         return structuredClone(
-  //           controlExample2.data_grid_detail?.rows || [],
-  //         ).map((row) => {
-  //           for (const index in Object.keys(row)) {
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             )
-  //               row[Object.keys(row)[index]].control_editable = false;
-  //           }
+            return row;
+          });
+        })(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCellEditable(_control);
+  });
+  it('Should not be able to edit cell if control_editable=false - controlExample2', function () {
+    const _control = {
+      ...structuredClone(controlExample2),
+      data_grid_detail: {
+        ...structuredClone(controlExample2.data_grid_detail),
+        rows: (() => {
+          return structuredClone(
+            controlExample2.data_grid_detail?.rows || [],
+          ).map((row) => {
+            for (const index in Object.keys(row)) {
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              )
+                row[Object.keys(row)[index]].control_editable = false;
+            }
 
-  //           return row;
-  //         });
-  //       })(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   cy.on('uncaught:exception', () => false);
-  //   _assertCellEditable(_control);
-  // });
-  // it('Should not be able to edit cell if control_editable=false', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample4),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample4.data_grid_detail),
-  //       rows: (() => {
-  //         return structuredClone(
-  //           controlExample4.data_grid_detail
-  //             ?.rows as any as DataGridDetailsRow[],
-  //         ).map((row) => {
-  //           for (const index in Object.keys(row)) {
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             )
-  //               row[Object.keys(row)[index]].control_editable = false;
-  //           }
+            return row;
+          });
+        })(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.on('uncaught:exception', () => false);
+    _assertCellEditable(_control);
+  });
+  it('Should not be able to edit cell if control_editable=false - controlExample4', function () {
+    const _control = {
+      ...structuredClone(controlExample4),
+      data_grid_detail: {
+        ...structuredClone(controlExample4.data_grid_detail),
+        rows: (() => {
+          return structuredClone(
+            controlExample4.data_grid_detail
+              ?.rows as any as DataGridDetailsRow[],
+          ).map((row) => {
+            for (const index in Object.keys(row)) {
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              )
+                row[Object.keys(row)[index]].control_editable = false;
+            }
 
-  //           return row;
-  //         });
-  //       })(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   };
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid
-  //         control={_control as any as IApiControl}
-  //         fileId={''}
-  //       />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCellEditable(_control as any as IApiControl);
-  // });
-  // it('Should not be able to edit cell if control_editable=false', function () {
-  //   cy.viewport(3500, 720);
-  //   const _control = {
-  //     ...structuredClone(controlExample5),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample5.data_grid_detail),
-  //       rows: (() => {
-  //         return structuredClone(
-  //           controlExample5.data_grid_detail
-  //             ?.rows as any as DataGridDetailsRow[],
-  //         ).map((row) => {
-  //           for (const index in Object.keys(row)) {
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             )
-  //               row[Object.keys(row)[index]].control_editable = false;
-  //           }
+            return row;
+          });
+        })(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    };
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control as any as IApiControl}
+          fileId={''}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCellEditable(_control as any as IApiControl);
+  });
+  it('Should not be able to edit cell if control_editable=false - controlExample5', function () {
+    cy.viewport(3500, 720);
+    const _control = {
+      ...structuredClone(controlExample5),
+      data_grid_detail: {
+        ...structuredClone(controlExample5.data_grid_detail),
+        rows: (() => {
+          return structuredClone(
+            controlExample5.data_grid_detail
+              ?.rows as any as DataGridDetailsRow[],
+          ).map((row) => {
+            for (const index in Object.keys(row)) {
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              )
+                row[Object.keys(row)[index]].control_editable = false;
+            }
 
-  //           return row;
-  //         });
-  //       })(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCellEditable(_control);
-  // });
-  // it('Should not be able to edit cell if control_editable=false', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample6),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample6.data_grid_detail),
-  //       rows: (() => {
-  //         return structuredClone(
-  //           controlExample6.data_grid_detail?.rows || [],
-  //         ).map((row) => {
-  //           for (const index in Object.keys(row)) {
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             ) {
-  //               row[Object.keys(row)[index]].choice_options = [
-  //                 ...(row[Object.keys(row)[index]].choice_options || []),
-  //                 {
-  //                   choice_bg_color: 'FFFFFF',
-  //                   choice_font_color: '000000',
-  //                   choice_font_weight: 'normal',
-  //                   choice_id: 2,
-  //                   choice_lib: 'Checkbox 2',
-  //                 },
-  //               ];
-  //               row[Object.keys(row)[index]].control_editable = false;
-  //             }
-  //           }
+            return row;
+          });
+        })(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCellEditable(_control);
+  });
+  it('Should not be able to edit cell if control_editable=false - controlExample6', function () {
+    const _control = {
+      ...structuredClone(controlExample6),
+      data_grid_detail: {
+        ...structuredClone(controlExample6.data_grid_detail),
+        rows: (() => {
+          return structuredClone(
+            controlExample6.data_grid_detail?.rows || [],
+          ).map((row) => {
+            for (const index in Object.keys(row)) {
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              ) {
+                row[Object.keys(row)[index]].choice_options = [
+                  ...(row[Object.keys(row)[index]].choice_options || []),
+                  {
+                    choice_bg_color: 'FFFFFF',
+                    choice_font_color: '000000',
+                    choice_font_weight: 'normal',
+                    choice_id: 2,
+                    choice_lib: 'Checkbox 2',
+                  },
+                ];
+                row[Object.keys(row)[index]].control_editable = false;
+              }
+            }
 
-  //           return row;
-  //         });
-  //       })(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCellEditable(_control);
-  // });
-  // it('Should not be able to edit cell if control_editable=false', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample6),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample6.data_grid_detail),
-  //       rows: (() => {
-  //         return structuredClone(
-  //           controlExample6.data_grid_detail?.rows || [],
-  //         ).map((row) => {
-  //           for (const index in Object.keys(row)) {
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             )
-  //               row[Object.keys(row)[index]].control_editable = false;
-  //           }
+            return row;
+          });
+        })(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCellEditable(_control);
+  });
+  it('Should not be able to edit cell if control_editable=false - controlExample6', function () {
+    const _control = {
+      ...structuredClone(controlExample6),
+      data_grid_detail: {
+        ...structuredClone(controlExample6.data_grid_detail),
+        rows: (() => {
+          return structuredClone(
+            controlExample6.data_grid_detail?.rows || [],
+          ).map((row) => {
+            for (const index in Object.keys(row)) {
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              )
+                row[Object.keys(row)[index]].control_editable = false;
+            }
 
-  //           return row;
-  //         });
-  //       })(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCellEditable(_control);
-  // });
-  // it('Should be able to edit cell if control_editable=true', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample4),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample4.data_grid_detail),
-  //       rows: (() => {
-  //         return structuredClone(
-  //           controlExample4.data_grid_detail?.rows || [],
-  //         ).map((row) => {
-  //           for (const index in Object.keys(row)) {
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             )
-  //               row[Object.keys(row)[index]].control_editable = true;
-  //           }
+            return row;
+          });
+        })(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCellEditable(_control);
+  });
+  it('Should be able to edit cell if control_editable=true - controlExample4', function () {
+    const _control = {
+      ...structuredClone(controlExample4),
+      data_grid_detail: {
+        ...structuredClone(controlExample4.data_grid_detail),
+        rows: (() => {
+          return structuredClone(
+            controlExample4.data_grid_detail?.rows || [],
+          ).map((row) => {
+            for (const index in Object.keys(row)) {
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              )
+                row[Object.keys(row)[index]].control_editable = true;
+            }
 
-  //           return row;
-  //         });
-  //       })(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   };
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid
-  //         control={_control as any as IApiControl}
-  //         fileId={''}
-  //       />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCellEditable(_control as any as IApiControl);
-  // });
+            return row;
+          });
+        })(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    };
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control as any as IApiControl}
+          fileId={''}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCellEditable(_control as any as IApiControl);
+  });
 
-  // it('Should unfocus editing cell when click away', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample2),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertUnfocusCellClickAway(_control);
-  // });
-  // it('Should unfocus editing cell when click away', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample3),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertUnfocusCellClickAway(_control);
-  // });
-  // it('Should unfocus editing cell when click away', function () {
-  //   cy.viewport(3500, 720);
-  //   const _control = {
-  //     ...structuredClone(controlExample5),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertUnfocusCellClickAway(_control);
-  // });
+  it('Should unfocus editing cell when click away - controlExample2', function () {
+    const _control = {
+      ...structuredClone(controlExample2),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertUnfocusCellClickAway(_control);
+  });
+  it('Should unfocus editing cell when click away - controlExample3', function () {
+    const _control = {
+      ...structuredClone(controlExample3),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertUnfocusCellClickAway(_control);
+  });
+  it('Should unfocus editing cell when click away - controlExample5', function () {
+    cy.viewport(3500, 720);
+    const _control = {
+      ...structuredClone(controlExample5),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertUnfocusCellClickAway(_control);
+  });
 
-  // it('Should not be able to edit if row_editable=false', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample1.data_grid_detail),
-  //       rows: (() => {
-  //         return structuredClone(
-  //           controlExample1.data_grid_detail
-  //             ?.rows as any as DataGridDetailsRow[],
-  //         ).map((row) => {
-  //           row.row_editable = false;
+  it('Should not be able to edit if row_editable=false - controlExample1', function () {
+    const _control = {
+      ...structuredClone(controlExample1),
+      data_grid_detail: {
+        ...structuredClone(controlExample1.data_grid_detail),
+        rows: (() => {
+          return structuredClone(
+            controlExample1.data_grid_detail
+              ?.rows as any as DataGridDetailsRow[],
+          ).map((row) => {
+            row.row_editable = false;
 
-  //           return row;
-  //         });
-  //       })(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCellEditable(_control);
-  // });
-  // it('Should not be able to edit if row_editable=false', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample3),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample3.data_grid_detail),
-  //       rows: (() => {
-  //         return structuredClone(
-  //           controlExample3.data_grid_detail
-  //             ?.rows as any as DataGridDetailsRow[],
-  //         ).map((row) => {
-  //           row.row_editable = false;
+            return row;
+          });
+        })(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCellEditable(_control);
+  });
+  it('Should not be able to edit if row_editable=false - controlExample3', function () {
+    const _control = {
+      ...structuredClone(controlExample3),
+      data_grid_detail: {
+        ...structuredClone(controlExample3.data_grid_detail),
+        rows: (() => {
+          return structuredClone(
+            controlExample3.data_grid_detail
+              ?.rows as any as DataGridDetailsRow[],
+          ).map((row) => {
+            row.row_editable = false;
 
-  //           return row;
-  //         });
-  //       })(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCellEditable(_control);
-  // });
-  // it('Should not be able to edit if row_editable=false', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample4),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample4.data_grid_detail),
-  //       rows: (() => {
-  //         return structuredClone(
-  //           controlExample4.data_grid_detail
-  //             ?.rows as any as DataGridDetailsRow[],
-  //         ).map((row) => {
-  //           row.row_editable = false;
+            return row;
+          });
+        })(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCellEditable(_control);
+  });
+  it('Should not be able to edit if row_editable=false - controlExample4', function () {
+    const _control = {
+      ...structuredClone(controlExample4),
+      data_grid_detail: {
+        ...structuredClone(controlExample4.data_grid_detail),
+        rows: (() => {
+          return structuredClone(
+            controlExample4.data_grid_detail
+              ?.rows as any as DataGridDetailsRow[],
+          ).map((row) => {
+            row.row_editable = false;
 
-  //           return row;
-  //         });
-  //       })(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   };
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid
-  //         control={_control as any as IApiControl}
-  //         fileId={''}
-  //       />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCellEditable(_control as any as IApiControl);
-  // });
-  // it('Should not be able to edit if row_editable=false and every cell.control_editable=true', function () {
-  //   cy.viewport(3500, 720);
-  //   const _control = {
-  //     ...structuredClone(controlExample5),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample5.data_grid_detail),
-  //       rows: structuredClone(
-  //         controlExample5.data_grid_detail?.rows as any as DataGridDetailsRow[],
-  //       ).map((row) => {
-  //         for (const index in Object.keys(row)) {
-  //           if (
-  //             typeof row[Object.keys(row)[index]] === 'object' &&
-  //             !Array.isArray(row[Object.keys(row)[index]])
-  //           )
-  //             row[Object.keys(row)[index]].control_editable = true;
-  //         }
+            return row;
+          });
+        })(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    };
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control as any as IApiControl}
+          fileId={''}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCellEditable(_control as any as IApiControl);
+  });
+  it('Should not be able to edit if row_editable=false and every cell.control_editable=true - controlExample5', function () {
+    cy.viewport(3500, 720);
+    const _control = {
+      ...structuredClone(controlExample5),
+      data_grid_detail: {
+        ...structuredClone(controlExample5.data_grid_detail),
+        rows: structuredClone(
+          controlExample5.data_grid_detail?.rows as any as DataGridDetailsRow[],
+        ).map((row) => {
+          for (const index in Object.keys(row)) {
+            if (
+              typeof row[Object.keys(row)[index]] === 'object' &&
+              !Array.isArray(row[Object.keys(row)[index]])
+            )
+              row[Object.keys(row)[index]].control_editable = true;
+          }
 
-  //         row.row_editable = false;
+          row.row_editable = false;
 
-  //         return row;
-  //       }),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCellEditable(_control);
-  // });
-  // it('Should not be able to edit if row_editable=false and every cell.control_editable=true', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample6),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample6.data_grid_detail),
-  //       rows: structuredClone(controlExample6.data_grid_detail?.rows || []).map(
-  //         (row) => {
-  //           for (const index in Object.keys(row)) {
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             )
-  //               row[Object.keys(row)[index]].control_editable = true;
-  //           }
+          return row;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCellEditable(_control);
+  });
+  it('Should not be able to edit if row_editable=false and every cell.control_editable=true - controlExample6', function () {
+    const _control = {
+      ...structuredClone(controlExample6),
+      data_grid_detail: {
+        ...structuredClone(controlExample6.data_grid_detail),
+        rows: structuredClone(controlExample6.data_grid_detail?.rows || []).map(
+          (row) => {
+            for (const index in Object.keys(row)) {
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              )
+                row[Object.keys(row)[index]].control_editable = true;
+            }
 
-  //           row.row_editable = false;
+            row.row_editable = false;
 
-  //           return row;
-  //         },
-  //       ),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCellEditable(_control);
-  // });
+            return row;
+          },
+        ),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCellEditable(_control);
+  });
 
-  it('should not have pagination', function () {
+  it('should not have pagination - controlExample1', function () {
     const _control = {
       ...structuredClone(controlExample1),
       data_grid_detail: {
@@ -1892,244 +2192,435 @@ describe('<DataGridControlAgGrid />', () => {
     );
   });
 
-  // it('Should have the correct pagination size', function () {
-  //   const paginationSize = _getRandomNumberBetween(1, 10);
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample1.data_grid_detail || {}),
-  //       datagrid_options: {
-  //         ...structuredClone(
-  //           controlExample1.data_grid_detail?.datagrid_options || {},
-  //         ),
-  //         pagination_row_size: paginationSize,
-  //       },
-  //       rows: [
-  //         ...structuredClone(controlExample1.data_grid_detail?.rows || []),
-  //         ...structuredClone(controlExample1.data_grid_detail?.rows || []),
-  //         ...structuredClone(controlExample1.data_grid_detail?.rows || []),
-  //         ...structuredClone(controlExample1.data_grid_detail?.rows || []),
-  //       ],
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertPagination(_control, paginationSize);
-  // });
-  // it('Should have the default pagination size', function () {
-  //   const paginationSize = 20;
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample1.data_grid_detail || {}),
-  //       datagrid_options: {
-  //         ...structuredClone(
-  //           controlExample1.data_grid_detail?.datagrid_options || {},
-  //         ),
-  //         pagination_row_size: null,
-  //       },
-  //       rows: [
-  //         ...structuredClone(controlExample1.data_grid_detail?.rows || []),
-  //         ...structuredClone(controlExample1.data_grid_detail?.rows || []),
-  //       ],
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertPagination(_control, paginationSize);
-  // });
-  // it('Should have the default pagination size', function () {
-  //   const paginationSize = 20;
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample1.data_grid_detail || {}),
-  //       datagrid_options: null,
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertPagination(_control, paginationSize);
-  // });
+  it('Should have the correct pagination size - controlExample1', function () {
+    const paginationSize = _getRandomNumberBetween(1, 10);
+    const _control = {
+      ...structuredClone(controlExample1),
+      data_grid_detail: {
+        ...structuredClone(controlExample1.data_grid_detail || {}),
+        datagrid_options: {
+          ...structuredClone(
+            controlExample1.data_grid_detail?.datagrid_options || {},
+          ),
+          pagination_row_size: paginationSize,
+        },
+        rows: [
+          ...structuredClone(controlExample1.data_grid_detail?.rows || []),
+          ...structuredClone(controlExample1.data_grid_detail?.rows || []),
+          ...structuredClone(controlExample1.data_grid_detail?.rows || []),
+          ...structuredClone(controlExample1.data_grid_detail?.rows || []),
+        ],
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertPagination(_control, paginationSize);
+  });
+  it('Should have the default pagination size - controlExample1', function () {
+    const paginationSize = 20;
+    const _control = {
+      ...structuredClone(controlExample1),
+      data_grid_detail: {
+        ...structuredClone(controlExample1.data_grid_detail || {}),
+        datagrid_options: {
+          ...structuredClone(
+            controlExample1.data_grid_detail?.datagrid_options || {},
+          ),
+          pagination_row_size: null,
+        },
+        rows: [
+          ...structuredClone(controlExample1.data_grid_detail?.rows || []),
+          ...structuredClone(controlExample1.data_grid_detail?.rows || []),
+        ],
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertPagination(_control, paginationSize);
+  });
+  it('Should have the default pagination size - controlExample1', function () {
+    const paginationSize = 20;
+    const _control = {
+      ...structuredClone(controlExample1),
+      data_grid_detail: {
+        ...structuredClone(controlExample1.data_grid_detail || {}),
+        datagrid_options: null,
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertPagination(_control, paginationSize);
+  });
 
-  // it('Should apply cell styles', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCellStyle(_control);
-  // });
-  // it('Should apply cell styles', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample2),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCellStyle(_control);
-  // });
-  // it('Should apply cell styles', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample3),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCellStyle(_control);
-  // });
-  // it('Should apply cell styles', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample4),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCellStyle(_control);
-  // });
-  // it('Should apply cell styles', function () {
-  //   cy.viewport(3500, 720);
-  //   const _control = {
-  //     ...structuredClone(controlExample5),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCellStyle(_control);
-  // });
-  // it('Should apply cell styles', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample6),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCellStyle(_control);
-  // });
+  it('Should apply cell styles - controlExample1', function () {
+    const _control = {
+      ...structuredClone(controlExample1),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCellStyle(_control);
+  });
+  it('Should apply cell styles - controlExample2', function () {
+    const _control = {
+      ...structuredClone(controlExample2),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCellStyle(_control);
+  });
+  it('Should apply cell styles - controlExample3', function () {
+    const _control = {
+      ...structuredClone(controlExample3),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCellStyle(_control);
+  });
+  it('Should apply cell styles - controlExample4', function () {
+    const _control = {
+      ...structuredClone(controlExample4),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCellStyle(_control);
+  });
+  it('Should apply cell styles - controlExample5', function () {
+    cy.viewport(3500, 720);
+    const _control = {
+      ...structuredClone(controlExample5),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCellStyle(_control);
+  });
+  it('Should apply cell styles - controlExample6', function () {
+    const _control = {
+      ...structuredClone(controlExample6),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCellStyle(_control);
+  });
 
-  // it('Should be able to resize column', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample1.data_grid_detail),
-  //       columns: (() =>
-  //         structuredClone(controlExample1.data_grid_detail?.columns || []).map(
-  //           (col) => {
-  //             col.resizable = true;
+  it('Should be able to resize column - controlExample1', function () {
+    const _control = {
+      ...structuredClone(controlExample1),
+      data_grid_detail: {
+        ...structuredClone(controlExample1.data_grid_detail),
+        columns: (() =>
+          structuredClone(controlExample1.data_grid_detail?.columns || []).map(
+            (col) => {
+              col.resizable = true;
 
-  //             return col;
-  //           },
-  //         ))(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertResizableColumns(_control);
-  // });
-  // it('Should NOT be able to resize column', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample1.data_grid_detail),
-  //       columns: (() =>
-  //         structuredClone(controlExample1.data_grid_detail?.columns || []).map(
-  //           (col) => {
-  //             col.resizable = false;
+              return col;
+            },
+          ))(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertResizableColumns(_control);
+  });
+  it('Should NOT be able to resize column - controlExample1', function () {
+    const _control = {
+      ...structuredClone(controlExample1),
+      data_grid_detail: {
+        ...structuredClone(controlExample1.data_grid_detail),
+        columns: (() =>
+          structuredClone(controlExample1.data_grid_detail?.columns || []).map(
+            (col) => {
+              col.resizable = false;
 
-  //             return col;
-  //           },
-  //         ))(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertResizableColumns(_control);
-  // });
+              return col;
+            },
+          ))(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertResizableColumns(_control);
+  });
+  it('Should NOT be able to resize column - controlExample2', function () {
+    const _control = {
+      ...structuredClone(controlExample2),
+      data_grid_detail: {
+        ...structuredClone(controlExample2.data_grid_detail),
+        columns: (() =>
+          structuredClone(controlExample2.data_grid_detail?.columns || []).map(
+            (col) => {
+              col.resizable = false;
 
-  it('Should have styles applied for select_list choices options', function () {
+              return col;
+            },
+          ))(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertResizableColumns(_control);
+  });
+  it('Should NOT be able to resize column - controlExample3', function () {
+    const _control = {
+      ...structuredClone(controlExample3),
+      data_grid_detail: {
+        ...structuredClone(controlExample3.data_grid_detail),
+        columns: (() =>
+          structuredClone(controlExample3.data_grid_detail?.columns || []).map(
+            (col) => {
+              col.resizable = false;
+
+              return col;
+            },
+          ))(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertResizableColumns(_control);
+  });
+  it('Should NOT be able to resize column - controlExample4', function () {
+    const _control = {
+      ...structuredClone(controlExample4),
+      data_grid_detail: {
+        ...structuredClone(controlExample4.data_grid_detail),
+        columns: (() =>
+          structuredClone(controlExample4.data_grid_detail?.columns || []).map(
+            (col) => {
+              col.resizable = false;
+
+              return col;
+            },
+          ))(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertResizableColumns(_control);
+  });
+  it('Should NOT be able to resize column - controlExample5', function () {
+    const _control = {
+      ...structuredClone(controlExample5),
+      data_grid_detail: {
+        ...structuredClone(controlExample5.data_grid_detail),
+        columns: (() =>
+          structuredClone(controlExample5.data_grid_detail?.columns || []).map(
+            (col) => {
+              col.resizable = false;
+
+              return col;
+            },
+          ))(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertResizableColumns(_control);
+  });
+  it('Should NOT be able to resize column - controlExample6', function () {
+    const _control = {
+      ...structuredClone(controlExample6),
+      data_grid_detail: {
+        ...structuredClone(controlExample6.data_grid_detail),
+        columns: (() =>
+          structuredClone(controlExample6.data_grid_detail?.columns || []).map(
+            (col) => {
+              col.resizable = false;
+
+              return col;
+            },
+          ))(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertResizableColumns(_control);
+  });
+  it('Should NOT be able to resize column - controlExample7', function () {
+    const _control = {
+      ...structuredClone(controlExample7),
+      data_grid_detail: {
+        ...structuredClone(controlExample7.data_grid_detail),
+        columns: (() =>
+          structuredClone(controlExample7.data_grid_detail?.columns || []).map(
+            (col) => {
+              col.resizable = false;
+
+              return col;
+            },
+          ))(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertResizableColumns(_control);
+  });
+  it('Should NOT be able to resize column - controlExample8', function () {
+    const _control = {
+      ...structuredClone(controlExample8),
+      data_grid_detail: {
+        ...structuredClone(controlExample8.data_grid_detail),
+        columns: (() =>
+          structuredClone(controlExample8.data_grid_detail?.columns || []).map(
+            (col) => {
+              col.resizable = false;
+
+              return col;
+            },
+          ))(),
+        rows: [controlExample8.data_grid_detail?.rows[0]],
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertResizableColumns(_control);
+  });
+
+  // NOTE: FAIL because aggrid render with color transparency (alpha) TODO:
+  it('Should have styles applied for select_list choices options - controlExample5', function () {
     const _control = {
       ...structuredClone(controlExample5),
       mandatory: false,
@@ -2146,7 +2637,7 @@ describe('<DataGridControlAgGrid />', () => {
     _assertSelectListOptionsStyles(_control);
   });
 
-  it('Should have hidden columns by default', function () {
+  it('Should have hidden columns by default - controlExample5', function () {
     const _control = {
       ...structuredClone(controlExample5),
       data_grid_detail: {
@@ -2173,356 +2664,355 @@ describe('<DataGridControlAgGrid />', () => {
     cy.waitReactApp();
     _assertHiddenColumns(_control);
   });
-  return;
 
-  // it('Should have columns pinned', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample5),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertPinnedPositionColumns(_control);
-  // });
-  // it('Should have columns pinned to left only', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample1.data_grid_detail),
-  //       columns: (() =>
-  //         structuredClone(controlExample1.data_grid_detail?.columns || []).map(
-  //           (col) => {
-  //             col.pinned = 'left';
+  it('Should have columns pinned - controlExample5', function () {
+    const _control = {
+      ...structuredClone(controlExample5),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertPinnedPositionColumns(_control);
+  });
+  it('Should have columns pinned to left only - controlExample1', function () {
+    const _control = {
+      ...structuredClone(controlExample1),
+      data_grid_detail: {
+        ...structuredClone(controlExample1.data_grid_detail),
+        columns: (() =>
+          structuredClone(controlExample1.data_grid_detail?.columns || []).map(
+            (col) => {
+              col.pinned = 'left';
 
-  //             return col;
-  //           },
-  //         ))(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertPinnedPositionColumns(_control);
-  // });
-  // it('Should have columns pinned to left only', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample3),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample3.data_grid_detail),
-  //       columns: (() =>
-  //         structuredClone(controlExample3.data_grid_detail?.columns || []).map(
-  //           (col) => {
-  //             col.pinned = 'left';
+              return col;
+            },
+          ))(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertPinnedPositionColumns(_control);
+  });
+  it('Should have columns pinned to left only - controlExample3', function () {
+    const _control = {
+      ...structuredClone(controlExample3),
+      data_grid_detail: {
+        ...structuredClone(controlExample3.data_grid_detail),
+        columns: (() =>
+          structuredClone(controlExample3.data_grid_detail?.columns || []).map(
+            (col) => {
+              col.pinned = 'left';
 
-  //             return col;
-  //           },
-  //         ))(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertPinnedPositionColumns(_control);
-  // });
-  // it('Should have columns pinned to left only', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample4),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample4.data_grid_detail),
-  //       columns: (() =>
-  //         structuredClone(controlExample4.data_grid_detail?.columns || []).map(
-  //           (col) => {
-  //             col.pinned = 'left';
+              return col;
+            },
+          ))(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertPinnedPositionColumns(_control);
+  });
+  it('Should have columns pinned to left only - controlExample4', function () {
+    const _control = {
+      ...structuredClone(controlExample4),
+      data_grid_detail: {
+        ...structuredClone(controlExample4.data_grid_detail),
+        columns: (() =>
+          structuredClone(controlExample4.data_grid_detail?.columns || []).map(
+            (col) => {
+              col.pinned = 'left';
 
-  //             return col;
-  //           },
-  //         ))(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertPinnedPositionColumns(_control);
-  // });
-  // it('Should have columns pinned to left only', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample5),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample5.data_grid_detail),
-  //       columns: (() =>
-  //         structuredClone(controlExample5.data_grid_detail?.columns || []).map(
-  //           (col, i) => {
-  //             if ([0, 2, 4, 6].includes(i)) col.pinned = 'left';
-  //             else col.pinned = null;
+              return col;
+            },
+          ))(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertPinnedPositionColumns(_control);
+  });
+  it('Should have columns pinned to left only - controlExample5', function () {
+    const _control = {
+      ...structuredClone(controlExample5),
+      data_grid_detail: {
+        ...structuredClone(controlExample5.data_grid_detail),
+        columns: (() =>
+          structuredClone(controlExample5.data_grid_detail?.columns || []).map(
+            (col, i) => {
+              if ([0, 2, 4, 6].includes(i)) col.pinned = 'left';
+              else col.pinned = null;
 
-  //             return col;
-  //           },
-  //         ))(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertPinnedPositionColumns(_control);
-  // });
-  // it('Should have columns pinned to left only', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample6),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample6.data_grid_detail),
-  //       columns: (() =>
-  //         structuredClone(controlExample6.data_grid_detail?.columns || []).map(
-  //           (col) => {
-  //             col.pinned = 'left';
+              return col;
+            },
+          ))(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertPinnedPositionColumns(_control);
+  });
+  it('Should have columns pinned to left only - controlExample6', function () {
+    const _control = {
+      ...structuredClone(controlExample6),
+      data_grid_detail: {
+        ...structuredClone(controlExample6.data_grid_detail),
+        columns: (() =>
+          structuredClone(controlExample6.data_grid_detail?.columns || []).map(
+            (col) => {
+              col.pinned = 'left';
 
-  //             return col;
-  //           },
-  //         ))(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertPinnedPositionColumns(_control);
-  // });
+              return col;
+            },
+          ))(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertPinnedPositionColumns(_control);
+  });
 
-  // it('Should have columns pinned to right only', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample1.data_grid_detail),
-  //       columns: (() =>
-  //         structuredClone(controlExample1.data_grid_detail?.columns || []).map(
-  //           (col) => {
-  //             col.pinned = 'right';
+  it('Should have columns pinned to right only - controlExample1', function () {
+    const _control = {
+      ...structuredClone(controlExample1),
+      data_grid_detail: {
+        ...structuredClone(controlExample1.data_grid_detail),
+        columns: (() =>
+          structuredClone(controlExample1.data_grid_detail?.columns || []).map(
+            (col) => {
+              col.pinned = 'right';
 
-  //             return col;
-  //           },
-  //         ))(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertPinnedPositionColumns(_control);
-  // });
-  // it('Should have columns pinned to right only', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample3),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample3.data_grid_detail),
-  //       columns: (() =>
-  //         structuredClone(controlExample3.data_grid_detail?.columns || []).map(
-  //           (col) => {
-  //             col.pinned = 'right';
+              return col;
+            },
+          ))(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertPinnedPositionColumns(_control);
+  });
+  it('Should have columns pinned to right only - controlExample3', function () {
+    const _control = {
+      ...structuredClone(controlExample3),
+      data_grid_detail: {
+        ...structuredClone(controlExample3.data_grid_detail),
+        columns: (() =>
+          structuredClone(controlExample3.data_grid_detail?.columns || []).map(
+            (col) => {
+              col.pinned = 'right';
 
-  //             return col;
-  //           },
-  //         ))(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertPinnedPositionColumns(_control);
-  // });
-  // it('Should have columns pinned to right only', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample4),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample4.data_grid_detail),
-  //       columns: (() =>
-  //         structuredClone(controlExample4.data_grid_detail?.columns || []).map(
-  //           (col) => {
-  //             col.pinned = 'right';
+              return col;
+            },
+          ))(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertPinnedPositionColumns(_control);
+  });
+  it('Should have columns pinned to right only - controlExample4', function () {
+    const _control = {
+      ...structuredClone(controlExample4),
+      data_grid_detail: {
+        ...structuredClone(controlExample4.data_grid_detail),
+        columns: (() =>
+          structuredClone(controlExample4.data_grid_detail?.columns || []).map(
+            (col) => {
+              col.pinned = 'right';
 
-  //             return col;
-  //           },
-  //         ))(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertPinnedPositionColumns(_control);
-  // });
-  // it('Should have columns pinned to right only', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample5),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample5.data_grid_detail),
-  //       columns: (() =>
-  //         structuredClone(controlExample5.data_grid_detail?.columns || []).map(
-  //           (col, i) => {
-  //             if ([0, 2, 4, 6].includes(i)) col.pinned = 'right';
-  //             else col.pinned = null;
+              return col;
+            },
+          ))(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertPinnedPositionColumns(_control);
+  });
+  it('Should have columns pinned to right only - controlExample5', function () {
+    const _control = {
+      ...structuredClone(controlExample5),
+      data_grid_detail: {
+        ...structuredClone(controlExample5.data_grid_detail),
+        columns: (() =>
+          structuredClone(controlExample5.data_grid_detail?.columns || []).map(
+            (col, i) => {
+              if ([0, 2, 4, 6].includes(i)) col.pinned = 'right';
+              else col.pinned = null;
 
-  //             return col;
-  //           },
-  //         ))(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertPinnedPositionColumns(_control);
-  // });
-  // it('Should have columns pinned to right only', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample6),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample6.data_grid_detail),
-  //       columns: (() =>
-  //         structuredClone(controlExample6.data_grid_detail?.columns || []).map(
-  //           (col) => {
-  //             col.pinned = 'right';
+              return col;
+            },
+          ))(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertPinnedPositionColumns(_control);
+  });
+  it('Should have columns pinned to right only - controlExample6', function () {
+    const _control = {
+      ...structuredClone(controlExample6),
+      data_grid_detail: {
+        ...structuredClone(controlExample6.data_grid_detail),
+        columns: (() =>
+          structuredClone(controlExample6.data_grid_detail?.columns || []).map(
+            (col) => {
+              col.pinned = 'right';
 
-  //             return col;
-  //           },
-  //         ))(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertPinnedPositionColumns(_control);
-  // });
-  // it('Should have some columns pinned to left and right', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample5),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample5.data_grid_detail),
-  //       columns: (() =>
-  //         structuredClone(controlExample5.data_grid_detail?.columns || []).map(
-  //           (col, i) => {
-  //             if ([0, 2, 4].includes(i)) col.pinned = 'left';
-  //             else if ([1, 3, 5].includes(i)) col.pinned = 'right';
-  //             else col.pinned = null;
+              return col;
+            },
+          ))(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertPinnedPositionColumns(_control);
+  });
+  it('Should have some columns pinned to left and right - controlExample5', function () {
+    const _control = {
+      ...structuredClone(controlExample5),
+      data_grid_detail: {
+        ...structuredClone(controlExample5.data_grid_detail),
+        columns: (() =>
+          structuredClone(controlExample5.data_grid_detail?.columns || []).map(
+            (col, i) => {
+              if ([0, 2, 4].includes(i)) col.pinned = 'left';
+              else if ([1, 3, 5].includes(i)) col.pinned = 'right';
+              else col.pinned = null;
 
-  //             return col;
-  //           },
-  //         ))(),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertPinnedPositionColumns(_control);
-  // });
-  // it('Should NOT have pinned columns with unknown pinned value', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample5),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample5.data_grid_detail),
-  //       columns: structuredClone(
-  //         controlExample5.data_grid_detail?.columns || [],
-  //       ).map((col, i) => {
-  //         // @ts-ignore
-  //         if ([0, 2, 4].includes(i)) col.pinned = 'qsdjqsd';
-  //         else col.pinned = null;
+              return col;
+            },
+          ))(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertPinnedPositionColumns(_control);
+  });
+  it('Should NOT have pinned columns with unknown pinned value - controlExample5', function () {
+    const _control = {
+      ...structuredClone(controlExample5),
+      data_grid_detail: {
+        ...structuredClone(controlExample5.data_grid_detail),
+        columns: structuredClone(
+          controlExample5.data_grid_detail?.columns || [],
+        ).map((col, i) => {
+          // @ts-ignore
+          if ([0, 2, 4].includes(i)) col.pinned = 'qsdjqsd';
+          else col.pinned = null;
 
-  //         return col;
-  //       }),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertPinnedPositionColumns(_control);
-  // });
+          return col;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertPinnedPositionColumns(_control);
+  });
 
-  it('Should be able to pin column manually', function () {
+  it('Should be able to pin column manually - controlExample1', function () {
     const _control = {
       ...structuredClone(controlExample1),
       data_grid_detail: {
@@ -2549,7 +3039,34 @@ describe('<DataGridControlAgGrid />', () => {
     cy.waitReactApp();
     _assertManuallyPinnedPositionColumns(_control);
   });
-  it('Should be able to pin column manually', function () {
+  it('Should be able to pin column manually - controlExample2', function () {
+    const _control = {
+      ...structuredClone(controlExample2),
+      data_grid_detail: {
+        ...structuredClone(controlExample2.data_grid_detail),
+        columns: structuredClone(
+          controlExample2.data_grid_detail?.columns || [],
+        ).map((col) => {
+          col.lockPinned = false;
+          col.pinned = null;
+
+          return col;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertManuallyPinnedPositionColumns(_control);
+  });
+  it('Should be able to pin column manually - controlExample3', function () {
     const _control = {
       ...structuredClone(controlExample3),
       data_grid_detail: {
@@ -2576,7 +3093,7 @@ describe('<DataGridControlAgGrid />', () => {
     cy.waitReactApp();
     _assertManuallyPinnedPositionColumns(_control);
   });
-  it('Should be able to pin column manually', function () {
+  it('Should be able to pin column manually - controlExample4', function () {
     const _control = {
       ...structuredClone(controlExample4),
       data_grid_detail: {
@@ -2603,7 +3120,7 @@ describe('<DataGridControlAgGrid />', () => {
     cy.waitReactApp();
     _assertManuallyPinnedPositionColumns(_control);
   });
-  it('Should be able to pin column manually', function () {
+  it('Should be able to pin column manually - controlExample5', function () {
     const _control = {
       ...structuredClone(controlExample5),
       data_grid_detail: {
@@ -2630,7 +3147,7 @@ describe('<DataGridControlAgGrid />', () => {
     cy.waitReactApp();
     _assertManuallyPinnedPositionColumns(_control);
   });
-  it('Should be able to pin column manually', function () {
+  it('Should be able to pin column manually - controlExample6', function () {
     const _control = {
       ...structuredClone(controlExample6),
       data_grid_detail: {
@@ -2657,1034 +3174,1094 @@ describe('<DataGridControlAgGrid />', () => {
     cy.waitReactApp();
     _assertManuallyPinnedPositionColumns(_control);
   });
-  // it('Should NOT be able to pin column manually', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample1.data_grid_detail),
-  //       columns: structuredClone(
-  //         controlExample1.data_grid_detail?.columns || [],
-  //       ).map((col) => {
-  //         col.lockPinned = true;
-  //         col.pinned = null;
+  it('Should be able to pin column manually - controlExample7', function () {
+    const _control = {
+      ...structuredClone(controlExample7),
+      data_grid_detail: {
+        ...structuredClone(controlExample7.data_grid_detail),
+        columns: structuredClone(
+          controlExample7.data_grid_detail?.columns || [],
+        ).map((col) => {
+          col.lockPinned = false;
+          col.pinned = null;
 
-  //         return col;
-  //       }),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertManuallyPinnedPositionColumns(_control);
-  // });
-  // it('Should NOT be able to pin column manually', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample3),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample3.data_grid_detail),
-  //       columns: structuredClone(
-  //         controlExample3.data_grid_detail?.columns || [],
-  //       ).map((col) => {
-  //         col.lockPinned = true;
-  //         col.pinned = null;
+          return col;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertManuallyPinnedPositionColumns(_control);
+  });
+  it('Should be able to pin column manually - controlExample8', function () {
+    const _control = {
+      ...structuredClone(controlExample8),
+      data_grid_detail: {
+        ...structuredClone(controlExample8.data_grid_detail),
+        columns: structuredClone(
+          controlExample8.data_grid_detail?.columns || [],
+        ).map((col) => {
+          col.lockPinned = false;
+          col.pinned = null;
 
-  //         return col;
-  //       }),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertManuallyPinnedPositionColumns(_control);
-  // });
-  // it('Should NOT be able to pin column manually', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample4),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample4.data_grid_detail),
-  //       columns: structuredClone(
-  //         controlExample4.data_grid_detail?.columns || [],
-  //       ).map((col) => {
-  //         col.lockPinned = true;
-  //         col.pinned = null;
+          return col;
+        }),
+        rows: [controlExample8.data_grid_detail?.rows[0]],
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertManuallyPinnedPositionColumns(_control);
+  });
+  it('Should NOT be able to pin column manually - controlExample1', function () {
+    const _control = {
+      ...structuredClone(controlExample1),
+      data_grid_detail: {
+        ...structuredClone(controlExample1.data_grid_detail),
+        columns: structuredClone(
+          controlExample1.data_grid_detail?.columns || [],
+        ).map((col) => {
+          col.lockPinned = true;
+          col.pinned = null;
 
-  //         return col;
-  //       }),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertManuallyPinnedPositionColumns(_control);
-  // });
-  // it('Should NOT be able to pin column manually', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample5),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample5.data_grid_detail),
-  //       columns: structuredClone(
-  //         controlExample5.data_grid_detail?.columns || [],
-  //       ).map((col) => {
-  //         col.lockPinned = true;
-  //         col.pinned = null;
+          return col;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertManuallyPinnedPositionColumns(_control);
+  });
+  it('Should NOT be able to pin column manually - controlExample3', function () {
+    const _control = {
+      ...structuredClone(controlExample3),
+      data_grid_detail: {
+        ...structuredClone(controlExample3.data_grid_detail),
+        columns: structuredClone(
+          controlExample3.data_grid_detail?.columns || [],
+        ).map((col) => {
+          col.lockPinned = true;
+          col.pinned = null;
 
-  //         return col;
-  //       }),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertManuallyPinnedPositionColumns(_control);
-  // });
-  // it('Should NOT be able to pin column manually', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample6),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample6.data_grid_detail),
-  //       columns: structuredClone(
-  //         controlExample6.data_grid_detail?.columns || [],
-  //       ).map((col) => {
-  //         col.lockPinned = true;
-  //         col.pinned = null;
+          return col;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertManuallyPinnedPositionColumns(_control);
+  });
+  it('Should NOT be able to pin column manually - controlExample4', function () {
+    const _control = {
+      ...structuredClone(controlExample4),
+      data_grid_detail: {
+        ...structuredClone(controlExample4.data_grid_detail),
+        columns: structuredClone(
+          controlExample4.data_grid_detail?.columns || [],
+        ).map((col) => {
+          col.lockPinned = true;
+          col.pinned = null;
 
-  //         return col;
-  //       }),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertManuallyPinnedPositionColumns(_control);
-  // });
+          return col;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertManuallyPinnedPositionColumns(_control);
+  });
+  it('Should NOT be able to pin column manually - controlExample5', function () {
+    const _control = {
+      ...structuredClone(controlExample5),
+      data_grid_detail: {
+        ...structuredClone(controlExample5.data_grid_detail),
+        columns: structuredClone(
+          controlExample5.data_grid_detail?.columns || [],
+        ).map((col) => {
+          col.lockPinned = true;
+          col.pinned = null;
 
-  // it('Should apply cell styles with track modification', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample1.data_grid_detail || {}),
-  //       columns: structuredClone(
-  //         controlExample1.data_grid_detail?.columns || [],
-  //       ).map((col: DataGridDetailsColumnType) => {
-  //         const _col: DataGridDetailsColumnType = {
-  //           ...structuredClone(col),
-  //           alignment: 'right',
-  //           borderRight: true,
-  //           borderRightColor: generateRandExp(/^#([0-9A-Fa-f]{6})$/),
-  //           borderRightWidth: '3',
-  //           track_modification: true,
-  //           track_modification_option: `{"background-color": "${generateRandExp(
-  //             /^#([0-9A-Fa-f]{6})$/,
-  //           )}", "color": "${generateRandExp(/^#([0-9A-Fa-f]{6})$/)}"}`,
-  //           track_modification_tooltip: false,
-  //         };
+          return col;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertManuallyPinnedPositionColumns(_control);
+  });
+  it('Should NOT be able to pin column manually - controlExample6', function () {
+    const _control = {
+      ...structuredClone(controlExample6),
+      data_grid_detail: {
+        ...structuredClone(controlExample6.data_grid_detail),
+        columns: structuredClone(
+          controlExample6.data_grid_detail?.columns || [],
+        ).map((col) => {
+          col.lockPinned = true;
+          col.pinned = null;
 
-  //         return _col;
-  //       }),
-  //       rows: structuredClone(controlExample1.data_grid_detail?.rows || []).map(
-  //         (row) => {
-  //           for (const index in Object.keys(row)) {
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             )
-  //               row[Object.keys(row)[index]].reference_value =
-  //                 row[Object.keys(row)[index]].value;
-  //           }
+          return col;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertManuallyPinnedPositionColumns(_control);
+  });
 
-  //           return row;
-  //         },
-  //       ),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCellStyle(_control);
-  // });
-  // it('Should apply cell styles with track modification', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample1.data_grid_detail || {}),
-  //       columns: structuredClone(
-  //         controlExample1.data_grid_detail?.columns || [],
-  //       ).map((col: DataGridDetailsColumnType) => {
-  //         const _col: DataGridDetailsColumnType = {
-  //           ...structuredClone(col),
-  //           alignment: 'right',
-  //           borderRight: true,
-  //           borderRightColor: '',
-  //           borderRightWidth: '3',
-  //           track_modification: true,
-  //           track_modification_option: '{"background-color": "", "color": ""}',
-  //           track_modification_tooltip: false,
-  //         };
+  it('Should apply cell styles with track modification - controlExample1', function () {
+    const _control = {
+      ...structuredClone(controlExample1),
+      data_grid_detail: {
+        ...structuredClone(controlExample1.data_grid_detail || {}),
+        columns: structuredClone(
+          controlExample1.data_grid_detail?.columns || [],
+        ).map((col: DataGridDetailsColumnType) => {
+          const _col: DataGridDetailsColumnType = {
+            ...structuredClone(col),
+            alignment: 'right',
+            borderRight: true,
+            borderRightColor: generateRandExp(/^#([0-9A-Fa-f]{6})$/),
+            borderRightWidth: '3',
+            track_modification: true,
+            track_modification_option: `{"background-color": "${generateRandExp(
+              /^#([0-9A-Fa-f]{6})$/,
+            )}", "color": "${generateRandExp(/^#([0-9A-Fa-f]{6})$/)}"}`,
+            track_modification_tooltip: false,
+          };
 
-  //         return _col;
-  //       }),
-  //       rows: structuredClone(controlExample1.data_grid_detail?.rows || []).map(
-  //         (row) => {
-  //           for (const index in Object.keys(row)) {
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             )
-  //               row[Object.keys(row)[index]].reference_value =
-  //                 row[Object.keys(row)[index]].value;
-  //           }
+          return _col;
+        }),
+        rows: structuredClone(controlExample1.data_grid_detail?.rows || []).map(
+          (row) => {
+            for (const index in Object.keys(row)) {
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              )
+                row[Object.keys(row)[index]].reference_value =
+                  row[Object.keys(row)[index]].value;
+            }
 
-  //           return row;
-  //         },
-  //       ),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCellStyle(_control);
-  // });
-  // it('Should apply cell styles with track modification', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample4),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample4.data_grid_detail || {}),
-  //       columns: structuredClone(
-  //         controlExample4.data_grid_detail?.columns || [],
-  //       ).map((col: DataGridDetailsColumnType) => {
-  //         const _col: DataGridDetailsColumnType = {
-  //           ...structuredClone(col),
-  //           alignment: 'right',
-  //           borderRight: true,
-  //           borderRightColor: generateRandExp(/^#([0-9A-Fa-f]{6})$/),
-  //           borderRightWidth: '3',
-  //           track_modification: true,
-  //           track_modification_option:
-  //             `{"background-color": "${generateRandExp(/^#([0-9A-Fa-f]{6})$/)}", "color": "${generateRandExp(/^#([0-9A-Fa-f]{6})$/)}"}`,
-  //           track_modification_tooltip: false,
-  //         };
+            return row;
+          },
+        ),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCellStyle(_control);
+  });
+  it('Should apply cell styles with track modification - controlExample1', function () {
+    const _control = {
+      ...structuredClone(controlExample1),
+      data_grid_detail: {
+        ...structuredClone(controlExample1.data_grid_detail || {}),
+        columns: structuredClone(
+          controlExample1.data_grid_detail?.columns || [],
+        ).map((col: DataGridDetailsColumnType) => {
+          const _col: DataGridDetailsColumnType = {
+            ...structuredClone(col),
+            alignment: 'right',
+            borderRight: true,
+            borderRightColor: '',
+            borderRightWidth: '3',
+            track_modification: true,
+            track_modification_option: '{"background-color": "", "color": ""}',
+            track_modification_tooltip: false,
+          };
 
-  //         return _col;
-  //       }),
-  //       rows: structuredClone(controlExample4.data_grid_detail?.rows || []).map(
-  //         (row) => {
-  //           for (const index in Object.keys(row)) {
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             )
-  //               row[Object.keys(row)[index]].reference_value =
-  //                 row[Object.keys(row)[index]].value;
-  //           }
+          return _col;
+        }),
+        rows: structuredClone(controlExample1.data_grid_detail?.rows || []).map(
+          (row) => {
+            for (const index in Object.keys(row)) {
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              )
+                row[Object.keys(row)[index]].reference_value =
+                  row[Object.keys(row)[index]].value;
+            }
 
-  //           return row;
-  //         },
-  //       ),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCellStyle(_control);
-  // });
-  // it('Should apply cell styles with track modification', function () {
-  //   cy.viewport(3500, 720);
-  //   const _control = {
-  //     ...structuredClone(controlExample5),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample5.data_grid_detail || {}),
-  //       columns: structuredClone(
-  //         controlExample5.data_grid_detail?.columns || [],
-  //       ).map((col: DataGridDetailsColumnType) => {
-  //         const _col: DataGridDetailsColumnType = {
-  //           ...structuredClone(col),
-  //           alignment: 'right',
-  //           borderRight: true,
-  //           borderRightColor: generateRandExp(/^#([0-9A-Fa-f]{6})$/),
-  //           borderRightWidth: '3',
-  //           track_modification: true,
-  //           track_modification_option:
-  //             `{"background-color": "${generateRandExp(/^#([0-9A-Fa-f]{6})$/)}", "color": "${generateRandExp(/^#([0-9A-Fa-f]{6})$/)}"}`,
-  //           track_modification_tooltip: false,
-  //         };
+            return row;
+          },
+        ),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCellStyle(_control);
+  });
 
-  //         return _col;
-  //       }),
-  //       rows: structuredClone(controlExample5.data_grid_detail?.rows || []).map(
-  //         (row) => {
-  //           for (const index in Object.keys(row)) {
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             )
-  //               row[Object.keys(row)[index]].reference_value =
-  //                 row[Object.keys(row)[index]].value;
-  //           }
+  it('Should apply cell styles with track modification - controlExample4', function () {
+    const _control = {
+      ...structuredClone(controlExample4),
+      data_grid_detail: {
+        ...structuredClone(controlExample4.data_grid_detail || {}),
+        columns: structuredClone(
+          controlExample4.data_grid_detail?.columns || [],
+        ).map((col: DataGridDetailsColumnType) => {
+          const _col: DataGridDetailsColumnType = {
+            ...structuredClone(col),
+            alignment: 'right',
+            borderRight: true,
+            borderRightColor: generateRandExp(/^#([0-9A-Fa-f]{6})$/),
+            borderRightWidth: '3',
+            track_modification: true,
+            track_modification_option: `{"background-color": "${generateRandExp(
+              /^#([0-9A-Fa-f]{6})$/,
+            )}", "color": "${generateRandExp(/^#([0-9A-Fa-f]{6})$/)}"}`,
+            track_modification_tooltip: false,
+          };
 
-  //           return row;
-  //         },
-  //       ),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCellStyle(_control);
-  // });
-  // it('Should apply cell styles', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample6),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample6.data_grid_detail || {}),
-  //       columns: structuredClone(
-  //         controlExample6.data_grid_detail?.columns || [],
-  //       ).map((col: DataGridDetailsColumnType) => {
-  //         const _col: DataGridDetailsColumnType = {
-  //           ...structuredClone(col),
-  //           alignment: 'right',
-  //           borderRight: true,
-  //           borderRightColor: '#ff0000',
-  //           borderRightWidth: '5',
-  //         };
+          return _col;
+        }),
+        rows: structuredClone(controlExample4.data_grid_detail?.rows || []).map(
+          (row) => {
+            for (const index in Object.keys(row)) {
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              )
+                row[Object.keys(row)[index]].reference_value =
+                  row[Object.keys(row)[index]].value;
+            }
 
-  //         return _col;
-  //       }),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCellStyle(_control);
-  // });
+            return row;
+          },
+        ),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCellStyle(_control);
+  });
+  it('Should apply cell styles with track modification - controlExample5', function () {
+    cy.viewport(3500, 720);
+    const _control = {
+      ...structuredClone(controlExample5),
+      data_grid_detail: {
+        ...structuredClone(controlExample5.data_grid_detail || {}),
+        columns: structuredClone(
+          controlExample5.data_grid_detail?.columns || [],
+        ).map((col: DataGridDetailsColumnType) => {
+          const _col: DataGridDetailsColumnType = {
+            ...structuredClone(col),
+            alignment: 'right',
+            borderRight: true,
+            borderRightColor: generateRandExp(/^#([0-9A-Fa-f]{6})$/),
+            borderRightWidth: '3',
+            track_modification: true,
+            track_modification_option: `{"background-color": "${generateRandExp(
+              /^#([0-9A-Fa-f]{6})$/,
+            )}", "color": "${generateRandExp(/^#([0-9A-Fa-f]{6})$/)}"}`,
+            track_modification_tooltip: false,
+          };
 
-  // it('Should apply header background color', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample5),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample5.data_grid_detail || {}),
-  //       columns: structuredClone(
-  //         controlExample5.data_grid_detail?.columns || [],
-  //       ).map((col: DataGridDetailsColumnType) => {
-  //         col.headerColor = generateRandExp(/^#([0-9A-Fa-f]{6})$/);
+          return _col;
+        }),
+        rows: structuredClone(controlExample5.data_grid_detail?.rows || []).map(
+          (row) => {
+            for (const index in Object.keys(row)) {
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              )
+                row[Object.keys(row)[index]].reference_value =
+                  row[Object.keys(row)[index]].value;
+            }
 
-  //         return col;
-  //       }),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertColumnHeaderStyle(_control);
-  // });
-  // it('Should apply header background color', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample6),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample6.data_grid_detail || {}),
-  //       columns: structuredClone(
-  //         controlExample6.data_grid_detail?.columns || [],
-  //       ).map((col: DataGridDetailsColumnType) => {
-  //         col.headerColor = '#ff1234';
+            return row;
+          },
+        ),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCellStyle(_control);
+  });
+  it('Should apply cell styles - controlExample6', function () {
+    const _control = {
+      ...structuredClone(controlExample6),
+      data_grid_detail: {
+        ...structuredClone(controlExample6.data_grid_detail || {}),
+        columns: structuredClone(
+          controlExample6.data_grid_detail?.columns || [],
+        ).map((col: DataGridDetailsColumnType) => {
+          const _col: DataGridDetailsColumnType = {
+            ...structuredClone(col),
+            alignment: 'right',
+            borderRight: true,
+            borderRightColor: '#ff0000',
+            borderRightWidth: '5',
+          };
 
-  //         return col;
-  //       }),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertColumnHeaderStyle(_control);
-  // });
+          return _col;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertCellStyle(_control);
+  });
 
-  // it('Should render tooltip when cell modified', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample1.data_grid_detail || {}),
-  //       columns: structuredClone(
-  //         controlExample1.data_grid_detail?.columns || [],
-  //       ).map((col: DataGridDetailsColumnType) => {
-  //         const _col: DataGridDetailsColumnType = {
-  //           ...structuredClone(col),
-  //           track_modification: true,
-  //           track_modification_tooltip: true,
-  //         };
+  it('Should apply header background color - controlExample5', function () {
+    const _control = {
+      ...structuredClone(controlExample5),
+      data_grid_detail: {
+        ...structuredClone(controlExample5.data_grid_detail || {}),
+        columns: structuredClone(
+          controlExample5.data_grid_detail?.columns || [],
+        ).map((col: DataGridDetailsColumnType) => {
+          col.headerColor = generateRandExp(/^#([0-9A-Fa-f]{6})$/);
 
-  //         return _col;
-  //       }),
-  //       rows: structuredClone(controlExample1.data_grid_detail?.rows || []).map(
-  //         (row) => {
-  //           for (const index in Object.keys(row)) {
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             )
-  //               row[Object.keys(row)[index]].reference_value =
-  //                 row[Object.keys(row)[index]].value;
-  //           }
+          return col;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertColumnHeaderStyle(_control);
+  });
+  it('Should apply header background color - controlExample6', function () {
+    const _control = {
+      ...structuredClone(controlExample6),
+      data_grid_detail: {
+        ...structuredClone(controlExample6.data_grid_detail || {}),
+        columns: structuredClone(
+          controlExample6.data_grid_detail?.columns || [],
+        ).map((col: DataGridDetailsColumnType) => {
+          col.headerColor = '#ff1234';
 
-  //           return row;
-  //         },
-  //       ),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertTrackModifTooltip(_control);
-  // });
-  // it('Should render tooltip when cell modified', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample2),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample2.data_grid_detail || {}),
-  //       columns: structuredClone(
-  //         controlExample2.data_grid_detail?.columns || [],
-  //       ).map((col: DataGridDetailsColumnType) => {
-  //         const _col: DataGridDetailsColumnType = {
-  //           ...structuredClone(col),
-  //           track_modification: true,
-  //           track_modification_tooltip: true,
-  //         };
+          return col;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertColumnHeaderStyle(_control);
+  });
 
-  //         return _col;
-  //       }),
-  //       rows: structuredClone(controlExample2.data_grid_detail?.rows || []).map(
-  //         (row) => {
-  //           for (const index in Object.keys(row)) {
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             )
-  //               row[Object.keys(row)[index]].reference_value =
-  //                 row[Object.keys(row)[index]].value;
-  //           }
+  it('Should render tooltip when cell modified - controlExample1', function () {
+    const _control = {
+      ...structuredClone(controlExample1),
+      data_grid_detail: {
+        ...structuredClone(controlExample1.data_grid_detail || {}),
+        columns: structuredClone(
+          controlExample1.data_grid_detail?.columns || [],
+        ).map((col: DataGridDetailsColumnType) => {
+          const _col: DataGridDetailsColumnType = {
+            ...structuredClone(col),
+            track_modification: true,
+            track_modification_tooltip: true,
+          };
 
-  //           return row;
-  //         },
-  //       ),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertTrackModifTooltip(_control);
-  // });
-  // it('Should render tooltip when cell modified', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample4),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample4.data_grid_detail || {}),
-  //       columns: structuredClone(
-  //         controlExample4.data_grid_detail?.columns || [],
-  //       ).map((col: DataGridDetailsColumnType) => {
-  //         const _col: DataGridDetailsColumnType = {
-  //           ...structuredClone(col),
-  //           track_modification: true,
-  //           track_modification_tooltip: true,
-  //         };
+          return _col;
+        }),
+        rows: structuredClone(controlExample1.data_grid_detail?.rows || []).map(
+          (row) => {
+            for (const index in Object.keys(row)) {
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              )
+                row[Object.keys(row)[index]].reference_value =
+                  row[Object.keys(row)[index]].value;
+            }
 
-  //         return _col;
-  //       }),
-  //       rows: structuredClone(controlExample4.data_grid_detail?.rows || []).map(
-  //         (row) => {
-  //           for (const index in Object.keys(row)) {
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             )
-  //               row[Object.keys(row)[index]].reference_value =
-  //                 row[Object.keys(row)[index]].value;
-  //           }
+            return row;
+          },
+        ),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertTrackModifTooltip(_control);
+  });
+  it('Should render tooltip when cell modified - controlExample2', function () {
+    const _control = {
+      ...structuredClone(controlExample2),
+      data_grid_detail: {
+        ...structuredClone(controlExample2.data_grid_detail || {}),
+        columns: structuredClone(
+          controlExample2.data_grid_detail?.columns || [],
+        ).map((col: DataGridDetailsColumnType) => {
+          const _col: DataGridDetailsColumnType = {
+            ...structuredClone(col),
+            track_modification: true,
+            track_modification_tooltip: true,
+          };
 
-  //           return row;
-  //         },
-  //       ),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertTrackModifTooltip(_control);
-  // });
-  // it('Should render tooltip when cell modified', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample5),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample5.data_grid_detail || {}),
-  //       columns: structuredClone(
-  //         controlExample5.data_grid_detail?.columns || [],
-  //       ).map((col: DataGridDetailsColumnType) => {
-  //         col.track_modification = true;
-  //         col.track_modification_tooltip = true;
+          return _col;
+        }),
+        rows: structuredClone(controlExample2.data_grid_detail?.rows || []).map(
+          (row) => {
+            for (const index in Object.keys(row)) {
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              )
+                row[Object.keys(row)[index]].reference_value =
+                  row[Object.keys(row)[index]].value;
+            }
 
-  //         return col;
-  //       }),
-  //       rows: structuredClone(controlExample5.data_grid_detail?.rows || []).map(
-  //         (row) => {
-  //           for (const index in Object.keys(row)) {
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             )
-  //               row[Object.keys(row)[index]].reference_value =
-  //                 row[Object.keys(row)[index]].value;
-  //           }
+            return row;
+          },
+        ),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertTrackModifTooltip(_control);
+  });
+  it('Should render tooltip when cell modified - controlExample4', function () {
+    const _control = {
+      ...structuredClone(controlExample4),
+      data_grid_detail: {
+        ...structuredClone(controlExample4.data_grid_detail || {}),
+        columns: structuredClone(
+          controlExample4.data_grid_detail?.columns || [],
+        ).map((col: DataGridDetailsColumnType) => {
+          const _col: DataGridDetailsColumnType = {
+            ...structuredClone(col),
+            track_modification: true,
+            track_modification_tooltip: true,
+          };
 
-  //           return row;
-  //         },
-  //       ),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   // _assertTrackModifTooltip(_control);
-  // });
-  // it('Should NOT render tooltip when cell modified', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample1.data_grid_detail || {}),
-  //       columns: structuredClone(
-  //         controlExample1.data_grid_detail?.columns || [],
-  //       ).map((col: DataGridDetailsColumnType) => {
-  //         const _col: DataGridDetailsColumnType = {
-  //           ...structuredClone(col),
-  //           track_modification: false,
-  //           track_modification_tooltip: true,
-  //         };
+          return _col;
+        }),
+        rows: structuredClone(controlExample4.data_grid_detail?.rows || []).map(
+          (row) => {
+            for (const index in Object.keys(row)) {
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              )
+                row[Object.keys(row)[index]].reference_value =
+                  row[Object.keys(row)[index]].value;
+            }
 
-  //         return _col;
-  //       }),
-  //       rows: structuredClone(controlExample1.data_grid_detail?.rows || []).map(
-  //         (row) => {
-  //           for (const index in Object.keys(row)) {
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             )
-  //               row[Object.keys(row)[index]].reference_value =
-  //                 row[Object.keys(row)[index]].value;
-  //           }
+            return row;
+          },
+        ),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertTrackModifTooltip(_control);
+  });
+  it('Should render tooltip when cell modified - controlExample5', function () {
+    cy.viewport(3500, 720);
+    const _control = {
+      ...structuredClone(controlExample5),
+      data_grid_detail: {
+        ...structuredClone(controlExample5.data_grid_detail || {}),
+        columns: structuredClone(
+          controlExample5.data_grid_detail?.columns || [],
+        ).map((col: DataGridDetailsColumnType) => {
+          col.track_modification = true;
+          col.track_modification_tooltip = true;
 
-  //           return row;
-  //         },
-  //       ),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertTrackModifTooltip(_control);
-  // });
-  // it('Should NOT render tooltip when cell modified', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample2),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample2.data_grid_detail || {}),
-  //       columns: structuredClone(
-  //         controlExample2.data_grid_detail?.columns || [],
-  //       ).map((col: DataGridDetailsColumnType) => {
-  //         const _col: DataGridDetailsColumnType = {
-  //           ...structuredClone(col),
-  //           track_modification: false,
-  //           track_modification_tooltip: true,
-  //         };
+          return col;
+        }),
+        rows: structuredClone(controlExample5.data_grid_detail?.rows || []).map(
+          (row) => {
+            for (const index in Object.keys(row)) {
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              )
+                row[Object.keys(row)[index]].reference_value =
+                  row[Object.keys(row)[index]].value;
+            }
 
-  //         return _col;
-  //       }),
-  //       rows: structuredClone(controlExample2.data_grid_detail?.rows || []).map(
-  //         (row) => {
-  //           for (const index in Object.keys(row)) {
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             )
-  //               row[Object.keys(row)[index]].reference_value =
-  //                 row[Object.keys(row)[index]].value;
-  //           }
+            return row;
+          },
+        ),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertTrackModifTooltip(_control);
+  });
 
-  //           return row;
-  //         },
-  //       ),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertTrackModifTooltip(_control);
-  // });
-  // it('Should NOT render tooltip when cell modified', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample3),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample3.data_grid_detail || {}),
-  //       columns: structuredClone(
-  //         controlExample3.data_grid_detail?.columns || [],
-  //       ).map((col: DataGridDetailsColumnType) => {
-  //         const _col: DataGridDetailsColumnType = {
-  //           ...structuredClone(col),
-  //           track_modification: false,
-  //           track_modification_tooltip: true,
-  //         };
+  it('Should NOT render tooltip when cell modified - controlExample1', function () {
+    const _control = {
+      ...structuredClone(controlExample1),
+      data_grid_detail: {
+        ...structuredClone(controlExample1.data_grid_detail || {}),
+        columns: structuredClone(
+          controlExample1.data_grid_detail?.columns || [],
+        ).map((col: DataGridDetailsColumnType) => {
+          const _col: DataGridDetailsColumnType = {
+            ...structuredClone(col),
+            track_modification: false,
+            track_modification_tooltip: true,
+          };
 
-  //         return _col;
-  //       }),
-  //       rows: structuredClone(controlExample3.data_grid_detail?.rows || []).map(
-  //         (row) => {
-  //           for (const index in Object.keys(row)) {
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             )
-  //               row[Object.keys(row)[index]].reference_value =
-  //                 row[Object.keys(row)[index]].value;
-  //           }
+          return _col;
+        }),
+        rows: structuredClone(controlExample1.data_grid_detail?.rows || []).map(
+          (row) => {
+            for (const index in Object.keys(row)) {
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              )
+                row[Object.keys(row)[index]].reference_value =
+                  row[Object.keys(row)[index]].value;
+            }
 
-  //           return row;
-  //         },
-  //       ),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertTrackModifTooltip(_control);
-  // });
-  // it('Should NOT render tooltip when cell modified', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample4),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample4.data_grid_detail || {}),
-  //       columns: structuredClone(
-  //         controlExample4.data_grid_detail?.columns || [],
-  //       ).map((col: DataGridDetailsColumnType) => {
-  //         const _col: DataGridDetailsColumnType = {
-  //           ...structuredClone(col),
-  //           track_modification: false,
-  //           track_modification_tooltip: true,
-  //         };
+            return row;
+          },
+        ),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertTrackModifTooltip(_control);
+  });
+  it('Should NOT render tooltip when cell modified - controlExample2', function () {
+    const _control = {
+      ...structuredClone(controlExample2),
+      data_grid_detail: {
+        ...structuredClone(controlExample2.data_grid_detail || {}),
+        columns: structuredClone(
+          controlExample2.data_grid_detail?.columns || [],
+        ).map((col: DataGridDetailsColumnType) => {
+          const _col: DataGridDetailsColumnType = {
+            ...structuredClone(col),
+            track_modification: false,
+            track_modification_tooltip: true,
+          };
 
-  //         return _col;
-  //       }),
-  //       rows: structuredClone(controlExample4.data_grid_detail?.rows || []).map(
-  //         (row) => {
-  //           for (const index in Object.keys(row)) {
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             )
-  //               row[Object.keys(row)[index]].reference_value =
-  //                 row[Object.keys(row)[index]].value;
-  //           }
+          return _col;
+        }),
+        rows: structuredClone(controlExample2.data_grid_detail?.rows || []).map(
+          (row) => {
+            for (const index in Object.keys(row)) {
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              )
+                row[Object.keys(row)[index]].reference_value =
+                  row[Object.keys(row)[index]].value;
+            }
 
-  //           return row;
-  //         },
-  //       ),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertTrackModifTooltip(_control);
-  // });
-  // it('Should NOT render tooltip when cell modified', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample1),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample1.data_grid_detail || {}),
-  //       columns: structuredClone(
-  //         controlExample1.data_grid_detail?.columns || [],
-  //       ).map((col: DataGridDetailsColumnType) => {
-  //         const _col: DataGridDetailsColumnType = {
-  //           ...structuredClone(col),
-  //           track_modification: false,
-  //           track_modification_tooltip: false,
-  //         };
+            return row;
+          },
+        ),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertTrackModifTooltip(_control);
+  });
+  it('Should NOT render tooltip when cell modified - controlExample3', function () {
+    const _control = {
+      ...structuredClone(controlExample3),
+      data_grid_detail: {
+        ...structuredClone(controlExample3.data_grid_detail || {}),
+        columns: structuredClone(
+          controlExample3.data_grid_detail?.columns || [],
+        ).map((col: DataGridDetailsColumnType) => {
+          const _col: DataGridDetailsColumnType = {
+            ...structuredClone(col),
+            track_modification: false,
+            track_modification_tooltip: true,
+          };
 
-  //         return _col;
-  //       }),
-  //       rows: structuredClone(controlExample1.data_grid_detail?.rows || []).map(
-  //         (row) => {
-  //           for (const index in Object.keys(row)) {
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             )
-  //               row[Object.keys(row)[index]].reference_value =
-  //                 row[Object.keys(row)[index]].value;
-  //           }
+          return _col;
+        }),
+        rows: structuredClone(controlExample3.data_grid_detail?.rows || []).map(
+          (row) => {
+            for (const index in Object.keys(row)) {
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              )
+                row[Object.keys(row)[index]].reference_value =
+                  row[Object.keys(row)[index]].value;
+            }
 
-  //           return row;
-  //         },
-  //       ),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertTrackModifTooltip(_control);
-  // });
-  // it('Should NOT render tooltip when cell modified', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample2),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample2.data_grid_detail || {}),
-  //       columns: structuredClone(
-  //         controlExample2.data_grid_detail?.columns || [],
-  //       ).map((col: DataGridDetailsColumnType) => {
-  //         const _col: DataGridDetailsColumnType = {
-  //           ...structuredClone(col),
-  //           track_modification: false,
-  //           track_modification_tooltip: false,
-  //         };
+            return row;
+          },
+        ),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertTrackModifTooltip(_control);
+  });
+  it('Should NOT render tooltip when cell modified - controlExample4', function () {
+    const _control = {
+      ...structuredClone(controlExample4),
+      data_grid_detail: {
+        ...structuredClone(controlExample4.data_grid_detail || {}),
+        columns: structuredClone(
+          controlExample4.data_grid_detail?.columns || [],
+        ).map((col: DataGridDetailsColumnType) => {
+          const _col: DataGridDetailsColumnType = {
+            ...structuredClone(col),
+            track_modification: false,
+            track_modification_tooltip: true,
+          };
 
-  //         return _col;
-  //       }),
-  //       rows: structuredClone(controlExample2.data_grid_detail?.rows || []).map(
-  //         (row) => {
-  //           for (const index in Object.keys(row)) {
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             )
-  //               row[Object.keys(row)[index]].reference_value =
-  //                 row[Object.keys(row)[index]].value;
-  //           }
+          return _col;
+        }),
+        rows: structuredClone(controlExample4.data_grid_detail?.rows || []).map(
+          (row) => {
+            for (const index in Object.keys(row)) {
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              )
+                row[Object.keys(row)[index]].reference_value =
+                  row[Object.keys(row)[index]].value;
+            }
 
-  //           return row;
-  //         },
-  //       ),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertTrackModifTooltip(_control);
-  // });
-  // it('Should NOT render tooltip when cell modified', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample3),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample3.data_grid_detail || {}),
-  //       columns: structuredClone(
-  //         controlExample3.data_grid_detail?.columns || [],
-  //       ).map((col: DataGridDetailsColumnType) => {
-  //         const _col: DataGridDetailsColumnType = {
-  //           ...structuredClone(col),
-  //           track_modification: false,
-  //           track_modification_tooltip: false,
-  //         };
+            return row;
+          },
+        ),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertTrackModifTooltip(_control);
+  });
+  it('Should NOT render tooltip when cell modified - controlExample1', function () {
+    const _control = {
+      ...structuredClone(controlExample1),
+      data_grid_detail: {
+        ...structuredClone(controlExample1.data_grid_detail || {}),
+        columns: structuredClone(
+          controlExample1.data_grid_detail?.columns || [],
+        ).map((col: DataGridDetailsColumnType) => {
+          const _col: DataGridDetailsColumnType = {
+            ...structuredClone(col),
+            track_modification: false,
+            track_modification_tooltip: false,
+          };
 
-  //         return _col;
-  //       }),
-  //       rows: structuredClone(controlExample3.data_grid_detail?.rows || []).map(
-  //         (row) => {
-  //           for (const index in Object.keys(row)) {
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             )
-  //               row[Object.keys(row)[index]].reference_value =
-  //                 row[Object.keys(row)[index]].value;
-  //           }
+          return _col;
+        }),
+        rows: structuredClone(controlExample1.data_grid_detail?.rows || []).map(
+          (row) => {
+            for (const index in Object.keys(row)) {
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              )
+                row[Object.keys(row)[index]].reference_value =
+                  row[Object.keys(row)[index]].value;
+            }
 
-  //           return row;
-  //         },
-  //       ),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertTrackModifTooltip(_control);
-  // });
-  // it('Should NOT render tooltip when cell modified', function () {
-  //   const _control = {
-  //     ...structuredClone(controlExample4),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample4.data_grid_detail || {}),
-  //       columns: structuredClone(
-  //         controlExample4.data_grid_detail?.columns || [],
-  //       ).map((col: DataGridDetailsColumnType) => {
-  //         const _col: DataGridDetailsColumnType = {
-  //           ...structuredClone(col),
-  //           track_modification: false,
-  //           track_modification_tooltip: false,
-  //         };
+            return row;
+          },
+        ),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertTrackModifTooltip(_control);
+  });
+  it('Should NOT render tooltip when cell modified - controlExample2', function () {
+    const _control = {
+      ...structuredClone(controlExample2),
+      data_grid_detail: {
+        ...structuredClone(controlExample2.data_grid_detail || {}),
+        columns: structuredClone(
+          controlExample2.data_grid_detail?.columns || [],
+        ).map((col: DataGridDetailsColumnType) => {
+          const _col: DataGridDetailsColumnType = {
+            ...structuredClone(col),
+            track_modification: false,
+            track_modification_tooltip: false,
+          };
 
-  //         return _col;
-  //       }),
-  //       rows: structuredClone(controlExample4.data_grid_detail?.rows || []).map(
-  //         (row) => {
-  //           for (const index in Object.keys(row)) {
-  //             if (
-  //               typeof row[Object.keys(row)[index]] === 'object' &&
-  //               !Array.isArray(row[Object.keys(row)[index]])
-  //             )
-  //               row[Object.keys(row)[index]].reference_value =
-  //                 row[Object.keys(row)[index]].value;
-  //           }
+          return _col;
+        }),
+        rows: structuredClone(controlExample2.data_grid_detail?.rows || []).map(
+          (row) => {
+            for (const index in Object.keys(row)) {
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              )
+                row[Object.keys(row)[index]].reference_value =
+                  row[Object.keys(row)[index]].value;
+            }
 
-  //           return row;
-  //         },
-  //       ),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertTrackModifTooltip(_control);
-  // });
+            return row;
+          },
+        ),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertTrackModifTooltip(_control);
+  });
+  it('Should NOT render tooltip when cell modified - controlExample3', function () {
+    const _control = {
+      ...structuredClone(controlExample3),
+      data_grid_detail: {
+        ...structuredClone(controlExample3.data_grid_detail || {}),
+        columns: structuredClone(
+          controlExample3.data_grid_detail?.columns || [],
+        ).map((col: DataGridDetailsColumnType) => {
+          const _col: DataGridDetailsColumnType = {
+            ...structuredClone(col),
+            track_modification: false,
+            track_modification_tooltip: false,
+          };
 
-  // it('Should render header tooltip if column.col_header_display_tooltip=true', function () {
-  //   cy.viewport(3500, 720);
-  //   const _control = {
-  //     ...structuredClone(controlExample5),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertColHeaderTooltip(_control);
-  // });
-  // it('Should render header tooltip and text tooltip from api', function () {
-  //   cy.viewport(3500, 720);
-  //   const _control = {
-  //     ...structuredClone(controlExample5),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample5.data_grid_detail || {}),
-  //       columns: structuredClone(
-  //         controlExample5.data_grid_detail?.columns || [],
-  //       ).map((col: DataGridDetailsColumnType) => {
-  //         const _col: DataGridDetailsColumnType = {
-  //           ...structuredClone(col),
-  //           col_header_display_tooltip: true,
-  //           col_header_tooltip: listChars()(_getRandomNumberBetween(6, 23)),
-  //         };
+          return _col;
+        }),
+        rows: structuredClone(controlExample3.data_grid_detail?.rows || []).map(
+          (row) => {
+            for (const index in Object.keys(row)) {
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              )
+                row[Object.keys(row)[index]].reference_value =
+                  row[Object.keys(row)[index]].value;
+            }
 
-  //         return _col;
-  //       }),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertColHeaderTooltip(_control);
-  // });
-  // it('Should NOT render header tooltip', function () {
-  //   cy.viewport(3500, 720);
-  //   const _control = {
-  //     ...structuredClone(controlExample5),
-  //     data_grid_detail: {
-  //       ...structuredClone(controlExample5.data_grid_detail || {}),
-  //       columns: structuredClone(
-  //         controlExample5.data_grid_detail?.columns || [],
-  //       ).map((col: DataGridDetailsColumnType) => {
-  //         const _col: DataGridDetailsColumnType = {
-  //           ...structuredClone(col),
-  //           col_header_display_tooltip: false,
-  //           col_header_tooltip: 'azd',
-  //         };
+            return row;
+          },
+        ),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertTrackModifTooltip(_control);
+  });
+  it('Should NOT render tooltip when cell modified - controlExample4', function () {
+    const _control = {
+      ...structuredClone(controlExample4),
+      data_grid_detail: {
+        ...structuredClone(controlExample4.data_grid_detail || {}),
+        columns: structuredClone(
+          controlExample4.data_grid_detail?.columns || [],
+        ).map((col: DataGridDetailsColumnType) => {
+          const _col: DataGridDetailsColumnType = {
+            ...structuredClone(col),
+            track_modification: false,
+            track_modification_tooltip: false,
+          };
 
-  //         return _col;
-  //       }),
-  //     },
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertColHeaderTooltip(_control);
-  // });
+          return _col;
+        }),
+        rows: structuredClone(controlExample4.data_grid_detail?.rows || []).map(
+          (row) => {
+            for (const index in Object.keys(row)) {
+              if (
+                typeof row[Object.keys(row)[index]] === 'object' &&
+                !Array.isArray(row[Object.keys(row)[index]])
+              )
+                row[Object.keys(row)[index]].reference_value =
+                  row[Object.keys(row)[index]].value;
+            }
+
+            return row;
+          },
+        ),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertTrackModifTooltip(_control);
+  });
+
+  it('Should render header tooltip if column.col_header_display_tooltip=true - controlExample5', function () {
+    cy.viewport(3500, 720);
+    const _control = {
+      ...structuredClone(controlExample5),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertColHeaderTooltip(_control);
+  });
+  it('Should render header tooltip and text tooltip from api - controlExample5', function () {
+    cy.viewport(3500, 720);
+    const _control = {
+      ...structuredClone(controlExample5),
+      data_grid_detail: {
+        ...structuredClone(controlExample5.data_grid_detail || {}),
+        columns: structuredClone(
+          controlExample5.data_grid_detail?.columns || [],
+        ).map((col: DataGridDetailsColumnType) => {
+          const _col: DataGridDetailsColumnType = {
+            ...structuredClone(col),
+            col_header_display_tooltip: true,
+            col_header_tooltip: listChars()(_getRandomNumberBetween(6, 23)),
+          };
+
+          return _col;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertColHeaderTooltip(_control);
+  });
+  it('Should NOT render header tooltip - controlExample5', function () {
+    cy.viewport(3500, 720);
+    const _control = {
+      ...structuredClone(controlExample5),
+      data_grid_detail: {
+        ...structuredClone(controlExample5.data_grid_detail || {}),
+        columns: structuredClone(
+          controlExample5.data_grid_detail?.columns || [],
+        ).map((col: DataGridDetailsColumnType) => {
+          const _col: DataGridDetailsColumnType = {
+            ...structuredClone(col),
+            col_header_display_tooltip: false,
+            col_header_tooltip: 'azd',
+          };
+
+          return _col;
+        }),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertColHeaderTooltip(_control);
+  });
 });
 
 function kFormatter(num: string): string {
@@ -3699,21 +4276,21 @@ function formatDecimalDigit(number, decimalDigits: number): string {
 
   return formattedNumber;
 }
-function getRandomBigNumber(
-  decimal = false,
-  minExponent = 22,
-  maxExponent = 22,
-  precision = 50,
-) {
-  const randomFloat = Math.random();
-  const randomAdjusted = randomFloat.toFixed(precision);
-  const randomBigNumber = new BigNumber(randomAdjusted);
-  const randExpo = _getRandomNumberBetween(minExponent, maxExponent);
+// function getRandomBigNumber(
+//   decimal = false,
+//   minExponent = 22,
+//   maxExponent = 22,
+//   precision = 50,
+// ) {
+//   const randomFloat = Math.random();
+//   const randomAdjusted = randomFloat.toFixed(precision);
+//   const randomBigNumber = new BigNumber(randomAdjusted);
+//   const randExpo = _getRandomNumberBetween(minExponent, maxExponent);
 
-  const multipliedResult = randomBigNumber.times(`1e${randExpo}`);
+//   const multipliedResult = randomBigNumber.times(`1e${randExpo}`);
 
-  return multipliedResult.toFixed(decimal ? _getRandomNumberBetween(1, 23) : 0);
-}
+//   return multipliedResult.toFixed(decimal ? _getRandomNumberBetween(1, 23) : 0);
+// }
 
 function generateRandExp<T = string>(regex: RegExp, max?: number): T {
   const reg = new RandExp(regex);
@@ -3721,7 +4298,7 @@ function generateRandExp<T = string>(regex: RegExp, max?: number): T {
   if (max) reg.max = max;
 
   let randExp = reg.gen();
-  while (randExp === '' /*|| !regex.test(randExp)*/) randExp = reg.gen();
+  while (randExp === '' || !regex.test(randExp)) randExp = reg.gen();
 
   return randExp as T;
 }
@@ -3760,6 +4337,7 @@ function generateRegex(list: string[]): RegExp {
 
 // validate the correctness of formulas in a data grid by simulating user input, recalculating formula cells, and checking the evaluated results against expected values.
 function _assertFormatAndEvalFormula(_control: IApiControl) {
+  cy.on('uncaught:exception', () => false);
   cy.window().then((w) => {
     w[
       'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
@@ -3802,7 +4380,7 @@ function _assertFormatAndEvalFormula(_control: IApiControl) {
               case 'integer':
               case 'percent':
               case 'decimal':
-              case 'financial':
+              case 'financial': {
                 if (!cell.control_editable) continue;
 
                 const strMatch = emptyCell
@@ -3827,6 +4405,7 @@ function _assertFormatAndEvalFormula(_control: IApiControl) {
                   next: emptyCell ? '@' : next,
                 };
                 break;
+              }
               default:
                 break;
             }
@@ -3891,6 +4470,7 @@ function _assertFormatAndEvalFormula(_control: IApiControl) {
 }
 
 function _assertFormat(_control: IApiControl) {
+  cy.on('uncaught:exception', () => false);
   cy.window().then((w) => {
     w[
       'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
@@ -3917,7 +4497,7 @@ function _assertFormat(_control: IApiControl) {
               case 'integer':
               case 'decimal':
               case 'financial':
-              case 'percent':
+              case 'percent': {
                 const {
                   decimal_digit: decimalDigit,
                   currency_symbol: currencySymbol,
@@ -3949,6 +4529,7 @@ function _assertFormat(_control: IApiControl) {
                     expect(t).to.be.equal(result);
                   });
                 break;
+              }
               default:
                 break;
             }
@@ -3969,7 +4550,7 @@ function _assertFormat(_control: IApiControl) {
               case 'integer':
               case 'decimal':
               case 'financial':
-              case 'percent':
+              case 'percent': {
                 const {
                   decimal_digit: decimalDigit,
                   currency_symbol: currencySymbol,
@@ -4015,6 +4596,7 @@ function _assertFormat(_control: IApiControl) {
                     });
                 }
                 break;
+              }
               default:
                 break;
             }
@@ -4176,7 +4758,6 @@ function _assertCellEditable(_control: IApiControl) {
             case 'radio':
             case 'multiple_list':
             case 'boolean':
-            case 'action_button':
             case 'formula':
             case 'icon':
               cy.wrap(elCell).focus().realType('1');
@@ -4246,6 +4827,7 @@ function _assertUnfocusCellClickAway(_control: IApiControl) {
 }
 
 function _assertRegexValidation(_control: IApiControl) {
+  cy.on('uncaught:exception', () => false);
   // Set the temporary timeout for this test (e.g., 100 milliseconds)
   Cypress.config('defaultCommandTimeout', 100);
   cy.window().then((w) => {
@@ -4440,6 +5022,7 @@ function _assertSorting(_control: IApiControl) {
               return dateB.getTime() - dateA.getTime();
             });
             break;
+          case 'checkbox':
           case 'icon':
           case 'action_button':
           case 'text':
@@ -4578,6 +5161,8 @@ function _assertSorting(_control: IApiControl) {
             });
             break;
           default:
+            expectedSortedDataASC = [...unsortedData];
+            expectedSortedDataDESC = [...unsortedData];
             break;
         }
 
@@ -4676,7 +5261,11 @@ function _assertCanFiltering(_control: IApiControl) {
         );
 
         if (!$col.is(':visible') && !col.hide) {
-          cy.wrap(new Array(6)).each(() => cy.realPress('ArrowRight'));
+          cy.wrap(
+            new Array(
+              Cypress.$('.ag-header-cell:not(.ag-floating-filter)').length,
+            ),
+          ).each(() => cy.realPress('ArrowRight'));
         } else return true;
       }).then(() => {
         const $col = Cypress.$(
@@ -4735,7 +5324,9 @@ function _assertCellStyle(_control: IApiControl) {
                 'border-right',
                 columns[indexCell].borderRight
                   ? `${columns[indexCell].borderRightWidth}px solid ${_hexToRgb(
-                      columns[indexCell].borderRightColor,
+                      columns[indexCell].borderRightColor
+                        ? columns[indexCell].borderRightColor
+                        : '#000000',
                     )}`
                   : '0px none rgb(0, 0, 0)',
               );
@@ -4751,7 +5342,7 @@ function _assertCellStyle(_control: IApiControl) {
 
             switch (cell.component) {
               case 'select_list':
-              case 'dynamic_select_list':
+              case 'dynamic_select_list': {
                 const elCellText = Cypress.$(elCell).text();
 
                 cy.window().then((w) => {
@@ -4772,6 +5363,7 @@ function _assertCellStyle(_control: IApiControl) {
                     }
                   });
                 break;
+              }
               case 'text':
               case 'integer':
               case 'decimal':
@@ -4831,7 +5423,11 @@ function _assertColumnHeaderStyle(_control: IApiControl) {
         );
 
         if (!$col.is(':visible') && !col.hide) {
-          cy.realPress('ArrowRight');
+          cy.wrap(
+            new Array(
+              Cypress.$('.ag-header-cell:not(.ag-floating-filter)').length,
+            ),
+          ).each(() => cy.realPress('ArrowRight'));
         } else return true;
       }).then(() => {
         if (!col.hide)
@@ -4868,104 +5464,106 @@ function _assertTrackModifTooltip(_control: IApiControl) {
       .react('AgGridReact')
       .getAgGridElements()
       .then((elRows) => {
-        for (const indexCell in rowValues) {
-          const cell = rowValues[indexCell];
-          const listCells = Object.values(elRows[indexRow]);
-          const elCell: HTMLElement = listCells[indexCell];
+        cy.wrap(rowValues).each(
+          (cell: DataGridDetailsRowsCell, indexCell: number) => {
+            const listCells = Object.values(elRows[indexRow]);
+            const elCell: HTMLElement = listCells[indexCell];
 
-          if (cell.control_editable) {
-            let beenEdited = false;
+            if (cell.control_editable) {
+              let beenEdited = false;
 
-            switch (cell.component) {
-              case 'select_list':
-              case 'dynamic_select_list':
-                const elCellText = Cypress.$(elCell).text();
+              switch (cell.component) {
+                case 'select_list':
+                case 'dynamic_select_list': {
+                  const elCellText = Cypress.$(elCell).text();
 
-                cy.window().then((w) => {
-                  w[
-                    `Features_Edit_Control_DataGridControlAgGrid_CustomSelectRenderer${cell.row_num}-${cell.col_elm_id}`
-                  ].setCanSendApi(false);
-                });
-                cy.wrap(elCell).click();
-                cy.get('.MuiMenu-paper')
-                  .find('ul li')
-                  .then((lis) => {
-                    for (const li of lis as any as HTMLLIElement[]) {
-                      if (Cypress.$(li).text() !== elCellText) {
-                        cy.wrap(li).click().clickOutside();
-                        beenEdited = true;
-                        break;
-                      }
-                    }
+                  cy.window().then((w) => {
+                    w[
+                      `Features_Edit_Control_DataGridControlAgGrid_CustomSelectRenderer${cell.row_num}-${cell.col_elm_id}`
+                    ].setCanSendApi(false);
                   });
-                break;
-              case 'text':
-              case 'integer':
-              case 'decimal':
-              case 'financial':
-              case 'percent':
-                cy.wrap(elCell).focus().realType('1').clickOutside();
-                beenEdited = true;
-                break;
-              case 'long_text':
-              case 'comment':
-                cy.wrap(elCell).focus().realType('1');
-                cy.react('DataGridControlAgGrid')
-                  .react('AgGridReact')
-                  .find('.ag-large-text-input textarea')
-                  .focus()
-                  .type('strMatch')
-                  .clickOutside();
-                beenEdited = true;
-                break;
-              default:
-                break;
-            }
-
-            cy.then(() => {
-              if (beenEdited) {
-                cy.wrap(elCell).focus().realHover();
-
-                if (
-                  columns[indexCell].track_modification &&
-                  columns[indexCell].track_modification_tooltip
-                ) {
-                  cy.get(
-                    '.ag-theme-alpine.ag-popup .ag-popup-child .custom-tooltip',
-                  )
-                    .should('be.visible')
-                    .invoke('text')
-                    .then((t) => {
-                      expect(t).to.equal(
-                        `Previous Value:${(() => {
-                          switch (cell.component) {
-                            case 'decimal':
-                            case 'integer':
-                            case 'percent':
-                              return kFormatter(cell?.reference_value);
-                            case 'financial':
-                              return `${
-                                columns[indexCell]?.currency_symbol
-                              }${kFormatter(cell?.reference_value)}`;
-                            default:
-                              return cell?.reference_value || '';
-                          }
-                        })()}`,
-                      );
+                  cy.wrap(elCell).click();
+                  cy.get('.MuiMenu-paper')
+                    .find('ul li')
+                    .then((lis) => {
+                      for (const li of lis as any as HTMLLIElement[]) {
+                        if (Cypress.$(li).text() !== elCellText) {
+                          cy.wrap(li).click().clickOutside();
+                          beenEdited = true;
+                          break;
+                        }
+                      }
                     });
-                } else
-                  cy.get(
-                    '.ag-theme-alpine.ag-popup .ag-popup-child .custom-tooltip',
-                  )
-                    .should('have.css', 'display', 'none')
-                    .should('not.be.visible');
-
-                cy.wrap(elCell).realMouseMove(0, 50, { position: 'center' });
-                cy.wait(2000);
+                  break;
+                }
+                case 'text':
+                case 'integer':
+                case 'decimal':
+                case 'financial':
+                case 'percent':
+                  cy.wrap(elCell).focus().realType('1').clickOutside();
+                  beenEdited = true;
+                  break;
+                case 'long_text':
+                case 'comment':
+                  cy.wrap(elCell).focus().realType('1');
+                  cy.react('DataGridControlAgGrid')
+                    .react('AgGridReact')
+                    .find('.ag-large-text-input textarea')
+                    .focus()
+                    .type('strMatch')
+                    .clickOutside();
+                  beenEdited = true;
+                  break;
+                default:
+                  break;
               }
-            });
-          }
-        }
+
+              cy.then(() => {
+                if (beenEdited) {
+                  cy.wrap(elCell).focus().realHover();
+
+                  if (
+                    columns[indexCell].track_modification &&
+                    columns[indexCell].track_modification_tooltip
+                  ) {
+                    cy.get(
+                      '.ag-theme-alpine.ag-popup .ag-popup-child .custom-tooltip',
+                    )
+                      .should('be.visible')
+                      .invoke('text')
+                      .then((t) => {
+                        expect(t).to.equal(
+                          `Previous Value:${(() => {
+                            switch (cell.component) {
+                              case 'decimal':
+                              case 'integer':
+                              case 'percent':
+                                return kFormatter(cell?.reference_value);
+                              case 'financial':
+                                return `${
+                                  columns[indexCell]?.currency_symbol
+                                }${kFormatter(cell?.reference_value)}`;
+                              default:
+                                return cell?.reference_value || '';
+                            }
+                          })()}`,
+                        );
+                      });
+                  } else
+                    cy.get(
+                      '.ag-theme-alpine.ag-popup .ag-popup-child .custom-tooltip',
+                    )
+                      .should('have.css', 'display', 'none')
+                      .should('not.be.visible');
+
+                  cy.wrap(elCell).realMouseMove(0, 50, { position: 'center' });
+                  cy.wait(2000);
+                }
+              });
+            }
+          },
+        );
       });
   });
 }
@@ -5010,8 +5608,6 @@ function _assertResizableColumns(_control: IApiControl) {
   const withControlData = getData(_control);
 
   withControlData(1, ({ columns }) => {
-    cy.react('AgGridReact').find('.ag-cell').eq(0).focus();
-
     cy.wrap(columns).each((col: DataGridDetailsColumnType) => {
       const colId = col.field;
       let initialColWidth: number;
@@ -5023,7 +5619,11 @@ function _assertResizableColumns(_control: IApiControl) {
         initialColWidth = $col[0].getBoundingClientRect().width;
 
         if (!$col.is(':visible') && !col.hide) {
-          cy.realPress('ArrowRight');
+          cy.wrap(
+            new Array(
+              Cypress.$('.ag-header-cell:not(.ag-floating-filter)').length,
+            ),
+          ).each(() => cy.realPress('ArrowRight'));
         } else return true;
       }).then(() => {
         if (!col.hide)
@@ -5032,7 +5632,8 @@ function _assertResizableColumns(_control: IApiControl) {
               .find(
                 `.ag-header-row.ag-header-row-column .ag-header-cell[col-id="${colId}"] .ag-header-cell-resize`,
               )
-              .should('not.have.css', 'display', 'none !important');
+              .should('not.have.css', 'display', 'none !important')
+              .should('not.have.css', 'display', 'none');
             cy.react('AgGridReact')
               .find(
                 `.ag-header-row.ag-header-row-column .ag-header-cell[col-id="${colId}"] .ag-header-cell-resize`,
@@ -5054,7 +5655,8 @@ function _assertResizableColumns(_control: IApiControl) {
               .find(
                 `.ag-header-row.ag-header-row-column .ag-header-cell[col-id="${colId}"] .ag-header-cell-resize`,
               )
-              .should('have.css', 'display', 'none !important');
+              .should('have.css', 'display')
+              .and('match', new RegExp('none'));
             cy.react('AgGridReact')
               .find(
                 `.ag-header-row.ag-header-row-column .ag-header-cell[col-id="${colId}"] .ag-header-cell-resize`,
@@ -5071,6 +5673,7 @@ function _assertResizableColumns(_control: IApiControl) {
 
                 expect(width).to.equal(initialColWidth);
               });
+            cy.get('.ag-cell').eq(0).realClick();
           }
       });
     });
@@ -5212,7 +5815,12 @@ function _assertManuallyPinnedPositionColumns(_control: IApiControl) {
           );
 
           if (!$col.is(':visible') && !col.hide) {
-            cy.wrap(new Array(6)).each(() => cy.realPress('ArrowRight'));
+            const l = Cypress.$(
+              '.ag-header-viewport .ag-header-cell:not(.ag-floating-filter)',
+            ).length;
+            cy.wrap(new Array(l < 7 ? 7 : l)).each(() =>
+              cy.realPress('ArrowRight'),
+            );
           } else return true;
         }).then(() => {
           const $col = Cypress.$(
@@ -5243,15 +5851,15 @@ function _assertManuallyPinnedPositionColumns(_control: IApiControl) {
                   .should('not.exist');
                 cy.realPress('Escape').then(() => {
                   cy.wrap(
-                    Cypress.$('.ag-center-cols-viewport')
-                      .find(getJqueryRowElement())
-                      .find('.ag-cell'),
+                    Cypress.$(
+                      getJqueryRowElement('.ag-center-cols-viewport'),
+                    ).find('.ag-cell'),
                   )
                     .eq(
                       Math.floor(
-                        Cypress.$('.ag-center-cols-viewport')
-                          .find(getJqueryRowElement())
-                          .find('.ag-cell').length / 2,
+                        Cypress.$(
+                          getJqueryRowElement('.ag-center-cols-viewport'),
+                        ).find('.ag-cell').length / 2,
                       ),
                     )
                     .focus();
@@ -5370,14 +5978,14 @@ function getData(_control: IApiControl) {
       row: DataGridDetailsRow;
       rowValues: DataGridDetailsRowsCell[];
       columns: DataGridDetailsColumnType[];
-      getJqueryRowElement: () => JQuery<HTMLElement>;
+      getJqueryRowElement: (beforeSelector: string) => JQuery<HTMLElement>;
     }) => void,
   ): void => {
     const count = numberRows === 'all' ? rows.length : numberRows;
 
     cy.wrap(new Array(count)).each((i, indexRow: number) => {
-      const getJqueryRowElement = () =>
-        Cypress.$(`.ag-row[row-index="${indexRow}"]:eq(0)`);
+      const getJqueryRowElement = (beforeSelector = '') =>
+        Cypress.$(`${beforeSelector} .ag-row[row-index="${indexRow}"]:eq(0)`);
       const row = rows[indexRow];
       const rowValues: DataGridDetailsRowsCell[] = [];
 

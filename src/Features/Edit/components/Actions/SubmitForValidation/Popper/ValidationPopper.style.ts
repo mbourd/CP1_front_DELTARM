@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 export const ValidationPopperStyled = styled.div`
   .MuiCard-root {
@@ -74,7 +74,7 @@ export const ValidationPopperStyled = styled.div`
     font-family: ${({ theme }) => theme.font.regular.main};
   }
 
-  .card-items { 
+  .card-items {
     margin: 20px;
     height: 300px;
     overflow-y: auto;

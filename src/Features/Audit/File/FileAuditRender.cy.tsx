@@ -19,7 +19,7 @@ describe('<FileAuditRender />', () => {
   });
 
   it('should render', () => {
-    const DummyFC: React.FC = () => {
+    const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
       const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(
         null,
       );
@@ -54,7 +54,7 @@ describe('<FileAuditRender />', () => {
   });
 
   it('should render if is_audit', () => {
-    const DummyFC: React.FC = () => {
+    const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
       const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(
         null,
       );
@@ -92,7 +92,7 @@ describe('<FileAuditRender />', () => {
   });
 
   it('should render if is_audit_xls', () => {
-    const DummyFC: React.FC = () => {
+    const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
       const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(
         null,
       );
@@ -133,7 +133,7 @@ describe('<FileAuditRender />', () => {
   });
 
   it('should render <FileAuditBody /> if audits', function () {
-    const DummyFC: React.FC = () => {
+    const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
       const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(
         null,
       );
@@ -174,7 +174,7 @@ describe('<FileAuditRender />', () => {
   });
 
   it('should a badge containing the correct number of audit', function () {
-    const DummyFC: React.FC = () => {
+    const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
       const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(
         null,
       );
@@ -213,7 +213,7 @@ describe('<FileAuditRender />', () => {
 
   it('should render errormessage', () => {
     const error = 'Error';
-    const DummyFC: React.FC = () => {
+    const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
       const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(
         null,
       );

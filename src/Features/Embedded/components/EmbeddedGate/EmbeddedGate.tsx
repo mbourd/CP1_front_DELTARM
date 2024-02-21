@@ -3,7 +3,9 @@ import { EmbeddedGateStyled } from './EmbeddedGate.style';
 import { router, useSecurity } from '../../../../Services';
 import { EmbeddedContent } from '../../EmbeddedContent';
 
-export const EmbeddedGate: React.FC = (): React.ReactElement => {
+export const EmbeddedGate: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
   const { user } = useSecurity();
 
   return (

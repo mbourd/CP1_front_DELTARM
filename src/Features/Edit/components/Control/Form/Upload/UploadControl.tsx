@@ -14,6 +14,7 @@ import { UploadList } from '../../../../../../Shared/components/UploadList/Uploa
 import { deleteFile } from '../../../../../../Shared/components/UploadList/apiRoutes/deleteFile';
 import { downloadFile } from '../../../../../../Shared/components/UploadList/apiRoutes/downloadFile';
 import { RejectControl } from '../RejectByPointControl/RejectControl';
+import { useTrans } from '../../../../../../Services';
 
 interface IProps {
   control: IApiControl;
@@ -21,11 +22,12 @@ interface IProps {
   context: 'edit' | 'validate';
 }
 
-export const UploadControl: React.FC<IProps> = ({
+export const UploadControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   context,
 }): React.ReactElement => {
+  const [trans] = useTrans('Edit');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [newUploadFile, setNewUploadFile] = useState<File | any>(null);
   const [currentUploadFile, setCurrentUploadFile] = useState<
@@ -39,26 +41,26 @@ export const UploadControl: React.FC<IProps> = ({
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
 
-  useEffect(() => {
-    if (
-      control.mandatory &&
-      (currentUploadFile?.length === 0 || !currentUploadFile)
-    ) {
-      setErrorMessage('Valeur obligatoire');
-    }
-    if (!control.mandatory) {
-      setErrorMessage(null);
-    }
-  }, [control, newUploadFile, currentUploadFile]);
-
   const saveFileToUpload = useCallback(
-    (e) => {
+    (e: any) => {
       setNewUploadFile(e.target.files[0]);
     },
     [setNewUploadFile],
   );
 
-  const onDrop = useCallback((acceptedFiles) => {
+  useEffect(() => {
+    if (
+      control.mandatory &&
+      (currentUploadFile?.length === 0 || !currentUploadFile)
+    ) {
+      setErrorMessage(trans('mandatoryValue'));
+    }
+    if (!control.mandatory) {
+      setErrorMessage(null);
+    }
+  }, [control, newUploadFile, trans, currentUploadFile]);
+
+  const onDrop = useCallback((acceptedFiles: any) => {
     acceptedFiles.forEach((file: File) => {
       setNewUploadFile(file);
     });
@@ -67,9 +69,7 @@ export const UploadControl: React.FC<IProps> = ({
 
   const handleUploadFile = useCallback(() => {
     if (control.mandatory && !newUploadFile) {
-      setErrorMessage('Valeur obligatoire');
-
-      return;
+      setErrorMessage(trans('mandatoryValue'));
     }
     if (!control.mandatory) {
       setErrorMessage(null);
@@ -81,15 +81,14 @@ export const UploadControl: React.FC<IProps> = ({
       jwt,
       setCurrentUploadFile,
       setErrorMessage,
-      setNewUploadFile,
     );
     setTimeout(() => {
       setNewUploadFile(null);
     }, 2000);
-  }, [fileId, control, newUploadFile, jwt]);
+  }, [fileId, control, newUploadFile, jwt, trans]);
 
   const handleDeleteFile = useCallback(
-    (e, name) => {
+    (e: any, name: any) => {
       e.preventDefault();
       deleteFile(
         fileId,
@@ -104,7 +103,7 @@ export const UploadControl: React.FC<IProps> = ({
   );
 
   const handleDownloadFile = useCallback(
-    (e, id, name) => {
+    (e: any, id: any, name: any) => {
       e.preventDefault();
       downloadFile(id, name, jwt, setErrorMessage);
     },

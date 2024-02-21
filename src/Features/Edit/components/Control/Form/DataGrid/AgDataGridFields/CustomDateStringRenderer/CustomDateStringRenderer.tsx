@@ -7,10 +7,9 @@ type CustomDateStringRendererPropsType = {
   fieldName: string;
 };
 
-const CustomDateStringRenderer: React.FC<CustomDateStringRendererPropsType> = ({
-  props,
-  fieldName,
-}) => {
+const CustomDateStringRenderer: React.FC<
+  React.PropsWithChildren<CustomDateStringRendererPropsType>
+> = ({ props, fieldName }) => {
   const content = (
     <div
       style={{

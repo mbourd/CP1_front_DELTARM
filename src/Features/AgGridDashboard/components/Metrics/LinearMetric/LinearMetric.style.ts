@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { LinearProgress } from '@material-ui/core';
 import { linearProgressClasses } from '@mui/material';
 import React from 'react';

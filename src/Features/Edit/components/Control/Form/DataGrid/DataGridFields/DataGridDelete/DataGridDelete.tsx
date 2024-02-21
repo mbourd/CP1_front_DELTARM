@@ -13,7 +13,7 @@ interface IProps {
   setGridDetails: React.Dispatch<SetStateAction<any>>;
 }
 
-export const DataGridDelete: React.FC<IProps> = ({
+export const DataGridDelete: React.FC<React.PropsWithChildren<IProps>> = ({
   rowNum,
   fileId,
   controlId,

@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 export const TabContentStyled = styled.div`
   border: 1px solid ${({ theme }) => theme.color.primary.main};

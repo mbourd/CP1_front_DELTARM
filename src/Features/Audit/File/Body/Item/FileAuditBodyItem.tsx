@@ -8,9 +8,9 @@ interface IFileAuditBodyItem {
   audit: IFileAudit;
 }
 
-export const FileAuditBodyItem: React.FC<IFileAuditBodyItem> = ({
-  audit,
-}): React.ReactElement => {
+export const FileAuditBodyItem: React.FC<
+  React.PropsWithChildren<IFileAuditBodyItem>
+> = ({ audit }): React.ReactElement => {
   return (
     <FileAuditBodyItemStyled>
       <Grid container alignItems={'center'} wrap={'nowrap'}>

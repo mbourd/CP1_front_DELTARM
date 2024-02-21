@@ -6,7 +6,7 @@ import { IInputBase } from '../types';
 
 // Todo: rename to Input
 
-export const InputBase: React.FC<IInputBase> = ({
+export const InputBase: React.FC<React.PropsWithChildren<IInputBase>> = ({
   color = 'text',
   bdr,
   status,
