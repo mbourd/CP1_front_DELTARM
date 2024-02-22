@@ -13,7 +13,7 @@ export const NoData: React.FC<
     <DashboardStyled>
       <HeadingOne>{trans('pageTitle')}</HeadingOne>
       <DashboardSearch />
-      <ErrorNoData message={'Aucun dossier disponible'} />
+      <ErrorNoData message={trans('noRecordAvailable')} />
     </DashboardStyled>
   );
 };

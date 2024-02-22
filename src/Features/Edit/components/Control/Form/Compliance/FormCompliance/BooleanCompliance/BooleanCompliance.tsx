@@ -68,9 +68,9 @@ export const BooleanCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
 
   useEffect(() => {
     if (error) {
-      setErrorMessage("Une erreur s'est produite durant l'enregistrement");
+      setErrorMessage(trans('errorRecording'));
     }
-  }, [error]);
+  }, [error, trans]);
 
   useEffect(() => {
     setCurrentValue(compliance.compliance_elm_value);

@@ -170,7 +170,8 @@ export const DataGridControlAgGrid: React.FC<
   // refit column size when window size changes
   useEffect(() => {
     const listener = () => {
-      gridRef.current.api.sizeColumnsToFit();
+      if (gridRef.current?.api?.sizeColumnsToFit)
+        gridRef.current.api.sizeColumnsToFit();
     };
     window.addEventListener('resize', listener);
 
@@ -927,18 +928,20 @@ export const DataGridControlAgGrid: React.FC<
   );
 
   const onGridReady = (params: any) => {
-    params.api.sizeColumnsToFit();
-    params.api.enableVirtualization = true;
-    params.api.forEachNode((node) => {
-      if (
-        node.data[
-          control.data_grid_detail?.datagrid_options
-            ?.select_all_button_col_ref as string
-        ]?.value === '1'
-      ) {
-        setSelectedRows((selected) => [...selected, node]);
-      }
-    });
+    setTimeout(() => {
+      params.api.sizeColumnsToFit();
+      params.api.enableVirtualization = true;
+      params.api.forEachNode((node) => {
+        if (
+          node.data[
+            control.data_grid_detail?.datagrid_options
+              ?.select_all_button_col_ref as string
+          ]?.value === '1'
+        ) {
+          setSelectedRows((selected) => [...selected, node]);
+        }
+      });
+    }, 0);
   };
 
   const onCellEditingStarted = useCallback((event: CellEditingStartedEvent) => {

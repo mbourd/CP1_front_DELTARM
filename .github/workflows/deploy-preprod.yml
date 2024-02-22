@@ -3,6 +3,7 @@ on:
     push:
         branches:
             - 'preprod'
+
 jobs:
     tests:
         name: Tests

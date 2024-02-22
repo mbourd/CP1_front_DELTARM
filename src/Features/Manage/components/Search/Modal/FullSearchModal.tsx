@@ -1,5 +1,5 @@
 import { IFileSearchFullResult } from 'Features/Manage/apiRoutes';
-import { router, useApi } from 'Services';
+import { router, useApi, useTrans } from 'Services';
 import React, { FC, useEffect } from 'react';
 import { BadRequest, Button, Modal } from 'Shared/components';
 import { SearchModalFooterStyled } from './SearchModal.style';
@@ -21,9 +21,10 @@ export const FullSearchModal: FC<
   React.PropsWithChildren<FullSearchModalProps>
 > = ({ search, onClose }): React.ReactElement => {
   const { send, data } = useApi<IFileSearchFullResult[]>();
-
+  const [trans] = useTrans('Manage');
   useEffect(() => {
     if (search) {
+      // console.log('find me');
       send('searchFileFull', {}, { search_value: search });
     }
   }, [send, search]);
@@ -61,7 +62,7 @@ export const FullSearchModal: FC<
                         )
                       }
                     >
-                      Sélectionner
+                      {trans('Sélectionner')}
                     </Button>
                   </Box>
                 </TableCell>
@@ -72,14 +73,14 @@ export const FullSearchModal: FC<
       </Table>
     ) : (
       <Box display="flex" justifyContent="center" padding={6}>
-        <BadRequest>Aucun résultat</BadRequest>
+        <BadRequest>{trans('noResult')}</BadRequest>
       </Box>
     );
 
   const footer = (
     <SearchModalFooterStyled>
       <Button color={'error'} onClick={onClose}>
-        Annuler la recherche
+        {trans('cancelSearch')}
       </Button>
     </SearchModalFooterStyled>
   );
@@ -88,7 +89,9 @@ export const FullSearchModal: FC<
     <Modal
       open={!!search}
       onClose={onClose}
-      header={<Typography variant="h6">Résultat de la recherche</Typography>}
+      header={
+        <Typography variant="h6">{trans('resultOfTheSearch')}</Typography>
+      }
       footer={footer}
     >
       {content}

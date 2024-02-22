@@ -53,7 +53,7 @@ export const BooleanControl: React.FC<React.PropsWithChildren<IProps>> = ({
     if (booleanValue === true) setErrorMessage(null);
 
     if (control.mandatory && booleanValue === false) {
-      setErrorMessage('Valeur obligatoire');
+      setErrorMessage(trans('mandatoryValue'));
     }
 
     setCurrentValue(booleanValue.toString());

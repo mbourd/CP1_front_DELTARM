@@ -10,7 +10,7 @@ export const NoData: React.FC<
 
   return (
     <ManageStyled>
-      <HeadingOne>{trans('dashboard')}</HeadingOne>
+      <HeadingOne>{trans('pageTitle')}</HeadingOne>
       <ErrorNoData message={trans('empty')} />
     </ManageStyled>
   );

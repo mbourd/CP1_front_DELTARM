@@ -8,6 +8,7 @@ import { addRejectComment } from '../apiRoute/addRejectComment';
 import { IFileComment } from '../../../../../../Comments';
 import { IUser, security } from '../../../../../../../Packages/Security';
 import { EditValidationContext } from '../../../../../EditValidationContext';
+import { useTrans } from '../../../../../../../Services';
 
 interface FileCommentRejectionFooter {
   controlId: string;
@@ -22,6 +23,7 @@ export const FileCommentRejectionFooter: React.FC<
   const { fileId } = useContext(EditValidationContext);
   const [inputCommentValue, setInputCommentValue] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
+  const [trans] = useTrans('Edit');
 
   const handleChangeInputValue = useCallback((value: string) => {
     setInputCommentValue(value);
@@ -66,9 +68,7 @@ export const FileCommentRejectionFooter: React.FC<
         <InputBase
           color={'disabled'}
           bdr={'4px'}
-          placeholder={
-            'Appuyez sur la touche ENTREE pour valider votre message'
-          }
+          placeholder={trans('validateMessage')}
           onChange={(e) => handleChangeInputValue(e.currentTarget.value)}
           value={inputCommentValue}
           onKeyPress={addComment}

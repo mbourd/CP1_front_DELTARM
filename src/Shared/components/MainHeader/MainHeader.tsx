@@ -23,6 +23,7 @@ export const MainHeader: React.FC<
   }, [context.cli_id, clientInfos]);
 
   if (dataClientInfos?.data[0].cli_name) {
+    localStorage.setItem('client_info', JSON.stringify(dataClientInfos?.data));
     document.title = 'CP1 - ' + dataClientInfos?.data[0].cli_name;
   }
 

@@ -53,13 +53,6 @@ export const ValidationPopper: React.FC<
     }
   }, [data?.response?.linkable_files]);
   useEffect(() => {
-    if (data?.response?.linkable_files?.length !== 0) {
-      setopenFileSelection(true);
-    } else {
-      setopenFileSelection(false);
-    }
-  }, [data?.response?.linkable_files]);
-  useEffect(() => {
     const q: Record<string, string> = { file_id: context.fileId };
     if (context.data?.validationCount) {
       q['valid_num'] = context.data?.validationCount;
@@ -307,8 +300,8 @@ export const ValidationPopper: React.FC<
                   >
                     {`Vous êtes sur le point d'effectuer une duplication entre plusieurs fichiers. Vous avez demandé de dupliquer les informations du dossier ${
                       context?.data?.number
-                    } vers ${
-                      selectedFiles.length === 1 ? 'le dossier' : 'les dossiers'
+                    } vers les ${
+                      selectedFiles.length === 1 ? 'dossier' : 'dossiers'
                     }:`}
                   </h2>
                   <div style={{ marginTop: 15 }}>
