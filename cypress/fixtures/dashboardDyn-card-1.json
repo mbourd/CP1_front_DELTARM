@@ -6,10 +6,28 @@
         "border_right": true,
         "dataKey": "Contrôle",
         "filter": true,
-        "floating_filter": false,
+        "floating_filter": true,
         "header": "Contrôle",
         "label": "Contrôle",
         "width": 450
+      },
+      {
+        "border_right": true,
+        "dataKey": "Contrôle",
+        "filter": true,
+        "floating_filter": true,
+        "header": "Contrôle",
+        "label": "Contrôle",
+        "width": 450
+      },
+      {
+        "border_right": false,
+        "dataKey": "Période",
+        "filter": true,
+        "floating_filter": false,
+        "header": "Période",
+        "label": "Période",
+        "width": 120
       },
       {
         "border_right": false,
@@ -30,6 +48,15 @@
         "width": 85
       },
       {
+        "border_right": true,
+        "dataKey": "Dernier",
+        "filter": true,
+        "floating_filter": false,
+        "header": "Dernier",
+        "label": "Dernier",
+        "width": 85
+      },
+      {
         "border_right": false,
         "dataKey": "Nouveau",
         "filter": true,
@@ -37,6 +64,24 @@
         "header": "Nouveau",
         "label": "Nouveau",
         "width": 85
+      },
+      {
+        "border_right": false,
+        "dataKey": "Nouveau",
+        "filter": true,
+        "floating_filter": false,
+        "header": "Nouveau",
+        "label": "Nouveau",
+        "width": 85
+      },
+      {
+        "border_right": false,
+        "dataKey": "Liste",
+        "filter": true,
+        "floating_filter": false,
+        "header": "Liste",
+        "label": "Liste",
+        "width": 60
       },
       {
         "border_right": false,
@@ -2940,5 +2985,6 @@
     "bg_color": "#3498DB",
     "font_color": "#FFFFFF",
     "lib": "Contrôles à la demande"
-  }
+  },
+  "version": 1
 }

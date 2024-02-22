@@ -33,7 +33,9 @@ export const Card: React.FC<React.PropsWithChildren<ICardC>> = ({
   card,
   triggerAction,
 }): React.ReactElement => {
-  const [rows] = useState<ICardRow[]>(card.lines.values);
+  const [rows] = useState<ICardRow[]>(
+    card?.lines?.values ? card?.lines?.values : [],
+  );
   const [heightTable, setHeightTable] = useState<number>(0);
   const tableRef = useRef<HTMLDivElement | null>(null);
   const theme = useTheme();
@@ -200,9 +202,9 @@ export const Card: React.FC<React.PropsWithChildren<ICardC>> = ({
   }, [rows, cache]);
 
   return (
-    <CardStyled $cardColor={card.title.bg_color}>
-      <Header color={card.title.bg_color}>
-        <span style={{ color: card.title.font_color }}>{card.title.lib}</span>
+    <CardStyled $cardColor={card.title?.bg_color}>
+      <Header color={card.title?.bg_color}>
+        <span style={{ color: card.title?.font_color }}>{card.title?.lib}</span>
       </Header>
       <TableContainer
         component={Paper}
@@ -220,7 +222,7 @@ export const Card: React.FC<React.PropsWithChildren<ICardC>> = ({
         <AutoSizer>
           {({ width }) => (
             <Table
-              id={'Table_Virtualized' + card.title.lib}
+              id={'Table_Virtualized' + card.title?.lib}
               deferredMeasurementCache={cache}
               height={300}
               width={width}
@@ -230,7 +232,7 @@ export const Card: React.FC<React.PropsWithChildren<ICardC>> = ({
                 display: 'flex',
                 flexDirection: 'row',
                 borderBottom: card.lines.border_bottom
-                  ? `1px solid ${card.title.bg_color}`
+                  ? `1px solid ${card.title?.bg_color}`
                   : 'none',
               }}
               rowCount={rows.length}
@@ -247,7 +249,7 @@ export const Card: React.FC<React.PropsWithChildren<ICardC>> = ({
                         flexDirection: 'row',
                         alignItems: 'center',
                         borderRight: border_right
-                          ? `1px solid ${card.title.bg_color}`
+                          ? `1px solid ${card.title?.bg_color}`
                           : 'none',
                         top: 0,
                         position: 'sticky',
@@ -263,7 +265,7 @@ export const Card: React.FC<React.PropsWithChildren<ICardC>> = ({
                       {...other}
                       headerStyle={{
                         borderRight: border_right
-                          ? `1px solid ${card.title.bg_color}`
+                          ? `1px solid ${card.title?.bg_color}`
                           : 'none',
                         overflow: 'hidden',
                       }}
