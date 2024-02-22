@@ -300,8 +300,8 @@ export const ValidationPopper: React.FC<
                   >
                     {`Vous êtes sur le point d'effectuer une duplication entre plusieurs fichiers. Vous avez demandé de dupliquer les informations du dossier ${
                       context?.data?.number
-                    } vers ${
-                      selectedFiles.length === 1 ? 'le dossier' : 'les dossiers'
+                    } vers les ${
+                      selectedFiles.length === 1 ? 'dossier' : 'dossiers'
                     }:`}
                   </h2>
                   <div style={{ marginTop: 15 }}>

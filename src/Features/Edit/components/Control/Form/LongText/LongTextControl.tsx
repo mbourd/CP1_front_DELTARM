@@ -9,6 +9,7 @@ import { ControlFooter } from '../ControlFooter';
 import { checkIfSameValues } from '../../../../../../Packages/Helpers/src/checkIfSameValues';
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
 import { RejectControl } from '../RejectByPointControl/RejectControl';
+import { useTrans } from '../../../../../../Services';
 
 interface IProps {
   control: IApiControl;
@@ -34,6 +35,7 @@ export const LongTextControl: React.FC<React.PropsWithChildren<IProps>> = ({
       : false,
   );
   const { currentRoute } = useRouter();
+  const [trans] = useTrans('Edit');
 
   useEffect(() => {
     setCurrentValue(control.control_value);
@@ -57,7 +59,7 @@ export const LongTextControl: React.FC<React.PropsWithChildren<IProps>> = ({
       if (!checkIfSameValues(value, currentValue)) {
         setErrorMessage(null);
         if (control.mandatory && !value.trim()) {
-          setErrorMessage('Valeur obligatoire');
+          setErrorMessage(trans('mandatoryValue'));
         }
 
         return;
@@ -66,7 +68,7 @@ export const LongTextControl: React.FC<React.PropsWithChildren<IProps>> = ({
       setErrorMessage(null);
 
       if (control.mandatory && !value.trim()) {
-        setErrorMessage('Valeur obligatoire');
+        setErrorMessage(trans('mandatoryValue'));
       }
 
       setCurrentValue(value);
@@ -92,23 +94,24 @@ export const LongTextControl: React.FC<React.PropsWithChildren<IProps>> = ({
       currentValue,
       setCurrentValue,
       control.mandatory,
+      trans,
     ],
   );
 
   useEffect(() => {
     if (control.mandatory && control.editable && !currentValue) {
-      setErrorMessage('Valeur obligatoire');
+      setErrorMessage(trans('mandatoryValue'));
     }
     if (!control.mandatory) {
       setErrorMessage(null);
     }
-  }, [control.mandatory, control.editable, currentValue]);
+  }, [control.mandatory, control.editable, currentValue, trans]);
 
   useEffect(() => {
     if (error) {
-      setErrorMessage("Une erreur s'est produite durant l'enregistrement");
+      setErrorMessage(trans('errorRecording'));
     }
-  }, [error]);
+  }, [error, trans]);
 
   useEffect(() => {
     if (!isRejected) {

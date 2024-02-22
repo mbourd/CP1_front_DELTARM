@@ -107,7 +107,7 @@ export const FinancialControl: React.FC<React.PropsWithChildren<IProps>> = ({
       if (!checkIfSameValues(value, currentValue)) {
         setErrorMessage(null);
         if (control.mandatory && !value.trim()) {
-          setErrorMessage('Valeur obligatoire');
+          setErrorMessage(trans('mandatoryValue'));
         }
 
         return;
@@ -116,7 +116,7 @@ export const FinancialControl: React.FC<React.PropsWithChildren<IProps>> = ({
       setErrorMessage(null);
 
       if (control.mandatory && !value.trim()) {
-        setErrorMessage('Valeur obligatoire');
+        setErrorMessage(trans('mandatoryValue'));
       }
 
       setCurrentValue(value);
@@ -150,9 +150,9 @@ export const FinancialControl: React.FC<React.PropsWithChildren<IProps>> = ({
 
   useEffect(() => {
     if (error) {
-      setErrorMessage("Une erreur s'est produite durant l'enregistrement");
+      setErrorMessage(trans('errorRecording'));
     }
-  }, [error]);
+  }, [error, trans]);
 
   // useEffect(() => {
   //   console.log(control);

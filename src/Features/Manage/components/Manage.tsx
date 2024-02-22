@@ -43,6 +43,10 @@ export const Manage: React.FC<
     logout();
   }
 
+  //   useEffect(() => {
+  //     console.log(data);
+  //   }, [data]);
+
   const initStages: Record<number | string, true> = {};
   const initStates: Record<number | string, true> = {};
   const initRoles: Record<number | string, true> = {};
@@ -144,8 +148,8 @@ export const Manage: React.FC<
             <Search
               placeholder={
                 searchMode === 'fileNum'
-                  ? 'N°Dossier / N°Avenant'
-                  : 'Contrepartie emprunteuse ou nom de famille'
+                  ? trans('searchPlaceholder')
+                  : trans('counterpartyBorrowerOrSurname')
               }
             />
             <Divider className={'divider'} orientation="vertical" />
@@ -179,12 +183,12 @@ export const Manage: React.FC<
                 <FormControlLabel
                   value="fileNum"
                   control={<Radio size="small" />}
-                  label="Rechercher par numéro "
+                  label={trans('searchByNumber')}
                 />
                 <FormControlLabel
                   value="full"
                   control={<Radio size="small" />}
-                  label="Rechercher par contrepartie ou utilisateur"
+                  label={trans('searchByCounterPartyOrUser')}
                 />
               </RadioGroup>
             </div>

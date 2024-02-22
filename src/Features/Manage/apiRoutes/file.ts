@@ -10,7 +10,7 @@ export interface IFileSearchApiReturn {
   fileContext?: AppActionContextType;
   bottomMessage?: string;
   topMessage?: string;
-  productList?: Record<string, ISelectData>;
+  productList?: any;
   file?: { key: string; type: string; value: string }[];
   fileBorrower?: string;
   fileCodecp?: string;

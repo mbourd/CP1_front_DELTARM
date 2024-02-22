@@ -53,7 +53,7 @@ export const DashboardSearch: React.FC<
           placeholder={
             searchMode === 'fileNum'
               ? dataClientInfos?.data[0].file_search_placeholder
-              : 'Contrepartie emprunteuse ou nom de famille'
+              : trans('counterpartyBorrowerOrSurname')
           }
         />
       </Paper>
@@ -67,12 +67,12 @@ export const DashboardSearch: React.FC<
             <FormControlLabel
               value="fileNum"
               control={<Radio size="small" />}
-              label="Rechercher par numéro"
+              label={trans('searchByNumber')}
             />
             <FormControlLabel
               value="full"
               control={<Radio size="small" />}
-              label="Rechercher par contrepartie ou utilisateur"
+              label={trans('searchByCounterPartyOrUser')}
             />
           </RadioGroup>
         </div>

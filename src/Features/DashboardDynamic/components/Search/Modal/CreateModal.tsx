@@ -23,6 +23,8 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { GenerateFieldManual } from './GenerateFieldManual';
 
+import { useTrans } from '../../../../../Services';
+
 interface IProps {
   open: boolean;
   onClose: () => void;
@@ -38,6 +40,7 @@ export const CreateModal: React.FC<React.PropsWithChildren<IProps>> = ({
   const { error, callState, send, data } = useApi<IKSIOPManualInput | null>();
   const [missingFields, setStateMissingFields] = useState(true);
   const queries = useRef<any>({});
+  const [trans] = useTrans('Dashboard');
 
   // Have the current filled queries in object
   useEffect(() => {
@@ -143,13 +146,13 @@ export const CreateModal: React.FC<React.PropsWithChildren<IProps>> = ({
         states={{
           IS_LOADING: <StairsLoader size={'md'} />,
           SERVER_ERROR: (
-            <Error500 size={'md'} message={'Le serveur ne répond pas'} />
+            <Error500 size={'md'} message={trans('noServerResponding')} />
           ),
           BAD_REQUEST: (
             <BadRequest
               size={'md'}
               message={error?.response ? error?.response.body.error_msg : ''}
-              title={'Réponse de KSIOP'}
+              title={trans('responseFromKSIOP')}
             />
           ),
         }}
