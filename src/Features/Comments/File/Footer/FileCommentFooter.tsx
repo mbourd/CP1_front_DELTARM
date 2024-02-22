@@ -3,6 +3,7 @@ import { FileCommentFooterStyled } from './FileCommentFooter.style';
 import { InputBase } from 'Shared/components';
 import { useApi } from 'Services';
 import { EditValidationContext } from 'Features/Edit';
+import { useTrans } from '../../../../Services';
 
 interface IProps {
   addComment: () => void;
@@ -11,6 +12,7 @@ interface IProps {
 export const FileCommentFooter: React.FC<React.PropsWithChildren<IProps>> = ({
   addComment,
 }): React.ReactElement => {
+  const [trans] = useTrans('Comments');
   const addCommentApi = useApi({ promise: true });
   const context = useContext(EditValidationContext);
   const { fileId } = context;
@@ -52,7 +54,7 @@ export const FileCommentFooter: React.FC<React.PropsWithChildren<IProps>> = ({
       <InputBase
         color={'disabled'}
         bdr={'4px'}
-        placeholder={'Appuyez sur la touche ENTREE pour valider votre message'}
+        placeholder={trans('validateMessage')}
         onKeyPress={onAddComment}
       />
     </FileCommentFooterStyled>

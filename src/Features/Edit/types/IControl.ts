@@ -167,8 +167,8 @@ export interface IControlOptions
     IPercentOptions {}
 
 export interface IUploadDetail {
-  file_id: string;
-  file_name: string;
+  file_id: string | any;
+  file_name: string | any;
 }
 
 export interface IAPIControlRejectable {

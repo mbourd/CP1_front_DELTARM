@@ -13,7 +13,14 @@ import {
   SearchModalBPIContentStyled,
   SearchModalFooterStyled,
 } from './SearchModal.style';
-import { apiRouter, router, storage, SwitchCallState, useApi } from 'Services';
+import {
+  apiRouter,
+  router,
+  storage,
+  SwitchCallState,
+  useApi,
+  useTrans,
+} from 'Services';
 import { IFileSearchApiReturn, IKSIOPManualInput } from 'Features/Manage';
 import { CreateModal } from './CreateModal';
 
@@ -28,12 +35,24 @@ export const SearchModal: React.FC<React.PropsWithChildren<IProps>> = ({
 }): React.ReactElement | null => {
   const { request, error, callState, route, send, data } =
     useApi<IFileSearchApiReturn | null>();
+  const [trans] = useTrans('Manage');
+
   const {
     send: sendManualInput,
     data: dataManualInput,
     callState: callStateManualInput,
     route: routeManualInput,
   } = useApi<IKSIOPManualInput | null>();
+
+  // useEffect(() => {
+  //   console.log(data);
+  // }, [data]);
+
+  const file = (
+    storage.getData('shared.component.search.value') as string
+  ).split(/ *\/ */);
+  const file_num = file[0];
+  const file_avenant = file[1];
 
   useEffect(() => {
     if (data?.productList !== null && data?.productList !== undefined) {
@@ -44,12 +63,6 @@ export const SearchModal: React.FC<React.PropsWithChildren<IProps>> = ({
     // const dat: any = Object.keys(data?.productList);
     // setprod_id(dat);
   }, [data]);
-
-  const file = (
-    storage.getData('shared.component.search.value') as string
-  ).split(/ *\/ */);
-  const file_num = file[0];
-  const file_avenant = file[1];
 
   // const setProduct = useCallback((values: Record<string, true>) => {
   //   storage.setData('edit.selected.product', values);
@@ -129,9 +142,9 @@ export const SearchModal: React.FC<React.PropsWithChildren<IProps>> = ({
         {error?.response?.body.data?.btn[1] !== undefined ? (
           <Button
             color={'success'}
-            onClick={() =>
-              send('searchFileKSIOP', {}, { file_num, file_avenant })
-            }
+            onClick={() => {
+              send('searchFileKSIOP', {}, { file_num, file_avenant });
+            }}
           >
             {error?.response?.body.data?.btn[1].label}
           </Button>
@@ -146,8 +159,8 @@ export const SearchModal: React.FC<React.PropsWithChildren<IProps>> = ({
   ) {
     footer = (
       <SearchModalFooterStyled>
-        <Button color={'error'} onClick={onClose}>
-          Annuler
+        <Button color={'success'} onClick={onClose}>
+          {trans('cancel')}
         </Button>
       </SearchModalFooterStyled>
     );
@@ -200,10 +213,10 @@ export const SearchModal: React.FC<React.PropsWithChildren<IProps>> = ({
     footer = (
       <SearchModalFooterStyled>
         <Button color={'error'} onClick={onClose}>
-          Annuler la création
+          {trans('cancelCreation')}
         </Button>
         <Button color={'success'} onClick={createFile}>
-          Confirmer la création
+          {trans('confirmCreation')}
         </Button>
       </SearchModalFooterStyled>
     );
@@ -231,20 +244,20 @@ export const SearchModal: React.FC<React.PropsWithChildren<IProps>> = ({
         states={{
           IS_LOADING: <StairsLoader size={'md'} />,
           SERVER_ERROR: (
-            <Error500 size={'md'} message={'Le serveur ne répond pas'} />
+            <Error500 size={'md'} message={trans('serverNotResponding')} />
           ),
           BAD_REQUEST:
             route?.type === 'KSIOP' ? (
               <BadRequest
                 size={'md'}
                 message={error?.response ? error?.response.body.error_msg : ''}
-                title={'Réponse de KSIOP'}
+                title={trans('responseFromKSIOP')}
               />
             ) : (
               <BadRequest
                 size={'md'}
                 message={error?.response ? error?.response.body.error_msg : ''}
-                title={'Dossier introuvable !'}
+                title={trans('fileNotFound')}
               />
             ),
         }}
@@ -266,26 +279,6 @@ export const SearchModal: React.FC<React.PropsWithChildren<IProps>> = ({
                 );
               })}
             </Grid>
-            {/* <div className={'product-list'}>
-              {data.productList ? (
-                <>
-                  <FormLabel>Sélectionner une famille de produit</FormLabel>
-                  <Select
-                    name={'productList'}
-                    data={data.productList}
-                    multiple={false}
-                    selectedValues={{
-                      [Object.keys(data.productList)[0] || '-1']: true,
-                    }}
-                    onInit={setProduct}
-                    onClose={setProduct}
-                    closeOnSelect
-                  >
-                    Sélectionner une famille de produit
-                  </Select>
-                </>
-              ) : null}
-            </div> */}
             <p className={'bottom-message'}>{data.bottomMessage}</p>
           </SearchModalBPIContentStyled>
         ) : null}

@@ -5,6 +5,7 @@ import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
 import { useSecurity } from '../../../../../../../../Packages/Security';
 import { EuroIcon } from '../../../../../../../../Packages/Design';
 import { checkIfSameValues } from '../../../../../../../../Packages/Helpers/src/checkIfSameValues';
+import { useTrans } from '../../../../../../../../Services';
 
 interface IProps {
   value: string;
@@ -36,6 +37,7 @@ export const DataGridFinancial: React.FC<React.PropsWithChildren<IProps>> = ({
   const [currentValue, setCurrentValue] = useState(value);
   const { user } = useSecurity();
   const jwt = user.getJwt();
+  const [trans] = useTrans('Edit');
 
   useEffect(() => {
     if (value) {
@@ -57,7 +59,7 @@ export const DataGridFinancial: React.FC<React.PropsWithChildren<IProps>> = ({
       if (!checkIfSameValues(value, currentValue)) {
         setErrorMessage(null);
         if (mandatory && !value.trim()) {
-          setErrorMessage('Valeur obligatoire');
+          setErrorMessage(trans('mandatoryValue'));
         }
 
         return;
@@ -65,7 +67,7 @@ export const DataGridFinancial: React.FC<React.PropsWithChildren<IProps>> = ({
       setErrorMessage(null);
 
       if (mandatory && !value.trim()) {
-        setErrorMessage('Valeur obligatoire');
+        setErrorMessage(trans('mandatoryValue'));
       }
 
       saveValueDataGrid(
@@ -89,6 +91,7 @@ export const DataGridFinancial: React.FC<React.PropsWithChildren<IProps>> = ({
       rowNum,
       currentValue,
       mandatory,
+      trans,
     ],
   );
 
@@ -98,12 +101,12 @@ export const DataGridFinancial: React.FC<React.PropsWithChildren<IProps>> = ({
 
   useEffect(() => {
     if (mandatory && editable && !currentValue) {
-      setErrorMessage('Valeur obligatoire');
+      setErrorMessage(trans('mandatoryValue'));
     }
     if (!mandatory) {
       setErrorMessage(null);
     }
-  }, [mandatory, editable, currentValue]);
+  }, [mandatory, editable, currentValue, trans]);
 
   return (
     <DataGridFinancialStyled>

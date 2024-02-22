@@ -88,11 +88,9 @@ export const SelectListCompliance: React.FC<
 
   useEffect(() => {
     if (error) {
-      setErrorMessage(
-        "Une erreur s'est produite, veuillez re-sélectionner une valeur",
-      );
+      setErrorMessage(trans('errorReselect'));
     }
-  }, [error]);
+  }, [error, trans]);
 
   //expose for Cypress API
   if (window?.['Cypress']) {
@@ -137,7 +135,7 @@ export const SelectListCompliance: React.FC<
           }}
           error={!!error}
         >
-          {'Sélectionner une valeur'}
+          {trans('selectValue')}
         </Select>
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ComplianceFooter compliance={compliance} />

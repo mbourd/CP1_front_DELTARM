@@ -3,6 +3,7 @@ import { DataGridSelectStyled } from './DataGridSelect.style';
 import { FormError, ISelectData, Select } from 'Shared/components';
 import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
 import { useSecurity } from '../../../../../../../../Packages/Security';
+import { useTrans } from '../../../../../../../../Services';
 
 interface IProps {
   value: string;
@@ -36,6 +37,7 @@ export const DataGridSelect: React.FC<React.PropsWithChildren<IProps>> = ({
   const [currentValue, setCurrentValue] = useState(value);
   const { user } = useSecurity();
   const jwt = user.getJwt();
+  const [trans] = useTrans('Edit');
 
   const selectedValue: Record<string, true> = {
     [currentValue || '']: true,
@@ -68,12 +70,12 @@ export const DataGridSelect: React.FC<React.PropsWithChildren<IProps>> = ({
 
   useEffect(() => {
     if (mandatory && editable && !currentValue) {
-      setErrorMessage('Valeur obligatoire');
+      setErrorMessage(trans('mandatoryValue'));
     }
     if (!mandatory) {
       setErrorMessage(null);
     }
-  }, [mandatory, editable, currentValue]);
+  }, [mandatory, editable, currentValue, trans]);
 
   return (
     <DataGridSelectStyled>
@@ -94,7 +96,7 @@ export const DataGridSelect: React.FC<React.PropsWithChildren<IProps>> = ({
           saveValue('' + val);
         }}
       >
-        {'Sélectionner une valeur'}
+        {trans('selectValue')}
       </Select>
       {errorMessage ? (
         <FormError style={{ paddingLeft: '0' }}>{errorMessage}</FormError>

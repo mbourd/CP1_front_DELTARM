@@ -68,7 +68,7 @@ export const TextCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
 
   useEffect(() => {
     if (error) {
-      setErrorMessage("Une erreur s'est produite durant l'enregistrement");
+      setErrorMessage(trans('errorRecording'));
     }
   }, [error, trans]);
 

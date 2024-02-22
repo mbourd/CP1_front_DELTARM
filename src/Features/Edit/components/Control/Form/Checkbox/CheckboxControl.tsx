@@ -10,6 +10,7 @@ import { Compliance } from '../Compliance/Compliance';
 import { CheckboxWrapper } from '../../../../../../Packages/Design/components/Checkbox/CheckboxWrapper';
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
 import { RejectControl } from '../RejectByPointControl/RejectControl';
+import { useTrans } from '../../../../../../Services';
 
 interface IProps {
   control: IApiControl;
@@ -28,6 +29,7 @@ export const CheckboxControl: React.FC<React.PropsWithChildren<IProps>> = ({
   setFormState,
   context,
 }): React.ReactElement => {
+  const [trans] = useTrans('Edit');
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);
@@ -69,7 +71,7 @@ export const CheckboxControl: React.FC<React.PropsWithChildren<IProps>> = ({
   const saveValue = useCallback(
     (value: string) => {
       if (control.control_regex && !value.match(control.control_regex)) {
-        setErrorMessage("Le format attendu n'est pas valide");
+        setErrorMessage(trans('expectedFormat'));
 
         return;
       }
@@ -93,17 +95,24 @@ export const CheckboxControl: React.FC<React.PropsWithChildren<IProps>> = ({
       control.control_family,
       currentRoute,
       control.control_regex,
+      trans,
     ],
   );
 
   useEffect(() => {
     if (control.mandatory && control.editable && !currentValue) {
-      setErrorMessage('Valeur obligatoire');
+      setErrorMessage(trans('mandatoryValue'));
     }
     if (!control.mandatory) {
       setErrorMessage(null);
     }
-  }, [control.control_id, control.mandatory, currentValue, control.editable]);
+  }, [
+    control.control_id,
+    control.mandatory,
+    currentValue,
+    control.editable,
+    trans,
+  ]);
 
   useEffect(() => {
     if (!isRejected) {
@@ -113,11 +122,9 @@ export const CheckboxControl: React.FC<React.PropsWithChildren<IProps>> = ({
 
   useEffect(() => {
     if (error) {
-      setErrorMessage(
-        "Une erreur s'est produite, veuillez re-sélectionner une valeur",
-      );
+      setErrorMessage(trans('errorReselect'));
     }
-  }, [error]);
+  }, [error, trans]);
 
   return (
     <Grid item xs={6}>
