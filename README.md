@@ -61,10 +61,13 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 ### Build image docker
 
 build the image before pushing it
+
 ```bash
 docker build -t ghcr.io/deltarm/cp1-front/[env]:latest -f ci/[env]/Dockerfile .
 ```
+
 pushing image
+
 ```bash
 docker push ghcr.io/deltarm/cp1-front/[env]:latest
 ```

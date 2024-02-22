@@ -53,13 +53,6 @@ export const ValidationPopper: React.FC<
     }
   }, [data?.response?.linkable_files]);
   useEffect(() => {
-    if (data?.response?.linkable_files?.length !== 0) {
-      setopenFileSelection(true);
-    } else {
-      setopenFileSelection(false);
-    }
-  }, [data?.response?.linkable_files]);
-  useEffect(() => {
     const q: Record<string, string> = { file_id: context.fileId };
     if (context.data?.validationCount) {
       q['valid_num'] = context.data?.validationCount;
