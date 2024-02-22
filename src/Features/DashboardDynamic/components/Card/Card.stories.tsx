@@ -1525,7 +1525,7 @@ CardDashboard.args = {
     },
     title: {
       bg_color: '#ABCDEF',
-      font_color: '#DA70D6',
+      font_color: '#FFFFFFF',
       lib: '4 Contrôles à réaliser',
     },
   },

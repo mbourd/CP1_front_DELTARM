@@ -13,7 +13,9 @@ export const uploadFile = (
 ) => {
   const formData = new FormData();
   formData.append('file', newUploadFile);
-  const fileName = newUploadFile.name;
+  formData.append('file_name', newUploadFile.name);
+  const fileName = newUploadFile.name.replace('#', ' ');
+
   axios
     .post(
       `${getEnv('API_PROTOCOL')}://${getEnv(
@@ -35,6 +37,8 @@ export const uploadFile = (
       return setCurrentUploadFile(res.data.data.file_detail);
     })
     .catch((err) => {
-      return setErrorMessage(err?.response?.data?.error_msg);
+      if (err.response.data.error_msg) {
+        return setErrorMessage(err?.response?.data?.error_msg);
+      }
     });
 };
