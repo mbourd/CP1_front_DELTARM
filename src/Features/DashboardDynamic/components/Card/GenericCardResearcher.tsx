@@ -36,7 +36,7 @@ export const GenericCardResearcher = forwardRef((props: IFilterParams, ref) => {
                 getValue: (field) => node.data[field],
                 node,
               });
-              const strippedString = (value.content || value).replace(
+              const strippedString = value.content.replace(
                 /(<([^>]+)>)/gi,
                 ' ',
               );

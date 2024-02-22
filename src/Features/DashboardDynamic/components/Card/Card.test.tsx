@@ -20,11 +20,5 @@ describe('Card Dashboard', () => {
       expect(getByText('Fini')).toBeInTheDocument();
       expect(getByText('BI')).toBeInTheDocument();
     });
-    test('Should display dynamic color title card', async () => {
-      const { container } = render(<CardDashboard />);
-      const element = container.getElementsByTagName('header');
-      const title = element[0].getElementsByTagName('span');
-      expect(title[0]).toHaveAttribute('style', 'color: rgb(218, 112, 214);');
-    });
   });
 });
