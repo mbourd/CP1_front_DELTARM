@@ -11,6 +11,7 @@ import { uploadFile } from '../../apiRoutes/upload/uploadFile';
 import { downloadFile } from '../../apiRoutes/upload/downloadFile';
 import { deleteFile } from '../../apiRoutes/upload/deleteFile';
 import { UploadList } from '../../../../../../../../Shared/components/UploadList/UploadList';
+import { useTrans } from '../../../../../../../../Services';
 
 interface IProps {
   value: IUploadDetail[];
@@ -36,6 +37,7 @@ export const AgDataGridUpload: React.FC<React.PropsWithChildren<IProps>> = ({
   }
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [newUploadFile, setNewUploadFile] = useState<File | null>(null);
+  const [trans] = useTrans('Edit');
   const [currentUploadFile, setCurrentUploadFile] = useState<
     IUploadDetail[] | null
   >(value);
@@ -59,7 +61,7 @@ export const AgDataGridUpload: React.FC<React.PropsWithChildren<IProps>> = ({
 
   const handleUploadFile = useCallback(() => {
     if (mandatory && !newUploadFile) {
-      setErrorMessage('Valeur obligatoire');
+      setErrorMessage(trans('mandatoryValue'));
 
       return;
     }
@@ -78,7 +80,16 @@ export const AgDataGridUpload: React.FC<React.PropsWithChildren<IProps>> = ({
         setErrorMessage,
       );
     }
-  }, [fileId, controlId, newUploadFile, jwt, rowNum, columnId, mandatory]);
+  }, [
+    fileId,
+    controlId,
+    newUploadFile,
+    jwt,
+    rowNum,
+    columnId,
+    mandatory,
+    trans,
+  ]);
 
   const handleDeleteFile = useCallback(
     (e: any, name: any) => {

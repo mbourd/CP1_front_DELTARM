@@ -43,7 +43,7 @@ export const DataGridControl: React.FC<React.PropsWithChildren<IProps>> = ({
   const [errorMessageAdd, setErrorMessageAdd] = useState<string>('');
   const { user } = useSecurity();
   const jwt = user.getJwt();
-  // const [trans] = useTrans('Edit');
+  const [trans] = useTrans('Edit');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modal_data, setmodal_data]: any = useState(null);
 
@@ -304,7 +304,7 @@ export const DataGridControl: React.FC<React.PropsWithChildren<IProps>> = ({
             components={{ rowRenderer: rowRenderer }}
           />
         )}
-        <BPITooltip title={'Ajouter une ligne'}>
+        <BPITooltip title={trans('addLine')}>
           <AddCircleOutline fontSize={'large'} onClick={handleClickAddRow} />
         </BPITooltip>
         {isModalOpen && modal_data ? (

@@ -82,9 +82,9 @@ export const RadioCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
 
   useEffect(() => {
     if (error) {
-      setErrorMessage("Une erreur s'est produite durant l'enregistrement");
+      setErrorMessage(trans('errorRecording'));
     }
-  }, [error]);
+  }, [error, trans]);
 
   const modified_data = compliance?.control_answer_choices
     ?.map((choice: any) => {

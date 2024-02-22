@@ -5,6 +5,7 @@ import { Delete } from '@mui/icons-material';
 import { SearchModalFooterStyled } from '../../../../../../../Manage/components/Search/Modal/SearchModal.style';
 import { deleteRow } from '../../apiRoutes/deleteRow';
 import { useSecurity } from '../../../../../../../../Packages/Security';
+import { useTrans } from '../../../../../../../../Services';
 
 interface IProps {
   rowNum: number;
@@ -24,6 +25,7 @@ export const DataGridDelete: React.FC<React.PropsWithChildren<IProps>> = ({
   const [errorMessageDelete, setErrorMessageDelete] = useState<string>('');
   const [currentRowNum, setCurrentRowNum] = useState<string>(rowNum + '');
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [trans] = useTrans('Edit');
 
   const handleShowModalToDelete = useCallback((row_num: string) => {
     setShowModal(true);
@@ -58,9 +60,11 @@ export const DataGridDelete: React.FC<React.PropsWithChildren<IProps>> = ({
     </SearchModalFooterStyled>
   );
 
+  const deleteConfirm: any = trans('deleteConfirmation');
+
   return (
     <DataGridDeleteStyled>
-      <BPITooltip title={'Supprimer la ligne'}>
+      <BPITooltip title={trans('deleteLine')}>
         <Delete
           fontSize={'medium'}
           onClick={() => handleShowModalToDelete(rowNum + '')}
@@ -72,7 +76,7 @@ export const DataGridDelete: React.FC<React.PropsWithChildren<IProps>> = ({
           onClose={handleClickCloseModal}
           footer={deleteFooter}
         >
-          Souhaitez-vous vraiment supprimer la ligne ?
+          {deleteConfirm}
         </Modal>
       )}
     </DataGridDeleteStyled>

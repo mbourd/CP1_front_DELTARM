@@ -36,7 +36,6 @@ export const EditValidation: React.FC<React.PropsWithChildren<IProps>> = ({
   // To avoid (bpi specific)
   const { id } = router.getParams();
   const frontRouterQueries = router.getQueries();
-
   if (!user.isLogged()) {
     logout();
   }

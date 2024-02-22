@@ -9,6 +9,7 @@ import { ControlFooter } from '../ControlFooter';
 import { Compliance } from '../Compliance/Compliance';
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
 import { RejectControl } from '../RejectByPointControl/RejectControl';
+import { useTrans } from '../../../../../../Services';
 
 interface IProps {
   control: IApiControl;
@@ -30,6 +31,7 @@ export const SelectListControl: React.FC<React.PropsWithChildren<IProps>> = ({
 }): React.ReactElement => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);
+  const [trans] = useTrans('Edit');
   const [choiceIsKo, setChoiceIsKo] = useState(
     control.compliance?.compliance_checkbox_resolved
       ? control.compliance.compliance_checkbox_resolved
@@ -107,20 +109,24 @@ export const SelectListControl: React.FC<React.PropsWithChildren<IProps>> = ({
 
   useEffect(() => {
     if (control.mandatory && control.editable && !currentValue) {
-      setErrorMessage('Valeur obligatoire');
+      setErrorMessage(trans('mandatoryValue'));
     }
     if (!control.mandatory) {
       setErrorMessage(null);
     }
-  }, [control.control_id, control.mandatory, currentValue, control.editable]);
+  }, [
+    control.control_id,
+    control.mandatory,
+    currentValue,
+    control.editable,
+    trans,
+  ]);
 
   useEffect(() => {
     if (error) {
-      setErrorMessage(
-        "Une erreur s'est produite, veuillez re-sélectionner une valeur",
-      );
+      setErrorMessage(trans('errorReselect'));
     }
-  }, [error]);
+  }, [error, trans]);
 
   return (
     <Grid item xs={6}>
@@ -148,7 +154,7 @@ export const SelectListControl: React.FC<React.PropsWithChildren<IProps>> = ({
           choiceIsKo={choiceIsKo}
           setChoiceIsKo={setChoiceIsKo}
         >
-          {'Sélectionner une valeur'}
+          {trans('selectValue')}
         </Select>
         <ControlFooter control={control} />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}

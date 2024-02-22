@@ -4,6 +4,7 @@ import { FormError, InputBase } from 'Shared/components';
 import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
 import { useSecurity } from '../../../../../../../../Packages/Security';
 import { checkIfSameValues } from '../../../../../../../../Packages/Helpers/src/checkIfSameValues';
+import { useTrans } from '../../../../../../../../Services';
 
 interface IProps {
   value: string;
@@ -35,6 +36,7 @@ export const DataGridDate: React.FC<React.PropsWithChildren<IProps>> = ({
   const [currentValue, setCurrentValue] = useState(value);
   const { user } = useSecurity();
   const jwt = user.getJwt();
+  const [trans] = useTrans('Edit');
 
   useEffect(() => {
     if (value) {
@@ -56,7 +58,7 @@ export const DataGridDate: React.FC<React.PropsWithChildren<IProps>> = ({
       if (!checkIfSameValues(value, currentValue)) {
         setErrorMessage(null);
         if (mandatory && !value.trim()) {
-          setErrorMessage('Valeur obligatoire');
+          setErrorMessage(trans('mandatoryValue'));
         }
 
         return;
@@ -88,6 +90,7 @@ export const DataGridDate: React.FC<React.PropsWithChildren<IProps>> = ({
       rowNum,
       currentValue,
       mandatory,
+      trans,
     ],
   );
 

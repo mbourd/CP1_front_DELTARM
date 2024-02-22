@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { CommentRejectControlStyled } from './CommentRejectControl.style';
 import { Grid } from '@material-ui/core';
 import { FormError, InputBase } from 'Shared/components';
+import { useTrans } from '../../../../../../../../Services';
 
 interface IProps {
   setCommentValue: React.Dispatch<React.SetStateAction<string | null>>;
@@ -17,6 +18,7 @@ export const CommentRejectControl: React.FC<
     },
     [setCommentValue],
   );
+  const [trans] = useTrans('Edit');
 
   return (
     <Grid item xs={12}>
@@ -24,7 +26,7 @@ export const CommentRejectControl: React.FC<
         <InputBase
           multiline
           multilineRows={7}
-          placeholder={'Expliquer la raison du rejet'}
+          placeholder={trans('explainReasonRejection')}
           onChange={(e) => handleChangeValue(e.currentTarget.value)}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
