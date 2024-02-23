@@ -1324,25 +1324,8 @@ export const DataGridControlAgGrid: React.FC<
   ]);
 
   const getRowData = useCallback(() => {
-    const selected_data: any = [];
-    gridOptions.rowData?.map((row: DataGridDetailsRow) => {
-      if (
-        row[
-          control?.data_grid_detail?.datagrid_options
-            ?.select_all_button_col_ref as string
-        ]?.value === '1'
-      ) {
-        selected_data.push(row?.row_uuid);
-      } else {
-        return;
-      }
-    });
-
-    return selected_data;
-  }, [
-    control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref,
-    gridOptions.rowData,
-  ]);
+    return selectedRows.map((rowNode) => rowNode?.data?.row_uuid);
+  }, [selectedRows]);
   const refresh_grid = useCallback(async () => {
     try {
       const response = await axios.get(
