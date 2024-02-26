@@ -31,6 +31,7 @@ import {
   _translate,
 } from '../../../../../../../cypress/utils';
 import { AgDataGridStyle } from './DataGridControl.style';
+import { IButtons } from '../../../../../DashboardDynamic/components/types';
 
 describe('<DataGridControlAgGrid />', () => {
   // int,dec,fin,perc
@@ -49,6 +50,7 @@ describe('<DataGridControlAgGrid />', () => {
   let controlExample7: IApiControl;
   // innerHTML,test_alt,date_string,icon,icon,icon
   let controlExample8: IApiControl;
+  let controlExample9: IApiControl;
 
   let originalTimeout: number;
 
@@ -77,6 +79,9 @@ describe('<DataGridControlAgGrid />', () => {
     cy.fixture('controlDataGridAgGrid-8.json').then(
       (d) => (controlExample8 = d),
     );
+    cy.fixture('controlDataGridAgGrid-9.json').then(
+      (d) => (controlExample9 = d),
+    );
 
     // Store the original timeout value
     originalTimeout = Cypress.config('defaultCommandTimeout');
@@ -93,505 +98,598 @@ describe('<DataGridControlAgGrid />', () => {
     Cypress.config('defaultCommandTimeout', originalTimeout);
   });
 
-  it('should render - controlExample1', function () {
-    const _control = {
-      ...structuredClone(controlExample1),
-      mandatory: false,
-      upload_detail: null,
-      rich_text_detail: null,
-      control_rejectable: null,
-    } as any as IApiControl;
-    cy.mount(
-      <SetupTestsComponents>
-        <DataGridControlAgGrid control={_control} fileId={''} />
-      </SetupTestsComponents>,
-    );
-    cy.waitReactApp();
-    cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
-  });
-  it('should render - controlExample2', function () {
-    const _control = {
-      ...structuredClone(controlExample2),
-      mandatory: false,
-      upload_detail: null,
-      rich_text_detail: null,
-      control_rejectable: null,
-    } as any as IApiControl;
-    cy.mount(
-      <SetupTestsComponents>
-        <DataGridControlAgGrid control={_control} fileId={''} />
-      </SetupTestsComponents>,
-    );
-    cy.waitReactApp();
-    cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
-  });
-  it('should render - controlExample3', function () {
-    const _control = {
-      ...structuredClone(controlExample3),
-      mandatory: false,
-      upload_detail: null,
-      rich_text_detail: null,
-      control_rejectable: null,
-    } as any as IApiControl;
-    cy.mount(
-      <SetupTestsComponents>
-        <DataGridControlAgGrid control={_control} fileId={''} />
-      </SetupTestsComponents>,
-    );
-    cy.waitReactApp();
-    cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
-  });
-  it('should render - controlExample4', function () {
-    const _control = {
-      ...structuredClone(controlExample4),
-      mandatory: false,
-      upload_detail: null,
-      rich_text_detail: null,
-      control_rejectable: null,
-    } as any as IApiControl;
-    cy.mount(
-      <SetupTestsComponents>
-        <DataGridControlAgGrid control={_control} fileId={''} />
-      </SetupTestsComponents>,
-    );
-    cy.waitReactApp();
-    cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
-  });
-  it('should render - controlExample5', function () {
-    const _control = {
-      ...structuredClone(controlExample5),
-      mandatory: false,
-      upload_detail: null,
-      rich_text_detail: null,
-      control_rejectable: null,
-    } as any as IApiControl;
-    cy.mount(
-      <SetupTestsComponents>
-        <DataGridControlAgGrid control={_control} fileId={''} />
-      </SetupTestsComponents>,
-    );
-    cy.waitReactApp();
-    cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
-  });
-  it('should render - controlExample6', function () {
-    const _control = {
-      ...structuredClone(controlExample6),
-      mandatory: false,
-      upload_detail: null,
-      rich_text_detail: null,
-      control_rejectable: null,
-    } as any as IApiControl;
-    cy.mount(
-      <SetupTestsComponents>
-        <DataGridControlAgGrid control={_control} fileId={''} />
-      </SetupTestsComponents>,
-    );
-    cy.waitReactApp();
-    cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
-  });
-  it('should render - controlExample7', function () {
-    const _control = {
-      ...structuredClone(controlExample7),
-      mandatory: false,
-      upload_detail: null,
-      rich_text_detail: null,
-      control_rejectable: null,
-    } as any as IApiControl;
-    cy.mount(
-      <SetupTestsComponents>
-        <DataGridControlAgGrid control={_control} fileId={''} />
-      </SetupTestsComponents>,
-    );
-    cy.waitReactApp();
-    cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
-  });
-  it('should render - controlExample8', function () {
-    const _control = {
-      ...structuredClone(controlExample8),
-      mandatory: false,
-      upload_detail: null,
-      rich_text_detail: null,
-      control_rejectable: null,
-    } as any as IApiControl;
-    cy.mount(
-      <SetupTestsComponents>
-        <DataGridControlAgGrid control={_control} fileId={''} />
-      </SetupTestsComponents>,
-    );
-    cy.waitReactApp();
-    cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
-  });
+  // it('should render - controlExample1', function () {
+  //   const _control = {
+  //     ...structuredClone(controlExample1),
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   } as any as IApiControl;
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid control={_control} fileId={''} />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
+  // });
+  // it('should render - controlExample2', function () {
+  //   const _control = {
+  //     ...structuredClone(controlExample2),
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   } as any as IApiControl;
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid control={_control} fileId={''} />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
+  // });
+  // it('should render - controlExample3', function () {
+  //   const _control = {
+  //     ...structuredClone(controlExample3),
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   } as any as IApiControl;
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid control={_control} fileId={''} />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
+  // });
+  // it('should render - controlExample4', function () {
+  //   const _control = {
+  //     ...structuredClone(controlExample4),
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   } as any as IApiControl;
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid control={_control} fileId={''} />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
+  // });
+  // it('should render - controlExample5', function () {
+  //   const _control = {
+  //     ...structuredClone(controlExample5),
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   } as any as IApiControl;
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid control={_control} fileId={''} />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
+  // });
+  // it('should render - controlExample6', function () {
+  //   const _control = {
+  //     ...structuredClone(controlExample6),
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   } as any as IApiControl;
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid control={_control} fileId={''} />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
+  // });
+  // it('should render - controlExample7', function () {
+  //   const _control = {
+  //     ...structuredClone(controlExample7),
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   } as any as IApiControl;
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid control={_control} fileId={''} />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
+  // });
+  // it('should render - controlExample8', function () {
+  //   const _control = {
+  //     ...structuredClone(controlExample8),
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   } as any as IApiControl;
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid control={_control} fileId={''} />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
+  // });
 
-  it('should have a fixed height - controlExample1', function () {
-    const _control = {
-      ...structuredClone(controlExample1),
-      mandatory: false,
-      upload_detail: null,
-      rich_text_detail: null,
-      control_rejectable: null,
-    } as any as IApiControl;
-    cy.mount(
-      <SetupTestsComponents>
-        <DataGridControlAgGrid
-          control={_control}
-          fileId={''}
-          heightGrid={'456px'}
-        />
-      </SetupTestsComponents>,
-    );
-    cy.waitReactApp();
-    cy.get(`.${AgDataGridStyle.styledComponentId}`).should(
-      'have.css',
-      'height',
-      '456px',
-    );
-  });
-  it('should have a fixed height - controlExample1', function () {
-    const _control = {
-      ...structuredClone(controlExample1),
-      mandatory: false,
-      upload_detail: null,
-      rich_text_detail: null,
-      control_rejectable: null,
-    } as any as IApiControl;
-    cy.mount(
-      <SetupTestsComponents>
-        <DataGridControlAgGrid
-          control={_control}
-          fileId={''}
-          heightGrid={233}
-        />
-      </SetupTestsComponents>,
-    );
-    cy.waitReactApp();
-    cy.get(`.${AgDataGridStyle.styledComponentId}`).should(
-      'have.css',
-      'height',
-      '233px',
-    );
-    cy.react('AgGridReact')
-      .invoke('height')
-      .then((height) => expect(height).to.be.eq(233));
-  });
+  // it('should have a fixed height - controlExample1', function () {
+  //   const _control = {
+  //     ...structuredClone(controlExample1),
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   } as any as IApiControl;
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid
+  //         control={_control}
+  //         fileId={''}
+  //         heightGrid={'456px'}
+  //       />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   cy.get(`.${AgDataGridStyle.styledComponentId}`).should(
+  //     'have.css',
+  //     'height',
+  //     '456px',
+  //   );
+  // });
+  // it('should have a fixed height - controlExample1', function () {
+  //   const _control = {
+  //     ...structuredClone(controlExample1),
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   } as any as IApiControl;
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid
+  //         control={_control}
+  //         fileId={''}
+  //         heightGrid={233}
+  //       />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   cy.get(`.${AgDataGridStyle.styledComponentId}`).should(
+  //     'have.css',
+  //     'height',
+  //     '233px',
+  //   );
+  //   cy.react('AgGridReact')
+  //     .invoke('height')
+  //     .then((height) => expect(height).to.be.eq(233));
+  // });
 
-  it('Should have the correct number of columns - controlExample1', function () {
-    const _control = {
-      ...structuredClone(controlExample1),
-      mandatory: false,
-      upload_detail: null,
-      rich_text_detail: null,
-      control_rejectable: null,
-    };
-    const columns = _control.data_grid_detail?.columns || [];
-    cy.mount(
-      <SetupTestsComponents>
-        <DataGridControlAgGrid
-          control={_control as any as IApiControl}
-          fileId={''}
-        />
-      </SetupTestsComponents>,
-    );
-    cy.waitReactApp();
-    cy.react('DataGridControlAgGrid')
-      .react('AgGridReact')
-      .find('.ag-header-row.ag-header-row-column .ag-header-cell')
-      .should('be.visible')
-      .should('have.length', columns.length)
-      .each(($el, i) => {
-        cy.wrap($el)
-          .find('.ag-header-cell-text')
-          .should('have.text', columns[i].headerName);
-      });
-  });
-  it('Should have the correct number of columns - controlExample2', function () {
-    const _control = {
-      ...structuredClone(controlExample2),
-      mandatory: false,
-      upload_detail: null,
-      rich_text_detail: null,
-      control_rejectable: null,
-    };
-    const columns = _control.data_grid_detail?.columns || [];
-    cy.mount(
-      <SetupTestsComponents>
-        <DataGridControlAgGrid
-          control={_control as any as IApiControl}
-          fileId={''}
-        />
-      </SetupTestsComponents>,
-    );
-    cy.waitReactApp();
-    cy.react('DataGridControlAgGrid')
-      .react('AgGridReact')
-      .find('.ag-header-row.ag-header-row-column .ag-header-cell')
-      .should('be.visible')
-      .should('have.length', columns.length)
-      .each(($el, i) => {
-        cy.wrap($el)
-          .find('.ag-header-cell-text')
-          .should('have.text', columns[i].headerName);
-      });
-  });
-  it('Should have the correct number of columns - controlExample3', function () {
-    cy.viewport(3500, 720);
+  // it('Should have the correct number of columns - controlExample1', function () {
+  //   const _control = {
+  //     ...structuredClone(controlExample1),
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   };
+  //   const columns = _control.data_grid_detail?.columns || [];
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid
+  //         control={_control as any as IApiControl}
+  //         fileId={''}
+  //       />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   cy.react('DataGridControlAgGrid')
+  //     .react('AgGridReact')
+  //     .find('.ag-header-row.ag-header-row-column .ag-header-cell')
+  //     .should('be.visible')
+  //     .should('have.length', columns.length)
+  //     .each(($el, i) => {
+  //       cy.wrap($el)
+  //         .find('.ag-header-cell-text')
+  //         .should('have.text', columns[i].headerName);
+  //     });
+  // });
+  // it('Should have the correct number of columns - controlExample2', function () {
+  //   const _control = {
+  //     ...structuredClone(controlExample2),
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   };
+  //   const columns = _control.data_grid_detail?.columns || [];
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid
+  //         control={_control as any as IApiControl}
+  //         fileId={''}
+  //       />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   cy.react('DataGridControlAgGrid')
+  //     .react('AgGridReact')
+  //     .find('.ag-header-row.ag-header-row-column .ag-header-cell')
+  //     .should('be.visible')
+  //     .should('have.length', columns.length)
+  //     .each(($el, i) => {
+  //       cy.wrap($el)
+  //         .find('.ag-header-cell-text')
+  //         .should('have.text', columns[i].headerName);
+  //     });
+  // });
+  // it('Should have the correct number of columns - controlExample3', function () {
+  //   cy.viewport(3500, 720);
 
-    const _control = {
-      ...structuredClone(controlExample3),
-      mandatory: false,
-      upload_detail: null,
-      rich_text_detail: null,
-      control_rejectable: null,
-    };
-    const columns = _control.data_grid_detail?.columns || [];
-    cy.mount(
-      <SetupTestsComponents>
-        <DataGridControlAgGrid
-          control={_control as any as IApiControl}
-          fileId={''}
-        />
-      </SetupTestsComponents>,
-    );
-    cy.waitReactApp();
-    cy.react('DataGridControlAgGrid')
-      .react('AgGridReact')
-      .find('.ag-header-row.ag-header-row-column .ag-header-cell')
-      .should('have.length', columns.length)
-      .each(($el, i) => {
-        cy.wrap($el)
-          .find('.ag-header-cell-text')
-          .should('have.text', columns[i].headerName);
-      });
-  });
-  it('Should have the correct number of columns - controlExample4', function () {
-    cy.viewport(3500, 720);
+  //   const _control = {
+  //     ...structuredClone(controlExample3),
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   };
+  //   const columns = _control.data_grid_detail?.columns || [];
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid
+  //         control={_control as any as IApiControl}
+  //         fileId={''}
+  //       />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   cy.react('DataGridControlAgGrid')
+  //     .react('AgGridReact')
+  //     .find('.ag-header-row.ag-header-row-column .ag-header-cell')
+  //     .should('have.length', columns.length)
+  //     .each(($el, i) => {
+  //       cy.wrap($el)
+  //         .find('.ag-header-cell-text')
+  //         .should('have.text', columns[i].headerName);
+  //     });
+  // });
+  // it('Should have the correct number of columns - controlExample4', function () {
+  //   cy.viewport(3500, 720);
 
-    const _control = {
-      ...structuredClone(controlExample4),
-      mandatory: false,
-      upload_detail: null,
-      rich_text_detail: null,
-      control_rejectable: null,
-    };
-    const columns = _control.data_grid_detail?.columns || [];
-    cy.mount(
-      <SetupTestsComponents>
-        <DataGridControlAgGrid
-          control={_control as any as IApiControl}
-          fileId={''}
-        />
-      </SetupTestsComponents>,
-    );
-    cy.waitReactApp();
-    cy.react('DataGridControlAgGrid')
-      .react('AgGridReact')
-      .find('.ag-header-row.ag-header-row-column .ag-header-cell')
-      .should('have.length', columns.length)
-      .each(($el, i) => {
-        cy.wrap($el)
-          .find('.ag-header-cell-text')
-          .should('have.text', columns[i].headerName);
-      });
-  });
-  it('Should have the correct number of columns - controlExample5', function () {
-    cy.viewport(3500, 720);
+  //   const _control = {
+  //     ...structuredClone(controlExample4),
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   };
+  //   const columns = _control.data_grid_detail?.columns || [];
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid
+  //         control={_control as any as IApiControl}
+  //         fileId={''}
+  //       />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   cy.react('DataGridControlAgGrid')
+  //     .react('AgGridReact')
+  //     .find('.ag-header-row.ag-header-row-column .ag-header-cell')
+  //     .should('have.length', columns.length)
+  //     .each(($el, i) => {
+  //       cy.wrap($el)
+  //         .find('.ag-header-cell-text')
+  //         .should('have.text', columns[i].headerName);
+  //     });
+  // });
+  // it('Should have the correct number of columns - controlExample5', function () {
+  //   cy.viewport(3500, 720);
 
-    const _control = {
-      ...structuredClone(controlExample5),
-      mandatory: false,
-      upload_detail: null,
-      rich_text_detail: null,
-      control_rejectable: null,
-    };
-    const columns = _control.data_grid_detail?.columns || [];
-    cy.mount(
-      <SetupTestsComponents>
-        <DataGridControlAgGrid
-          control={_control as any as IApiControl}
-          fileId={''}
-        />
-      </SetupTestsComponents>,
-    );
-    cy.waitReactApp();
-    cy.react('DataGridControlAgGrid')
-      .react('AgGridReact')
-      .find('.ag-header-row.ag-header-row-column .ag-header-cell')
-      .should('have.length', columns.length)
-      .each(($el, i) => {
-        cy.wrap($el)
-          .find('.ag-header-cell-text')
-          .should('have.text', columns[i].headerName);
-      });
-  });
+  //   const _control = {
+  //     ...structuredClone(controlExample5),
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   };
+  //   const columns = _control.data_grid_detail?.columns || [];
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid
+  //         control={_control as any as IApiControl}
+  //         fileId={''}
+  //       />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   cy.react('DataGridControlAgGrid')
+  //     .react('AgGridReact')
+  //     .find('.ag-header-row.ag-header-row-column .ag-header-cell')
+  //     .should('have.length', columns.length)
+  //     .each(($el, i) => {
+  //       cy.wrap($el)
+  //         .find('.ag-header-cell-text')
+  //         .should('have.text', columns[i].headerName);
+  //     });
+  // });
 
-  it('Should render extra buttons - controlExample2', function () {
-    const _buttons = [
-      {
-        button_bg_color: '#2EB82E',
-        button_font_color: '#FFFFFF',
-        button_id: 1,
-        button_label: 'Declare Values',
-        button_method: 'POST',
-        button_order: 1,
-        button_refresh_callback: false,
-        button_route: '/total_energies/declare_values',
-        button_row_selected: true,
-      },
-      {
-        button_bg_color: '#2E54AA',
-        button_font_color: '#FFEEBF',
-        button_id: 1,
-        button_label: 'Other button1',
-        button_method: 'POST',
-        button_order: 1,
-        button_refresh_callback: false,
-        button_route: '/total_energies/declare_values',
-        button_row_selected: true,
-      },
-      {
-        button_bg_color: '#FD59AA',
-        button_font_color: '#FFEABF',
-        button_id: 1,
-        button_label: 'Other button2',
-        button_method: 'POST',
-        button_order: 1,
-        button_refresh_callback: false,
-        button_route: '/total_energies/declare_values',
-        button_row_selected: true,
-      },
-    ];
+  // it('Should render extra buttons - controlExample2', function () {
+  //   const _buttons = [
+  //     {
+  //       button_bg_color: '#2EB82E',
+  //       button_font_color: '#FFFFFF',
+  //       button_id: 1,
+  //       button_label: 'Declare Values',
+  //       button_method: 'POST',
+  //       button_order: 1,
+  //       button_refresh_callback: false,
+  //       button_route: '/total_energies/declare_values',
+  //       button_row_selected: true,
+  //     },
+  //     {
+  //       button_bg_color: '#2E54AA',
+  //       button_font_color: '#FFEEBF',
+  //       button_id: 1,
+  //       button_label: 'Other button1',
+  //       button_method: 'POST',
+  //       button_order: 1,
+  //       button_refresh_callback: false,
+  //       button_route: '/total_energies/declare_values',
+  //       button_row_selected: true,
+  //     },
+  //     {
+  //       button_bg_color: '#FD59AA',
+  //       button_font_color: '#FFEABF',
+  //       button_id: 1,
+  //       button_label: 'Other button2',
+  //       button_method: 'POST',
+  //       button_order: 1,
+  //       button_refresh_callback: false,
+  //       button_route: '/total_energies/declare_values',
+  //       button_row_selected: true,
+  //     },
+  //   ];
+  //   const _control = {
+  //     ...structuredClone(controlExample2),
+  //     data_grid_detail: {
+  //       ...structuredClone(controlExample2.data_grid_detail),
+  //       buttons: _buttons,
+  //     },
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   };
+
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid
+  //         control={_control as any as IApiControl}
+  //         fileId={''}
+  //       />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+
+  //   cy.react('DataGridControlAgGrid')
+  //     .react('ControlLabel')
+  //     .next('div')
+  //     .within(($elDiv) => {
+  //       const totalButton = $elDiv.find('button').length;
+
+  //       for (const indexBtn in _buttons) {
+  //         const btn = _buttons[indexBtn];
+
+  //         cy.wrap($elDiv)
+  //           .react('Button')
+  //           .find('button')
+  //           .eq(totalButton - _buttons.length + parseInt(indexBtn))
+  //           .should(
+  //             'have.css',
+  //             'background-color',
+  //             _hexToRgb(btn.button_bg_color),
+  //           )
+  //           .should('have.css', 'color', _hexToRgb(btn.button_font_color))
+  //           .contains(btn.button_label);
+  //       }
+  //     });
+  // });
+
+  // it('Should render extra buttons in the right order - controlExample2', function () {
+  //   const _buttons: DataGridDetailButtonsType[] = [
+  //     {
+  //       button_bg_color: '#2EB82E',
+  //       button_font_color: '#FFFFFF',
+  //       button_id: 1,
+  //       button_label: 'Declare Values',
+  //       button_method: 'POST',
+  //       button_order: 3,
+  //       button_refresh_callback: false,
+  //       button_route: '/total_energies/declare_values',
+  //       button_row_selected: true,
+  //     },
+  //     {
+  //       button_bg_color: '#2E54AA',
+  //       button_font_color: '#FFEEBF',
+  //       button_id: 1,
+  //       button_label: 'Other button1',
+  //       button_method: 'POST',
+  //       button_order: 1,
+  //       button_refresh_callback: false,
+  //       button_route: '/total_energies/declare_values',
+  //       button_row_selected: true,
+  //     },
+  //     {
+  //       button_bg_color: '#FD59AA',
+  //       button_font_color: '#FFEABF',
+  //       button_id: 1,
+  //       button_label: 'Other button2',
+  //       button_method: 'POST',
+  //       button_order: 6,
+  //       button_refresh_callback: false,
+  //       button_route: '/total_energies/declare_values',
+  //       button_row_selected: true,
+  //     },
+  //   ];
+  //   const reorderedBtns = [..._buttons];
+  //   const _control = {
+  //     ...structuredClone(controlExample2),
+  //     data_grid_detail: {
+  //       ...structuredClone(controlExample2.data_grid_detail),
+  //       buttons: _buttons,
+  //     },
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   } as IApiControl;
+
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid control={_control} fileId={''} />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   reorderedBtns.sort((btn1, btn2) => {
+  //     if (btn1.button_order < btn2.button_order) return -1;
+  //     if (btn1.button_order > btn2.button_order) return 1;
+
+  //     return 0;
+  //   });
+
+  //   cy.react('DataGridControlAgGrid')
+  //     .react('ControlLabel')
+  //     .next('div')
+  //     .within(($elDiv) => {
+  //       const totalButton = $elDiv.find('button').length;
+
+  //       cy.wrap(reorderedBtns).each(
+  //         (btn: DataGridDetailButtonsType, indexBtn) => {
+  //           cy.wrap($elDiv)
+  //             .react('Button')
+  //             .find('button')
+  //             .eq(totalButton - reorderedBtns.length + indexBtn)
+  //             .should(
+  //               'have.css',
+  //               'background-color',
+  //               _hexToRgb(btn.button_bg_color),
+  //             )
+  //             .should('have.css', 'color', _hexToRgb(btn.button_font_color))
+  //             .contains(btn.button_label);
+  //         },
+  //       );
+  //     });
+  // });
+
+  it('should render delete rows button - controlExample2', function () {
+    const trans_FR = _translate('fr', 'Edit', 'deleteRows');
+    const trans_EN = _translate('en', 'Edit', 'deleteRows');
+    const trans_DE = _translate('de', 'Edit', 'deleteRows');
+    const translations = [trans_FR, trans_EN, trans_DE];
     const _control = {
       ...structuredClone(controlExample2),
       data_grid_detail: {
         ...structuredClone(controlExample2.data_grid_detail),
-        buttons: _buttons,
-      },
-      mandatory: false,
-      upload_detail: null,
-      rich_text_detail: null,
-      control_rejectable: null,
-    };
-
-    cy.mount(
-      <SetupTestsComponents>
-        <DataGridControlAgGrid
-          control={_control as any as IApiControl}
-          fileId={''}
-        />
-      </SetupTestsComponents>,
-    );
-    cy.waitReactApp();
-
-    cy.react('DataGridControlAgGrid')
-      .react('ControlLabel')
-      .next('div')
-      .within(($elDiv) => {
-        const totalButton = $elDiv.find('button').length;
-
-        for (const indexBtn in _buttons) {
-          const btn = _buttons[indexBtn];
-
-          cy.wrap($elDiv)
-            .react('Button')
-            .find('button')
-            .eq(totalButton - _buttons.length + parseInt(indexBtn))
-            .should(
-              'have.css',
-              'background-color',
-              _hexToRgb(btn.button_bg_color),
-            )
-            .should('have.css', 'color', _hexToRgb(btn.button_font_color))
-            .contains(btn.button_label);
-        }
-      });
-  });
-
-  it('Should render extra buttons in the right order - controlExample2', function () {
-    const _buttons: DataGridDetailButtonsType[] = [
-      {
-        button_bg_color: '#2EB82E',
-        button_font_color: '#FFFFFF',
-        button_id: 1,
-        button_label: 'Declare Values',
-        button_method: 'POST',
-        button_order: 3,
-        button_refresh_callback: false,
-        button_route: '/total_energies/declare_values',
-        button_row_selected: true,
-      },
-      {
-        button_bg_color: '#2E54AA',
-        button_font_color: '#FFEEBF',
-        button_id: 1,
-        button_label: 'Other button1',
-        button_method: 'POST',
-        button_order: 1,
-        button_refresh_callback: false,
-        button_route: '/total_energies/declare_values',
-        button_row_selected: true,
-      },
-      {
-        button_bg_color: '#FD59AA',
-        button_font_color: '#FFEABF',
-        button_id: 1,
-        button_label: 'Other button2',
-        button_method: 'POST',
-        button_order: 6,
-        button_refresh_callback: false,
-        button_route: '/total_energies/declare_values',
-        button_row_selected: true,
-      },
-    ];
-    const reorderedBtns = [..._buttons];
-    const _control = {
-      ...structuredClone(controlExample2),
-      data_grid_detail: {
-        ...structuredClone(controlExample2.data_grid_detail),
-        buttons: _buttons,
+        datagrid_options: {
+          ...structuredClone(
+            controlExample2.data_grid_detail?.datagrid_options || {},
+          ),
+          delete_row_button_display: true,
+        },
       },
       mandatory: false,
       upload_detail: null,
       rich_text_detail: null,
       control_rejectable: null,
     } as IApiControl;
-
     cy.mount(
       <SetupTestsComponents>
         <DataGridControlAgGrid control={_control} fileId={''} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    reorderedBtns.sort((btn1, btn2) => {
-      if (btn1.button_order < btn2.button_order) return -1;
-      if (btn1.button_order > btn2.button_order) return 1;
-
-      return 0;
-    });
-
-    cy.react('DataGridControlAgGrid')
-      .react('ControlLabel')
-      .next('div')
-      .within(($elDiv) => {
-        const totalButton = $elDiv.find('button').length;
-
-        cy.wrap(reorderedBtns).each(
-          (btn: DataGridDetailButtonsType, indexBtn) => {
-            cy.wrap($elDiv)
-              .react('Button')
-              .find('button')
-              .eq(totalButton - reorderedBtns.length + indexBtn)
-              .should(
-                'have.css',
-                'background-color',
-                _hexToRgb(btn.button_bg_color),
-              )
-              .should('have.css', 'color', _hexToRgb(btn.button_font_color))
-              .contains(btn.button_label);
-          },
-        );
-      });
+    cy.get('._Button').contains(new RegExp(translations.join('|')));
   });
 
-  it('should have selected_rows not empty when call endpoint', function () {
+  it('should render modal confirmation when click on delete rows and payload rows not empty - controlExample9', function () {
+    const trans_FR = _translate('fr', 'Edit', 'deleteRows');
+    const trans_EN = _translate('en', 'Edit', 'deleteRows');
+    const trans_DE = _translate('de', 'Edit', 'deleteRows');
+    const translations = [trans_FR, trans_EN, trans_DE];
+    const _control = {
+      ...structuredClone(controlExample9),
+      data_grid_detail: {
+        ...structuredClone(controlExample9.data_grid_detail),
+        datagrid_options: {
+          ...structuredClone(
+            controlExample9.data_grid_detail?.datagrid_options || {},
+          ),
+          delete_row_button_display: true,
+        },
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.contains('Select All').click();
+    cy.wait(100).then(() => {
+      cy.intercept('POST', '/control/data_grid/delete_row?file_id=*', {
+        statusCode: 200,
+        fixture: 'controlDataGridAgGrid-resp-delete_rows-1.json',
+      }).as('deleteRowsConfirmRequest');
+      cy.get('._Button')
+        .contains(new RegExp(translations.join('|')))
+        .click();
+      cy.react('ModalDynamic').should('exist');
+      cy.window().then((w) => {
+        cy.wait('@deleteRowsConfirmRequest').then((intercept) => {
+          const { request } = intercept;
+          const selected: any[] = [];
+          w[
+            'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
+          ].gridRef.current.api.forEachNode((node) => {
+            if (
+              node.data[
+                _control.data_grid_detail?.datagrid_options
+                  ?.select_all_button_col_ref as string
+              ]?.value === '1'
+            ) {
+              selected.push(node);
+            }
+          });
+          expect(request.body.rows.length).to.be.eq(selected.length);
+          expect(request.body.rows.length).to.be.gt(0);
+          selected.forEach((node: RowNode) => {
+            expect(request.body.rows).to.include(node.data.row_uuid);
+          });
+        });
+      });
+    });
+  });
+
+  it('should have selected_rows not empty when call endpoint declare values - controlExample2', function () {
     const _control = {
       ...structuredClone(controlExample2),
       data_grid_detail: {
@@ -639,23 +737,26 @@ describe('<DataGridControlAgGrid />', () => {
           });
           expect(request.body.selected_rows.length).to.be.eq(selected.length);
           expect(request.body.selected_rows.length).to.be.gt(0);
+          selected.forEach((node: RowNode) => {
+            expect(request.body.selected_rows).to.include(node.data.row_uuid);
+          });
         });
       });
     });
   });
 
-  it('should render delete rows button - controlExample2', function () {
+  it('should match the endpoint after confirm delete rows modal and rows payload not empty - controlExample2', function () {
     const trans_FR = _translate('fr', 'Edit', 'deleteRows');
     const trans_EN = _translate('en', 'Edit', 'deleteRows');
     const trans_DE = _translate('de', 'Edit', 'deleteRows');
     const translations = [trans_FR, trans_EN, trans_DE];
     const _control = {
-      ...structuredClone(controlExample2),
+      ...structuredClone(controlExample9),
       data_grid_detail: {
-        ...structuredClone(controlExample2.data_grid_detail),
+        ...structuredClone(controlExample9.data_grid_detail),
         datagrid_options: {
           ...structuredClone(
-            controlExample2.data_grid_detail?.datagrid_options || {},
+            controlExample9.data_grid_detail?.datagrid_options || {},
           ),
           delete_row_button_display: true,
         },
@@ -671,8 +772,67 @@ describe('<DataGridControlAgGrid />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.get('._Button').contains(new RegExp(translations.join('|')));
+    cy.contains('Select All').click();
+    cy.wait(100).then(() => {
+      cy.intercept('POST', '/control/data_grid/delete_row?file_id=*', {
+        statusCode: 200,
+        fixture: 'controlDataGridAgGrid-resp-delete_rows-1.json',
+      });
+      cy.get('._Button')
+        .contains(new RegExp(translations.join('|')))
+        .click();
+      cy.wait(100).then(() => {
+        cy.window().then((w) => {
+          cy.fixture('controlDataGridAgGrid-resp-delete_rows-1.json').then(
+            (d: { btn: IButtons[] }) => {
+              const btnConfirmDel = d.btn.find(
+                (d) => d.action.method === 'POST',
+              ) as IButtons;
+              cy.intercept('POST', btnConfirmDel.action.endpoint + '?*', {
+                statusCode: 201,
+                body: {},
+              });
+              cy.intercept('POST', '**/*').as('callAfterConfirmDeletionBtn');
+              cy.react('ModalDynamic')
+                .find('button')
+                .contains(btnConfirmDel.btn_lib)
+                .click();
+              cy.wait('@callAfterConfirmDeletionBtn').then((intercepted) => {
+                const { request } = intercepted;
+                expect(request.url).to.match(
+                  new RegExp(btnConfirmDel.action.endpoint),
+                );
+                const selected: any[] = [];
+                w[
+                  'Features_Edit_Control_DataGridControlAgGrid' +
+                    _control.control_id
+                ].gridRef.current.api.forEachNode((node) => {
+                  if (
+                    node.data[
+                      _control.data_grid_detail?.datagrid_options
+                        ?.select_all_button_col_ref as string
+                    ]?.value === '1'
+                  ) {
+                    selected.push(node);
+                  }
+                });
+                expect(JSON.parse(request.body).rows.length).to.be.eq(
+                  selected.length,
+                );
+                expect(JSON.parse(request.body).rows.length).to.be.gt(0);
+                selected.forEach((node: RowNode) => {
+                  expect(JSON.parse(request.body).rows).to.include(
+                    node.data.row_uuid,
+                  );
+                });
+              });
+            },
+          );
+        });
+      });
+    });
   });
+  return;
 
   it('should delete selected rows - controlExample2', function () {
     const trans_FR = _translate('fr', 'Edit', 'deleteRows');

@@ -122,7 +122,7 @@ export const Select: React.FC<React.PropsWithChildren<ISelect>> = ({
   );
 
   const labels = Object.keys(selected).map((id) => {
-    return data[id] ? data[id].label : null;
+    return data[id] ? data[id]?.label ?? data[id]?.value : null;
   });
 
   useEffect(() => {

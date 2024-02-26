@@ -155,13 +155,17 @@ export const DataGridControlAgGrid: React.FC<
   const [local_text] = useState(
     currentLang === 'en' ? AG_GRID_LOCALE_EN : AG_GRID_LOCALE_FR,
   );
-  const [modal_data, setmodal_data]: any = useState(null);
+  const [modalData, setModalData] = useState(null);
   const [selectedRows, setSelectedRows] = useState<RowNode[]>([]);
-  const [isDeletingRows, setIsDeletingRows] = useState<boolean>(false);
   // const modal: IDataModal = useRecoilValue<any>(modal_data);
 
   const paginationPageSize: number =
     control?.data_grid_detail?.datagrid_options?.pagination_row_size ?? 20;
+  const gridOptions = {
+    rowClass: 'my-hover-class',
+    rowData: GridDetails?.rows,
+    stopEditingWhenGridLosesFocus: true,
+  };
 
   useEffect(() => {
     setGridDetails(control?.data_grid_detail);
@@ -213,6 +217,28 @@ export const DataGridControlAgGrid: React.FC<
     };
   };
 
+  const getSelectedRows = useCallback(() => {
+    // return selectedRows.map((rowNode) => rowNode?.data?.row_uuid);
+    const selected_data: any = [];
+    gridOptions.rowData?.map((row: DataGridDetailsRow) => {
+      if (
+        row[
+          control?.data_grid_detail?.datagrid_options
+            ?.select_all_button_col_ref as string
+        ]?.value === '1'
+      ) {
+        selected_data.push(row?.row_uuid);
+      } else {
+        return;
+      }
+    });
+
+    return selected_data;
+  }, [
+    // selectedRows,
+    control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref,
+    gridOptions.rowData,
+  ]);
   const decide_editable = (props: any) => {
     const data: any = props?.colDef?.field?.split('.')[0];
     if (props?.data?.row_editable === false) {
@@ -1008,14 +1034,14 @@ export const DataGridControlAgGrid: React.FC<
 
       if (response?.data) {
         setIsModalOpen(true);
-        setmodal_data(response?.data);
+        setModalData(response?.data);
       }
     } catch (error) {
       setErrorMessageAdd("Une erreur est survenue lors de l'ajout de la ligne");
     }
   }, [control.control_id, jwt, fileId, GridDetails?.source]);
   const handleClickDeleteSelectedRows = useCallback(async () => {
-    setIsDeletingRows(true);
+    const rows: string[] = getSelectedRows();
     await axios
       .post(
         `${getEnv('API_PROTOCOL')}://${getEnv(
@@ -1023,7 +1049,7 @@ export const DataGridControlAgGrid: React.FC<
         )}/control/data_grid/delete_row?file_id=${fileId}&elm_id=${
           control.control_id
         }&source=${GridDetails?.source}`,
-        { rows: selectedRows.map((rowNode) => rowNode?.data?.row_uuid) },
+        { rows },
         {
           headers: {
             Authorization: jwt,
@@ -1031,11 +1057,13 @@ export const DataGridControlAgGrid: React.FC<
           responseType: 'json',
         },
       )
-      .then(() => {
-        gridRef.current.api.applyTransaction({
-          remove: selectedRows.map((node) => node.data),
-        });
-        setSelectedRows([]);
+      .then((response) => {
+        setIsModalOpen(true);
+        setModalData({ ...response.data, __extraData: { rows } });
+        // gridRef.current.api.applyTransaction({
+        //   remove: selectedRows.map((node) => node.data),
+        // });
+        // setSelectedRows([]);
       })
       .catch(async (error: AxiosError) => {
         setErrorMessageAdd(error.response?.data.error_msg ?? '');
@@ -1044,9 +1072,9 @@ export const DataGridControlAgGrid: React.FC<
         }, 3000);
       })
       .finally(() => {
-        setIsDeletingRows(false);
+        //
       });
-  }, [GridDetails?.source, control.control_id, fileId, jwt, selectedRows]);
+  }, [GridDetails?.source, control.control_id, fileId, getSelectedRows, jwt]);
 
   const onCellValueChanged = useCallback(
     (event: any) => {
@@ -1198,11 +1226,6 @@ export const DataGridControlAgGrid: React.FC<
   // const handlePrint = useReactToPrint({
   //   content: () => gridRef.current,
   // });
-  const gridOptions = {
-    rowClass: 'my-hover-class',
-    rowData: GridDetails?.rows,
-    stopEditingWhenGridLosesFocus: true,
-  };
 
   const onPaginationChanged = useCallback(() => {
     control?.data_grid_detail?.columns?.map((column: any) => {
@@ -1323,29 +1346,6 @@ export const DataGridControlAgGrid: React.FC<
     control?.data_grid_detail?.columns,
     control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref,
   ]);
-
-  const getRowData = useCallback(() => {
-    // return selectedRows.map((rowNode) => rowNode?.data?.row_uuid);
-    const selected_data: any = [];
-    gridOptions.rowData?.map((row: DataGridDetailsRow) => {
-      if (
-        row[
-          control?.data_grid_detail?.datagrid_options
-            ?.select_all_button_col_ref as string
-        ]?.value === '1'
-      ) {
-        selected_data.push(row?.row_uuid);
-      } else {
-        return;
-      }
-    });
-
-    return selected_data;
-  }, [
-    // selectedRows,
-    control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref,
-    gridOptions.rowData,
-  ]);
   const refresh_grid = useCallback(async () => {
     try {
       const response = await axios.get(
@@ -1385,7 +1385,7 @@ export const DataGridControlAgGrid: React.FC<
           )}/control/data_grid${route}?file_id=${fileId}&control_id=${
             control.control_id
           }&source=${GridDetails?.source}`,
-          button_row_selected ? { selected_rows: getRowData() } : {},
+          button_row_selected ? { selected_rows: getSelectedRows() } : {},
           {
             headers: {
               Authorization: jwt,
@@ -1400,7 +1400,7 @@ export const DataGridControlAgGrid: React.FC<
         }, 3000);
       }
     },
-    [getRowData, jwt, control?.control_id, fileId, GridDetails?.source],
+    [getSelectedRows, jwt, control?.control_id, fileId, GridDetails?.source],
   );
 
   const DynamicButtonClick = ({
@@ -1587,7 +1587,6 @@ export const DataGridControlAgGrid: React.FC<
           {GridDetails?.datagrid_options?.delete_row_button_display ===
             true && (
             <Button
-              disabled={isDeletingRows}
               onClick={handleClickDeleteSelectedRows}
               style={{
                 backgroundColor: 'crimson',
@@ -1661,11 +1660,11 @@ export const DataGridControlAgGrid: React.FC<
         />
       </AgDataGridStyle>
       {/* </DataGridControlStyled> */}
-      {isModalOpen && modal_data ? (
+      {isModalOpen && modalData ? (
         <ModalDynamic
           open={isModalOpen}
           setIsModalOpen={setIsModalOpen}
-          data={modal_data}
+          data={modalData}
         />
       ) : null}
     </Grid>
