@@ -591,6 +591,59 @@ describe('<DataGridControlAgGrid />', () => {
       });
   });
 
+  it('should have selected_rows not empty when call endpoint', function () {
+    const _control = {
+      ...structuredClone(controlExample2),
+      data_grid_detail: {
+        ...structuredClone(controlExample2.data_grid_detail),
+        datagrid_options: {
+          ...structuredClone(
+            controlExample2.data_grid_detail?.datagrid_options || {},
+          ),
+          delete_row_button_display: true,
+        },
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.contains('Select All').click();
+    cy.wait(100).then(() => {
+      cy.intercept('POST', '**/*/declare_values?*', {
+        statusCode: 200,
+        body: {},
+      }).as('declareValueRequest');
+      cy.get('._Button').contains('Declare Values').click();
+      cy.window().then((w) => {
+        cy.wait('@declareValueRequest').then((intercept) => {
+          const { request } = intercept;
+          const selected: any[] = [];
+          w[
+            'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
+          ].gridRef.current.api.forEachNode((node) => {
+            if (
+              node.data[
+                _control.data_grid_detail?.datagrid_options
+                  ?.select_all_button_col_ref as string
+              ]?.value === '1'
+            ) {
+              selected.push(node);
+            }
+          });
+          expect(request.body.selected_rows.length).to.be.eq(selected.length);
+          expect(request.body.selected_rows.length).to.be.gt(0);
+        });
+      });
+    });
+  });
+
   it('should render delete rows button - controlExample2', function () {
     const trans_FR = _translate('fr', 'Edit', 'deleteRows');
     const trans_EN = _translate('en', 'Edit', 'deleteRows');
