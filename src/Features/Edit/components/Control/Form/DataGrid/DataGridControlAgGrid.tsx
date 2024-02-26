@@ -1225,6 +1225,7 @@ export const DataGridControlAgGrid: React.FC<
           gridRef.current.api?.refreshCells({
             force: true,
           });
+          // setSelectedRows([]);
         }
       }
     });
@@ -1271,7 +1272,7 @@ export const DataGridControlAgGrid: React.FC<
             rowNodes: data,
             force: true,
           });
-          setSelectedRows([...data]);
+          // setSelectedRows([...data.slice(startIndex, endIndex)]);
         }
       }
     });
@@ -1324,8 +1325,27 @@ export const DataGridControlAgGrid: React.FC<
   ]);
 
   const getRowData = useCallback(() => {
-    return selectedRows.map((rowNode) => rowNode?.data?.row_uuid);
-  }, [selectedRows]);
+    // return selectedRows.map((rowNode) => rowNode?.data?.row_uuid);
+    const selected_data: any = [];
+    gridOptions.rowData?.map((row: DataGridDetailsRow) => {
+      if (
+        row[
+          control?.data_grid_detail?.datagrid_options
+            ?.select_all_button_col_ref as string
+        ]?.value === '1'
+      ) {
+        selected_data.push(row?.row_uuid);
+      } else {
+        return;
+      }
+    });
+
+    return selected_data;
+  }, [
+    // selectedRows,
+    control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref,
+    gridOptions.rowData,
+  ]);
   const refresh_grid = useCallback(async () => {
     try {
       const response = await axios.get(
