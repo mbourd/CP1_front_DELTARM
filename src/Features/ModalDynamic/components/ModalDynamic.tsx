@@ -30,6 +30,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { StyledTableCell } from '../../DashboardDynamic/components/Card/Card.style';
 import { InputModalDynamic } from './InputModalDynamic/InputModalDynamic';
 import { SelectModalDynamic } from './SelectModalDynamic/SelectModalDynamic';
+import { DatePickerModalDynamic } from './DatePickerModalDynamic/DatePickerModalDynamic';
 import { security } from '../../../Services';
 
 export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
@@ -69,7 +70,10 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
               <Button
                 key={index}
                 onClick={() =>
-                  handleCLickActionsBeforeSendToActionButtons(btn.action)
+                  handleCLickActionsBeforeSendToActionButtons(
+                    btn.action,
+                    data.__extraData,
+                  )
                 }
                 style={{ backgroundColor: btn.bg_color }}
               >
@@ -94,7 +98,7 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
   );
 
   const handleCLickActionsBeforeSendToActionButtons = useCallback(
-    (action: any) => {
+    (action: any, extraData?: Record<any, any>) => {
       if (action.params) {
         const keys = Object.keys(action.params);
         const params = { ...getValues(keys) };
@@ -128,12 +132,12 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
           ...action,
           params,
         };
-        actionButton(modifiedAction);
+        actionButton(modifiedAction, extraData);
 
         return;
       }
 
-      actionButton(action);
+      actionButton(action, extraData);
     },
     [getValues, actionButton, data?.content, user_language?.lang],
   );
@@ -207,13 +211,11 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
               }
               case 'select': {
                 const selectedValue: Record<string, true> = {
-                  [(element.value as string) || '']: true,
+                  [(element?.value as string) ?? '']: true,
                 };
 
                 const keySelectField: Record<string, string> = {
-                  [element.attribute.id]: element?.value
-                    ? (element.value as string)
-                    : '',
+                  [element.attribute.id]: (element?.value as string) ?? '',
                 };
                 Object.assign(defaultQueries, keySelectField);
 
@@ -307,6 +309,38 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
                     </TableContainer>
                   </Grid>
                 );
+              case 'date_picker': {
+                const defaultDate = `${new Date().getFullYear()}-${(
+                  '0' +
+                  (new Date().getMonth() + 1)
+                ).slice(-2)}-${('0' + new Date().getDate()).slice(-2)}`;
+                Object.assign(defaultQueries, {
+                  [element.attribute.id]:
+                    (element?.value as string) ?? defaultDate,
+                });
+
+                return (
+                  <Grid key={index} item xs={8}>
+                    <Controller
+                      defaultValue={!element?.value}
+                      control={control}
+                      name={element.attribute.id}
+                      rules={{ required: element?.attribute?.mandatory }}
+                      render={() => (
+                        <DatePickerModalDynamic
+                          defaultDate={defaultDate}
+                          element={element}
+                          index={index}
+                          handleChangeValue={handleChangeValue}
+                          register={register}
+                        />
+                      )}
+                    />
+                  </Grid>
+                );
+              }
+              default:
+                return <></>;
             }
           },
         )}
