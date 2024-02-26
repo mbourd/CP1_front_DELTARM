@@ -18,6 +18,7 @@ export interface IDataModal {
   img: string | null;
   content: IElementModal[] | IElementPModal[] | IElementTableModal[];
   btn: IButtons[];
+  __extraData?: Record<any, any>;
 }
 
 export interface IElementPModal {
@@ -35,7 +36,7 @@ export interface IElementPModal {
 }
 
 export interface IElementModal {
-  element: 'input' | 'select' | 'p' | 'table';
+  element: 'input' | 'select' | 'p' | 'table' | 'date_picker';
   attribute: {
     type: string;
     id: string;

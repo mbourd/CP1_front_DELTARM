@@ -1,0 +1,110 @@
+{
+  "btn": [
+    {
+      "action": {
+        "endpoint": null,
+        "method": "CANCEL",
+        "params": null
+      },
+      "bg_color": "red",
+      "btn_lib": "Cancel",
+      "font_color": "white",
+      "hover_color": "orange"
+    },
+    {
+      "action": {
+        "endpoint": "/control/data_grid/delete_row_te",
+        "method": "POST",
+        "params": {
+          "action_date": "$action_date",
+          "action_type": "$action_type",
+          "file_id": "$file_id",
+          "rows": "$rows",
+          "source": "$source"
+        }
+      },
+      "bg_color": "red",
+      "btn_lib": "Confirm Deletion",
+      "font_color": "white",
+      "hover_color": "orange"
+    }
+  ],
+  "content": [
+    {
+      "attribute": {
+        "id": "file_id",
+        "type": "hidden"
+      },
+      "element": "input",
+      "value": "5e618715-7f5c-405d-830a-975109f8b5d4"
+    },
+    {
+      "attribute": {
+        "id": "rows",
+        "type": "hidden"
+      },
+      "element": "input",
+      "value": []
+    },
+    {
+      "attribute": {
+        "id": "source",
+        "type": "hidden"
+      },
+      "element": "input",
+      "value": "TE_tobedeclared"
+    },
+    {
+      "attribute": null,
+      "element": "p",
+      "value": "An object can either be 'Closed' (and remain in historical data) or 'Removed' (and no longer appear)."
+    },
+    {
+      "attribute": null,
+      "element": "p",
+      "value": "Please select which type of action you intend :"
+    },
+    {
+      "attribute": {
+        "id": "action_type",
+        "option": [
+          {
+            "id": 0,
+            "value": "None (Abort)"
+          },
+          {
+            "id": 1,
+            "value": "Close (Object will still appear in Historical Data)"
+          },
+          {
+            "id": 2,
+            "value": "Remove (Object will no longer appear)"
+          }
+        ]
+      },
+      "element": "select",
+      "value": 0
+    },
+    {
+      "attribute": null,
+      "element": "p",
+      "value": " "
+    },
+    {
+      "attribute": null,
+      "element": "p",
+      "value": "Please input the deletion date :"
+    },
+    {
+      "attribute": {
+        "id": "action_date"
+      },
+      "element": "date_picker",
+      "value": null
+    }
+  ],
+  "img": null,
+  "subtitle": "Delete Object(s)",
+  "target": "modal",
+  "title": null
+}
