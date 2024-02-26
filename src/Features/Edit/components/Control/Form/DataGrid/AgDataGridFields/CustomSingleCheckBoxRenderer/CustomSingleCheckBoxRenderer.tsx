@@ -19,24 +19,24 @@ const CustomSingleCheckboxRender: React.FC<
       props.setValue('1');
     }
 
-    setSelectedRows((selected) => {
-      const foundIndex = selected.indexOf(props.node);
-      const n: RowNode[] = [];
+    // setSelectedRows((selected) => {
+    //   const foundIndex = selected.indexOf(props.node);
+    //   const n: RowNode[] = [];
 
-      if (foundIndex !== -1) {
-        n.push(...selected);
-        n.splice(foundIndex, 1);
+    //   if (foundIndex !== -1) {
+    //     n.push(...selected);
+    //     n.splice(foundIndex, 1);
 
-        return n;
-      }
+    //     return n;
+    //   }
 
-      return [...selected, props.node];
-    });
-  }, [props, setSelectedRows]);
+    //   return [...selected, props.node];
+    // });
+  }, [props /*, setSelectedRows*/]);
 
-  useEffect(() => {
-    setIsChecked(selectedRows.includes(props.node));
-  }, [props.node, selectedRows]);
+  // useEffect(() => {
+  //   setIsChecked(selectedRows.includes(props.node));
+  // }, [props.node, selectedRows]);
 
   return (
     <>
@@ -54,7 +54,7 @@ const CustomSingleCheckboxRender: React.FC<
             <input
               type="checkbox"
               onChange={onChange}
-              checked={isChecked}
+              checked={props?.value === '1'}
               style={{ height: 14, width: 15, borderRadius: 0, borderWidth: 1 }}
             />
           </div>
