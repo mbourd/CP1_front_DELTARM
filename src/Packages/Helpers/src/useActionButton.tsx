@@ -30,7 +30,11 @@ export const useActionButton = ({
   const setPageData = useSetRecoilState(data);
   const setModalData = useSetRecoilState(modalData);
   const actionButton = useCallback(
-    (action: IActionButton | null) => {
+    (
+      action: IActionButton | null,
+      extraData: Record<any, any> = {},
+      callbackResponseConfirmation?: (...p) => undefined,
+    ) => {
       const dispatchActionButton = (data: any) => {
         // create a dispatcher function outside of actionButtonTrigger
         switch (data?.target) {
@@ -54,6 +58,20 @@ export const useActionButton = ({
             }
 
             return;
+        }
+        switch (data?.origin_fonction_callback) {
+          case 'delete_row':
+            if (setErrorMessage && data?.row_error && data.row_error?.length) {
+              setErrorMessage(
+                (data.row_error as any[]).reduce(
+                  (acc, curr) => `${acc} ${curr.error}`,
+                  '',
+                ),
+              );
+            }
+            if (callbackResponseConfirmation)
+              callbackResponseConfirmation(data);
+            break;
         }
       };
       let queryString = '';
@@ -110,7 +128,7 @@ export const useActionButton = ({
               `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}${
                 action?.endpoint
               }${queryString}`,
-              action?.params,
+              { ...action?.params, ...extraData },
               {
                 headers: {
                   Authorization: jwt,
@@ -119,12 +137,13 @@ export const useActionButton = ({
               },
             )
             .then(async (response) => {
+              // console.dir(response);
               dispatchActionButton(response.data);
             })
             .catch(async (error: AxiosError) => {
               if (error.response) {
                 if (setErrorMessage && error.response.status >= 300)
-                  setErrorMessage(error.response.data.error_msg);
+                  setErrorMessage(error.response.data?.error_msg);
 
                 dispatchActionButton(error.response.data);
 
@@ -133,7 +152,9 @@ export const useActionButton = ({
               if (error) {
                 if (setErrorMessage)
                   setErrorMessage(
-                    typeof error === 'string' ? error : "Impossible d'ajouter",
+                    typeof error === 'string'
+                      ? error
+                      : 'Erreur lors de la requête',
                   );
 
                 dispatchActionButton(genericErrorsData);

@@ -35,7 +35,7 @@ export const SelectBody: React.FC<
                 }
               }}
             >
-              {datum.label}
+              {datum?.label ?? datum?.value}
             </Radio>
           </ListItem>
         );
