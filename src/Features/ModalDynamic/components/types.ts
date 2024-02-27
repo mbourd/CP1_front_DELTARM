@@ -19,6 +19,7 @@ export interface IDataModal {
   content: IElementModal[] | IElementPModal[] | IElementTableModal[];
   btn: IButtons[];
   __extraData?: Record<any, any>;
+  callbackResponseConfirmation?: (...p) => undefined;
 }
 
 export interface IElementPModal {

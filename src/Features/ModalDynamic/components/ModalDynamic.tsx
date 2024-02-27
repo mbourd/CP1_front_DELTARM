@@ -72,7 +72,8 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
                 onClick={() =>
                   handleCLickActionsBeforeSendToActionButtons(
                     btn.action,
-                    data.__extraData,
+                    data?.__extraData,
+                    data?.callbackResponseConfirmation,
                   )
                 }
                 style={{ backgroundColor: btn.bg_color }}
@@ -98,7 +99,11 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
   );
 
   const handleCLickActionsBeforeSendToActionButtons = useCallback(
-    (action: any, extraData?: Record<any, any>) => {
+    (
+      action: any,
+      extraData?: Record<any, any>,
+      callbackResponseConfirmation?: () => undefined,
+    ) => {
       if (action.params) {
         const keys = Object.keys(action.params);
         const params = { ...getValues(keys) };
@@ -132,12 +137,12 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
           ...action,
           params,
         };
-        actionButton(modifiedAction, extraData);
+        actionButton(modifiedAction, extraData, callbackResponseConfirmation);
 
         return;
       }
 
-      actionButton(action, extraData);
+      actionButton(action, extraData, callbackResponseConfirmation);
     },
     [getValues, actionButton, data?.content, user_language?.lang],
   );
