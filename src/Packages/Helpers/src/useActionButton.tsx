@@ -30,7 +30,11 @@ export const useActionButton = ({
   const setPageData = useSetRecoilState(data);
   const setModalData = useSetRecoilState(modalData);
   const actionButton = useCallback(
-    (action: IActionButton | null, extraData: Record<any, any> = {}) => {
+    (
+      action: IActionButton | null,
+      extraData: Record<any, any> = {},
+      callbackResponseConfirmation?: (...p) => undefined,
+    ) => {
       const dispatchActionButton = (data: any) => {
         // create a dispatcher function outside of actionButtonTrigger
         switch (data?.target) {
@@ -54,6 +58,20 @@ export const useActionButton = ({
             }
 
             return;
+        }
+        switch (data?.origin_fonction_callback) {
+          case 'delete_row':
+            if (setErrorMessage && data?.row_error && data.row_error?.length) {
+              setErrorMessage(
+                (data.row_error as any[]).reduce(
+                  (acc, curr) => `${acc} ${curr.error}`,
+                  '',
+                ),
+              );
+            }
+            if (callbackResponseConfirmation)
+              callbackResponseConfirmation(data);
+            break;
         }
       };
       let queryString = '';
