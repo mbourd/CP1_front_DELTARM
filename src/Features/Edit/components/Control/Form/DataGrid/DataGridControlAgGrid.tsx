@@ -1630,7 +1630,7 @@ export const DataGridControlAgGrid: React.FC<
                 marginBottom: 14,
               }}
             >
-              {trans('deleteRows')}
+              Delete Row(s)
             </Button>
           )}
           {/* <Button onClick={getRowData}>Get Data</Button> */}
