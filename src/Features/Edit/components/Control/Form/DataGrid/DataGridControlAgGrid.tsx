@@ -4,6 +4,7 @@ import React, {
   useMemo,
   useRef,
   useEffect,
+  useContext,
 } from 'react';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import {
@@ -59,6 +60,7 @@ import { CustomInnerHTMLRenderer } from './AgDataGridFields/CustomInnerHTMLRende
 import { CustomDateStringRenderer } from './AgDataGridFields/CustomDateStringRenderer/CustomDateStringRenderer';
 import { CustomTextAltRenderer } from './AgDataGridFields/CustomTextAltRenderer/CustomTextAltRenderer';
 import { useTransEdit } from 'Features/Edit/translations';
+import { EditValidationContext } from 'Features/Edit/EditValidationContext';
 
 interface IProps {
   control: IApiControl;
@@ -157,6 +159,7 @@ export const DataGridControlAgGrid: React.FC<
   );
   const [modalData, setModalData] = useState(null);
   const [selectedRows, setSelectedRows] = useState<RowNode[]>([]);
+  const { setSectionsLabels, sectionId } = useContext(EditValidationContext);
   // const modal: IDataModal = useRecoilValue<any>(modal_data);
 
   const paginationPageSize: number =
@@ -1172,6 +1175,7 @@ export const DataGridControlAgGrid: React.FC<
           callbackResponseConfirmation: (responseData: Record<any, any>) => {
             const { row_deleted, row_error } = responseData;
             const deletedRowNodes: RowNode[] = [];
+            const allRowNode: RowNode[] = [];
 
             gridRef.current.api.forEachNode((rowNode: RowNode) => {
               if ((row_deleted as string[]).includes(rowNode.data?.row_uuid)) {
@@ -1191,6 +1195,17 @@ export const DataGridControlAgGrid: React.FC<
             gridRef.current.api.applyTransaction({
               remove: deletedRowNodes.map((node) => node.data),
             });
+            gridRef.current.api.forEachNode((rowNode: RowNode) =>
+              allRowNode.push(rowNode),
+            );
+
+            if (setSectionsLabels && sectionId)
+              setSectionsLabels((sectionsLabels) => ({
+                ...sectionsLabels,
+                [sectionId]: (
+                  (sectionsLabels?.[sectionId] as string) || ''
+                ).replace(/\(.*\)$/, `(${allRowNode.length})`),
+              }));
 
             if (row_error?.length === 0) {
               setIsModalOpen(false);
@@ -1215,6 +1230,8 @@ export const DataGridControlAgGrid: React.FC<
     fileId,
     getSelectedRows,
     jwt,
+    sectionId,
+    setSectionsLabels,
   ]);
 
   const onCellValueChanged = useCallback(
