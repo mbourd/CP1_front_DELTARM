@@ -85,6 +85,21 @@ export const AgDataGridStyle = styled.div<{
     return 'auto';
   }};
 
+  .ag-header-cell {
+    &.left-header .ag-header-cell-label {
+      justify-content: left;
+      text-align: left;
+    }
+    &.center-header .ag-header-cell-label {
+      justify-content: center;
+      text-align: center;
+    }
+    &.right-header .ag-header-cell-label {
+      justify-content: right;
+      text-align: right;
+    }
+  }
+
   .ag-theme-alpine {
     --ag-foreground-color: ${({ $font_color }) =>
       $font_color ? $font_color : '#000000'};
