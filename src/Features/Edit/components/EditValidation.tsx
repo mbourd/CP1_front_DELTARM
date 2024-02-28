@@ -32,6 +32,21 @@ export const EditValidation: React.FC<React.PropsWithChildren<IProps>> = ({
   const [currentSection, setCurrentSection] = useState<string | null>(null);
   const { user } = useSecurity();
   const { logout } = useContext(SecurityContext);
+  const [sectionsLabels, setSectionsLabels] = useState<
+    Record<any, any> | undefined
+  >({});
+
+  useEffect(() => {
+    setSectionsLabels(
+      data?.sections
+        .map((section) => [section.id, section.label])
+        .reduce((acc, [id, label]) => {
+          acc[id] = label;
+
+          return acc;
+        }, {}),
+    );
+  }, [data]);
 
   // To avoid (bpi specific)
   const { id } = router.getParams();
@@ -82,7 +97,12 @@ export const EditValidation: React.FC<React.PropsWithChildren<IProps>> = ({
           </EditHeaderStyled>
 
           <EditValidationContext.Provider
-            value={{ data, fileId: id ? id : frontRouterQueries.file_id }}
+            value={{
+              data,
+              fileId: id ? id : frontRouterQueries.file_id,
+              setSectionsLabels: setSectionsLabels,
+              sectionId: currentSection,
+            }}
           >
             <Grid container wrap={'nowrap'}>
               <Grid item className={'nav'}>
@@ -94,6 +114,7 @@ export const EditValidation: React.FC<React.PropsWithChildren<IProps>> = ({
                       <NavItem
                         key={index}
                         item={section}
+                        sectionLabel={sectionsLabels?.[section.id] || ''}
                         active={section.id === current}
                         onClick={(id: string) => setCurrentSection(id)}
                       />

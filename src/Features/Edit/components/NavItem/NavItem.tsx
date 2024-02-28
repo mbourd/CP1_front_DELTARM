@@ -9,17 +9,19 @@ interface INavItem {
   item: ISection;
   active: boolean;
   onClick?: (id: string) => void;
+  sectionLabel: string | null;
 }
 
 export const NavItem: React.FC<React.PropsWithChildren<INavItem>> = ({
   item,
   onClick,
   active = false,
+  sectionLabel,
 }): React.ReactElement => {
   let content = (
     <NavItemStyled className={'item'} $locked={item.locked} $active={active}>
       {item.locked && <LockedIcon />}
-      <NavItemTextStyled>{item.label}</NavItemTextStyled>
+      <NavItemTextStyled>{sectionLabel}</NavItemTextStyled>
     </NavItemStyled>
   );
 
