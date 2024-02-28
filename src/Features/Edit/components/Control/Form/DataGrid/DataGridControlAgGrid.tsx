@@ -1667,23 +1667,6 @@ export const DataGridControlAgGrid: React.FC<
                 );
               });
             })()}
-
-          {GridDetails?.datagrid_options?.delete_row_button_display ===
-            true && (
-            <Button
-              onClick={handleDeleteSelectedRowsClick}
-              style={{
-                backgroundColor: 'crimson',
-                border: 0,
-                color: '#fff',
-                margin: 5,
-                borderRadius: 5,
-                marginBottom: 14,
-              }}
-            >
-              {trans('deleteRows')}
-            </Button>
-          )}
           {/* <Button onClick={getRowData}>Get Data</Button> */}
         </div>
       </div>
