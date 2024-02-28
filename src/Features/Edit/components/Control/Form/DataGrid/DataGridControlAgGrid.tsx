@@ -356,6 +356,7 @@ export const DataGridControlAgGrid: React.FC<
           case 'checkbox_select_datagrid':
             return {
               ...g,
+              headerClass: 'center-header',
               minWidth: 80,
               width: 80,
               singleClickEdit: false,
@@ -377,6 +378,7 @@ export const DataGridControlAgGrid: React.FC<
           case 'select_list':
             return {
               ...g,
+              headerClass: 'center-header',
               minWidth: 150,
               width: 'auto',
               singleClickEdit: false,
@@ -418,6 +420,7 @@ export const DataGridControlAgGrid: React.FC<
           case 'comment':
             return {
               ...g,
+              headerClass: 'center-header',
               minWidth: 150,
               width: 'auto',
               sortingOrder: ['desc', 'asc', null],
@@ -451,6 +454,7 @@ export const DataGridControlAgGrid: React.FC<
           case 'long_text':
             return {
               ...g,
+              headerClass: 'center-header',
               minWidth: 150,
               width: 'auto',
               sortingOrder: ['desc', 'asc', null],
@@ -489,6 +493,7 @@ export const DataGridControlAgGrid: React.FC<
           case 'percent':
             return {
               ...g,
+              headerClass: 'center-header',
               minWidth: 150,
               width: 'auto',
               tooltipField: g?.field,
@@ -536,6 +541,7 @@ export const DataGridControlAgGrid: React.FC<
           case 'radio':
             return {
               ...g,
+              headerClass: 'center-header',
               minWidth: 150,
               width: 'auto',
               tooltipField: g?.field,
@@ -545,6 +551,7 @@ export const DataGridControlAgGrid: React.FC<
           case 'multiple_list':
             return {
               ...g,
+              headerClass: 'center-header',
               minWidth: 150,
               width: 'auto',
               tooltipField: g?.field,
@@ -554,6 +561,7 @@ export const DataGridControlAgGrid: React.FC<
           case 'integer':
             return {
               ...g,
+              headerClass: 'center-header',
               minWidth: 150,
               width: 'auto',
               headerTooltip: g?.headerName,
@@ -601,6 +609,7 @@ export const DataGridControlAgGrid: React.FC<
           case 'decimal':
             return {
               ...g,
+              headerClass: 'center-header',
               minWidth: 150,
               width: 'auto',
               tooltipField: g?.field,
@@ -648,6 +657,7 @@ export const DataGridControlAgGrid: React.FC<
           case 'financial':
             return {
               ...g,
+              headerClass: 'center-header',
               minWidth: 150,
               width: 'auto',
               tooltipField: g?.field,
@@ -697,6 +707,7 @@ export const DataGridControlAgGrid: React.FC<
           case 'checkbox':
             return {
               ...g,
+              headerClass: 'center-header',
               minWidth: 150,
               width: 'auto',
               tooltipField: g?.field,
@@ -719,6 +730,7 @@ export const DataGridControlAgGrid: React.FC<
           case 'text':
             return {
               ...g,
+              headerClass: 'center-header',
               minWidth: 150,
               width: 'auto',
               tooltipField: g?.field,
@@ -782,6 +794,7 @@ export const DataGridControlAgGrid: React.FC<
           case 'boolean':
             return {
               ...g,
+              headerClass: 'center-header',
               minWidth: 150,
               headerTooltip: g?.headerName,
               width: 'auto',
@@ -791,6 +804,7 @@ export const DataGridControlAgGrid: React.FC<
           case 'date':
             return {
               ...g,
+              headerClass: 'center-header',
               minWidth: 150,
               tooltipField: g?.field,
               headerTooltip: g?.headerName,
@@ -825,6 +839,7 @@ export const DataGridControlAgGrid: React.FC<
           case 'icon':
             return {
               ...g,
+              headerClass: 'center-header',
               minWidth: 20,
               // width: 'auto',
               singleClickEdit: false,
@@ -852,6 +867,7 @@ export const DataGridControlAgGrid: React.FC<
           case 'action_button':
             return {
               ...g,
+              headerClass: 'center-header',
               minWidth: 150,
               width: 'auto',
               singleClickEdit: false,
@@ -879,6 +895,7 @@ export const DataGridControlAgGrid: React.FC<
           case 'formula':
             return {
               ...g,
+              headerClass: 'center-header',
               minWidth: 150,
               width: 'auto',
               headerTooltip: g?.headerName,
@@ -978,6 +995,7 @@ export const DataGridControlAgGrid: React.FC<
           default:
             return {
               ...g,
+              headerClass: 'center-header',
               minWidth: 150,
               headerTooltip: g?.headerName,
               width: 'auto',
