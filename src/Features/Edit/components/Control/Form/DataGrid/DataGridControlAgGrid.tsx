@@ -255,7 +255,7 @@ export const DataGridControlAgGrid: React.FC<
     return true;
   };
 
-  const handleButtonClick = () => {
+  const handleSelectAllClick = () => {
     const currentPage = gridRef.current.api.paginationGetCurrentPage() + 1;
     const pageSize = gridRef.current.api.paginationGetPageSize();
     const startIndex = currentPage === 0 ? 0 : (currentPage - 1) * pageSize;
@@ -298,7 +298,7 @@ export const DataGridControlAgGrid: React.FC<
       }
     });
   };
-  const UnSelectAllByClick = useCallback(() => {
+  const handleUnselectAllClick = useCallback(() => {
     const currentPage = gridRef.current.api.paginationGetCurrentPage() + 1;
     const pageSize = gridRef.current.api.paginationGetPageSize();
     const startIndex = currentPage === 0 ? 0 : (currentPage - 1) * pageSize;
@@ -1104,7 +1104,7 @@ export const DataGridControlAgGrid: React.FC<
     }
   }, []);
 
-  const handleClickAddRow = useCallback(async () => {
+  const handleAddRowClick = useCallback(async () => {
     try {
       const response = await axios.post(
         `${getEnv('API_PROTOCOL')}://${getEnv(
@@ -1129,7 +1129,7 @@ export const DataGridControlAgGrid: React.FC<
       setErrorMessageAdd("Une erreur est survenue lors de l'ajout de la ligne");
     }
   }, [control.control_id, jwt, fileId, GridDetails?.source]);
-  const handleClickDeleteSelectedRows = useCallback(async () => {
+  const handleDeleteSelectedRowsClick = useCallback(async () => {
     const rows: string[] = getSelectedRows();
     await axios
       .post(
@@ -1521,28 +1521,11 @@ export const DataGridControlAgGrid: React.FC<
           >
             Export PDF
           </Button> */}
-          {GridDetails?.datagrid_options?.add_row_button_display === true && (
-            <BPITooltip title={trans('addLine')}>
-              <Button
-                onClick={handleClickAddRow}
-                style={{
-                  backgroundColor: 'teal',
-                  border: 0,
-                  color: '#fff',
-                  margin: 5,
-                  borderRadius: 5,
-                  marginBottom: 14,
-                }}
-              >
-                {trans('addLine')}
-              </Button>
-            </BPITooltip>
-          )}
           {GridDetails?.datagrid_options?.select_all_button_display ===
             true && (
             <BPITooltip title={'Sélectionner toutes les lignes'}>
               <Button
-                onClick={handleButtonClick}
+                onClick={handleSelectAllClick}
                 style={{
                   backgroundColor: 'teal',
                   border: 0,
@@ -1560,7 +1543,7 @@ export const DataGridControlAgGrid: React.FC<
             true && (
             <BPITooltip title={'Désélectionner toutes les lignes'}>
               <Button
-                onClick={UnSelectAllByClick}
+                onClick={handleUnselectAllClick}
                 style={{
                   backgroundColor: 'teal',
                   border: 0,
@@ -1573,6 +1556,39 @@ export const DataGridControlAgGrid: React.FC<
                 Unselect All
               </Button>
             </BPITooltip>
+          )}
+          {GridDetails?.datagrid_options?.add_row_button_display === true && (
+            <BPITooltip title={trans('addLine')}>
+              <Button
+                onClick={handleAddRowClick}
+                style={{
+                  backgroundColor: '#77077d',
+                  border: 0,
+                  color: '#fff',
+                  margin: 5,
+                  borderRadius: 5,
+                  marginBottom: 14,
+                }}
+              >
+                Add Row
+              </Button>
+            </BPITooltip>
+          )}
+          {GridDetails?.datagrid_options?.delete_row_button_display ===
+            true && (
+            <Button
+              onClick={handleDeleteSelectedRowsClick}
+              style={{
+                backgroundColor: 'crimson',
+                border: 0,
+                color: '#fff',
+                margin: 5,
+                borderRadius: 5,
+                marginBottom: 14,
+              }}
+            >
+              Delete Rows
+            </Button>
           )}
           {(GridDetails?.buttons ?? []).length > 0 &&
             (() => {
@@ -1616,23 +1632,6 @@ export const DataGridControlAgGrid: React.FC<
                 );
               });
             })()}
-
-          {GridDetails?.datagrid_options?.delete_row_button_display ===
-            true && (
-            <Button
-              onClick={handleClickDeleteSelectedRows}
-              style={{
-                backgroundColor: 'crimson',
-                border: 0,
-                color: '#fff',
-                margin: 5,
-                borderRadius: 5,
-                marginBottom: 14,
-              }}
-            >
-              {trans('deleteRows')}
-            </Button>
-          )}
           {/* <Button onClick={getRowData}>Get Data</Button> */}
         </div>
       </div>
