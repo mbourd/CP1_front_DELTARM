@@ -93,6 +93,7 @@ export const AgDataGridStyle = styled.div<{
     &.center-header .ag-header-cell-label {
       justify-content: center;
       text-align: center;
+      margin-left: 7px;
     }
     &.right-header .ag-header-cell-label {
       justify-content: right;
