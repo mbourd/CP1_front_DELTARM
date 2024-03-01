@@ -12,7 +12,7 @@ import BigNumber from 'bignumber.js';
 import RandExp from 'randexp';
 import regexgen from 'regexgen';
 import { create as mathCreate, all as mathAll } from 'mathjs';
-import { RowNode } from 'ag-grid-community';
+import { GridApi, RowNode } from 'ag-grid-community';
 import { keyCodeDefinitions } from 'cypress-real-events/keyCodeDefinitions';
 
 import { DataGridControlAgGrid } from './DataGridControlAgGrid';
@@ -5613,12 +5613,14 @@ function _assertSorting(_control: IApiControl) {
 
   cy.window().then((cyWindow) => {
     const unsortedData: Record<string, any>[] = [];
-    cyWindow[
-      'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
-    ].gridRef.current.api.forEachNode((rowNode) => {
+    const { api: gridApi }: { api: GridApi } =
+      cyWindow[
+        'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
+      ].gridRef.current;
+
+    gridApi.forEachNode((rowNode) => {
       unsortedData.push(processRowData(rowNode));
     });
-
     cy.wrap(columns).each((col: DataGridDetailsColumnType) => {
       if (col.sortable) {
         let expectedSortedDataASC: Record<string, any>[] = [];
@@ -5803,47 +5805,52 @@ function _assertSorting(_control: IApiControl) {
         );
 
         cy.then(() => {
-          cy.react('DataGridControlAgGrid')
-            .react('AgGridReact')
-            .find(`.ag-header-cell[col-id="${col.field}"]`)
-            .agGridSortColumn(
-              _escapeForRegExp(col.headerName) as string,
-              'ascending',
-            )
-            .then(() => {
-              const actualTableData = cyWindow[
-                'Features_Edit_Control_DataGridControlAgGrid' +
-                  _control.control_id
-              ].gridRef.current.api
-                .getRenderedNodes()
-                .map(processRowData);
-              // console.log('u', unsortedData);
-              // console.log('a', actualTableData);
-              // console.log('asc', expectedSortedDataASC);
-              expect(actualTableData).to.deep.equal(expectedSortedDataASC);
-            });
+          cy.waitUntil(() => {
+            return cy
+              .react('DataGridControlAgGrid')
+              .react('AgGridReact')
+              .find(`.ag-header-cell[col-id="${col.field}"]`)
+              .click()
+              .then(
+                () =>
+                  Cypress.$(`.ag-header-cell[col-id="${col.field}"]`).attr(
+                    'aria-sort',
+                  ) === 'ascending',
+              );
+          }).then(() => {
+            const actualTableData = gridApi
+              .getRenderedNodes()
+              .map(processRowData);
+            // console.log('u', unsortedData);
+            // console.log('a', actualTableData);
+            // console.log('asc', expectedSortedDataASC);
+            expect(actualTableData).to.deep.equal(expectedSortedDataASC);
+          });
         }).then(() => {
-          cy.react('DataGridControlAgGrid')
-            .react('AgGridReact')
-            .find(`.ag-header-cell[col-id="${col.field}"]`)
-            .agGridSortColumn(
-              _escapeForRegExp(col.headerName) as string,
-              'descending',
-            )
-            .then(() => {
-              const actualTableData = cyWindow[
-                'Features_Edit_Control_DataGridControlAgGrid' +
-                  _control.control_id
-              ].gridRef.current.api
-                .getRenderedNodes()
-                .map((rowNode) => processRowData(rowNode));
-              expect(actualTableData).to.deep.equal(expectedSortedDataDESC);
-            });
+          cy.waitUntil(() => {
+            return cy
+              .react('DataGridControlAgGrid')
+              .react('AgGridReact')
+              .find(`.ag-header-cell[col-id="${col.field}"]`)
+              .click()
+              .then(
+                () =>
+                  Cypress.$(`.ag-header-cell[col-id="${col.field}"]`).attr(
+                    'aria-sort',
+                  ) === 'descending',
+              );
+          }).then(() => {
+            const actualTableData = gridApi
+              .getRenderedNodes()
+              .map(processRowData);
+            // console.log('u', unsortedData);
+            // console.log('a', actualTableData);
+            // console.log('desc', expectedSortedDataDESC);
+            expect(actualTableData).to.deep.equal(expectedSortedDataDESC);
+          });
         });
       } else {
-        cyWindow[
-          'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
-        ].gridRef.current.api.paginationSetPageSize(
+        gridApi.paginationSetPageSize(
           _control.data_grid_detail?.datagrid_options?.pagination_row_size ??
             9999,
         );
