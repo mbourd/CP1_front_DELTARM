@@ -11,24 +11,21 @@ import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTe
 import { Row } from './Row';
 
 import '../../../../translations';
-import { BrowserRouter } from 'react-router-dom';
 
 describe('<Row />', () => {
   it('Should render', () => {
     cy.mount(
       <SetupTestsComponents>
-        <BrowserRouter>
-          <Row
-            count={0}
-            text={''}
-            stage={0}
-            state={0}
-            role={0}
-            stageName={''}
-            color={''}
-            workflow={undefined}
-          />
-        </BrowserRouter>
+        <Row
+          count={0}
+          text={''}
+          stage={0}
+          state={0}
+          role={0}
+          stageName={''}
+          color={''}
+          workflow={undefined}
+        />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
@@ -39,18 +36,16 @@ describe('<Row />', () => {
     const count = 1;
     cy.mount(
       <SetupTestsComponents>
-        <BrowserRouter>
-          <Row
-            count={count}
-            text={''}
-            stage={0}
-            state={0}
-            role={0}
-            stageName={''}
-            color={''}
-            workflow={undefined}
-          />
-        </BrowserRouter>
+        <Row
+          count={count}
+          text={''}
+          stage={0}
+          state={0}
+          role={0}
+          stageName={''}
+          color={''}
+          workflow={undefined}
+        />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
@@ -67,18 +62,16 @@ describe('<Row />', () => {
     const stageName = 'stagename';
     cy.mount(
       <SetupTestsComponents>
-        <BrowserRouter>
-          <Row
-            count={count}
-            text={''}
-            stage={0}
-            state={0}
-            role={0}
-            stageName={stageName}
-            color={''}
-            workflow={undefined}
-          />
-        </BrowserRouter>
+        <Row
+          count={count}
+          text={''}
+          stage={0}
+          state={0}
+          role={0}
+          stageName={stageName}
+          color={''}
+          workflow={undefined}
+        />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();

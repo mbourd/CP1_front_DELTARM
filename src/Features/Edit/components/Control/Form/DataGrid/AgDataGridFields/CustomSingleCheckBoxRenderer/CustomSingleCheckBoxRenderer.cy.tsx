@@ -5,7 +5,7 @@
 // NOTE: Run CLI:
 // yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/DataGrid/AgDataGridFields/CustomSingleCheckBoxRenderer/CustomSingleCheckBoxRenderer.cy.tsx"
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { SetupTestsComponents } from '../../../../../../../../../cypress/utils/SetupTestsComponents';
 import CustomSingleCheckboxRender from './CustomSingleCheckBoxRenderer';
 import { RowNode } from 'ag-grid-community';
@@ -22,13 +22,7 @@ describe('<CustomSingleCheckboxRender />', () => {
 
     cy.mount(
       <SetupTestsComponents>
-        <CustomSingleCheckboxRender
-          props={props}
-          selectedRows={[]}
-          setSelectedRows={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
+        <CustomSingleCheckboxRender props={props} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
@@ -45,13 +39,7 @@ describe('<CustomSingleCheckboxRender />', () => {
 
     cy.mount(
       <SetupTestsComponents>
-        <CustomSingleCheckboxRender
-          props={props}
-          selectedRows={[]}
-          setSelectedRows={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
+        <CustomSingleCheckboxRender props={props} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
@@ -73,13 +61,7 @@ describe('<CustomSingleCheckboxRender />', () => {
 
     cy.mount(
       <SetupTestsComponents>
-        <CustomSingleCheckboxRender
-          props={props}
-          selectedRows={[node]}
-          setSelectedRows={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
+        <CustomSingleCheckboxRender props={props} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
@@ -98,13 +80,7 @@ describe('<CustomSingleCheckboxRender />', () => {
 
     cy.mount(
       <SetupTestsComponents>
-        <CustomSingleCheckboxRender
-          props={props}
-          selectedRows={[]}
-          setSelectedRows={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
+        <CustomSingleCheckboxRender props={props} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
@@ -115,11 +91,10 @@ describe('<CustomSingleCheckboxRender />', () => {
 
   it('Should be able to change to checked/unchecked', () => {
     let val = '1';
-    let selected: RowNode[] = [];
+    // let selected: RowNode[] = [];
     const node = {} as RowNode;
     const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
       const [value, setValue] = useState(val);
-      const [selectedRows, setSelectedRows] = useState<RowNode[]>([node]);
       const props = {
         data: { row_editable: true },
         value: value,
@@ -131,17 +106,13 @@ describe('<CustomSingleCheckboxRender />', () => {
         node,
       };
 
-      useEffect(() => {
-        selected = selectedRows;
-      }, [selectedRows]);
+      // useEffect(() => {
+      //   selected = selectedRows;
+      // }, [selectedRows]);
 
       return (
         <SetupTestsComponents>
-          <CustomSingleCheckboxRender
-            props={props}
-            selectedRows={selectedRows}
-            setSelectedRows={setSelectedRows}
-          />
+          <CustomSingleCheckboxRender props={props} />
         </SetupTestsComponents>
       );
     };
@@ -152,14 +123,14 @@ describe('<CustomSingleCheckboxRender />', () => {
       .find('input[type="checkbox"]')
       .check()
       .then(() => {
-        expect(selected).to.include(node);
+        // expect(selected).to.include(node);
       })
       .should('be.checked');
     cy.react('CustomSingleCheckboxRender')
       .find('input[type="checkbox"]')
       .uncheck()
       .then(() => {
-        expect(selected).to.not.include(node);
+        // expect(selected).to.not.include(node);
       })
       .should('not.be.checked');
   });

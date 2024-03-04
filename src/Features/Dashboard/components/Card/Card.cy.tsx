@@ -9,7 +9,6 @@ import React from 'react';
 
 import { Card } from './Card';
 import { ICardBody, ICardFooter, ICardHeader } from './types';
-import { BrowserRouter } from 'react-router-dom';
 
 import '../../../Manage/routes';
 import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
@@ -42,9 +41,7 @@ describe('<Card />', () => {
     };
     cy.mount(
       <SetupTestsComponents>
-        <BrowserRouter>
-          <Card header={header} body={body} footer={footer} context={'EDIT'} />
-        </BrowserRouter>
+        <Card header={header} body={body} footer={footer} context={'EDIT'} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
@@ -103,9 +100,7 @@ describe('<Card />', () => {
     };
     cy.mount(
       <SetupTestsComponents>
-        <BrowserRouter>
-          <Card header={header} body={body} footer={footer} context={'EDIT'} />
-        </BrowserRouter>
+        <Card header={header} body={body} footer={footer} context={'EDIT'} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
@@ -151,9 +146,7 @@ describe('<Card />', () => {
     };
     cy.mount(
       <SetupTestsComponents>
-        <BrowserRouter>
-          <Card header={header} body={body} footer={footer} context={'EDIT'} />
-        </BrowserRouter>
+        <Card header={header} body={body} footer={footer} context={'EDIT'} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
@@ -197,9 +190,7 @@ describe('<Card />', () => {
     };
     cy.mount(
       <SetupTestsComponents>
-        <BrowserRouter>
-          <Card header={header} body={body} footer={footer} context={'EDIT'} />
-        </BrowserRouter>
+        <Card header={header} body={body} footer={footer} context={'EDIT'} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
