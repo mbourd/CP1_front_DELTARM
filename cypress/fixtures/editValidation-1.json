@@ -1,0 +1,2951 @@
+{
+  "data": {
+    "actions_contr_perm": [],
+    "current_section": {
+      "chapters": [
+        {
+          "chap_lib": "List of Wells",
+          "chap_num": 1,
+          "controls": [
+            {
+              "control_conditional": false,
+              "control_desc_1": null,
+              "control_desc_2": null,
+              "control_editable": true,
+              "control_family": "data_grid",
+              "control_id": 22868,
+              "control_manage_compliance": null,
+              "control_mandatory": false,
+              "control_options": null,
+              "control_pg_base_type": null,
+              "control_previous_value": null,
+              "control_regex": null,
+              "control_regex_msg": null,
+              "control_title": "List of Wells",
+              "control_type": "ag_datagrid",
+              "control_value": null,
+              "data_grid_detail": {
+                "buttons": [
+                  {
+                    "button_bg_color": "#2EB82E",
+                    "button_font_color": "#FFFFFF",
+                    "button_id": 1,
+                    "button_label": "Declare Values",
+                    "button_method": "POST",
+                    "button_order": 1,
+                    "button_refresh_callback": false,
+                    "button_route": "/total_energies/declare_values",
+                    "button_row_selected": false
+                  }
+                ],
+                "columns": [
+                  {
+                    "alignment": "left",
+                    "borderRight": null,
+                    "borderRightColor": null,
+                    "borderRightWidth": null,
+                    "col_header_display_tooltip": false,
+                    "col_header_tooltip": "Sel.",
+                    "currency_symbol": null,
+                    "decimal_digit": 0,
+                    "field": "rdg_1.value",
+                    "field_type": "checkbox_select_datagrid",
+                    "filter": "false",
+                    "floatingFilter": false,
+                    "headerColor": "#FFFFFF",
+                    "headerName": "Sel.",
+                    "hide": false,
+                    "lockPinned": true,
+                    "pinned": "left",
+                    "resizable": true,
+                    "sortable": true,
+                    "thousand_separator": false,
+                    "track_modification": false,
+                    "track_modification_option": null,
+                    "track_modification_tooltip": false
+                  },
+                  {
+                    "alignment": "left",
+                    "borderRight": null,
+                    "borderRightColor": null,
+                    "borderRightWidth": null,
+                    "col_header_display_tooltip": true,
+                    "col_header_tooltip": "Field Name",
+                    "currency_symbol": null,
+                    "decimal_digit": 0,
+                    "field": "rdg_2.value",
+                    "field_type": "text",
+                    "filter": "true",
+                    "floatingFilter": true,
+                    "headerColor": "#FFFFFF",
+                    "headerName": "Field Name",
+                    "hide": false,
+                    "lockPinned": true,
+                    "pinned": "left",
+                    "resizable": true,
+                    "sortable": true,
+                    "thousand_separator": false,
+                    "track_modification": false,
+                    "track_modification_option": null,
+                    "track_modification_tooltip": false
+                  },
+                  {
+                    "alignment": "left",
+                    "borderRight": null,
+                    "borderRightColor": null,
+                    "borderRightWidth": null,
+                    "col_header_display_tooltip": true,
+                    "col_header_tooltip": "Well Long Name",
+                    "currency_symbol": null,
+                    "decimal_digit": 0,
+                    "field": "rdg_3.value",
+                    "field_type": "text",
+                    "filter": "true",
+                    "floatingFilter": true,
+                    "headerColor": "#FFFFFF",
+                    "headerName": "Well Long Name",
+                    "hide": false,
+                    "lockPinned": true,
+                    "pinned": "left",
+                    "resizable": true,
+                    "sortable": true,
+                    "thousand_separator": false,
+                    "track_modification": true,
+                    "track_modification_option": "{\"background-color\": \"#ffb3b3\"}",
+                    "track_modification_tooltip": true
+                  },
+                  {
+                    "alignment": "center",
+                    "borderRight": null,
+                    "borderRightColor": null,
+                    "borderRightWidth": null,
+                    "col_header_display_tooltip": true,
+                    "col_header_tooltip": "Category",
+                    "currency_symbol": null,
+                    "decimal_digit": 0,
+                    "field": "rdg_4.value",
+                    "field_type": "select_list",
+                    "filter": "true",
+                    "floatingFilter": false,
+                    "headerColor": "#FFFFFF",
+                    "headerName": "Category",
+                    "hide": false,
+                    "lockPinned": false,
+                    "pinned": null,
+                    "resizable": true,
+                    "sortable": true,
+                    "thousand_separator": false,
+                    "track_modification": true,
+                    "track_modification_option": "{\"background-color\": \"#ffb3b3\"}",
+                    "track_modification_tooltip": true
+                  },
+                  {
+                    "alignment": "center",
+                    "borderRight": null,
+                    "borderRightColor": null,
+                    "borderRightWidth": null,
+                    "col_header_display_tooltip": true,
+                    "col_header_tooltip": "Well Status",
+                    "currency_symbol": null,
+                    "decimal_digit": 0,
+                    "field": "rdg_5.value",
+                    "field_type": "select_list",
+                    "filter": "true",
+                    "floatingFilter": false,
+                    "headerColor": "#FFFFFF",
+                    "headerName": "Well Status",
+                    "hide": false,
+                    "lockPinned": false,
+                    "pinned": null,
+                    "resizable": true,
+                    "sortable": true,
+                    "thousand_separator": false,
+                    "track_modification": true,
+                    "track_modification_option": "{\"background-color\": \"#ffb3b3\"}",
+                    "track_modification_tooltip": true
+                  },
+                  {
+                    "alignment": "center",
+                    "borderRight": null,
+                    "borderRightColor": null,
+                    "borderRightWidth": null,
+                    "col_header_display_tooltip": true,
+                    "col_header_tooltip": "Type of Well",
+                    "currency_symbol": null,
+                    "decimal_digit": 0,
+                    "field": "rdg_6.value",
+                    "field_type": "select_list",
+                    "filter": "true",
+                    "floatingFilter": false,
+                    "headerColor": "#FFFFFF",
+                    "headerName": "Type of Well",
+                    "hide": false,
+                    "lockPinned": false,
+                    "pinned": null,
+                    "resizable": true,
+                    "sortable": true,
+                    "thousand_separator": false,
+                    "track_modification": true,
+                    "track_modification_option": "{\"background-color\": \"#ffb3b3\"}",
+                    "track_modification_tooltip": true
+                  },
+                  {
+                    "alignment": "center",
+                    "borderRight": null,
+                    "borderRightColor": null,
+                    "borderRightWidth": null,
+                    "col_header_display_tooltip": true,
+                    "col_header_tooltip": "Nature of Well",
+                    "currency_symbol": null,
+                    "decimal_digit": 0,
+                    "field": "rdg_7.value",
+                    "field_type": "select_list",
+                    "filter": "true",
+                    "floatingFilter": false,
+                    "headerColor": "#FFFFFF",
+                    "headerName": "Nature of Well",
+                    "hide": false,
+                    "lockPinned": false,
+                    "pinned": null,
+                    "resizable": true,
+                    "sortable": true,
+                    "thousand_separator": false,
+                    "track_modification": true,
+                    "track_modification_option": "{\"background-color\": \"#ffb3b3\"}",
+                    "track_modification_tooltip": true
+                  },
+                  {
+                    "alignment": "center",
+                    "borderRight": null,
+                    "borderRightColor": null,
+                    "borderRightWidth": null,
+                    "col_header_display_tooltip": true,
+                    "col_header_tooltip": "Named Location",
+                    "currency_symbol": null,
+                    "decimal_digit": 0,
+                    "field": "rdg_9.value",
+                    "field_type": "select_list",
+                    "filter": "true",
+                    "floatingFilter": false,
+                    "headerColor": "#FFFFFF",
+                    "headerName": "Named Location",
+                    "hide": false,
+                    "lockPinned": false,
+                    "pinned": null,
+                    "resizable": true,
+                    "sortable": true,
+                    "thousand_separator": false,
+                    "track_modification": true,
+                    "track_modification_option": "{\"background-color\": \"#ffb3b3\"}",
+                    "track_modification_tooltip": true
+                  },
+                  {
+                    "alignment": "center",
+                    "borderRight": null,
+                    "borderRightColor": null,
+                    "borderRightWidth": null,
+                    "col_header_display_tooltip": true,
+                    "col_header_tooltip": "Location",
+                    "currency_symbol": null,
+                    "decimal_digit": 0,
+                    "field": "rdg_10.value",
+                    "field_type": "text",
+                    "filter": "true",
+                    "floatingFilter": false,
+                    "headerColor": "#FFFFFF",
+                    "headerName": "Location",
+                    "hide": false,
+                    "lockPinned": false,
+                    "pinned": null,
+                    "resizable": true,
+                    "sortable": true,
+                    "thousand_separator": false,
+                    "track_modification": true,
+                    "track_modification_option": "{\"background-color\": \"#ffb3b3\"}",
+                    "track_modification_tooltip": true
+                  },
+                  {
+                    "alignment": "center",
+                    "borderRight": null,
+                    "borderRightColor": null,
+                    "borderRightWidth": null,
+                    "col_header_display_tooltip": true,
+                    "col_header_tooltip": "Type of Location",
+                    "currency_symbol": null,
+                    "decimal_digit": 0,
+                    "field": "rdg_11.value",
+                    "field_type": "select_list",
+                    "filter": "true",
+                    "floatingFilter": false,
+                    "headerColor": "#FFFFFF",
+                    "headerName": "Type of Location",
+                    "hide": false,
+                    "lockPinned": false,
+                    "pinned": null,
+                    "resizable": true,
+                    "sortable": true,
+                    "thousand_separator": false,
+                    "track_modification": true,
+                    "track_modification_option": "{\"background-color\": \"#ffb3b3\"}",
+                    "track_modification_tooltip": true
+                  },
+                  {
+                    "alignment": "center",
+                    "borderRight": null,
+                    "borderRightColor": null,
+                    "borderRightWidth": null,
+                    "col_header_display_tooltip": true,
+                    "col_header_tooltip": "Water Depth (feet)",
+                    "currency_symbol": null,
+                    "decimal_digit": 0,
+                    "field": "rdg_12.value",
+                    "field_type": "integer",
+                    "filter": "true",
+                    "floatingFilter": false,
+                    "headerColor": "#FFFFFF",
+                    "headerName": "Water Depth (feet)",
+                    "hide": false,
+                    "lockPinned": false,
+                    "pinned": null,
+                    "resizable": true,
+                    "sortable": true,
+                    "thousand_separator": false,
+                    "track_modification": true,
+                    "track_modification_option": "{\"background-color\": \"#ffb3b3\"}",
+                    "track_modification_tooltip": true
+                  },
+                  {
+                    "alignment": "center",
+                    "borderRight": null,
+                    "borderRightColor": null,
+                    "borderRightWidth": null,
+                    "col_header_display_tooltip": true,
+                    "col_header_tooltip": "Length Drilled (feet) - Drilled length from seabed for subsea wells and from rotary table for platform wells",
+                    "currency_symbol": null,
+                    "decimal_digit": 0,
+                    "field": "rdg_13.value",
+                    "field_type": "integer",
+                    "filter": "true",
+                    "floatingFilter": false,
+                    "headerColor": "#FFFFFF",
+                    "headerName": "Length Drilled (feet)",
+                    "hide": false,
+                    "lockPinned": false,
+                    "pinned": null,
+                    "resizable": true,
+                    "sortable": true,
+                    "thousand_separator": false,
+                    "track_modification": true,
+                    "track_modification_option": "{\"background-color\": \"#ffb3b3\"}",
+                    "track_modification_tooltip": true
+                  },
+                  {
+                    "alignment": "center",
+                    "borderRight": null,
+                    "borderRightColor": null,
+                    "borderRightWidth": null,
+                    "col_header_display_tooltip": true,
+                    "col_header_tooltip": "Deviation (\u00b0)",
+                    "currency_symbol": null,
+                    "decimal_digit": 0,
+                    "field": "rdg_14.value",
+                    "field_type": "integer",
+                    "filter": "true",
+                    "floatingFilter": false,
+                    "headerColor": "#FFFFFF",
+                    "headerName": "Deviation (\u00b0)",
+                    "hide": false,
+                    "lockPinned": false,
+                    "pinned": null,
+                    "resizable": true,
+                    "sortable": true,
+                    "thousand_separator": false,
+                    "track_modification": true,
+                    "track_modification_option": "{\"background-color\": \"#ffb3b3\"}",
+                    "track_modification_tooltip": true
+                  },
+                  {
+                    "alignment": "center",
+                    "borderRight": null,
+                    "borderRightColor": null,
+                    "borderRightWidth": null,
+                    "col_header_display_tooltip": true,
+                    "col_header_tooltip": "AFE",
+                    "currency_symbol": "$",
+                    "decimal_digit": 0,
+                    "field": "rdg_15.value",
+                    "field_type": "financial",
+                    "filter": "true",
+                    "floatingFilter": false,
+                    "headerColor": "#FFFFFF",
+                    "headerName": "AFE",
+                    "hide": false,
+                    "lockPinned": false,
+                    "pinned": null,
+                    "resizable": true,
+                    "sortable": true,
+                    "thousand_separator": false,
+                    "track_modification": true,
+                    "track_modification_option": "{\"background-color\": \"#ffb3b3\"}",
+                    "track_modification_tooltip": true
+                  },
+                  {
+                    "alignment": "center",
+                    "borderRight": null,
+                    "borderRightColor": null,
+                    "borderRightWidth": null,
+                    "col_header_display_tooltip": true,
+                    "col_header_tooltip": "HP - Within TotalEnergies Company (c.f. section 2.3 of Company Rule CR EP FP 454), a well qualified as HPHT - high pressure and high temperature - is a well with:  1/ An expected wellhead shut-in pressure exceeding 10,000 psi (690 bar) and 2/ a bottom hole temperature (static or dynamic) higher than 150\u00b0C (300\u00b0F)",
+                    "currency_symbol": null,
+                    "decimal_digit": 0,
+                    "field": "rdg_16.value",
+                    "field_type": "select_list",
+                    "filter": "true",
+                    "floatingFilter": false,
+                    "headerColor": "#FFFFFF",
+                    "headerName": "HP",
+                    "hide": false,
+                    "lockPinned": false,
+                    "pinned": null,
+                    "resizable": true,
+                    "sortable": true,
+                    "thousand_separator": false,
+                    "track_modification": true,
+                    "track_modification_option": "{\"background-color\": \"#ffb3b3\"}",
+                    "track_modification_tooltip": true
+                  },
+                  {
+                    "alignment": "center",
+                    "borderRight": null,
+                    "borderRightColor": null,
+                    "borderRightWidth": null,
+                    "col_header_display_tooltip": true,
+                    "col_header_tooltip": "HT - Within TotalEnergies Company (c.f. section 2.3 of Company Rule CR EP FP 454), a well qualified as HPHT - high pressure and high temperature - is a well with:  1/ An expected wellhead shut-in pressure exceeding 10,000 psi (690 bar) and 2/ a bottom hole temperature (static or dynamic) higher than 150\u00b0C (300\u00b0F)",
+                    "currency_symbol": null,
+                    "decimal_digit": 0,
+                    "field": "rdg_17.value",
+                    "field_type": "select_list",
+                    "filter": "true",
+                    "floatingFilter": false,
+                    "headerColor": "#FFFFFF",
+                    "headerName": "HT",
+                    "hide": false,
+                    "lockPinned": false,
+                    "pinned": null,
+                    "resizable": true,
+                    "sortable": true,
+                    "thousand_separator": false,
+                    "track_modification": true,
+                    "track_modification_option": "{\"background-color\": \"#ffb3b3\"}",
+                    "track_modification_tooltip": true
+                  },
+                  {
+                    "alignment": "center",
+                    "borderRight": null,
+                    "borderRightColor": null,
+                    "borderRightWidth": null,
+                    "col_header_display_tooltip": true,
+                    "col_header_tooltip": "Critical Well - A well qualified as \u201ccritical\u201d by meeting any of the below criteria:      1/ Targeting Pre-Salt and/or     2/ Total Vertical Depth Below Mudline greater than 15,000ft and/or     3/ Borehole pressure anticipated at 15,000psi or higher, and/or     4/ Borehole temperature anticipated at 175\u00b0C or higher and/or     5/ Water depth greater than 3,0000 meters     6/ Wells drilled using mud weights that are intentionally \u201cbalanced\u201d or \u201cunder balanced\u201d. ",
+                    "currency_symbol": null,
+                    "decimal_digit": 0,
+                    "field": "rdg_18.value",
+                    "field_type": "select_list",
+                    "filter": "true",
+                    "floatingFilter": false,
+                    "headerColor": "#FFFFFF",
+                    "headerName": "Critical Well",
+                    "hide": false,
+                    "lockPinned": false,
+                    "pinned": null,
+                    "resizable": true,
+                    "sortable": true,
+                    "thousand_separator": false,
+                    "track_modification": true,
+                    "track_modification_option": "{\"background-color\": \"#ffb3b3\"}",
+                    "track_modification_tooltip": true
+                  },
+                  {
+                    "alignment": "center",
+                    "borderRight": null,
+                    "borderRightColor": null,
+                    "borderRightWidth": null,
+                    "col_header_display_tooltip": true,
+                    "col_header_tooltip": "Workover Y",
+                    "currency_symbol": null,
+                    "decimal_digit": 0,
+                    "field": "rdg_19.value",
+                    "field_type": "select_list",
+                    "filter": "true",
+                    "floatingFilter": false,
+                    "headerColor": "#FFFFFF",
+                    "headerName": "Workover Y",
+                    "hide": false,
+                    "lockPinned": false,
+                    "pinned": null,
+                    "resizable": true,
+                    "sortable": true,
+                    "thousand_separator": true,
+                    "track_modification": true,
+                    "track_modification_option": "{\"background-color\": \"#ffb3b3\"}",
+                    "track_modification_tooltip": true
+                  },
+                  {
+                    "alignment": "center",
+                    "borderRight": null,
+                    "borderRightColor": null,
+                    "borderRightWidth": null,
+                    "col_header_display_tooltip": true,
+                    "col_header_tooltip": "Estimated Spud Date",
+                    "currency_symbol": null,
+                    "decimal_digit": 0,
+                    "field": "rdg_20.value",
+                    "field_type": "date",
+                    "filter": "true",
+                    "floatingFilter": false,
+                    "headerColor": "#FFFFFF",
+                    "headerName": "Estimated Spud Date",
+                    "hide": false,
+                    "lockPinned": false,
+                    "pinned": null,
+                    "resizable": true,
+                    "sortable": true,
+                    "thousand_separator": false,
+                    "track_modification": true,
+                    "track_modification_option": "{\"background-color\": \"#ffb3b3\"}",
+                    "track_modification_tooltip": true
+                  },
+                  {
+                    "alignment": "center",
+                    "borderRight": null,
+                    "borderRightColor": null,
+                    "borderRightWidth": null,
+                    "col_header_display_tooltip": true,
+                    "col_header_tooltip": "Estimated Completion Date",
+                    "currency_symbol": null,
+                    "decimal_digit": 0,
+                    "field": "rdg_21.value",
+                    "field_type": "date",
+                    "filter": "true",
+                    "floatingFilter": false,
+                    "headerColor": "#FFFFFF",
+                    "headerName": "Estimated Completion Date",
+                    "hide": false,
+                    "lockPinned": false,
+                    "pinned": null,
+                    "resizable": true,
+                    "sortable": true,
+                    "thousand_separator": false,
+                    "track_modification": true,
+                    "track_modification_option": "{\"background-color\": \"#ffb3b3\"}",
+                    "track_modification_tooltip": true
+                  },
+                  {
+                    "alignment": "center",
+                    "borderRight": null,
+                    "borderRightColor": null,
+                    "borderRightWidth": null,
+                    "col_header_display_tooltip": true,
+                    "col_header_tooltip": "RIG Contractor",
+                    "currency_symbol": null,
+                    "decimal_digit": 0,
+                    "field": "rdg_22.value",
+                    "field_type": "text",
+                    "filter": "true",
+                    "floatingFilter": false,
+                    "headerColor": "#FFFFFF",
+                    "headerName": "RIG Contractor",
+                    "hide": false,
+                    "lockPinned": false,
+                    "pinned": null,
+                    "resizable": true,
+                    "sortable": true,
+                    "thousand_separator": false,
+                    "track_modification": true,
+                    "track_modification_option": "{\"background-color\": \"#ffb3b3\"}",
+                    "track_modification_tooltip": true
+                  },
+                  {
+                    "alignment": "center",
+                    "borderRight": null,
+                    "borderRightColor": null,
+                    "borderRightWidth": null,
+                    "col_header_display_tooltip": true,
+                    "col_header_tooltip": "Drilling RIG Name",
+                    "currency_symbol": null,
+                    "decimal_digit": 0,
+                    "field": "rdg_23.value",
+                    "field_type": "text",
+                    "filter": "true",
+                    "floatingFilter": false,
+                    "headerColor": "#FFFFFF",
+                    "headerName": "Drilling RIG Name",
+                    "hide": false,
+                    "lockPinned": false,
+                    "pinned": null,
+                    "resizable": true,
+                    "sortable": true,
+                    "thousand_separator": false,
+                    "track_modification": true,
+                    "track_modification_option": "{\"background-color\": \"#ffb3b3\"}",
+                    "track_modification_tooltip": true
+                  }
+                ],
+                "datagrid_options": {
+                  "add_row_button_display": true,
+                  "pagination_row_size": 10,
+                  "select_all_button_col_ref": "rdg_1",
+                  "select_all_button_display": true,
+                  "unselect_all_button_display": true,
+                  "delete_row_button_display": true
+                },
+                "rows": [
+                  {
+                    "rdg_1": {
+                      "choice_options": null,
+                      "col_elm_id": 7808,
+                      "component": "checkbox_select_datagrid",
+                      "control_editable": true,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 1,
+                      "value": null
+                    },
+                    "rdg_10": {
+                      "choice_options": null,
+                      "col_elm_id": 7838,
+                      "component": "text",
+                      "control_editable": false,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "BULGARIA",
+                      "row_num": 1,
+                      "value": "BULGARIA"
+                    },
+                    "rdg_11": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Platform"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "Standalone"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 3,
+                          "choice_lib": "Well cluster (Offshore)"
+                        }
+                      ],
+                      "col_elm_id": 7839,
+                      "component": "select_list",
+                      "control_editable": false,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 1,
+                      "value": null
+                    },
+                    "rdg_12": {
+                      "choice_options": null,
+                      "col_elm_id": 7840,
+                      "component": "integer",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": "^-?[0-9]\\d*$",
+                      "control_regex_msg": "La valeur saisie n'est pas une valeur enti\u00e8re",
+                      "reference_value": null,
+                      "row_num": 1,
+                      "value": null
+                    },
+                    "rdg_13": {
+                      "choice_options": null,
+                      "col_elm_id": 7841,
+                      "component": "integer",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": "^-?[0-9]\\d*$",
+                      "control_regex_msg": "La valeur saisie n'est pas une valeur enti\u00e8re",
+                      "reference_value": "15157",
+                      "row_num": 1,
+                      "value": "15157"
+                    },
+                    "rdg_14": {
+                      "choice_options": null,
+                      "col_elm_id": 7842,
+                      "component": "integer",
+                      "control_editable": true,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": "^-?[0-9]\\d*$",
+                      "control_regex_msg": "La valeur saisie n'est pas une valeur enti\u00e8re",
+                      "reference_value": null,
+                      "row_num": 1,
+                      "value": null
+                    },
+                    "rdg_15": {
+                      "choice_options": null,
+                      "col_elm_id": 7843,
+                      "component": "financial",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": "^-?[0-9]\\d*(\\.\\d+)?$",
+                      "control_regex_msg": "La valeur saisie n'est pas une valeur autoris\u00e9e pour ce champ",
+                      "reference_value": "68000000",
+                      "row_num": 1,
+                      "value": "68000000"
+                    },
+                    "rdg_16": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Yes"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "No"
+                        }
+                      ],
+                      "col_elm_id": 7844,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "2",
+                      "row_num": 1,
+                      "value": "2"
+                    },
+                    "rdg_17": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Yes"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "No"
+                        }
+                      ],
+                      "col_elm_id": 7845,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "2",
+                      "row_num": 1,
+                      "value": "2"
+                    },
+                    "rdg_18": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Yes"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "No"
+                        }
+                      ],
+                      "col_elm_id": 7846,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 1,
+                      "value": null
+                    },
+                    "rdg_19": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Yes"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "No"
+                        }
+                      ],
+                      "col_elm_id": 7847,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 1,
+                      "value": null
+                    },
+                    "rdg_2": {
+                      "choice_options": null,
+                      "col_elm_id": 7806,
+                      "component": "text",
+                      "control_editable": false,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "KHAN ASPARUH EXPLO",
+                      "row_num": 1,
+                      "value": "KHAN ASPARUH EXPLO"
+                    },
+                    "rdg_20": {
+                      "choice_options": null,
+                      "col_elm_id": 7848,
+                      "component": "date",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 1,
+                      "value": null
+                    },
+                    "rdg_21": {
+                      "choice_options": null,
+                      "col_elm_id": 7849,
+                      "component": "date",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 1,
+                      "value": null
+                    },
+                    "rdg_22": {
+                      "choice_options": null,
+                      "col_elm_id": 7850,
+                      "component": "text",
+                      "control_editable": true,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 1,
+                      "value": null
+                    },
+                    "rdg_23": {
+                      "choice_options": null,
+                      "col_elm_id": 7851,
+                      "component": "text",
+                      "control_editable": true,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 1,
+                      "value": null
+                    },
+                    "rdg_24": {
+                      "choice_options": null,
+                      "col_elm_id": 7830,
+                      "component": "timestamp",
+                      "control_editable": false,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 1,
+                      "value": "2023-11-06 16:59:16"
+                    },
+                    "rdg_3": {
+                      "choice_options": null,
+                      "col_elm_id": 7831,
+                      "component": "text",
+                      "control_editable": false,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "Melnik",
+                      "row_num": 1,
+                      "value": "Melnik"
+                    },
+                    "rdg_4": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Onshore"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "Offshore"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 3,
+                          "choice_lib": "Deep Offshore"
+                        }
+                      ],
+                      "col_elm_id": 7832,
+                      "component": "select_list",
+                      "control_editable": false,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "3",
+                      "row_num": 1,
+                      "value": "3"
+                    },
+                    "rdg_5": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Existing"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "Drilling in progress"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 3,
+                          "choice_lib": "Planned drilling"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 4,
+                          "choice_lib": "Permanently plugged and abandoned"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 5,
+                          "choice_lib": "Temporary plugged and abandoned"
+                        }
+                      ],
+                      "col_elm_id": 7833,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "4",
+                      "row_num": 1,
+                      "value": "4"
+                    },
+                    "rdg_6": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Exploration"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "Appraisal"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 3,
+                          "choice_lib": "Development"
+                        }
+                      ],
+                      "col_elm_id": 7834,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 1,
+                      "value": null
+                    },
+                    "rdg_7": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Co2 Injector"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "Condensate Injector"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 3,
+                          "choice_lib": "Gas Injector"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 4,
+                          "choice_lib": "Gas Producer"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 5,
+                          "choice_lib": "Oil Producer"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 6,
+                          "choice_lib": "Tight Gas"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 7,
+                          "choice_lib": "Water Disposal"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 8,
+                          "choice_lib": "Water Injector"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 9,
+                          "choice_lib": "Water Producer"
+                        }
+                      ],
+                      "col_elm_id": 7835,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 1,
+                      "value": null
+                    },
+                    "rdg_8": {
+                      "choice_options": null,
+                      "col_elm_id": 7836,
+                      "component": "long_text",
+                      "control_editable": true,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 1,
+                      "value": null
+                    },
+                    "rdg_9": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 0,
+                          "choice_lib": "False"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "True"
+                        }
+                      ],
+                      "col_elm_id": 7837,
+                      "component": "select_list",
+                      "control_editable": false,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "0",
+                      "row_num": 1,
+                      "value": "0"
+                    },
+                    "row_editable": true,
+                    "row_uuid": "46fba736-8fc4-4183-bd37-1c9bc2a94ecc"
+                  },
+                  {
+                    "rdg_1": {
+                      "choice_options": null,
+                      "col_elm_id": 7808,
+                      "component": "checkbox_select_datagrid",
+                      "control_editable": true,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 2,
+                      "value": null
+                    },
+                    "rdg_10": {
+                      "choice_options": null,
+                      "col_elm_id": 7838,
+                      "component": "text",
+                      "control_editable": false,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "BULGARIA",
+                      "row_num": 2,
+                      "value": "BULGARIA"
+                    },
+                    "rdg_11": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Platform"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "Standalone"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 3,
+                          "choice_lib": "Well cluster (Offshore)"
+                        }
+                      ],
+                      "col_elm_id": 7839,
+                      "component": "select_list",
+                      "control_editable": false,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 2,
+                      "value": null
+                    },
+                    "rdg_12": {
+                      "choice_options": null,
+                      "col_elm_id": 7840,
+                      "component": "integer",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": "^-?[0-9]\\d*$",
+                      "control_regex_msg": "La valeur saisie n'est pas une valeur enti\u00e8re",
+                      "reference_value": null,
+                      "row_num": 2,
+                      "value": null
+                    },
+                    "rdg_13": {
+                      "choice_options": null,
+                      "col_elm_id": 7841,
+                      "component": "integer",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": "^-?[0-9]\\d*$",
+                      "control_regex_msg": "La valeur saisie n'est pas une valeur enti\u00e8re",
+                      "reference_value": "6000",
+                      "row_num": 2,
+                      "value": "6000"
+                    },
+                    "rdg_14": {
+                      "choice_options": null,
+                      "col_elm_id": 7842,
+                      "component": "integer",
+                      "control_editable": true,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": "^-?[0-9]\\d*$",
+                      "control_regex_msg": "La valeur saisie n'est pas une valeur enti\u00e8re",
+                      "reference_value": "90.00",
+                      "row_num": 2,
+                      "value": "90.00"
+                    },
+                    "rdg_15": {
+                      "choice_options": null,
+                      "col_elm_id": 7843,
+                      "component": "financial",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": "^-?[0-9]\\d*(\\.\\d+)?$",
+                      "control_regex_msg": "La valeur saisie n'est pas une valeur autoris\u00e9e pour ce champ",
+                      "reference_value": "61000000",
+                      "row_num": 2,
+                      "value": "61000000"
+                    },
+                    "rdg_16": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Yes"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "No"
+                        }
+                      ],
+                      "col_elm_id": 7844,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "2",
+                      "row_num": 2,
+                      "value": "2"
+                    },
+                    "rdg_17": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Yes"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "No"
+                        }
+                      ],
+                      "col_elm_id": 7845,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "2",
+                      "row_num": 2,
+                      "value": "2"
+                    },
+                    "rdg_18": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Yes"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "No"
+                        }
+                      ],
+                      "col_elm_id": 7846,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 2,
+                      "value": null
+                    },
+                    "rdg_19": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Yes"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "No"
+                        }
+                      ],
+                      "col_elm_id": 7847,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "2",
+                      "row_num": 2,
+                      "value": "2"
+                    },
+                    "rdg_2": {
+                      "choice_options": null,
+                      "col_elm_id": 7806,
+                      "component": "text",
+                      "control_editable": false,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "KHAN ASPARUH EXPLO",
+                      "row_num": 2,
+                      "value": "KHAN ASPARUH EXPLO"
+                    },
+                    "rdg_20": {
+                      "choice_options": null,
+                      "col_elm_id": 7848,
+                      "component": "date",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 2,
+                      "value": null
+                    },
+                    "rdg_21": {
+                      "choice_options": null,
+                      "col_elm_id": 7849,
+                      "component": "date",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 2,
+                      "value": null
+                    },
+                    "rdg_22": {
+                      "choice_options": null,
+                      "col_elm_id": 7850,
+                      "component": "text",
+                      "control_editable": true,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 2,
+                      "value": null
+                    },
+                    "rdg_23": {
+                      "choice_options": null,
+                      "col_elm_id": 7851,
+                      "component": "text",
+                      "control_editable": true,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 2,
+                      "value": null
+                    },
+                    "rdg_24": {
+                      "choice_options": null,
+                      "col_elm_id": 7830,
+                      "component": "timestamp",
+                      "control_editable": false,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 2,
+                      "value": "2023-11-06 16:56:16"
+                    },
+                    "rdg_3": {
+                      "choice_options": null,
+                      "col_elm_id": 7831,
+                      "component": "text",
+                      "control_editable": false,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "Krum",
+                      "row_num": 2,
+                      "value": "Krum"
+                    },
+                    "rdg_4": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Onshore"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "Offshore"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 3,
+                          "choice_lib": "Deep Offshore"
+                        }
+                      ],
+                      "col_elm_id": 7832,
+                      "component": "select_list",
+                      "control_editable": false,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "3",
+                      "row_num": 2,
+                      "value": "3"
+                    },
+                    "rdg_5": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Existing"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "Drilling in progress"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 3,
+                          "choice_lib": "Planned drilling"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 4,
+                          "choice_lib": "Permanently plugged and abandoned"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 5,
+                          "choice_lib": "Temporary plugged and abandoned"
+                        }
+                      ],
+                      "col_elm_id": 7833,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "3",
+                      "row_num": 2,
+                      "value": "3"
+                    },
+                    "rdg_6": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Exploration"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "Appraisal"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 3,
+                          "choice_lib": "Development"
+                        }
+                      ],
+                      "col_elm_id": 7834,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 2,
+                      "value": null
+                    },
+                    "rdg_7": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Co2 Injector"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "Condensate Injector"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 3,
+                          "choice_lib": "Gas Injector"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 4,
+                          "choice_lib": "Gas Producer"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 5,
+                          "choice_lib": "Oil Producer"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 6,
+                          "choice_lib": "Tight Gas"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 7,
+                          "choice_lib": "Water Disposal"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 8,
+                          "choice_lib": "Water Injector"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 9,
+                          "choice_lib": "Water Producer"
+                        }
+                      ],
+                      "col_elm_id": 7835,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 2,
+                      "value": null
+                    },
+                    "rdg_8": {
+                      "choice_options": null,
+                      "col_elm_id": 7836,
+                      "component": "long_text",
+                      "control_editable": true,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 2,
+                      "value": null
+                    },
+                    "rdg_9": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 0,
+                          "choice_lib": "False"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "True"
+                        }
+                      ],
+                      "col_elm_id": 7837,
+                      "component": "select_list",
+                      "control_editable": false,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "0",
+                      "row_num": 2,
+                      "value": "0"
+                    },
+                    "row_editable": true,
+                    "row_uuid": "32c428ac-6534-44fa-8cdd-f2e7a16d213a"
+                  },
+                  {
+                    "rdg_1": {
+                      "choice_options": null,
+                      "col_elm_id": 7808,
+                      "component": "checkbox_select_datagrid",
+                      "control_editable": true,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 3,
+                      "value": null
+                    },
+                    "rdg_10": {
+                      "choice_options": null,
+                      "col_elm_id": 7838,
+                      "component": "text",
+                      "control_editable": false,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "BULGARIA",
+                      "row_num": 3,
+                      "value": "BULGARIA"
+                    },
+                    "rdg_11": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Platform"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "Standalone"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 3,
+                          "choice_lib": "Well cluster (Offshore)"
+                        }
+                      ],
+                      "col_elm_id": 7839,
+                      "component": "select_list",
+                      "control_editable": false,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 3,
+                      "value": null
+                    },
+                    "rdg_12": {
+                      "choice_options": null,
+                      "col_elm_id": 7840,
+                      "component": "integer",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": "^-?[0-9]\\d*$",
+                      "control_regex_msg": "La valeur saisie n'est pas une valeur enti\u00e8re",
+                      "reference_value": null,
+                      "row_num": 3,
+                      "value": null
+                    },
+                    "rdg_13": {
+                      "choice_options": null,
+                      "col_elm_id": 7841,
+                      "component": "integer",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": "^-?[0-9]\\d*$",
+                      "control_regex_msg": "La valeur saisie n'est pas une valeur enti\u00e8re",
+                      "reference_value": "19094",
+                      "row_num": 3,
+                      "value": "19094"
+                    },
+                    "rdg_14": {
+                      "choice_options": null,
+                      "col_elm_id": 7842,
+                      "component": "integer",
+                      "control_editable": true,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": "^-?[0-9]\\d*$",
+                      "control_regex_msg": "La valeur saisie n'est pas une valeur enti\u00e8re",
+                      "reference_value": "30.00",
+                      "row_num": 3,
+                      "value": "30.00"
+                    },
+                    "rdg_15": {
+                      "choice_options": null,
+                      "col_elm_id": 7843,
+                      "component": "financial",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": "^-?[0-9]\\d*(\\.\\d+)?$",
+                      "control_regex_msg": "La valeur saisie n'est pas une valeur autoris\u00e9e pour ce champ",
+                      "reference_value": "72000000",
+                      "row_num": 3,
+                      "value": "72000000"
+                    },
+                    "rdg_16": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Yes"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "No"
+                        }
+                      ],
+                      "col_elm_id": 7844,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "2",
+                      "row_num": 3,
+                      "value": "2"
+                    },
+                    "rdg_17": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Yes"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "No"
+                        }
+                      ],
+                      "col_elm_id": 7845,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "1",
+                      "row_num": 3,
+                      "value": "1"
+                    },
+                    "rdg_18": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Yes"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "No"
+                        }
+                      ],
+                      "col_elm_id": 7846,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 3,
+                      "value": null
+                    },
+                    "rdg_19": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Yes"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "No"
+                        }
+                      ],
+                      "col_elm_id": 7847,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 3,
+                      "value": null
+                    },
+                    "rdg_2": {
+                      "choice_options": null,
+                      "col_elm_id": 7806,
+                      "component": "text",
+                      "control_editable": false,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "KHAN ASPARUH EXPLO",
+                      "row_num": 3,
+                      "value": "KHAN ASPARUH EXPLO"
+                    },
+                    "rdg_20": {
+                      "choice_options": null,
+                      "col_elm_id": 7848,
+                      "component": "date",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 3,
+                      "value": null
+                    },
+                    "rdg_21": {
+                      "choice_options": null,
+                      "col_elm_id": 7849,
+                      "component": "date",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 3,
+                      "value": null
+                    },
+                    "rdg_22": {
+                      "choice_options": null,
+                      "col_elm_id": 7850,
+                      "component": "text",
+                      "control_editable": true,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 3,
+                      "value": null
+                    },
+                    "rdg_23": {
+                      "choice_options": null,
+                      "col_elm_id": 7851,
+                      "component": "text",
+                      "control_editable": true,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 3,
+                      "value": null
+                    },
+                    "rdg_24": {
+                      "choice_options": null,
+                      "col_elm_id": 7830,
+                      "component": "timestamp",
+                      "control_editable": false,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 3,
+                      "value": "2023-11-06 16:56:13"
+                    },
+                    "rdg_3": {
+                      "choice_options": null,
+                      "col_elm_id": 7831,
+                      "component": "text",
+                      "control_editable": false,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "Rubin-1",
+                      "row_num": 3,
+                      "value": "Rubin-1"
+                    },
+                    "rdg_4": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Onshore"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "Offshore"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 3,
+                          "choice_lib": "Deep Offshore"
+                        }
+                      ],
+                      "col_elm_id": 7832,
+                      "component": "select_list",
+                      "control_editable": false,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "3",
+                      "row_num": 3,
+                      "value": "3"
+                    },
+                    "rdg_5": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Existing"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "Drilling in progress"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 3,
+                          "choice_lib": "Planned drilling"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 4,
+                          "choice_lib": "Permanently plugged and abandoned"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 5,
+                          "choice_lib": "Temporary plugged and abandoned"
+                        }
+                      ],
+                      "col_elm_id": 7833,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "4",
+                      "row_num": 3,
+                      "value": "4"
+                    },
+                    "rdg_6": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Exploration"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "Appraisal"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 3,
+                          "choice_lib": "Development"
+                        }
+                      ],
+                      "col_elm_id": 7834,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 3,
+                      "value": null
+                    },
+                    "rdg_7": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Co2 Injector"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "Condensate Injector"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 3,
+                          "choice_lib": "Gas Injector"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 4,
+                          "choice_lib": "Gas Producer"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 5,
+                          "choice_lib": "Oil Producer"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 6,
+                          "choice_lib": "Tight Gas"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 7,
+                          "choice_lib": "Water Disposal"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 8,
+                          "choice_lib": "Water Injector"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 9,
+                          "choice_lib": "Water Producer"
+                        }
+                      ],
+                      "col_elm_id": 7835,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 3,
+                      "value": null
+                    },
+                    "rdg_8": {
+                      "choice_options": null,
+                      "col_elm_id": 7836,
+                      "component": "long_text",
+                      "control_editable": true,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 3,
+                      "value": null
+                    },
+                    "rdg_9": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 0,
+                          "choice_lib": "False"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "True"
+                        }
+                      ],
+                      "col_elm_id": 7837,
+                      "component": "select_list",
+                      "control_editable": false,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "0",
+                      "row_num": 3,
+                      "value": "0"
+                    },
+                    "row_editable": true,
+                    "row_uuid": "04b802b2-bc57-44f7-9303-dd5eea3abd9e"
+                  },
+                  {
+                    "rdg_1": {
+                      "choice_options": null,
+                      "col_elm_id": 7808,
+                      "component": "checkbox_select_datagrid",
+                      "control_editable": true,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 4,
+                      "value": null
+                    },
+                    "rdg_10": {
+                      "choice_options": null,
+                      "col_elm_id": 7838,
+                      "component": "text",
+                      "control_editable": false,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "BULGARIA",
+                      "row_num": 4,
+                      "value": "BULGARIA"
+                    },
+                    "rdg_11": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Platform"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "Standalone"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 3,
+                          "choice_lib": "Well cluster (Offshore)"
+                        }
+                      ],
+                      "col_elm_id": 7839,
+                      "component": "select_list",
+                      "control_editable": false,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 4,
+                      "value": null
+                    },
+                    "rdg_12": {
+                      "choice_options": null,
+                      "col_elm_id": 7840,
+                      "component": "integer",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": "^-?[0-9]\\d*$",
+                      "control_regex_msg": "La valeur saisie n'est pas une valeur enti\u00e8re",
+                      "reference_value": null,
+                      "row_num": 4,
+                      "value": null
+                    },
+                    "rdg_13": {
+                      "choice_options": null,
+                      "col_elm_id": 7841,
+                      "component": "integer",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": "^-?[0-9]\\d*$",
+                      "control_regex_msg": "La valeur saisie n'est pas une valeur enti\u00e8re",
+                      "reference_value": "13120",
+                      "row_num": 4,
+                      "value": "13120"
+                    },
+                    "rdg_14": {
+                      "choice_options": null,
+                      "col_elm_id": 7842,
+                      "component": "integer",
+                      "control_editable": true,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": "^-?[0-9]\\d*$",
+                      "control_regex_msg": "La valeur saisie n'est pas une valeur enti\u00e8re",
+                      "reference_value": null,
+                      "row_num": 4,
+                      "value": null
+                    },
+                    "rdg_15": {
+                      "choice_options": null,
+                      "col_elm_id": 7843,
+                      "component": "financial",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": "^-?[0-9]\\d*(\\.\\d+)?$",
+                      "control_regex_msg": "La valeur saisie n'est pas une valeur autoris\u00e9e pour ce champ",
+                      "reference_value": "126500000",
+                      "row_num": 4,
+                      "value": "126500000"
+                    },
+                    "rdg_16": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Yes"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "No"
+                        }
+                      ],
+                      "col_elm_id": 7844,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "2",
+                      "row_num": 4,
+                      "value": "2"
+                    },
+                    "rdg_17": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Yes"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "No"
+                        }
+                      ],
+                      "col_elm_id": 7845,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "2",
+                      "row_num": 4,
+                      "value": "2"
+                    },
+                    "rdg_18": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Yes"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "No"
+                        }
+                      ],
+                      "col_elm_id": 7846,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 4,
+                      "value": null
+                    },
+                    "rdg_19": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Yes"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "No"
+                        }
+                      ],
+                      "col_elm_id": 7847,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 4,
+                      "value": null
+                    },
+                    "rdg_2": {
+                      "choice_options": null,
+                      "col_elm_id": 7806,
+                      "component": "text",
+                      "control_editable": false,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "KHAN ASPARUH EXPLO",
+                      "row_num": 4,
+                      "value": "KHAN ASPARUH EXPLO"
+                    },
+                    "rdg_20": {
+                      "choice_options": null,
+                      "col_elm_id": 7848,
+                      "component": "date",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 4,
+                      "value": null
+                    },
+                    "rdg_21": {
+                      "choice_options": null,
+                      "col_elm_id": 7849,
+                      "component": "date",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 4,
+                      "value": null
+                    },
+                    "rdg_22": {
+                      "choice_options": null,
+                      "col_elm_id": 7850,
+                      "component": "text",
+                      "control_editable": true,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 4,
+                      "value": null
+                    },
+                    "rdg_23": {
+                      "choice_options": null,
+                      "col_elm_id": 7851,
+                      "component": "text",
+                      "control_editable": true,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 4,
+                      "value": null
+                    },
+                    "rdg_24": {
+                      "choice_options": null,
+                      "col_elm_id": 7830,
+                      "component": "timestamp",
+                      "control_editable": false,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 4,
+                      "value": null
+                    },
+                    "rdg_3": {
+                      "choice_options": null,
+                      "col_elm_id": 7831,
+                      "component": "text",
+                      "control_editable": false,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "Polshkov 1",
+                      "row_num": 4,
+                      "value": "Polshkov 1"
+                    },
+                    "rdg_4": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Onshore"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "Offshore"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 3,
+                          "choice_lib": "Deep Offshore"
+                        }
+                      ],
+                      "col_elm_id": 7832,
+                      "component": "select_list",
+                      "control_editable": false,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "3",
+                      "row_num": 4,
+                      "value": "3"
+                    },
+                    "rdg_5": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Existing"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "Drilling in progress"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 3,
+                          "choice_lib": "Planned drilling"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 4,
+                          "choice_lib": "Permanently plugged and abandoned"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 5,
+                          "choice_lib": "Temporary plugged and abandoned"
+                        }
+                      ],
+                      "col_elm_id": 7833,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "4",
+                      "row_num": 4,
+                      "value": "4"
+                    },
+                    "rdg_6": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Exploration"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "Appraisal"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 3,
+                          "choice_lib": "Development"
+                        }
+                      ],
+                      "col_elm_id": 7834,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 4,
+                      "value": null
+                    },
+                    "rdg_7": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "Co2 Injector"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 2,
+                          "choice_lib": "Condensate Injector"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 3,
+                          "choice_lib": "Gas Injector"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 4,
+                          "choice_lib": "Gas Producer"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 5,
+                          "choice_lib": "Oil Producer"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 6,
+                          "choice_lib": "Tight Gas"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 7,
+                          "choice_lib": "Water Disposal"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 8,
+                          "choice_lib": "Water Injector"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 9,
+                          "choice_lib": "Water Producer"
+                        }
+                      ],
+                      "col_elm_id": 7835,
+                      "component": "select_list",
+                      "control_editable": true,
+                      "control_mandatory": true,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 4,
+                      "value": null
+                    },
+                    "rdg_8": {
+                      "choice_options": null,
+                      "col_elm_id": 7836,
+                      "component": "long_text",
+                      "control_editable": true,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": null,
+                      "row_num": 4,
+                      "value": null
+                    },
+                    "rdg_9": {
+                      "choice_options": [
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 0,
+                          "choice_lib": "False"
+                        },
+                        {
+                          "choice_bg_color": "FFFFFF",
+                          "choice_font_color": "000000",
+                          "choice_font_weight": "normal",
+                          "choice_id": 1,
+                          "choice_lib": "True"
+                        }
+                      ],
+                      "col_elm_id": 7837,
+                      "component": "select_list",
+                      "control_editable": false,
+                      "control_mandatory": false,
+                      "control_options": null,
+                      "control_regex": null,
+                      "control_regex_msg": null,
+                      "reference_value": "0",
+                      "row_num": 4,
+                      "value": "0"
+                    },
+                    "row_editable": true,
+                    "row_uuid": "53932e1a-8bde-4cf9-9f71-9ab13f2475d6"
+                  }
+                ],
+                "source": "TE_tobedeclared"
+              }
+            }
+          ]
+        }
+      ],
+      "section_id": 2855
+    },
+    "file": [
+      {
+        "key": "Num\u00e9ro de Dossier",
+        "type": "text",
+        "value": "#49863"
+      },
+      {
+        "key": "Avenant",
+        "type": "text",
+        "value": "None"
+      },
+      {
+        "key": "Produit KSIOP",
+        "type": "text",
+        "value": "Yearly Declaration - TotalEnergies"
+      },
+      {
+        "key": "Contrepartie",
+        "type": "text",
+        "value": "None"
+      },
+      {
+        "key": "Code Contrepartie",
+        "type": "text",
+        "value": "None"
+      },
+      {
+        "key": "Cr\u00e9ation le",
+        "type": "date",
+        "value": "Sat, 15 Jul 2023 11:51:14 GMT"
+      },
+      {
+        "key": "Dossier cr\u00e9\u00e9 par",
+        "type": "text",
+        "value": "Boris Horowitz"
+      },
+      {
+        "key": "Derni\u00e8re \u00e9dition le",
+        "type": "date",
+        "value": "Sat, 15 Jul 2023 11:51:14 GMT"
+      },
+      {
+        "key": "Derni\u00e8re \u00e9dition par",
+        "type": "text",
+        "value": "Boris Horowitz"
+      }
+    ],
+    "file_info": {
+      "contrepartie": null,
+      "file_avenant": null,
+      "file_num": "#49863",
+      "product_type": "Yearly Declaration - TotalEnergies",
+      "title": "TO BE DECLARED : KHAN ASPARUH - TOTALENERGIES EP BULGARIA BV (An. 2024)"
+    },
+    "nb_comment": 0,
+    "section_footer": {
+      "footer_message": ""
+    },
+    "section_header": null,
+    "sections": [
+      {
+        "section_hint": "",
+        "section_id": 2853,
+        "section_lib": "Block / Fields",
+        "section_locked": false,
+        "stage_code": "MEP"
+      },
+      {
+        "section_hint": "",
+        "section_id": 2854,
+        "section_lib": "Facilities",
+        "section_locked": false,
+        "stage_code": "MEP"
+      },
+      {
+        "section_hint": "",
+        "section_id": 2855,
+        "section_lib": "Wells (4)",
+        "section_locked": false,
+        "stage_code": "MEP"
+      },
+      {
+        "section_hint": "",
+        "section_id": 2856,
+        "section_lib": "Spare Parts (1)",
+        "section_locked": false,
+        "stage_code": "MEP"
+      },
+      {
+        "section_hint": "",
+        "section_id": 2857,
+        "section_lib": "Stock",
+        "section_locked": false,
+        "stage_code": "MEP"
+      },
+      {
+        "section_hint": "",
+        "section_id": 2858,
+        "section_lib": "Minor Works",
+        "section_locked": false,
+        "stage_code": "MEP"
+      }
+    ],
+    "state": {
+      "state_color": "007E33",
+      "state_id": 1,
+      "state_name": "Dossiers \u00e0 Traiter"
+    },
+    "valid_mode": "global"
+  },
+  "route_front": "/file/edit?source=TE_tobedeclared&file_id=e05211cb-6bbe-4db6-97f1-244f32c02d53",
+  "target": "main"
+}

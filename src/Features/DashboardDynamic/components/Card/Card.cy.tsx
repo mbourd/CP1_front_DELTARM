@@ -43,6 +43,204 @@ describe('<Card />', () => {
     cy.waitReactApp();
     cy.react('Card').should('exist');
   });
+  it('should render (same number of cols/cells values) - card1', function () {
+    const _card = {
+      ...structuredClone(card1),
+      cols: {
+        ...structuredClone(card1.cols),
+        values: [
+          {
+            border_right: true,
+            dataKey: 'Contrôle',
+            filter: true,
+            floating_filter: true,
+            header: 'Contrôle',
+            label: 'Contrôle',
+            width: 450,
+          },
+          {
+            border_right: true,
+            dataKey: 'Contrôle',
+            filter: true,
+            floating_filter: true,
+            header: 'Contrôle',
+            label: 'Contrôle',
+            width: 450,
+          },
+          {
+            border_right: false,
+            dataKey: 'Période',
+            filter: true,
+            floating_filter: false,
+            header: 'Période',
+            label: 'Période',
+            width: 120,
+          },
+          {
+            border_right: false,
+            dataKey: 'Période',
+            filter: true,
+            floating_filter: false,
+            header: 'Période',
+            label: 'Période',
+            width: 120,
+          },
+          {
+            border_right: true,
+            dataKey: 'Dernier',
+            filter: true,
+            floating_filter: false,
+            header: 'Dernier',
+            label: 'Dernier',
+            width: 85,
+          },
+          {
+            border_right: true,
+            dataKey: 'Dernier',
+            filter: true,
+            floating_filter: false,
+            header: 'Dernier',
+            label: 'Dernier',
+            width: 85,
+          },
+          {
+            border_right: false,
+            dataKey: 'Nouveau',
+            filter: true,
+            floating_filter: false,
+            header: 'Nouveau',
+            label: 'Nouveau',
+            width: 85,
+          },
+          {
+            border_right: false,
+            dataKey: 'Nouveau',
+            filter: true,
+            floating_filter: false,
+            header: 'Nouveau',
+            label: 'Nouveau',
+            width: 85,
+          },
+          {
+            border_right: false,
+            dataKey: 'Liste',
+            filter: true,
+            floating_filter: false,
+            header: 'Liste',
+            label: 'Liste',
+            width: 60,
+          },
+          {
+            border_right: false,
+            dataKey: 'Liste',
+            filter: true,
+            floating_filter: false,
+            header: 'Liste',
+            label: 'Liste',
+            width: 60,
+          },
+        ],
+      },
+      lines: {
+        ...structuredClone(card1.lines),
+        values: [
+          {
+            id: 'e4685ad1-5776-4f0e-a979-478b3a21696c',
+            item: [
+              {
+                action: null,
+                content:
+                  '<p style="color:#5a4749; font-weight:bold;">Export Finance</p>CP-00004-Contrôle de la correcte préparation du dossier pour décision...',
+                hint: 'Contrôle de la correcte préparation du dossier pour décision en comité',
+                icon: null,
+              },
+              {
+                action: null,
+                content: '--/--/--',
+                hint: 'Aucune saisie pour ce contrôle',
+                icon: null,
+              },
+              {
+                action: null,
+                content: null,
+                hint: null,
+                icon: {
+                  color: null,
+                  ref: null,
+                  size: null,
+                },
+              },
+              {
+                action: {
+                  endpoint: '/edit/new_ctrl_file',
+                  method: 'GET',
+                  params: {
+                    cp_uuid: 'e4685ad1-5776-4f0e-a979-478b3a21696c',
+                  },
+                },
+                content: null,
+                hint: 'Nouvelle Saisie',
+                icon: {
+                  color: '#66499c',
+                  ref: 'CreateNewFolder',
+                  size: 12,
+                },
+              },
+              {
+                action: null,
+                content: null,
+                hint: null,
+                icon: null,
+              },
+              {
+                action: null,
+                content: null,
+                hint: null,
+                icon: null,
+              },
+              {
+                action: null,
+                content: null,
+                hint: null,
+                icon: null,
+              },
+              {
+                action: null,
+                content: null,
+                hint: null,
+                icon: null,
+              },
+              {
+                action: null,
+                content: null,
+                hint: null,
+                icon: null,
+              },
+              {
+                action: null,
+                content: null,
+                hint: null,
+                icon: null,
+              },
+            ],
+          },
+        ],
+      },
+    };
+    cy.mount(
+      <SetupTestsComponents>
+        <Card
+          // @ts-ignore
+          card={_card}
+          triggerAction={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('Card').should('exist');
+  });
   it('should render - card1', function () {
     const _card = {
       ...structuredClone(card1),

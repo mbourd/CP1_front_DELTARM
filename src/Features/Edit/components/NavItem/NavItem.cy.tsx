@@ -24,7 +24,7 @@ describe('<NavItem />', () => {
 
     cy.mount(
       <SetupTestsComponents>
-        <NavItem item={item} active={false} />
+        <NavItem item={item} active={false} sectionLabel={null} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
@@ -36,14 +36,14 @@ describe('<NavItem />', () => {
     const item: ISection = {
       id: '',
       code: '',
-      label: label,
+      label: '',
       locked: false,
       tooltip: '',
     };
 
     cy.mount(
       <SetupTestsComponents>
-        <NavItem item={item} active={false} />
+        <NavItem item={item} active={false} sectionLabel={label} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
@@ -62,7 +62,7 @@ describe('<NavItem />', () => {
 
     cy.mount(
       <SetupTestsComponents>
-        <NavItem item={item} active={false} />
+        <NavItem item={item} active={false} sectionLabel={null} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
@@ -89,7 +89,7 @@ describe('<NavItem />', () => {
 
     cy.mount(
       <SetupTestsComponents theme={_BPITheme}>
-        <NavItem item={item} active={true} />
+        <NavItem item={item} active={true} sectionLabel={null} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
