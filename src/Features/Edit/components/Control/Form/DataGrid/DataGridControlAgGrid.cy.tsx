@@ -434,7 +434,7 @@ describe('<DataGridControlAgGrid />', () => {
       });
   });
 
-  it('should render "Select All" button - controlExample2', function () {
+  it('should render "Select All" button & select rows on current pagination - controlExample2', function () {
     const _control = {
       ...structuredClone(controlExample2),
       data_grid_detail: {
@@ -481,11 +481,18 @@ describe('<DataGridControlAgGrid />', () => {
                 ?.select_all_button_col_ref as string
             ].value,
           ).to.eq('1');
+          cy.get(
+            `.ag-cell[col-id^="${_control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref}"]`,
+          )
+            .find('input[type="checkbox"]')
+            .each(($ch) => {
+              cy.wrap($ch).should('be.checked');
+            });
         }
       });
     });
   });
-  it('should render "Unselect All" button - controlExample2', function () {
+  it('should render "Unselect All" button & rows not selected on current pagination - controlExample2', function () {
     const _control = {
       ...structuredClone(controlExample2),
       data_grid_detail: {
@@ -532,6 +539,13 @@ describe('<DataGridControlAgGrid />', () => {
                 ?.select_all_button_col_ref as string
             ].value,
           ).to.eq('0');
+          cy.get(
+            `.ag-cell[col-id^="${_control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref}"]`,
+          )
+            .find('input[type="checkbox"]')
+            .each(($ch) => {
+              cy.wrap($ch).should('not.be.checked');
+            });
         }
       });
     });
@@ -593,6 +607,13 @@ describe('<DataGridControlAgGrid />', () => {
                   ?.select_all_button_col_ref as string
               ].value,
             ).to.eq('0');
+            cy.get(
+              `.ag-cell[col-id^="${_control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref}"]`,
+            )
+              .find('input[type="checkbox"]')
+              .each(($ch) => {
+                cy.wrap($ch).should('not.be.checked');
+              });
           }
         });
       });

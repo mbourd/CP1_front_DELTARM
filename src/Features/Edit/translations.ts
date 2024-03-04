@@ -124,7 +124,7 @@ const transEdit = {
     de: 'Wähle einen Wert',
   },
   addLine: {
-    en: 'Add Line',
+    en: 'Add Row',
     fr: 'Ajouter une ligne',
     de: 'Zeile hinzufügen',
   },
@@ -139,7 +139,7 @@ const transEdit = {
     de: 'Zeile löschen',
   },
   deleteRows: {
-    en: 'Delete row(s)',
+    en: 'Delete Rows',
     fr: 'Supprimer ligne(s)',
     de: 'Zeile(n) löschen',
   },
