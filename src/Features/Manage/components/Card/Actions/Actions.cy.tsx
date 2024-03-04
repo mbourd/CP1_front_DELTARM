@@ -9,15 +9,12 @@ import React from 'react';
 import { SetupTestsComponents } from '../../../../../../cypress/utils/SetupTestsComponents';
 
 import { Actions } from './Actions';
-import { BrowserRouter } from 'react-router-dom';
 
 describe('<Actions />', () => {
   it('Should render', () => {
     cy.mount(
       <SetupTestsComponents>
-        <BrowserRouter>
-          <Actions id={'56'} context={'EDIT'} />
-        </BrowserRouter>
+        <Actions id={'56'} context={'EDIT'} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
@@ -27,9 +24,7 @@ describe('<Actions />', () => {
   it('Should have the correct border-bottom value for <a>', () => {
     cy.mount(
       <SetupTestsComponents>
-        <BrowserRouter>
-          <Actions id={'56'} context={'EDIT'} />
-        </BrowserRouter>
+        <Actions id={'56'} context={'EDIT'} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();

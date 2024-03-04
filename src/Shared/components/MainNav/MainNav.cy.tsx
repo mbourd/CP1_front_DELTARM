@@ -17,7 +17,6 @@ import {
 } from '../../../../cypress/utils';
 
 import { MainNav } from './MainNav';
-import { BrowserRouter } from 'react-router-dom';
 import '../../apiRoutes';
 import '../../../Shared/translations/default';
 import { security } from '../../../Packages/Security';
@@ -99,9 +98,7 @@ describe('<MainNav />', () => {
           logout: () => undefined,
         }}
       >
-        <BrowserRouter>
-          <MainNav />
-        </BrowserRouter>
+        <MainNav />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
@@ -119,9 +116,7 @@ describe('<MainNav />', () => {
           logout: () => undefined,
         }}
       >
-        <BrowserRouter>
-          <MainNav />
-        </BrowserRouter>
+        <MainNav />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
@@ -152,9 +147,7 @@ describe('<MainNav />', () => {
           logout: () => undefined,
         }}
       >
-        <BrowserRouter>
-          <MainNav />
-        </BrowserRouter>
+        <MainNav />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
@@ -184,9 +177,7 @@ describe('<MainNav />', () => {
           logout: () => undefined,
         }}
       >
-        <BrowserRouter>
-          <MainNav />
-        </BrowserRouter>
+        <MainNav />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
@@ -216,11 +207,7 @@ describe('<MainNav />', () => {
         } as any as IDashboard);
       }, [dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent]);
 
-      return (
-        <BrowserRouter>
-          <MainNav />
-        </BrowserRouter>
-      );
+      return <MainNav />;
     };
 
     cy.mount(
@@ -258,11 +245,7 @@ describe('<MainNav />', () => {
         } as any as IDashboard);
       }, [dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent]);
 
-      return (
-        <BrowserRouter>
-          <MainNav />
-        </BrowserRouter>
-      );
+      return <MainNav />;
     };
 
     cy.mount(
@@ -320,11 +303,7 @@ describe('<MainNav />', () => {
         } as any as IDashboard);
       }, [dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent]);
 
-      return (
-        <BrowserRouter>
-          <MainNav />
-        </BrowserRouter>
-      );
+      return <MainNav />;
     };
 
     cy.mount(
