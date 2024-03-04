@@ -1,17 +1,13 @@
-import { RowNode } from 'ag-grid-community';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 // import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
 
 type CustomSingleCheckboxRenderPropsType = {
   props: Record<any, any>;
-  selectedRows: RowNode[];
-  setSelectedRows: React.Dispatch<React.SetStateAction<RowNode[]>>;
 };
 
 const CustomSingleCheckboxRender: React.FC<
   React.PropsWithChildren<CustomSingleCheckboxRenderPropsType>
-> = ({ props, selectedRows, setSelectedRows }) => {
-  const [isChecked, setIsChecked] = useState(selectedRows.includes(props.node));
+> = ({ props }) => {
   const onChange = useCallback(() => {
     if (props.value === '1') {
       props.setValue('0');

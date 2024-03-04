@@ -158,7 +158,6 @@ export const DataGridControlAgGrid: React.FC<
     currentLang === 'en' ? AG_GRID_LOCALE_EN : AG_GRID_LOCALE_FR,
   );
   const [modalData, setModalData] = useState(null);
-  const [selectedRows, setSelectedRows] = useState<RowNode[]>([]);
   const { setSectionsLabels, sectionId } = useContext(EditValidationContext);
   // const modal: IDataModal = useRecoilValue<any>(modal_data);
 
@@ -368,13 +367,7 @@ export const DataGridControlAgGrid: React.FC<
               editable: false,
               cellStyle: (props: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
-                return (
-                  <CustomSingleCheckboxRender
-                    props={props}
-                    selectedRows={selectedRows}
-                    setSelectedRows={setSelectedRows}
-                  />
-                );
+                return <CustomSingleCheckboxRender props={props} />;
               },
             };
           case 'dynamic_select_list':
@@ -1011,7 +1004,7 @@ export const DataGridControlAgGrid: React.FC<
             };
         }
       }),
-    [control, selectedRows, GridDetails?.rows, fileId, jwt],
+    [control, GridDetails?.rows, fileId, jwt],
   );
 
   const cellRenderer = useCallback(
@@ -1067,16 +1060,6 @@ export const DataGridControlAgGrid: React.FC<
     setTimeout(() => {
       params.api.sizeColumnsToFit();
       params.api.enableVirtualization = true;
-      params.api.forEachNode((node) => {
-        if (
-          node.data[
-            control.data_grid_detail?.datagrid_options
-              ?.select_all_button_col_ref as string
-          ]?.value === '1'
-        ) {
-          setSelectedRows((selected) => [...selected, node]);
-        }
-      });
     }, 0);
   };
 

@@ -11,7 +11,7 @@ import { FileComment } from './FileComment';
 import { IApiFileComment } from '../apiRoutes';
 import { _getRandomNumberBetween } from '../../../../cypress/utils';
 
-describe('', function () {
+describe('<FileComment />', function () {
   it('should render', function () {
     cy.mount(
       <SetupTestsComponents
