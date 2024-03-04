@@ -100,8 +100,8 @@ export const EditValidation: React.FC<React.PropsWithChildren<IProps>> = ({
             value={{
               data,
               fileId: id ? id : frontRouterQueries.file_id,
-              setSectionsLabels: setSectionsLabels,
-              sectionId: currentSection,
+              setSectionsLabels,
+              sectionId: currentSection || data?.currentSection.id,
             }}
           >
             <Grid container wrap={'nowrap'}>

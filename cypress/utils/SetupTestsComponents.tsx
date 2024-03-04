@@ -9,6 +9,7 @@ import {
   SecurityContext,
   appStore,
 } from '../../src/Services';
+import { BrowserRouter } from 'react-router-dom';
 
 type SetupTestsComponentProps = {
   theme?: ITheme;
@@ -38,10 +39,12 @@ const SetupTestsComponents: React.FC<
         <SecurityContext.Provider value={securityContextValue}>
           <main id="main-content" style={style}>
             <RecoilRoot>
-              <ThemeProvider theme={theme ?? BPITheme}>
-                <BPIGlobalStyle />
-                {children}
-              </ThemeProvider>
+              <BrowserRouter>
+                <ThemeProvider theme={theme ?? BPITheme}>
+                  <BPIGlobalStyle />
+                  {children}
+                </ThemeProvider>
+              </BrowserRouter>
             </RecoilRoot>
           </main>
         </SecurityContext.Provider>

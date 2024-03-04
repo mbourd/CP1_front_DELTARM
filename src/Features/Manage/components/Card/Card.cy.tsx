@@ -9,15 +9,12 @@ import React from 'react';
 import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
 
 import { Card } from './Card';
-import { BrowserRouter } from 'react-router-dom';
 
 describe('<Card />', () => {
   it('Should render', () => {
     cy.mount(
       <SetupTestsComponents>
-        <BrowserRouter>
-          <Card id={''} color={''} data={[]} context={undefined} />
-        </BrowserRouter>
+        <Card id={''} color={''} data={[]} context={undefined} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
@@ -27,15 +24,13 @@ describe('<Card />', () => {
   it('Should render data', () => {
     cy.mount(
       <SetupTestsComponents>
-        <BrowserRouter>
-          <Card
-            id={''}
-            color={''}
-            data={[{ value: 'value1', label: 'label1' }]}
-            context={undefined}
-            comments={1}
-          />
-        </BrowserRouter>
+        <Card
+          id={''}
+          color={''}
+          data={[{ value: 'value1', label: 'label1' }]}
+          context={undefined}
+          comments={1}
+        />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
@@ -54,19 +49,17 @@ describe('<Card />', () => {
   it('Should render the correct number of data', () => {
     cy.mount(
       <SetupTestsComponents>
-        <BrowserRouter>
-          <Card
-            id={''}
-            color={''}
-            data={[
-              { value: 'value1', label: 'label1' },
-              { value: 'value2', label: 'label2' },
-              { value: 'value3', label: 'label3' },
-            ]}
-            context={undefined}
-            comments={0}
-          />
-        </BrowserRouter>
+        <Card
+          id={''}
+          color={''}
+          data={[
+            { value: 'value1', label: 'label1' },
+            { value: 'value2', label: 'label2' },
+            { value: 'value3', label: 'label3' },
+          ]}
+          context={undefined}
+          comments={0}
+        />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
