@@ -23,7 +23,9 @@
     "cypress:run:e2e:chrome": "cypress run --e2e --browser chrome",
     "cypress:run:e2e:firefox": "cypress run --e2e --browser firefox",
     "cypress:run:component": "cypress run --component",
+    "cypress:parallel:component:chrome": "cypress-parallel -s cypress:run:component:chrome:ci -t 3 -m false",
     "cypress:run:component:chrome": "cypress run --component --browser chrome",
+    "cypress:run:component:chrome:ci": "cypress run --component --browser chrome --config video=false,screenshotOnRunFailure=false",
     "cypress:run:component:firefox": "cypress run --component --browser firefox",
     "cypress:cache:clear": "cypress cache clear",
     "cypress:cache:prune": "cypress cache prune"
@@ -168,6 +170,8 @@
     "cypress": "^13.6.4",
     "cypress-ag-grid": "^3.0.0",
     "cypress-fs": "^0.2.4",
+    "cypress-multi-reporters": "^1.6.4",
+    "cypress-parallel": "^0.14.0",
     "cypress-react-selector": "^3.0.0",
     "cypress-real-events": "^1.11.0",
     "cypress-wait-until": "^3.0.1",
