@@ -28,8 +28,8 @@ jobs:
             -   name: launch tests
                 run: yarn test --watchAll=false
 
-    cypress-tests:
-        name: Cypress Components tests
+    cypress-tests-job1:
+        name: Cypress Components tests - Job1
         runs-on: ubuntu-20.04
         steps:
             -   name: checkout
@@ -51,4 +51,104 @@ jobs:
                     NODE_OPTIONS: "--max-old-space-size=8192"
                 with:
                     browser: chrome
-                    command: yarn cypress:run:component --browser chrome --config video=false,screenshotOnRunFailure=false
+                    command: yarn cypress:parallel:component:chrome -d 'src/**/*/*.job1.cy.tsx'
+
+    cypress-tests-job2:
+        name: Cypress Components tests - Job2
+        runs-on: ubuntu-20.04
+        steps:
+            -   name: checkout
+                uses: actions/checkout@v3
+
+            -   name: setup node
+                uses: actions/setup-node@v3
+                with:
+                    node-version: 16.18.0
+                env:
+                    NODE_OPTIONS: "--max-old-space-size=8192"
+
+            -   name: yarn install
+                run: yarn install
+
+            -   name: launch tests
+                uses: cypress-io/github-action@v6
+                env:
+                    NODE_OPTIONS: "--max-old-space-size=8192"
+                with:
+                    browser: chrome
+                    command: yarn cypress:parallel:component:chrome -d 'src/**/*/*.job2.cy.tsx'
+
+    cypress-tests-job3:
+        name: Cypress Components tests - Job3
+        runs-on: ubuntu-20.04
+        steps:
+            -   name: checkout
+                uses: actions/checkout@v3
+
+            -   name: setup node
+                uses: actions/setup-node@v3
+                with:
+                    node-version: 16.18.0
+                env:
+                    NODE_OPTIONS: "--max-old-space-size=8192"
+
+            -   name: yarn install
+                run: yarn install
+
+            -   name: launch tests
+                uses: cypress-io/github-action@v6
+                env:
+                    NODE_OPTIONS: "--max-old-space-size=8192"
+                with:
+                    browser: chrome
+                    command: yarn cypress:parallel:component:chrome -d 'src/**/*/*.job3.cy.tsx'
+
+    cypress-tests-job4:
+        name: Cypress Components tests - Job4
+        runs-on: ubuntu-20.04
+        steps:
+            -   name: checkout
+                uses: actions/checkout@v3
+
+            -   name: setup node
+                uses: actions/setup-node@v3
+                with:
+                    node-version: 16.18.0
+                env:
+                    NODE_OPTIONS: "--max-old-space-size=8192"
+
+            -   name: yarn install
+                run: yarn install
+
+            -   name: launch tests
+                uses: cypress-io/github-action@v6
+                env:
+                    NODE_OPTIONS: "--max-old-space-size=8192"
+                with:
+                    browser: chrome
+                    command: yarn cypress:parallel:component:chrome -d 'src/**/*/*.job4.cy.tsx'
+
+    cypress-tests-aggrid-component:
+        name: Cypress Components tests - DataGridControlAgGrid
+        runs-on: ubuntu-20.04
+        steps:
+            -   name: checkout
+                uses: actions/checkout@v3
+
+            -   name: setup node
+                uses: actions/setup-node@v3
+                with:
+                    node-version: 16.18.0
+                env:
+                    NODE_OPTIONS: "--max-old-space-size=8192"
+
+            -   name: yarn install
+                run: yarn install
+
+            -   name: launch tests
+                uses: cypress-io/github-action@v6
+                env:
+                    NODE_OPTIONS: "--max-old-space-size=8192"
+                with:
+                    browser: chrome
+                    command: yarn cypress:run:component --browser chrome --config video=false,screenshotOnRunFailure=false --spec '**/*/DataGridControlAgGrid.cy.tsx'
