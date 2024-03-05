@@ -100,16 +100,18 @@ describe('<Editvalidation />', function () {
                 .contains(btnConfirmDel.btn_lib)
                 .click();
               cy.wait('@callAfterConfirmDeletionBtn').then(() => {
-                cy.react('NavItem')
-                  .eq(indexCurrentSection)
-                  .invoke('text')
-                  .then((t) => {
-                    const remainingNodes: RowNode[] = [];
-                    gridApi.forEachNode((n) => remainingNodes.push(n));
-                    expect(t).to.eq(
-                      t.replace(/\(.*\)$/, `(${remainingNodes.length})`),
-                    );
-                  });
+                cy.wait(25).then(() => {
+                  cy.react('NavItem')
+                    .eq(indexCurrentSection)
+                    .invoke('text')
+                    .then((t) => {
+                      const remainingNodes: RowNode[] = [];
+                      gridApi.forEachNode((n) => remainingNodes.push(n));
+                      expect(t).to.eq(
+                        t.replace(/\(.*\)$/, `(${remainingNodes.length})`),
+                      );
+                    });
+                });
               });
             },
           );

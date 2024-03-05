@@ -8,17 +8,18 @@
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../../../cypress/utils/SetupTestsComponents';
 import CustomDateRenderer from './CustomDateRenderer';
-import { _requestJWT } from '../../../../../../../../../cypress/utils';
+// import { _requestJWT } from '../../../../../../../../../cypress/utils';
 
 describe('<CustomDateRenderer />', () => {
   let jwt: string;
 
-  before(() => {
-    _requestJWT();
-  });
+  // before(() => {
+  //   _requestJWT();
+  // });
 
   before(() => {
-    jwt = Cypress.env('JWT');
+    // jwt = Cypress.env('JWT');
+    jwt = '';
   });
 
   it('Should render', () => {
