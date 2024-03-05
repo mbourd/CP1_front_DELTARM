@@ -7,44 +7,25 @@
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
-import {
-  _requestJWT,
-  _getEnv,
-  _escapeForRegExp,
-} from '../../../../../cypress/utils';
+import { _translate } from '../../../../../cypress/utils';
 
 import { IconsContainerRender } from './IconsContainerRender';
-import { translation } from '../../../../Services';
 
 describe('<IconsContainer />', () => {
-  let defaultData;
-  const getResourceTrans = (lng: string, ns: string, key: string): string => {
-    return _escapeForRegExp(translation.getResource(lng, ns)?.[key]);
-  };
-
-  before('Should fetch JWT from CP1 back', () => {
-    _requestJWT();
-  });
-
-  before(() => {
-    cy.request({
-      method: 'GET',
-      url: `${_getEnv('url_cp1_back')}/interface/nav_btn`,
-      headers: {
-        'Content-type': 'application/json',
-        Authorization: _getEnv('JWT'),
-      },
-    })
-      .its('body')
-      .then((body: { data: Record<any, any> }) => {
-        defaultData = body.data.interface_btn;
-      });
-  });
-
   it('Should render', () => {
+    const interfaceButtons = {
+      aiv: {
+        url: 'https://aiv-v5.deltarm.com/aiv/embed/external/6354524f3461322532424c49424359314e67677a4f784a65345932724a394a7841714a4a7677396a7636514c63253344/a_u__1015140&a_p__&a_t__&a_d__Default&a_ex__&a_af__true/aivg_aivg_deltarm_cli_id___8&aivg_aivg_deltarm_client_id___8&aivg_aivg_deltarm_lang_id___1&aivg_aivg_deltarm_user_id___1015140&aivg_environ___staging_cp1&aivToken___7376446f3635626d363437507167663933617067445256424e48756357494436645535373636666a61487754674144635a446e6d6663764d4b766d74555463666a7a6e5572334e4b732b6e65713151506b5a5237715443516642674d47374943754d55514659336579614d4f513175306753457335314e3276754d36774b6a2f4f6642746a4975586c6e78454a7a59346769736b315857455634735575395046514a626d6c684264793436785446674979636d766c6e544e596252384234774a76725976507a3446627a342f5973446c5334524a342f414c65706343634431354d556d386951685042674b593731436f7762636e30425330723353504c434973',
+        visible: true,
+      },
+      faq: {
+        url: null,
+        visible: false,
+      },
+    };
     cy.mount(
       <SetupTestsComponents>
-        <IconsContainerRender interfaceButtons={defaultData} />
+        <IconsContainerRender interfaceButtons={interfaceButtons} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
@@ -52,16 +33,18 @@ describe('<IconsContainer />', () => {
 
   it('Should have title tooltip for AIV', () => {
     const _data = {
-      ...defaultData,
-      aiv: { ...defaultData.aiv, visible: true },
-      faq: { ...defaultData.faq, visible: false },
+      aiv: {
+        url: 'https://aiv-v5.deltarm.com/aiv/embed/external/6354524f3461322532424c49424359314e67677a4f784a65345932724a394a7841714a4a7677396a7636514c63253344/a_u__1015140&a_p__&a_t__&a_d__Default&a_ex__&a_af__true/aivg_aivg_deltarm_cli_id___8&aivg_aivg_deltarm_client_id___8&aivg_aivg_deltarm_lang_id___1&aivg_aivg_deltarm_user_id___1015140&aivg_environ___staging_cp1&aivToken___7376446f3635626d363437507167663933617067445256424e48756357494436645535373636666a61487754674144635a446e6d6663764d4b766d74555463666a7a6e5572334e4b732b6e65713151506b5a5237715443516642674d47374943754d55514659336579614d4f513175306753457335314e3276754d36774b6a2f4f6642746a4975586c6e78454a7a59346769736b315857455634735575395046514a626d6c684264793436785446674979636d766c6e544e596252384234774a76725976507a3446627a342f5973446c5334524a342f414c65706343634431354d556d386951685042674b593731436f7762636e30425330723353504c434973',
+        visible: true,
+      },
+      faq: {
+        url: null,
+        visible: false,
+      },
     };
-    const titleAIV_EN =
-      getResourceTrans('en', 'MainHeader', 'reports') || 'reports';
-    const titleAIV_FR =
-      getResourceTrans('fr', 'MainHeader', 'reports') || 'reports';
-    const titleAIV_DE =
-      getResourceTrans('de', 'MainHeader', 'reports') || 'reports';
+    const titleAIV_EN = _translate('en', 'MainHeader', 'reports');
+    const titleAIV_FR = _translate('fr', 'MainHeader', 'reports');
+    const titleAIV_DE = _translate('de', 'MainHeader', 'reports');
     const titlesAIV = [titleAIV_EN, titleAIV_FR, titleAIV_DE];
 
     cy.mount(
@@ -87,19 +70,18 @@ describe('<IconsContainer />', () => {
 
   it('Should have title tooltip for FAQ', () => {
     const _data = {
-      ...defaultData,
-      aiv: { ...defaultData.aiv, visible: false },
-      faq: { ...defaultData.faq, visible: true },
+      aiv: {
+        url: 'https://aiv-v5.deltarm.com/aiv/embed/external/6354524f3461322532424c49424359314e67677a4f784a65345932724a394a7841714a4a7677396a7636514c63253344/a_u__1015140&a_p__&a_t__&a_d__Default&a_ex__&a_af__true/aivg_aivg_deltarm_cli_id___8&aivg_aivg_deltarm_client_id___8&aivg_aivg_deltarm_lang_id___1&aivg_aivg_deltarm_user_id___1015140&aivg_environ___staging_cp1&aivToken___7376446f3635626d363437507167663933617067445256424e48756357494436645535373636666a61487754674144635a446e6d6663764d4b766d74555463666a7a6e5572334e4b732b6e65713151506b5a5237715443516642674d47374943754d55514659336579614d4f513175306753457335314e3276754d36774b6a2f4f6642746a4975586c6e78454a7a59346769736b315857455634735575395046514a626d6c684264793436785446674979636d766c6e544e596252384234774a76725976507a3446627a342f5973446c5334524a342f414c65706343634431354d556d386951685042674b593731436f7762636e30425330723353504c434973',
+        visible: false,
+      },
+      faq: {
+        url: null,
+        visible: true,
+      },
     };
-    const titleFAQ_EN =
-      getResourceTrans('en', 'MainHeader', 'F.A.Q') ||
-      _escapeForRegExp('F.A.Q');
-    const titleFAQ_FR =
-      getResourceTrans('fr', 'MainHeader', 'F.A.Q') ||
-      _escapeForRegExp('F.A.Q');
-    const titleFAQ_DE =
-      getResourceTrans('de', 'MainHeader', 'F.A.Q') ||
-      _escapeForRegExp('F.A.Q');
+    const titleFAQ_EN = _translate('en', 'MainHeader', 'F.A.Q', 'F.A.Q');
+    const titleFAQ_FR = _translate('fr', 'MainHeader', 'F.A.Q', 'F.A.Q');
+    const titleFAQ_DE = _translate('de', 'MainHeader', 'F.A.Q', 'F.A.Q');
     const titlesFAQ = [titleFAQ_EN, titleFAQ_FR, titleFAQ_DE];
 
     cy.mount(
@@ -124,9 +106,14 @@ describe('<IconsContainer />', () => {
 
   it('AIV & FAQ should not be visible', () => {
     const _data = {
-      ...defaultData,
-      aiv: { ...defaultData.aiv, visible: false },
-      faq: { ...defaultData.faq, visible: false },
+      aiv: {
+        url: 'https://aiv-v5.deltarm.com/aiv/embed/external/6354524f3461322532424c49424359314e67677a4f784a65345932724a394a7841714a4a7677396a7636514c63253344/a_u__1015140&a_p__&a_t__&a_d__Default&a_ex__&a_af__true/aivg_aivg_deltarm_cli_id___8&aivg_aivg_deltarm_client_id___8&aivg_aivg_deltarm_lang_id___1&aivg_aivg_deltarm_user_id___1015140&aivg_environ___staging_cp1&aivToken___7376446f3635626d363437507167663933617067445256424e48756357494436645535373636666a61487754674144635a446e6d6663764d4b766d74555463666a7a6e5572334e4b732b6e65713151506b5a5237715443516642674d47374943754d55514659336579614d4f513175306753457335314e3276754d36774b6a2f4f6642746a4975586c6e78454a7a59346769736b315857455634735575395046514a626d6c684264793436785446674979636d766c6e544e596252384234774a76725976507a3446627a342f5973446c5334524a342f414c65706343634431354d556d386951685042674b593731436f7762636e30425330723353504c434973',
+        visible: false,
+      },
+      faq: {
+        url: null,
+        visible: false,
+      },
     };
     const nbNotVisible = Object.values(_data).reduce(
       (acc: number, curr: Record<any, any> | unknown) => {
@@ -169,9 +156,14 @@ describe('<IconsContainer />', () => {
 
   it('AIV & FAQ should be visible', () => {
     const _data = {
-      ...defaultData,
-      aiv: { ...defaultData.aiv, visible: true },
-      faq: { ...defaultData.faq, visible: true },
+      aiv: {
+        url: 'https://aiv-v5.deltarm.com/aiv/embed/external/6354524f3461322532424c49424359314e67677a4f784a65345932724a394a7841714a4a7677396a7636514c63253344/a_u__1015140&a_p__&a_t__&a_d__Default&a_ex__&a_af__true/aivg_aivg_deltarm_cli_id___8&aivg_aivg_deltarm_client_id___8&aivg_aivg_deltarm_lang_id___1&aivg_aivg_deltarm_user_id___1015140&aivg_environ___staging_cp1&aivToken___7376446f3635626d363437507167663933617067445256424e48756357494436645535373636666a61487754674144635a446e6d6663764d4b766d74555463666a7a6e5572334e4b732b6e65713151506b5a5237715443516642674d47374943754d55514659336579614d4f513175306753457335314e3276754d36774b6a2f4f6642746a4975586c6e78454a7a59346769736b315857455634735575395046514a626d6c684264793436785446674979636d766c6e544e596252384234774a76725976507a3446627a342f5973446c5334524a342f414c65706343634431354d556d386951685042674b593731436f7762636e30425330723353504c434973',
+        visible: true,
+      },
+      faq: {
+        url: null,
+        visible: true,
+      },
     };
     const nbNotVisible = Object.values(_data).reduce(
       (acc: number, curr: Record<any, any> | unknown) => {

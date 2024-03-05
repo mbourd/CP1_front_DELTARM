@@ -8,7 +8,7 @@
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
 import {
-  _requestJWT,
+  // _requestJWT,
   _getEnv,
   _escapeForRegExp,
 } from '../../../../../../../cypress/utils';
@@ -44,9 +44,9 @@ describe('<UploadControl />', () => {
     return _escapeForRegExp(translation.getResource(lng, ns)?.[key]);
   };
 
-  before(() => {
-    _requestJWT();
-  });
+  // before(() => {
+  //   _requestJWT();
+  // });
 
   beforeEach(() => {
     const client_info = [
