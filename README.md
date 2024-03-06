@@ -24,19 +24,16 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
-### `yarn test`
+### `yarn test --watchAll=false`
 
 Launches the test runner in the interactive watch mode.<br />
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 We use react-testing library for assertions. You can download the testing playground extension available for chrome https://chrome.google.com/webstore/detail/testing-playground/hejbmebodbijjdhflfknehhcgaklhano
 which allows you to use `screen.logTestingPlaygroundURL()` in your test. It gives an interactive environment for testing assertions and write tests.
 
-### `yarn storybook`
+### `yarn cypress:open`
 
-Launches the storybook's project locally on port 3000.
-Storybook gives us a specific environment to develop, isolate and test our components.
-
-In unit tests, we should only import stories instead of components directly.
+Lauches the Cypress testing framework software
 
 ### `yarn build`
 
@@ -89,9 +86,3 @@ The application is configurable in production to enable a maintenance mode. To a
 Then, change the constant variable `maintenanceMode` to `true` in index.tsx. You can configure which user can still see the app by add their user id in the white list configuration `adminUsers`.
 
 This is a temporary feature, we should have the role admin enables in app and the toggle of maintenance mode should be in a environment configuration.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
