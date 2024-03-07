@@ -7,7 +7,10 @@
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
-import { _translate } from '../../../../../../../cypress/utils';
+import {
+  _escapeForRegExp,
+  _translate,
+} from '../../../../../../../cypress/utils';
 
 import { DecimalControl } from './DecimalControl';
 import { IApiControl } from '../../../../types';
@@ -15,6 +18,16 @@ import '../../../../../Edit/translations';
 import RandExp from 'randexp';
 
 describe('<DecimalControl />', () => {
+  const trans_EN =
+    _translate('en', 'Edit', 'mandatoryValue') ||
+    'mandatoryValue|Valeur obligatoire';
+  const trans_FR =
+    _translate('fr', 'Edit', 'mandatoryValue') ||
+    'mandatoryValue|Valeur obligatoire';
+  const trans_DE =
+    _translate('de', 'Edit', 'mandatoryValue') ||
+    'mandatoryValue|Valeur obligatoire';
+  const translations_mandatoryValue = [trans_EN, trans_FR, trans_DE];
   const control: IApiControl = {
     control_desc_1: null,
     control_desc_2: null,
@@ -267,6 +280,11 @@ describe('<DecimalControl />', () => {
       control_regex_msg: 'Value do not match with regex',
     };
     const randExpOpposite = new RandExp(oppositeRegex);
+    let generated = randExpOpposite.gen();
+
+    while (generated === '' || !oppositeRegex.test(generated)) {
+      generated = randExpOpposite.gen();
+    }
 
     cy.mount(
       <SetupTestsComponents>
@@ -282,12 +300,13 @@ describe('<DecimalControl />', () => {
     cy.waitReactApp();
     cy.react('DecimalControl')
       .find('input[type="text"]')
-      .type(randExpOpposite.gen(), { parseSpecialCharSequences: false })
+      .type(generated, { parseSpecialCharSequences: false })
       .blur();
-    cy.wait(255);
-    cy.react('DecimalControl')
-      .find('._FormError')
-      .should('have.text', _control.control_regex_msg);
+    cy.wait(100).then(() => {
+      cy.react('DecimalControl')
+        .find('._FormError')
+        .should('have.text', _control.control_regex_msg);
+    });
   });
   it('Should match the value with regex', () => {
     const trans_EN =
@@ -306,6 +325,10 @@ describe('<DecimalControl />', () => {
       control_regex_msg: 'Value do not match with regex',
     };
     const randExp = new RandExp(regex);
+    let generated = randExp.gen();
+
+    while (generated === '' || !regex.test(generated))
+      generated = randExp.gen();
 
     cy.mount(
       <SetupTestsComponents>
@@ -319,19 +342,19 @@ describe('<DecimalControl />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
+    cy.window().then((w) => {
+      w['Features_Edit_Control_DecimalControl'].setCanSendApi(false);
+    });
     cy.react('DecimalControl')
       .find('input[type="text"]')
-      .type(randExp.gen(), { parseSpecialCharSequences: false })
+      .type(generated, { parseSpecialCharSequences: false })
       .blur();
-    cy.wait(255);
-    cy.react('DecimalControl')
-      .get('._FormError', { timeout: 1 })
-      .then(($el) => {
-        if ($el.length) {
-          cy.wrap($el)
-            .invoke('text')
-            .should('match', new RegExp(translations.join('|')));
-        }
-      });
+    cy.wait(100).then(() => {
+      cy.react('DecimalControl').formErrorMessageShouldNotMatch([
+        ...translations,
+        ...translations_mandatoryValue,
+        _escapeForRegExp(_control.control_regex_msg as string) as string,
+      ]);
+    });
   });
 });

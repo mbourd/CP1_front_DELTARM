@@ -3,7 +3,7 @@
 /// <reference types="../../../../cypress/support/component" />
 
 // NOTE: Run CLI:
-// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Comments/File/FileComment.cy.tsx"
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Comments/File/FileComment.job1.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../cypress/utils/SetupTestsComponents';
@@ -90,16 +90,22 @@ describe('<FileComment />', function () {
     }));
 
     cy.intercept(
+      // {
+      //   method: 'GET',
+      //   url: '/comment/file?file_id=*',
+      // },
+      // (req) => {
+      //   req.on('response', (resp) => {
+      //     resp.send(200, { data: comments });
+      //   });
+      // },
+      'GET',
+      '/comment/file*',
       {
-        method: 'GET',
-        url: '/comment/file?file_id=*',
+        statusCode: 200,
+        body: { data: comments },
       },
-      (req) => {
-        req.on('response', (resp) => {
-          resp.send(200, { data: comments });
-        });
-      },
-    );
+    ).as('dataComments');
 
     cy.mount(
       <SetupTestsComponents>
@@ -109,7 +115,9 @@ describe('<FileComment />', function () {
     cy.waitReactApp();
     cy.react('FileComment').find('.comment-icon').realClick();
     cy.wait(3).then(() => {
-      cy.react('Popper').react('FileCommentBody').should('exist');
+      cy.wait('@dataComments').then(() => {
+        cy.react('Popper').react('FileCommentBody').should('exist');
+      });
     });
   });
 });

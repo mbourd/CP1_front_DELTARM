@@ -39,11 +39,6 @@ jobs:
                 uses: actions/setup-node@v3
                 with:
                     node-version: 16.18.0
-                env:
-                    NODE_OPTIONS: "--max-old-space-size=8192"
-
-            -   name: yarn install
-                run: yarn install
 
             -   name: launch tests
                 uses: cypress-io/github-action@v6
@@ -51,7 +46,7 @@ jobs:
                     NODE_OPTIONS: "--max-old-space-size=8192"
                 with:
                     browser: chrome
-                    command: yarn cypress:parallel:component:chrome -d 'src/**/*/*.job1.cy.tsx'
+                    command: yarn cypress:run:component:chrome:ci --spec '**/*/*.job1.cy.(ts|tsx)'
 
     cypress-tests-job2:
         name: Cypress Components tests - Job2
@@ -64,11 +59,6 @@ jobs:
                 uses: actions/setup-node@v3
                 with:
                     node-version: 16.18.0
-                env:
-                    NODE_OPTIONS: "--max-old-space-size=8192"
-
-            -   name: yarn install
-                run: yarn install
 
             -   name: launch tests
                 uses: cypress-io/github-action@v6
@@ -76,7 +66,7 @@ jobs:
                     NODE_OPTIONS: "--max-old-space-size=8192"
                 with:
                     browser: chrome
-                    command: yarn cypress:parallel:component:chrome -d 'src/**/*/*.job2.cy.tsx'
+                    command: yarn cypress:run:component:chrome:ci --spec '**/*/*.job2.cy.(ts|tsx)'
 
     cypress-tests-job3:
         name: Cypress Components tests - Job3
@@ -89,11 +79,6 @@ jobs:
                 uses: actions/setup-node@v3
                 with:
                     node-version: 16.18.0
-                env:
-                    NODE_OPTIONS: "--max-old-space-size=8192"
-
-            -   name: yarn install
-                run: yarn install
 
             -   name: launch tests
                 uses: cypress-io/github-action@v6
@@ -101,7 +86,7 @@ jobs:
                     NODE_OPTIONS: "--max-old-space-size=8192"
                 with:
                     browser: chrome
-                    command: yarn cypress:parallel:component:chrome -d 'src/**/*/*.job3.cy.tsx'
+                    command: yarn cypress:run:component:chrome:ci --spec '**/*/*.job3.cy.(ts|tsx)'
 
     cypress-tests-job4:
         name: Cypress Components tests - Job4
@@ -114,11 +99,6 @@ jobs:
                 uses: actions/setup-node@v3
                 with:
                     node-version: 16.18.0
-                env:
-                    NODE_OPTIONS: "--max-old-space-size=8192"
-
-            -   name: yarn install
-                run: yarn install
 
             -   name: launch tests
                 uses: cypress-io/github-action@v6
@@ -126,10 +106,10 @@ jobs:
                     NODE_OPTIONS: "--max-old-space-size=8192"
                 with:
                     browser: chrome
-                    command: yarn cypress:parallel:component:chrome -d 'src/**/*/*.job4.cy.tsx'
+                    command: yarn cypress:run:component:chrome:ci --spec '**/*/*.job4.cy.(ts|tsx)'
 
-    cypress-tests-aggrid-component:
-        name: Cypress Components tests - DataGridControlAgGrid
+    cypress-tests-aggrid-component-1:
+        name: Cypress Components tests - DataGridControlAgGrid - 1
         runs-on: ubuntu-20.04
         steps:
             -   name: checkout
@@ -139,11 +119,6 @@ jobs:
                 uses: actions/setup-node@v3
                 with:
                     node-version: 16.18.0
-                env:
-                    NODE_OPTIONS: "--max-old-space-size=8192"
-
-            -   name: yarn install
-                run: yarn install
 
             -   name: launch tests
                 uses: cypress-io/github-action@v6
@@ -151,4 +126,104 @@ jobs:
                     NODE_OPTIONS: "--max-old-space-size=8192"
                 with:
                     browser: chrome
-                    command: yarn cypress:run:component --browser chrome --config video=false,screenshotOnRunFailure=false --spec '**/*/DataGridControlAgGrid.cy.tsx'
+                    command: yarn cypress:run:component:chrome:ci --spec '**/*/DataGridControlAgGrid.part{1..4}.cy.tsx'
+
+    cypress-tests-aggrid-component-2:
+        name: Cypress Components tests - DataGridControlAgGrid - 2
+        runs-on: ubuntu-20.04
+        steps:
+            -   name: checkout
+                uses: actions/checkout@v3
+
+            -   name: setup node
+                uses: actions/setup-node@v3
+                with:
+                    node-version: 16.18.0
+
+            -   name: launch tests
+                uses: cypress-io/github-action@v6
+                env:
+                    NODE_OPTIONS: "--max-old-space-size=8192"
+                with:
+                    browser: chrome
+                    command: yarn cypress:run:component:chrome:ci --spec '**/*/DataGridControlAgGrid.part{5..9}.cy.tsx'
+
+    cypress-tests-aggrid-component-3:
+        name: Cypress Components tests - DataGridControlAgGrid - 3
+        runs-on: ubuntu-20.04
+        steps:
+            -   name: checkout
+                uses: actions/checkout@v3
+
+            -   name: setup node
+                uses: actions/setup-node@v3
+                with:
+                    node-version: 16.18.0
+
+            -   name: launch tests
+                uses: cypress-io/github-action@v6
+                env:
+                    NODE_OPTIONS: "--max-old-space-size=8192"
+                with:
+                    browser: chrome
+                    command: yarn cypress:run:component:chrome:ci --spec '**/*/DataGridControlAgGrid.part{10..16}.cy.tsx'
+
+    cypress-tests-aggrid-component-4:
+        name: Cypress Components tests - DataGridControlAgGrid - 4
+        runs-on: ubuntu-20.04
+        steps:
+            -   name: checkout
+                uses: actions/checkout@v3
+
+            -   name: setup node
+                uses: actions/setup-node@v3
+                with:
+                    node-version: 16.18.0
+
+            -   name: launch tests
+                uses: cypress-io/github-action@v6
+                env:
+                    NODE_OPTIONS: "--max-old-space-size=8192"
+                with:
+                    browser: chrome
+                    command: yarn cypress:run:component:chrome:ci --spec '**/*/DataGridControlAgGrid.part{17..20}.cy.tsx'
+
+    cypress-tests-aggrid-component-5:
+        name: Cypress Components tests - DataGridControlAgGrid - 5
+        runs-on: ubuntu-20.04
+        steps:
+            -   name: checkout
+                uses: actions/checkout@v3
+
+            -   name: setup node
+                uses: actions/setup-node@v3
+                with:
+                    node-version: 16.18.0
+
+            -   name: launch tests
+                uses: cypress-io/github-action@v6
+                env:
+                    NODE_OPTIONS: "--max-old-space-size=8192"
+                with:
+                    browser: chrome
+                    command: yarn cypress:run:component:chrome:ci --spec '**/*/DataGridControlAgGrid.part{21..23}.cy.tsx'
+
+    cypress-tests-aggrid-component-6:
+        name: Cypress Components tests - DataGridControlAgGrid - 6
+        runs-on: ubuntu-20.04
+        steps:
+            -   name: checkout
+                uses: actions/checkout@v3
+
+            -   name: setup node
+                uses: actions/setup-node@v3
+                with:
+                    node-version: 16.18.0
+
+            -   name: launch tests
+                uses: cypress-io/github-action@v6
+                env:
+                    NODE_OPTIONS: "--max-old-space-size=8192"
+                with:
+                    browser: chrome
+                    command: yarn cypress:run:component:chrome:ci --spec '**/*/DataGridControlAgGrid.part{24..26}.cy.tsx'

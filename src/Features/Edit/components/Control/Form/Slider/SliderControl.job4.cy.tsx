@@ -7,12 +7,11 @@
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
-import { _escapeForRegExp } from '../../../../../../../cypress/utils';
+import { _translate } from '../../../../../../../cypress/utils';
 
 import { SliderControl } from './SliderControl';
 import { IApiControl } from '../../../../types';
 import '../../../../../Edit/translations';
-import { translation } from '../../../../../../Services';
 
 describe('<SliderControl />', () => {
   const control: IApiControl = {
@@ -35,9 +34,6 @@ describe('<SliderControl />', () => {
     upload_detail: null,
     rich_text_detail: null,
     control_rejectable: null,
-  };
-  const getResourceTrans = (lng: string, ns: string, key: string): string => {
-    return _escapeForRegExp(translation.getResource(lng, ns)?.[key]);
   };
 
   it('should render', () => {
@@ -220,15 +216,24 @@ describe('<SliderControl />', () => {
       mandatory: true,
       editable: true,
     };
-    const trans_EN =
-      getResourceTrans('en', 'Edit', 'mandatoryValue') ||
-      'mandatoryValue|Valeur obligatoire';
-    const trans_FR =
-      getResourceTrans('fr', 'Edit', 'mandatoryValue') ||
-      'mandatoryValue|Valeur obligatoire';
-    const trans_DE =
-      getResourceTrans('de', 'Edit', 'mandatoryValue') ||
-      'mandatoryValue|Valeur obligatoire';
+    const trans_EN = _translate(
+      'en',
+      'Edit',
+      'mandatoryValue',
+      'Valeur obligatoire',
+    );
+    const trans_FR = _translate(
+      'fr',
+      'Edit',
+      'mandatoryValue',
+      'Valeur obligatoire',
+    );
+    const trans_DE = _translate(
+      'de',
+      'Edit',
+      'mandatoryValue',
+      'Valeur obligatoire',
+    );
     const translations = [trans_EN, trans_FR, trans_DE];
     cy.mount(
       <SetupTestsComponents>
@@ -256,18 +261,24 @@ describe('<SliderControl />', () => {
       mandatory: true,
       editable: true,
     };
-    const trans_EN =
-      getResourceTrans('en', 'Edit', 'errorRecording') ||
-      'errorRecording|' +
-        _escapeForRegExp("Une erreur s'est produite durant l'enregistrement");
-    const trans_FR =
-      getResourceTrans('fr', 'Edit', 'errorRecording') ||
-      'errorRecording|' +
-        _escapeForRegExp("Une erreur s'est produite durant l'enregistrement");
-    const trans_DE =
-      getResourceTrans('de', 'Edit', 'errorRecording') ||
-      'errorRecording|' +
-        _escapeForRegExp("Une erreur s'est produite durant l'enregistrement");
+    const trans_EN = _translate(
+      'en',
+      'Edit',
+      'errorRecording',
+      "Une erreur s'est produite durant l'enregistrement",
+    );
+    const trans_FR = _translate(
+      'fr',
+      'Edit',
+      'errorRecording',
+      "Une erreur s'est produite durant l'enregistrement",
+    );
+    const trans_DE = _translate(
+      'de',
+      'Edit',
+      'errorRecording',
+      "Une erreur s'est produite durant l'enregistrement",
+    );
     const translations = [trans_EN, trans_FR, trans_DE];
     cy.mount(
       <SetupTestsComponents>

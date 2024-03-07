@@ -93,7 +93,8 @@ Cypress.Commands.add('login_v2', login_v2);
 function waitReactApp(selector = '#main-content', timeout = 10000) {
   cy.get(selector as any, { timeout });
   cy.waitForReact(10000, selector as any);
-  cy.wait(255);
+
+  return cy.wait(0);
 }
 Cypress.Commands.add('waitReactApp', waitReactApp);
 

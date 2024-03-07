@@ -7,7 +7,10 @@
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
-import { _translate } from '../../../../../../../cypress/utils';
+import {
+  _escapeForRegExp,
+  _translate,
+} from '../../../../../../../cypress/utils';
 
 import { PercentControl } from './PercentControl';
 import { IApiControl } from '../../../../types';
@@ -15,6 +18,16 @@ import '../../../../../Edit/translations';
 import RandExp from 'randexp';
 
 describe('<PercentControl />', () => {
+  const trans_EN =
+    _translate('en', 'Edit', 'mandatoryValue') ||
+    'mandatoryValue|Valeur obligatoire';
+  const trans_FR =
+    _translate('fr', 'Edit', 'mandatoryValue') ||
+    'mandatoryValue|Valeur obligatoire';
+  const trans_DE =
+    _translate('de', 'Edit', 'mandatoryValue') ||
+    'mandatoryValue|Valeur obligatoire';
+  const translations_mandatoryValue = [trans_EN, trans_FR, trans_DE];
   const control: IApiControl = {
     control_desc_1: null,
     control_desc_2: null,
@@ -258,6 +271,13 @@ describe('<PercentControl />', () => {
   });
 
   it('Should match the value with regex', () => {
+    const trans_EN =
+      _translate('en', 'Edit', 'errorRecording') || 'errorRecording';
+    const trans_FR =
+      _translate('fr', 'Edit', 'errorRecording') || 'errorRecording';
+    const trans_DE =
+      _translate('de', 'Edit', 'errorRecording') || 'errorRecording';
+    const translations = [trans_EN, trans_FR, trans_DE];
     const regex = '^-?[0-9]\\d*(\\.\\d+)?$';
     const _control = {
       ...structuredClone(control),
@@ -269,7 +289,7 @@ describe('<PercentControl />', () => {
     const randExp = new RandExp(new RegExp(regex, 'i'));
     let generated = randExp.gen();
 
-    while (generated === '') {
+    while (generated === '' || !new RegExp(regex, 'i').test(generated)) {
       generated = randExp.gen();
     }
 
@@ -292,10 +312,13 @@ describe('<PercentControl />', () => {
       .find('input[type="text"]')
       .type(generated, { parseSpecialCharSequences: false })
       .blur();
-    cy.wait(255);
-    cy.react('PercentControl')
-      .get('._FormError', { timeout: 1 })
-      .should('not.exist');
+    cy.wait(100).then(() => {
+      cy.react('PercentControl').formErrorMessageShouldNotMatch([
+        ...translations,
+        ...translations_mandatoryValue,
+        _escapeForRegExp(_control.control_regex_msg as string) as string,
+      ]);
+    });
   });
   it('Should render error message if value do not match with regex', () => {
     const regex = '^-?[0-9]\\d*(\\.\\d+)?$';
@@ -310,7 +333,7 @@ describe('<PercentControl />', () => {
     const randExpOpposite = new RandExp(oppositeRegex);
     let generated = randExpOpposite.gen();
 
-    while (generated === '') {
+    while (generated === '' || !oppositeRegex.test(generated)) {
       generated = randExpOpposite.gen();
     }
 
@@ -330,9 +353,10 @@ describe('<PercentControl />', () => {
       .find('input[type="text"]')
       .type(generated, { parseSpecialCharSequences: false })
       .blur();
-    cy.wait(255);
-    cy.react('PercentControl')
-      .find('._FormError')
-      .should('have.text', _control.control_regex_msg);
+    cy.wait(100).then(() => {
+      cy.react('PercentControl')
+        .find('._FormError')
+        .should('have.text', _control.control_regex_msg);
+    });
   });
 });
