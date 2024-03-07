@@ -35,6 +35,10 @@ which allows you to use `screen.logTestingPlaygroundURL()` in your test. It give
 
 Lauches the Cypress testing framework software
 
+### `yarn cypress:run:(e2e|component)`
+
+Launches the Cypress testing framework for E2E or Components
+
 ### `yarn build`
 
 Builds the app for production to the `build` folder.<br />
