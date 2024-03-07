@@ -1,4 +1,5 @@
 import { getByKey } from '../src';
+import { expect } from '@jest/globals';
 
 const cart = {
   fruits: {

@@ -1,4 +1,5 @@
 import { between } from '../src/between';
+import { expect } from '@jest/globals';
 
 describe('test the between function', () => {
   it('should return true when given number is within the range', () => {
