@@ -9,7 +9,7 @@ export const deleteFile = (
   rowNum: number,
   columnId: number,
   name: string,
-  jwt: string | null,
+  jwt: string,
   setErrorMessage: React.Dispatch<SetStateAction<string | null>>,
   setCurrentUploadFile: React.Dispatch<SetStateAction<IUploadDetail[] | null>>,
 ) => {

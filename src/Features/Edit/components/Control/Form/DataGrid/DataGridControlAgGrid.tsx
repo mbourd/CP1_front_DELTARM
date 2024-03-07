@@ -1197,7 +1197,7 @@ export const DataGridControlAgGrid: React.FC<
           },
         });
       })
-      .catch(async (error: AxiosError) => {
+      .catch(async (error: AxiosError<any>) => {
         setErrorMessageAdd(error.response?.data.error_msg ?? '');
         setTimeout(() => {
           setErrorMessageAdd('');

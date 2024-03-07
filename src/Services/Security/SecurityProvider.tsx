@@ -7,7 +7,7 @@ import version from '../../build-version.json';
 
 export interface ISecurityProviderContext {
   user: IUser;
-  jwt: string | null;
+  jwt: string;
   data: any;
   login: (token: string) => void;
   logout: () => void;
@@ -15,7 +15,7 @@ export interface ISecurityProviderContext {
 
 export const SecurityContext = React.createContext<ISecurityProviderContext>({
   user: new User(),
-  jwt: null,
+  jwt: '',
   data: {},
   login: () => undefined,
   logout: () => undefined,

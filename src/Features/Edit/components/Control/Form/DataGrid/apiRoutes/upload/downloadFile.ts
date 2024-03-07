@@ -5,7 +5,7 @@ import { getEnv } from '../../../../../../../../Packages/Helpers';
 export const downloadFile = (
   fileId: string,
   name: string,
-  jwt: string | null,
+  jwt: string,
   setErrorMessage: React.Dispatch<SetStateAction<string | null>>,
 ) => {
   axios

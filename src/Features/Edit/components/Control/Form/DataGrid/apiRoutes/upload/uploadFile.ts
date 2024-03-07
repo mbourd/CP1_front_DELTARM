@@ -9,7 +9,7 @@ export const uploadFile = (
   rowNum: number,
   columnId: number,
   newUploadFile: File,
-  jwt: string | null,
+  jwt: string,
   setCurrentUploadFile: React.Dispatch<SetStateAction<IUploadDetail[] | null>>,
   setErrorMessage: React.Dispatch<SetStateAction<string | null>>,
 ) => {

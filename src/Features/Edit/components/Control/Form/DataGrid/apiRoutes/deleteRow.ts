@@ -6,7 +6,7 @@ export const deleteRow = (
   fileId: string,
   controlId: string,
   row_num: string,
-  jwt: string | null,
+  jwt: string,
   setGridDetails: React.Dispatch<SetStateAction<any>>,
   setErrorMessage: React.Dispatch<SetStateAction<string>>,
   setShowModal: React.Dispatch<SetStateAction<boolean>>,
