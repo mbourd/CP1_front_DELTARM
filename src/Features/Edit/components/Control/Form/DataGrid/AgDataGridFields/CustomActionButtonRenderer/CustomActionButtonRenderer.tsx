@@ -8,7 +8,7 @@ type CustomActionButtonRendererPropsType = {
   field_data?: DataGridDetailsRowsCell;
   control?: IApiControl;
   fileId?: string;
-  jwt?: string | null;
+  jwt?: string;
   seterrors?: React.Dispatch<React.SetStateAction<string>>;
 };
 

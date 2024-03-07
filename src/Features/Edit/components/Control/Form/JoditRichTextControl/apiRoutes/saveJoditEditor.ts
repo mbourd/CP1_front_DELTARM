@@ -7,7 +7,7 @@ export const saveJoditEditor = (
   fileId: string,
   control: IApiControl,
   editorContent: string,
-  jwt: string | null,
+  jwt: string,
   setMessage: React.Dispatch<React.SetStateAction<string | null>>,
 ) => {
   axios
