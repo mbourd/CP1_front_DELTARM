@@ -7,12 +7,11 @@
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
-import { _escapeForRegExp } from '../../../../../../../cypress/utils';
+import { _translate } from '../../../../../../../cypress/utils';
 
 import { CommentControl } from './CommentControl';
 import { IApiControl } from '../../../../types';
 import '../../../../../Edit/translations';
-import { translation } from '../../../../../../Services';
 
 describe('<CommentControl />', () => {
   const control: IApiControl = {
@@ -35,9 +34,6 @@ describe('<CommentControl />', () => {
     upload_detail: null,
     rich_text_detail: null,
     control_rejectable: null,
-  };
-  const getResourceTrans = (lng: string, ns: string, key: string): string => {
-    return _escapeForRegExp(translation.getResource(lng, ns)?.[key]);
   };
 
   it('should render', () => {
@@ -130,15 +126,24 @@ describe('<CommentControl />', () => {
       mandatory: true,
       editable: true,
     };
-    const trans_EN =
-      getResourceTrans('en', 'Edit', 'mandatoryValue') ||
-      'mandatoryValue|Valeur obligatoire';
-    const trans_FR =
-      getResourceTrans('fr', 'Edit', 'mandatoryValue') ||
-      'mandatoryValue|Valeur obligatoire';
-    const trans_DE =
-      getResourceTrans('de', 'Edit', 'mandatoryValue') ||
-      'mandatoryValue|Valeur obligatoire';
+    const trans_EN = _translate(
+      'en',
+      'Edit',
+      'mandatoryValue',
+      'Valeur obligatoire',
+    );
+    const trans_FR = _translate(
+      'fr',
+      'Edit',
+      'mandatoryValue',
+      'Valeur obligatoire',
+    );
+    const trans_DE = _translate(
+      'de',
+      'Edit',
+      'mandatoryValue',
+      'Valeur obligatoire',
+    );
     const translations = [trans_EN, trans_FR, trans_DE];
     cy.mount(
       <SetupTestsComponents>

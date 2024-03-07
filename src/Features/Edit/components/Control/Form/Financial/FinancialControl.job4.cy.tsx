@@ -18,6 +18,16 @@ import '../../../../../Edit/translations';
 import RandExp from 'randexp';
 
 describe('<FinancialControl />', () => {
+  const trans_EN =
+    _translate('en', 'Edit', 'mandatoryValue') ||
+    'mandatoryValue|Valeur obligatoire';
+  const trans_FR =
+    _translate('fr', 'Edit', 'mandatoryValue') ||
+    'mandatoryValue|Valeur obligatoire';
+  const trans_DE =
+    _translate('de', 'Edit', 'mandatoryValue') ||
+    'mandatoryValue|Valeur obligatoire';
+  const translations_mandatoryValue = [trans_EN, trans_FR, trans_DE];
   const control: IApiControl = {
     control_desc_1: null,
     control_desc_2: null,
@@ -369,10 +379,11 @@ describe('<FinancialControl />', () => {
       .find('input[type="text"]')
       .type(gen, { parseSpecialCharSequences: false })
       .blur();
-    cy.wait(255);
-    cy.react('FinancialControl').formErrorShouldBeVisible([
-      _escapeForRegExp(_control.control_regex_msg as string),
-    ]);
+    cy.wait(100).then(() => {
+      cy.react('FinancialControl').formErrorShouldBeVisible([
+        _escapeForRegExp(_control.control_regex_msg as string) as string,
+      ]);
+    });
   });
   it('Should match the value with regex', () => {
     const trans_EN =
@@ -393,7 +404,8 @@ describe('<FinancialControl />', () => {
     const randExp = new RandExp(regex);
     let generated = randExp.gen();
 
-    while (generated === '') generated = randExp.gen();
+    while (generated === '' || !regex.test(generated))
+      generated = randExp.gen();
 
     cy.mount(
       <SetupTestsComponents>
@@ -407,19 +419,19 @@ describe('<FinancialControl />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
+    cy.window().then((w) => {
+      w['Features_Edit_Control_FinancialControl'].setCanSendApi(false);
+    });
     cy.react('FinancialControl')
       .find('input[type="text"]')
       .type(generated, { parseSpecialCharSequences: false })
       .blur();
-    cy.wait(255);
-    cy.react('FinancialControl')
-      .get('._FormError', { timeout: 1 })
-      .then(($el) => {
-        if ($el.length) {
-          cy.wrap($el)
-            .invoke('text')
-            .should('match', new RegExp(translations.join('|')));
-        }
-      });
+    cy.wait(100).then(() => {
+      cy.react('FinancialControl').formErrorMessageShouldNotMatch([
+        ...translations,
+        ...translations_mandatoryValue,
+        _escapeForRegExp(_control.control_regex_msg as string) as string,
+      ]);
+    });
   });
 });

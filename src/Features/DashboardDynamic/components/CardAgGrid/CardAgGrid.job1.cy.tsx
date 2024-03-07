@@ -3,7 +3,7 @@
 /// <reference types="../../../../../cypress/support/component" />
 
 // NOTE: Run CLI:
-// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/DashboardDynamic/components/CardAgGrid/CardAgGrid.cy.tsx"
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/DashboardDynamic/components/CardAgGrid/CardAgGrid.job1.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
@@ -481,10 +481,12 @@ function _assertCanFiltering(_control: IApiControl) {
           `.ag-theme-alpine .ag-header-row.ag-header-row-column .ag-header-cell[col-id="${col.field}"]`,
         );
 
-        if (!$col.is(':visible') && !col.hide) {
-          cy.wrap(new Array(6)).each(() => cy.realPress('ArrowRight'));
-        } else return true;
+        if (col.hide) return true;
+
+        return cy.realPress('ArrowRight').then(() => $col.is(':visible'));
       }).then(() => {
+        if (col.hide) return;
+
         const $col = Cypress.$(
           `.ag-theme-alpine .ag-header-row.ag-header-row-column .ag-header-cell[col-id="${col.field}"]`,
         );
