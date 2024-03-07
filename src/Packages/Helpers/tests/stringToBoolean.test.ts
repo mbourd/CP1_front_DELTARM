@@ -1,3 +1,4 @@
+import { expect } from '@jest/globals';
 import { stringToBoolean } from '../src/stringToBoolean';
 
 describe('test method function string to boolean', () => {

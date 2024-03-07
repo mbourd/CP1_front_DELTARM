@@ -1,4 +1,5 @@
 import { findByValue } from '../src';
+import { expect } from '@jest/globals';
 
 describe('findByValue', () => {
   const brother = {

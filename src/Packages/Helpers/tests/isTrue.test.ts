@@ -1,3 +1,4 @@
+import { expect } from '@jest/globals';
 import { isTrue } from '../src';
 
 describe('isTrue', () => {
