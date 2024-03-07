@@ -11,7 +11,10 @@ import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTe
 import '../../../../../Edit/translations';
 import { TextControl } from './TextControl';
 import { IApiControl } from '../../../../types';
-import { _translate } from '../../../../../../../cypress/utils';
+import {
+  _escapeForRegExp,
+  _translate,
+} from '../../../../../../../cypress/utils';
 import RandExp from 'randexp';
 
 describe('<TextControl />', () => {
@@ -275,6 +278,13 @@ describe('<TextControl />', () => {
   });
 
   it('Should match the value with regex', () => {
+    const trans_EN =
+      _translate('en', 'Edit', 'errorRecording') || 'errorRecording';
+    const trans_FR =
+      _translate('fr', 'Edit', 'errorRecording') || 'errorRecording';
+    const trans_DE =
+      _translate('de', 'Edit', 'errorRecording') || 'errorRecording';
+    const translations = [trans_EN, trans_FR, trans_DE];
     const regex = '^-?((180(\\.0+)?)|(((1[0-7]\\d)|(\\d{1,2}))(\\.\\d+)?))$';
     const _control = {
       ...structuredClone(control),
@@ -284,7 +294,12 @@ describe('<TextControl />', () => {
       control_regex_msg: 'Value do not match with regex',
     };
     const randExp = new RandExp(new RegExp(_control.control_regex, 'i'));
-    const generated = randExp.gen();
+    let generated = randExp.gen();
+    while (
+      generated === '' ||
+      !new RegExp(_control.control_regex, 'i').test(generated)
+    )
+      generated = randExp.gen();
 
     cy.mount(
       <SetupTestsComponents>
@@ -307,9 +322,11 @@ describe('<TextControl />', () => {
         typeOptions: { parseSpecialCharSequences: false },
         triggers: { blur: { exec: true } },
       });
-    cy.react('TextControl').formErrorMessageShouldNotMatch(
-      translations_mandatoryValue,
-    );
+    cy.react('TextControl').formErrorMessageShouldNotMatch([
+      ...translations,
+      ...translations_mandatoryValue,
+      _escapeForRegExp(_control.control_regex_msg as string) as string,
+    ]);
   });
   it('Should render error message if value do not match with regex', () => {
     const regex = '^-?((180(\\.0+)?)|(((1[0-7]\\d)|(\\d{1,2}))(\\.\\d+)?))$';
@@ -346,9 +363,10 @@ describe('<TextControl />', () => {
       .find('input[type="text"]')
       .type(generated, { parseSpecialCharSequences: false })
       .blur();
-    cy.wait(255);
-    cy.react('TextControl')
-      .find('._FormError')
-      .should('have.text', _control.control_regex_msg);
+    cy.wait(100).then(() => {
+      cy.react('TextControl')
+        .find('._FormError')
+        .should('have.text', _control.control_regex_msg);
+    });
   });
 });
