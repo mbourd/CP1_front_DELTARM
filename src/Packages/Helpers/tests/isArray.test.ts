@@ -1,3 +1,4 @@
+import { expect } from '@jest/globals';
 import { isArray } from '../src';
 
 describe('isArray', () => {

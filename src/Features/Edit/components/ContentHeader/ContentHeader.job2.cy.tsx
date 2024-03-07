@@ -93,19 +93,30 @@ describe('<ContentHeader />', function () {
     };
 
     cy.intercept(
+      // {
+      //   url: '/file/audit*',
+      //   method: 'GET',
+      // },
+      // (req) => {
+      //   req.on('response', (resp) => {
+      //     resp.send(200, {
+      //       data: {
+      //         is_audit: true,
+      //         audit: [audit1],
+      //       },
+      //     });
+      //   });
+      // },
+      'GET',
+      '/file/audit*',
       {
-        url: '/file/audit*',
-        method: 'GET',
-      },
-      (req) => {
-        req.on('response', (resp) => {
-          resp.send(200, {
-            data: {
-              is_audit: true,
-              audit: [audit1],
-            },
-          });
-        });
+        statusCode: 200,
+        body: {
+          data: {
+            is_audit: true,
+            audit: [audit1],
+          },
+        },
       },
     ).as('fileAuditRequest');
 
@@ -138,19 +149,30 @@ describe('<ContentHeader />', function () {
     };
 
     cy.intercept(
+      // {
+      //   url: '/file/audit*',
+      //   method: 'GET',
+      // },
+      // (req) => {
+      //   req.on('response', (resp) => {
+      //     resp.send(200, {
+      //       data: {
+      //         is_audit: false,
+      //         audit: [audit1],
+      //       },
+      //     });
+      //   });
+      // },
+      'GET',
+      '/file/audit*',
       {
-        url: '/file/audit*',
-        method: 'GET',
-      },
-      (req) => {
-        req.on('response', (resp) => {
-          resp.send(200, {
-            data: {
-              is_audit: false,
-              audit: [audit1],
-            },
-          });
-        });
+        statusCode: 200,
+        body: {
+          data: {
+            is_audit: false,
+            audit: [audit1],
+          },
+        },
       },
     ).as('fileAuditRequest');
 
@@ -182,19 +204,30 @@ describe('<ContentHeader />', function () {
     };
 
     cy.intercept(
+      // {
+      //   url: '/file/audit*',
+      //   method: 'GET',
+      // },
+      // (req) => {
+      //   req.on('response', (resp) => {
+      //     resp.send(200, {
+      //       data: {
+      //         // is_audit: false,
+      //         audit: [audit1],
+      //       },
+      //     });
+      //   });
+      // },
+      'GET',
+      '/file/audit*',
       {
-        url: '/file/audit*',
-        method: 'GET',
-      },
-      (req) => {
-        req.on('response', (resp) => {
-          resp.send(200, {
-            data: {
-              // is_audit: false,
-              audit: [audit1],
-            },
-          });
-        });
+        statusCode: 200,
+        body: {
+          data: {
+            // is_audit: false,
+            audit: [audit1],
+          },
+        },
       },
     ).as('fileAuditRequest');
 

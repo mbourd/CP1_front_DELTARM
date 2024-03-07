@@ -1,3 +1,4 @@
+import { expect } from '@jest/globals';
 import { isUndefined } from '../src';
 
 describe('isUndefined', () => {

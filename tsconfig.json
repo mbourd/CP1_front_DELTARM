@@ -38,5 +38,7 @@
     "src/**/*.test.ts",
     "src/**/*.cy.tsx",
     "src/**/*.cy.ts",
+    "src/**/tests",
+    "cypress"
   ]
 }

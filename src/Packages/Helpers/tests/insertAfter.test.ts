@@ -1,3 +1,4 @@
+import { expect } from '@jest/globals';
 import { insertAfter } from '../src';
 
 describe('insertAfter', () => {
