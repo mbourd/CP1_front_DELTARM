@@ -6,7 +6,7 @@ export class User implements IUser {
 
   private _roles: string[] = [];
   private _email: string | null = null;
-  private _jwt: string | null = null;
+  private _jwt = '';
   private _lang = 'fr';
   private _username: string = User.Roles.ANON;
   private _expireAt: Date | null = null;
@@ -25,7 +25,7 @@ export class User implements IUser {
     return this._roles;
   }
 
-  public getJwt(): string | null {
+  public getJwt(): string {
     return this._jwt;
   }
 
@@ -137,7 +137,7 @@ export class User implements IUser {
     return this;
   }
 
-  public setJwt(token: string | null): this {
+  public setJwt(token: string): this {
     this._jwt = token;
 
     return this;
