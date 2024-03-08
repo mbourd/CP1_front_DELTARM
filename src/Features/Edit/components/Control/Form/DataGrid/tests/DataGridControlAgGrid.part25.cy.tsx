@@ -44,10 +44,8 @@ describe('<DataGridControlAgGrid /> - part 25', function () {
       ...structuredClone(controlExample4),
       data_grid_detail: {
         ...structuredClone(controlExample4.data_grid_detail),
-        rows: (() => {
-          return structuredClone(
-            controlExample4.data_grid_detail?.rows || [],
-          ).map((row) => {
+        rows: structuredClone(controlExample4.data_grid_detail?.rows || []).map(
+          (row) => {
             for (const index in Object.keys(row)) {
               if (
                 typeof row[Object.keys(row)[index]] === 'object' &&
@@ -68,8 +66,8 @@ describe('<DataGridControlAgGrid /> - part 25', function () {
             }
 
             return row;
-          });
-        })(),
+          },
+        ),
       },
       mandatory: false,
       upload_detail: null,
@@ -92,10 +90,8 @@ describe('<DataGridControlAgGrid /> - part 25', function () {
       ...structuredClone(controlExample4),
       data_grid_detail: {
         ...structuredClone(controlExample4.data_grid_detail),
-        rows: (() => {
-          return structuredClone(
-            controlExample4.data_grid_detail?.rows || [],
-          ).map((row) => {
+        rows: structuredClone(controlExample4.data_grid_detail?.rows || []).map(
+          (row) => {
             for (const index in Object.keys(row)) {
               if (
                 typeof row[Object.keys(row)[index]] === 'object' &&
@@ -116,8 +112,8 @@ describe('<DataGridControlAgGrid /> - part 25', function () {
             }
 
             return row;
-          });
-        })(),
+          },
+        ),
       },
       mandatory: false,
       upload_detail: null,
