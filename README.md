@@ -38,6 +38,7 @@ Lauches the Cypress testing framework software
 ### `yarn cypress:run:(e2e|component)`
 
 Launches the Cypress testing framework for E2E or Components
+Pass the param --config to specify additional configuration
 
 ### `yarn build`
 
