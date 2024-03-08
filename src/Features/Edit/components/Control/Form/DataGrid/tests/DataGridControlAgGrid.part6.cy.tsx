@@ -237,6 +237,7 @@ describe('<DataGridControlAgGrid /> - part 6', function () {
             .click();
           cy.wait('@callAfterConfirmDeletionBtn').then((intercepted) => {
             const { request } = intercepted;
+            const reqBody = parseMultipartFormData(request.body);
             const { query } = request;
             const selected: any[] = [];
 
@@ -253,14 +254,10 @@ describe('<DataGridControlAgGrid /> - part 6', function () {
                 selected.push(node);
               }
             });
-            expect(JSON.parse(request.body).rows.length).to.be.eq(
-              selected.length,
-            );
-            expect(JSON.parse(request.body).rows.length).to.be.gt(0);
+            expect(JSON.parse(reqBody).rows.length).to.be.eq(selected.length);
+            expect(JSON.parse(reqBody).rows.length).to.be.gt(0);
             selected.forEach((node: RowNode) => {
-              expect(JSON.parse(request.body).rows).to.include(
-                node.data.row_uuid,
-              );
+              expect(JSON.parse(reqBody).rows).to.include(node.data.row_uuid);
             });
             cy.wrap(query).should('have.property', 'file_id');
             expect(query.file_id, 'query.file_id').to.eq(fileId);
@@ -436,3 +433,39 @@ describe('<DataGridControlAgGrid /> - part 6', function () {
     });
   });
 });
+
+function parseMultipartFormData(multipartFormData) {
+  if (!multipartFormData.includes('------WebKitFormBoundary'))
+    return multipartFormData;
+
+  const formDataObject = {};
+
+  // Split the multipart content into individual parts
+  const parts = multipartFormData.split(/------WebKitFormBoundary.*/);
+
+  // Remove the first and last empty parts
+  parts.shift();
+  parts.pop();
+
+  // Iterate over each part to extract key-value pairs
+  parts.forEach((part) => {
+    const match = /name="([^"]+)"(?:\r\n|\r|\n)([\s\S]*)/.exec(part);
+    if (match) {
+      const key = match[1].replace(/\[\]$/, '');
+      const value = match[2].trim();
+
+      // If the key already exists, convert the value to an array
+      if (Object.hasOwnProperty.call(formDataObject, key)) {
+        if (Array.isArray(formDataObject[key])) {
+          formDataObject[key].push(value);
+        } else {
+          formDataObject[key] = [formDataObject[key], value];
+        }
+      } else {
+        formDataObject[key] = value;
+      }
+    }
+  });
+
+  return JSON.stringify(formDataObject);
+}
