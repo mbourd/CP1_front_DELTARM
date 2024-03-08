@@ -1,5 +1,5 @@
-import regexgen from 'regexgen';
+import toRegex from 'to-regex';
 
-export function generateRegex(list: string[]): RegExp {
-  return new RegExp('^' + regexgen(list).source + '$');
+export function generateRegex(list: string[]) {
+  return toRegex(list);
 }
