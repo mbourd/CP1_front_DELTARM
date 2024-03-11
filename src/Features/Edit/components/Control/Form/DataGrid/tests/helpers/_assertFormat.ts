@@ -5,7 +5,7 @@ import { getData } from './getData';
 import { kFormatter } from './kFormatter';
 
 export function _assertFormat(_control: IApiControl) {
-  cy.wait(155).then(() => {
+  cy.wait(500).then(() => {
     cy.window().then((w) => {
       w[
         'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id

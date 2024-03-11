@@ -3,7 +3,7 @@ import { getData } from './getData';
 import { keyCodeDefinitions } from 'cypress-real-events/keyCodeDefinitions';
 
 export function _assertHiddenColumns(_control: IApiControl) {
-  cy.wait(155).then(() => {
+  cy.wait(500).then(() => {
     const withControlData = getData(_control);
 
     withControlData(1, ({ columns }) => {

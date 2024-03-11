@@ -8,7 +8,7 @@ import BigNumber from 'bignumber.js';
 import { create as mathCreate, all as mathAll } from 'mathjs';
 
 export function _assertSorting(_control: IApiControl) {
-  cy.wait(155).then(() => {
+  cy.wait(500).then(() => {
     cy.window().then((w) => {
       w[
         'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id

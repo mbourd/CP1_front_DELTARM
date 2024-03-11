@@ -4,7 +4,7 @@ import { _assertPinnedPositionColumns } from './_assertPinnedPositionColumns';
 import { _getRandomNumberBetween } from '../../../../../../../../../cypress/utils';
 
 export function _assertManuallyPinnedPositionColumns(_control: IApiControl) {
-  cy.wait(155).then(() => {
+  cy.wait(500).then(() => {
     const withControlData = getData(_control);
 
     withControlData(1, ({ columns, indexRow, getJqueryRowElement }) => {
@@ -75,8 +75,8 @@ export function _assertManuallyPinnedPositionColumns(_control: IApiControl) {
                           direction === null
                             ? "Pas d'épingle"
                             : direction === 'left'
-                            ? 'Goupille à gauche'
-                            : 'Broche droite',
+                              ? 'Goupille à gauche'
+                              : 'Broche droite',
                         )
                         .click()
                         .then(() => {

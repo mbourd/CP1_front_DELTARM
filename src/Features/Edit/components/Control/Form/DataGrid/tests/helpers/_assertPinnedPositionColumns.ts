@@ -8,7 +8,7 @@ import { DataGridDetailsColumnType, IApiControl } from 'Features/Edit/types';
 import { getData } from './getData';
 
 export function _assertPinnedPositionColumns(_control: IApiControl) {
-  cy.wait(155).then(() => {
+  cy.wait(500).then(() => {
     const classHeaderCellSelector =
       '.ag-header-row.ag-header-row-column .ag-header-cell';
     const withControlData = getData(_control);

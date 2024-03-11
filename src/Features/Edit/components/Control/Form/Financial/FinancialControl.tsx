@@ -173,8 +173,8 @@ export const FinancialControl: React.FC<React.PropsWithChildren<IProps>> = ({
         control.control_options?.precision
           ? control.control_options?.precision
           : control.control_options?.precision === 0
-          ? control.control_options.precision
-          : 2,
+            ? control.control_options.precision
+            : 2,
       )
     : currentValue;
 
@@ -195,8 +195,8 @@ export const FinancialControl: React.FC<React.PropsWithChildren<IProps>> = ({
             control.editable
               ? control.control_title
               : currentValue
-              ? currentValue
-              : ''
+                ? currentValue
+                : ''
           }
           disabled={!control.editable}
           color={control.editable ? 'text' : 'disabled'}

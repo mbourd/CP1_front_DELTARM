@@ -4,7 +4,7 @@ export function _assertPagination(
   _control: IApiControl,
   paginationSize: number,
 ) {
-  cy.wait(155).then(() => {
+  cy.wait(500).then(() => {
     cy.window().then((w) => {
       expect(
         w[

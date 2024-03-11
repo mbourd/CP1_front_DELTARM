@@ -4,7 +4,7 @@ import { getData } from './getData';
 
 export function _assertCellStyle(_control: IApiControl) {
   Cypress.config('defaultCommandTimeout', 6000);
-  cy.wait(155).then(() => {
+  cy.wait(500).then(() => {
     cy.window().then((w) => {
       w[
         'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
