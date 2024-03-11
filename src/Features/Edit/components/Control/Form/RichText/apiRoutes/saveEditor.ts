@@ -8,7 +8,7 @@ export const saveEditor = (
   fileId: string,
   control: IApiControl,
   editorContent: RawDraftContentState,
-  jwt: string | null,
+  jwt: string,
   setMessage: React.Dispatch<React.SetStateAction<string | null>>,
 ) => {
   axios

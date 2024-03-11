@@ -4,7 +4,7 @@ import { getEnv } from '../../../Packages/Helpers';
 
 export const downloadAuditExcel = (
   fileId: string,
-  jwt: string | null,
+  jwt: string,
   setErrorMessage: React.Dispatch<SetStateAction<string | null>>,
 ) => {
   axios

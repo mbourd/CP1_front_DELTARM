@@ -7,7 +7,7 @@ export const uploadFile = (
   fileId: string,
   control: IApiControl,
   newUploadFile: File,
-  jwt: string | null,
+  jwt: string,
   setCurrentUploadFile: React.Dispatch<SetStateAction<IUploadDetail[] | null>>,
   setErrorMessage: React.Dispatch<SetStateAction<string | null>>,
 ) => {

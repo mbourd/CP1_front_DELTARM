@@ -130,8 +130,8 @@ export const LongTextControl: React.FC<React.PropsWithChildren<IProps>> = ({
             control.editable
               ? control.control_title
               : control.control_value
-              ? control.control_value
-              : ''
+                ? control.control_value
+                : ''
           }
           disabled={!control.editable}
           color={control.editable ? 'text' : 'disabled'}

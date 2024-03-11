@@ -63,7 +63,7 @@ export class Security implements ISecurity {
       .setEmail(null)
       .setUsername(User.Roles.ANON)
       .setRoles([User.Roles.ANON])
-      .setJwt(null)
+      .setJwt('')
       .setExpireAt(null)
       .setLang('fr');
     try {

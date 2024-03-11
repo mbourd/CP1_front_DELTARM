@@ -37,7 +37,8 @@ export default defineConfig({
   component: {
     setupNodeEvents(on, config) {
       // implement node event listeners here
-      return require('./node_modules/cypress-fs/plugins/index.js')(on, config);
+      // return require('./node_modules/cypress-fs/plugins/index.js')(on, config);
+      return config;
     },
     devServer: {
       framework: 'create-react-app',

@@ -3,6 +3,10 @@
 import { translation } from './Translation';
 
 describe('Assert Packages/Translation.ts', () => {
+  beforeEach(() => {
+    cy.viewport(0, 0);
+  });
+
   it('Should add multiple resources once', () => {
     translation.init();
     translation.addBatchResource({

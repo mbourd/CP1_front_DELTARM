@@ -2,7 +2,7 @@ import {
   ActionCreatorWithPayload,
   ActionCreatorWithoutPayload,
   Reducer,
-  AnyAction,
+  Action,
   Store,
 } from '@reduxjs/toolkit';
 
@@ -21,9 +21,9 @@ export type UseReduxToolkitReturnType<T, A extends string> = {
 };
 
 export interface IAppStore {
-  setReducer: (reducer: Record<string, Reducer<any, AnyAction>>) => IAppStore;
-  setMiddleWares: (middleware: any[]) => IAppStore;
-  getMiddleWares: () => any[];
+  setReducer: (reducer: Record<string, Reducer<any, Action>>) => IAppStore;
+  setMiddleWares: (middleware) => IAppStore;
+  getMiddleWares: () => any;
   setEnhancers: (enhancers: any) => IAppStore;
   getEnhancers: () => any;
   configureStore: () => IAppStore;
