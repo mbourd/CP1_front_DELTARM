@@ -112,8 +112,8 @@ export const SliderControl: React.FC<React.PropsWithChildren<IProps>> = ({
             control.control_options?.boundaries
               ? control.control_options?.boundaries
               : control.control_options?.marks
-              ? control.control_options.marks
-              : false
+                ? control.control_options.marks
+                : false
           }
           min={control.control_options?.min ? control.control_options?.min : 0}
           max={

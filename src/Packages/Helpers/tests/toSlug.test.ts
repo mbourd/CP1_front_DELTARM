@@ -1,3 +1,4 @@
+import { expect } from '@jest/globals';
 import { toSlug } from '../src';
 
 describe('toSlug', () => {

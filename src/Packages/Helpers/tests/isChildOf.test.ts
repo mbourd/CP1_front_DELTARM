@@ -1,3 +1,4 @@
+import { expect } from '@jest/globals';
 import { isChildOf } from '../src';
 
 describe('isChildOf', () => {

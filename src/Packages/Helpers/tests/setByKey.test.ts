@@ -1,3 +1,4 @@
+import { expect } from '@jest/globals';
 import { setByKey } from '../src';
 
 describe('setByKey', () => {

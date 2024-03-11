@@ -29,6 +29,7 @@ export const DecimalControl: React.FC<React.PropsWithChildren<IProps>> = ({
   context,
 }): React.ReactElement => {
   const { send, error } = useApi<void>();
+  const [canSendApi, setCanSendApi] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(
     control.mandatory && control.editable && !control.control_value
       ? 'Valeur obligatoire'
@@ -110,16 +111,18 @@ export const DecimalControl: React.FC<React.PropsWithChildren<IProps>> = ({
       }
 
       setCurrentValue(value);
-      send(
-        currentRoute?.props?.apiSaveControlRouteName,
-        {},
-        {
-          file_id: fileId,
-          elm_id: control.control_id,
-          elm_val: value,
-          control_family: control.control_family,
-        },
-      );
+
+      if (canSendApi)
+        send(
+          currentRoute?.props?.apiSaveControlRouteName,
+          {},
+          {
+            file_id: fileId,
+            elm_id: control.control_id,
+            elm_val: value,
+            control_family: control.control_family,
+          },
+        );
     },
     [
       send,
@@ -135,6 +138,7 @@ export const DecimalControl: React.FC<React.PropsWithChildren<IProps>> = ({
       control.control_options,
       setInputFocus,
       trans,
+      canSendApi,
     ],
   );
 
@@ -150,13 +154,20 @@ export const DecimalControl: React.FC<React.PropsWithChildren<IProps>> = ({
     }
   }, [isRejected]);
 
+  if (window?.['Cypress']) {
+    window['Features_Edit_Control_DecimalControl'] = {
+      setErrorMessage,
+      setCanSendApi,
+    };
+  }
+
   const controlValue = currentValue
     ? parseFloat(currentValue)?.toFixed(
         control.control_options?.precision
           ? control.control_options?.precision
           : control.control_options?.precision === 0
-          ? control.control_options.precision
-          : 2,
+            ? control.control_options.precision
+            : 2,
       )
     : currentValue;
 
@@ -170,8 +181,8 @@ export const DecimalControl: React.FC<React.PropsWithChildren<IProps>> = ({
             control.editable
               ? control.control_title
               : currentValue
-              ? currentValue
-              : ''
+                ? currentValue
+                : ''
           }
           disabled={!control.editable}
           color={control.editable ? 'text' : 'disabled'}

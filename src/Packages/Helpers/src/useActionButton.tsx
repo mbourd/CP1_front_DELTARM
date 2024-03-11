@@ -17,7 +17,7 @@ const modalData = atom({
 });
 
 type useActionButtonPropsType = {
-  jwt: string | null;
+  jwt: string;
   setIsModalOpen?: React.Dispatch<SetStateAction<boolean>>;
   setErrorMessage?: React.Dispatch<SetStateAction<string | null>>;
 };
@@ -140,7 +140,7 @@ export const useActionButton = ({
               // console.dir(response);
               dispatchActionButton(response.data);
             })
-            .catch(async (error: AxiosError) => {
+            .catch(async (error: AxiosError<any>) => {
               if (error.response) {
                 if (setErrorMessage && error.response.status >= 300)
                   setErrorMessage(error.response.data?.error_msg);
