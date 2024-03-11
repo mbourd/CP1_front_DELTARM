@@ -128,8 +128,8 @@ export const FormulaControl: React.FC<React.PropsWithChildren<IProps>> = ({
           control.control_options?.precision
             ? control.control_options?.precision
             : control.control_options?.precision === 0
-            ? control.control_options.precision
-            : 2,
+              ? control.control_options.precision
+              : 2,
         )
       : currentValue;
 
@@ -142,8 +142,8 @@ export const FormulaControl: React.FC<React.PropsWithChildren<IProps>> = ({
             control.editable
               ? control.control_title
               : controlValue
-              ? controlValue
-              : ''
+                ? controlValue
+                : ''
           }
           disabled={!control.editable}
           color={control.editable ? 'text' : 'disabled'}

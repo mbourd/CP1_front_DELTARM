@@ -7,7 +7,7 @@ import { create as mathCreate, all as mathAll } from 'mathjs';
 
 // validate the correctness of formulas in a data grid by simulating user input, recalculating formula cells, and checking the evaluated results against expected values.
 export function _assertFormatAndEvalFormula(_control: IApiControl) {
-  cy.wait(155).then(() => {
+  cy.wait(500).then(() => {
     cy.window().then((w) => {
       w[
         'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id

@@ -46,7 +46,7 @@ export class User implements IUser {
    * This function checks if user is logged. It based on JWT.
    */
   public isLogged(): boolean {
-    if (this._jwt === null) {
+    if (this._jwt === null || this._jwt === '' || this._jwt === undefined) {
       return false;
     }
 

@@ -6,7 +6,7 @@ import { getData } from './getData';
 export function _assertRegexValidation(_control: IApiControl) {
   // Set the temporary timeout for this test (e.g., 100 milliseconds)
   Cypress.config('defaultCommandTimeout', 100);
-  cy.wait(155).then(() => {
+  cy.wait(500).then(() => {
     cy.window().then((w) => {
       w[
         'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id

@@ -297,23 +297,23 @@ export const DateControl: React.FC<React.PropsWithChildren<IProps>> = ({
     control?.control_options?.min_date === 'today'
       ? today_date
       : control?.control_options?.min_date === 'tomorrow'
-      ? tomorrow_date
-      : control?.control_options?.min_date === 'day_after_tomorrow'
-      ? day_after_tomorrow_date
-      : control?.control_options?.min_date === 'next_month'
-      ? next_month
-      : control?.control_options?.min_date;
+        ? tomorrow_date
+        : control?.control_options?.min_date === 'day_after_tomorrow'
+          ? day_after_tomorrow_date
+          : control?.control_options?.min_date === 'next_month'
+            ? next_month
+            : control?.control_options?.min_date;
 
   const max_date =
     control?.control_options?.max_date === 'today'
       ? today_date
       : control?.control_options?.max_date === 'tomorrow'
-      ? tomorrow_date
-      : control?.control_options?.max_date === 'day_after_tomorrow'
-      ? day_after_tomorrow_date
-      : control?.control_options?.max_date === 'next_month'
-      ? next_month
-      : control?.control_options?.max_date;
+        ? tomorrow_date
+        : control?.control_options?.max_date === 'day_after_tomorrow'
+          ? day_after_tomorrow_date
+          : control?.control_options?.max_date === 'next_month'
+            ? next_month
+            : control?.control_options?.max_date;
 
   return (
     <Grid item xs={6}>
@@ -325,8 +325,8 @@ export const DateControl: React.FC<React.PropsWithChildren<IProps>> = ({
             control.editable
               ? control.control_title
               : control.control_value
-              ? control.control_value
-              : ''
+                ? control.control_value
+                : ''
           }
           disabled={!control.editable}
           color={control.editable ? 'text' : 'disabled'}

@@ -3,7 +3,7 @@ import { getData } from './getData';
 
 export function _assertColHeaderTooltip(_control: IApiControl) {
   Cypress.config('defaultCommandTimeout', 6000);
-  cy.wait(155).then(() => {
+  cy.wait(500).then(() => {
     const withControlData = getData(_control);
 
     withControlData(1, ({ columns }) => {

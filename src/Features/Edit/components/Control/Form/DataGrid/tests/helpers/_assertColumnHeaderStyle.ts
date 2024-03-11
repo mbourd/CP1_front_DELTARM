@@ -3,7 +3,7 @@ import { _hexToRgb } from '../../../../../../../../../cypress/utils';
 import { getData } from './getData';
 
 export function _assertColumnHeaderStyle(_control: IApiControl) {
-  cy.wait(155).then(() => {
+  cy.wait(500).then(() => {
     const withControlData = getData(_control);
 
     withControlData(1, ({ columns }) => {
