@@ -39,52 +39,53 @@ describe('<DataGridControlAgGrid /> - part 25', function () {
     Cypress.config('defaultCommandTimeout', originalTimeout);
   });
 
-  it('Should render an error message if value dont match with control_regex & no error message if match - controlExample4', function () {
-    const _control = {
-      ...structuredClone(controlExample4),
-      data_grid_detail: {
-        ...structuredClone(controlExample4.data_grid_detail),
-        rows: structuredClone(controlExample4.data_grid_detail?.rows || []).map(
-          (row) => {
-            for (const index in Object.keys(row)) {
-              if (
-                typeof row[Object.keys(row)[index]] === 'object' &&
-                !Array.isArray(row[Object.keys(row)[index]])
-              ) {
-                if ([0, 1].includes(parseInt(index))) {
-                  row[Object.keys(row)[index]].control_regex = new RegExp(
-                    '^-?((180(\\.0+)?)|(((1[0-7]\\d)|(\\d{1,2}))(\\.\\d+)?))$',
-                  );
-                } else
-                  row[Object.keys(row)[index]].control_regex = new RegExp(
-                    '^-?(90(\\.0+)?|[1-8]?\\d(\\.\\d+)?)$',
-                  );
+  // TODO
+  // it('Should render an error message if value dont match with control_regex & no error message if match - controlExample4', function () {
+  //   const _control = {
+  //     ...structuredClone(controlExample4),
+  //     data_grid_detail: {
+  //       ...structuredClone(controlExample4.data_grid_detail),
+  //       rows: structuredClone(controlExample4.data_grid_detail?.rows || []).map(
+  //         (row) => {
+  //           for (const index in Object.keys(row)) {
+  //             if (
+  //               typeof row[Object.keys(row)[index]] === 'object' &&
+  //               !Array.isArray(row[Object.keys(row)[index]])
+  //             ) {
+  //               if ([0, 1].includes(parseInt(index))) {
+  //                 row[Object.keys(row)[index]].control_regex = new RegExp(
+  //                   '^-?((180(\\.0+)?)|(((1[0-7]\\d)|(\\d{1,2}))(\\.\\d+)?))$',
+  //                 );
+  //               } else
+  //                 row[Object.keys(row)[index]].control_regex = new RegExp(
+  //                   '^-?(90(\\.0+)?|[1-8]?\\d(\\.\\d+)?)$',
+  //                 );
 
-                row[Object.keys(row)[index]].control_regex_msg =
-                  'The value dont match with the regex';
-              }
-            }
+  //               row[Object.keys(row)[index]].control_regex_msg =
+  //                 'The value dont match with the regex';
+  //             }
+  //           }
 
-            return row;
-          },
-        ),
-      },
-      mandatory: false,
-      upload_detail: null,
-      rich_text_detail: null,
-      control_rejectable: null,
-    };
-    cy.mount(
-      <SetupTestsComponents>
-        <DataGridControlAgGrid
-          control={_control as any as IApiControl}
-          fileId={''}
-        />
-      </SetupTestsComponents>,
-    );
-    cy.waitReactApp();
-    _assertRegexValidation(_control as any as IApiControl);
-  });
+  //           return row;
+  //         },
+  //       ),
+  //     },
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   };
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid
+  //         control={_control as any as IApiControl}
+  //         fileId={''}
+  //       />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   _assertRegexValidation(_control as any as IApiControl);
+  // });
   it('Should render an error message if value dont match with control_regex & no error message if match - controlExample4', function () {
     const _control = {
       ...structuredClone(controlExample4),
