@@ -114,8 +114,8 @@ export const BooleanControl: React.FC<React.PropsWithChildren<IProps>> = ({
             control.editable
               ? control.control_title
               : currentValue
-              ? currentValue
-              : ''
+                ? currentValue
+                : ''
           }
           disabled={!control.editable}
           checked={booleanValue ? booleanValue : false}

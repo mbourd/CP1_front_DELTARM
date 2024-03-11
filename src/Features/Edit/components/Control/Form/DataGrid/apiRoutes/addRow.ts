@@ -5,7 +5,7 @@ import { getEnv } from '../../../../../../../Packages/Helpers';
 export const addRow = (
   fileId: string,
   controlId: string,
-  jwt: string | null,
+  jwt: string,
   setGridDetails: React.Dispatch<SetStateAction<any>>,
   setErrorMessage: React.Dispatch<SetStateAction<string>>,
   setRowsData?: any,

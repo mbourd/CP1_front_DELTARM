@@ -6,7 +6,7 @@ export const saveValueDataGrid = (
   row_uuid: string,
   columnId: number,
   rowNum: number,
-  jwt: string | null,
+  jwt: string,
   setGridDetails: any,
   setErrorMessage: any,
   value: string,

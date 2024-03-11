@@ -1,3 +1,4 @@
+import { expect } from '@jest/globals';
 import { injectDisabledFields } from '../src/injectDisabledFields';
 import { IChapter } from '../../../Features/Edit/types';
 const chapters: IChapter[] = [
@@ -28,6 +29,8 @@ const chapters: IChapter[] = [
           conditional_formula: '$==1',
           conditional_by_field_id: 1928,
         },
+        rich_text_detail: null,
+        control_rejectable: null,
       },
     ],
   },
@@ -58,6 +61,8 @@ const chapters: IChapter[] = [
           conditional_formula: '$==3',
           conditional_by_field_id: 1930,
         },
+        rich_text_detail: null,
+        control_rejectable: null,
       },
     ],
   },
@@ -84,6 +89,8 @@ const chapters: IChapter[] = [
         control_conditional: true,
         control_options: null,
         upload_detail: null,
+        rich_text_detail: null,
+        control_rejectable: null,
       },
     ],
   },

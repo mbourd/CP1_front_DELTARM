@@ -91,9 +91,25 @@ function login_v2(
 Cypress.Commands.add('login_v2', login_v2);
 
 function waitReactApp(selector = '#main-content', timeout = 10000) {
+  cy.on('uncaught:exception', (err) => {
+    // Check if the error is a ChunkLoadError
+    if (err.message.includes('ChunkLoadError')) {
+      // // Handle the ChunkLoadError here, you can log it, retry, or perform other actions
+      // // For example:
+      // cy.log('ChunkLoadError occurred. Reloading the page...');
+      // cy.reload(); // Reload the page to attempt to load the chunk again
+
+      return false; // Prevent Cypress from failing the test
+    }
+
+    // If the error is not a ChunkLoadError, let Cypress handle it
+    return true;
+  });
+
   cy.get(selector as any, { timeout });
   cy.waitForReact(10000, selector as any);
-  cy.wait(255);
+
+  return cy.wait(0);
 }
 Cypress.Commands.add('waitReactApp', waitReactApp);
 

@@ -10,9 +10,9 @@ export interface IUser {
   addRole: (role: string) => IUser;
   removeRole: (role: string) => IUser;
   hasRole: (role: string) => boolean;
-  setJwt: (token: string | null) => IUser;
+  setJwt: (token: string) => IUser;
   hasJwt: () => boolean;
-  getJwt: () => string | null;
+  getJwt: () => string;
   setExpireAt: (date: Date | null) => IUser;
   getExpireAt: () => Date | null;
   isLogged: () => boolean;

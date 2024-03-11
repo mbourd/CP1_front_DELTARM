@@ -1,3 +1,4 @@
+import { expect } from '@jest/globals';
 import { removeFromArrayByIndex } from '../src';
 
 describe('removeFromArrayByIndex', () => {

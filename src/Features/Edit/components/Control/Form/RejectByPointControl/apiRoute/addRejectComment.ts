@@ -6,7 +6,7 @@ import React from 'react';
 export const addRejectComment = (
   fileId: string,
   controlId: string,
-  jwt: string | null,
+  jwt: string,
   value: string,
   setRejectComments: React.Dispatch<React.SetStateAction<IFileComment[]>>,
   setError: React.Dispatch<React.SetStateAction<string | null>>,

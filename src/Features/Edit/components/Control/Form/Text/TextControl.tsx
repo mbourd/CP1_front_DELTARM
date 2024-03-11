@@ -133,8 +133,8 @@ export const TextControl: React.FC<React.PropsWithChildren<IProps>> = ({
             control.editable
               ? control.control_title
               : currentValue
-              ? currentValue
-              : ''
+                ? currentValue
+                : ''
           }
           disabled={!control.editable}
           color={control.editable ? 'text' : 'disabled'}

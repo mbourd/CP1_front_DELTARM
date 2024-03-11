@@ -10,7 +10,7 @@ export const deleteComplianceFile = (
   fileId: string,
   controlId: string,
   name: string,
-  jwt: string | null,
+  jwt: string,
   setErrorMessage: React.Dispatch<SetStateAction<string | null>>,
   setCurrentUploadFile: React.Dispatch<SetStateAction<IUploadDetail[] | null>>,
   compliance: IApiComplianceFields,

@@ -1,4 +1,5 @@
 import { ellipsis } from '../src';
+import { expect } from '@jest/globals';
 
 describe('ellipsis', () => {
   it('should return 4 characters', () => {
