@@ -2,7 +2,7 @@ import { IApiControl, DataGridDetailsColumnType } from 'Features/Edit/types';
 import { getData } from './getData';
 
 export function _assertCanFiltering(_control: IApiControl) {
-  cy.wait(155).then(() => {
+  cy.wait(500).then(() => {
     const withControlData = getData(_control);
 
     withControlData(1, ({ columns }) => {
