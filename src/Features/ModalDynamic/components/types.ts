@@ -12,7 +12,7 @@ export interface IDataModalProps {
 }
 
 export interface IDataModal {
-  target: 'modal';
+  target: 'modal' | 'fixed_modal';
   title: string;
   subtitle: string | null;
   img: string | null;
@@ -37,7 +37,7 @@ export interface IElementPModal {
 }
 
 export interface IElementModal {
-  element: 'input' | 'select' | 'p' | 'table' | 'date_picker';
+  element: 'input' | 'select' | 'p' | 'table' | 'date_picker' | 'upload';
   attribute: {
     type: string;
     id: string;
