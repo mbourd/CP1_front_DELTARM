@@ -32,6 +32,7 @@ import { InputModalDynamic } from './InputModalDynamic/InputModalDynamic';
 import { SelectModalDynamic } from './SelectModalDynamic/SelectModalDynamic';
 import { DatePickerModalDynamic } from './DatePickerModalDynamic/DatePickerModalDynamic';
 import { security } from '../../../Services';
+import { UploadFileModalDynamic } from './UploadFileModalDynamic/UploadFileModalDynamic';
 
 export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
   open,
@@ -51,6 +52,7 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
     return {};
   }, []);
   const user_language: any = security.decodeJwtToken(jwt ? jwt : '');
+  const [canClose] = useState(data?.target !== 'fixed_modal');
 
   const footer = (
     <ModalDynamicFooterStyled>
@@ -147,13 +149,16 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
     [getValues, actionButton, data?.content, user_language?.lang],
   );
 
+  console.log(data);
+
   return (
     <Modal
       open={open}
-      onClose={() => setIsModalOpen(false)}
+      onClose={() => (canClose ? setIsModalOpen(false) : null)}
       footer={footer}
       maxHeight={'720px'}
       height={'50%'}
+      closable={canClose}
     >
       <Heading>{data?.title}</Heading>
       <HeadingTwo>{data?.subtitle}</HeadingTwo>
@@ -335,6 +340,33 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
                         <DatePickerModalDynamic
                           defaultDate={defaultDate}
                           element={element}
+                          index={index}
+                          handleChangeValue={handleChangeValue}
+                          register={register}
+                        />
+                      )}
+                    />
+                  </Grid>
+                );
+              }
+              case 'upload': {
+                const keyField: Record<string, string> = {
+                  [element.attribute.id]: element?.value
+                    ? (element.value as string)
+                    : '',
+                };
+                Object.assign(defaultQueries, keyField);
+
+                return (
+                  <Grid>
+                    <Controller
+                      defaultValue={!element?.value}
+                      control={control}
+                      name={element.attribute.id}
+                      rules={{ required: element?.attribute?.mandatory }}
+                      render={() => (
+                        <UploadFileModalDynamic
+                          element={{ ...element, editable: true }}
                           index={index}
                           handleChangeValue={handleChangeValue}
                           register={register}

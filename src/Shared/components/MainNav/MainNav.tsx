@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import version from '../../../build-version.json';
 import { List, ListItem, ListItemText } from '@material-ui/core';
@@ -14,9 +14,19 @@ import {
 } from 'Styles';
 import { MainNavStyled } from './MainNav.style';
 import { Popper } from 'Shared/components';
-import { router, SecurityContext, useApi, useTrans } from 'Services';
+import {
+  router,
+  SecurityContext,
+  useApi,
+  useSecurity,
+  useTrans,
+} from 'Services';
 import { useDashboardDynamicReducer } from 'Features/DashboardDynamic/dashboardDynamic.reducer';
 import { RoundFilledIcon } from 'Packages/Design/icons/RoundFilledIcon';
+import { ModalDynamic } from 'Features/ModalDynamic/components/ModalDynamic';
+import { useActionButton } from 'Packages/Helpers/src/useActionButton';
+import { IDataModal } from 'Features/ModalDynamic/components/types';
+import { useRecoilValue } from 'recoil';
 
 export const MainNav: React.FC<
   React.PropsWithChildren<unknown>
@@ -26,6 +36,14 @@ export const MainNav: React.FC<
   const theme = useTheme();
   const [trans] = useTrans('Default');
   const { data: dataSecurity, logout } = useContext(SecurityContext);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { user } = useSecurity();
+  const jwt = user.getJwt();
+  const { modalData: recoilData, actionButton } = useActionButton({
+    jwt,
+    setIsModalOpen,
+  });
+  const modalData: IDataModal = useRecoilValue<any>(recoilData);
 
   const handleClick = useCallback(
     (event: React.MouseEvent<SVGSVGElement>) => {
@@ -137,8 +155,18 @@ export const MainNav: React.FC<
                       <ListItem
                         key={'menu-contr_perm' + i}
                         component={Link}
-                        to={m.action.endpoint}
-                        onClick={hideNav}
+                        to={
+                          m?.action?.endpoint.includes('modal')
+                            ? '#'
+                            : m.action.endpoint
+                        }
+                        onClick={async () => {
+                          hideNav();
+
+                          if (m?.action?.endpoint.includes('modal')) {
+                            actionButton(m.action);
+                          }
+                        }}
                         className={'contr_perm_menus'}
                       >
                         <RoundFilledIcon />
@@ -166,6 +194,13 @@ export const MainNav: React.FC<
           </ListItemText>
         </ListItem>
       </Popper>
+      {isModalOpen && modalData ? (
+        <ModalDynamic
+          open={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          data={modalData}
+        />
+      ) : null}
     </>
   );
 };
