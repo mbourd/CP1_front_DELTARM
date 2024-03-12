@@ -55,9 +55,6 @@ export const UploadControl: React.FC<React.PropsWithChildren<IProps>> = ({
     ) {
       setErrorMessage(trans('mandatoryValue'));
     }
-    if (!control.mandatory) {
-      setErrorMessage(null);
-    }
   }, [control, newUploadFile, trans, currentUploadFile]);
 
   const onDrop = useCallback((acceptedFiles: any) => {
