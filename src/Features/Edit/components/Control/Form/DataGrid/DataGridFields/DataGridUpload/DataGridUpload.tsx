@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { DataGridUploadStyled } from './DataGridUpload.style';
 import { Fab } from '@material-ui/core';
 import { CloudUpload } from '@material-ui/icons';
@@ -35,6 +35,7 @@ export const DataGridUpload: React.FC<React.PropsWithChildren<IProps>> = ({
   if (editable === undefined) {
     editable = true;
   }
+  const inputFileRef = useRef<any>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [newUploadFile, setNewUploadFile] = useState<File | null>(null);
   const [currentUploadFile, setCurrentUploadFile] = useState<
@@ -154,7 +155,12 @@ export const DataGridUpload: React.FC<React.PropsWithChildren<IProps>> = ({
           }}
           {...getRootProps({ onClick: (event) => event.stopPropagation() })}
         >
-          <label htmlFor={`data-grid-file-upload${controlId}`}>
+          <label
+            htmlFor={`data-grid-file-upload${controlId}`}
+            onClick={() => {
+              inputFileRef.current.value = null;
+            }}
+          >
             <input
               style={{ display: 'none' }}
               id={`data-grid-file-upload${controlId}`}
@@ -162,6 +168,7 @@ export const DataGridUpload: React.FC<React.PropsWithChildren<IProps>> = ({
               type="file"
               onChange={saveFileToUpload}
               {...getInputProps()}
+              ref={(el) => (inputFileRef.current = el)}
             />
             <Fab
               color="secondary"
