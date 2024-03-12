@@ -58,6 +58,9 @@ export const useActionButton = ({
             }
 
             return;
+          case 'fixed_modal':
+            setModalData(data);
+            if (setIsModalOpen) setIsModalOpen(true);
         }
         switch (data?.origin_fonction_callback) {
           case 'delete_row':
@@ -123,43 +126,47 @@ export const useActionButton = ({
 
           return;
         case 'POST':
-          axios
-            .post(
-              `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}${
-                action?.endpoint
-              }${queryString}`,
-              { ...action?.params, ...extraData },
-              {
-                headers: {
-                  Authorization: jwt,
-                  'Content-type': 'multipart/form-data',
+          // @ts-ignore
+          if (action?.params?.file && action.params.file instanceof File) {
+            console.log('file type');
+          } else
+            axios
+              .post(
+                `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}${
+                  action?.endpoint
+                }${queryString}`,
+                { ...action?.params, ...extraData },
+                {
+                  headers: {
+                    Authorization: jwt,
+                    'Content-type': 'multipart/form-data',
+                  },
                 },
-              },
-            )
-            .then(async (response) => {
-              // console.dir(response);
-              dispatchActionButton(response.data);
-            })
-            .catch(async (error: AxiosError<any>) => {
-              if (error.response) {
-                if (setErrorMessage && error.response.status >= 300)
-                  setErrorMessage(error.response.data?.error_msg);
+              )
+              .then(async (response) => {
+                // console.dir(response);
+                dispatchActionButton(response.data);
+              })
+              .catch(async (error: AxiosError<any>) => {
+                if (error.response) {
+                  if (setErrorMessage && error.response.status >= 300)
+                    setErrorMessage(error.response.data?.error_msg);
 
-                dispatchActionButton(error.response.data);
+                  dispatchActionButton(error.response.data);
 
-                return;
-              }
-              if (error) {
-                if (setErrorMessage)
-                  setErrorMessage(
-                    typeof error === 'string'
-                      ? error
-                      : 'Erreur lors de la requête',
-                  );
+                  return;
+                }
+                if (error) {
+                  if (setErrorMessage)
+                    setErrorMessage(
+                      typeof error === 'string'
+                        ? error
+                        : 'Erreur lors de la requête',
+                    );
 
-                dispatchActionButton(genericErrorsData);
-              }
-            });
+                  dispatchActionButton(genericErrorsData);
+                }
+              });
 
           return;
         case 'DELETE':
