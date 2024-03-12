@@ -3,7 +3,7 @@
 /// <reference types="../../../../../cypress/support/component" />
 
 // NOTE: Run CLI:
-// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Manage/components/Card/Card.cy.tsx"
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Manage/components/Card/Card.job4.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
@@ -14,7 +14,7 @@ describe('<Card />', () => {
   it('Should render', () => {
     cy.mount(
       <SetupTestsComponents>
-        <Card id={''} color={''} data={[]} context={undefined} />
+        <Card id={'a'} color={''} data={[]} context={undefined} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
@@ -25,7 +25,7 @@ describe('<Card />', () => {
     cy.mount(
       <SetupTestsComponents>
         <Card
-          id={''}
+          id={'a'}
           color={''}
           data={[{ value: 'value1', label: 'label1' }]}
           context={undefined}
@@ -50,7 +50,7 @@ describe('<Card />', () => {
     cy.mount(
       <SetupTestsComponents>
         <Card
-          id={''}
+          id={'a'}
           color={''}
           data={[
             { value: 'value1', label: 'label1' },
