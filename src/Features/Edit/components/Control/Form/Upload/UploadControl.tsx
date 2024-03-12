@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { UploadControlStyled } from './UploadControl.style';
 import { Grid, Fab } from '@material-ui/core';
 import { CloudUpload } from '@material-ui/icons';
@@ -27,6 +27,7 @@ export const UploadControl: React.FC<React.PropsWithChildren<IProps>> = ({
   fileId,
   context,
 }): React.ReactElement => {
+  const inputFileRef = useRef<any>();
   const [trans] = useTrans('Edit');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [newUploadFile, setNewUploadFile] = useState<File | any>(null);
@@ -155,7 +156,12 @@ export const UploadControl: React.FC<React.PropsWithChildren<IProps>> = ({
               onClick: (event: any) => event.stopPropagation(),
             })}
           >
-            <label htmlFor={`compliance-file-upload${control.control_id}`}>
+            <label
+              htmlFor={`compliance-file-upload${control.control_id}`}
+              onClick={() => {
+                inputFileRef.current.value = null;
+              }}
+            >
               <input
                 style={{ display: 'none' }}
                 id={`compliance-file-upload${control.control_id}`}
@@ -163,6 +169,7 @@ export const UploadControl: React.FC<React.PropsWithChildren<IProps>> = ({
                 type="file"
                 onChange={saveFileToUpload}
                 {...getInputProps()}
+                ref={(el) => (inputFileRef.current = el)}
               />
               <Fab
                 color="secondary"
