@@ -79,6 +79,7 @@ export const DataGridUpload: React.FC<React.PropsWithChildren<IProps>> = ({
         setCurrentUploadFile,
         setErrorMessage,
       );
+      setNewUploadFile(null);
     }
   }, [
     fileId,
