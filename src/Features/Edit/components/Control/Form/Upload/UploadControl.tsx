@@ -16,6 +16,8 @@ import { downloadFile } from '../../../../../../Shared/components/UploadList/api
 import { RejectControl } from '../RejectByPointControl/RejectControl';
 import { useTrans } from '../../../../../../Services';
 
+import _ from 'lodash';
+
 interface IProps {
   control: IApiControl;
   fileId: string;
@@ -41,13 +43,24 @@ export const UploadControl: React.FC<React.PropsWithChildren<IProps>> = ({
   );
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
-
-  const saveFileToUpload = useCallback(
-    (e: any) => {
-      setNewUploadFile(e.target.files[0]);
-    },
-    [setNewUploadFile],
+  const [isUploading, setIsUploading] = useState(false); // Add this state
+  const debouncedUpload = useCallback(
+    _.debounce((file) => {
+      uploadFile(
+        fileId,
+        control,
+        file,
+        jwt,
+        setCurrentUploadFile,
+        setErrorMessage,
+      );
+    }, 1),
+    [],
   );
+
+  const saveFileToUpload = useCallback((e: any) => {
+    setNewUploadFile(e.target.files[0]);
+  }, []);
 
   useEffect(() => {
     if (
@@ -61,6 +74,7 @@ export const UploadControl: React.FC<React.PropsWithChildren<IProps>> = ({
   const onDrop = useCallback((acceptedFiles: any) => {
     acceptedFiles.forEach((file: File) => {
       setNewUploadFile(file);
+      setIsUploading(false);
     });
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
@@ -74,16 +88,25 @@ export const UploadControl: React.FC<React.PropsWithChildren<IProps>> = ({
     if (!control.mandatory) {
       setErrorMessage(null);
     }
-    uploadFile(
-      fileId,
-      control,
-      newUploadFile,
-      jwt,
-      setCurrentUploadFile,
-      setErrorMessage,
-    );
-    setNewUploadFile(null);
-  }, [fileId, control, newUploadFile, jwt, trans]);
+    if (newUploadFile) {
+      setIsUploading(true); // Set uploading flag
+      debouncedUpload(newUploadFile);
+      // setNewUploadFile(() => {
+      //   setTimeout(() => {
+      //     uploadFile(
+      //       fileId,
+      //       control,
+      //       newUploadFile,
+      //       jwt,
+      //       setCurrentUploadFile,
+      //       setErrorMessage,
+      //     );
+      //   }, 1500);
+
+      //   return null;
+      // });
+    }
+  }, [control.mandatory, newUploadFile, trans, debouncedUpload]);
 
   const handleDeleteFile = useCallback(
     (e: any, name: any) => {
@@ -109,11 +132,11 @@ export const UploadControl: React.FC<React.PropsWithChildren<IProps>> = ({
   );
 
   useEffect(() => {
-    if (newUploadFile !== null) {
+    if (newUploadFile && !isUploading) {
       handleUploadFile();
     }
     // setNewUploadFile(null);
-  }, [newUploadFile, handleUploadFile]);
+  }, [newUploadFile, handleUploadFile, isUploading]);
 
   useEffect(() => {
     if (!isRejected) {
@@ -159,6 +182,8 @@ export const UploadControl: React.FC<React.PropsWithChildren<IProps>> = ({
             <label
               htmlFor={`compliance-file-upload${control.control_id}`}
               onClick={() => {
+                setNewUploadFile(null);
+                setIsUploading(false);
                 inputFileRef.current.value = null;
               }}
             >

@@ -11,6 +11,8 @@ export const uploadFile = (
   setCurrentUploadFile: React.Dispatch<SetStateAction<IUploadDetail[] | null>>,
   setErrorMessage: React.Dispatch<SetStateAction<string | null>>,
 ) => {
+  if (!newUploadFile) return;
+
   const formData = new FormData();
   formData.append('file', newUploadFile);
   formData.append('file_name', newUploadFile.name);
