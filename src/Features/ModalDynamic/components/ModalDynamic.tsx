@@ -88,7 +88,7 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
       </Grid>
     </ModalDynamicFooterStyled>
   );
-
+  //
   const { register, getValues, setValue, control } = useForm({
     defaultValues: defaultQueries,
   });
