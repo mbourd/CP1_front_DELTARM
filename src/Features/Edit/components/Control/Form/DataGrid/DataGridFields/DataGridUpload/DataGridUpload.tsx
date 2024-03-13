@@ -12,6 +12,7 @@ import { downloadFile } from '../../apiRoutes/upload/downloadFile';
 import { deleteFile } from '../../apiRoutes/upload/deleteFile';
 import { UploadList } from '../../../../../../../../Shared/components/UploadList/UploadList';
 import { useTrans } from '../../../../../../../../Services';
+import _ from 'lodash';
 
 interface IProps {
   value: IUploadDetail[];
@@ -44,6 +45,22 @@ export const DataGridUpload: React.FC<React.PropsWithChildren<IProps>> = ({
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
   const [trans] = useTrans('Edit');
+  const [isUploading, setIsUploading] = useState(false); // Add this state
+  const debouncedUpload = useCallback(
+    _.debounce((file) => {
+      uploadFile(
+        fileId,
+        controlId,
+        rowNum,
+        columnId,
+        file,
+        jwt,
+        setCurrentUploadFile,
+        setErrorMessage,
+      );
+    }, 1),
+    [],
+  );
 
   const saveFileToUpload = useCallback(
     (e: any) => {
@@ -55,6 +72,7 @@ export const DataGridUpload: React.FC<React.PropsWithChildren<IProps>> = ({
   const onDrop = useCallback((acceptedFiles: any) => {
     acceptedFiles.forEach((file: File) => {
       setNewUploadFile(file);
+      setIsUploading(false);
     });
   }, []);
 
@@ -70,28 +88,10 @@ export const DataGridUpload: React.FC<React.PropsWithChildren<IProps>> = ({
       setErrorMessage(null);
     }
     if (newUploadFile) {
-      uploadFile(
-        fileId,
-        controlId,
-        rowNum,
-        columnId,
-        newUploadFile,
-        jwt,
-        setCurrentUploadFile,
-        setErrorMessage,
-      );
-      setNewUploadFile(null);
+      setIsUploading(true); // Set uploading flag
+      debouncedUpload(newUploadFile);
     }
-  }, [
-    fileId,
-    controlId,
-    newUploadFile,
-    jwt,
-    rowNum,
-    columnId,
-    mandatory,
-    trans,
-  ]);
+  }, [mandatory, newUploadFile, trans, debouncedUpload]);
 
   const handleDeleteFile = useCallback(
     (e: any, name: any) => {
@@ -119,10 +119,10 @@ export const DataGridUpload: React.FC<React.PropsWithChildren<IProps>> = ({
   );
 
   useEffect(() => {
-    if (newUploadFile) {
+    if (newUploadFile && !isUploading) {
       handleUploadFile();
     }
-  }, [newUploadFile, handleUploadFile]);
+  }, [newUploadFile, handleUploadFile, isUploading]);
 
   return (
     <DataGridUploadStyled>
@@ -158,6 +158,8 @@ export const DataGridUpload: React.FC<React.PropsWithChildren<IProps>> = ({
           <label
             htmlFor={`data-grid-file-upload${controlId}`}
             onClick={() => {
+              setNewUploadFile(null);
+              setIsUploading(false);
               inputFileRef.current.value = null;
             }}
           >
