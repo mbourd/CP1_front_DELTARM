@@ -4,11 +4,10 @@ import { CloudUpload } from '@material-ui/icons';
 import { UploadControlStyled } from 'Features/Edit/components/Control/Form/Upload/UploadControl.style';
 import { UploadList } from 'Shared/components/UploadList/UploadList';
 import { useDropzone } from 'react-dropzone';
-import { IUser, security } from 'Services';
-import { deleteFile } from 'Shared/components/UploadList/apiRoutes/deleteFile';
-import { downloadFile } from 'Shared/components/UploadList/apiRoutes/downloadFile';
+// import { IUser, security } from 'Services';
+// import { deleteFile } from 'Shared/components/UploadList/apiRoutes/deleteFile';
+// import { downloadFile } from 'Shared/components/UploadList/apiRoutes/downloadFile';
 import { FieldName, RegisterOptions } from 'react-hook-form';
-import { IElementModal } from '../types';
 
 type UploadModalDynamicPropsType = {
   element: any;
@@ -23,17 +22,13 @@ const UploadFileModalDynamic: React.FC<UploadModalDynamicPropsType> = ({
   handleChangeValue,
   register,
 }) => {
-  const [newUploadFile, setNewUploadFile] = useState<File | any>(null);
-  const [currentUploadFile, setCurrentUploadFile] = useState<any[] | null>(
-    null,
-  );
-  const [user] = useState<IUser>(security.getUser());
-  const jwt = user.getJwt();
+  const [newUploadFile, setNewUploadFile] = useState<File | null>(null);
+  const [listFile, setListFile] = useState<File[]>([]);
 
   useEffect(() => {
-    console.log(newUploadFile);
-    handleChangeValue(element.attribute.id, newUploadFile);
-  }, [element.attribute.id, handleChangeValue, newUploadFile]);
+    // console.log(newUploadFile);
+    handleChangeValue(element.attribute.id, listFile);
+  }, [element.attribute.id, handleChangeValue, listFile]);
 
   const saveFileToUpload = useCallback(
     (e: any) => {
@@ -49,6 +44,19 @@ const UploadFileModalDynamic: React.FC<UploadModalDynamicPropsType> = ({
 
   const handleDeleteFile = useCallback((e: any, name: any) => {
     e.preventDefault();
+    setNewUploadFile(null);
+    setListFile((listFile) => {
+      if (listFile.some((f) => f.name === name)) {
+        const _listFile = [...listFile];
+        const index = _listFile.findIndex((f) => f.name === name);
+
+        _listFile.splice(index, 1);
+
+        return _listFile;
+      }
+
+      return listFile;
+    });
     // deleteFile(
     //   fileId,
     //   control.control_id,
@@ -58,12 +66,30 @@ const UploadFileModalDynamic: React.FC<UploadModalDynamicPropsType> = ({
     //   setCurrentUploadFile,
     // );
   }, []);
-  const handleDownloadFile = useCallback((e: any, id: any, name: any) => {
-    e.preventDefault();
-    // downloadFile(id, name, jwt, setErrorMessage);
-  }, []);
+  // const handleDownloadFile = useCallback((e: any, id: any, name: any) => {
+  //   e.preventDefault();
+  //   // downloadFile(id, name, jwt, setErrorMessage);
+  // }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  useEffect(() => {
+    if (newUploadFile) {
+      setListFile((listFile) => {
+        if (element?.attribute?.mode && element.attribute.mode === 'multiple') {
+          if (!listFile.some((f) => newUploadFile.name === f.name)) {
+            return [...listFile, newUploadFile];
+          }
+
+          return listFile;
+        }
+
+        return [newUploadFile];
+      });
+    }
+  }, [element.attribute.mode, newUploadFile]);
+
+  const { getRootProps, getInputProps, isDragActive, inputRef } = useDropzone({
+    onDrop,
+  });
 
   return (
     <UploadControlStyled>
@@ -82,6 +108,9 @@ const UploadFileModalDynamic: React.FC<UploadModalDynamicPropsType> = ({
           margin: '0',
           opacity: `${element.editable ? '1' : '0.5'}`,
         }}
+        onClick={() => {
+          if (inputRef.current) inputRef.current.value = '';
+        }}
       >
         <Container
           style={{
@@ -99,7 +128,12 @@ const UploadFileModalDynamic: React.FC<UploadModalDynamicPropsType> = ({
             onClick: (event: any) => event.stopPropagation(),
           })}
         >
-          <label htmlFor={`${element.attribute.id}`}>
+          <label
+            htmlFor={`${element.attribute.id}`}
+            onClick={() => {
+              if (inputRef.current) inputRef.current.value = '';
+            }}
+          >
             <input
               style={{ display: 'none' }}
               id={`${element.attribute.id}`}
@@ -123,9 +157,10 @@ const UploadFileModalDynamic: React.FC<UploadModalDynamicPropsType> = ({
         </Container>
       </Button>
       <UploadList
-        currentUploadFile={currentUploadFile}
+        currentUploadFile={listFile.map((f) => {
+          return { file_id: '', file_name: f.name };
+        })}
         handleDeleteFile={handleDeleteFile}
-        handleDownloadFile={handleDownloadFile}
         disabled={!element.editable}
       />
     </UploadControlStyled>
