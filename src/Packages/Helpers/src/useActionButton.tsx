@@ -126,9 +126,50 @@ export const useActionButton = ({
 
           return;
         case 'POST':
-          // @ts-ignore
-          if (action?.params?.file && action.params.file instanceof File) {
-            console.log('file type');
+          if (
+            action?.params?.file &&
+            (action?.params?.file as any as any[]).every(
+              (f) => f instanceof File,
+            )
+          ) {
+            const files = action?.params?.file as any as File[];
+            const formData = new FormData();
+
+            files.forEach((f, i) => {
+              formData.append('file' + i, f);
+            });
+
+            axios
+              .post(
+                `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}${
+                  action?.endpoint
+                }${queryString}`,
+                formData,
+                {
+                  headers: {
+                    Authorization: jwt,
+                    'Content-type': 'multipart/form-data',
+                  },
+                },
+              )
+              .then((response) => {
+                if (response.status >= 200) {
+                  if (callbackResponseConfirmation)
+                    callbackResponseConfirmation();
+                }
+              })
+              .catch((err) => {
+                if (callbackResponseConfirmation)
+                  callbackResponseConfirmation();
+
+                if (setErrorMessage && err)
+                  setErrorMessage(
+                    typeof err === 'string' ? err : 'Erreur lors de la requête',
+                  );
+
+                if (setErrorMessage && err?.response)
+                  setErrorMessage(err?.response?.data?.error_msg);
+              });
           } else
             axios
               .post(

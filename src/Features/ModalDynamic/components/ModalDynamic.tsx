@@ -52,7 +52,11 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
     return {};
   }, []);
   const user_language: any = security.decodeJwtToken(jwt ? jwt : '');
-  const [canClose] = useState(data?.target !== 'fixed_modal');
+  const canClose = useMemo(
+    () => data?.target !== 'fixed_modal',
+    [data?.target],
+  );
+  const [isDisabledModalBtns, setIsDisabledModalBtns] = useState(false);
 
   const footer = (
     <ModalDynamicFooterStyled>
@@ -68,16 +72,28 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
           style={{ display: 'flex', justifyContent: 'flex-end' }}
         >
           {data?.btn?.map((btn, index) => {
+            let callback: any = data?.callbackResponseConfirmation;
+
+            if (data.target === 'fixed_modal')
+              callback = () => {
+                setIsDisabledModalBtns(false);
+              };
+
             return (
               <Button
                 key={index}
-                onClick={() =>
+                disabled={isDisabledModalBtns}
+                onClick={() => {
+                  if (data.target === 'fixed_modal') {
+                    setIsDisabledModalBtns(true);
+                  }
+
                   handleCLickActionsBeforeSendToActionButtons(
                     btn.action,
                     data?.__extraData,
-                    data?.callbackResponseConfirmation,
-                  )
-                }
+                    callback,
+                  );
+                }}
                 style={{ backgroundColor: btn.bg_color }}
               >
                 {btn.btn_lib}
@@ -148,8 +164,6 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
     },
     [getValues, actionButton, data?.content, user_language?.lang],
   );
-
-  console.log(data);
 
   return (
     <Modal
@@ -358,7 +372,7 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
                 Object.assign(defaultQueries, keyField);
 
                 return (
-                  <Grid>
+                  <Grid item xs={6} md={6}>
                     <Controller
                       defaultValue={!element?.value}
                       control={control}
