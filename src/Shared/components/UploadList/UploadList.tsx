@@ -7,7 +7,7 @@ import { DownloadFile } from './UploadList.style';
 interface IProps {
   currentUploadFile: IUploadDetail[] | null;
   handleDeleteFile: (e: any, name: any) => void;
-  handleDownloadFile: (e: any, id: string, name: any) => void;
+  handleDownloadFile?: (e: any, id: string, name: any) => void;
   disabled?: boolean;
   style?: React.CSSProperties;
 }
@@ -24,7 +24,7 @@ export const UploadList: React.FC<React.PropsWithChildren<IProps>> = ({
       {currentUploadFile?.map((file) => {
         return (
           <Container
-            key={file.file_id}
+            key={file?.file_id ? file.file_id : file.file_name}
             style={{
               margin: '10px 0',
               padding: '0',
@@ -34,10 +34,11 @@ export const UploadList: React.FC<React.PropsWithChildren<IProps>> = ({
             }}
           >
             <DownloadFile
-              href={file.file_id}
-              onClick={(e) =>
-                handleDownloadFile(e, file.file_id, file.file_name)
-              }
+              {...(handleDownloadFile ? { href: file.file_id } : {})}
+              onClick={(e) => {
+                if (handleDownloadFile)
+                  handleDownloadFile(e, file.file_id, file.file_name);
+              }}
               style={{
                 margin: '5px',
                 marginRight: '0',
