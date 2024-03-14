@@ -192,11 +192,15 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
       <Grid
         container
         spacing={1}
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
+        {...(data?.target === 'fixed_modal'
+          ? {
+              style: {
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              },
+            }
+          : {})}
       >
         {data?.content?.map(
           (
@@ -211,7 +215,9 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
                       dangerouslySetInnerHTML={{
                         __html: element.value as string,
                       }}
-                      style={{ textAlign: 'center' }}
+                      {...(data?.target === 'fixed_modal'
+                        ? { style: { textAlign: 'center' } }
+                        : {})}
                     ></p>
                   </Grid>
                 );
