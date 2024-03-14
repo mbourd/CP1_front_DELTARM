@@ -133,43 +133,71 @@ export const useActionButton = ({
             )
           ) {
             const files = action?.params?.file as any as File[];
-            const formData = new FormData();
+            let errMsg = '';
 
-            files.forEach((f, i) => {
-              formData.append('file' + i, f);
-            });
+            files.forEach((f) => {
+              const qS =
+                '?' +
+                // @ts-ignore
+                Object.keys(action.params)
+                  .map((key) => {
+                    if (action?.params) {
+                      const isStr = typeof action.params[key] === 'string';
 
-            axios
-              .post(
-                `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}${
-                  action?.endpoint
-                }${queryString}`,
-                formData,
-                {
-                  headers: {
-                    Authorization: jwt,
-                    'Content-type': 'multipart/form-data',
+                      return (
+                        encodeURIComponent(key) +
+                        '=' +
+                        encodeURIComponent(
+                          isStr
+                            ? action.params[key]
+                            : (action.params[key] as any as any[]).every(
+                                  (ff) => ff instanceof File,
+                                )
+                              ? f.name.replace('#', ' ')
+                              : action.params[key],
+                        )
+                      );
+                    }
+
+                    return;
+                  })
+                  .join('&');
+              const formData = new FormData();
+
+              formData.append('file', f);
+              formData.append('file_name', f.name);
+              axios
+                .post(
+                  `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}${
+                    action?.endpoint
+                  }${qS}`,
+                  formData,
+                  {
+                    headers: {
+                      Authorization: jwt,
+                      'Content-type': 'multipart/form-data',
+                    },
                   },
-                },
-              )
-              .then((response) => {
-                if (response.status >= 200) {
+                )
+                .then((response) => {
+                  if (response.status >= 200) {
+                    if (callbackResponseConfirmation)
+                      callbackResponseConfirmation();
+                  }
+                })
+                .catch((err) => {
                   if (callbackResponseConfirmation)
                     callbackResponseConfirmation();
-                }
-              })
-              .catch((err) => {
-                if (callbackResponseConfirmation)
-                  callbackResponseConfirmation();
 
-                if (setErrorMessage && err)
-                  setErrorMessage(
-                    typeof err === 'string' ? err : 'Erreur lors de la requête',
-                  );
-
-                if (setErrorMessage && err?.response)
-                  setErrorMessage(err?.response?.data?.error_msg);
-              });
+                  if (setErrorMessage) {
+                    errMsg =
+                      ' ' +
+                      (err?.response?.data?.error_msg ??
+                        'Erreur lords de la requête');
+                    setErrorMessage(errMsg);
+                  }
+                });
+            });
           } else
             axios
               .post(
