@@ -8,6 +8,8 @@ import { useDropzone } from 'react-dropzone';
 // import { deleteFile } from 'Shared/components/UploadList/apiRoutes/deleteFile';
 // import { downloadFile } from 'Shared/components/UploadList/apiRoutes/downloadFile';
 import { FieldName, RegisterOptions } from 'react-hook-form';
+import { FormError } from 'Shared/components';
+import { useTransEdit } from 'Features/Edit';
 
 type UploadModalDynamicPropsType = {
   element: any;
@@ -22,6 +24,8 @@ const UploadFileModalDynamic: React.FC<UploadModalDynamicPropsType> = ({
   handleChangeValue,
   register,
 }) => {
+  const { trans } = useTransEdit();
+  const [errorMessage, setErrorMessage] = useState('');
   const [newUploadFile, setNewUploadFile] = useState<File | null>(null);
   const [listFile, setListFile] = useState<File[]>([]);
 
@@ -86,6 +90,14 @@ const UploadFileModalDynamic: React.FC<UploadModalDynamicPropsType> = ({
       });
     }
   }, [element.attribute.mode, newUploadFile]);
+
+  useEffect(() => {
+    setErrorMessage('');
+
+    if (!listFile.length) {
+      setErrorMessage(trans('mandatoryValue'));
+    }
+  }, [listFile, trans]);
 
   const { getRootProps, getInputProps, isDragActive, inputRef } = useDropzone({
     onDrop,
@@ -163,6 +175,9 @@ const UploadFileModalDynamic: React.FC<UploadModalDynamicPropsType> = ({
         handleDeleteFile={handleDeleteFile}
         disabled={!element.editable}
       />
+      <FormError className={'_Message'}>
+        {errorMessage ? errorMessage : ' '}
+      </FormError>
     </UploadControlStyled>
   );
 };

@@ -180,15 +180,17 @@ export const useActionButton = ({
                   },
                 )
                 .then((response) => {
-                  if (response.status >= 200) {
-                    if (callbackResponseConfirmation)
-                      callbackResponseConfirmation();
-                  }
+                  if (callbackResponseConfirmation)
+                    callbackResponseConfirmation();
+                  setModalData(response.data);
                 })
-                .catch((err) => {
+                .catch((err: AxiosError<any>) => {
                   if (callbackResponseConfirmation)
                     callbackResponseConfirmation();
 
+                  if (err?.response?.status === 400) {
+                    setModalData(err.response.data);
+                  }
                   if (setErrorMessage) {
                     errMsg =
                       ' ' +
