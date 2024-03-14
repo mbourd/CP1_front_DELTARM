@@ -33,6 +33,7 @@ import { SelectModalDynamic } from './SelectModalDynamic/SelectModalDynamic';
 import { DatePickerModalDynamic } from './DatePickerModalDynamic/DatePickerModalDynamic';
 import { security } from '../../../Services';
 import { UploadFileModalDynamic } from './UploadFileModalDynamic/UploadFileModalDynamic';
+import { CircularMetric } from 'Features/DashboardDynamic/components/Metrics/CircularMetric/CircularMetric';
 
 export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
   open,
@@ -43,11 +44,6 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
   const { user } = useSecurity();
   const jwt = user.getJwt();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const { actionButton } = useActionButton({
-    jwt,
-    setIsModalOpen,
-    setErrorMessage,
-  });
   const defaultQueries = useMemo<Record<string, string>>(() => {
     return {};
   }, []);
@@ -57,6 +53,12 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
     [data?.target],
   );
   const [isDisabledModalBtns, setIsDisabledModalBtns] = useState(false);
+  const { actionButton } = useActionButton({
+    jwt,
+    setIsModalOpen,
+    setErrorMessage,
+    setIsDisabledModalBtns,
+  });
 
   const footer = (
     <ModalDynamicFooterStyled>
@@ -72,22 +74,13 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
           style={{ display: 'flex', justifyContent: 'flex-end' }}
         >
           {data?.btn?.map((btn, index) => {
-            let callback: any = data?.callbackResponseConfirmation;
-
-            if (data.target === 'fixed_modal')
-              callback = () => {
-                setIsDisabledModalBtns(false);
-              };
+            const callback: any = data?.callbackResponseConfirmation;
 
             return (
               <Button
                 key={index}
                 disabled={isDisabledModalBtns}
                 onClick={() => {
-                  if (data.target === 'fixed_modal') {
-                    setIsDisabledModalBtns(true);
-                  }
-
                   handleCLickActionsBeforeSendToActionButtons(
                     btn.action,
                     data?.__extraData,
@@ -96,7 +89,20 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
                 }}
                 style={{ backgroundColor: btn.bg_color }}
               >
-                {btn.btn_lib}
+                {data?.target === 'fixed_modal' &&
+                isDisabledModalBtns &&
+                (btn.action.method === 'POST' ||
+                  btn.action.method === 'GET') ? (
+                  <CircularMetric
+                    variant="indeterminate"
+                    value={0}
+                    hint={''}
+                    style={{ color: 'white' }}
+                    size={23}
+                  />
+                ) : (
+                  btn.btn_lib
+                )}
               </Button>
             );
           })}
