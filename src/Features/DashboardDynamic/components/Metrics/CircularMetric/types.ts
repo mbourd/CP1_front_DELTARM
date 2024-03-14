@@ -5,4 +5,5 @@ export interface ICircularMetric {
   value: number;
   hint: string;
   style?: React.CSSProperties;
+  size?: number;
 }
