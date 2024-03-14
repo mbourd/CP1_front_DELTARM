@@ -20,12 +20,14 @@ type useActionButtonPropsType = {
   jwt: string;
   setIsModalOpen?: React.Dispatch<SetStateAction<boolean>>;
   setErrorMessage?: React.Dispatch<SetStateAction<string | null>>;
+  setIsDisabledModalBtns?: React.Dispatch<SetStateAction<boolean>>;
 };
 
 export const useActionButton = ({
   jwt,
   setIsModalOpen,
   setErrorMessage,
+  setIsDisabledModalBtns,
 }: useActionButtonPropsType) => {
   const setPageData = useSetRecoilState(data);
   const setModalData = useSetRecoilState(modalData);
@@ -126,6 +128,7 @@ export const useActionButton = ({
 
           return;
         case 'POST':
+          setIsDisabledModalBtns && setIsDisabledModalBtns(false);
           if (
             action?.params?.file &&
             (action?.params?.file as any as any[]).every(
@@ -136,6 +139,7 @@ export const useActionButton = ({
             let errMsg = '';
 
             files.forEach((f) => {
+              setIsDisabledModalBtns && setIsDisabledModalBtns(true);
               const qS =
                 '?' +
                 // @ts-ignore
@@ -183,13 +187,27 @@ export const useActionButton = ({
                   if (callbackResponseConfirmation)
                     callbackResponseConfirmation();
                   setModalData(response.data);
+                  setIsDisabledModalBtns && setIsDisabledModalBtns(false);
                 })
                 .catch((err: AxiosError<any>) => {
                   if (callbackResponseConfirmation)
                     callbackResponseConfirmation();
+                  setIsDisabledModalBtns && setIsDisabledModalBtns(false);
 
                   if (err?.response?.status === 400) {
-                    setModalData(err.response.data);
+                    if (setErrorMessage)
+                      setErrorMessage(
+                        err?.response?.data?.error_msg +
+                          ' code: ' +
+                          err?.response?.data?.error_code,
+                      );
+
+                    return;
+                  }
+                  if (err?.response?.status === 409) {
+                    setModalData(err?.response?.data);
+
+                    return;
                   }
                   if (setErrorMessage) {
                     errMsg =
