@@ -171,7 +171,7 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
       onClose={() => (canClose ? setIsModalOpen(false) : null)}
       footer={footer}
       maxHeight={'720px'}
-      height={'50%'}
+      height={'66%'}
       closable={canClose}
     >
       <Heading>{data?.title}</Heading>
@@ -182,13 +182,22 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
             display: 'flex',
             justifyContent: 'center',
             height: '130px',
-            marginBottom: '15px',
+            marginBottom: '20px',
+            marginTop: '10px',
           }}
         >
           <img src={data.img} alt={'modal-image'} />
         </Container>
       )}
-      <Grid container spacing={1}>
+      <Grid
+        container
+        spacing={1}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
         {data?.content?.map(
           (
             element: IElementModal | IElementPModal | IElementTableModal,
@@ -202,6 +211,7 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
                       dangerouslySetInnerHTML={{
                         __html: element.value as string,
                       }}
+                      style={{ textAlign: 'center' }}
                     ></p>
                   </Grid>
                 );
