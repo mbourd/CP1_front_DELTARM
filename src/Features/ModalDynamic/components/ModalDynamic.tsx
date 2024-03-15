@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo, useState } from 'react';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Button,
   FormError,
@@ -34,6 +34,7 @@ import { DatePickerModalDynamic } from './DatePickerModalDynamic/DatePickerModal
 import { security } from '../../../Services';
 import { UploadFileModalDynamic } from './UploadFileModalDynamic/UploadFileModalDynamic';
 import { CircularMetric } from 'Features/DashboardDynamic/components/Metrics/CircularMetric/CircularMetric';
+import { InputBase } from '../../../Packages/Design/components/Input/InputBase/InputBase';
 
 export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
   open,
@@ -59,6 +60,13 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
     setErrorMessage,
     setIsDisabledModalBtns,
   });
+  // const [callbackResponseConfirmation, setCallbackResponseConfirmation] =
+  //   useState((...p) => undefined);
+
+  // useEffect(() => {
+  //   if (data?.callbackResponseConfirmation)
+  //     setCallbackResponseConfirmation(data.callbackResponseConfirmation);
+  // }, [data?.callbackResponseConfirmation]);
 
   const footer = (
     <ModalDynamicFooterStyled>
@@ -408,6 +416,40 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
                           register={register}
                         />
                       )}
+                    />
+                  </Grid>
+                );
+              }
+              case 'json_array': {
+                const format = element.format;
+                const items = (element as IElementModal).items;
+                let contentStr = '';
+
+                items.forEach((item, i) => {
+                  contentStr +=
+                    format?.replace(/{([^}]*)}/g, (match, key) => {
+                      return item?.[key] || '';
+                    }) + (i < items.length - 1 ? '\r\n\r\n' : '');
+                });
+
+                return (
+                  <Grid item xs={12} md={12} style={{ marginTop: 10 }}>
+                    <InputBase
+                      disabled={false}
+                      multiline
+                      multilineRows={20}
+                      fullWidth
+                      selectAllOnClick
+                      defaultValue={contentStr}
+                      onChange={(e) => {
+                        e.currentTarget.value = contentStr;
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.value = contentStr;
+                      }}
+                      onKeyPress={(e) => {
+                        e.preventDefault();
+                      }}
                     />
                   </Grid>
                 );

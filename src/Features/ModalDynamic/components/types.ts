@@ -24,6 +24,7 @@ export interface IDataModal {
 
 export interface IElementPModal {
   element: 'p';
+  format?: string;
   attribute: {
     type: string;
     id: string;
@@ -38,7 +39,21 @@ export interface IElementPModal {
 }
 
 export interface IElementModal {
-  element: 'input' | 'select' | 'p' | 'table' | 'date_picker' | 'upload';
+  element:
+    | 'input'
+    | 'select'
+    | 'p'
+    | 'table'
+    | 'date_picker'
+    | 'upload'
+    | 'json_array';
+  format?: string;
+  items: {
+    cell: string;
+    control_step: string;
+    error_type: string;
+    sheet: string;
+  }[];
   attribute: {
     type: string;
     id: string;
