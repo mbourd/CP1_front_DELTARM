@@ -8,16 +8,24 @@
 import React from 'react';
 import { SetupTestsComponents } from '../../../../cypress/utils/SetupTestsComponents';
 import { ModalDynamic } from './ModalDynamic';
-import { IDataModal } from './types';
+import { IDataModal, IElementModal } from './types';
 import { _escapeForRegExp } from '../../../../cypress/utils';
 import { DownloadFile } from '../../../Shared/components/UploadList/UploadList.style';
 
 describe('<ModalDynamic />', function () {
   let import_TE_1_1: IDataModal;
+  let import_TE_1_2_error: IDataModal;
+  let import_TE_1_2_error_: IDataModal;
 
   before(() => {
     cy.fixture('modalDynamic-import_TE-1-1.json').then((d) => {
       import_TE_1_1 = d;
+    });
+    cy.fixture('modalDynamic-import_TE-1-2-error.json').then((d) => {
+      import_TE_1_2_error = d;
+    });
+    cy.fixture('modalDynamic-import_TE-1-2-error_.json').then((d) => {
+      import_TE_1_2_error_ = d;
     });
   });
 
@@ -166,5 +174,80 @@ describe('<ModalDynamic />', function () {
     cy.wait(10).then(() => {
       expect(reqCount).to.be.eq(1);
     });
+  });
+
+  it('should render textarea - import modal TE 1 2 error', function () {
+    let contentStr = '';
+
+    for (const element of import_TE_1_2_error.content) {
+      const format = (element as IElementModal).format;
+      const items = (element as IElementModal).items;
+
+      items.forEach((item, i) => {
+        contentStr +=
+          format?.replace(/{([^}]*)}/g, (match, key) => {
+            return item[key] || '';
+          }) + (i < items.length - 1 ? '\r\n\r\n' : '');
+      });
+    }
+
+    cy.viewport(1920, 1080);
+    cy.mount(
+      <SetupTestsComponents>
+        <ModalDynamic
+          data={import_TE_1_2_error}
+          setIsModalOpen={function (): void {
+            //
+          }}
+          open={true}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+
+    cy.react('ModalDynamic').find('textarea').should('exist');
+    cy.react('ModalDynamic')
+      .find('textarea')
+      .invoke('text')
+      .then((t) => {
+        expect(t).to.be.deep.eq(contentStr);
+      });
+  });
+  it('should render textarea - import modal TE 1 2 error (changed format)', function () {
+    let contentStr = '';
+
+    for (const element of import_TE_1_2_error_.content) {
+      const format = (element as IElementModal).format;
+      const items = (element as IElementModal).items;
+
+      items.forEach((item, i) => {
+        contentStr +=
+          format?.replace(/{([^}]*)}/g, (match, key) => {
+            return item[key] || '';
+          }) + (i < items.length - 1 ? '\r\n\r\n' : '');
+      });
+    }
+
+    cy.viewport(1920, 1080);
+    cy.mount(
+      <SetupTestsComponents>
+        <ModalDynamic
+          data={import_TE_1_2_error_}
+          setIsModalOpen={function (): void {
+            //
+          }}
+          open={true}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+
+    cy.react('ModalDynamic').find('textarea').should('exist');
+    cy.react('ModalDynamic')
+      .find('textarea')
+      .invoke('text')
+      .then((t) => {
+        expect(t).to.be.deep.eq(contentStr);
+      });
   });
 });
