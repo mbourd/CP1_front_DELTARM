@@ -1,0 +1,152 @@
+{
+  "btn": [
+    {
+      "action": {
+        "endpoint": null,
+        "method": "CANCEL",
+        "params": null
+      },
+      "bg_color": "red",
+      "btn_lib": "Close",
+      "font_color": "white",
+      "hover": "green"
+    }
+  ],
+  "content": [
+    {
+      "element": "json_array",
+      "format": "{sheet}-{cell} : {control_step} => {error_type}",
+      "items": [
+        {
+          "cell": "D5",
+          "control_step": "MANDATORY value",
+          "error_type": "Column 'CATEGORY' Row #5 : Cell is empty but this column is mandatory.",
+          "sheet": "Facilities"
+        },
+        {
+          "cell": "B4 & X4",
+          "control_step": "FIELD NAME for ANNEE COLLECTE",
+          "error_type": "Row #4 => FIELD NAME 'None' for ANNEE COLLECTE '2022' is not existing in the database.",
+          "sheet": "Wells"
+        },
+        {
+          "cell": "B6 & X6",
+          "control_step": "FIELD NAME for ANNEE COLLECTE",
+          "error_type": "Row #6 => FIELD NAME '2/4 (PL 018) EKOFISK' for ANNEE COLLECTE '2044' is not existing in the database.",
+          "sheet": "Wells"
+        },
+        {
+          "cell": "B4",
+          "control_step": "MANDATORY value",
+          "error_type": "Column 'FIELD NAME' Row #4 : Cell is empty but this column is mandatory.",
+          "sheet": "Wells"
+        },
+        {
+          "cell": "I6",
+          "control_step": "MANDATORY value",
+          "error_type": "Column 'NAMED LOCATION' Row #6 : Cell is empty but this column is mandatory.",
+          "sheet": "Wells"
+        },
+        {
+          "cell": "D4",
+          "control_step": "REFERENCE value",
+          "error_type": "Column 'CATEGORY' Row #4 : The value 'Offshore1' is not a valid option for this Data Field.",
+          "sheet": "Wells"
+        },
+        {
+          "cell": "G6",
+          "control_step": "REFERENCE value",
+          "error_type": "Column 'NATURE OF WELL' Row #6 : The value 'Oil Producer2' is not a valid option for this Data Field.",
+          "sheet": "Wells"
+        },
+        {
+          "cell": "I2",
+          "control_step": "REFERENCE value",
+          "error_type": "Column 'NAMED LOCATION' Row #2 : The value 'NO' is not a valid option for this Data Field.",
+          "sheet": "Wells"
+        },
+        {
+          "cell": "I3",
+          "control_step": "REFERENCE value",
+          "error_type": "Column 'NAMED LOCATION' Row #3 : The value 'YES' is not a valid option for this Data Field.",
+          "sheet": "Wells"
+        },
+        {
+          "cell": "I4",
+          "control_step": "REFERENCE value",
+          "error_type": "Column 'NAMED LOCATION' Row #4 : The value 'YES' is not a valid option for this Data Field.",
+          "sheet": "Wells"
+        },
+        {
+          "cell": "I5",
+          "control_step": "REFERENCE value",
+          "error_type": "Column 'NAMED LOCATION' Row #5 : The value 'NO' is not a valid option for this Data Field.",
+          "sheet": "Wells"
+        },
+        {
+          "cell": "K5",
+          "control_step": "REFERENCE value",
+          "error_type": "Column 'TYPE OF LOCATION' Row #5 : The value 'PlatformXXX' is not a valid option for this Data Field.",
+          "sheet": "Wells"
+        },
+        {
+          "cell": "O4",
+          "control_step": "TYPE of value",
+          "error_type": "Column 'AFE' Row #4 : The value '32990000x' is not a value of the expected 'financial' type.",
+          "sheet": "Wells"
+        },
+        {
+          "cell": "B5 & L5",
+          "control_step": "FIELD NAME for ANNEE COLLECTE",
+          "error_type": "Row #5 => FIELD NAME 'ANGOLAN SPARES WAREHOUSE' for ANNEE COLLECTE '2025' is not existing in the database.",
+          "sheet": "Spare parts"
+        },
+        {
+          "cell": "C4",
+          "control_step": "MANDATORY value",
+          "error_type": "Column 'NAME OF SPARE' Row #4 : Cell is empty but this column is mandatory.",
+          "sheet": "Spare parts"
+        },
+        {
+          "cell": "F2",
+          "control_step": "REFERENCE value",
+          "error_type": "Column 'TYPE OF WORKS' Row #2 : The value 'Decommissioning' is not a valid option for this Data Field.",
+          "sheet": "Minor works"
+        },
+        {
+          "cell": "F3",
+          "control_step": "REFERENCE value",
+          "error_type": "Column 'TYPE OF WORKS' Row #3 : The value 'Decommissioning' is not a valid option for this Data Field.",
+          "sheet": "Minor works"
+        },
+        {
+          "cell": "F4",
+          "control_step": "REFERENCE value",
+          "error_type": "Column 'TYPE OF WORKS' Row #4 : The value 'DecommissioningX' is not a valid option for this Data Field.",
+          "sheet": "Minor works"
+        },
+        {
+          "cell": "F5",
+          "control_step": "REFERENCE value",
+          "error_type": "Column 'TYPE OF WORKS' Row #5 : The value 'Decommissioning' is not a valid option for this Data Field.",
+          "sheet": "Minor works"
+        },
+        {
+          "cell": "F6",
+          "control_step": "REFERENCE value",
+          "error_type": "Column 'TYPE OF WORKS' Row #6 : The value 'Modifications' is not a valid option for this Data Field.",
+          "sheet": "Minor works"
+        },
+        {
+          "cell": "L6",
+          "control_step": "REFERENCE value",
+          "error_type": "Column 'STATUS' Row #6 : The value 'In progressA' is not a valid option for this Data Field.",
+          "sheet": "Minor works"
+        }
+      ]
+    }
+  ],
+  "subtitle": "21 errors found in the file",
+  "target": "modal",
+  "title": ""
+}
