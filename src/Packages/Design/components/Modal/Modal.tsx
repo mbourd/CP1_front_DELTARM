@@ -19,6 +19,7 @@ export const Modal: React.FC<React.PropsWithChildren<IModal>> = ({
   header,
   width = 'md',
   height,
+  minHeight,
   maxHeight,
   dividers = false,
   onClose,
@@ -35,7 +36,7 @@ export const Modal: React.FC<React.PropsWithChildren<IModal>> = ({
       fullWidth={true}
       PaperProps={{
         elevation: 0,
-        style: { height: height, maxHeight: maxHeight },
+        style: { height: height, maxHeight: maxHeight, minHeight: minHeight },
       }}
     >
       <DialogTitle disableTypography={true} className={'_ModalTitle'}>
