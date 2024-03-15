@@ -32,6 +32,7 @@ export interface IElementPModal {
     multiline: boolean;
     multilineRows: number | null;
     option?: ISelectData[];
+    mode?: string;
   } | null;
   value: string | null;
 }
@@ -46,6 +47,7 @@ export interface IElementModal {
     multiline: boolean;
     multilineRows: number | null;
     option?: ISelectData[];
+    mode?: string;
   };
   value: ElementTableModalValueType | string | null;
 }

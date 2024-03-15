@@ -323,7 +323,14 @@ export const useActionButton = ({
           return;
       }
     },
-    [jwt, setPageData, setModalData, setIsModalOpen, setErrorMessage],
+    [
+      setPageData,
+      setIsModalOpen,
+      setModalData,
+      setErrorMessage,
+      jwt,
+      setIsDisabledModalBtns,
+    ],
   );
 
   return { actionButton, data, modalData };
