@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { TextField as MUIInputBase } from '@material-ui/core';
 import { InputBaseStyled, useStyles } from './InputBase.style';
 import { useTheme } from 'Styles';
@@ -34,6 +34,9 @@ export const InputBase: React.FC<React.PropsWithChildren<IInputBase>> = ({
   fullWidth,
   selectAllOnClick,
   onClick,
+  fontFamily,
+  fontSize,
+  style,
 }): React.ReactElement => {
   const ref = useRef();
   const theme = useTheme();
@@ -55,6 +58,8 @@ export const InputBase: React.FC<React.PropsWithChildren<IInputBase>> = ({
       className={
         '_Input ' + (className || '') + (status ? ' _Input-' + status : '')
       }
+      $fontFamily={fontFamily}
+      $fontSize={fontSize}
     >
       <div
         style={{
@@ -71,6 +76,7 @@ export const InputBase: React.FC<React.PropsWithChildren<IInputBase>> = ({
         )}
       </div>
       <MUIInputBase
+        style={style}
         inputRef={inputRef ?? ref}
         classes={MUIInputBaseClasse}
         name={name}
