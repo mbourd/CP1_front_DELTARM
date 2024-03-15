@@ -184,6 +184,7 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
       open={open}
       onClose={() => (canClose ? setIsModalOpen(false) : null)}
       footer={footer}
+      minHeight={'444px'}
       maxHeight={'720px'}
       height={'66%'}
       closable={canClose}
@@ -429,11 +430,17 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
                   contentStr +=
                     format?.replace(/{([^}]*)}/g, (match, key) => {
                       return item?.[key] || '';
-                    }) + (i < items.length - 1 ? '\r\n\r\n' : '');
+                    }) + (i < items.length - 1 ? '\r\n' : '');
                 });
 
                 return (
-                  <Grid item xs={12} md={12} style={{ marginTop: 10 }}>
+                  <Grid
+                    item
+                    xs={12}
+                    md={12}
+                    style={{ marginTop: 10, alignSelf: 'stretch' }}
+                    className="ioqsdoqsidhqsjkd"
+                  >
                     <InputBase
                       disabled={false}
                       multiline
@@ -450,6 +457,9 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
                       onKeyPress={(e) => {
                         e.preventDefault();
                       }}
+                      fontFamily={'Courier'}
+                      fontSize={'10px'}
+                      style={{ height: '100%' }}
                     />
                   </Grid>
                 );
