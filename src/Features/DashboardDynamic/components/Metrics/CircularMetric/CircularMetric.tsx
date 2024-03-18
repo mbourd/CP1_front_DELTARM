@@ -6,7 +6,7 @@ import { ICircularMetric } from './types';
 
 export const CircularMetric: React.FC<
   React.PropsWithChildren<ICircularMetric>
-> = ({ variant, value, hint, style }) => {
+> = ({ variant, value, hint, style, size }) => {
   return (
     <BPITooltip title={hint}>
       <CircularProgress
@@ -14,6 +14,7 @@ export const CircularMetric: React.FC<
         variant={variant}
         value={value}
         style={style}
+        size={size}
       />
     </BPITooltip>
   );

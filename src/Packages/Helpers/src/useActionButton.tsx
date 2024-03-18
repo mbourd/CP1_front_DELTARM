@@ -20,12 +20,14 @@ type useActionButtonPropsType = {
   jwt: string;
   setIsModalOpen?: React.Dispatch<SetStateAction<boolean>>;
   setErrorMessage?: React.Dispatch<SetStateAction<string | null>>;
+  setIsDisabledModalBtns?: React.Dispatch<SetStateAction<boolean>>;
 };
 
 export const useActionButton = ({
   jwt,
   setIsModalOpen,
   setErrorMessage,
+  setIsDisabledModalBtns,
 }: useActionButtonPropsType) => {
   const setPageData = useSetRecoilState(data);
   const setModalData = useSetRecoilState(modalData);
@@ -126,6 +128,7 @@ export const useActionButton = ({
 
           return;
         case 'POST':
+          setIsDisabledModalBtns && setIsDisabledModalBtns(false);
           if (
             action?.params?.file &&
             (action?.params?.file as any as any[]).every(
@@ -133,43 +136,88 @@ export const useActionButton = ({
             )
           ) {
             const files = action?.params?.file as any as File[];
-            const formData = new FormData();
+            let errMsg = '';
 
-            files.forEach((f, i) => {
-              formData.append('file' + i, f);
-            });
+            files.forEach((f) => {
+              setIsDisabledModalBtns && setIsDisabledModalBtns(true);
+              const qS =
+                '?' +
+                // @ts-ignore
+                Object.keys(action.params)
+                  .map((key) => {
+                    if (action?.params) {
+                      const isStr = typeof action.params[key] === 'string';
 
-            axios
-              .post(
-                `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}${
-                  action?.endpoint
-                }${queryString}`,
-                formData,
-                {
-                  headers: {
-                    Authorization: jwt,
-                    'Content-type': 'multipart/form-data',
+                      return (
+                        encodeURIComponent(key) +
+                        '=' +
+                        encodeURIComponent(
+                          isStr
+                            ? action.params[key]
+                            : (action.params[key] as any as any[]).every(
+                                  (ff) => ff instanceof File,
+                                )
+                              ? f.name.replace('#', ' ')
+                              : action.params[key],
+                        )
+                      );
+                    }
+
+                    return;
+                  })
+                  .join('&');
+              const formData = new FormData();
+
+              formData.append('file', f);
+              formData.append('file_name', f.name);
+              axios
+                .post(
+                  `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}${
+                    action?.endpoint
+                  }${qS}`,
+                  formData,
+                  {
+                    headers: {
+                      Authorization: jwt,
+                      'Content-type': 'multipart/form-data',
+                    },
                   },
-                },
-              )
-              .then((response) => {
-                if (response.status >= 200) {
+                )
+                .then((response) => {
                   if (callbackResponseConfirmation)
                     callbackResponseConfirmation();
-                }
-              })
-              .catch((err) => {
-                if (callbackResponseConfirmation)
-                  callbackResponseConfirmation();
+                  setModalData(response.data);
+                  setIsDisabledModalBtns && setIsDisabledModalBtns(false);
+                })
+                .catch((err: AxiosError<any>) => {
+                  if (callbackResponseConfirmation)
+                    callbackResponseConfirmation();
+                  setIsDisabledModalBtns && setIsDisabledModalBtns(false);
 
-                if (setErrorMessage && err)
-                  setErrorMessage(
-                    typeof err === 'string' ? err : 'Erreur lors de la requête',
-                  );
+                  if (err?.response?.status === 400) {
+                    if (setErrorMessage)
+                      setErrorMessage(
+                        err?.response?.data?.error_msg +
+                          ' code: ' +
+                          err?.response?.data?.error_code,
+                      );
 
-                if (setErrorMessage && err?.response)
-                  setErrorMessage(err?.response?.data?.error_msg);
-              });
+                    return;
+                  }
+                  if (err?.response?.status === 409) {
+                    setModalData(err?.response?.data);
+
+                    return;
+                  }
+                  if (setErrorMessage) {
+                    errMsg =
+                      ' ' +
+                      (err?.response?.data?.error_msg ??
+                        'Erreur lords de la requête');
+                    setErrorMessage(errMsg);
+                  }
+                });
+            });
           } else
             axios
               .post(
@@ -275,7 +323,14 @@ export const useActionButton = ({
           return;
       }
     },
-    [jwt, setPageData, setModalData, setIsModalOpen, setErrorMessage],
+    [
+      setPageData,
+      setIsModalOpen,
+      setModalData,
+      setErrorMessage,
+      jwt,
+      setIsDisabledModalBtns,
+    ],
   );
 
   return { actionButton, data, modalData };

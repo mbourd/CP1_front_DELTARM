@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo, useState } from 'react';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Button,
   FormError,
@@ -33,6 +33,8 @@ import { SelectModalDynamic } from './SelectModalDynamic/SelectModalDynamic';
 import { DatePickerModalDynamic } from './DatePickerModalDynamic/DatePickerModalDynamic';
 import { security } from '../../../Services';
 import { UploadFileModalDynamic } from './UploadFileModalDynamic/UploadFileModalDynamic';
+import { CircularMetric } from 'Features/DashboardDynamic/components/Metrics/CircularMetric/CircularMetric';
+import { InputBase } from '../../../Packages/Design/components/Input/InputBase/InputBase';
 
 export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
   open,
@@ -43,11 +45,6 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
   const { user } = useSecurity();
   const jwt = user.getJwt();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const { actionButton } = useActionButton({
-    jwt,
-    setIsModalOpen,
-    setErrorMessage,
-  });
   const defaultQueries = useMemo<Record<string, string>>(() => {
     return {};
   }, []);
@@ -57,6 +54,19 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
     [data?.target],
   );
   const [isDisabledModalBtns, setIsDisabledModalBtns] = useState(false);
+  const { actionButton } = useActionButton({
+    jwt,
+    setIsModalOpen,
+    setErrorMessage,
+    setIsDisabledModalBtns,
+  });
+  // const [callbackResponseConfirmation, setCallbackResponseConfirmation] =
+  //   useState((...p) => undefined);
+
+  // useEffect(() => {
+  //   if (data?.callbackResponseConfirmation)
+  //     setCallbackResponseConfirmation(data.callbackResponseConfirmation);
+  // }, [data?.callbackResponseConfirmation]);
 
   const footer = (
     <ModalDynamicFooterStyled>
@@ -72,22 +82,13 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
           style={{ display: 'flex', justifyContent: 'flex-end' }}
         >
           {data?.btn?.map((btn, index) => {
-            let callback: any = data?.callbackResponseConfirmation;
-
-            if (data.target === 'fixed_modal')
-              callback = () => {
-                setIsDisabledModalBtns(false);
-              };
+            const callback: any = data?.callbackResponseConfirmation;
 
             return (
               <Button
                 key={index}
                 disabled={isDisabledModalBtns}
                 onClick={() => {
-                  if (data.target === 'fixed_modal') {
-                    setIsDisabledModalBtns(true);
-                  }
-
                   handleCLickActionsBeforeSendToActionButtons(
                     btn.action,
                     data?.__extraData,
@@ -96,7 +97,20 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
                 }}
                 style={{ backgroundColor: btn.bg_color }}
               >
-                {btn.btn_lib}
+                {data?.target === 'fixed_modal' &&
+                isDisabledModalBtns &&
+                (btn.action.method === 'POST' ||
+                  btn.action.method === 'GET') ? (
+                  <CircularMetric
+                    variant="indeterminate"
+                    value={0}
+                    hint={''}
+                    style={{ color: 'white' }}
+                    size={23}
+                  />
+                ) : (
+                  btn.btn_lib
+                )}
               </Button>
             );
           })}
@@ -170,8 +184,9 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
       open={open}
       onClose={() => (canClose ? setIsModalOpen(false) : null)}
       footer={footer}
+      minHeight={'444px'}
       maxHeight={'720px'}
-      height={'50%'}
+      height={'66%'}
       closable={canClose}
     >
       <Heading>{data?.title}</Heading>
@@ -182,13 +197,26 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
             display: 'flex',
             justifyContent: 'center',
             height: '130px',
-            marginBottom: '15px',
+            marginBottom: '20px',
+            marginTop: '10px',
           }}
         >
           <img src={data.img} alt={'modal-image'} />
         </Container>
       )}
-      <Grid container spacing={1}>
+      <Grid
+        container
+        spacing={1}
+        {...(data?.target === 'fixed_modal'
+          ? {
+              style: {
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              },
+            }
+          : {})}
+      >
         {data?.content?.map(
           (
             element: IElementModal | IElementPModal | IElementTableModal,
@@ -202,6 +230,9 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
                       dangerouslySetInnerHTML={{
                         __html: element.value as string,
                       }}
+                      {...(data?.target === 'fixed_modal'
+                        ? { style: { textAlign: 'center' } }
+                        : {})}
                     ></p>
                   </Grid>
                 );
@@ -386,6 +417,49 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
                           register={register}
                         />
                       )}
+                    />
+                  </Grid>
+                );
+              }
+              case 'json_array': {
+                const format = element.format;
+                const items = (element as IElementModal).items;
+                let contentStr = '';
+
+                items.forEach((item, i) => {
+                  contentStr +=
+                    format?.replace(/{([^}]*)}/g, (match, key) => {
+                      return item?.[key] || '';
+                    }) + (i < items.length - 1 ? '\r\n' : '');
+                });
+
+                return (
+                  <Grid
+                    item
+                    xs={12}
+                    md={12}
+                    style={{ marginTop: 10, alignSelf: 'stretch' }}
+                    className="ioqsdoqsidhqsjkd"
+                  >
+                    <InputBase
+                      disabled={false}
+                      multiline
+                      multilineRows={20}
+                      fullWidth
+                      selectAllOnClick
+                      defaultValue={contentStr}
+                      onChange={(e) => {
+                        e.currentTarget.value = contentStr;
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.value = contentStr;
+                      }}
+                      onKeyPress={(e) => {
+                        e.preventDefault();
+                      }}
+                      fontFamily={'Courier'}
+                      fontSize={'10px'}
+                      style={{ height: '100%' }}
                     />
                   </Grid>
                 );

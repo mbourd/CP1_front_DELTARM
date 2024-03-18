@@ -106,4 +106,10 @@ export interface IInputBase {
   inputRef?: any;
 
   InputProps?: any;
+  fullWidth?: boolean;
+  selectAllOnClick?: boolean;
+  onClick?: React.MouseEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  fontFamily?: string;
+  fontSize?: string;
+  style?: React.CSSProperties;
 }

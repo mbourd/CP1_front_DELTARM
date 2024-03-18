@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { TextField as MUIInputBase } from '@material-ui/core';
 import { InputBaseStyled, useStyles } from './InputBase.style';
 import { useTheme } from 'Styles';
@@ -31,7 +31,14 @@ export const InputBase: React.FC<React.PropsWithChildren<IInputBase>> = ({
   unit,
   inputRef,
   InputProps,
+  fullWidth,
+  selectAllOnClick,
+  onClick,
+  fontFamily,
+  fontSize,
+  style,
 }): React.ReactElement => {
+  const ref = useRef();
   const theme = useTheme();
   const c = theme.color[color];
   const classes = useStyles({
@@ -51,6 +58,8 @@ export const InputBase: React.FC<React.PropsWithChildren<IInputBase>> = ({
       className={
         '_Input ' + (className || '') + (status ? ' _Input-' + status : '')
       }
+      $fontFamily={fontFamily}
+      $fontSize={fontSize}
     >
       <div
         style={{
@@ -67,7 +76,8 @@ export const InputBase: React.FC<React.PropsWithChildren<IInputBase>> = ({
         )}
       </div>
       <MUIInputBase
-        inputRef={inputRef}
+        style={style}
+        inputRef={inputRef ?? ref}
         classes={MUIInputBaseClasse}
         name={name}
         autoFocus={autoFocus}
@@ -84,6 +94,12 @@ export const InputBase: React.FC<React.PropsWithChildren<IInputBase>> = ({
         multiline={multiline}
         InputProps={InputProps}
         rows={multiline ? multilineRows : undefined}
+        fullWidth={fullWidth}
+        onClick={(e) => {
+          if (selectAllOnClick) (inputRef ?? ref).current.select();
+
+          onClick && onClick(e as any);
+        }}
       />
       <span style={{ padding: '5px' }}>{unit}</span>
     </InputBaseStyled>

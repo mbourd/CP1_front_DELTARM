@@ -6,6 +6,8 @@ interface IProps {
   $bgc: string;
   $fontColor: string;
   $bdr: string;
+  $fontFamily?: string;
+  $fontSize?: string;
 }
 
 interface IUseStylesProps {
@@ -31,6 +33,12 @@ export const InputBaseStyled = styled.label<IProps>`
   .MuiSvgIcon-root {
     color: ${({ $fontColor }) => $fontColor};
     cursor: pointer;
+  }
+
+  .MuiInputBase-root {
+    font-family: ${({ $fontFamily }) =>
+      $fontFamily ? $fontFamily : 'inherit'};
+    font-size: ${({ $fontSize }) => ($fontSize ? $fontSize : 'inherit')};
   }
 
   .MuiInputBase-root,
