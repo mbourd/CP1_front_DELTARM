@@ -32,7 +32,7 @@ export interface ISelectLabel {
   isOpen?: boolean;
   isDisabled?: boolean;
   containerBdc?: keyof IColor;
-  current_value_styles?: any;
+  current_value_styles: any;
 }
 
 export interface ISelect {
