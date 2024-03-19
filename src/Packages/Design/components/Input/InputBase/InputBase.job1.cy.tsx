@@ -3,7 +3,7 @@
 /// <reference types="../../../../../../cypress/support/component" />
 
 // NOTE: Run CLI:
-// yarn cypress:run:component --browser chrome --config video=false --spec "src/Packages/Design/components/Input/InputBase/InputBase.cy.tsx"
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Packages/Design/components/Input/InputBase/InputBase.job1.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../cypress/utils/SetupTestsComponents';
@@ -255,5 +255,44 @@ describe('<InputBase />', () => {
     );
     cy.waitReactApp();
     cy.react('InputBase').get(`label`).should('have.css', 'color', textColor);
+  });
+
+  it('should have font-family applied for textarea', function () {
+    cy.mount(
+      <SetupTestsComponents>
+        <InputBase multiline fontFamily={'Courier'} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('InputBase')
+      .find('textarea')
+      .should('have.css', 'font-family', 'Courier');
+  });
+  it('should have font-size applied for textarea', function () {
+    cy.mount(
+      <SetupTestsComponents>
+        <InputBase multiline fontSize={'10px'} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('InputBase')
+      .find('textarea')
+      .should('have.css', 'font-size', '10px');
+  });
+
+  it('should have style applied', function () {
+    cy.mount(
+      <SetupTestsComponents>
+        <InputBase
+          multiline
+          style={{ fontFamily: 'Courier', fontSize: '10px' }}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('InputBase')
+      .find('textarea')
+      .should('have.css', 'font-family', 'Courier')
+      .should('have.css', 'font-size', '10px');
   });
 });

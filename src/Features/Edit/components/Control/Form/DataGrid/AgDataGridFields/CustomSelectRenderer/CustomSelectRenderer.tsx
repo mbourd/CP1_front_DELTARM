@@ -57,7 +57,7 @@ const CustomSelectRenderer: React.FC<React.PropsWithChildren<any>> = ({
     <CustomSelectRendererStyled>
       <div>
         <CustomSelectStyled
-          value={select_id_to_show[0]?.choice_lib}
+          value={select_id_to_show[0]?.choice_lib ?? ''}
           onChange={handleChange}
           disabled={!props?.data?.row_editable || !field_data?.control_editable}
           // displayEmpty
@@ -86,7 +86,7 @@ const CustomSelectRenderer: React.FC<React.PropsWithChildren<any>> = ({
           {field_data?.choice_options?.map((option: any) => (
             <OptionStyled
               key={option.choice_id}
-              value={option.choice_lib}
+              value={option?.choice_lib ?? ''}
               // bg_color={option?.choice_bg_color}
               // font_weight={option?.choice_font_weight}
               // font_color={option?.choice_font_color}
