@@ -141,6 +141,12 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
         const params = { ...getValues(keys) };
         let errorMandatory = false;
 
+        keys.forEach((v) => {
+          if (!action?.params?.[v].match(/^\$/)) {
+            params[v] = action?.params?.[v] ?? '';
+          }
+        });
+
         data?.content.map((value) => {
           keys.map((key) => {
             if (key === value?.attribute?.id) {
