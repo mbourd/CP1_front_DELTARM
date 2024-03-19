@@ -154,7 +154,7 @@ export const useActionButton = ({
                         encodeURIComponent(
                           isStr
                             ? action.params[key]
-                            : (action.params[key] as any as any[]).every(
+                            : (action.params[key] as any as any[])?.every(
                                   (ff) => ff instanceof File,
                                 )
                               ? f.name.replace('#', ' ')
