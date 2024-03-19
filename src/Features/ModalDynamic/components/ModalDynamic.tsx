@@ -142,7 +142,7 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
         let errorMandatory = false;
 
         keys.forEach((v) => {
-          if (!action?.params?.[v].match(/^\$/)) {
+          if (!action?.params?.[v].match(/^\$/) && params?.[v] === undefined) {
             params[v] = action?.params?.[v] ?? '';
           }
         });
