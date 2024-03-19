@@ -439,7 +439,6 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
                     xs={12}
                     md={12}
                     style={{ marginTop: 10, alignSelf: 'stretch' }}
-                    className="ioqsdoqsidhqsjkd"
                   >
                     <InputBase
                       disabled={false}
