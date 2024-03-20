@@ -33,5 +33,6 @@ package-lock.json
 *.cy.js.mp4
 cypress.env.json
 /cypress/screenshots
+/cypress/downloads
 /cypress/videos
 /cypress/fixtures/token-cp1.txt

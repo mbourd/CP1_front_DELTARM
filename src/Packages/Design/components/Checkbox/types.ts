@@ -56,7 +56,7 @@ export interface ICheckboxLabel {
 
 export interface ICheckboxData {
   id: string;
-  label: NonNullable<React.ReactNode>;
+  label?: NonNullable<React.ReactNode>;
   value?: string;
   order?: string;
   key?: string;
