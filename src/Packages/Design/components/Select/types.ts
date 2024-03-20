@@ -7,7 +7,7 @@ import { IColor } from '../../types';
 
 export interface ISelectData {
   id: string;
-  label: NonNullable<React.ReactNode>;
+  label?: NonNullable<React.ReactNode>;
   value?: string;
   order?: string;
   key?: string;

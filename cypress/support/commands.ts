@@ -160,19 +160,20 @@ function reactChain(subject: any, componentChain: string) {
 Cypress.Commands.add('reactChain', { prevSubject: 'optional' }, reactChain);
 
 function formErrorShouldBeVisible(
-  subject: JQuery<HTMLElement>,
+  subject: JQuery<HTMLElement> | void,
   translations: string[],
   selector = '._FormError',
 ) {
-  cy.wrap(subject)
-    .find(selector)
+  const root = subject ? cy.wrap(subject).find(selector) : cy.get(selector);
+
+  root
     .should('be.visible')
     .invoke('text')
     .should('match', new RegExp(translations.join('|'), 'u'));
 }
 Cypress.Commands.add(
   'formErrorShouldBeVisible',
-  { prevSubject: true },
+  { prevSubject: ['optional'] },
   formErrorShouldBeVisible,
 );
 
