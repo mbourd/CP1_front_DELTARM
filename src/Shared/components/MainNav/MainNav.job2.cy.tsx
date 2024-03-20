@@ -3,7 +3,7 @@
 /// <reference types="../../../../cypress/support/component" />
 
 // NOTE: Run CLI:
-// yarn cypress:run:component --browser chrome --config video=false --spec "src/Shared/components/MainNav/MainNav.cy.tsx"
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Shared/components/MainNav/MainNav.job2.cy.tsx"
 
 import React, { useEffect } from 'react';
 
@@ -195,17 +195,20 @@ describe('<MainNav />', () => {
 
   it('should have aditional menus if context=contr_perm', function () {
     const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
-      const {
-        dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent,
-      } = useDashboardDynamicReducer();
+      // const {
+      //   dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent,
+      // } = useDashboardDynamicReducer();
 
+      // useEffect(() => {
+      //   dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent({
+      //     data: {
+      //       menus,
+      //     },
+      //   } as any as IDashboard);
+      // }, [dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent]);
       useEffect(() => {
-        dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent({
-          data: {
-            menus,
-          },
-        } as any as IDashboard);
-      }, [dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent]);
+        localStorage.setItem('additional_menu_data', JSON.stringify(menus));
+      });
 
       return <MainNav />;
     };
@@ -233,17 +236,20 @@ describe('<MainNav />', () => {
   });
   it('should NOT have aditional menus if context!=contr_perm', function () {
     const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
-      const {
-        dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent,
-      } = useDashboardDynamicReducer();
+      // const {
+      //   dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent,
+      // } = useDashboardDynamicReducer();
 
+      // useEffect(() => {
+      //   dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent({
+      //     data: {
+      //       menus,
+      //     },
+      //   } as any as IDashboard);
+      // }, [dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent]);
       useEffect(() => {
-        dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent({
-          data: {
-            menus,
-          },
-        } as any as IDashboard);
-      }, [dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent]);
+        localStorage.setItem('additional_menu_data', JSON.stringify(menus));
+      });
 
       return <MainNav />;
     };
@@ -291,17 +297,20 @@ describe('<MainNav />', () => {
       return 0;
     });
     const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
-      const {
-        dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent,
-      } = useDashboardDynamicReducer();
+      // const {
+      //   dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent,
+      // } = useDashboardDynamicReducer();
 
+      // useEffect(() => {
+      //   dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent({
+      //     data: {
+      //       menus: _menus,
+      //     },
+      //   } as any as IDashboard);
+      // }, [dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent]);
       useEffect(() => {
-        dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent({
-          data: {
-            menus: _menus,
-          },
-        } as any as IDashboard);
-      }, [dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent]);
+        localStorage.setItem('additional_menu_data', JSON.stringify(_menus));
+      });
 
       return <MainNav />;
     };
