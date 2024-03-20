@@ -218,7 +218,9 @@ export const useActionButton = ({
                   }
                 });
             });
-          } else
+          } else {
+            setIsDisabledModalBtns && setIsDisabledModalBtns(true);
+
             axios
               .post(
                 `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}${
@@ -233,13 +235,32 @@ export const useActionButton = ({
                 },
               )
               .then(async (response) => {
-                // console.dir(response);
+                if (
+                  response.data?.data === 'ok' &&
+                  response.config.url?.includes('/import_file?')
+                )
+                  setIsModalOpen && setIsModalOpen(false);
+                setIsDisabledModalBtns && setIsDisabledModalBtns(false);
                 dispatchActionButton(response.data);
               })
               .catch(async (error: AxiosError<any>) => {
+                setIsDisabledModalBtns && setIsDisabledModalBtns(false);
+
                 if (error.response) {
                   if (setErrorMessage && error.response.status >= 300)
                     setErrorMessage(error.response.data?.error_msg);
+
+                  // REVIEW: maybe to remove
+                  if (
+                    error.response.status === 400 &&
+                    error.response.config.url?.includes('/import_file?') &&
+                    !error.response.data?.target
+                    // error.response.data?.target !== 'modal' ||
+                    // error.response.data?.target !== 'fixed_modal'
+                  ) {
+                    setModalData(error.response.data);
+                    setIsModalOpen && setIsModalOpen(true);
+                  }
 
                   dispatchActionButton(error.response.data);
 
@@ -256,6 +277,7 @@ export const useActionButton = ({
                   dispatchActionButton(genericErrorsData);
                 }
               });
+          }
 
           return;
         case 'DELETE':
