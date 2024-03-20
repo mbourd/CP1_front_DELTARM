@@ -27,6 +27,7 @@ import { ModalDynamic } from 'Features/ModalDynamic/components/ModalDynamic';
 import { useActionButton } from 'Packages/Helpers/src/useActionButton';
 import { IDataModal } from 'Features/ModalDynamic/components/types';
 import { useRecoilValue } from 'recoil';
+import { DashboardContrPermMenuType } from 'Features/DashboardDynamic/components/types';
 
 export const MainNav: React.FC<
   React.PropsWithChildren<unknown>
@@ -138,9 +139,17 @@ export const MainNav: React.FC<
             )}
             {dataSecurity.context === 'contr_perm'
               ? (() => {
-                  const reorderedMenus = [
-                    ...(stateDashboardDynamic?.dataApi_dashboardControlPermanent
-                      ?.data.menus ?? []),
+                  let storedLocalMenus = [];
+
+                  if (localStorage.getItem('additional_menu_data'))
+                    storedLocalMenus = JSON.parse(
+                      localStorage.getItem('additional_menu_data') + '' ?? '[]',
+                    );
+
+                  const reorderedMenus: DashboardContrPermMenuType[] = [
+                    // ...(stateDashboardDynamic?.dataApi_dashboardControlPermanent
+                    // ?.data.menus ?? []),
+                    ...storedLocalMenus,
                   ];
 
                   reorderedMenus.sort((m1, m2) => {
@@ -160,7 +169,8 @@ export const MainNav: React.FC<
                             ? '#'
                             : m.action.endpoint
                         }
-                        onClick={async () => {
+                        onClick={async (e) => {
+                          e.preventDefault();
                           hideNav();
 
                           if (m?.action?.endpoint.includes('modal')) {
