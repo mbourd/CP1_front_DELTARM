@@ -170,10 +170,10 @@ export const MainNav: React.FC<
                             : m.action.endpoint
                         }
                         onClick={async (e) => {
-                          e.preventDefault();
                           hideNav();
 
                           if (m?.action?.endpoint.includes('modal')) {
+                            e.preventDefault();
                             actionButton(m.action);
                           }
                         }}
