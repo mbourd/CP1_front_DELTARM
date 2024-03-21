@@ -9,6 +9,7 @@ import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsCom
 
 import { InputModalDynamic } from './InputModalDynamic';
 import { IElementModal } from '../types';
+import { cloneDeep } from 'lodash';
 
 describe('<InputModalDynamic />', function () {
   const element: IElementModal = {
@@ -40,5 +41,64 @@ describe('<InputModalDynamic />', function () {
     );
     cy.waitReactApp();
     cy.react('InputModalDynamic').should('exist');
+  });
+
+  it('should render default value', function () {
+    const _element = { ...cloneDeep(element), value: 'hello world' };
+
+    cy.mount(
+      <SetupTestsComponents>
+        <InputModalDynamic
+          element={_element}
+          index={0}
+          handleChangeValue={function (): void {}}
+          register={function (): void {}}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('InputModalDynamic')
+      .find('input')
+      .should('have.value', 'hello world');
+  });
+
+  it('should render error message if mandatory', function () {
+    const _element = {
+      ...cloneDeep(element),
+      value: '',
+      attribute: {
+        ...cloneDeep(element.attribute),
+        mandatory: true,
+      },
+    };
+
+    cy.mount(
+      <SetupTestsComponents>
+        <InputModalDynamic
+          element={_element}
+          index={0}
+          handleChangeValue={function (): void {}}
+          register={function (): void {}}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.formErrorShouldBeVisible(['Valeur obligatoire']);
+    cy.react('InputModalDynamic')
+      .find('input')
+      .typeThenWait('hello world', {
+        typeOptions: { parseSpecialCharSequences: false },
+        triggers: { blur: { exec: true } },
+      })
+      .then(() => {
+        cy.get('._FormError', { timeout: 10 }).should('not.exist');
+      });
+    cy.react('InputModalDynamic')
+      .find('input')
+      .clear()
+      .blur()
+      .then(() => {
+        cy.formErrorShouldBeVisible(['Valeur obligatoire']);
+      });
   });
 });

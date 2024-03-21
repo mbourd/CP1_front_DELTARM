@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { FC, useCallback, useMemo, useRef, useState } from 'react';
 import {
   Button,
   FormError,
@@ -34,13 +34,14 @@ import { DatePickerModalDynamic } from './DatePickerModalDynamic/DatePickerModal
 import { security } from '../../../Services';
 import { UploadFileModalDynamic } from './UploadFileModalDynamic/UploadFileModalDynamic';
 import { CircularMetric } from 'Features/DashboardDynamic/components/Metrics/CircularMetric/CircularMetric';
-import { InputBase } from '../../../Packages/Design/components/Input/InputBase/InputBase';
+import { TextAreaModalDynamic } from './TextAreaModalDynamic/TextAreaModalDynamic';
 
 export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
   open,
   setIsModalOpen,
   data,
 }): React.ReactElement => {
+  const modalRef = useRef<HTMLDivElement>(null);
   // const [trans] = useTrans('Manage');
   const { user } = useSecurity();
   const jwt = user.getJwt();
@@ -72,9 +73,9 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
     <ModalDynamicFooterStyled>
       <Grid container spacing={0.5}>
         <Grid item xs={12}>
-          <FormError className={'_Message'}>
-            {errorMessage ? errorMessage : ' '}
-          </FormError>
+          {errorMessage && (
+            <FormError className={'_Message'}>{errorMessage}</FormError>
+          )}
         </Grid>
         <Grid
           item
@@ -187,6 +188,7 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
 
   return (
     <Modal
+      ref={modalRef}
       open={open}
       onClose={() => (canClose ? setIsModalOpen(false) : null)}
       footer={footer}
@@ -446,25 +448,17 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
                     md={12}
                     style={{ marginTop: 10, alignSelf: 'stretch' }}
                   >
-                    <InputBase
-                      disabled={false}
-                      multiline
-                      multilineRows={20}
-                      fullWidth
+                    <TextAreaModalDynamic
                       selectAllOnClick
+                      keepContentFixed
+                      fitHeightAuto={
+                        data &&
+                        data.content.length === 1 &&
+                        data.content[0].element == 'json_array'
+                      }
+                      modalRef={modalRef}
                       defaultValue={contentStr}
-                      onChange={(e) => {
-                        e.currentTarget.value = contentStr;
-                      }}
-                      onBlur={(e) => {
-                        e.currentTarget.value = contentStr;
-                      }}
-                      onKeyPress={(e) => {
-                        e.preventDefault();
-                      }}
-                      fontFamily={'Courier'}
-                      fontSize={'10px'}
-                      style={{ height: '100%' }}
+                      anyData={data}
                     />
                   </Grid>
                 );
