@@ -441,6 +441,11 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
                     }) + (i < items.length - 1 ? '\r\n' : '');
                 });
 
+                const isOnlyVisible = [...data.content]
+                  .filter((c) => Object.hasOwnProperty.call(c, 'attribute'))
+                  .map((c) => c.attribute?.type === 'hidden')
+                  .every((bool) => bool === true);
+
                 return (
                   <Grid
                     item
@@ -452,9 +457,10 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
                       selectAllOnClick
                       keepContentFixed
                       fitHeightAuto={
-                        data &&
-                        data.content.length === 1 &&
-                        data.content[0].element == 'json_array'
+                        (data &&
+                          data.content.length === 1 &&
+                          data.content[0].element == 'json_array') ||
+                        isOnlyVisible
                       }
                       modalRef={modalRef}
                       defaultValue={contentStr}
