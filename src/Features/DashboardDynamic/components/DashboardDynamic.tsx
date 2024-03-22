@@ -59,11 +59,6 @@ const DashboardDynamic: React.FC<
 
   useEffect(() => {
     dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent(response);
-    if (response?.data?.menus)
-      localStorage.setItem(
-        'additional_menu_data',
-        JSON.stringify(response?.data.menus),
-      );
   }, [
     dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent,
     response,

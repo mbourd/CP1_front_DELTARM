@@ -5,6 +5,7 @@ import {
   Action,
   Store,
 } from '@reduxjs/toolkit';
+import { Persistor } from 'redux-persist';
 
 export type UseReduxToolkitType = <T, A extends string>(
   reducerName: string,
@@ -28,6 +29,9 @@ export interface IAppStore {
   getEnhancers: () => any;
   configureStore: () => IAppStore;
   getConfiguredStore: () => Store;
+  persistStore: () => void;
+  getPersistor: () => Persistor | undefined;
+  replaceReducer: (newReducers: Record<string, Reducer<any, Action>>) => void;
 }
 
 export interface IAppReducer {
@@ -42,6 +46,7 @@ export interface IAppReducer {
       | ActionCreatorWithoutPayload<string>
     >,
   ) => IAppReducer;
+  unregisterReducer: (name: string) => IAppReducer;
   getReducers: () => Record<string, Reducer<any>>;
   getActions: (
     reducerName: string,

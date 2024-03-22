@@ -195,20 +195,17 @@ describe('<MainNav />', () => {
 
   it('should have aditional menus if context=contr_perm', function () {
     const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
-      // const {
-      //   dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent,
-      // } = useDashboardDynamicReducer();
+      const {
+        dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent,
+      } = useDashboardDynamicReducer();
 
-      // useEffect(() => {
-      //   dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent({
-      //     data: {
-      //       menus,
-      //     },
-      //   } as any as IDashboard);
-      // }, [dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent]);
       useEffect(() => {
-        localStorage.setItem('additional_menu_data', JSON.stringify(menus));
-      });
+        dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent({
+          data: {
+            menus,
+          },
+        } as any as IDashboard);
+      }, [dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent]);
 
       return <MainNav />;
     };
@@ -236,20 +233,17 @@ describe('<MainNav />', () => {
   });
   it('should NOT have aditional menus if context!=contr_perm', function () {
     const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
-      // const {
-      //   dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent,
-      // } = useDashboardDynamicReducer();
+      const {
+        dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent,
+      } = useDashboardDynamicReducer();
 
-      // useEffect(() => {
-      //   dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent({
-      //     data: {
-      //       menus,
-      //     },
-      //   } as any as IDashboard);
-      // }, [dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent]);
       useEffect(() => {
-        localStorage.setItem('additional_menu_data', JSON.stringify(menus));
-      });
+        dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent({
+          data: {
+            menus,
+          },
+        } as any as IDashboard);
+      }, [dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent]);
 
       return <MainNav />;
     };
@@ -297,20 +291,17 @@ describe('<MainNav />', () => {
       return 0;
     });
     const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
-      // const {
-      //   dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent,
-      // } = useDashboardDynamicReducer();
+      const {
+        dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent,
+      } = useDashboardDynamicReducer();
 
-      // useEffect(() => {
-      //   dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent({
-      //     data: {
-      //       menus: _menus,
-      //     },
-      //   } as any as IDashboard);
-      // }, [dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent]);
       useEffect(() => {
-        localStorage.setItem('additional_menu_data', JSON.stringify(_menus));
-      });
+        dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent({
+          data: {
+            menus: _menus,
+          },
+        } as any as IDashboard);
+      }, [dispatchDashboardDynamicUpdateDataApi_dashboardControlPermanent]);
 
       return <MainNav />;
     };
