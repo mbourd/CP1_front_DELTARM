@@ -1,14 +1,16 @@
-import { appStore as store, appReducer } from 'Packages/ReduxToolkit';
+import { appStore, appReducer } from 'Packages/ReduxToolkit';
 
-store
-  // .setReducers({default: defaultReducer})
-  // .setMiddleWare([...middlewares]);
-  // .setEnhancers(enhancers);
-  .configureStore();
-const appStore = store.getConfiguredStore();
-appReducer.setAppStore(store);
+appReducer.setAppStore(
+  appStore
+    // .setReducers({default: defaultReducer})
+    // .setMiddleWare([...middlewares]);
+    // .setEnhancers(enhancers);
+    .configureStore(),
+);
 
-export type RootState = ReturnType<typeof appStore.getState>;
-export type AppDispatch = typeof appStore.dispatch;
-export { appStore, appReducer };
+const store = appStore.getConfiguredStore();
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+export { appStore, store, appReducer };
 export { useReduxToolkit } from 'Packages/ReduxToolkit';

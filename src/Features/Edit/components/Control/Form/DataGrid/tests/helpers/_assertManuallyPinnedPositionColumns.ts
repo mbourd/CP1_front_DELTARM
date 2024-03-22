@@ -1,4 +1,7 @@
-import { DataGridDetailsColumnType, IApiControl } from 'Features/Edit/types';
+import {
+  IApiControl,
+  DataGridDetailsColumnType,
+} from '../../../../../../types';
 import { getData } from './getData';
 import { _assertPinnedPositionColumns } from './_assertPinnedPositionColumns';
 import { _getRandomNumberBetween } from '../../../../../../../../../cypress/utils';
