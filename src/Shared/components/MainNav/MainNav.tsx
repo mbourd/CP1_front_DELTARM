@@ -139,17 +139,9 @@ export const MainNav: React.FC<
             )}
             {dataSecurity.context === 'contr_perm'
               ? (() => {
-                  let storedLocalMenus = [];
-
-                  if (localStorage.getItem('additional_menu_data'))
-                    storedLocalMenus = JSON.parse(
-                      localStorage.getItem('additional_menu_data') + '' ?? '[]',
-                    );
-
                   const reorderedMenus: DashboardContrPermMenuType[] = [
-                    // ...(stateDashboardDynamic?.dataApi_dashboardControlPermanent
-                    // ?.data.menus ?? []),
-                    ...storedLocalMenus,
+                    ...(stateDashboardDynamic?.dataApi_dashboardControlPermanent
+                      ?.data.menus ?? []),
                   ];
 
                   reorderedMenus.sort((m1, m2) => {

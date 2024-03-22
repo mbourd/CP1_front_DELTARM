@@ -16,6 +16,7 @@
         "endpoint": "/TE/import_file",
         "method": "POST",
         "params": {
+          "deubg_mod": "False",
           "file": "$file",
           "import_mode": "$import_mode"
         }

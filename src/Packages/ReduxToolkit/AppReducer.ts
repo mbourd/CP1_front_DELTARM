@@ -44,9 +44,16 @@ class AppReducer implements IAppReducer {
     this._reducers[name] = reducer;
     this._actions[name] = { ...actions };
 
-    this._appStore
-      .getConfiguredStore()
-      .replaceReducer(combineReducers({ ...this.getReducers() }));
+    this._appStore.replaceReducer({ ...this.getReducers() });
+
+    return this;
+  }
+
+  public unregisterReducer(name: string): this {
+    delete this._reducers[name];
+    delete this._actions[name];
+
+    this._appStore.replaceReducer({ ...this.getReducers() });
 
     return this;
   }
