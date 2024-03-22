@@ -128,6 +128,70 @@ describe('<ModalDynamic />', function () {
       });
   });
 
+  it('should render a loading logo if POST request takes some times', function () {
+    const _data = {
+      ...structuredClone(import_TE_1_1),
+      content: [
+        ...structuredClone(import_TE_1_1.content).filter(
+          (c) => c?.attribute?.mode !== 'single',
+        ),
+        {
+          attribute: {
+            id: 'file',
+            mandatory: true,
+            mode: 'single',
+          },
+          element: 'upload',
+        },
+      ],
+    } as IDataModal;
+    cy.viewport(1920, 1080);
+    cy.mount(
+      <SetupTestsComponents>
+        <ModalDynamic
+          data={_data}
+          setIsModalOpen={function (): void {
+            //
+          }}
+          open={true}
+        />
+      </SetupTestsComponents>,
+    ).waitReactApp();
+
+    cy.intercept(
+      'POST',
+      _data.btn.find((b) => b.action.method === 'POST')?.action.endpoint + '?*',
+      { delay: 3000, statusCode: 200, body: {} },
+    );
+
+    cy.react('ModalDynamic')
+      .find('input[type="file"]')
+      .selectFile(
+        {
+          contents: Cypress.Buffer.from('file contents'),
+          fileName: 'file.txt',
+          mimeType: 'text/plain',
+          lastModified: Date.now(),
+        },
+        { force: true, action: 'drag-drop' },
+      )
+      .then(() => {
+        cy.react('ModalDynamic')
+          .contains(
+            _data.btn.find((b) => b.action.method === 'POST')
+              ?.btn_lib as string,
+          )
+          .realClick()
+          .then(() => {
+            cy.react('ModalDynamic')
+              .react('Button')
+              .eq(_data.btn.findIndex((b) => b.action.method === 'POST'))
+              .react('CircularMetric')
+              .should('exist');
+          });
+      });
+  });
+
   it('should render the error msg if validate fails - import modal TE', function () {
     cy.viewport(1920, 1080);
     cy.mount(
@@ -211,6 +275,12 @@ describe('<ModalDynamic />', function () {
       .invoke('text')
       .then((t) => {
         expect(t).to.be.deep.eq(contentStr);
+      });
+    cy.react('ModalDynamic')
+      .contains(import_TE_1_2_error.btn[0].btn_lib)
+      .realClick()
+      .then(() => {
+        cy.react('ModalDynamic').should('not.exist');
       });
   });
   it('should render textarea - import modal TE 1 2 error (changed format)', function () {
