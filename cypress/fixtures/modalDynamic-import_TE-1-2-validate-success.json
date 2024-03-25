@@ -1,0 +1,63 @@
+{
+  "btn": [
+    {
+      "action": {
+        "endpoint": null,
+        "method": "CANCEL",
+        "params": null
+      },
+      "bg_color": "red",
+      "btn_lib": "Close",
+      "font_color": "white",
+      "hover": "green"
+    },
+    {
+      "action": {
+        "endpoint": "/TE/import_file",
+        "method": "POST",
+        "params": {
+          "ref_uuid": "$ref_uuid"
+        }
+      },
+      "bg_color": "green",
+      "btn_lib": "Import Data",
+      "font_color": "white",
+      "hover": "green"
+    }
+  ],
+  "content": [
+    {
+      "element": "json_array",
+      "format": "{sheet} : {info}",
+      "items": [
+        {
+          "info": "1 rows to import.",
+          "sheet": "Facilities"
+        },
+        {
+          "info": "1 rows to import.",
+          "sheet": "Wells"
+        },
+        {
+          "info": "1 rows to import.",
+          "sheet": "Spare parts"
+        },
+        {
+          "info": "1 rows to import.",
+          "sheet": "Minor works"
+        }
+      ]
+    },
+    {
+      "attribute": {
+        "id": "ref_uuid",
+        "type": "hidden"
+      },
+      "element": "input",
+      "value": "0d58657b-e9a3-4020-80ae-eefb91cdbd95"
+    }
+  ],
+  "subtitle": "File Validated with success !",
+  "target": "modal",
+  "title": ""
+}

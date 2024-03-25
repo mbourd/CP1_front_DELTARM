@@ -21,7 +21,7 @@ import {
   REHYDRATE,
   Persistor,
 } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import storageSession from 'redux-persist/lib/storage/session';
 import LZString from 'lz-string';
 
 class AppStore implements IAppStore {
@@ -33,7 +33,7 @@ class AppStore implements IAppStore {
   private _configuredStore!: Store;
   private _persistConfig: PersistConfig<any> = {
     key: 'root',
-    storage,
+    storage: storageSession,
     transforms: [
       {
         in: (state: any) => LZString.compressToUTF16(JSON.stringify(state)),
@@ -98,7 +98,6 @@ class AppStore implements IAppStore {
         }),
       enhancers: this._enhancers,
     });
-    this.persistStore();
 
     return this;
   }
@@ -112,6 +111,8 @@ class AppStore implements IAppStore {
     this._persistor = persistStore(this._configuredStore);
   }
   public getPersistor() {
+    this.persistStore();
+
     return this._persistor;
   }
 
