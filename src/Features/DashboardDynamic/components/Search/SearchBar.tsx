@@ -61,7 +61,7 @@ export const SearchBar: React.FC<React.PropsWithChildren<IProps>> = ({
       <div className={'buttons-container'}>
         <div className="search-mode-toggle">
           <RadioGroup
-            value={currentOption.lib}
+            value={currentOption?.lib ?? ''}
             row
             onChange={(_, value) => handleChangeOption(value)}
           >
@@ -79,7 +79,7 @@ export const SearchBar: React.FC<React.PropsWithChildren<IProps>> = ({
         </div>
       </div>
       <Paper className={'search-container'} elevation={0}>
-        <Search placeholder={currentOption.placeholder} />
+        <Search placeholder={currentOption?.placeholder ?? ''} />
         {btn_lib && <Button onClick={onSearch}>{btn_lib}</Button>}
       </Paper>
     </SearchBarStyled>
