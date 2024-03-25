@@ -24,6 +24,7 @@ type SetupTestsComponentProps = {
   securityContextValue?: ISecurityProviderContext;
   altReduxStore?: Store;
   altAppStore?: IAppStore;
+  hasReduxPersist?: boolean;
 };
 
 const SetupTestsComponents: React.FC<
@@ -41,33 +42,40 @@ const SetupTestsComponents: React.FC<
     logout: () => undefined,
   },
   altReduxStore,
+  hasReduxPersist,
   altAppStore,
 }) => {
-  return (
-    <Provider store={altReduxStore ?? store}>
+  let content = (
+    <AppContext.Provider value={appContextValue}>
+      <SecurityContext.Provider value={securityContextValue}>
+        <main id="main-content" style={style}>
+          <RecoilRoot>
+            <BrowserRouter>
+              <ThemeProvider theme={theme ?? BPITheme}>
+                <BPIGlobalStyle />
+                {children}
+              </ThemeProvider>
+            </BrowserRouter>
+          </RecoilRoot>
+        </main>
+      </SecurityContext.Provider>
+    </AppContext.Provider>
+  );
+
+  if (hasReduxPersist) {
+    content = (
       <PersistGate
         loading={null}
         persistor={
           altAppStore?.getPersistor() ?? (appStore.getPersistor() as Persistor)
         }
       >
-        <AppContext.Provider value={appContextValue}>
-          <SecurityContext.Provider value={securityContextValue}>
-            <main id="main-content" style={style}>
-              <RecoilRoot>
-                <BrowserRouter>
-                  <ThemeProvider theme={theme ?? BPITheme}>
-                    <BPIGlobalStyle />
-                    {children}
-                  </ThemeProvider>
-                </BrowserRouter>
-              </RecoilRoot>
-            </main>
-          </SecurityContext.Provider>
-        </AppContext.Provider>
+        {content}
       </PersistGate>
-    </Provider>
-  );
+    );
+  }
+
+  return <Provider store={altReduxStore ?? store}>{content}</Provider>;
 };
 
 export { SetupTestsComponents };

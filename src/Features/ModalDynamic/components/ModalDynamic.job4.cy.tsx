@@ -11,11 +11,13 @@ import { ModalDynamic } from './ModalDynamic';
 import { IDataModal, IElementModal } from './types';
 import { _escapeForRegExp } from '../../../../cypress/utils';
 import { DownloadFile } from '../../../Shared/components/UploadList/UploadList.style';
+import { IButtons } from '../../DashboardDynamic/components/types';
 
 describe('<ModalDynamic />', function () {
   let import_TE_1_1: IDataModal;
   let import_TE_1_2_error: IDataModal;
   let import_TE_1_2_error_: IDataModal;
+  let import_TE_1_2_success_validate: IDataModal;
 
   before(() => {
     cy.fixture('modalDynamic-import_TE-1-1.json').then((d) => {
@@ -26,6 +28,9 @@ describe('<ModalDynamic />', function () {
     });
     cy.fixture('modalDynamic-import_TE-1-2-error_.json').then((d) => {
       import_TE_1_2_error_ = d;
+    });
+    cy.fixture('modalDynamic-import_TE-1-2-validate-success.json').then((d) => {
+      import_TE_1_2_success_validate = d;
     });
   });
 
@@ -128,7 +133,7 @@ describe('<ModalDynamic />', function () {
       });
   });
 
-  it('should render a loading logo if POST request takes some times', function () {
+  it('should render a loading logo if POST request takes some times (valiate) - import modal TE 1 1', function () {
     const _data = {
       ...structuredClone(import_TE_1_1),
       content: [
@@ -161,7 +166,7 @@ describe('<ModalDynamic />', function () {
     cy.intercept(
       'POST',
       _data.btn.find((b) => b.action.method === 'POST')?.action.endpoint + '?*',
-      { delay: 3000, statusCode: 200, body: {} },
+      { delay: 500, statusCode: 200, body: {} },
     );
 
     cy.react('ModalDynamic')
@@ -192,7 +197,7 @@ describe('<ModalDynamic />', function () {
       });
   });
 
-  it('should render the error msg if validate fails - import modal TE', function () {
+  it('should render the error msg if validate fails (valiate) - import modal TE 1 1', function () {
     cy.viewport(1920, 1080);
     cy.mount(
       <SetupTestsComponents>
@@ -212,8 +217,11 @@ describe('<ModalDynamic />', function () {
       error_msg:
         "An error occured during the UUID creation process : unsupported operand type(s) for /: 'str' and 'int'",
     };
-    const btn = import_TE_1_1.btn.find((b) => b.action.method === 'POST');
+    const btn = import_TE_1_1.btn.find(
+      (b) => b.action.method === 'POST',
+    ) as IButtons;
     let reqCount = 0;
+    btn.action.endpoint = btn?.action.endpoint + 'bis';
 
     cy.intercept('POST', btn?.action.endpoint + '?*', (req) => {
       reqCount++;
@@ -231,7 +239,7 @@ describe('<ModalDynamic />', function () {
         },
         { force: true, action: 'drag-drop' },
       );
-    cy.contains(btn?.btn_lib as string).realClick();
+    cy.contains(btn?.btn_lib as string).click();
     cy.react('ModalDynamic').formErrorShouldBeVisible([
       _escapeForRegExp(resp.error_msg) as string,
     ]);
@@ -240,7 +248,7 @@ describe('<ModalDynamic />', function () {
     });
   });
 
-  it('should render textarea - import modal TE 1 2 error', function () {
+  it('should render textarea (valiate) - import modal TE 1 2 error', function () {
     let contentStr = '';
 
     for (const element of import_TE_1_2_error.content) {
@@ -283,7 +291,7 @@ describe('<ModalDynamic />', function () {
         cy.react('ModalDynamic').should('not.exist');
       });
   });
-  it('should render textarea - import modal TE 1 2 error (changed format)', function () {
+  it('should render textarea (valiate) - import modal TE 1 2 error (changed format)', function () {
     let contentStr = '';
 
     for (const element of import_TE_1_2_error_.content) {
@@ -320,4 +328,82 @@ describe('<ModalDynamic />', function () {
         expect(t).to.be.deep.eq(contentStr);
       });
   });
+
+  //// TODO: workflow import modal TE
+  // it('should render textarea (validate) - import modal TE 1 2 success', function () {
+  //   let contentStr = '';
+
+  //   for (const element of import_TE_1_2_success_validate.content) {
+  //     const format = (element as IElementModal).format;
+  //     const items = (element as IElementModal).items;
+
+  //     if (items)
+  //       items.forEach((item, i) => {
+  //         contentStr +=
+  //           format?.replace(/{([^}]*)}/g, (match, key) => {
+  //             return item[key] || '';
+  //           }) + (i < items.length - 1 ? '\r\n' : '');
+  //       });
+  //   }
+
+  //   const _data = {
+  //     ...structuredClone(import_TE_1_1),
+  //     content: [
+  //       ...structuredClone(import_TE_1_1.content).filter(
+  //         (c) => c?.attribute?.mode !== 'single',
+  //       ),
+  //       {
+  //         attribute: {
+  //           id: 'file',
+  //           mandatory: true,
+  //           mode: 'single',
+  //         },
+  //         element: 'upload',
+  //       },
+  //     ],
+  //   } as IDataModal;
+  //   const btn = import_TE_1_1.btn.find(
+  //     (b) => b.action.method === 'POST',
+  //   ) as IButtons;
+
+  //   cy.viewport(1920, 1080);
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <ModalDynamic
+  //         data={_data}
+  //         setIsModalOpen={function (): void {
+  //           //
+  //         }}
+  //         open={true}
+  //       />
+  //     </SetupTestsComponents>,
+  //   ).waitReactApp();
+
+  //   cy.intercept('POST', btn?.action.endpoint + '?*', {
+  //     statusCode: 200,
+  //     body: import_TE_1_2_success_validate,
+  //   }).as('reqValidate');
+
+  //   cy.react('ModalDynamic')
+  //     .find('input[type="file"]')
+  //     .selectFile(
+  //       {
+  //         contents: Cypress.Buffer.from('file contents'),
+  //         fileName: 'file.txt',
+  //         mimeType: 'text/plain',
+  //         lastModified: Date.now(),
+  //       },
+  //       { force: true, action: 'drag-drop' },
+  //     );
+  //   cy.contains(btn?.btn_lib as string).click();
+  //   cy.wait('@reqValidate').then(() => {
+  //     cy.react('ModalDynamic').find('textarea').should('exist');
+  //     cy.react('ModalDynamic')
+  //       .find('textarea')
+  //       .invoke('text')
+  //       .then((t) => {
+  //         expect(t).to.be.deep.eq(contentStr);
+  //       });
+  //   });
+  // });
 });
