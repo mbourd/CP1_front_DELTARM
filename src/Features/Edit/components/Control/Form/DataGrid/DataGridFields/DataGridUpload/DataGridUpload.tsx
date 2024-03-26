@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { DataGridUploadStyled } from './DataGridUpload.style';
-import { Fab } from '@material-ui/core';
-import { CloudUpload } from '@material-ui/icons';
+import { Fab } from '@mui/material';
+import { CloudUpload } from '@mui/icons-material';
 import { FormError } from 'Shared/components';
 import { IUser, security } from 'Services';
 import { Button, Container } from '@mui/material';

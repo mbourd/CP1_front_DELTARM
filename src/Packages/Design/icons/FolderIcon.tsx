@@ -1,5 +1,5 @@
 import React from 'react';
-import { SvgIcon, SvgIconProps } from '@material-ui/core';
+import { SvgIcon, SvgIconProps } from '@mui/material';
 
 export const FolderIcon: React.FC<React.PropsWithChildren<SvgIconProps>> = (
   props,

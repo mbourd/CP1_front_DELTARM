@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card as MUICard } from '@material-ui/core';
+import { Card as MUICard } from '@mui/material';
 import { CardStyled } from './Card.style';
 import { Body } from './Body/Body';
 import { Actions } from './Actions/Actions';

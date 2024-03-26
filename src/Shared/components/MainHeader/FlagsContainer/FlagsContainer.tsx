@@ -24,7 +24,7 @@ export const FlagsContainer: React.FC<
         <span>
           <FranceFlagIcon
             className={'flags'}
-            fontSize={lang === 'fr' ? 'default' : 'inherit'}
+            fontSize={lang === 'fr' ? 'medium' : 'inherit'}
             onClick={() => toggleLanguage('fr')}
           />
         </span>
@@ -34,7 +34,7 @@ export const FlagsContainer: React.FC<
         <span>
           <UnitedStatesFlagIcon
             className={'flags'}
-            fontSize={lang === 'en' ? 'default' : 'inherit'}
+            fontSize={lang === 'en' ? 'medium' : 'inherit'}
             onClick={() => toggleLanguage('en')}
           />
         </span>

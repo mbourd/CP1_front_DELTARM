@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { SearchBarStyled } from './SearchBar.style';
-import { FormControlLabel, Paper, Radio, RadioGroup } from '@material-ui/core';
+import { FormControlLabel, Paper, Radio, RadioGroup } from '@mui/material';
 import { Button, FormError } from 'Shared/components';
 import { Search } from 'Features/Manage/components/Search/Search';
 import { ISearchBarOptions } from '../types';

@@ -1,8 +1,7 @@
-import { ReferenceObject } from 'popper.js';
-import { PopperPlacementType } from '@material-ui/core';
+import { PopperPlacementType } from '@mui/material';
 
 export interface IPopper {
-  element: null | ReferenceObject | (() => ReferenceObject);
+  element: any;
   $border?: string;
   $shadow?: string;
   /**

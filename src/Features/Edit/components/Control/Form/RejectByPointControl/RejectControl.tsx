@@ -8,7 +8,7 @@ import {
   FileCommentHeaderStyled,
   FileCommentStyled,
 } from '../../../../../Comments/File/FileComment.style';
-import { Card } from '@material-ui/core';
+import { Card } from '@mui/material';
 import { CommentIcon } from '../../../../../../Packages/Design';
 import { router } from '../../../../../../Packages/Router';
 import { FileCommentRejectionFooter } from './FileCommentRejection/FileCommentRejectionFooter';

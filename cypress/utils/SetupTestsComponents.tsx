@@ -16,6 +16,7 @@ import {
 import { BrowserRouter } from 'react-router-dom';
 import { Store } from '@reduxjs/toolkit';
 import { IAppStore } from '../../src/Packages/ReduxToolkit/types';
+import { StyledEngineProvider } from '@mui/material';
 
 type SetupTestsComponentProps = {
   theme?: ITheme;
@@ -51,10 +52,12 @@ const SetupTestsComponents: React.FC<
         <main id="main-content" style={style}>
           <RecoilRoot>
             <BrowserRouter>
-              <ThemeProvider theme={theme ?? BPITheme}>
-                <BPIGlobalStyle />
-                {children}
-              </ThemeProvider>
+              <StyledEngineProvider injectFirst>
+                <ThemeProvider theme={theme ?? BPITheme}>
+                  <BPIGlobalStyle />
+                  {children}
+                </ThemeProvider>
+              </StyledEngineProvider>
             </BrowserRouter>
           </RecoilRoot>
         </main>
