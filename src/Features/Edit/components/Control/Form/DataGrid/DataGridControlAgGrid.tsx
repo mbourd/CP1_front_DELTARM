@@ -78,6 +78,7 @@ interface IProps {
   extraStyles?: React.CSSProperties;
   heightGrid?: string | number;
   hasPagination?: boolean;
+  suppressRowVirtualisation?: boolean;
 }
 
 const CustomTooltip = (props: any & { tooltip: string }, g) => {
@@ -141,6 +142,7 @@ export const DataGridControlAgGrid: React.FC<
   extraStyles = {},
   heightGrid,
   hasPagination = true,
+  suppressRowVirtualisation = false,
 }) => {
   const [canSendApi, setCanSendApi] = useState<boolean>(true);
   const [errorMessageAdd, setErrorMessageAdd] = useState<string>('');
@@ -212,7 +214,7 @@ export const DataGridControlAgGrid: React.FC<
         color !== null
           ? color
           : '',
-      ...(g?.cellStyle ?? {}),
+      ...(g?.cellStyles ?? {}),
     };
   };
 
@@ -362,6 +364,7 @@ export const DataGridControlAgGrid: React.FC<
     delete cl.border_right;
     delete cl.borderRightColor;
     delete cl.borderRightWidth;
+    delete cl.cellStyles;
     delete cl.col_header_display_tooltip;
     delete cl.col_header_tooltip;
     delete cl.currency_symbol;
@@ -1831,6 +1834,7 @@ export const DataGridControlAgGrid: React.FC<
           suppressRowClickSelection={suppressRowClickSelection}
           suppressAnimationFrame={suppressAnimationFrame}
           suppressCellFocus={suppressCellFocus}
+          suppressRowVirtualisation={suppressRowVirtualisation}
         />
       </AgDataGridStyle>
       {/* </DataGridControlStyled> */}
