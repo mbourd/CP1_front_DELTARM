@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { BodyStyled } from './Body.style';
 import { ICard } from '../types';
 import { FormLabel, FormText } from 'Shared/components';

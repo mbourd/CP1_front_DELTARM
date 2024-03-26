@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { RowStyled } from './Row.style';
 import { ICardBodyRow } from '../../types';

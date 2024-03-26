@@ -38,7 +38,6 @@ export const Popper: React.FC<React.PropsWithChildren<PopperProps>> = ({
       anchorEl={element}
       placement={placement}
       style={{ zIndex: zIndex }}
-      placeholder={''}
     >
       {onClickAway ? (
         <ClickAwayListener onClickAway={onClickAway}>

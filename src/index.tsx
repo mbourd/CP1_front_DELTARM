@@ -12,6 +12,7 @@ import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
 import { BPIGlobalStyle, BPITheme } from 'Styles';
 import { AppMaintenance } from './AppMaintenance';
+import { StyledEngineProvider } from '@mui/material';
 
 const maintenanceMode = false;
 
@@ -45,16 +46,18 @@ if (inIframe()) {
 root.render(
   <RecoilRoot>
     <Router>
-      <ThemeProvider theme={BPITheme}>
-        <BPIGlobalStyle />
-        <Suspense fallback={<PageLoader text={'...'} />}>
-          {maintenanceMode ? (
-            <AppMaintenance />
-          ) : (
-            <App isEmbedded={isEmbedded} />
-          )}
-        </Suspense>
-      </ThemeProvider>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={BPITheme}>
+          <BPIGlobalStyle />
+          <Suspense fallback={<PageLoader text={'...'} />}>
+            {maintenanceMode ? (
+              <AppMaintenance />
+            ) : (
+              <App isEmbedded={isEmbedded} />
+            )}
+          </Suspense>
+        </ThemeProvider>
+      </StyledEngineProvider>
     </Router>
   </RecoilRoot>,
 );

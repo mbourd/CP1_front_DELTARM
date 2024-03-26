@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { IApiComplianceFields } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
 import { FinancialComplianceStyled } from './FinancialCompliance.style';

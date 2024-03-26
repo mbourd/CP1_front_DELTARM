@@ -1,4 +1,4 @@
-import { CloudUpload } from '@material-ui/icons';
+import { CloudUpload } from '@mui/icons-material';
 import React, { FC, useState } from 'react';
 
 const AttachmentCellRenderer: FC<React.PropsWithChildren<any>> = ({

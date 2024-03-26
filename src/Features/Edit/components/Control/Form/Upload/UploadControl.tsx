@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { UploadControlStyled } from './UploadControl.style';
-import { Grid, Fab } from '@material-ui/core';
-import { CloudUpload } from '@material-ui/icons';
+import { Grid, Fab } from '@mui/material';
+import { CloudUpload } from '@mui/icons-material';
 import { IApiControl, IUploadDetail } from 'Features/Edit/types';
 import { FormError } from 'Shared/components';
 import { IUser, security } from 'Services';
@@ -197,10 +197,11 @@ export const UploadControl: React.FC<React.PropsWithChildren<IProps>> = ({
                 ref={(el) => (inputFileRef.current = el)}
               />
               <Fab
-                color="secondary"
+                color="error"
                 size="small"
                 component="span"
                 aria-label="upload"
+                style={{ position: 'inherit' }}
               >
                 <CloudUpload color={'action'} />
               </Fab>

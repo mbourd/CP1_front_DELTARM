@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { IApiControl } from 'Features/Edit/types';
 import DOMPurify from 'dompurify';
 import { InfoBlockControlStyled } from './InfoBlockControl.style';
