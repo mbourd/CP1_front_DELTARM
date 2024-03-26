@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Box, Grid, List } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+import { Box, Grid, List } from '@mui/material';
+import { Alert } from '@mui/material';
 import { EditHeaderStyled, EditStyled } from './Edit.style';
 import {
   isEmpty,
@@ -126,7 +126,7 @@ export const EditValidation: React.FC<React.PropsWithChildren<IProps>> = ({
                 <ContentBody />
                 {data.sectionFooter && (
                   <Box paddingY={5}>
-                    <Alert variant="outlined" severity="info">
+                    <Alert variant="standard" severity="info">
                       <PreWrapStyled>
                         {data.sectionFooter.message}
                       </PreWrapStyled>

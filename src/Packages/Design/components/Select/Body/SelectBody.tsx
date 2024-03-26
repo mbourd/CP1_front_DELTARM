@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { ListItem } from '@material-ui/core';
+import { ListItem } from '@mui/material';
 import { SelectBodyStyled } from './SelectBody.style';
 import { Radio } from '../../Radio';
 import { SelectContext } from '../SelectContext';

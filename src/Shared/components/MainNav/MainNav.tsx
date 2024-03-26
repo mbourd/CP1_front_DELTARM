@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import version from '../../../build-version.json';
-import { List, ListItem, ListItemText } from '@material-ui/core';
+import { List, ListItem, ListItemText } from '@mui/material';
 import {
   FolderIcon,
   FolderInfoIcon,

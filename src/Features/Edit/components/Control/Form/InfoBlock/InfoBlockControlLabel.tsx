@@ -1,9 +1,10 @@
 import React, { SetStateAction } from 'react';
-import { Grid, makeStyles, Theme } from '@material-ui/core';
+import { Grid, Theme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { BPITooltip, FormLabel } from 'Shared/components';
 import { HelpIcon, theme } from 'Styles';
 import { IApiControl } from 'Features/Edit/types';
-import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
+import { ArrowDownward, ArrowUpward } from '@mui/icons-material';
 
 interface IProps {
   control: IApiControl;

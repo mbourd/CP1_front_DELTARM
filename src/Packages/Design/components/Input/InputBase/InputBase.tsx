@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { TextField as MUIInputBase } from '@material-ui/core';
+import { TextField as MUIInputBase } from '@mui/material';
 import { InputBaseStyled, useStyles } from './InputBase.style';
 import { useTheme } from 'Styles';
 import { IInputBase } from '../types';
@@ -76,6 +76,7 @@ export const InputBase: React.FC<React.PropsWithChildren<IInputBase>> = ({
         )}
       </div>
       <MUIInputBase
+        variant="standard"
         style={style}
         inputRef={inputRef ?? ref}
         classes={MUIInputBaseClasse}

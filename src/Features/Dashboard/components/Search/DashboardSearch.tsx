@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { DashboardSearchStyled } from './DashboardSearch.style';
-import { FormControlLabel, Paper, Radio, RadioGroup } from '@material-ui/core';
+import { FormControlLabel, Paper, Radio, RadioGroup } from '@mui/material';
 import { Button, FormError } from 'Shared/components';
 import { Search } from 'Features/Manage/components/Search/Search';
 import { SearchModal } from 'Features/Manage/components/Search/Modal/SearchModal';

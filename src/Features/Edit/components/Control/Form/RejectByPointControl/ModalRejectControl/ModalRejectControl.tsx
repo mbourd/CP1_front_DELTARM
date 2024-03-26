@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { Button, Modal } from '../../../../../../../Packages/Design/components';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { FormControlStyled } from '../../../Display/FormControl.style';
 import { SearchModalFooterStyled } from '../../../../../../Manage/components/Search/Modal/SearchModal.style';
 import { HeadingTwo } from '../../../../../../../Shared/components';

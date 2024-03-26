@@ -1,5 +1,5 @@
 import React from 'react';
-import { Lock } from '@material-ui/icons';
+import { Lock } from '@mui/icons-material';
 import { IInputBase } from './types';
 import { InputBase } from './InputBase';
 
