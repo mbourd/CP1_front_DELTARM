@@ -23,7 +23,7 @@ const TextAreaModalDynamic: React.FC<TextAreaModalDynamicType> = ({
       const modalContent = modalRef.current?.querySelector('._ModalContent');
       const modalContentHeight = modalContent?.clientHeight ?? 0;
 
-      setNumRows(Math.floor(modalContentHeight / 10) - 17);
+      setNumRows(Math.floor(modalContentHeight / 10) - 18);
     }
   }, [modalRef]);
   useEffect(() => {
