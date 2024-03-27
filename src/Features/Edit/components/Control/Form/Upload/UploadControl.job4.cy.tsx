@@ -3,7 +3,7 @@
 /// <reference types="../../../../../../../cypress/support/component" />
 
 // NOTE: Run CLI:
-// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/Upload/UploadControl.cy.tsx"
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/Upload/UploadControl.job4.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
@@ -186,5 +186,51 @@ describe('<UploadControl />', () => {
       .find('span')
       .eq(0)
       .should('have.text', title);
+  });
+
+  it('should attach file and make only one request at a time', function () {
+    let requestCount = 0;
+    const title = 'hello world';
+    const _control: IApiControl = {
+      ...structuredClone(control),
+      control_title: title,
+      editable: true,
+    };
+    cy.mount(
+      <SetupTestsComponents>
+        <UploadControl control={_control} fileId={''} context={'edit'} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+
+    cy.intercept('POST', '/control/set_value?*', (req) => {
+      requestCount++;
+      req.reply({});
+    }).as('requestUploadFile');
+
+    // cy.fixture('test_to_upload1.txt').then((content) => {
+    // cy.react('UploadControl').find('input[type="file"]').attachFile(
+    //   {
+    //     fileContent: content.toString(),
+    //     fileName: 'test_to_upload1.txt',
+    //     mimeType: 'text/plain',
+    //   },
+    //   { subjectType: 'drag-n-drop', force: true },
+    // );
+    cy.react('UploadControl')
+      .find('input[type="file"]')
+      .selectFile(
+        {
+          contents: Cypress.Buffer.from('file contents'),
+          fileName: 'file.txt',
+          mimeType: 'text/plain',
+          lastModified: Date.now(),
+        },
+        { force: true, action: 'drag-drop' },
+      );
+    cy.wait(1000).then(() => {
+      expect(requestCount).to.be.eq(1);
+    });
+    // });
   });
 });

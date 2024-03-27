@@ -20,12 +20,14 @@ type useActionButtonPropsType = {
   jwt: string;
   setIsModalOpen?: React.Dispatch<SetStateAction<boolean>>;
   setErrorMessage?: React.Dispatch<SetStateAction<string | null>>;
+  setIsDisabledModalBtns?: React.Dispatch<SetStateAction<boolean>>;
 };
 
 export const useActionButton = ({
   jwt,
   setIsModalOpen,
   setErrorMessage,
+  setIsDisabledModalBtns,
 }: useActionButtonPropsType) => {
   const setPageData = useSetRecoilState(data);
   const setModalData = useSetRecoilState(modalData);
@@ -58,6 +60,9 @@ export const useActionButton = ({
             }
 
             return;
+          case 'fixed_modal':
+            setModalData(data);
+            if (setIsModalOpen) setIsModalOpen(true);
         }
         switch (data?.origin_fonction_callback) {
           case 'delete_row':
@@ -123,43 +128,156 @@ export const useActionButton = ({
 
           return;
         case 'POST':
-          axios
-            .post(
-              `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}${
-                action?.endpoint
-              }${queryString}`,
-              { ...action?.params, ...extraData },
-              {
-                headers: {
-                  Authorization: jwt,
-                  'Content-type': 'multipart/form-data',
-                },
-              },
+          setIsDisabledModalBtns && setIsDisabledModalBtns(false);
+          if (
+            action?.params?.file &&
+            (action?.params?.file as any as any[]).every(
+              (f) => f instanceof File,
             )
-            .then(async (response) => {
-              // console.dir(response);
-              dispatchActionButton(response.data);
-            })
-            .catch(async (error: AxiosError<any>) => {
-              if (error.response) {
-                if (setErrorMessage && error.response.status >= 300)
-                  setErrorMessage(error.response.data?.error_msg);
+          ) {
+            const files = action?.params?.file as any as File[];
+            let errMsg = '';
 
-                dispatchActionButton(error.response.data);
+            files.forEach((f) => {
+              setIsDisabledModalBtns && setIsDisabledModalBtns(true);
+              const qS =
+                '?' +
+                // @ts-ignore
+                Object.keys(action.params)
+                  .map((key) => {
+                    if (action?.params) {
+                      const isStr = typeof action.params[key] === 'string';
 
-                return;
-              }
-              if (error) {
-                if (setErrorMessage)
-                  setErrorMessage(
-                    typeof error === 'string'
-                      ? error
-                      : 'Erreur lors de la requête',
-                  );
+                      return (
+                        encodeURIComponent(key) +
+                        '=' +
+                        encodeURIComponent(
+                          isStr
+                            ? action.params[key]
+                            : (action.params[key] as any as any[])?.every(
+                                  (ff) => ff instanceof File,
+                                )
+                              ? f.name.replace('#', ' ')
+                              : action.params[key],
+                        )
+                      );
+                    }
 
-                dispatchActionButton(genericErrorsData);
-              }
+                    return;
+                  })
+                  .join('&');
+              const formData = new FormData();
+
+              formData.append('file', f);
+              formData.append('file_name', f.name);
+              axios
+                .post(
+                  `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}${
+                    action?.endpoint
+                  }${qS}`,
+                  formData,
+                  {
+                    headers: {
+                      Authorization: jwt,
+                      'Content-type': 'multipart/form-data',
+                    },
+                  },
+                )
+                .then((response) => {
+                  if (callbackResponseConfirmation)
+                    callbackResponseConfirmation();
+                  setModalData(response.data);
+                  setIsDisabledModalBtns && setIsDisabledModalBtns(false);
+                })
+                .catch((err: AxiosError<any>) => {
+                  if (callbackResponseConfirmation)
+                    callbackResponseConfirmation();
+                  setIsDisabledModalBtns && setIsDisabledModalBtns(false);
+
+                  if (err?.response?.status === 400) {
+                    if (setErrorMessage)
+                      setErrorMessage(
+                        err?.response?.data?.error_msg +
+                          ' code: ' +
+                          err?.response?.data?.error_code,
+                      );
+
+                    return;
+                  }
+                  if (err?.response?.status === 409) {
+                    setModalData(err?.response?.data);
+
+                    return;
+                  }
+                  if (setErrorMessage) {
+                    errMsg =
+                      ' ' +
+                      (err?.response?.data?.error_msg ??
+                        'Erreur lors de la requête');
+                    setErrorMessage(errMsg);
+                  }
+                });
             });
+          } else {
+            setIsDisabledModalBtns && setIsDisabledModalBtns(true);
+
+            axios
+              .post(
+                `${getEnv('API_PROTOCOL')}://${getEnv('API_HOST')}${
+                  action?.endpoint
+                }${queryString}`,
+                { ...action?.params, ...extraData },
+                {
+                  headers: {
+                    Authorization: jwt,
+                    'Content-type': 'multipart/form-data',
+                  },
+                },
+              )
+              .then(async (response) => {
+                if (
+                  response.data?.data === 'ok' &&
+                  response.config.url?.includes('/import_file?')
+                )
+                  setIsModalOpen && setIsModalOpen(false);
+                setIsDisabledModalBtns && setIsDisabledModalBtns(false);
+                dispatchActionButton(response.data);
+              })
+              .catch(async (error: AxiosError<any>) => {
+                setIsDisabledModalBtns && setIsDisabledModalBtns(false);
+
+                if (error.response) {
+                  if (setErrorMessage && error.response.status >= 300)
+                    setErrorMessage(error.response.data?.error_msg);
+
+                  // REVIEW: maybe to remove
+                  if (
+                    error.response.status === 400 &&
+                    error.response.config.url?.includes('/import_file?') &&
+                    !error.response.data?.target
+                    // error.response.data?.target !== 'modal' ||
+                    // error.response.data?.target !== 'fixed_modal'
+                  ) {
+                    setModalData(error.response.data);
+                    setIsModalOpen && setIsModalOpen(true);
+                  }
+
+                  dispatchActionButton(error.response.data);
+
+                  return;
+                }
+                if (error) {
+                  if (setErrorMessage)
+                    setErrorMessage(
+                      typeof error === 'string'
+                        ? error
+                        : 'Erreur lors de la requête',
+                    );
+
+                  dispatchActionButton(genericErrorsData);
+                }
+              });
+          }
 
           return;
         case 'DELETE':
@@ -227,7 +345,14 @@ export const useActionButton = ({
           return;
       }
     },
-    [jwt, setPageData, setModalData, setIsModalOpen, setErrorMessage],
+    [
+      setPageData,
+      setIsModalOpen,
+      setModalData,
+      setErrorMessage,
+      jwt,
+      setIsDisabledModalBtns,
+    ],
   );
 
   return { actionButton, data, modalData };

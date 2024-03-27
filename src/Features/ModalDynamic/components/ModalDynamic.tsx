@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo, useState } from 'react';
+import React, { FC, useCallback, useMemo, useRef, useState } from 'react';
 import {
   Button,
   FormError,
@@ -32,33 +32,50 @@ import { InputModalDynamic } from './InputModalDynamic/InputModalDynamic';
 import { SelectModalDynamic } from './SelectModalDynamic/SelectModalDynamic';
 import { DatePickerModalDynamic } from './DatePickerModalDynamic/DatePickerModalDynamic';
 import { security } from '../../../Services';
+import { UploadFileModalDynamic } from './UploadFileModalDynamic/UploadFileModalDynamic';
+import { CircularMetric } from 'Features/DashboardDynamic/components/Metrics/CircularMetric/CircularMetric';
+import { TextAreaModalDynamic } from './TextAreaModalDynamic/TextAreaModalDynamic';
 
 export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
   open,
   setIsModalOpen,
   data,
 }): React.ReactElement => {
+  const modalRef = useRef<HTMLDivElement>(null);
   // const [trans] = useTrans('Manage');
   const { user } = useSecurity();
   const jwt = user.getJwt();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const { actionButton } = useActionButton({
-    jwt,
-    setIsModalOpen,
-    setErrorMessage,
-  });
   const defaultQueries = useMemo<Record<string, string>>(() => {
     return {};
   }, []);
   const user_language: any = security.decodeJwtToken(jwt ? jwt : '');
+  const canClose = useMemo(
+    () => data?.target !== 'fixed_modal',
+    [data?.target],
+  );
+  const [isDisabledModalBtns, setIsDisabledModalBtns] = useState(false);
+  const { actionButton } = useActionButton({
+    jwt,
+    setIsModalOpen,
+    setErrorMessage,
+    setIsDisabledModalBtns,
+  });
+  // const [callbackResponseConfirmation, setCallbackResponseConfirmation] =
+  //   useState((...p) => undefined);
+
+  // useEffect(() => {
+  //   if (data?.callbackResponseConfirmation)
+  //     setCallbackResponseConfirmation(data.callbackResponseConfirmation);
+  // }, [data?.callbackResponseConfirmation]);
 
   const footer = (
     <ModalDynamicFooterStyled>
       <Grid container spacing={0.5}>
         <Grid item xs={12}>
-          <FormError className={'_Message'}>
-            {errorMessage ? errorMessage : ' '}
-          </FormError>
+          {errorMessage && (
+            <FormError className={'_Message'}>{errorMessage}</FormError>
+          )}
         </Grid>
         <Grid
           item
@@ -66,19 +83,35 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
           style={{ display: 'flex', justifyContent: 'flex-end' }}
         >
           {data?.btn?.map((btn, index) => {
+            const callback: any = data?.callbackResponseConfirmation;
+
             return (
               <Button
                 key={index}
-                onClick={() =>
+                disabled={isDisabledModalBtns}
+                onClick={() => {
                   handleCLickActionsBeforeSendToActionButtons(
                     btn.action,
                     data?.__extraData,
-                    data?.callbackResponseConfirmation,
-                  )
-                }
+                    callback,
+                  );
+                }}
                 style={{ backgroundColor: btn.bg_color }}
               >
-                {btn.btn_lib}
+                {data?.target === 'fixed_modal' &&
+                isDisabledModalBtns &&
+                (btn.action.method === 'POST' ||
+                  btn.action.method === 'GET') ? (
+                  <CircularMetric
+                    variant="indeterminate"
+                    value={0}
+                    hint={''}
+                    style={{ color: 'white' }}
+                    size={23}
+                  />
+                ) : (
+                  btn.btn_lib
+                )}
               </Button>
             );
           })}
@@ -108,6 +141,12 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
         const keys = Object.keys(action.params);
         const params = { ...getValues(keys) };
         let errorMandatory = false;
+
+        keys.forEach((v) => {
+          if (!action?.params?.[v].match(/^\$/) && params?.[v] === undefined) {
+            params[v] = action?.params?.[v] ?? '';
+          }
+        });
 
         data?.content.map((value) => {
           keys.map((key) => {
@@ -149,11 +188,14 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
 
   return (
     <Modal
+      ref={modalRef}
       open={open}
-      onClose={() => setIsModalOpen(false)}
+      onClose={() => (canClose ? setIsModalOpen(false) : null)}
       footer={footer}
+      minHeight={'444px'}
       maxHeight={'720px'}
-      height={'50%'}
+      height={'66%'}
+      closable={canClose}
     >
       <Heading>{data?.title}</Heading>
       <HeadingTwo>{data?.subtitle}</HeadingTwo>
@@ -163,13 +205,26 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
             display: 'flex',
             justifyContent: 'center',
             height: '130px',
-            marginBottom: '15px',
+            marginBottom: '20px',
+            marginTop: '10px',
           }}
         >
           <img src={data.img} alt={'modal-image'} />
         </Container>
       )}
-      <Grid container spacing={1}>
+      <Grid
+        container
+        spacing={1}
+        {...(data?.target === 'fixed_modal'
+          ? {
+              style: {
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              },
+            }
+          : {})}
+      >
         {data?.content?.map(
           (
             element: IElementModal | IElementPModal | IElementTableModal,
@@ -183,6 +238,9 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
                       dangerouslySetInnerHTML={{
                         __html: element.value as string,
                       }}
+                      {...(data?.target === 'fixed_modal'
+                        ? { style: { textAlign: 'center' } }
+                        : {})}
                     ></p>
                   </Grid>
                 );
@@ -340,6 +398,73 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
                           register={register}
                         />
                       )}
+                    />
+                  </Grid>
+                );
+              }
+              case 'upload': {
+                const keyField: Record<string, string> = {
+                  [element.attribute.id]: element?.value
+                    ? (element.value as string)
+                    : '',
+                };
+                Object.assign(defaultQueries, keyField);
+
+                return (
+                  <Grid item xs={6} md={6}>
+                    <Controller
+                      defaultValue={!element?.value}
+                      control={control}
+                      name={element.attribute.id}
+                      rules={{ required: element?.attribute?.mandatory }}
+                      render={() => (
+                        <UploadFileModalDynamic
+                          element={{ ...element, editable: true }}
+                          index={index}
+                          handleChangeValue={handleChangeValue}
+                          register={register}
+                        />
+                      )}
+                    />
+                  </Grid>
+                );
+              }
+              case 'json_array': {
+                const format = element.format;
+                const items = (element as IElementModal).items;
+                let contentStr = '';
+
+                items.forEach((item, i) => {
+                  contentStr +=
+                    format?.replace(/{([^}]*)}/g, (match, key) => {
+                      return item?.[key] || '';
+                    }) + (i < items.length - 1 ? '\r\n' : '');
+                });
+
+                const isOnlyVisible = [...data.content]
+                  .filter((c) => Object.hasOwnProperty.call(c, 'attribute'))
+                  .map((c) => c.attribute?.type === 'hidden')
+                  .every((bool) => bool === true);
+
+                return (
+                  <Grid
+                    item
+                    xs={12}
+                    md={12}
+                    style={{ marginTop: 10, alignSelf: 'stretch' }}
+                  >
+                    <TextAreaModalDynamic
+                      selectAllOnClick
+                      keepContentFixed
+                      fitHeightAuto={
+                        (data &&
+                          data.content.length === 1 &&
+                          data.content[0].element == 'json_array') ||
+                        isOnlyVisible
+                      }
+                      modalRef={modalRef}
+                      defaultValue={contentStr}
+                      anyData={data}
                     />
                   </Grid>
                 );

@@ -18,6 +18,10 @@ export interface IModal {
    */
   height?: string;
   /**
+   * Modal min height.
+   */
+  minHeight?: string;
+  /**
    * Modal max height.
    */
   maxHeight?: string;

@@ -34,7 +34,9 @@
     "@typescript-eslint/ban-ts-comment": ["off"],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-    "prettier/prettier": ["error", { "endOfLine": "auto" }]
+    "prettier/prettier": ["error", { "endOfLine": "auto" }],
+    "no-empty-pattern": ["warn"],
+    "no-empty-function": ["warn"]
   },
   "settings": {
     "react": {

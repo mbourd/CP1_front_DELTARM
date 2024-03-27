@@ -1,0 +1,57 @@
+{
+  "btn": [
+    {
+      "action": {
+        "endpoint": null,
+        "method": "CANCEL",
+        "params": null
+      },
+      "bg_color": "red",
+      "btn_lib": "Cancel Import",
+      "font_color": "white",
+      "hover_color": "orange"
+    },
+    {
+      "action": {
+        "endpoint": "/TE/import_file",
+        "method": "POST",
+        "params": {
+          "deubg_mod": "False",
+          "file": "$file",
+          "import_mode": "$import_mode"
+        }
+      },
+      "bg_color": "green",
+      "btn_lib": "Validate the File",
+      "font_color": "white",
+      "hover_color": "orange"
+    }
+  ],
+  "content": [
+    {
+      "attribute": null,
+      "element": "p",
+      "value": "Please select the file to import (or drag&drop the file in the target area) :"
+    },
+    {
+      "attribute": {
+        "id": "file",
+        "mandatory": true,
+        "mode": "single"
+      },
+      "element": "upload"
+    },
+    {
+      "attribute": {
+        "id": "import_mode",
+        "type": "hidden"
+      },
+      "element": "input",
+      "value": "create"
+    }
+  ],
+  "img": "https://s3-drm-cp1.s3.eu-west-3.amazonaws.com/ressources/images/prioritise.svg",
+  "subtitle": "CREATION - New Level 6 Objects (Import XLS File)",
+  "target": "fixed_modal",
+  "title": null
+}

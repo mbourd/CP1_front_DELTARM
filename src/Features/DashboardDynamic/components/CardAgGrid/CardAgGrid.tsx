@@ -210,7 +210,7 @@ const CardAgGrid: React.FC<React.PropsWithChildren<CardAgGridProps>> = ({
         borderBottom: card.lines.border_bottom ?? false,
         borderBottomColor: card.title.bg_color ?? '',
         borderBottomWidth: 1,
-        cellStyle: {
+        cellStyles: {
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
