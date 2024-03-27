@@ -213,7 +213,7 @@ export const useActionButton = ({
                     errMsg =
                       ' ' +
                       (err?.response?.data?.error_msg ??
-                        'Erreur lords de la requête');
+                        'Erreur lors de la requête');
                     setErrorMessage(errMsg);
                   }
                 });
