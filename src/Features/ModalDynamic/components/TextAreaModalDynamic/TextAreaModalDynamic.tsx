@@ -23,7 +23,7 @@ const TextAreaModalDynamic: React.FC<TextAreaModalDynamicType> = ({
       const modalContent = modalRef.current?.querySelector('._ModalContent');
       const modalContentHeight = modalContent?.clientHeight ?? 0;
 
-      setNumRows(Math.floor(modalContentHeight / 10) - 16);
+      setNumRows(Math.floor(modalContentHeight / 10) - 17);
     }
   }, [modalRef]);
   useEffect(() => {
@@ -58,8 +58,8 @@ const TextAreaModalDynamic: React.FC<TextAreaModalDynamicType> = ({
         if (keepContentFixed) e.preventDefault();
       }}
       fontFamily={'Courier'}
-      fontSize={'10px'}
-      style={{ height: '100%' }}
+      fontSize={'11px'}
+      style={{ height: '100%', padding: '3px' }}
     />
   );
 };

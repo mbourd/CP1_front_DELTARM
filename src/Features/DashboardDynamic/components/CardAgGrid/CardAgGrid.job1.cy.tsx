@@ -26,11 +26,13 @@ describe('<CardAgGrid />', function () {
   let card1: ICard;
   let card2: ICard;
   let card3: ICard;
+  let card4: ICard;
 
   before(() => {
     cy.fixture('dashboardDyn-card-1.json').then((d) => (card1 = d));
     cy.fixture('dashboardDyn-card-2.json').then((d) => (card2 = d));
     cy.fixture('dashboardDyn-card-3.json').then((d) => (card3 = d));
+    cy.fixture('dashboardDyn-card-4.json').then((d) => (card4 = d));
   });
 
   it('should render - card1', function () {
@@ -453,6 +455,327 @@ describe('<CardAgGrid />', function () {
     cy.react('AgGridReact')
       .find('.ag-header-container')
       .should('have.css', 'height', '53px');
+  });
+
+  it('should keep cell styles when scroll or sort - card1', function () {
+    const _card = {
+      ...structuredClone(card1),
+    };
+
+    cy.mount(
+      <SetupTestsComponents>
+        <CardAgGrid card={_card} triggerAction={function (): void {}} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+
+    cy.then(() => {
+      cy.get('.ag-cell').eq(0).realClick();
+      cy.realPress('End');
+      cy.realPress('End');
+      cy.realPress('End');
+      cy.realPress('End');
+    })
+      .then(() => {
+        cy.wait(255).then(() => {
+          cy.get('.ag-center-cols-container .ag-row').then(($rows) => {
+            cy.wrap($rows.slice(-5)).each(($row) => {
+              cy.wrap($row)
+                .find('.ag-cell')
+                .each(($cell, i) => {
+                  const col = _card.cols.values[i];
+
+                  if (col?.border_right) {
+                    cy.wrap($cell).should(
+                      'have.css',
+                      'border-right',
+                      '1px solid ' + _hexToRgb(_card.title.bg_color),
+                    );
+                  }
+                  if (_card?.lines.border_bottom) {
+                    cy.wrap($cell).should(
+                      'have.css',
+                      'border-bottom',
+                      '1px solid ' + _hexToRgb(_card.title.bg_color),
+                    );
+                  }
+                });
+            });
+          });
+        });
+      })
+      .then(() => {
+        cy.react('DataGridControlAgGrid')
+          .agGridSortColumn(_card.cols.values[0].label, 'ascending')
+          .then(() => {
+            cy.wait(255).then(() => {
+              cy.get('.ag-center-cols-container .ag-row').then(($rows) => {
+                cy.wrap($rows.slice(-5)).each(($row) => {
+                  cy.wrap($row)
+                    .find('.ag-cell')
+                    .each(($cell, i) => {
+                      const col = _card.cols.values[i];
+
+                      if (col?.border_right) {
+                        cy.wrap($cell).should(
+                          'have.css',
+                          'border-right',
+                          '1px solid ' + _hexToRgb(_card.title.bg_color),
+                        );
+                      }
+                      if (_card?.lines.border_bottom) {
+                        cy.wrap($cell).should(
+                          'have.css',
+                          'border-bottom',
+                          '1px solid ' + _hexToRgb(_card.title.bg_color),
+                        );
+                      }
+                    });
+                });
+              });
+            });
+          });
+      });
+  });
+  it('should keep cell styles when scroll or sort - card2', function () {
+    const _card = {
+      ...structuredClone(card2),
+    };
+
+    cy.mount(
+      <SetupTestsComponents>
+        <CardAgGrid card={_card} triggerAction={function (): void {}} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+
+    cy.then(() => {
+      cy.get('.ag-cell').eq(0).realClick();
+      cy.realPress('End');
+      cy.realPress('End');
+      cy.realPress('End');
+      cy.realPress('End');
+    })
+      .then(() => {
+        cy.wait(255).then(() => {
+          cy.get('.ag-center-cols-container .ag-row').then(($rows) => {
+            cy.wrap($rows.slice(-5)).each(($row) => {
+              cy.wrap($row)
+                .find('.ag-cell')
+                .each(($cell, i) => {
+                  const col = _card.cols.values[i];
+
+                  if (col?.border_right) {
+                    cy.wrap($cell).should(
+                      'have.css',
+                      'border-right',
+                      '1px solid ' + _hexToRgb(_card.title.bg_color),
+                    );
+                  }
+                  if (_card?.lines.border_bottom) {
+                    cy.wrap($cell).should(
+                      'have.css',
+                      'border-bottom',
+                      '1px solid ' + _hexToRgb(_card.title.bg_color),
+                    );
+                  }
+                });
+            });
+          });
+        });
+      })
+      .then(() => {
+        cy.react('DataGridControlAgGrid')
+          .agGridSortColumn(_card.cols.values[0].label, 'ascending')
+          .then(() => {
+            cy.wait(255).then(() => {
+              cy.get('.ag-center-cols-container .ag-row').then(($rows) => {
+                cy.wrap($rows.slice(-5)).each(($row) => {
+                  cy.wrap($row)
+                    .find('.ag-cell')
+                    .each(($cell, i) => {
+                      const col = _card.cols.values[i];
+
+                      if (col?.border_right) {
+                        cy.wrap($cell).should(
+                          'have.css',
+                          'border-right',
+                          '1px solid ' + _hexToRgb(_card.title.bg_color),
+                        );
+                      }
+                      if (_card?.lines.border_bottom) {
+                        cy.wrap($cell).should(
+                          'have.css',
+                          'border-bottom',
+                          '1px solid ' + _hexToRgb(_card.title.bg_color),
+                        );
+                      }
+                    });
+                });
+              });
+            });
+          });
+      });
+  });
+  it('should keep cell styles when scroll or sort - card3', function () {
+    const _card = {
+      ...structuredClone(card3),
+    };
+
+    cy.mount(
+      <SetupTestsComponents>
+        <CardAgGrid card={_card} triggerAction={function (): void {}} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+
+    cy.then(() => {
+      cy.get('.ag-cell').eq(0).realClick();
+      cy.realPress('End');
+      cy.realPress('End');
+      cy.realPress('End');
+      cy.realPress('End');
+    })
+      .then(() => {
+        cy.wait(255).then(() => {
+          cy.get('.ag-center-cols-container .ag-row').then(($rows) => {
+            cy.wrap($rows.slice(-5)).each(($row) => {
+              cy.wrap($row)
+                .find('.ag-cell')
+                .each(($cell, i) => {
+                  const col = _card.cols.values[i];
+
+                  if (col?.border_right) {
+                    cy.wrap($cell).should(
+                      'have.css',
+                      'border-right',
+                      '1px solid ' + _hexToRgb(_card.title.bg_color),
+                    );
+                  }
+                  if (_card?.lines.border_bottom) {
+                    cy.wrap($cell).should(
+                      'have.css',
+                      'border-bottom',
+                      '1px solid ' + _hexToRgb(_card.title.bg_color),
+                    );
+                  }
+                });
+            });
+          });
+        });
+      })
+      .then(() => {
+        cy.react('DataGridControlAgGrid')
+          .agGridSortColumn(_card.cols.values[0].label, 'ascending')
+          .then(() => {
+            cy.wait(255).then(() => {
+              cy.get('.ag-center-cols-container .ag-row').then(($rows) => {
+                cy.wrap($rows.slice(-5)).each(($row) => {
+                  cy.wrap($row)
+                    .find('.ag-cell')
+                    .each(($cell, i) => {
+                      const col = _card.cols.values[i];
+
+                      if (col?.border_right) {
+                        cy.wrap($cell).should(
+                          'have.css',
+                          'border-right',
+                          '1px solid ' + _hexToRgb(_card.title.bg_color),
+                        );
+                      }
+                      if (_card?.lines.border_bottom) {
+                        cy.wrap($cell).should(
+                          'have.css',
+                          'border-bottom',
+                          '1px solid ' + _hexToRgb(_card.title.bg_color),
+                        );
+                      }
+                    });
+                });
+              });
+            });
+          });
+      });
+  });
+  it('should keep cell styles when scroll or sort - card4', function () {
+    const _card = {
+      ...structuredClone(card4),
+    };
+
+    cy.mount(
+      <SetupTestsComponents>
+        <CardAgGrid card={_card} triggerAction={function (): void {}} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+
+    cy.then(() => {
+      cy.get('.ag-cell').eq(0).realClick();
+      cy.realPress('End');
+      cy.realPress('End');
+      cy.realPress('End');
+      cy.realPress('End');
+    })
+      .then(() => {
+        cy.wait(255).then(() => {
+          cy.get('.ag-center-cols-container .ag-row').then(($rows) => {
+            cy.wrap($rows.slice(-5)).each(($row) => {
+              cy.wrap($row)
+                .find('.ag-cell')
+                .each(($cell, i) => {
+                  const col = _card.cols.values[i];
+
+                  if (col?.border_right) {
+                    cy.wrap($cell).should(
+                      'have.css',
+                      'border-right',
+                      '1px solid ' + _hexToRgb(_card.title.bg_color),
+                    );
+                  }
+                  if (_card?.lines.border_bottom) {
+                    cy.wrap($cell).should(
+                      'have.css',
+                      'border-bottom',
+                      '1px solid ' + _hexToRgb(_card.title.bg_color),
+                    );
+                  }
+                });
+            });
+          });
+        });
+      })
+      .then(() => {
+        cy.react('DataGridControlAgGrid')
+          .agGridSortColumn(_card.cols.values[0].label, 'ascending')
+          .then(() => {
+            cy.wait(255).then(() => {
+              cy.get('.ag-center-cols-container .ag-row').then(($rows) => {
+                cy.wrap($rows.slice(-5)).each(($row) => {
+                  cy.wrap($row)
+                    .find('.ag-cell')
+                    .each(($cell, i) => {
+                      const col = _card.cols.values[i];
+
+                      if (col?.border_right) {
+                        cy.wrap($cell).should(
+                          'have.css',
+                          'border-right',
+                          '1px solid ' + _hexToRgb(_card.title.bg_color),
+                        );
+                      }
+                      if (_card?.lines.border_bottom) {
+                        cy.wrap($cell).should(
+                          'have.css',
+                          'border-bottom',
+                          '1px solid ' + _hexToRgb(_card.title.bg_color),
+                        );
+                      }
+                    });
+                });
+              });
+            });
+          });
+      });
   });
 });
 
