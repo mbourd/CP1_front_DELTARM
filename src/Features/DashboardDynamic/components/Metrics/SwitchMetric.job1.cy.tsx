@@ -3,7 +3,7 @@
 /// <reference types="../../../../../cypress/support/component" />
 
 // NOTE: Run CLI:
-// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/DashboardDynamic/components/Metrics/SwitchMetric.cy.tsx"
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/DashboardDynamic/components/Metrics/SwitchMetric.job1.cy.tsx"
 
 import React from 'react';
 
@@ -51,7 +51,7 @@ describe('<SwitchMetric />', () => {
     cy.react('CircularMetric').should('exist');
   });
 
-  it('Should have attribute with message hint', () => {
+  it('Should display tooltip with message hint', () => {
     const hint = 'hello';
     const indicator: IIndicator = {
       bg_color: '',
@@ -68,8 +68,15 @@ describe('<SwitchMetric />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('CircularMetric').should('have.attr', 'title', hint);
+    cy.react('CircularMetric').each(($el) => {
+      cy.wrap($el).trigger('mouseover');
+      cy.get('[role="tooltip"]').should('exist').should('be.visible');
+      cy.get('[role="tooltip"]').should('have.text', hint);
+      cy.wrap($el).trigger('mouseout');
+      cy.get('[role="tooltip"]').should('not.exist');
+    });
   });
+
   it('Should have attribute with message hint', () => {
     const hint = 'hello';
     const indicator: IIndicator = {
@@ -87,7 +94,13 @@ describe('<SwitchMetric />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('LinearMetric').should('have.attr', 'title', hint);
+    cy.react('LinearMetric').each(($el) => {
+      cy.wrap($el).trigger('mouseover');
+      cy.get('[role="tooltip"]').should('exist').should('be.visible');
+      cy.get('[role="tooltip"]').should('have.text', hint);
+      cy.wrap($el).trigger('mouseout');
+      cy.get('[role="tooltip"]').should('not.exist');
+    });
   });
 
   it('Should render message hint', () => {
@@ -107,10 +120,10 @@ describe('<SwitchMetric />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('LinearMetric').should('have.attr', 'title', hint);
     cy.react('LinearMetric').each(($el) => {
       cy.wrap($el).trigger('mouseover');
       cy.get('[role="tooltip"]').should('exist').should('be.visible');
+      cy.get('[role="tooltip"]').should('have.text', hint);
       cy.wrap($el).trigger('mouseout');
       cy.get('[role="tooltip"]').should('not.exist');
     });
@@ -132,10 +145,10 @@ describe('<SwitchMetric />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('CircularMetric').should('have.attr', 'title', hint);
     cy.react('CircularMetric').each(($el) => {
       cy.wrap($el).trigger('mouseover');
       cy.get('[role="tooltip"]').should('exist').should('be.visible');
+      cy.get('[role="tooltip"]').should('have.text', hint);
       cy.wrap($el).trigger('mouseout');
       cy.get('[role="tooltip"]').should('not.exist');
     });
@@ -236,10 +249,10 @@ describe('<SwitchMetric />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.get('span._Tooltip').should('have.attr', 'title', info);
-    cy.get('span._Tooltip').each(($el) => {
+    cy.get('span._Tooltip svg').each(($el) => {
       cy.wrap($el).trigger('mouseover');
       cy.get('[role="tooltip"]').should('exist').should('be.visible');
+      cy.get('[role="tooltip"]').should('have.text', info);
       cy.wrap($el).trigger('mouseout');
       cy.get('[role="tooltip"]').should('not.exist');
     });

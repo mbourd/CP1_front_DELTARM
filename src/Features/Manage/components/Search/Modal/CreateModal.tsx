@@ -125,12 +125,12 @@ export const CreateModal: React.FC<React.PropsWithChildren<IProps>> = ({
     <SearchModalFooterStyled>
       {dataManualInput?.buttons && (
         <Button color={'error'} onClick={onClose}>
-          {dataManualInput?.buttons[0].label}
+          {dataManualInput?.buttons[0]?.label}
         </Button>
       )}
       {dataManualInput?.buttons && (
         <Button color={'success'} onClick={createFile} disabled={missingFields}>
-          {dataManualInput?.buttons[1].label}
+          {dataManualInput?.buttons[1]?.label}
         </Button>
       )}
     </SearchModalFooterStyled>
@@ -156,10 +156,10 @@ export const CreateModal: React.FC<React.PropsWithChildren<IProps>> = ({
       >
         {dataManualInput ? (
           <SearchModalBPIContentStyled>
-            <p className={'top-message'}>{dataManualInput.title}</p>
-            <p className={'top-message'}>{dataManualInput.header}</p>
+            <p className={'top-message'}>{dataManualInput?.title}</p>
+            <p className={'top-message'}>{dataManualInput?.header}</p>
             <Grid container className={'file-info'}>
-              {dataManualInput.fields?.map((field: IMissingField, index) => {
+              {dataManualInput?.fields?.map((field: IMissingField, index) => {
                 return field.value_to_display ? (
                   <Grid item key={index} xs={4}>
                     <p>
@@ -176,7 +176,7 @@ export const CreateModal: React.FC<React.PropsWithChildren<IProps>> = ({
               className={'missing-fields-form'}
               onSubmit={handleSubmit(createFile)}
             >
-              {dataManualInput.fields.map((field: IMissingField) => {
+              {dataManualInput?.fields.map((field: IMissingField) => {
                 // if you want to return and use the order key : return field.order === index ? (...) : null
                 return (
                   <GenerateFieldManual

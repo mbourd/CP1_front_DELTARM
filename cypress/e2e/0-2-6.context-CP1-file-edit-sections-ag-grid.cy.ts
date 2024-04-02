@@ -246,7 +246,7 @@ describe(
                       case 'integer':
                       case 'percent':
                       case 'decimal':
-                      case 'financial':
+                      case 'financial': {
                         const strMatch = generateRandExp(
                           new RegExp(cell.control_regex as any as string, 'i'),
                           23,
@@ -263,6 +263,7 @@ describe(
                           .type(strMatch)
                           .clickOutside();
                         break;
+                      }
                       default:
                         break;
                     }
@@ -697,7 +698,7 @@ describe(
                       case 'integer':
                       case 'decimal':
                       case 'financial':
-                      case 'percent':
+                      case 'percent': {
                         const {
                           decimal_digit: decimalDigit,
                           currency_symbol: currencySymbol,
@@ -730,6 +731,7 @@ describe(
                             expect(t).to.be.equal(result);
                           });
                         break;
+                      }
                       default:
                         break;
                     }
@@ -751,7 +753,7 @@ describe(
                       case 'integer':
                       case 'decimal':
                       case 'financial':
-                      case 'percent':
+                      case 'percent': {
                         const {
                           decimal_digit: decimalDigit,
                           currency_symbol: currencySymbol,
@@ -815,6 +817,7 @@ describe(
                             .clickOutside();
                         }
                         break;
+                      }
                       default:
                         break;
                     }

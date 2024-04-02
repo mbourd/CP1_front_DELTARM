@@ -3,7 +3,7 @@
 /// <reference types="../../../../cypress/support/component" />
 
 // NOTE: Run CLI:
-// yarn cypress:run:component --browser chrome --config video=false --spec "src/Shared/components/Tooltip/BPITooltip.cy.tsx"
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Shared/components/Tooltip/BPITooltip.job2.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../cypress/utils/SetupTestsComponents';
@@ -26,7 +26,7 @@ describe('<BPITooltip />', () => {
     cy.get('#child');
   });
 
-  it('Should have attr title', () => {
+  it('Should have text tooltip', () => {
     const title = 'Tooltip title';
     const placement = 'bottom';
     cy.mount(
@@ -38,10 +38,10 @@ describe('<BPITooltip />', () => {
     );
     cy.waitReactApp();
     cy.wait(1);
-    cy.react('BPITooltip').should('have.attr', 'title', title);
     cy.get('#child').each(($el) => {
       cy.wrap($el).trigger('mouseover');
       cy.get('[role="tooltip"]').should('exist').should('be.visible');
+      cy.get('[role="tooltip"]').should('have.text', title);
       cy.wrap($el).trigger('mouseout');
       cy.get('[role="tooltip"]').should('not.exist');
     });
@@ -51,39 +51,52 @@ describe('<BPITooltip />', () => {
     const title = 'Tooltip title';
     const placement = 'bottom';
     cy.mount(
-      <SetupTestsComponents style={{ marginTop: '50px' }}>
-        <BPITooltip title={title} placement={placement}>
-          <div id="child">Children</div>
-        </BPITooltip>
+      <SetupTestsComponents>
+        <div style={{ height: '50px', display: 'block' }}></div>
+        <div>
+          <BPITooltip title={title} placement={placement}>
+            <div id="child">Children</div>
+          </BPITooltip>
+        </div>
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.wait(1);
+    cy.realPress('PageUp');
     cy.get('#child').each(($el) => {
       cy.wrap($el).trigger('mouseover');
       cy.get('[role="tooltip"]').should('exist').should('be.visible');
-      cy.get('[role="tooltip"]').should('have.attr', 'x-placement', placement);
+      cy.get('[role="tooltip"]').should(
+        'have.attr',
+        'data-popper-placement',
+        placement,
+      );
       cy.wrap($el).trigger('mouseout');
     });
   });
 
-  // it('Should have placement at top', () => {
-  //   const title = 'Tooltip titleeee';
-  //   const placement = 'top';
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <BPITooltip title={title} placement={placement}>
-  //         <div id="child">Children</div>
-  //       </BPITooltip>
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   cy.wait(1);
-  //   cy.get('#child').each(($el) => {
-  //     cy.wrap($el).trigger('mouseover');
-  //     cy.get('[role="tooltip"]').should('exist').should('be.visible');
-  //     cy.get('[role="tooltip"]').should('have.attr', 'x-placement', placement);
-  //     cy.wrap($el).trigger('mouseout');
-  //   });
-  // });
+  it('Should have placement at top', () => {
+    const title = 'Tooltip title';
+    const placement = 'top';
+    cy.mount(
+      <SetupTestsComponents>
+        <div style={{ height: '50px', display: 'block' }}></div>
+        <div>
+          <BPITooltip title={title} placement={placement}>
+            <div id="child">Children</div>
+          </BPITooltip>
+        </div>
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.realPress('PageUp');
+    cy.get('#child').each(($el) => {
+      cy.wrap($el).trigger('mouseover');
+      cy.get('[role="tooltip"]').should('exist').should('be.visible');
+      cy.get('[role="tooltip"]').should(
+        'have.attr',
+        'data-popper-placement',
+        placement,
+      );
+    });
+  });
 });

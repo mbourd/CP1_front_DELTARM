@@ -12,7 +12,7 @@ export const SelectBody: React.FC<
 
   return (
     <SelectBodyStyled className={'_SelectBody'}>
-      {Object.values(data).map((datum) => {
+      {Object.values(data ?? {}).map((datum) => {
         return (
           <ListItem
             className={'_SelectItem'}

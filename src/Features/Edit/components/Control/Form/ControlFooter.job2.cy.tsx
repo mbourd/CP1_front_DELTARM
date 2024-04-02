@@ -3,7 +3,7 @@
 /// <reference types="../../../../../../cypress/support/component" />
 
 // NOTE: Run CLI:
-// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/ControlFooter.cy.tsx"
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/ControlFooter.job2.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../cypress/utils/SetupTestsComponents';
@@ -11,7 +11,7 @@ import { SetupTestsComponents } from '../../../../../../cypress/utils/SetupTests
 import { ControlFooter } from './ControlFooter';
 import { IApiControl } from './../../../../Edit/types';
 
-describe('<Controlooter />', () => {
+describe('<ControlFooter />', () => {
   const control: IApiControl = {
     control_desc_1: null,
     control_desc_2: null,
@@ -64,10 +64,10 @@ describe('<Controlooter />', () => {
     cy.react('ControlFooter').react('BPITooltip').should('exist');
     cy.react('ControlFooter')
       .react('BPITooltip')
-      .should('have.attr', 'title', controlPreviousValue)
       .each(($el) => {
         cy.wrap($el).trigger('mouseover');
         cy.get('[role="tooltip"]').should('exist').should('be.visible');
+        cy.get('[role="tooltip"]').should('have.text', controlPreviousValue);
         cy.wrap($el).trigger('mouseout');
         cy.get('[role="tooltip"]').should('not.exist');
       });
@@ -89,14 +89,13 @@ describe('<Controlooter />', () => {
     cy.react('ControlFooter').react('BPITooltip').should('exist');
     cy.react('ControlFooter')
       .react('BPITooltip')
-      .should(
-        'have.attr',
-        'title',
-        new Date(controlPreviousValue).toLocaleDateString(),
-      )
       .each(($el) => {
         cy.wrap($el).trigger('mouseover');
         cy.get('[role="tooltip"]').should('exist').should('be.visible');
+        cy.get('[role="tooltip"]').should(
+          'have.text',
+          new Date(controlPreviousValue).toLocaleDateString(),
+        );
         cy.wrap($el).trigger('mouseout');
         cy.get('[role="tooltip"]').should('not.exist');
       });
@@ -116,10 +115,10 @@ describe('<Controlooter />', () => {
     cy.waitReactApp();
     cy.react('ControlFooter')
       .react('BPITooltip')
-      .should('have.attr', 'title', controlTitle)
       .each(($el) => {
         cy.wrap($el).trigger('mouseover');
         cy.get('[role="tooltip"]').should('exist').should('be.visible');
+        cy.get('[role="tooltip"]').should('have.text', controlTitle);
         cy.wrap($el).trigger('mouseout');
         cy.get('[role="tooltip"]').should('not.exist');
       });

@@ -93,7 +93,7 @@ describe(
 
         for (const c of content) {
           switch (c.element) {
-            case 'table':
+            case 'table': {
               const { value: rows } = (c as IElementTableModal).value?.row;
 
               cy.react('ModalDynamic')
@@ -139,6 +139,7 @@ describe(
                   }
                 });
               break;
+            }
             default:
               break;
           }

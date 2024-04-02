@@ -35,7 +35,7 @@ export const RejectControl: React.FC<
     SVGSVGElement | Element | null
   >(null);
   const [rejectComments, setRejectComments] = useState(
-    controlRejectable.rejectComments,
+    controlRejectable?.rejectComments ?? [],
   );
   const [trans] = useTrans('Edit');
 

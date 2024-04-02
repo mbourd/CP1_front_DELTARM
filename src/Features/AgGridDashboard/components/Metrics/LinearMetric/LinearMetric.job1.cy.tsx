@@ -3,7 +3,7 @@
 /// <reference types="../../../../../../cypress/support/component" />
 
 // NOTE: Run CLI:
-// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/AgGridDashboard/components/Metrics/LinearMetric/LinearMetric.cy.tsx"
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/AgGridDashboard/components/Metrics/LinearMetric/LinearMetric.job1.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../cypress/utils/SetupTestsComponents';
@@ -51,17 +51,6 @@ describe('<LinearMetric />', function () {
       });
   });
 
-  it('Should have attribute with message', () => {
-    const hintMsg = 'hello';
-    cy.mount(
-      <SetupTestsComponents>
-        <LinearMetric variant={undefined} value={0} hint={hintMsg} />
-      </SetupTestsComponents>,
-    );
-    cy.waitReactApp();
-    cy.react('LinearMetric').should('have.attr', 'title', hintMsg);
-  });
-
   it('Should render hint tooltip', () => {
     const hintMsg = 'hello';
     cy.mount(
@@ -74,6 +63,7 @@ describe('<LinearMetric />', function () {
     cy.react('LinearMetric').each(($el) => {
       cy.wrap($el).trigger('mouseover');
       cy.get('[role="tooltip"]').should('exist').should('be.visible');
+      cy.get('[role="tooltip"]').should('have.text', hintMsg);
       cy.wrap($el).trigger('mouseout');
       cy.get('[role="tooltip"]').should('not.exist');
     });

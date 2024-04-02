@@ -173,10 +173,11 @@ export const DataGridUpload: React.FC<React.PropsWithChildren<IProps>> = ({
               ref={(el) => (inputFileRef.current = el)}
             />
             <Fab
-              color="secondary"
+              color="error"
               size="small"
               component="span"
               aria-label="upload"
+              style={{ position: 'inherit' }}
             >
               <CloudUpload color={'action'} />
             </Fab>

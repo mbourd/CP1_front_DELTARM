@@ -133,10 +133,11 @@ export const UploadCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
               {...getInputProps()}
             />
             <Fab
-              color="secondary"
+              color="error"
               size="small"
               component="span"
               aria-label="upload"
+              style={{ position: 'inherit' }}
             >
               <CloudUpload color={'action'} />
             </Fab>

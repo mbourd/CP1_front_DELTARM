@@ -42,7 +42,7 @@ export const ContentHeader: React.FC<
       <Grid container style={{ width: '100%' }}>
         {data?.sectionHeader && (
           <Alert
-            variant="standard"
+            variant="outlined"
             icon={false}
             severity={data.sectionHeader.type === 'alert' ? 'error' : 'success'}
           >
