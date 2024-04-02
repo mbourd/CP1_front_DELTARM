@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { BPITooltip, FormLabel } from 'Shared/components';
 import { HelpIcon } from 'Styles';
 import { IApiComplianceFields } from 'Features/Edit/types';

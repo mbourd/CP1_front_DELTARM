@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { CommentRejectControlStyled } from './CommentRejectControl.style';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { FormError, InputBase } from 'Shared/components';
 import { useTrans } from '../../../../../../../../Services';
 

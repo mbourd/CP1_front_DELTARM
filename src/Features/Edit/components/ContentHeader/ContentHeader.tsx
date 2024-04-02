@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { ContentHeaderStyled } from './ContentHeader.style';
 
 import {
@@ -23,7 +23,7 @@ import { useSecurity } from '../../../../Packages/Security';
 import { ModalDynamic } from '../../../ModalDynamic/components/ModalDynamic';
 import { IDataModal } from '../../../ModalDynamic/components/types';
 import { useRecoilValue } from 'recoil';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/material';
 import { useTrans } from '../../../../Services';
 
 export const ContentHeader: React.FC<

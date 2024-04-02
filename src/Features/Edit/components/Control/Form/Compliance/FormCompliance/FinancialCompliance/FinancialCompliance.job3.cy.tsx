@@ -149,10 +149,10 @@ describe('<FinancialCompliance />', () => {
     cy.waitReactApp();
     cy.react('FinancialCompliance').should('exist');
     cy.react('FinancialCompliance').find('input').type('555').blur();
-    cy.wait(3000);
-
-    cy.get('._FormError', { timeout: 1 })
-      .invoke('text')
-      .should('not.match', new RegExp(translations.join('|'), 'gu'));
+    cy.wait(3000).then(() => {
+      cy.get('._FormError', { timeout: 1 })
+        .invoke('text')
+        .should('not.match', new RegExp(translations.join('|'), 'gu'));
+    });
   });
 });

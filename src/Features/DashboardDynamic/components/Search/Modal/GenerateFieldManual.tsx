@@ -1,7 +1,7 @@
 import React from 'react';
 import { Control, Controller } from 'react-hook-form';
 import { FormLabel, Select } from '../../../../../Packages/Design/components';
-import { Input } from '@material-ui/core';
+import { Input } from '@mui/material';
 
 interface IProps {
   field: any;

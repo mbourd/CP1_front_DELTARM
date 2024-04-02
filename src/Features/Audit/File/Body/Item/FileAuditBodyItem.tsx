@@ -1,6 +1,6 @@
 import React from 'react';
 import { FileAuditBodyItemStyled } from './FileAuditBodyItem.style';
-import { Avatar, Grid } from '@material-ui/core';
+import { Avatar, Grid } from '@mui/material';
 import { IFileAudit } from '../../../types';
 import { randomColor } from 'Styles';
 

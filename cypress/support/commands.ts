@@ -238,3 +238,11 @@ function typeThenWait(
   return cy.wrap(subject);
 }
 Cypress.Commands.add('typeThenWait', { prevSubject: true }, typeThenWait);
+
+function clickAll(subject: JQuery<HTMLElement>, realClick = false) {
+  cy.wrap(subject).each(($el) => {
+    if (realClick) cy.wrap($el).realClick();
+    else cy.wrap($el).click();
+  });
+}
+Cypress.Commands.add('clickAll', { prevSubject: true }, clickAll);

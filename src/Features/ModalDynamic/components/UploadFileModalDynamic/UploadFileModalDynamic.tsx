@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Button, Container, Fab } from '@material-ui/core';
-import { CloudUpload } from '@material-ui/icons';
+import { Button, Container, Fab } from '@mui/material';
+import { CloudUpload } from '@mui/icons-material';
 import { UploadControlStyled } from 'Features/Edit/components/Control/Form/Upload/UploadControl.style';
 import { UploadList } from 'Shared/components/UploadList/UploadList';
 import { useDropzone } from 'react-dropzone';
@@ -158,10 +158,11 @@ const UploadFileModalDynamic: React.FC<UploadModalDynamicPropsType> = ({
               }) as any as Record<string | number | symbol, any>)}
             />
             <Fab
-              color="secondary"
+              color="error"
               size="small"
               component="span"
               aria-label="upload"
+              style={{ position: 'inherit' }}
             >
               <CloudUpload color={'action'} />
             </Fab>

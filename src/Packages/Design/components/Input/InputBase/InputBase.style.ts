@@ -1,5 +1,7 @@
 import styled from 'styled-components';
-import { makeStyles, Theme } from '@material-ui/core';
+import { Theme } from '@mui/material';
+
+import makeStyles from '@mui/styles/makeStyles';
 
 interface IProps {
   $borderSize: number;

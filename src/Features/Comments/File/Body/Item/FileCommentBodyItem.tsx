@@ -1,6 +1,6 @@
 import React from 'react';
 import { FileCommentBodyItemStyled } from './FileCommentBodyItem.style';
-import { Avatar, Grid } from '@material-ui/core';
+import { Avatar, Grid } from '@mui/material';
 import { IFileComment } from '../../../types';
 import { randomColor } from 'Styles';
 

@@ -87,9 +87,11 @@ describe('<SearchBar />', function () {
         />
       </SetupTestsComponents>,
     ).waitReactApp();
-    cy.react('SearchBar').react('Radio').should('have.length', options.length);
     cy.react('SearchBar')
-      .react('FormControlLabel')
+      .find('label.MuiFormControlLabel-root')
+      .should('have.length', options.length);
+    cy.react('SearchBar')
+      .find('label.MuiFormControlLabel-root')
       .each(($el, i) => {
         cy.wrap($el).should('have.text', options[i].lib);
       });
@@ -142,7 +144,7 @@ describe('<SearchBar />', function () {
       </SetupTestsComponents>,
     ).waitReactApp();
     cy.react('SearchBar')
-      .react('Radio')
+      .find('label.MuiFormControlLabel-root')
       .each(($radio, i) => {
         cy.wrap($radio)
           .realClick()

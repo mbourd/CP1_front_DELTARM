@@ -203,6 +203,36 @@ describe('<FinancialControl />', () => {
       .and('match', new RegExp(translations.join('|'), 'gu'));
   });
 
+  it('should render the currency symbol', () => {
+    const value = '1987';
+    const _control: IApiControl = {
+      ...structuredClone(control),
+      control_value: value,
+      control_options: { currency_symbol: '$' },
+    };
+    cy.mount(
+      <SetupTestsComponents>
+        <FinancialControl
+          control={_control}
+          fileId={''}
+          formState={[]}
+          setFormState={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+          context={'edit'}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('InputBase')
+      .get(`label`)
+      .get('div')
+      .nthNode(0)
+      .get('p')
+      .nthNode(0)
+      .contains('$');
+  });
+
   it('should have default value', () => {
     const value = '1987';
     const _control: IApiControl = {
