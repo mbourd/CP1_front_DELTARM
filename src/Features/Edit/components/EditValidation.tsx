@@ -126,7 +126,7 @@ export const EditValidation: React.FC<React.PropsWithChildren<IProps>> = ({
                 <ContentBody />
                 {data.sectionFooter && (
                   <Box paddingY={5}>
-                    <Alert variant="standard" severity="info">
+                    <Alert variant="outlined" severity="info">
                       <PreWrapStyled>
                         {data.sectionFooter.message}
                       </PreWrapStyled>

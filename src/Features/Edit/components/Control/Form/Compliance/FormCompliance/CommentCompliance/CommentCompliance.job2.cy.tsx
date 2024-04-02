@@ -148,11 +148,25 @@ describe('<CommentCompliance />', () => {
     );
     cy.waitReactApp();
     cy.react('CommentCompliance').should('exist');
-    cy.react('CommentCompliance').find('textarea').type('aaa').blur();
-    cy.wait(3000);
-
-    cy.get('._FormError', { timeout: 1 })
-      .invoke('text')
-      .should('not.match', new RegExp(translations.join('|'), 'gu'));
+    cy.react('CommentCompliance')
+      .find('textarea')
+      .then(($txts) => {
+        cy.wrap($txts).each(($txt) => {
+          if ($txt.is(':visible')) {
+            cy.wrap($txt)
+              .focus()
+              .then(() => {
+                cy.realType('aaaa');
+                cy.wrap($txt).blur();
+              });
+          }
+        });
+      })
+      .wait(3000)
+      .then(() => {
+        cy.get('._FormError', { timeout: 1 })
+          .invoke('text')
+          .should('not.match', new RegExp(translations.join('|'), 'gu'));
+      });
   });
 });

@@ -3,7 +3,7 @@
 /// <reference types="../../../../../cypress/support/component" />
 
 // NOTE: Run CLI:
-// yarn cypress:run:component --browser chrome --config video=false --spec "src/Shared/components/MainHeader/FlagsContainer/FlagsContainer.cy.tsx"
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Shared/components/MainHeader/FlagsContainer/FlagsContainer.job2.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
@@ -41,11 +41,13 @@ describe('<FlagsContainer />', () => {
         const transDE = _translate('de', 'MainHeader', lang) || lang;
         const translations = [transEN, transFR, transDE];
 
-        cy.wrap($el)
-          .should('have.attr', 'title')
-          .and('match', new RegExp(translations.join('|'), 'gu'));
         cy.wrap($el).trigger('mouseover');
         cy.get('[role="tooltip"]').should('exist').should('be.visible');
+        cy.get('[role="tooltip"]')
+          .invoke('text')
+          .then((t) => {
+            expect(t).to.match(new RegExp(translations.join('|'), 'gu'));
+          });
         cy.wrap($el).trigger('mouseout');
         cy.get('[role="tooltip"]').should('not.exist');
       });

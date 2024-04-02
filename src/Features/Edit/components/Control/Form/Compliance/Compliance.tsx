@@ -37,8 +37,8 @@ export const Compliance: React.FC<
       <ActionsComplianceContainer>
         {choiceIsKo ? (
           <CheckboxCompliance
-            checkedColor={compliance.complianceCheckColor}
-            uncheckedColor={compliance.complianceUncheckColor}
+            checkedColor={compliance?.complianceCheckColor}
+            uncheckedColor={compliance?.complianceUncheckColor}
             label={label}
             checked={checked}
             controlId={controlId}

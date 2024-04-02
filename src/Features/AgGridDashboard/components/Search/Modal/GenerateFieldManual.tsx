@@ -15,7 +15,7 @@ export const GenerateFieldManual: React.FC<React.PropsWithChildren<IProps>> = ({
   setListMissingField,
   control,
 }): React.ReactElement | null => {
-  switch (field.type) {
+  switch (field?.type) {
     case 'select_list':
       return (
         <Controller

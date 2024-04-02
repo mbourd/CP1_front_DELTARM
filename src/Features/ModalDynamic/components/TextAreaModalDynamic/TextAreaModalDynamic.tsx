@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { InputBase } from '../../../../Packages/Design/components/Input/InputBase/InputBase';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
 
 type TextAreaModalDynamicType = {
   modalRef: React.RefObject<HTMLDivElement>;
@@ -20,10 +21,13 @@ const TextAreaModalDynamic: React.FC<TextAreaModalDynamicType> = ({
   const [numRows, setNumRows] = useState(20);
   const listenerWindowResized = useCallback(() => {
     if (modalRef?.current) {
-      const modalContent = modalRef.current?.querySelector('._ModalContent');
-      const modalContentHeight = modalContent?.clientHeight ?? 0;
+      const dialogModalHeight =
+        modalRef.current?.querySelector('[role="dialog"]')?.clientHeight ?? 0;
 
-      setNumRows(Math.floor(modalContentHeight / 10) - 18);
+      // if (dialogModalHeight === 444) setNumRows(15);
+      // else if (dialogModalHeight === 720) setNumRows(31);
+      // else
+      setNumRows(dialogModalHeight / 17 - 11);
     }
   }, [modalRef]);
   useEffect(() => {

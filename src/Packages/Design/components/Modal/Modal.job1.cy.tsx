@@ -38,7 +38,7 @@ describe('<Modal />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('Modal').react('DialogContent').contains(children);
+    cy.react('Modal').find('._ModalContent').contains(children);
   });
   it('Should render React.ReactNode children', () => {
     const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
@@ -52,8 +52,8 @@ describe('<Modal />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('Modal').react('DialogContent').react('DummyFC');
-    cy.react('Modal').react('DialogContent').contains('hello');
+    cy.react('Modal').find('._ModalContent').react('DummyFC');
+    cy.react('Modal').find('._ModalContent').contains('hello');
   });
 
   it('Should render the X logo', () => {
@@ -63,7 +63,7 @@ describe('<Modal />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('Modal').react('DialogTitle').react('IconButton').find('svg');
+    cy.react('Modal').find('._ModalTitle').find(`._ModalClose`).find('svg');
   });
   it('Should not render the X logo', () => {
     cy.mount(
@@ -73,8 +73,8 @@ describe('<Modal />', () => {
     );
     cy.waitReactApp();
     cy.react('Modal')
-      .react('DialogTitle')
-      .react('IconButton', { options: { timeout: 1 } })
+      .find('._ModalTitle')
+      .find(`._ModalClose`)
       .should('not.exist');
   });
 

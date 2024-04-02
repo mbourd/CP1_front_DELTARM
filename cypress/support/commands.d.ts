@@ -24,6 +24,7 @@ declare global {
           >;
         },
       ): Chainable<JQuery<HTMLElement>>;
+      clickAll(realClick?: boolean): Chainable<void>;
     }
   }
 }

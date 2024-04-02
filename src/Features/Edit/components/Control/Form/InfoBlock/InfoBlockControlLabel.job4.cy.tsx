@@ -77,14 +77,13 @@ describe('<FormulaControl />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('InfoBlockControlLabel')
-      .react('BPITooltip')
-      .should('have.attr', 'title', desc);
+    cy.react('InfoBlockControlLabel');
     cy.react('InfoBlockControlLabel')
       .react('BPITooltip')
       .each(($el) => {
         cy.wrap($el).trigger('mouseover');
         cy.get('[role="tooltip"]').should('exist').should('be.visible');
+        cy.get('[role="tooltip"]').should('have.text', desc);
         cy.wrap($el).trigger('mouseout');
         cy.get('[role="tooltip"]').should('not.exist');
       });

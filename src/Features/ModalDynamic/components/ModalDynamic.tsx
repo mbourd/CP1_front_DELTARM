@@ -411,7 +411,12 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
                 Object.assign(defaultQueries, keyField);
 
                 return (
-                  <Grid item xs={6} md={6}>
+                  <Grid
+                    item
+                    key={(element?.attribute?.id ?? '') + index}
+                    xs={6}
+                    md={6}
+                  >
                     <Controller
                       defaultValue={!element?.value}
                       control={control}
@@ -449,6 +454,7 @@ export const ModalDynamic: FC<React.PropsWithChildren<IDataModalProps>> = ({
                 return (
                   <Grid
                     item
+                    key={(element?.attribute?.id ?? '') + index}
                     xs={12}
                     md={12}
                     style={{ marginTop: 10, alignSelf: 'stretch' }}
