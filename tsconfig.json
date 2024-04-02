@@ -7,11 +7,7 @@
       "esnext"
     ],
     "types": [
-      "node",
-      "cypress",
-      "cypress-react-selector",
-      "cypress-real-events",
-      "cypress-wait-until",
+      "node"
     ],
     "noImplicitAny": false,
     "downlevelIteration": true,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { LinearMetric } from './LinearMetric/LinearMetric';
 import { BPITooltip } from '../../../../Shared/components';
 import { HelpIcon } from '../../../../Packages/Design';
@@ -13,7 +13,7 @@ interface ISwitchMetric {
 export const SwitchMetric: React.FC<ISwitchMetric> = ({
   indicator,
 }): React.ReactElement => {
-  switch (indicator.style) {
+  switch (indicator?.style) {
     case 'linear':
       return (
         <>

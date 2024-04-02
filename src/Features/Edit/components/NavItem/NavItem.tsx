@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListItem } from '@material-ui/core';
+import { ListItem } from '@mui/material';
 import { NavItemTextStyled, NavItemStyled } from './NavItem.style';
 import { LockedIcon } from 'Styles';
 import { ISection } from '../../types';

@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { ValidationPopperStyled } from './ValidationPopper.style';
-import { Card } from '@material-ui/core';
+import { Card } from '@mui/material';
 import {
   BadRequest,
   Button,

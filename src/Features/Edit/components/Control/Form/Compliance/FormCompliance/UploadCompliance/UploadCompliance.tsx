@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { UploadComplianceStyled } from './UploadCompliance.style';
-import { Grid, Fab } from '@material-ui/core';
-import { CloudUpload } from '@material-ui/icons';
+import { Grid, Fab } from '@mui/material';
+import { CloudUpload } from '@mui/icons-material';
 import { IApiComplianceFields, IUploadDetail } from 'Features/Edit/types';
 import { FormError } from 'Shared/components';
 import { IUser, security, useTrans } from 'Services';
@@ -133,10 +133,11 @@ export const UploadCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
               {...getInputProps()}
             />
             <Fab
-              color="secondary"
+              color="error"
               size="small"
               component="span"
               aria-label="upload"
+              style={{ position: 'inherit' }}
             >
               <CloudUpload color={'action'} />
             </Fab>

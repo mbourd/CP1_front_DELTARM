@@ -3,7 +3,7 @@
 /// <reference types="../../../../../cypress/support/component" />
 
 // NOTE: Run CLI:
-// yarn cypress:run:component --browser chrome --config video=false --spec "src/Shared/components/MainHeader/IconsContainer/IconsContainerRender.cy.tsx"
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Shared/components/MainHeader/IconsContainer/IconsContainerRender.job2.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
@@ -53,16 +53,16 @@ describe('<IconsContainer />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.wait(1);
-    cy.react('IconsContainerRender')
-      .find('a')
-      .should('have.attr', 'title')
-      .and('match', new RegExp(titlesAIV.join('|'), 'gu'));
     cy.react('IconsContainerRender')
       .find('a')
       .each(($el) => {
         cy.wrap($el).trigger('mouseover');
         cy.get('[role="tooltip"]').should('exist').should('be.visible');
+        cy.get('[role="tooltip"]')
+          .invoke('text')
+          .then((t) => {
+            expect(t).to.match(new RegExp(titlesAIV.join('|'), 'gu'));
+          });
         cy.wrap($el).trigger('mouseout');
         cy.get('[role="tooltip"]').should('not.exist');
       });
@@ -92,13 +92,14 @@ describe('<IconsContainer />', () => {
     cy.waitReactApp();
     cy.react('IconsContainerRender')
       .find('a')
-      .should('have.attr', 'title')
-      .and('match', new RegExp(titlesFAQ.join('|'), 'gu'));
-    cy.react('IconsContainerRender')
-      .find('a')
       .each(($el) => {
         cy.wrap($el).trigger('mouseover');
         cy.get('[role="tooltip"]').should('exist').should('be.visible');
+        cy.get('[role="tooltip"]')
+          .invoke('text')
+          .then((t) => {
+            expect(t).to.match(new RegExp(titlesFAQ.join('|'), 'gu'));
+          });
         cy.wrap($el).trigger('mouseout');
         cy.get('[role="tooltip"]').should('not.exist');
       });

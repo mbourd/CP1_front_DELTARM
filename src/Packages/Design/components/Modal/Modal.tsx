@@ -1,12 +1,12 @@
-import React, { forwardRef } from 'react';
+import React, { ForwardedRef, forwardRef } from 'react';
 import {
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
   IconButton,
-} from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import { useStyles } from './Modal.style';
 import { IModal } from './types';
 
@@ -27,7 +27,7 @@ const Modal = forwardRef(
       onClose,
       footerBorderTop = false,
     }: React.PropsWithChildren<IModal>,
-    ref,
+    ref: ForwardedRef<HTMLDivElement>,
   ) => {
     const IconClasses = useStyles();
 
@@ -44,13 +44,14 @@ const Modal = forwardRef(
           style: { height: height, maxHeight: maxHeight, minHeight: minHeight },
         }}
       >
-        <DialogTitle disableTypography={true} className={'_ModalTitle'}>
+        <DialogTitle className={'_ModalTitle'}>
           {header ? <div>{header}</div> : null}
           {closable ? (
             <IconButton
               className={'_ModalClose' + (className ? ' ' + className : '')}
               classes={IconClasses}
               onClick={onClose}
+              size="large"
             >
               <CloseIcon />
             </IconButton>

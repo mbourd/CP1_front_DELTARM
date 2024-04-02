@@ -148,7 +148,15 @@ describe('<LongTextCompliance />', () => {
     );
     cy.waitReactApp();
     cy.react('LongTextCompliance').should('exist');
-    cy.react('LongTextCompliance').find('textarea').type('aaa').blur();
+    cy.react('LongTextCompliance')
+      .find('textarea')
+      .each(($txts) => {
+        cy.wrap($txts).each(($txt) => {
+          if ($txt.is(':visible')) {
+            cy.wrap($txt).type('aaaa').blur();
+          }
+        });
+      });
     cy.wait(3000);
 
     cy.get('._FormError', { timeout: 1 })

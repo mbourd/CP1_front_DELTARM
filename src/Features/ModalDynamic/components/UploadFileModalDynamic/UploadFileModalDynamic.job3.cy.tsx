@@ -27,6 +27,7 @@ describe('<UploadFileModalDynamic />', function () {
       mode: undefined,
     },
     value: null,
+    editable: true,
   };
 
   it('should render without crash', function () {

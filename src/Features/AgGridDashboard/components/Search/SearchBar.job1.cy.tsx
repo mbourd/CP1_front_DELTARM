@@ -3,7 +3,7 @@
 /// <reference types="../../../../../cypress/support/component" />
 
 // NOTE: Run CLI:
-// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/AgGridDashboard/components/Search/SearchBar.cy.tsx"
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/AgGridDashboard/components/Search/SearchBar.job1.cy.tsx"
 
 import React from 'react';
 
@@ -98,7 +98,7 @@ describe('<SearchBar />', () => {
 
     cy.react('Search').should('have.length', 1).should('be.visible');
     cy.react('FormError').should('have.length', 1);
-    cy.react('FormControlLabel')
+    cy.get('label.MuiFormControlLabel-root')
       .should('have.length', options.length)
       .should('be.visible')
       .each(($el, i) => {
@@ -146,7 +146,7 @@ describe('<SearchBar />', () => {
     cy.waitReactApp();
 
     cy.react('Search').should('have.length', 1).should('be.visible');
-    cy.react('Radio').each(($el, i) => {
+    cy.get('label.MuiFormControlLabel-root').each(($el, i) => {
       cy.wrap($el).click();
       cy.react('Search')
         .react('InputBase')

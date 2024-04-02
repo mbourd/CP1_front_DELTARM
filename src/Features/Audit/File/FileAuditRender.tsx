@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from '@material-ui/core';
+import { Card } from '@mui/material';
 import { BPIBadge, FormError, Popper } from 'Shared/components';
 import { AuditIcon } from 'Styles';
 import { IDataFileAudit } from '../types';

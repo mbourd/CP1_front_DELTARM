@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Button, Modal } from '../../../../../../../Packages/Design/components';
 import { IApiComplianceData, IApiComplianceFields } from '../../../../../types';
 import { SwitchControlCompliance } from '../SwitchControlCompliance';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { SearchModalFooterStyled } from '../../../../../../Manage/components/Search/Modal/SearchModal.style';
 import { HeadingTwo } from '../../../../../../../Shared/components';
 import { useApi } from '../../../../../../../Services';

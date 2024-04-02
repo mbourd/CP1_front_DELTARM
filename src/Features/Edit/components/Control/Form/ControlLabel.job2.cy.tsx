@@ -81,10 +81,10 @@ describe('<ControlLabel />', () => {
     cy.react('ControlLabel')
       .find('span span:nth-child(2)')
       .react('BPITooltip')
-      .should('have.attr', 'title', controlTitle)
       .each(($el) => {
         cy.wrap($el).trigger('mouseover');
         cy.get('[role="tooltip"]').should('exist').should('be.visible');
+        cy.get('[role="tooltip"]').should('have.text', controlTitle);
         cy.wrap($el).trigger('mouseout');
         cy.get('[role="tooltip"]').should('not.exist');
       });
