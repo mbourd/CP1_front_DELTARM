@@ -27,7 +27,7 @@ const TextAreaModalDynamic: React.FC<TextAreaModalDynamicType> = ({
       // if (dialogModalHeight === 444) setNumRows(15);
       // else if (dialogModalHeight === 720) setNumRows(31);
       // else
-      setNumRows(dialogModalHeight / 17 - 11);
+      setNumRows(dialogModalHeight / 17 - 12);
     }
   }, [modalRef]);
   useEffect(() => {
