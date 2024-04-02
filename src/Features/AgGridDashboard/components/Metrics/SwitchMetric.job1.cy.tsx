@@ -3,7 +3,7 @@
 /// <reference types="../../../../../cypress/support/component" />
 
 // NOTE: Run CLI:
-// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/AgGridDashboard/components/Metrics/SwitchMetric.cy.tsx"
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/AgGridDashboard/components/Metrics/SwitchMetric.job1.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
@@ -21,6 +21,18 @@ describe('<SwitchMetric />', function () {
     value: 23,
     style: 'linear',
   };
+
+  it('should not crash', function () {
+    cy.mount(
+      <SetupTestsComponents>
+        {/* @ts-ignore */}
+        <SwitchMetric indicator={undefined} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('LinearMetric').should('not.exist');
+    cy.react('CircularMetric').should('not.exist');
+  });
 
   it('should render <LinearMetric /> if indicator.style=linear', function () {
     const _indicator: IIndicator = {

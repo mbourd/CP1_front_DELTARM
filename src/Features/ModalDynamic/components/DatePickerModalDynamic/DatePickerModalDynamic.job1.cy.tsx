@@ -10,8 +10,6 @@ import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsCom
 import { DatePickerModalDynamic } from './DatePickerModalDynamic';
 import { IElementModal } from '../types';
 
-import { cloneDeep } from 'lodash';
-
 describe('<DatePickerModalDynamic />', function () {
   const element: IElementModal = {
     element: 'date_picker',
@@ -49,7 +47,7 @@ describe('<DatePickerModalDynamic />', function () {
     const today = new Date();
     const year = today.getFullYear();
     const month = ('0' + (today.getMonth() + 1)).slice(-2);
-    const day = today.getDate();
+    const day = ('0' + today.getDate()).slice(-2);
 
     cy.mount(
       <SetupTestsComponents>

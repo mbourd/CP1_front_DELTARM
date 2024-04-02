@@ -24,7 +24,7 @@ export const CheckboxWrapper: React.FC<
     selectedValues = first ? { [first]: true } : {};
   }
   if (multiple) {
-    const values = Object.keys(selectedValues)[0].split(';');
+    const values = Object.keys(selectedValues)?.[0]?.split(';') ?? [];
     selectedValues = {};
     if (values.includes('undefined')) {
       values.splice(values.indexOf('undefined'), 1);

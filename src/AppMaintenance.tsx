@@ -7,9 +7,19 @@ import 'Services/Api/registerCallState';
 
 import { MainHeader } from 'Shared/components';
 import { MainContent } from 'Shared/components';
-import { JwtData, security, SecurityProvider, useSecurity } from 'Services';
+import {
+  appStore,
+  JwtData,
+  security,
+  SecurityProvider,
+  store,
+  useSecurity,
+} from 'Services';
 import { Maintenance } from './Packages/Design/components/ApiResponse/Maintenance/Maintenance';
 import { Login } from './Features';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { Persistor } from 'redux-persist';
 
 /* Maintenance mode below, use this component for maintenance mode, add admin users below so they still can see the app */
 const AppMaintenance = (): React.ReactElement => {
@@ -20,17 +30,24 @@ const AppMaintenance = (): React.ReactElement => {
   const isAdmin = adminUsers.find((user) => userId?.user_id === user);
 
   return (
-    <SecurityProvider security={security}>
-      {jwt ? null : <Login />}
-      {isAdmin !== undefined ? (
-        <>
-          <MainHeader />
-          <MainContent />
-        </>
-      ) : (
-        <Maintenance message={'Le site est en maintenance'} />
-      )}
-    </SecurityProvider>
+    <Provider store={store}>
+      <PersistGate
+        loading={null}
+        persistor={appStore.getPersistor() as Persistor}
+      >
+        <SecurityProvider security={security}>
+          {jwt ? null : <Login />}
+          {isAdmin !== undefined ? (
+            <>
+              <MainHeader />
+              <MainContent />
+            </>
+          ) : (
+            <Maintenance message={'Le site est en maintenance'} />
+          )}
+        </SecurityProvider>
+      </PersistGate>
+    </Provider>
   );
 };
 

@@ -66,11 +66,14 @@ describe('<TextAreaModalDynamic />', function () {
     cy.mount(<DummFC />).waitReactApp();
     cy.react('TextAreaModalDynamic')
       .find('textarea')
-      .should('not.be.disabled')
-      .focus();
-    cy.realType('new string value').clickOutside();
-    cy.react('TextAreaModalDynamic')
-      .find('textarea')
-      .should('have.value', value);
+      .then(($txts) => {
+        cy.wrap($txts).each(($txt) => {
+          if ($txt.is(':visible')) {
+            cy.wrap($txt).should('not.be.disabled').focus();
+            cy.realType('new string value').clickOutside();
+            cy.wrap($txt).should('have.value', value);
+          }
+        });
+      });
   });
 });

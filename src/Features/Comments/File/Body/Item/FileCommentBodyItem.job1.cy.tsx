@@ -77,6 +77,8 @@ describe('<FileCommentBodyItem />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('FileCommentBodyItem');
+    cy.react('FileCommentBodyItem')
+      .find('.MuiAvatar-root')
+      .should('have.text', user[0]);
   });
 });

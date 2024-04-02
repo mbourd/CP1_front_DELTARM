@@ -203,7 +203,16 @@ export const FinancialControl: React.FC<React.PropsWithChildren<IProps>> = ({
           defaultValue={controlValue ? numberWithSpaces(controlValue) : ''}
           icon={
             control?.control_options?.currency_symbol ? (
-              control?.control_options
+              <div
+                style={{
+                  width: 50,
+                  marginLeft: 5,
+                }}
+              >
+                <p style={{ fontSize: 13, fontWeight: 'bolder' }}>
+                  {control.control_options.currency_symbol}
+                </p>
+              </div>
             ) : (
               <EuroIcon />
             )

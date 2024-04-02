@@ -13,7 +13,7 @@ interface ISwitchMetric {
 export const SwitchMetric: React.FC<ISwitchMetric> = ({
   indicator,
 }): React.ReactElement => {
-  switch (indicator.style) {
+  switch (indicator?.style) {
     case 'linear':
       return (
         <>
