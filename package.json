@@ -25,7 +25,7 @@
     "cypress:run:component": "cypress run --component",
     "cypress:parallel:component:chrome": "cypress-parallel -s cypress:run:component:chrome:ci -m false",
     "cypress:run:component:chrome": "cypress run --component --browser chrome",
-    "cypress:run:component:chrome:ci": "cypress run --component --browser chrome --headless --config video=false,screenshotOnRunFailure=false,experimentalMemoryManagement=true,numTestsKeptInMemory=0",
+    "cypress:run:component:chrome:ci": "DISABLE_ESLINT_PLUGIN=true cypress run --component --browser chrome --headless --config video=false,screenshotOnRunFailure=false,experimentalMemoryManagement=true,numTestsKeptInMemory=0",
     "cypress:run:component:firefox": "cypress run --component --browser firefox",
     "cypress:cache:clear": "cypress cache clear",
     "cypress:cache:prune": "cypress cache prune"
