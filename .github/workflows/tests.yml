@@ -10,6 +10,30 @@ on:
     workflow_call:
 
 jobs:
+    linter:
+        name: Check linter
+        runs-on: ubuntu-20.04
+        steps:
+            -   name: checkout
+                uses: actions/checkout@v4
+
+            -   name: setup node
+                uses: actions/setup-node@v4
+                with:
+                    node-version: 16.18.0
+
+            -   name: yarn install
+                run: yarn install
+
+            -   name: check linter src folder
+                run: yarn lint
+
+            -   name: check linter jest tests
+                run: yarn lint:jest
+
+            -   name: check linter cypress tests
+                run: yarn lint:cypress
+
     jest-tests:
         name: Jest Unit tests
         runs-on: ubuntu-20.04
