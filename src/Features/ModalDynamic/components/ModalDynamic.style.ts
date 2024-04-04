@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 export const ModalDynamicStyled = styled.div`
+  margin-top: ${({ theme }) => theme.spacing.xxLarge};
   font-weight: bold;
   line-height: ${({ theme }) => theme.sizing.xLarge};
-  margin-top: ${({ theme }) => theme.spacing.xxLarge};
 `;
 
 export const ModalDynamicFooterStyled = styled.div`
@@ -25,12 +25,13 @@ export const ModalDynamicFooterStyled = styled.div`
 
 export const ModalDynamicContentStyled = styled.div`
   max-height: 320px;
-  overflow-y: scroll;
   margin: 0 15px;
+  overflow-y: scroll;
+
   .top-message,
   .bottom-message {
-    font-weight: bold;
     margin: ${({ theme }) => theme.spacing.normal} 0;
+    font-weight: bold;
   }
 
   .file-info {
@@ -45,9 +46,10 @@ export const ModalDynamicContentStyled = styled.div`
   .missing-fields {
     margin: ${({ theme }) => theme.spacing.large}
       ${({ theme }) => theme.spacing.normal};
+
     .missing-field {
-      margin: ${({ theme }) => theme.spacing.normal};
       display: inline-block;
+      margin: ${({ theme }) => theme.spacing.normal};
     }
   }
 

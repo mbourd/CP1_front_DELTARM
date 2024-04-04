@@ -3,36 +3,38 @@ import styled from 'styled-components';
 export const AcceptValidationStyled = styled.div`
   input[type='checkbox'] {
     position: relative;
-    cursor: pointer;
-    margin: 10px;
     width: 1rem;
     height: 1rem;
+    margin: 10px;
+    cursor: pointer;
   }
-  input[type='checkbox']:before {
-    content: '';
-    display: block;
+
+  input[type='checkbox']::before {
     position: absolute;
-    width: 16px;
-    height: 16px;
     top: 0;
     left: 0;
+    display: block;
+    width: 16px;
+    height: 16px;
     border: 2px solid #555555;
     border-radius: 3px;
     background-color: white;
-  }
-  input[type='checkbox']:checked:after {
     content: '';
+  }
+
+  input[type='checkbox']:checked::after {
+    position: absolute;
+    top: 2px;
+    left: 6px;
     display: block;
     width: 5px;
     height: 10px;
     border: solid black;
     border-width: 0 2px 2px 0;
+    content: '';
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
-    position: absolute;
-    top: 2px;
-    left: 6px;
   }
 
   .font {
@@ -40,8 +42,7 @@ export const AcceptValidationStyled = styled.div`
   }
 
   .card-items {
-    maxHeight: 280px;
+    max-height: 280px;
     overflow-y: auto;
-  }
   }
 `;

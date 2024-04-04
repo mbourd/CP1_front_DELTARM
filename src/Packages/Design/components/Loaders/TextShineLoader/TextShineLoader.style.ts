@@ -5,18 +5,18 @@ import { ITextShineLoader } from '../types';
 export const TextShineLoaderStyled = styled.span<
   Required<Omit<ITextShineLoader, 'text'>>
 >`
+  animation: shine 3s linear infinite;
   background: ${({ $colors }) => {
     const step = 100 / $colors.length;
     $colors = $colors.map((color, k) => `${color} ${step * k}%`);
 
     return `linear-gradient(to right, ${$colors.join(', ')})`;
   }};
+  /* background-clip: text; */
+  /* text-fill-color: transparent; */
+  background-clip: text;
   background-size: 200% auto;
-  //background-clip: text;
-  text-fill-color: transparent;
-  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: shine 3s linear infinite;
 
   @keyframes shine {
     to {

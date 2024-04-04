@@ -7,20 +7,20 @@ export const FileAuditStyled = styled.div`
 `;
 
 export const FileAuditHeaderStyled = styled.header`
+  padding: ${({ theme }) => theme.spacing.small};
   background-color: ${({ theme }) => theme.color.primary.main};
   color: ${({ theme }) => theme.color.white.main};
   font-family: ${({ theme }) => theme.font.medium.main};
-  padding: ${({ theme }) => theme.spacing.small};
   text-align: center;
 `;
 
 export const FileAuditFooterStyled = styled.div`
-  box-shadow: 0 -2px 4px -5px #333;
   padding: ${({ theme }) => theme.spacing.normal};
+  box-shadow: 0 -2px 4px -5px #333333;
 
   .MuiInputBase-input {
-    color: ${({ theme }) => theme.color.text.main};
-    padding-left: ${({ theme }) => theme.spacing.small};
     padding-right: ${({ theme }) => theme.spacing.small};
+    padding-left: ${({ theme }) => theme.spacing.small};
+    color: ${({ theme }) => theme.color.text.main};
   }
 `;
