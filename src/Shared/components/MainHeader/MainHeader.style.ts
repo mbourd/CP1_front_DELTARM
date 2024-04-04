@@ -36,8 +36,6 @@ export const MainHeaderStyled = styled.header`
   }
 
   .language-option {
-    right: 100px;
-    bottom: 0;
     margin: auto;
     position: absolute;
     right: ${({ theme }) => theme.spacing.xxLarge};

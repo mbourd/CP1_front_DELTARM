@@ -27,18 +27,15 @@ export const RadioStyled = styled.label<IProps>`
     min-width: 18px;
   }
 
-  ._CheckboxRadioCheckmark:after {
+  ._CheckboxRadioCheckmark::after {
     border-radius: ${({ $inputType }) =>
       $inputType === 'checkbox' ? '2px' : '50%'};
-    bottom: 0;
+    inset: 0;
     content: '';
     display: block;
     height: 0;
-    left: 0;
     margin: auto;
     position: absolute;
-    right: 0;
-    top: 0;
     transition: all ${({ theme }) => theme.transition.time};
     width: 0;
   }
@@ -48,7 +45,7 @@ export const RadioStyled = styled.label<IProps>`
       theme.color[$checkedColor].main};
   }
 
-  input:checked ~ ._CheckboxRadioCheckmark:after {
+  input:checked ~ ._CheckboxRadioCheckmark::after {
     background-color: ${({ theme, $checkedColor }) =>
       theme.color[$checkedColor].main};
     height: 10px;

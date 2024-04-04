@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const FileCommentFooterStyled = styled.div`
-  box-shadow: 0 -2px 4px -5px #333;
+  box-shadow: 0 -2px 4px -5px #333333;
   padding: ${({ theme }) => theme.spacing.normal};
 
   .MuiInputBase-input {

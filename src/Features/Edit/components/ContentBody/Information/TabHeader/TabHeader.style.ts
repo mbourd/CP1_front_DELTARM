@@ -26,8 +26,8 @@ export const TabHeaderStyled = styled.div`
         background-color: transparent;
       }
 
-      &:after {
-        background-color: #fff;
+      &::after {
+        background-color: #ffffff;
         bottom: -1px;
         content: '';
         height: 1px;

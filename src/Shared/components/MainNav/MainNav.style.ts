@@ -22,7 +22,7 @@ export const MainNavStyled = styled.div`
       }
 
       &:hover {
-        background-color: rgba(255, 205, 0, 0.1);
+        background-color: rgb(255 205 0 / 10%);
       }
 
       &:first-child {

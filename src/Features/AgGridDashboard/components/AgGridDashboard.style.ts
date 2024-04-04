@@ -4,6 +4,7 @@ export const AgGridDashboardStyled = styled.div`
   .MuiGrid-item {
     padding: ${({ theme }) => theme.sizing.xxLarge};
   }
+
   max-width: ${({ theme }) => theme.breakpoint.md};
   margin: auto;
 `;
@@ -34,6 +35,7 @@ export const MetricsContainerStyled = styled.div`
   flex-direction: column;
   align-items: center;
   margin: auto;
+
   & > span > span {
     flex-grow: 1;
   }

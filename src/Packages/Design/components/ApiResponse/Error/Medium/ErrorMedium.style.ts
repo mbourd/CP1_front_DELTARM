@@ -25,7 +25,7 @@ export const ErrorMediumStyled = styled.div`
     white-space: pre-wrap;
   }
 
-  @media only screen and (min-width: 1800px) {
+  @media only screen and (width >= 1800px) {
     .MuiCard-root {
       border: 1px solid ${({ theme }) => theme.color.success.main};
       height: 500px;
@@ -61,6 +61,10 @@ export const ErrorMediumStyled = styled.div`
       }
     }
 
-    .card-items { margin: 20px, height: 400px, overflow-y: auto }
+    .card-items {
+      margin: 20px;
+      height: 400px;
+      overflow-y: auto;
+    }
   }
 `;

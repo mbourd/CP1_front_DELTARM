@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { stateHeight, actionsWidth } from '../types';
 
 export const ActionsStyled = styled.div`
-  background-color: rgba(255, 205, 0, 0.1);
+  background-color: rgb(255 205 0 / 10%);
   position: absolute;
   right: 0;
   top: ${stateHeight}px;
@@ -20,12 +20,9 @@ export const ActionsStyled = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
-      bottom: 0;
-      left: 0;
+      inset: 0;
       margin: auto;
       position: absolute;
-      right: 0;
-      top: 0;
     }
 
     &:last-child {

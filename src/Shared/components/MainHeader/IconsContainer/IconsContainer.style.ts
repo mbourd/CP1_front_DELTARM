@@ -1,13 +1,10 @@
 import styled from 'styled-components';
 
 export const IconsContainerStyled = styled.div`
-  bottom: 0;
+  inset: 0 0 0 5px;
   height: 36px;
-  left: 5px;
   margin: auto;
   position: absolute;
-  right: 0;
-  top: 0;
   width: 200px;
 
   a {

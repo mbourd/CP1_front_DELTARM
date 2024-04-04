@@ -37,6 +37,7 @@ export const SearchModalBPIContentStyled = styled.div`
   .missing-fields {
     margin: ${({ theme }) => theme.spacing.large}
       ${({ theme }) => theme.spacing.normal};
+
     .missing-field {
       margin: ${({ theme }) => theme.spacing.normal};
       display: inline-block;
