@@ -29,8 +29,8 @@ export const FormComplianceContainer = styled.div`
     width: 100%;
 
     .MuiGrid-item {
-      margin: 0;
       padding: 0;
+      margin: 0;
 
       &:last-child {
         height: 20px;
@@ -39,14 +39,14 @@ export const FormComplianceContainer = styled.div`
   }
 
   .control-footer {
-    margin-top: 2px;
     position: absolute;
     right: 0;
     width: auto;
+    margin-top: 2px;
 
     .MuiGrid-item {
-      margin: 0;
       padding: 0;
+      margin: 0;
     }
   }
 `;

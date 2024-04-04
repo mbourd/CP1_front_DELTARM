@@ -2,9 +2,10 @@ import styled from 'styled-components';
 import { IStairsLoader } from '../types';
 
 export const StairsLoaderStyled = styled.div<IStairsLoader>`
+  position: relative;
+  width: 75px;
   height: 100px;
   margin: auto;
-  position: relative;
   transform: ${({ $size }) => {
     switch ($size) {
       case 'sm':
@@ -15,56 +16,55 @@ export const StairsLoaderStyled = styled.div<IStairsLoader>`
 
     return 'scale(1)';
   }};
-  width: 75px;
 
   ._LoaderStairsBar {
-    background: ${({ $barsColor }) => $barsColor};
-    bottom: 0;
-    height: 50%;
     position: absolute;
-    transform-origin: center bottom;
+    bottom: 0;
     width: 10px;
+    height: 50%;
+    background: ${({ $barsColor }) => $barsColor};
+    transform-origin: center bottom;
   }
 
   ._LoaderStairsBar:nth-child(1) {
-    animation: barUp1 ${({ $speed }) => $speed}s infinite;
     left: 0;
+    animation: barUp1 ${({ $speed }) => $speed}s infinite;
     transform: scale(1, 0.2);
   }
 
   ._LoaderStairsBar:nth-child(2) {
-    animation: barUp2 ${({ $speed }) => $speed}s infinite;
     left: 15px;
+    animation: barUp2 ${({ $speed }) => $speed}s infinite;
     transform: scale(1, 0.4);
   }
 
   ._LoaderStairsBar:nth-child(3) {
-    animation: barUp3 ${({ $speed }) => $speed}s infinite;
     left: 30px;
+    animation: barUp3 ${({ $speed }) => $speed}s infinite;
     transform: scale(1, 0.6);
   }
 
   ._LoaderStairsBar:nth-child(4) {
-    animation: barUp4 ${({ $speed }) => $speed}s infinite;
     left: 45px;
+    animation: barUp4 ${({ $speed }) => $speed}s infinite;
     transform: scale(1, 0.8);
   }
 
   ._LoaderStairsBar:nth-child(5) {
-    animation: barUp5 ${({ $speed }) => $speed}s infinite;
     left: 60px;
+    animation: barUp5 ${({ $speed }) => $speed}s infinite;
     transform: scale(1, 1);
   }
 
   ._LoaderStairsBall {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
     animation: ball ${({ $speed }) => $speed}s infinite;
     background: ${({ $ballColor }) => $ballColor};
-    border-radius: 50%;
-    bottom: 10px;
-    height: 10px;
-    left: 0;
-    position: absolute;
-    width: 10px;
   }
 
   @keyframes ball {
