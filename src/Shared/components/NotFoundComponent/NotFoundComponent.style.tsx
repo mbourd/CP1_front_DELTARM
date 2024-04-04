@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 export const NotFoundComponentContainer = styled.div`
   display: flex;
-  flex-direction: column;
   height: 500px;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
 
   & a {
     font-size: 1.5em;

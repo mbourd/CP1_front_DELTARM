@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "yarn lint && DISABLE_ESLINT_PLUGIN=true react-scripts start",
-    "start:browser:none": "yarn lint && BROWSER=none DISABLE_ESLINT_PLUGIN=true react-scripts start",
+    "start": "yarn lint && yarn lint:style && DISABLE_ESLINT_PLUGIN=true react-scripts start",
+    "start:browser:none": "yarn lint && yarn lint:style && BROWSER=none DISABLE_ESLINT_PLUGIN=true react-scripts start",
     "build": "react-scripts --max_old_space_size=4096 build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettier:fix": "prettier --single-quote --print-width 80 --trailing-comma all --write './src/**/*.{ts,tsx}'",
+    "lint:all": "yarn lint && yarn lint:cypress && yarn lint:jest && yarn lint:style",
     "lint": "eslint ./src --ext .ts,.tsx --ignore-pattern '**/*.cy.ts' --ignore-pattern '**/*.cy.tsx' --ignore-pattern '**/*.test.ts' --config .eslintrc",
     "lint:cypress": "eslint '**/*.cy.{ts,tsx}' --config .eslintrc",
     "lint:jest": "eslint '**/*.test.ts' --config .eslintrc",
@@ -170,13 +171,14 @@
     "prettier": "^3.2.5",
     "regexp-tree": "^0.1.27",
     "stylelint": "^16.3.1",
+    "stylelint-config-idiomatic-order": "^10.0.0",
     "stylelint-config-prettier": "^9.0.5",
     "stylelint-config-recommended": "^14.0.0",
     "stylelint-config-standard": "^36.0.0",
     "stylelint-order": "^6.0.4",
     "stylelint-prettier": "^5.0.0",
     "to-regex": "^3.0.2",
-    "typescript": "^4.5.4"
+    "typescript": "^5.4.3"
   },
   "resolutions": {
     "@types/react": "^18.2.55",

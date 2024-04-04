@@ -3,19 +3,19 @@ import styled from 'styled-components';
 export const DataGridControlStyled = styled.div`
   ._DataGrid {
     .select-list-data-grid {
+      z-index: 0;
+      display: block;
       padding-top: 26px;
       white-space: unset;
-      display: block;
-      z-index: 0;
     }
 
     .cell {
-      white-space: unset;
       display: flex;
-      align-items: center;
       flex-direction: column;
+      align-items: center;
       justify-content: center;
       line-height: initial;
+      white-space: unset;
     }
   }
 
@@ -29,15 +29,15 @@ export const DataGridControlStyled = styled.div`
 
   .ag-center-cols-clipper,
   .ag-center-cols-container {
-    min-height: 40px !important;
     overflow: visible !important;
+    min-height: 40px !important;
   }
 
   .select-cell-ag-grid {
     .ag-cell-value {
+      z-index: 999;
       overflow: clip visible;
       height: 100%;
-      z-index: 999;
     }
   }
 
@@ -48,8 +48,8 @@ export const DataGridControlStyled = styled.div`
 
   .ag-root.ag-layout-auto-height {
     overflow: visible !important;
-    flex: 1 1 auto;
     width: 0;
+    flex: 1 1 auto;
   }
 
   .ag-header-viewport,
@@ -60,9 +60,9 @@ export const DataGridControlStyled = styled.div`
   .ag-body-horizontal-scroll-viewport,
   .ag-virtual-list-viewport {
     position: relative;
-    height: 100%;
-    min-width: 0;
     overflow: visible !important;
+    min-width: 0;
+    height: 100%;
     flex: 1 1 auto;
   }
 `;
@@ -87,14 +87,14 @@ export const AgDataGridStyle = styled.div<{
   }};
 
   .ag-header-cell {
-    display: inline-flex;
-    align-items: left !important;
     position: absolute;
-    height: 100%;
+    display: inline-flex;
     overflow: hidden;
+    height: 100%;
+    align-items: left !important;
+    font-size: ${({ $font_size }) => ($font_size ? `${$font_size}px` : '13px')};
     font-weight: ${({ $font_weight }) =>
       $font_weight ? $font_weight : 'normal'};
-    font-size: ${({ $font_size }) => ($font_size ? `${$font_size}px` : '13px')};
 
     &.left-header .ag-header-cell-label {
       justify-content: left;
@@ -103,8 +103,8 @@ export const AgDataGridStyle = styled.div<{
 
     &.center-header .ag-header-cell-label {
       justify-content: center;
-      text-align: center;
       margin-left: 7px;
+      text-align: center;
     }
 
     &.right-header .ag-header-cell-label {
@@ -135,11 +135,11 @@ export const AgDataGridStyle = styled.div<{
   .ag-theme-alpine .ag-header-cell-resize::after {
     position: absolute;
     z-index: 1;
-    display: block;
+    top: 0 !important;
     left: calc(50% - 1px);
+    display: block;
     /* width: ${({ $is_border_color }) => ($is_border_color ? '5px' : '0')}; */
     height: 100% !important;
-    top: 0 !important;
     background-color: ${({ $border_color, $is_border_color }) =>
       $is_border_color ? $border_color : 'none'};
   }
@@ -151,9 +151,9 @@ export const AgDataGridStyle = styled.div<{
   }
 
   .ag-cell {
+    font-size: ${({ $font_size }) => ($font_size ? `${$font_size}px` : '13px')};
     font-weight: ${({ $font_weight }) =>
       $font_weight ? $font_weight : 'normal'};
-    font-size: ${({ $font_size }) => ($font_size ? `${$font_size}px` : '13px')};
   }
   /* .ag-theme-alpine .ag-paging-panel {
     color: ${({ $font_color }) =>

@@ -13,13 +13,7 @@ export const ButtonStyled = styled.span<IProps>`
 
   .MuiButtonBase-root,
   .MuiButton-root {
-    background-color: ${({ theme, $type, $colorType, $disabled }) => {
-      if ($disabled) {
-        return $type === 'default' ? theme.color.disabled.main : 'transparent';
-      }
-
-      return $type === 'default' ? $colorType.main : 'transparent';
-    }};
+    padding: 6px 15px;
     border: ${({ theme, $type, $colorType, $disabled }) => {
       if ($disabled) {
         return $type === 'default'
@@ -29,18 +23,24 @@ export const ButtonStyled = styled.span<IProps>`
 
       return $type === 'default' ? 'none' : `1px solid ${$colorType.main}`;
     }};
+    background-color: ${({ theme, $type, $colorType, $disabled }) => {
+      if ($disabled) {
+        return $type === 'default' ? theme.color.disabled.main : 'transparent';
+      }
+
+      return $type === 'default' ? $colorType.main : 'transparent';
+    }};
     color: ${({ $type, $colorType }) =>
       $type === 'default' ? '#FFF' : $colorType.main};
     font-family: ${({ theme }) => theme.font.medium.main};
-    padding: 6px 15px;
     text-transform: none;
     transition: all ${({ theme }) => theme.transition.time};
 
     &:hover {
-      background-color: ${({ $type, $colorType }) =>
-        $type === 'default' ? $colorType.dark : 'transparent'};
       border: ${({ $type, $colorType }) =>
         $type === 'default' ? 'none' : ` 1px solid ${$colorType.light}`};
+      background-color: ${({ $type, $colorType }) =>
+        $type === 'default' ? $colorType.dark : 'transparent'};
       color: ${({ $type, $colorType }) =>
         $type === 'default' ? '#FFF' : $colorType.light};
     }

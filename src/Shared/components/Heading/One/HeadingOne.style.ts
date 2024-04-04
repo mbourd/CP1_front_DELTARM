@@ -6,10 +6,10 @@ interface IProps {
 }
 
 export const HeadingOneStyled = styled.h1<IProps>`
+  margin: ${({ theme }) => theme.spacing.xLarge} 0;
   color: ${({ theme, $variant }) => theme.color.heading[$variant]};
   font-family: ${({ theme }) => theme.font.heading.main};
   font-size: ${({ theme }) => theme.sizing.heading.one};
   line-height: 40px;
-  margin: ${({ theme }) => theme.spacing.xLarge} 0;
   text-align: center;
 `;
