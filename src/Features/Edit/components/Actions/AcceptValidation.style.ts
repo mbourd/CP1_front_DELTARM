@@ -8,7 +8,8 @@ export const AcceptValidationStyled = styled.div`
     width: 1rem;
     height: 1rem;
   }
-  input[type='checkbox']:before {
+
+  input[type='checkbox']::before {
     content: '';
     display: block;
     position: absolute;
@@ -20,7 +21,8 @@ export const AcceptValidationStyled = styled.div`
     border-radius: 3px;
     background-color: white;
   }
-  input[type='checkbox']:checked:after {
+
+  input[type='checkbox']:checked::after {
     content: '';
     display: block;
     width: 5px;
@@ -40,8 +42,7 @@ export const AcceptValidationStyled = styled.div`
   }
 
   .card-items {
-    maxHeight: 280px;
+    max-height: 280px;
     overflow-y: auto;
-  }
   }
 `;

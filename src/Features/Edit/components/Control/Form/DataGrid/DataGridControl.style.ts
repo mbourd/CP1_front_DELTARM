@@ -8,6 +8,7 @@ export const DataGridControlStyled = styled.div`
       display: block;
       z-index: 0;
     }
+
     .cell {
       white-space: unset;
       display: flex;
@@ -25,6 +26,7 @@ export const DataGridControlStyled = styled.div`
   .ag-row.ag-row-focus {
     z-index: 1;
   }
+
   .ag-center-cols-clipper,
   .ag-center-cols-container {
     min-height: 40px !important;
@@ -33,16 +35,15 @@ export const DataGridControlStyled = styled.div`
 
   .select-cell-ag-grid {
     .ag-cell-value {
-      overflow-x: clip;
-      overflow-y: visible !important;
+      overflow: clip visible;
       height: 100%;
       z-index: 999;
     }
   }
+
   .ag-root,
   .ag-root-wrapper {
-    overflow-x: scroll !important;
-    overflow-y: visible !important;
+    overflow: scroll visible !important;
   }
 
   .ag-root.ag-layout-auto-height {
@@ -60,7 +61,7 @@ export const DataGridControlStyled = styled.div`
   .ag-virtual-list-viewport {
     position: relative;
     height: 100%;
-    min-width: 0px;
+    min-width: 0;
     overflow: visible !important;
     flex: 1 1 auto;
   }
@@ -86,15 +87,26 @@ export const AgDataGridStyle = styled.div<{
   }};
 
   .ag-header-cell {
+    display: inline-flex;
+    align-items: left !important;
+    position: absolute;
+    height: 100%;
+    overflow: hidden;
+    font-weight: ${({ $font_weight }) =>
+      $font_weight ? $font_weight : 'normal'};
+    font-size: ${({ $font_size }) => ($font_size ? `${$font_size}px` : '13px')};
+
     &.left-header .ag-header-cell-label {
       justify-content: left;
       text-align: left;
     }
+
     &.center-header .ag-header-cell-label {
       justify-content: center;
       text-align: center;
       margin-left: 7px;
     }
+
     &.right-header .ag-header-cell-label {
       justify-content: right;
       text-align: right;
@@ -137,23 +149,12 @@ export const AgDataGridStyle = styled.div<{
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .ag-header-cell {
-    display: inline-flex;
-    align-items: left !important;
-    position: absolute;
-    height: 100%;
-    overflow: hidden;
-    font-weight: ${({ $font_weight }) =>
-      $font_weight ? $font_weight : 'normal'};
-    font-size: ${({ $font_size }) => ($font_size ? `${$font_size}px` : '13px')};
-  }
 
   .ag-cell {
     font-weight: ${({ $font_weight }) =>
       $font_weight ? $font_weight : 'normal'};
     font-size: ${({ $font_size }) => ($font_size ? `${$font_size}px` : '13px')};
   }
-
   /* .ag-theme-alpine .ag-paging-panel {
     color: ${({ $font_color }) =>
     $font_color ? $font_color : '#000000'} !important;

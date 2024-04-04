@@ -2,9 +2,11 @@ import styled from 'styled-components';
 
 export const ActionsComplianceContainer = styled.div`
   margin-top: 10px;
+
   & span {
     margin-top: 5px;
   }
+
   .resolved-compliance {
     margin: 5px;
   }
@@ -18,6 +20,7 @@ export const FormComplianceContainer = styled.div`
   .MuiGrid-item {
     padding: 0.5rem;
   }
+
   ._FormError {
     padding: 0;
   }

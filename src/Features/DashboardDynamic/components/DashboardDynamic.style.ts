@@ -32,6 +32,7 @@ export const MetricsContainerStyled = styled.div`
   flex-direction: column;
   align-items: center;
   margin: auto;
+
   & > span > span {
     flex-grow: 1;
   }

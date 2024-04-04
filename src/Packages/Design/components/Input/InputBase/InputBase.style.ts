@@ -45,12 +45,12 @@ export const InputBaseStyled = styled.label<IProps>`
 
   .MuiInputBase-root,
   .MuiTextField-root {
-    .MuiInput-underline:hover:not(.Mui-disabled):before {
+    .MuiInput-underline:hover:not(.Mui-disabled)::before {
       border: none;
     }
 
-    .MuiInput-underline.Mui-disabled:before,
-    .MuiInput-underline:before {
+    .MuiInput-underline.Mui-disabled::before,
+    .MuiInput-underline::before {
       border: none;
     }
 

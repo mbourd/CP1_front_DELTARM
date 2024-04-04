@@ -27,6 +27,7 @@ export const ModalDynamicContentStyled = styled.div`
   max-height: 320px;
   overflow-y: scroll;
   margin: 0 15px;
+
   .top-message,
   .bottom-message {
     font-weight: bold;
@@ -45,6 +46,7 @@ export const ModalDynamicContentStyled = styled.div`
   .missing-fields {
     margin: ${({ theme }) => theme.spacing.large}
       ${({ theme }) => theme.spacing.normal};
+
     .missing-field {
       margin: ${({ theme }) => theme.spacing.normal};
       display: inline-block;
