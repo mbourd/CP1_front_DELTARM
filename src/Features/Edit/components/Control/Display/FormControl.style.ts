@@ -8,6 +8,7 @@ export const FormControlStyled = styled.div`
   .MuiGrid-item {
     padding: 1.3rem;
   }
+
   ._FormError {
     padding: 0;
   }

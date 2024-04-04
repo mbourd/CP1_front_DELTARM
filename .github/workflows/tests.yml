@@ -20,7 +20,7 @@ jobs:
             -   name: setup node
                 uses: actions/setup-node@v4
                 with:
-                    node-version: 16.18.0
+                    node-version: 20.11.0
 
             -   name: yarn install
                 run: yarn install
@@ -34,6 +34,9 @@ jobs:
             -   name: check linter cypress tests
                 run: yarn lint:cypress
 
+            -   name: check stylelint
+                run: yarn lint:style
+
     jest-tests:
         name: Jest Unit tests
         runs-on: ubuntu-20.04
@@ -44,7 +47,7 @@ jobs:
             -   name: setup node
                 uses: actions/setup-node@v4
                 with:
-                    node-version: 16.18.0
+                    node-version: 20.11.0
 
             -   name: yarn install
                 run: yarn install
@@ -62,7 +65,7 @@ jobs:
             -   name: setup node
                 uses: actions/setup-node@v4
                 with:
-                    node-version: 16.18.0
+                    node-version: 20.11.0
 
             -   name: launch tests
                 uses: cypress-io/github-action@v6
@@ -82,7 +85,7 @@ jobs:
             -   name: setup node
                 uses: actions/setup-node@v4
                 with:
-                    node-version: 16.18.0
+                    node-version: 20.11.0
 
             -   name: launch tests
                 uses: cypress-io/github-action@v6
@@ -102,7 +105,7 @@ jobs:
             -   name: setup node
                 uses: actions/setup-node@v4
                 with:
-                    node-version: 16.18.0
+                    node-version: 20.11.0
 
             -   name: launch tests
                 uses: cypress-io/github-action@v6
@@ -122,7 +125,7 @@ jobs:
             -   name: setup node
                 uses: actions/setup-node@v4
                 with:
-                    node-version: 16.18.0
+                    node-version: 20.11.0
 
             -   name: launch tests
                 uses: cypress-io/github-action@v6
@@ -142,7 +145,7 @@ jobs:
             -   name: setup node
                 uses: actions/setup-node@v4
                 with:
-                    node-version: 16.18.0
+                    node-version: 20.11.0
 
             -   name: launch tests
                 uses: cypress-io/github-action@v6
@@ -162,7 +165,7 @@ jobs:
             -   name: setup node
                 uses: actions/setup-node@v4
                 with:
-                    node-version: 16.18.0
+                    node-version: 20.11.0
 
             -   name: launch tests
                 uses: cypress-io/github-action@v6
@@ -182,7 +185,7 @@ jobs:
             -   name: setup node
                 uses: actions/setup-node@v4
                 with:
-                    node-version: 16.18.0
+                    node-version: 20.11.0
 
             -   name: launch tests
                 uses: cypress-io/github-action@v6
@@ -202,7 +205,7 @@ jobs:
             -   name: setup node
                 uses: actions/setup-node@v4
                 with:
-                    node-version: 16.18.0
+                    node-version: 20.11.0
 
             -   name: launch tests
                 uses: cypress-io/github-action@v6
@@ -222,7 +225,7 @@ jobs:
             -   name: setup node
                 uses: actions/setup-node@v4
                 with:
-                    node-version: 16.18.0
+                    node-version: 20.11.0
 
             -   name: launch tests
                 uses: cypress-io/github-action@v6
@@ -242,7 +245,7 @@ jobs:
             -   name: setup node
                 uses: actions/setup-node@v4
                 with:
-                    node-version: 16.18.0
+                    node-version: 20.11.0
 
             -   name: launch tests
                 uses: cypress-io/github-action@v6

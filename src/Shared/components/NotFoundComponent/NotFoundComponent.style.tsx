@@ -6,6 +6,7 @@ export const NotFoundComponentContainer = styled.div`
   height: 500px;
   justify-content: center;
   align-items: center;
+
   & a {
     font-size: 1.5em;
   }

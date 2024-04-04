@@ -43,7 +43,8 @@ export const ValidationPopperStyled = styled.div`
     width: 1rem;
     height: 1rem;
   }
-  input[type='checkbox']:before {
+
+  input[type='checkbox']::before {
     content: '';
     display: block;
     position: absolute;
@@ -55,15 +56,14 @@ export const ValidationPopperStyled = styled.div`
     border-radius: 3px;
     background-color: white;
   }
-  input[type='checkbox']:checked:after {
+
+  input[type='checkbox']:checked::after {
     content: '';
     display: block;
     width: 5px;
     height: 10px;
     border: solid black;
     border-width: 0 2px 2px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
     transform: rotate(45deg);
     position: absolute;
     top: 2px;
@@ -80,7 +80,7 @@ export const ValidationPopperStyled = styled.div`
     overflow-y: auto;
   }
 
-  @media only screen and (min-width: 1800px) {
+  @media only screen and (width >= 1800px) {
     .MuiCard-root {
       border: 1px solid ${({ theme }) => theme.color.success.main};
       height: 500px;
@@ -116,6 +116,10 @@ export const ValidationPopperStyled = styled.div`
       }
     }
 
-    .card-items { margin: 20px, height: 400px, overflow-y: auto }
+    .card-items {
+      margin: 20px;
+      height: 400px;
+      overflow-y: auto;
+    }
   }
 `;

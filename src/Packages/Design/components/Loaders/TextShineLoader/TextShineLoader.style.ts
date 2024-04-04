@@ -14,7 +14,7 @@ export const TextShineLoaderStyled = styled.span<
   background-size: 200% auto;
   //background-clip: text;
   text-fill-color: transparent;
-  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: shine 3s linear infinite;
 

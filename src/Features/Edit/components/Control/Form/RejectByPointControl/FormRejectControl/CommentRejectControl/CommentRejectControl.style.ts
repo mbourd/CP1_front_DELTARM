@@ -1,12 +1,16 @@
 import styled from 'styled-components';
 
-export const CommentRejectControlStyled = styled.div`
-  position: relative;
-  max-width: 70%;
-  margin: auto;
+const CommentRejectControlStyled = styled.div((props) => {
+  return {
+    position: 'relative',
+    maxWidth: '70%',
+    margin: 'auto',
 
-  .MuiSvgIcon-root:hover {
-    color: inherit;
-    cursor: inherit;
-  }
-`;
+    '& .MuiSvgIcon-root:hover': {
+      color: 'inherit',
+      cursor: 'inherit',
+    },
+  };
+});
+
+export { CommentRejectControlStyled };
