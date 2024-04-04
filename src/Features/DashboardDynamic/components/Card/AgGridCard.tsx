@@ -38,12 +38,14 @@ export const AgGridCard: React.FC<React.PropsWithChildren<ICardC>> = ({
   card.cols.values.forEach((column) => {
     if (column.filter) {
       switch (column.filter) {
+        // @ts-ignore
         case 'GenericCardResearcher':
           column.filter = GenericCardResearcher;
       }
     }
     if (column.comparator) {
       switch (column.comparator) {
+        // @ts-ignore
         case 'StrippedHTMLComparator':
           column.comparator = StrippedHTMLComparator;
       }

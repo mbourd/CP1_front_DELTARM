@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 export const SearchModalStyled = styled.div`
+  margin-top: ${({ theme }) => theme.spacing.xxLarge};
   font-weight: bold;
   line-height: ${({ theme }) => theme.sizing.xLarge};
-  margin-top: ${({ theme }) => theme.spacing.xxLarge};
 `;
 
 export const SearchModalFooterStyled = styled.div`
@@ -21,8 +21,8 @@ export const SearchModalFooterStyled = styled.div`
 export const SearchModalBPIContentStyled = styled.div`
   .top-message,
   .bottom-message {
-    font-weight: bold;
     margin: ${({ theme }) => theme.spacing.normal} 0;
+    font-weight: bold;
   }
 
   .file-info {
@@ -39,8 +39,8 @@ export const SearchModalBPIContentStyled = styled.div`
       ${({ theme }) => theme.spacing.normal};
 
     .missing-field {
-      margin: ${({ theme }) => theme.spacing.normal};
       display: inline-block;
+      margin: ${({ theme }) => theme.spacing.normal};
     }
   }
 

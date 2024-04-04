@@ -4,9 +4,9 @@ export const TabHeaderStyled = styled.div`
   margin-top: ${({ theme }) => theme.spacing.large};
 
   .MuiGrid-item {
+    padding: ${({ theme }) => theme.spacing.medium} 0;
     cursor: pointer;
     font-family: ${({ theme }) => theme.font.medium.main};
-    padding: ${({ theme }) => theme.spacing.medium} 0;
     text-align: center;
     text-transform: uppercase;
     transition: background-color ${({ theme }) => theme.transition.time};
@@ -16,24 +16,24 @@ export const TabHeaderStyled = styled.div`
     }
 
     &.active {
+      position: relative;
       border: 1px solid ${({ theme }) => theme.color.primary.main};
       border-bottom: none;
       color: ${({ theme }) => theme.color.active.main};
       cursor: default;
-      position: relative;
 
       &:hover {
         background-color: transparent;
       }
 
       &::after {
-        background-color: #ffffff;
-        bottom: -1px;
-        content: '';
-        height: 1px;
-        left: 0;
         position: absolute;
+        bottom: -1px;
+        left: 0;
         width: 100%;
+        height: 1px;
+        background-color: #ffffff;
+        content: '';
       }
     }
   }

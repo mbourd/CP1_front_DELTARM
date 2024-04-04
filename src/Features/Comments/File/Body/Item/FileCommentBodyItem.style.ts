@@ -10,11 +10,11 @@ export const FileCommentBodyItemStyled = styled.div<IProps>`
   }
 
   .MuiAvatar-root {
+    width: 40px;
+    height: 40px;
     background-color: ${({ $bgc }) => $bgc};
     font-family: ${({ theme }) => theme.font.medium.main};
-    height: 40px;
     line-height: 1px;
-    width: 40px;
   }
 
   .author {

@@ -4,8 +4,8 @@ export const MainNavStyled = styled.div`
   padding: 2px;
 
   .MuiList-root {
-    margin: 0;
     padding: 0;
+    margin: 0;
 
     .MuiListItem-root {
       border-bottom: 1px dotted ${({ theme }) => theme.color.primary.main};
@@ -26,8 +26,8 @@ export const MainNavStyled = styled.div`
       }
 
       &:first-child {
-        background-color: ${({ theme }) => theme.color.secondary.main};
         border-bottom: none;
+        background-color: ${({ theme }) => theme.color.secondary.main};
         color: ${({ theme }) => theme.color.white.main};
 
         .MuiSvgIcon-root,

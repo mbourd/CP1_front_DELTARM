@@ -5,8 +5,8 @@ type CardAgGridStyledProps = {
 };
 
 const CardAgGridStyled = styled.div<CardAgGridStyledProps>`
-  height: 415px;
   width: 100%;
+  height: 415px;
   /* .ag-header {
     display: none;
   } */
@@ -39,8 +39,8 @@ const CardAgGridStyled = styled.div<CardAgGridStyledProps>`
   }
 
   .ag-cell {
-    padding-left: 7px;
     padding-right: 7px;
+    padding-left: 7px;
 
     p {
       line-height: normal;

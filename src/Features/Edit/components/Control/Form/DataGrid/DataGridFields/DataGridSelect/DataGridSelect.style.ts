@@ -1,21 +1,21 @@
 import styled from 'styled-components';
 
 export const DataGridSelectStyled = styled.div`
-  line-height: initial;
-  z-index: 999;
-  margin-bottom: 20px;
   position: relative;
+  z-index: 999;
   height: '100%';
+  margin-bottom: 20px;
+  line-height: initial;
 
   .eylunC ._SelectContainer {
-    background-color: #ffffff;
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    padding: 4px;
     border: 1px solid #ffcd00;
     border-radius: 0 0 4px 4px;
     border-top: none;
-    padding: 4px;
-    position: relative;
-    width: 100%;
-    z-index: 10;
     margin-bottom: 20px;
+    background-color: #ffffff;
   }
 `;

@@ -2,11 +2,11 @@ import styled from 'styled-components';
 
 export const DataGridUploadStyled = styled.div`
   width: 100%;
+  padding: 0.3em;
   border: 1px solid #e0dddc;
   border-radius: 5px;
-  padding: 0.3em;
-  line-height: initial;
   margin-bottom: 3px;
+  line-height: initial;
 
   .MuiSvgIcon-root:hover {
     color: inherit;

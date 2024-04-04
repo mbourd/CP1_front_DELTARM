@@ -34,16 +34,27 @@ export const CustomSelectStyled = styled(Select).attrs(() => {
     },
   };
 })`
+  width: 100%;
+  /* padding: 10px 10px 0 0 !important; */
+  min-width: 120px;
+  height: auto;
+  min-height: 30px;
+  border: none !important;
   margin-top: -40px !important;
+  outline: none !important;
+  /* -webkit-appearance: none;
+  -moz-appearance: none; */
+  text-indent: 1px;
+  text-overflow: '';
 
   .MuiOutlinedInput-notchedOutline {
     border: 0;
   }
 
   .MuiSvgIcon-root {
+    padding-right: -20px !important;
     /* margin-top: -15px !important; */
     padding-left: 10px !important;
-    padding-right: -20px !important;
   }
 
   .MuiSelect-select {
@@ -51,17 +62,6 @@ export const CustomSelectStyled = styled(Select).attrs(() => {
     margin-left: -20px !important;
     /* margin-top: -40px !important; */
   }
-  /* -webkit-appearance: none;
-  -moz-appearance: none; */
-  text-indent: 1px;
-  text-overflow: '';
-  width: 100%;
-  height: auto;
-  border: none !important;
-  outline: none !important;
-  /* padding: 10px 10px 0 0 !important; */
-  min-width: 120px;
-  min-height: 30px;
 `;
 
 // export const OptionStyled = styled.option`

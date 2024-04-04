@@ -8,15 +8,15 @@ interface IProps {
 
 export const CardStyled = styled.section<IProps>`
   display: block;
-  margin: 0 auto;
-  border-radius: 4px;
   max-width: ${({ theme }) => theme.breakpoint.md};
+  border-radius: 4px;
+  margin: 0 auto;
   font-family: ${({ theme }) => theme.font.text.main};
 
   .MuiCard-root {
-    border: ${({ $cardColor }) => $cardColor};
     position: relative;
     height: ${cardHeight}px;
+    border: ${({ $cardColor }) => $cardColor};
   }
 
   .ag-header-cell-label {

@@ -6,12 +6,15 @@ interface IProps {
 }
 
 export const NavItemStyled = styled.span<IProps>`
+  display: flex;
+  width: 100%;
+  flex-wrap: nowrap;
   align-items: center;
+  border-style: dotted;
+  border-color: ${({ theme }) => theme.color.primary.main};
+  border-bottom-width: 1px;
   background-color: ${({ theme, $active }) =>
     $active ? theme.color.white.main : 'transparent'};
-  border-bottom-width: 1px;
-  border-color: ${({ theme }) => theme.color.primary.main};
-  border-style: dotted;
   cursor: ${({ $active }) => {
     if ($active) {
       return 'default';
@@ -19,9 +22,6 @@ export const NavItemStyled = styled.span<IProps>`
 
     return 'pointer';
   }};
-  display: flex;
-  flex-wrap: nowrap;
-  width: 100%;
 
   .MuiSvgIcon-root {
     color: ${({ theme }) => theme.color.disabled.main};
@@ -34,12 +34,12 @@ export const NavItemStyled = styled.span<IProps>`
 `;
 
 export const NavItemTextStyled = styled.span`
-  color: ${({ theme }) => theme.color.text.main};
   display: inline-block;
+  width: 100%;
+  padding: ${({ theme }) => theme.spacing.medium + ' ' + theme.spacing.small};
+  color: ${({ theme }) => theme.color.text.main};
   font-family: ${({ theme }) => theme.font.medium.main};
   font-size: ${({ theme }) => theme.sizing.normal};
-  padding: ${({ theme }) => theme.spacing.medium + ' ' + theme.spacing.small};
   text-align: right;
   text-transform: uppercase;
-  width: 100%;
 `;
