@@ -2,9 +2,11 @@ import styled from 'styled-components';
 
 export const ActionsComplianceContainer = styled.div`
   margin-top: 10px;
+
   & span {
     margin-top: 5px;
   }
+
   .resolved-compliance {
     margin: 5px;
   }
@@ -18,6 +20,7 @@ export const FormComplianceContainer = styled.div`
   .MuiGrid-item {
     padding: 0.5rem;
   }
+
   ._FormError {
     padding: 0;
   }
@@ -26,8 +29,8 @@ export const FormComplianceContainer = styled.div`
     width: 100%;
 
     .MuiGrid-item {
-      margin: 0;
       padding: 0;
+      margin: 0;
 
       &:last-child {
         height: 20px;
@@ -36,14 +39,14 @@ export const FormComplianceContainer = styled.div`
   }
 
   .control-footer {
-    margin-top: 2px;
     position: absolute;
     right: 0;
     width: auto;
+    margin-top: 2px;
 
     .MuiGrid-item {
-      margin: 0;
       padding: 0;
+      margin: 0;
     }
   }
 `;

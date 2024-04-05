@@ -2,30 +2,27 @@ import styled from 'styled-components';
 import { stateHeight, actionsWidth } from '../types';
 
 export const ActionsStyled = styled.div`
-  background-color: rgba(255, 205, 0, 0.1);
   position: absolute;
-  right: 0;
   top: ${stateHeight}px;
+  right: 0;
   bottom: 0;
   width: ${actionsWidth}px;
+  background-color: rgb(255 205 0 / 10%);
 
   a {
-    border-bottom: 1px dotted ${({ theme }) => theme.color.primary.main};
-    cursor: pointer;
+    position: relative;
     display: block;
     height: 50%;
-    position: relative;
+    border-bottom: 1px dotted ${({ theme }) => theme.color.primary.main};
+    cursor: pointer;
 
     .icon {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      bottom: 0;
-      left: 0;
-      margin: auto;
       position: absolute;
-      right: 0;
-      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: auto;
+      inset: 0;
     }
 
     &:last-child {

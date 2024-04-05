@@ -9,17 +9,17 @@ export const CardStyled = styled.div<IProps>`
   margin-bottom: ${({ theme }) => theme.spacing.normal};
 
   .MuiCard-root {
-    border: 1px solid ${({ $color }) => $color};
-    min-height: ${cardHeight}px;
     position: relative;
+    min-height: ${cardHeight}px;
+    border: 1px solid ${({ $color }) => $color};
   }
 
   .state {
-    background-color: ${({ $color }) => $color};
-    height: ${stateHeight}px;
-    left: 0;
     position: absolute;
     top: 0;
+    left: 0;
     width: 100%;
+    height: ${stateHeight}px;
+    background-color: ${({ $color }) => $color};
   }
 `;

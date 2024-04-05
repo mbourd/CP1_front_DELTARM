@@ -5,9 +5,8 @@ type CardAgGridStyledProps = {
 };
 
 const CardAgGridStyled = styled.div<CardAgGridStyledProps>`
-  height: 415px;
   width: 100%;
-
+  height: 415px;
   /* .ag-header {
     display: none;
   } */
@@ -16,9 +15,11 @@ const CardAgGridStyled = styled.div<CardAgGridStyledProps>`
     &.left-header .ag-header-cell-label {
       justify-content: left;
     }
+
     &.center-header .ag-header-cell-label {
       justify-content: center;
     }
+
     &.right-header .ag-header-cell-label {
       justify-content: right;
     }
@@ -26,8 +27,9 @@ const CardAgGridStyled = styled.div<CardAgGridStyledProps>`
 
   .ag-floating-filter {
     border-top: none !important;
-    border-right: solid 1px rgba(186, 191, 199, 0.5) !important;
+    border-right: solid 1px rgb(186 191 199 / 50%) !important;
   }
+
   .ag-floating-filter-body {
     top: -0.172rem !important;
   }
@@ -35,9 +37,10 @@ const CardAgGridStyled = styled.div<CardAgGridStyledProps>`
   .ag-row {
     /* height: 140px; */
   }
+
   .ag-cell {
-    padding-left: 7px;
     padding-right: 7px;
+    padding-left: 7px;
 
     p {
       line-height: normal;

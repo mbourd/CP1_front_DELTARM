@@ -16,13 +16,13 @@ import styled from 'styled-components';
 //   justify-content: center !important;
 // `;
 export const CustomTextAltRendererStyled = styled.div`
-  width: 100%;
-  font-family: ${({ theme }) => theme.font.text.main};
-  text-align: center;
-  border-bottom: none;
   display: block;
+  width: 100%;
   padding: 2px;
+  border-bottom: none;
+  font-family: ${({ theme }) => theme.font.text.main};
+  line-height: 17px;
+  text-align: center;
   white-space: pre-line;
   word-wrap: break-word;
-  line-height: 17px;
 `;

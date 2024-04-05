@@ -1,21 +1,21 @@
 import styled from 'styled-components';
 
 export const SearchBarStyled = styled.div`
-  margin: auto;
   position: relative;
   width: ${({ theme }) => theme.breakpoint.sm};
+  margin: auto;
 
   .search-container {
+    display: flex;
     align-items: center;
     border-radius: ${({ theme }) => theme.sizing.radius};
-    display: flex;
     margin-bottom: ${({ theme }) => theme.spacing.normal};
   }
 
   .buttons-container {
     display: flex;
-    justify-content: flex-end;
     align-items: center;
+    justify-content: flex-end;
     margin-bottom: ${({ theme }) => theme.spacing.small};
     text-transform: none;
 
@@ -26,8 +26,8 @@ export const SearchBarStyled = styled.div`
   }
 
   ._FormError {
-    padding-left: 0;
     position: absolute;
     top: -22px;
+    padding-left: 0;
   }
 `;
