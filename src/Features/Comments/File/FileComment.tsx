@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect } from 'react';
-import { Card } from '@material-ui/core';
+import { Card } from '@mui/material';
 import { BPIBadge, Popper } from 'Shared/components';
 import { CommentIcon } from 'Styles';
 import { router, useApi } from 'Services';

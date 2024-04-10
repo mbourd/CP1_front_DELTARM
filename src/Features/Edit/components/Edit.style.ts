@@ -27,21 +27,21 @@ export const EditStyled = styled.div`
   }
 
   .content {
-    background-color: ${({ theme }) => theme.color.white.main};
+    width: 100%;
     min-height: 600px;
     padding: ${({ theme }) => theme.spacing.medium};
     padding-top: 10px;
-    width: 100%;
+    background-color: ${({ theme }) => theme.color.white.main};
   }
 `;
 
 export const EditHeaderStyled = styled.div`
   position: fixed;
+  z-index: 5;
+  right: 0;
   left: 0;
   height: 110px;
-  right: 0;
   background: ${({ theme }) => theme.color.background.main};
-  z-index: 5;
 
   & + * {
     padding-top: 100px;
@@ -49,23 +49,23 @@ export const EditHeaderStyled = styled.div`
 `;
 
 export const EditTitleFileStyled = styled.p`
-  align-items: center;
-  text-align: center;
-  justify-content: center;
   position: relative;
-  margin-top: 10px !important;
-  margin: 5px;
-  font-size: 1.4rem;
   width: 120%;
   height: auto;
+  align-items: center;
+  justify-content: center;
+  margin: 5px;
+  margin-top: 10px !important;
   font-family: ${({ theme }) => theme.font.heading.main};
+  font-size: 1.4rem;
   line-height: 25px;
+  text-align: center;
 
   .MuiSvgIcon-root,
   span {
+    margin: 0 ${({ theme }) => theme.spacing.xSmall};
     color: ${({ theme }) => theme.color.heading.main};
     cursor: default;
-    margin: 0 ${({ theme }) => theme.spacing.xSmall};
 
     &:hover {
       color: ${({ theme }) => theme.color.heading.main};

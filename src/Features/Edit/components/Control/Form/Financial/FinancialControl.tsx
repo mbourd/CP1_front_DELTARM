@@ -1,5 +1,5 @@
 import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { IApiControl, IChapter } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
 import { FinancialControlStyled } from './FinancialControl.style';
@@ -203,7 +203,16 @@ export const FinancialControl: React.FC<React.PropsWithChildren<IProps>> = ({
           defaultValue={controlValue ? numberWithSpaces(controlValue) : ''}
           icon={
             control?.control_options?.currency_symbol ? (
-              control?.control_options
+              <div
+                style={{
+                  width: 50,
+                  marginLeft: 5,
+                }}
+              >
+                <p style={{ fontSize: 13, fontWeight: 'bolder' }}>
+                  {control.control_options.currency_symbol}
+                </p>
+              </div>
             ) : (
               <EuroIcon />
             )

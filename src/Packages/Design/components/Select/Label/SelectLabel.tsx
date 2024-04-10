@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button as MUIButton } from '@material-ui/core';
+import { Button as MUIButton } from '@mui/material';
 import { SelectLabelStyled } from './SelectLabel.style';
 import { ISelectLabel } from '../types';
 import { useSizing } from '../../../hooks';

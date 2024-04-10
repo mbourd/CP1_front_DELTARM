@@ -3,7 +3,7 @@
 /// <reference types="../../../../../../../../../cypress/support/component" />
 
 // NOTE: Run CLI:
-// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/Compliance/FormCompliance/DateCompliance/DateCompliance.cy.tsx"
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/Form/Compliance/FormCompliance/DateCompliance/DateCompliance.job3.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../../../cypress/utils/SetupTestsComponents';

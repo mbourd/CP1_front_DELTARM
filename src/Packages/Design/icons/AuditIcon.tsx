@@ -1,6 +1,6 @@
 import React from 'react';
-import DescriptionIcon from '@material-ui/icons/Description';
-import { SvgIconProps } from '@material-ui/core';
+import DescriptionIcon from '@mui/icons-material/Description';
+import { SvgIconProps } from '@mui/material';
 
 export const AuditIcon: React.FC<React.PropsWithChildren<SvgIconProps>> = (
   props,

@@ -5,8 +5,6 @@ import 'Shared';
 import 'Services/Api/registerCallState';
 import { security, SecurityProvider, useSecurity } from 'Services';
 import { MainContent, MainHeader } from './Shared/components';
-import { BPITheme } from 'Styles';
-import { ThemeProvider } from 'styled-components';
 import { appStore, store } from 'Services';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -25,12 +23,10 @@ const App: React.FC<AppProps> = ({ isEmbedded }): React.ReactElement => {
         loading={null}
         persistor={appStore.getPersistor() as Persistor}
       >
-        <ThemeProvider theme={BPITheme}>
-          <SecurityProvider security={security}>
-            {user.isLogged() && !isEmbedded && <MainHeader />}
-            <MainContent />
-          </SecurityProvider>
-        </ThemeProvider>
+        <SecurityProvider security={security}>
+          {user.isLogged() && !isEmbedded && <MainHeader />}
+          <MainContent />
+        </SecurityProvider>
       </PersistGate>
     </Provider>
   );

@@ -65,6 +65,7 @@ export interface IElementModal {
     mode?: string;
   };
   value: ElementTableModalValueType | string | null;
+  editable?: boolean;
 }
 
 export type ElementTableModalValueType = {

@@ -61,11 +61,11 @@ describe('<CustomInnerHTMLRenderer />', function () {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('BPITooltip').should('have.attr', 'title', hint);
     cy.react('CustomInnerHTMLRenderer').each(($el) => {
       cy.wrap($el).trigger('mouseover');
       cy.wait(10).then(() => {
         cy.get('[role="tooltip"]').should('exist').should('be.visible');
+        cy.get('[role="tooltip"]').should('have.text', hint);
       });
     });
   });

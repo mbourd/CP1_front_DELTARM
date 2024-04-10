@@ -11,36 +11,33 @@ interface IProps {
 }
 
 export const RadioStyled = styled.label<IProps>`
-  align-items: center;
-  cursor: pointer;
   display: inline-flex;
   flex-wrap: nowrap;
+  align-items: center;
+  cursor: pointer;
 
   ._CheckboxRadioCheckmark {
+    position: relative;
+    display: block;
+    min-width: 18px;
+    height: 18px;
     border: 1px solid ${({ theme, $mainColor }) => theme.color[$mainColor].main};
     border-radius: ${({ $inputType }) =>
       $inputType === 'checkbox' ? '3px' : '50%'};
-    display: block;
-    height: 18px;
-    position: relative;
     transition: all ${({ theme }) => theme.transition.time};
-    min-width: 18px;
   }
 
-  ._CheckboxRadioCheckmark:after {
+  ._CheckboxRadioCheckmark::after {
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
     border-radius: ${({ $inputType }) =>
       $inputType === 'checkbox' ? '2px' : '50%'};
-    bottom: 0;
-    content: '';
-    display: block;
-    height: 0;
-    left: 0;
     margin: auto;
-    position: absolute;
-    right: 0;
-    top: 0;
+    content: '';
+    inset: 0;
     transition: all ${({ theme }) => theme.transition.time};
-    width: 0;
   }
 
   input:checked ~ ._CheckboxRadioCheckmark {
@@ -48,18 +45,18 @@ export const RadioStyled = styled.label<IProps>`
       theme.color[$checkedColor].main};
   }
 
-  input:checked ~ ._CheckboxRadioCheckmark:after {
+  input:checked ~ ._CheckboxRadioCheckmark::after {
+    width: 10px;
+    height: 10px;
     background-color: ${({ theme, $checkedColor }) =>
       theme.color[$checkedColor].main};
-    height: 10px;
-    width: 10px;
   }
 
   ._CheckboxRadioLabel {
+    margin-left: ${({ theme }) => theme.spacing.small};
     color: ${({ theme, $mainColor }) => theme.color[$mainColor].main};
     font-family: ${({ theme }) => theme.font.text.main};
     font-size: ${({ theme }) => theme.sizing.normal};
-    margin-left: ${({ theme }) => theme.spacing.small};
     transition: all ${({ theme }) => theme.transition.time};
   }
 

@@ -1,4 +1,8 @@
 {
+  "env": {
+    "browser": true,
+    "jest": true
+  },
   "plugins": [
     "react-hooks",
     "@typescript-eslint"
@@ -7,9 +11,9 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "prettier",
+    "plugin:react-hooks/recommended",
     "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:import/typescript"
   ],
   "parserOptions": {
@@ -20,23 +24,26 @@
     }
   },
   "rules": {
-    "@typescript-eslint/explicit-module-boundary-types": ["off"],
-    "@typescript-eslint/no-unused-vars": ["warn", {
-      "vars": "all",
-      "args": "after-used",
-      "ignoreRestSiblings": false
-    }],
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-unused-vars": ["warn", {}],
     "newline-before-return": ["warn"],
     "no-console": ["warn", { "allow": ["warn", "error"] }],
     "no-eval": ["error"],
     "react/prop-types": ["off"],
-    "@typescript-eslint/no-explicit-any": ["off"],
-    "@typescript-eslint/ban-ts-comment": ["off"],
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "react/forbid-component-props": [
+      "error",
+      { "forbid": ["deprecatedPropName"] }
+    ],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
+    "react/no-array-index-key": "warn",
+    "react/no-children-prop": "error",
     "prettier/prettier": ["error", { "endOfLine": "auto" }],
     "no-empty-pattern": ["warn"],
-    "no-empty-function": ["warn"]
+    "no-empty-function": ["warn"],
+    "no-unsafe-optional-chaining": "warn"
   },
   "settings": {
     "react": {

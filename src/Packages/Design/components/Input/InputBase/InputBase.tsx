@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { TextField as MUIInputBase } from '@material-ui/core';
+import { TextField as MUIInputBase } from '@mui/material';
 import { InputBaseStyled, useStyles } from './InputBase.style';
 import { useTheme } from 'Styles';
 import { IInputBase } from '../types';
@@ -18,6 +18,8 @@ export const InputBase: React.FC<React.PropsWithChildren<IInputBase>> = ({
   id,
   onChange,
   onKeyPress,
+  onKeyUp,
+  onKeyDown,
   onBlur,
   placeholder,
   required,
@@ -61,21 +63,9 @@ export const InputBase: React.FC<React.PropsWithChildren<IInputBase>> = ({
       $fontFamily={fontFamily}
       $fontSize={fontSize}
     >
-      <div
-        style={{
-          width: icon?.currency_symbol ? 50 : 'auto',
-          marginLeft: icon?.currency_symbol ? 5 : 0,
-        }}
-      >
-        {icon?.currency_symbol ? (
-          <p style={{ fontSize: 13, fontWeight: 'bolder' }}>
-            {icon?.currency_symbol}
-          </p>
-        ) : (
-          icon
-        )}
-      </div>
+      {icon}
       <MUIInputBase
+        variant="standard"
         style={style}
         inputRef={inputRef ?? ref}
         classes={MUIInputBaseClasse}
@@ -89,7 +79,9 @@ export const InputBase: React.FC<React.PropsWithChildren<IInputBase>> = ({
         type={type}
         value={value}
         onChange={onChange}
-        onKeyPress={onKeyPress}
+        // onKeyPress={onKeyPress}
+        onKeyUp={onKeyUp}
+        onKeyDown={onKeyDown ?? onKeyPress}
         onBlur={onBlur}
         multiline={multiline}
         InputProps={InputProps}

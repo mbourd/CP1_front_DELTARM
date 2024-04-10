@@ -48,7 +48,16 @@ describe('<InputBase />', () => {
   });
 
   it('Should render $ from icon props', () => {
-    const icon = { currency_symbol: '$' };
+    const icon = (
+      <div
+        style={{
+          width: 50,
+          marginLeft: 5,
+        }}
+      >
+        <p style={{ fontSize: 13, fontWeight: 'bolder' }}>$</p>
+      </div>
+    );
     cy.mount(
       <SetupTestsComponents>
         <InputBase icon={icon} />
@@ -61,7 +70,7 @@ describe('<InputBase />', () => {
       .nthNode(0)
       .get('p')
       .nthNode(0)
-      .contains(icon.currency_symbol);
+      .contains('$');
   });
 
   it('Should render a text from icon props', () => {
@@ -77,7 +86,7 @@ describe('<InputBase />', () => {
 
   it('Should render a ReactNode from icon props', () => {
     const DummyFC: React.FC<React.PropsWithChildren<unknown>> = () => {
-      return <>hello</>;
+      return <div>hello</div>;
     };
 
     cy.mount(
@@ -86,7 +95,7 @@ describe('<InputBase />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.react('InputBase').get('label').find('div').eq(0).react('DummyFC');
+    cy.react('InputBase').react('DummyFC').should('have.text', 'hello');
   });
 
   it('Input should have a name', () => {

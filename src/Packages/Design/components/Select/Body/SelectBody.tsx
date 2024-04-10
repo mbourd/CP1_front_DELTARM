@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { ListItem } from '@material-ui/core';
+import { ListItem } from '@mui/material';
 import { SelectBodyStyled } from './SelectBody.style';
 import { Radio } from '../../Radio';
 import { SelectContext } from '../SelectContext';
@@ -12,7 +12,7 @@ export const SelectBody: React.FC<
 
   return (
     <SelectBodyStyled className={'_SelectBody'}>
-      {Object.values(data).map((datum) => {
+      {Object.values(data ?? {}).map((datum) => {
         return (
           <ListItem
             className={'_SelectItem'}

@@ -458,6 +458,7 @@ describe('<CardAgGrid />', function () {
   });
 
   it('should keep cell styles when scroll or sort - card1', function () {
+    cy.viewport(1920, 1080);
     const _card = {
       ...structuredClone(card1),
     };
@@ -538,6 +539,7 @@ describe('<CardAgGrid />', function () {
       });
   });
   it('should keep cell styles when scroll or sort - card2', function () {
+    cy.viewport(1920, 1080);
     const _card = {
       ...structuredClone(card2),
     };
@@ -618,6 +620,7 @@ describe('<CardAgGrid />', function () {
       });
   });
   it('should keep cell styles when scroll or sort - card3', function () {
+    cy.viewport(1920, 1080);
     const _card = {
       ...structuredClone(card3),
     };
@@ -698,6 +701,8 @@ describe('<CardAgGrid />', function () {
       });
   });
   it('should keep cell styles when scroll or sort - card4', function () {
+    cy.viewport(1920, 1080);
+
     const _card = {
       ...structuredClone(card4),
     };

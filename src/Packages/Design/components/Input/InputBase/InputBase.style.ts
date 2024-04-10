@@ -1,5 +1,7 @@
 import styled from 'styled-components';
-import { makeStyles, Theme } from '@material-ui/core';
+import { Theme } from '@mui/material';
+
+import makeStyles from '@mui/styles/makeStyles';
 
 interface IProps {
   $borderSize: number;
@@ -23,12 +25,12 @@ export const useStyles = makeStyles<Theme, IUseStylesProps>({
 });
 
 export const InputBaseStyled = styled.label<IProps>`
+  display: flex;
   align-items: center;
-  background-color: ${({ $bgc }) => $bgc};
   border: ${({ $borderSize }) => $borderSize}px solid
     ${({ $fontColor }) => $fontColor};
   border-radius: ${({ $bdr }) => $bdr};
-  display: flex;
+  background-color: ${({ $bgc }) => $bgc};
 
   .MuiSvgIcon-root {
     color: ${({ $fontColor }) => $fontColor};
@@ -43,12 +45,12 @@ export const InputBaseStyled = styled.label<IProps>`
 
   .MuiInputBase-root,
   .MuiTextField-root {
-    .MuiInput-underline:hover:not(.Mui-disabled):before {
+    .MuiInput-underline:hover:not(.Mui-disabled)::before {
       border: none;
     }
 
-    .MuiInput-underline.Mui-disabled:before,
-    .MuiInput-underline:before {
+    .MuiInput-underline.Mui-disabled::before,
+    .MuiInput-underline::before {
       border: none;
     }
 
@@ -57,9 +59,9 @@ export const InputBaseStyled = styled.label<IProps>`
       background-color: transparent;
     }
 
-    color: ${({ $fontColor }) => $fontColor};
-    padding: 0 ${({ theme }) => theme.spacing.xSmall};
     width: 100%;
+    padding: 0 ${({ theme }) => theme.spacing.xSmall};
+    color: ${({ $fontColor }) => $fontColor};
   }
 
   &._Input-success {

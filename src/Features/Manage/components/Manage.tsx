@@ -20,7 +20,7 @@ import {
   Paper,
   Radio,
   RadioGroup,
-} from '@material-ui/core';
+} from '@mui/material';
 import { ICard } from './Card/types';
 import { SearchModal } from './Search/Modal/SearchModal';
 import { IsLoading } from './IsLoading';

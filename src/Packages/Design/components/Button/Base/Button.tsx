@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button as MUIButton } from '@material-ui/core';
+import { Button as MUIButton } from '@mui/material';
 import { ButtonStyled } from './Button.style';
 import { useTheme } from 'Styles';
 import { IButton } from '../types';

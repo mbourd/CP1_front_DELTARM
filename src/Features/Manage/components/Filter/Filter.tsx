@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { FilterStyled, BadgeStyled } from './Filter.style';
 import { FilterIcon, useTheme } from 'Styles';
 import { BPIBadge, Checkbox, Popper } from 'Shared/components';

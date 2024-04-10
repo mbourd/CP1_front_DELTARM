@@ -63,6 +63,8 @@ export interface IInputBase {
    */
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  onKeyUp?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onBlur?: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 
   /**
