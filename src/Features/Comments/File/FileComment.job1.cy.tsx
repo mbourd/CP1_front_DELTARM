@@ -10,6 +10,10 @@ import { SetupTestsComponents } from '../../../../cypress/utils/SetupTestsCompon
 import { FileComment } from './FileComment';
 import { IApiFileComment } from '../apiRoutes';
 import { _getRandomNumberBetween } from '../../../../cypress/utils';
+import {
+  EditValidationContext,
+  IEditValidationContext,
+} from '../../Edit/EditValidationContext';
 
 describe('<FileComment />', function () {
   it('should render', function () {
@@ -29,6 +33,50 @@ describe('<FileComment />', function () {
     cy.react('FileComment').find('.comment-icon').should('exist');
   });
 
+  it('should make on request at a time and payload or queries not empty', function () {
+    let reqCount = 0;
+    const contextValue: IEditValidationContext = {
+      data: null,
+      fileId: 'fileId',
+    };
+
+    cy.intercept('GET', '/comment/file?*', (req) => {
+      reqCount++;
+      req.on('response', (resp) => {
+        resp.send(200, { data: {} });
+      });
+    }).as('reqCommentFile');
+
+    cy.mount(
+      <SetupTestsComponents
+        appContextValue={{
+          ForCompTests: {
+            FileComment: { canSend: true },
+          },
+        }}
+      >
+        <EditValidationContext.Provider value={contextValue}>
+          <FileComment />
+        </EditValidationContext.Provider>
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+
+    cy.wait('@reqCommentFile').then((interception) => {
+      const { request } = interception;
+      const { query } = request;
+
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(500).then(() => {
+        expect(reqCount).to.be.eq(1);
+
+        cy.wrap(query)
+          .should('have.property', 'file_id')
+          .then(() => expect(query.file_id).to.be.eq(contextValue.fileId));
+      });
+    });
+  });
+
   it('should render the number of comments', function () {
     const comments: IApiFileComment[] = Array.from({
       length: _getRandomNumberBetween(0, 6),
@@ -39,25 +87,25 @@ describe('<FileComment />', function () {
       comment_user_name: '',
     }));
 
-    cy.intercept(
-      {
-        method: 'GET',
-        url: '/comment/file?file_id=*',
-      },
-      (req) => {
-        req.on('response', (resp) => {
-          resp.send(200, { data: comments });
-        });
-      },
-    );
+    cy.intercept('GET', '/comment/file?*', (req) => {
+      req.on('response', (resp) => {
+        resp.send(200, { data: comments });
+      });
+    }).as('reqGetCommentFile');
 
     cy.mount(
       <SetupTestsComponents>
         <FileComment />
       </SetupTestsComponents>,
-    );
-    cy.waitReactApp();
-    cy.react('BPIBadge').should('have.text', comments.length);
+    )
+      .waitReactApp()
+      .then(() =>
+        cy
+          .wait('@reqGetCommentFile')
+          .then(() =>
+            cy.react('BPIBadge').should('have.text', comments.length),
+          ),
+      );
   });
 
   it('should display a Popper when on comment icon', function () {

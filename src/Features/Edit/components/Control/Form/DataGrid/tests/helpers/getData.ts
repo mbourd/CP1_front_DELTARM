@@ -1,9 +1,9 @@
 import {
-  DataGridDetailsColumnType,
+  IApiControl,
   DataGridDetailsRow,
   DataGridDetailsRowsCell,
-  IApiControl,
-} from 'Features/Edit/types';
+  DataGridDetailsColumnType,
+} from '../../../../../../types';
 
 export function getData(_control: IApiControl) {
   const rows = _control.data_grid_detail?.rows || [];

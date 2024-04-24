@@ -36,6 +36,7 @@ import {
   RowNode,
 } from 'ag-grid-community';
 // import millify from 'millify';
+import { ColDef, ColGroupDef } from 'ag-grid-community';
 import { LicenseManager } from 'ag-grid-enterprise';
 import { AG_GRID_LOCALE_FR } from './translations/fr';
 import { AG_GRID_LOCALE_EN } from './translations/en';
@@ -43,8 +44,8 @@ import CustomDateRenderer from './AgDataGridFields/CustomDateRenderer/CustomDate
 LicenseManager.setLicenseKey(
   'Using_this_AG_Grid_Enterprise_key_( AG-040865 )_in_excess_of_the_licence_granted_is_not_permitted___Please_report_misuse_to_( legal@ag-grid.com )___For_help_with_changing_this_key_please_contact_( info@ag-grid.com )___( Delta RM )_is_granted_a_( Single Application )_Developer_License_for_the_application_( DeltaRM )_only_for_( 1 )_Front-End_JavaScript_developer___All_Front-End_JavaScript_developers_working_on_( DeltaRM )_need_to_be_licensed___( DeltaRM )_has_been_granted_a_Deployment_License_Add-on_for_( 1 )_Production_Environment___This_key_works_with_AG_Grid_Enterprise_versions_released_before_( 11 April 2024 )____[v2]_MTcxMjc5MDAwMDAwMA==f0a7e979572bce7bc4376cbdee159586',
 );
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
 import CustomCheckboxRender from './AgDataGridFields/CustomCheckboxRenderer/CustomCheckboxRender';
 import { ModalDynamic } from 'Features/ModalDynamic/components/ModalDynamic';
 import axios, { AxiosError } from 'axios';
@@ -73,12 +74,13 @@ interface IProps {
   suppressAnimationFrame?: boolean;
   suppressCellFocus?: boolean;
   onGridReadyAlt?: (params: GridReadyEvent) => void;
-  defaultColDefAlt?: Record<any, any>;
+  defaultColDefAlt?: ColDef;
   hasControlLabel?: boolean;
   extraStyles?: React.CSSProperties;
   heightGrid?: string | number;
   hasPagination?: boolean;
   suppressRowVirtualisation?: boolean;
+  paginationPageSizeSelector?: boolean;
 }
 
 const CustomTooltip = (props: any & { tooltip: string }, g) => {
@@ -143,6 +145,7 @@ export const DataGridControlAgGrid: React.FC<
   heightGrid,
   hasPagination = true,
   suppressRowVirtualisation = false,
+  paginationPageSizeSelector = false,
 }) => {
   const [canSendApi, setCanSendApi] = useState<boolean>(true);
   const [errorMessageAdd, setErrorMessageAdd] = useState<string>('');
@@ -386,14 +389,14 @@ export const DataGridControlAgGrid: React.FC<
     return cl;
   }, []);
 
-  const columnDefs = useMemo(
+  const columnDefs: (ColDef | ColGroupDef)[] | null = useMemo(
     () =>
       control?.data_grid_detail?.columns?.map((g: any) => {
         const _g = cleanColDef(g);
 
         switch (g?.field_type) {
-          case 'checkbox_select_datagrid':
-            return {
+          case 'checkbox_select_datagrid': {
+            const col: ColDef | ColGroupDef = {
               ..._g,
               headerClass: 'center-header',
               minWidth: 80,
@@ -410,6 +413,9 @@ export const DataGridControlAgGrid: React.FC<
               },
               tooltipComponent: (props) => CustomTooltip(props, g),
             };
+
+            return col;
+          }
           case 'dynamic_select_list':
           case 'select_list':
             return {
@@ -812,7 +818,12 @@ export const DataGridControlAgGrid: React.FC<
                   />
                 );
               },
-              tooltipComponent: (props) => CustomTooltip(props, g),
+              tooltipComponent: (props) => {
+                Object.assign(props.column.colDef, g);
+                Object.assign(props.colDef, g);
+
+                return CustomTooltip(props, g);
+              },
             };
           case 'text':
             return {
@@ -1130,7 +1141,7 @@ export const DataGridControlAgGrid: React.FC<
               tooltipComponent: (props) => CustomTooltip(props, g),
             };
         }
-      }),
+      }) ?? [],
     [control, cleanColDef, GridDetails?.rows, fileId, jwt],
   );
 
@@ -1167,7 +1178,7 @@ export const DataGridControlAgGrid: React.FC<
   //   [control, fileId, jwt],
   // );
 
-  const defaultColDef = useMemo(
+  const defaultColDef: ColDef = useMemo(
     () => ({
       resizable: true,
       sortable: true,
@@ -1176,18 +1187,18 @@ export const DataGridControlAgGrid: React.FC<
       cellClass: 'grid-cell-centered',
       editable: true,
       // cellEditorPopup: true,
-      cellEditorPopupPosition: 'center',
+      cellEditorPopupPosition: 'over',
+      enableCellChangeFlash: true,
       singleClickEdit: true,
       // tooltipComponent: CustomTooltip,
     }),
     [],
   );
 
-  const onGridReady = (params: any) => {
+  const onGridReady = (params: GridReadyEvent) => {
     setTimeout(() => {
       params.api.sizeColumnsToFit();
-      params.api.enableVirtualization = true;
-    }, 0);
+    }, 1);
   };
 
   const onCellEditingStarted = useCallback((event: CellEditingStartedEvent) => {
@@ -1827,7 +1838,6 @@ export const DataGridControlAgGrid: React.FC<
           // paginationAutoPageSize={true}
           onCellValueChanged={onCellValueChanged}
           undoRedoCellEditing={true}
-          enableCellChangeFlash={true}
           onPaginationChanged={onPaginationChanged}
           onBodyScroll={onBodyScroll}
           animateRows={animateRows}
@@ -1835,6 +1845,7 @@ export const DataGridControlAgGrid: React.FC<
           suppressAnimationFrame={suppressAnimationFrame}
           suppressCellFocus={suppressCellFocus}
           suppressRowVirtualisation={suppressRowVirtualisation}
+          paginationPageSizeSelector={paginationPageSizeSelector}
         />
       </AgDataGridStyle>
       {/* </DataGridControlStyled> */}

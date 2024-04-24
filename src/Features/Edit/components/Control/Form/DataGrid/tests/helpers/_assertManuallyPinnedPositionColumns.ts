@@ -1,3 +1,7 @@
+// @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../../../../../cypress/support/component" />
+
 import {
   IApiControl,
   DataGridDetailsColumnType,
@@ -6,26 +10,33 @@ import { getData } from './getData';
 import { _assertPinnedPositionColumns } from './_assertPinnedPositionColumns';
 import { _getRandomNumberBetween } from '../../../../../../../../../cypress/utils';
 
-export function _assertManuallyPinnedPositionColumns(_control: IApiControl) {
-  cy.wait(500).then(() => {
+export function _assertManuallyPinnedPositionColumns(
+  _control: IApiControl,
+  waitMs = 500,
+) {
+  cy.wait(waitMs).then(() => {
     const withControlData = getData(_control);
 
     withControlData(1, ({ columns, indexRow, getJqueryRowElement }) => {
       cy.wrap(columns)
         .each((col: DataGridDetailsColumnType, i) => {
+          cy.wait(255);
           cy.waitUntil(() => {
             const $col = Cypress.$(
-              `.ag-theme-alpine .ag-header-row.ag-header-row-column .ag-header-cell[col-id="${col.field}"]`,
+              /*'.ag-theme-alpine ' +*/ `.ag-header-row.ag-header-row-column .ag-header-cell[col-id="${col.field}"]`,
             );
 
             if (col.hide) return true;
 
-            return cy.realPress('ArrowRight').then(() => $col.is(':visible'));
+            return cy
+              .wrap(Array.from({ length: 3 }))
+              .each(() => cy.realPress('ArrowRight'))
+              .then(() => $col.is(':visible'));
           }).then(() => {
             if (col.hide) return;
 
             const $col = Cypress.$(
-              `.ag-theme-alpine .ag-header-row.ag-header-row-column .ag-header-cell[col-id="${col.field}"]`,
+              /*'.ag-theme-alpine ' +*/ `.ag-header-row.ag-header-row-column .ag-header-cell[col-id="${col.field}"]`,
             );
             const random = i < 2 ? i : _getRandomNumberBetween(0, 6);
             let direction: 'left' | 'right' | null = null;
@@ -44,8 +55,8 @@ export function _assertManuallyPinnedPositionColumns(_control: IApiControl) {
             cy.wrap($col)
               .find('.ag-header-cell-menu-button')
               .realClick()
-              // .wait(500)
               .then(() => {
+                cy.wait(100);
                 if (col.lockPinned) {
                   cy.get('.ag-menu .ag-menu-list .ag-menu-option [ref="eName"]')
                     .contains('Épingler la colonne')
@@ -57,11 +68,9 @@ export function _assertManuallyPinnedPositionColumns(_control: IApiControl) {
                       ).find('.ag-cell'),
                     )
                       .eq(
-                        Math.floor(
-                          Cypress.$(
-                            getJqueryRowElement('.ag-center-cols-viewport'),
-                          ).find('.ag-cell').length / 2,
-                        ),
+                        Cypress.$(
+                          /*'.ag-theme-alpine ' + */ '.ag-header-row.ag-header-row-column .ag-header-cell',
+                        ).index($col),
                       )
                       .focus();
                   });
@@ -69,7 +78,6 @@ export function _assertManuallyPinnedPositionColumns(_control: IApiControl) {
                   cy.get('.ag-menu .ag-menu-list .ag-menu-option [ref="eName"]')
                     .contains('Épingler la colonne')
                     .realHover()
-                    // .wait(500)
                     .then(() => {
                       cy.get(
                         '.ag-menu.ag-popup-child[aria-label="SubMenu"] .ag-menu-option [ref="eName"]',

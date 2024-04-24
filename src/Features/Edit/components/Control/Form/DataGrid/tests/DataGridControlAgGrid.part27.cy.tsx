@@ -8,15 +8,47 @@ import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../../cypress/utils/SetupTestsComponents';
 import { IApiControl } from '../../../../../types';
 import { DataGridControlAgGrid } from '../DataGridControlAgGrid';
-import { _assertCellStyle } from './helpers/_assertCellStyle';
+import { _assertRequestPayloadQueries } from './helpers/_assertRequestPayloadQuery';
 
 describe('<DataGridControlAgGrid /> - part 27', function () {
-  // innerHTML,test_alt,date_string,icon,icon,icon
+  // int,dec,fin,perc
+  let controlExample1: IApiControl;
+  // checkbox,select,select,long_text,text,,,fin,fin
+  let controlExample2: IApiControl;
+  let controlExample3: IApiControl;
+  // text,comment,long_text
+  let controlExample4: IApiControl;
+  // text*n,select*n,number*n
+  let controlExample5: IApiControl;
+  // action_button,date,icon,checkbox
+  let controlExample6: IApiControl;
+  let controlExample7: IApiControl;
   let controlExample8: IApiControl;
 
   let originalTimeout: number;
 
   before(() => {
+    cy.fixture('controlDataGridAgGrid-1.json').then(
+      (d) => (controlExample1 = d),
+    );
+    cy.fixture('controlDataGridAgGrid-2.json').then(
+      (d) => (controlExample2 = d),
+    );
+    cy.fixture('controlDataGridAgGrid-3.json').then(
+      (d) => (controlExample3 = d),
+    );
+    cy.fixture('controlDataGridAgGrid-4.json').then(
+      (d) => (controlExample4 = d),
+    );
+    cy.fixture('controlDataGridAgGrid-5.json').then(
+      (d) => (controlExample5 = d),
+    );
+    cy.fixture('controlDataGridAgGrid-6.json').then(
+      (d) => (controlExample6 = d),
+    );
+    cy.fixture('controlDataGridAgGrid-7.json').then(
+      (d) => (controlExample7 = d),
+    );
     cy.fixture('controlDataGridAgGrid-8.json').then(
       (d) => (controlExample8 = d),
     );
@@ -36,7 +68,233 @@ describe('<DataGridControlAgGrid /> - part 27', function () {
     Cypress.config('defaultCommandTimeout', originalTimeout);
   });
 
-  it('Should have hidden columns by default - controlExample5', function () {
+  it('should make one request at a time and payload or queries not empty when editing cells - controlExample1', function () {
+    const fileId = 'fileId';
+    const _control = {
+      ...structuredClone(controlExample1),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    const _reqTest = { count: 0 };
+
+    cy.intercept('POST', '/control/data_grid/save_value?*', (req) => {
+      _reqTest.count++;
+      req.on('response', (resp) => {
+        resp.send(200, { data: {} });
+      });
+    }).as('reqSaveCellValue');
+
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control}
+          fileId={fileId}
+          hasPagination={false}
+        />
+      </SetupTestsComponents>,
+    )
+      .waitReactApp()
+      .then(() => {
+        _assertRequestPayloadQueries(_control, _reqTest, fileId);
+      });
+  });
+  it('should make one request at a time and payload or queries not empty when editing cells - controlExample2', function () {
+    const fileId = 'fileId';
+    const _control = {
+      ...structuredClone(controlExample2),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    const _reqTest = { count: 0 };
+
+    cy.intercept('POST', '/control/data_grid/save_value?*', (req) => {
+      _reqTest.count++;
+      req.on('response', (resp) => {
+        resp.send(200, { data: {} });
+      });
+    }).as('reqSaveCellValue');
+
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control}
+          fileId={fileId}
+          hasPagination={false}
+        />
+      </SetupTestsComponents>,
+    )
+      .waitReactApp()
+      .then(() => {
+        _assertRequestPayloadQueries(_control, _reqTest, fileId);
+      });
+  });
+  it('should make one request at a time and payload or queries not empty when editing cells - controlExample3', function () {
+    const fileId = 'fileId';
+    const _control = {
+      ...structuredClone(controlExample3),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    const _reqTest = { count: 0 };
+
+    cy.intercept('POST', '/control/data_grid/save_value?*', (req) => {
+      _reqTest.count++;
+      req.on('response', (resp) => {
+        resp.send(200, { data: {} });
+      });
+    }).as('reqSaveCellValue');
+
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control}
+          fileId={fileId}
+          hasPagination={false}
+        />
+      </SetupTestsComponents>,
+    )
+      .waitReactApp()
+      .then(() => {
+        _assertRequestPayloadQueries(_control, _reqTest, fileId);
+      });
+  });
+  it('should make one request at a time and payload or queries not empty when editing cells - controlExample4', function () {
+    const fileId = 'fileId';
+    const _control = {
+      ...structuredClone(controlExample4),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    const _reqTest = { count: 0 };
+
+    cy.intercept('POST', '/control/data_grid/save_value?*', (req) => {
+      _reqTest.count++;
+      req.on('response', (resp) => {
+        resp.send(200, { data: {} });
+      });
+    }).as('reqSaveCellValue');
+
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control}
+          fileId={fileId}
+          hasPagination={false}
+        />
+      </SetupTestsComponents>,
+    )
+      .waitReactApp()
+      .then(() => {
+        _assertRequestPayloadQueries(_control, _reqTest, fileId);
+      });
+  });
+  //// TODO:
+  // it('should make one request at a time and payload or queries not empty when editing cells - controlExample5', function () {
+  //   const fileId = 'fileId';
+  //   const _control = {
+  //     ...structuredClone(controlExample5),
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   } as any as IApiControl;
+  //   const _reqTest = { count: 0 };
+
+  //   cy.intercept('POST', '/control/data_grid/save_value?*', (req) => {
+  //     _reqTest.count++;
+  //     req.on('response', (resp) => {
+  //       resp.send(200, { data: {} });
+  //     });
+  //   }).as('reqSaveCellValue');
+
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid
+  //         control={_control}
+  //         fileId={fileId}
+  //         hasPagination={false}
+  //       />
+  //     </SetupTestsComponents>,
+  //   )
+  //     .waitReactApp()
+  //     .then(() => {
+  //       _assertRequestPayloadQueries(_control, _reqTest, fileId);
+  //     });
+  // });
+  it('should make one request at a time and payload or queries not empty when editing cells - controlExample6', function () {
+    const fileId = 'fileId';
+    const _control = {
+      ...structuredClone(controlExample6),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    const _reqTest = { count: 0 };
+
+    cy.intercept('POST', '/control/data_grid/save_value?*', (req) => {
+      _reqTest.count++;
+      req.on('response', (resp) => {
+        resp.send(200, { data: {} });
+      });
+    }).as('reqSaveCellValue');
+
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control}
+          fileId={fileId}
+          hasPagination={false}
+        />
+      </SetupTestsComponents>,
+    )
+      .waitReactApp()
+      .then(() => {
+        _assertRequestPayloadQueries(_control, _reqTest, fileId);
+      });
+  });
+  it('should make one request at a time and payload or queries not empty when editing cells - controlExample7', function () {
+    const fileId = 'fileId';
+    const _control = {
+      ...structuredClone(controlExample7),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    const _reqTest = { count: 0 };
+
+    cy.intercept('POST', '/control/data_grid/save_value?*', (req) => {
+      _reqTest.count++;
+      req.on('response', (resp) => {
+        resp.send(200, { data: {} });
+      });
+    }).as('reqSaveCellValue');
+
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid
+          control={_control}
+          fileId={fileId}
+          hasPagination={false}
+        />
+      </SetupTestsComponents>,
+    )
+      .waitReactApp()
+      .then(() => {
+        _assertRequestPayloadQueries(_control, _reqTest, fileId);
+      });
+  });
+  it('should make one request at a time and payload or queries not empty when editing cells - controlExample8', function () {
+    const fileId = 'fileId';
     const _control = {
       ...structuredClone(controlExample8),
       mandatory: false,
@@ -44,25 +302,27 @@ describe('<DataGridControlAgGrid /> - part 27', function () {
       rich_text_detail: null,
       control_rejectable: null,
     } as any as IApiControl;
+    const _reqTest = { count: 0 };
+
+    cy.intercept('POST', '/control/data_grid/save_value?*', (req) => {
+      _reqTest.count++;
+      req.on('response', (resp) => {
+        resp.send(200, { data: {} });
+      });
+    }).as('reqSaveCellValue');
+
     cy.mount(
       <SetupTestsComponents>
         <DataGridControlAgGrid
           control={_control}
-          fileId={''}
+          fileId={fileId}
           hasPagination={false}
         />
       </SetupTestsComponents>,
-    );
-    cy.waitReactApp();
-    cy.wait(15000)
+    )
+      .waitReactApp()
       .then(() => {
-        cy.get('.ag-cell').eq(2).realClick();
-        cy.realPress('End');
-      })
-      .then(() => {
-        cy.wait(1000).then(() => {
-          _assertCellStyle(_control);
-        });
+        _assertRequestPayloadQueries(_control, _reqTest, fileId);
       });
   });
 });

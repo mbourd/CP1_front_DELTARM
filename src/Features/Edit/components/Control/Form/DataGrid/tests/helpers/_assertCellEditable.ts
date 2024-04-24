@@ -1,8 +1,12 @@
-import { IApiControl } from 'Features/Edit/types';
+// @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../../../../../cypress/support/component" />
+
+import { IApiControl } from '../../../../../../types';
 import { getData } from './getData';
 
-export function _assertCellEditable(_control: IApiControl) {
-  cy.wait(500).then(() => {
+export function _assertCellEditable(_control: IApiControl, waitMs = 500) {
+  cy.wait(waitMs).then(() => {
     cy.window().then((w) => {
       w[
         'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id

@@ -9,8 +9,8 @@ import { SvgIconComponent } from '@mui/icons-material';
 import { useTheme } from '../../../../Packages/Design';
 import DOMPurify from 'dompurify';
 import { AgGridReact } from 'ag-grid-react';
-import 'ag-grid-community/dist/styles/ag-grid.css'; // Core grid CSS, always needed
-import 'ag-grid-community/dist/styles/ag-theme-alpine.css'; // Optional theme CSS
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { GenericCardResearcher } from './GenericCardResearcher';
 
 interface ICardC {

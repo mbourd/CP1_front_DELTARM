@@ -1,11 +1,14 @@
 {
   "env": {
     "browser": true,
-    "jest": true
+    "jest": true,
+    "cypress/globals": true
   },
   "plugins": [
     "react-hooks",
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "react-refresh",
+    "cypress"
   ],
   "parser": "@typescript-eslint/parser",
   "extends": [
@@ -14,7 +17,8 @@
     "plugin:react-hooks/recommended",
     "plugin:prettier/recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:import/typescript"
+    "plugin:import/typescript",
+    "plugin:cypress/recommended"
   ],
   "parserOptions": {
     "ecmaVersion": 2018,
@@ -40,10 +44,20 @@
     "react-hooks/exhaustive-deps": "warn",
     "react/no-array-index-key": "warn",
     "react/no-children-prop": "error",
+    "react-refresh/only-export-components": "error",
     "prettier/prettier": ["error", { "endOfLine": "auto" }],
     "no-empty-pattern": ["warn"],
-    "no-empty-function": ["warn"],
-    "no-unsafe-optional-chaining": "warn"
+    "no-empty-function": ["error"],
+    "no-multiple-empty-lines": "error",
+    "no-empty": "error",
+    "no-unsafe-optional-chaining": "warn",
+    "cypress/no-assigning-return-values": "warn",
+    "cypress/no-unnecessary-waiting": "warn",
+    "cypress/assertion-before-screenshot": "error",
+    "cypress/no-force": "warn",
+    "cypress/no-async-tests": "error",
+    "cypress/no-pause": "error",
+    "cypress/unsafe-to-chain-command": "off"
   },
   "settings": {
     "react": {
@@ -51,6 +65,5 @@
     }
   },
   "ignorePatterns": [
-    "src/**/*.test.tsx"
   ]
 }

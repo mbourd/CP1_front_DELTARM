@@ -46,6 +46,9 @@ export const FinancialControl: React.FC<React.PropsWithChildren<IProps>> = ({
   const [inputRef, setInputFocus] = useFocus();
   const { currentRoute } = useRouter();
   const [trans] = useTrans('Edit');
+  const [apiRouteName, setApiRouteName] = useState<string>(
+    currentRoute?.props?.apiSaveControlRouteName,
+  );
 
   useEffect(() => {
     setCurrentValue(control.control_value);
@@ -124,7 +127,7 @@ export const FinancialControl: React.FC<React.PropsWithChildren<IProps>> = ({
 
       if (canSendApi)
         send(
-          currentRoute?.props?.apiSaveControlRouteName,
+          apiRouteName,
           {},
           {
             file_id: fileId,
@@ -140,7 +143,7 @@ export const FinancialControl: React.FC<React.PropsWithChildren<IProps>> = ({
       control.control_id,
       control.mandatory,
       control.control_family,
-      currentRoute,
+      apiRouteName,
       control.control_regex,
       control.control_regex_msg,
       currentValue,
@@ -182,6 +185,7 @@ export const FinancialControl: React.FC<React.PropsWithChildren<IProps>> = ({
     window['Features_Edit_Control_FinancialControl'] = {
       setErrorMessage,
       setCanSendApi,
+      setApiRouteName,
     };
   }
 
