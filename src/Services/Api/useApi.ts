@@ -5,12 +5,14 @@ export interface UseApiOptions {
   promise?: boolean;
   waitForAuthenticated?: boolean;
   canSend?: boolean;
+  responseType?: 'json' | 'blob';
 }
 
 export const useApi = <T>({
   promise = false,
   waitForAuthenticated = false,
   canSend = true,
+  responseType = 'json',
 }: UseApiOptions = {}): UseApiReturnType<T> => {
   const { user } = useSecurity();
   const jwt = user.getJwt();
@@ -20,6 +22,7 @@ export const useApi = <T>({
     getEnv('API_PROTOCOL'),
     apiRouter,
     promise,
+    responseType,
   );
   request.setBearerToken(jwt);
 

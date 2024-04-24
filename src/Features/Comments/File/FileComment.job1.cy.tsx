@@ -162,9 +162,68 @@ describe('<FileComment />', function () {
     );
     cy.waitReactApp();
     cy.react('FileComment').find('.comment-icon').realClick();
-    cy.wait(3).then(() => {
-      cy.wait('@dataComments').then(() => {
-        cy.react('Popper').react('FileCommentBody').should('exist');
+    cy.wait('@dataComments').then(() => {
+      cy.react('Popper').react('FileCommentBody').should('exist');
+    });
+  });
+
+  it('should make one request at a time and payload/queries not empty', function () {
+    const contextValue: IEditValidationContext = {
+      data: null,
+      fileId: 'fileID454845326554',
+    };
+    let reqC1 = 0;
+    let reqC2 = 0;
+
+    cy.intercept('POST', '/comment/add\\?*', (req) => {
+      reqC1++;
+      req.reply({ statusCode: 201, body: {} });
+    }).as('saveFileComment');
+    cy.intercept('GET', '/comment/file\\?*', (req) => {
+      reqC2++;
+      req.reply({ statusCode: 200, body: {} });
+    }).as('getFileComments');
+
+    cy.mount(
+      <SetupTestsComponents>
+        <EditValidationContext.Provider value={contextValue}>
+          <FileComment />
+        </EditValidationContext.Provider>
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('FileComment').find('.comment-icon').realClick();
+    cy.react('FileCommentFooter')
+      .find('input')
+      .type('hello world')
+      .type('{ENTER}');
+
+    cy.wait('@saveFileComment').then((interception) => {
+      const { request } = interception;
+      const { query } = request;
+
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(255).then(() => {
+        expect(reqC1).to.eq(1);
+        cy.wrap(query).should('have.property', 'file_id');
+        cy.wrap(query).should('have.property', 'comment');
+        cy.then(() => {
+          expect(query.file_id).to.eq(contextValue.fileId);
+          expect(query.comment).to.eq('hello world');
+        });
+      });
+    });
+    cy.wait('@getFileComments').then((interception) => {
+      const { request } = interception;
+      const { query } = request;
+
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(255).then(() => {
+        expect(reqC2).to.lte(2);
+        cy.wrap(query).should('have.property', 'file_id');
+        cy.then(() => {
+          expect(query.file_id).to.eq(contextValue.fileId);
+        });
       });
     });
   });

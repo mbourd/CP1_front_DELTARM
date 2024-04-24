@@ -210,6 +210,93 @@ describe('<UploadCompliance />', () => {
     // });
   });
 
+  it('should delete the file and make one request at a time payload/queries not empty', function () {
+    const fileId = 'fileidd';
+    const controlId = 'ontrolidd';
+    const _compliance = {
+      ...structuredClone(compliance),
+      compliance_elm_family: 'compli_elm_fam',
+      compliance_id: 'compl_elm_id',
+    };
+    let requestCount = 0;
+
+    cy.mount(
+      <SetupTestsComponents>
+        <UploadCompliance
+          compliance={_compliance}
+          fileId={fileId}
+          controlId={controlId}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+
+    cy.intercept('POST', '/control/set_value?*', (req) => {
+      req.reply({
+        data: {
+          file_detail: [
+            {
+              file_id:
+                'upload/dev/cli_8/2024-3/d325d065-7676-4b57-9c56-dd9cec05b4dd',
+              file_name: 'file.txt',
+            },
+          ],
+          msg: 'ok',
+        },
+      });
+    }).as('requestUploadFile');
+    cy.intercept('POST', '/control/delete_upfile\\?*', (req) => {
+      requestCount++;
+      req.reply({
+        data: {
+          file_detail: [],
+        },
+      });
+    }).as('requestDeleteFile');
+
+    cy.react('UploadCompliance')
+      .find('input[type="file"]')
+      .selectFile(
+        {
+          contents: Cypress.Buffer.from('file contents'),
+          fileName: 'file.txt',
+          mimeType: 'text/plain',
+          lastModified: Date.now(),
+        },
+        { force: true, action: 'drag-drop' },
+      );
+    cy.wait('@requestUploadFile').then(() => {
+      cy.get('[data-testid="delete_icon_uploadfile"]').click();
+      cy.wait('@requestDeleteFile').then((interception) => {
+        const { request } = interception;
+        const { query } = request;
+
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(255).then(() => {
+          expect(requestCount).to.be.eq(1);
+
+          cy.wrap(query).should('have.property', 'file_id');
+          cy.wrap(query).should('have.property', 'control_id');
+          cy.wrap(query).should('have.property', 'compliance_id');
+          cy.wrap(query).should('have.property', 'control_family');
+          cy.wrap(query)
+            .should('have.property', 'file_name')
+            .then(() => {
+              expect(query.file_id).to.be.eq(fileId);
+              expect(query.control_id).to.be.eq(controlId);
+              expect(query.file_name).to.be.eq('file.txt');
+              expect(query.compliance_id).to.be.eq(_compliance.compliance_id);
+              expect(query.control_family).to.be.eq(
+                _compliance.compliance_elm_family,
+              );
+            });
+
+          cy.react('UploadList').find('span').should('have.length', 0);
+        });
+      });
+    });
+  });
+
   it('should render <ComplianceLabel /> and <ComplianceFooter />', () => {
     const _compliance = {
       ...structuredClone(compliance),

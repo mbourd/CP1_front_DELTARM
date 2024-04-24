@@ -168,9 +168,7 @@ describe('<FileAuditRender />', () => {
     );
     cy.waitReactApp();
     cy.react('DummyFC').react('BPIBadge').find('svg').realClick();
-    cy.wait(3).then(() => {
-      cy.react('FileAuditBody').should('exist');
-    });
+    cy.react('FileAuditBody').should('exist');
   });
 
   it('should a badge containing the correct number of audit', function () {
@@ -251,8 +249,6 @@ describe('<FileAuditRender />', () => {
     );
     cy.waitReactApp();
     cy.react('DummyFC').react('BPIBadge').find('svg').realClick();
-    cy.wait(1).then(() => {
-      cy.react('DummyFC').get('._FormError').contains(error);
-    });
+    cy.react('DummyFC').get('._FormError').contains(error);
   });
 });

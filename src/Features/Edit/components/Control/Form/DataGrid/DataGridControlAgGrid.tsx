@@ -20,7 +20,7 @@ import { useSecurity } from '../../../../../../Packages/Security';
 import { AgGridReact } from 'ag-grid-react';
 // import { useReactToPrint } from 'react-to-print';
 import { Button } from 'Shared/components';
-import { getEnv, kFormatter } from '../../../../../../Services';
+import { getEnv, kFormatter, useApi } from '../../../../../../Services';
 import './datagrid.css';
 import { saveValueDataGrid } from './apiRoutes/saveValueDataGrid';
 import CustomSelectRenderer from './AgDataGridFields/CustomSelectRenderer/CustomSelectRenderer';
@@ -48,7 +48,7 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import CustomCheckboxRender from './AgDataGridFields/CustomCheckboxRenderer/CustomCheckboxRender';
 import { ModalDynamic } from 'Features/ModalDynamic/components/ModalDynamic';
-import axios, { AxiosError } from 'axios';
+// import axios, { AxiosError } from 'axios';
 import CustomIconRenderer from './AgDataGridFields/CustomIconRenderer/CustomIconRenderer';
 import CustomActionButtonRenderer from './AgDataGridFields/CustomActionButtonRenderer/CustomActionButtonRenderer';
 import CustomSingleCheckboxRender from './AgDataGridFields/CustomSingleCheckBoxRenderer/CustomSingleCheckBoxRenderer';
@@ -161,6 +161,8 @@ export const DataGridControlAgGrid: React.FC<
   );
   const [modalData, setModalData] = useState(null);
   const { setSectionsLabels, sectionId } = useContext(EditValidationContext);
+  const { send: sendHandleClickButtons } = useApi({ promise: true });
+  const { send: sendSaveValues } = useApi({ promise: true });
   // const modal: IDataModal = useRecoilValue<any>(modal_data);
 
   const paginationPageSize: number =
@@ -1247,51 +1249,68 @@ export const DataGridControlAgGrid: React.FC<
   }, []);
 
   const handleAddRowClick = useCallback(async () => {
-    try {
-      const response = await axios.post(
-        `${getEnv('API_PROTOCOL')}://${getEnv(
-          'API_HOST',
-        )}/control/data_grid/add_row?file_id=${fileId}&elm_id=${
-          control.control_id
-        }&source=${GridDetails?.source}`,
-        {},
-        {
-          headers: {
-            Authorization: jwt,
-          },
-          responseType: 'json',
-        },
-      );
+    sendHandleClickButtons(
+      'addRowControlDataGridAgGrid',
+      {},
+      {
+        file_id: fileId,
+        elm_id: control.control_id,
+        source: GridDetails?.source,
+      },
+    )
+      ?.then((response) => {
+        if (!response?.body) return;
 
-      if (response?.data) {
         setIsModalOpen(true);
-        setModalData(response?.data);
-      }
-    } catch (error) {
-      setErrorMessageAdd("Une erreur est survenue lors de l'ajout de la ligne");
-    }
-  }, [control.control_id, jwt, fileId, GridDetails?.source]);
+        setModalData(response?.body);
+      })
+      .catch(() => {
+        setErrorMessageAdd(
+          "Une erreur est survenue lors de l'ajout de la ligne",
+        );
+      });
+
+    // try {
+    //   const response = await axios.post(
+    //     `${getEnv('API_PROTOCOL')}://${getEnv(
+    //       'API_HOST',
+    //     )}/control/data_grid/add_row?file_id=${fileId}&elm_id=${
+    //       control.control_id
+    //     }&source=${GridDetails?.source}`,
+    //     {},
+    //     {
+    //       headers: {
+    //         Authorization: jwt,
+    //       },
+    //       responseType: 'json',
+    //     },
+    //   );
+
+    //   if (response?.data) {
+    //     setIsModalOpen(true);
+    //     setModalData(response?.data);
+    //   }
+    // } catch (error) {
+    //   setErrorMessageAdd("Une erreur est survenue lors de l'ajout de la ligne");
+    // }
+  }, [sendHandleClickButtons, fileId, control.control_id, GridDetails?.source]);
   const handleDeleteSelectedRowsClick = useCallback(async () => {
     const rows: string[] = getSelectedRows();
-    await axios
-      .post(
-        `${getEnv('API_PROTOCOL')}://${getEnv(
-          'API_HOST',
-        )}/control/data_grid/delete_row?file_id=${fileId}&elm_id=${
-          control.control_id
-        }&source=${GridDetails?.source}`,
-        { rows },
-        {
-          headers: {
-            Authorization: jwt,
-          },
-          responseType: 'json',
-        },
-      )
-      .then((response) => {
+
+    sendHandleClickButtons(
+      'deleteRowControlDataGridAgGrid',
+      {},
+      {
+        file_id: fileId,
+        elm_id: control.control_id,
+        source: GridDetails?.source,
+      },
+      { rows },
+    )
+      ?.then((response) => {
         setIsModalOpen(true);
         setModalData({
-          ...response.data,
+          ...response.body,
           __extraData: { rows },
           callbackResponseConfirmation: (responseData: Record<any, any>) => {
             const { row_deleted, row_error } = responseData;
@@ -1304,14 +1323,12 @@ export const DataGridControlAgGrid: React.FC<
               }
             });
             deletedRowNodes.map((rowNode) => {
-              if (rowNode?.data?.read_editable === false) {
-                return;
-              } else {
-                rowNode.setDataValue(
-                  `${control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref}.value`,
-                  '0',
-                );
-              }
+              if (rowNode?.data?.read_editable === false) return;
+
+              rowNode.setDataValue(
+                `${control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref}.value`,
+                '0',
+              );
             });
             gridRef.current.api.applyTransaction({
               remove: deletedRowNodes.map((node) => node.data),
@@ -1335,23 +1352,94 @@ export const DataGridControlAgGrid: React.FC<
           },
         });
       })
-      .catch(async (error: AxiosError<any>) => {
-        setErrorMessageAdd(error.response?.data.error_msg ?? '');
+      .catch((error) => {
+        setErrorMessageAdd(
+          error.response?.body.error_msg ?? "Une erreur s'est produite",
+        );
         setTimeout(() => {
           setErrorMessageAdd('');
         }, 3000);
-      })
-      .finally(() => {
-        //
       });
+
+    // await axios
+    //   .post(
+    //     `${getEnv('API_PROTOCOL')}://${getEnv(
+    //       'API_HOST',
+    //     )}/control/data_grid/delete_row?file_id=${fileId}&elm_id=${
+    //       control.control_id
+    //     }&source=${GridDetails?.source}`,
+    //     { rows },
+    //     {
+    //       headers: {
+    //         Authorization: jwt,
+    //       },
+    //       responseType: 'json',
+    //     },
+    //   )
+    //   .then((response) => {
+    //     setIsModalOpen(true);
+    //     setModalData({
+    //       ...response.data,
+    //       __extraData: { rows },
+    //       callbackResponseConfirmation: (responseData: Record<any, any>) => {
+    //         const { row_deleted, row_error } = responseData;
+    //         const deletedRowNodes: RowNode[] = [];
+    //         const allRowNode: RowNode[] = [];
+
+    //         gridRef.current.api.forEachNode((rowNode: RowNode) => {
+    //           if ((row_deleted as string[]).includes(rowNode.data?.row_uuid)) {
+    //             deletedRowNodes.push(rowNode);
+    //           }
+    //         });
+    //         deletedRowNodes.map((rowNode) => {
+    //           if (rowNode?.data?.read_editable === false) {
+    //             return;
+    //           } else {
+    //             rowNode.setDataValue(
+    //               `${control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref}.value`,
+    //               '0',
+    //             );
+    //           }
+    //         });
+    //         gridRef.current.api.applyTransaction({
+    //           remove: deletedRowNodes.map((node) => node.data),
+    //         });
+    //         gridRef.current.api.forEachNode((rowNode: RowNode) =>
+    //           allRowNode.push(rowNode),
+    //         );
+
+    //         if (setSectionsLabels && sectionId)
+    //           setSectionsLabels((sectionsLabels) => ({
+    //             ...sectionsLabels,
+    //             [sectionId]: (
+    //               (sectionsLabels?.[sectionId] as string) || ''
+    //             ).replace(/\(.*\)$/, `(${allRowNode.length})`),
+    //           }));
+
+    //         if (row_error?.length === 0) {
+    //           setIsModalOpen(false);
+    //           setModalData(null);
+    //         }
+    //       },
+    //     });
+    //   })
+    //   .catch(async (error: AxiosError<any>) => {
+    //     setErrorMessageAdd(error.response?.data.error_msg ?? '');
+    //     setTimeout(() => {
+    //       setErrorMessageAdd('');
+    //     }, 3000);
+    //   })
+    //   .finally(() => {
+    //     //
+    //   });
   }, [
     GridDetails?.source,
     control.control_id,
     control?.data_grid_detail?.datagrid_options?.select_all_button_col_ref,
     fileId,
     getSelectedRows,
-    jwt,
     sectionId,
+    sendHandleClickButtons,
     setSectionsLabels,
   ]);
 
@@ -1470,21 +1558,35 @@ export const DataGridControlAgGrid: React.FC<
               break;
           }
 
-          if (canSendApi)
-            saveValueDataGrid(
-              fileId,
-              event?.data?.row_uuid,
-              field_data?.col_elm_id,
-              field_data?.row_num,
-              jwt,
-              event?.newValue?.toString(),
-              setErrors,
-              valueToSend,
-            );
+          if (canSendApi) {
+            sendSaveValues(
+              'saveDataGridAgGridValues',
+              {},
+              {
+                fileId,
+                row_uuid: event?.data?.row_uuid,
+                elm_val: valueToSend,
+                col_elm_id: field_data?.col_elm_id,
+              },
+            )?.catch(() => {
+              setErrors('Une erreur est survenue');
+            });
+
+            // saveValueDataGrid(
+            //   fileId,
+            //   event?.data?.row_uuid,
+            //   field_data?.col_elm_id,
+            //   field_data?.row_num,
+            //   jwt,
+            //   event?.newValue?.toString(),
+            //   setErrors,
+            //   valueToSend,
+            // );
+          }
         }
       }
     },
-    [canSendApi, fileId, jwt],
+    [canSendApi, fileId, sendSaveValues],
   );
 
   // const getRowStyle = (params: any) => {
@@ -1536,60 +1638,104 @@ export const DataGridControlAgGrid: React.FC<
     control?.data_grid_detail?.columns,
   ]);
   const refresh_grid = useCallback(async () => {
-    try {
-      const response = await axios.get(
-        `${getEnv('API_PROTOCOL')}://${getEnv(
-          'API_HOST',
-        )}/control/data_grid/refresh_values?file_id=${fileId}&control_id=${
-          control.control_id
-        }&source=${GridDetails?.source}`,
-        {
-          headers: {
-            Authorization: jwt,
-          },
-          responseType: 'json',
-        },
-      );
-
-      if (response) {
-        setGridDetails(response?.data?.data);
+    sendHandleClickButtons(
+      'refreshDataGridAgGrid',
+      {},
+      {
+        file_id: fileId,
+        control_id: control.control_id,
+        source: GridDetails?.source,
+      },
+    )
+      ?.then((response) => {
+        setGridDetails(response?.body?.data);
         gridRef.current.api.refreshCells({
           force: true,
         });
-      }
-    } catch (error) {
-      setErrors("Une erreur s'est produite");
-      setTimeout(() => {
-        setErrors('');
-      }, 3000);
-    }
-  }, [jwt, control?.control_id, fileId, GridDetails?.source]);
-
-  const callButtonRoute = useCallback(
-    async (method: string, route: string, button_row_selected: boolean) => {
-      try {
-        const response = await axios.post(
-          `${getEnv('API_PROTOCOL')}://${getEnv(
-            'API_HOST',
-          )}/control/data_grid${route}?file_id=${fileId}&control_id=${
-            control.control_id
-          }&source=${GridDetails?.source}`,
-          button_row_selected ? { selected_rows: getSelectedRows() } : {},
-          {
-            headers: {
-              Authorization: jwt,
-            },
-            responseType: 'json',
-          },
-        );
-      } catch (error) {
+      })
+      .catch(() => {
         setErrors("Une erreur s'est produite");
         setTimeout(() => {
           setErrors('');
         }, 3000);
-      }
+      });
+
+    // try {
+    //   const response = await axios.get(
+    //     `${getEnv('API_PROTOCOL')}://${getEnv(
+    //       'API_HOST',
+    //     )}/control/data_grid/refresh_values?file_id=${fileId}&control_id=${
+    //       control.control_id
+    //     }&source=${GridDetails?.source}`,
+    //     {
+    //       headers: {
+    //         Authorization: jwt,
+    //       },
+    //       responseType: 'json',
+    //     },
+    //   );
+
+    //   if (response) {
+    //     setGridDetails(response?.data?.data);
+    //     gridRef.current.api.refreshCells({
+    //       force: true,
+    //     });
+    //   }
+    // } catch (error) {
+    //   setErrors("Une erreur s'est produite");
+    //   setTimeout(() => {
+    //     setErrors('');
+    //   }, 3000);
+    // }
+  }, [sendHandleClickButtons, fileId, control.control_id, GridDetails?.source]);
+
+  const callButtonRoute = useCallback(
+    async (method: string, route: string, button_row_selected: boolean) => {
+      sendHandleClickButtons(
+        'callDataGridAgGridDynamicRoute',
+        { dynamicRoute: route },
+        {
+          file_id: fileId,
+          control_id: control.control_id,
+          source: GridDetails?.source,
+        },
+        button_row_selected ? { selected_rows: getSelectedRows() } : {},
+      )?.catch(() => {
+        setErrors("Une erreur s'est produite");
+        setTimeout(() => {
+          setErrors('');
+        }, 3000);
+      });
+
+      // try {
+      //   const response = await axios.post(
+      //     `${getEnv('API_PROTOCOL')}://${getEnv(
+      //       'API_HOST',
+      //     )}/control/data_grid${route}?file_id=${fileId}&control_id=${
+      //       control.control_id
+      //     }&source=${GridDetails?.source}`,
+      //     button_row_selected ? { selected_rows: getSelectedRows() } : {},
+      //     {
+      //       headers: {
+      //         Authorization: jwt,
+      //       },
+      //       responseType: 'json',
+      //     },
+      //   );
+      // } catch (error) {
+      //   setErrors("Une erreur s'est produite");
+      //   setTimeout(() => {
+      //     setErrors('');
+      //   }, 3000);
+      // }
     },
-    [getSelectedRows, jwt, control?.control_id, fileId, GridDetails?.source],
+    [
+      sendHandleClickButtons,
+      fileId,
+      control.control_id,
+      GridDetails?.source,
+      getSelectedRows,
+    ],
   );
 
   const DynamicButtonClick = ({
@@ -1635,6 +1781,7 @@ export const DataGridControlAgGrid: React.FC<
       {
         setCanSendApi,
         gridRef,
+        refresh_grid,
       };
   }
 

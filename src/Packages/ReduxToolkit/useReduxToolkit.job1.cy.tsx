@@ -42,7 +42,7 @@ describe('useReduxToolkit', function () {
   it('should unregister the reducer', function () {
     cy.viewport(0, 0).then(() => {
       appReducer.unregisterReducer(name);
-      expect(store.getState()[name]).to.be.undefined;
+      expect(store.getState()?.[name]).to.be.undefined;
     });
   });
 
@@ -76,7 +76,7 @@ describe('useReduxToolkit', function () {
       expect(stateSelected).to.not.null;
       expect(stateSelected).to.not.undefined;
 
-      expect(stateSelected.propTest).to.be.eq('Hello World');
+      expect(stateSelected?.propTest).to.be.eq('Hello World');
     });
   });
 });
