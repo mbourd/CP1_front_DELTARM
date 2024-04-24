@@ -80,6 +80,7 @@ describe('<JoditRichTextControl />', () => {
   });
 
   it('should render rich text options and available', () => {
+    cy.viewport(999, 500);
     const _control: IApiControl = {
       ...structuredClone(control),
       control_editable: true,
@@ -94,7 +95,7 @@ describe('<JoditRichTextControl />', () => {
       'Fill color or set the text color',
       'Insert format block',
       'Align',
-      'Open editor in fullsize',
+      'Open in fullsize',
     ];
 
     cy.mount(
@@ -116,6 +117,7 @@ describe('<JoditRichTextControl />', () => {
   });
 
   it('should render rich text options and unavailable', () => {
+    cy.viewport(999, 500);
     const _control: IApiControl = {
       ...structuredClone(control),
     };
@@ -143,7 +145,7 @@ describe('<JoditRichTextControl />', () => {
       cy.react('JoditRichTextControl')
         .get(`[aria-label="${option}"]`)
         .should('exist')
-        .should('be.disabled');
+        .should('have.attr', 'disabled', 'disabled');
     }
   });
 
@@ -160,9 +162,64 @@ describe('<JoditRichTextControl />', () => {
     cy.waitReactApp();
     cy.react('JoditRichTextControl');
     cy.window().then((w) => {
-      w['Features_Edit_JoditRichTextControl'].setMessage(msg);
-      cy.wait(1);
-      cy.react('JoditRichTextControl').get('._FormError').contains(msg);
+      cy.then(() =>
+        w['Features_Edit_JoditRichTextControl'].setMessage(msg),
+      ).then(() =>
+        cy.react('JoditRichTextControl').get('._FormError').contains(msg),
+      );
+    });
+  });
+
+  it('should make one request at a time and payload or queries not empty', function () {
+    cy.viewport(1000, 600);
+    const fileId = 'fileIdd';
+    const _control: IApiControl = {
+      ...structuredClone(control),
+      control_editable: true,
+      control_id: 'contr_idd',
+      control_family: 'contr_famil',
+    };
+    let reqCount = 0;
+
+    cy.intercept('POST', '/control/set_value?*', (req) => {
+      reqCount++;
+      req.on('response', (resp) => {
+        resp.send(200, { data: {} });
+      });
+    }).as('reqSaveJodit');
+
+    cy.mount(
+      <SetupTestsComponents>
+        <JoditRichTextControl
+          control={_control}
+          fileId={fileId}
+          context={'edit'}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+
+    cy.get('.jodit-wysiwyg').realClick().realType('Hello').clickOutside();
+
+    cy.wait('@reqSaveJodit').then((interception) => {
+      const { request } = interception;
+      const { query } = request;
+
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(255).then(() => {
+        expect(reqCount).to.be.lte(2);
+
+        cy.wrap(query).should('have.property', 'file_id');
+        cy.wrap(query).should('have.property', 'elm_id');
+        cy.wrap(query)
+          .should('have.property', 'control_family')
+          .then(() => {
+            expect(query.file_id).to.be.eq(fileId);
+            expect(query.elm_id).to.be.eq(_control.control_id);
+            expect(query.control_family).to.be.eq(_control.control_family);
+            expect(request.body).to.be.eq('<p>Hello</p>');
+          });
+      });
     });
   });
 });

@@ -52,6 +52,7 @@ export const UploadList: React.FC<React.PropsWithChildren<IProps>> = ({
             </DownloadFile>
             {!disabled && (
               <HighlightOff
+                data-testid="delete_icon_uploadfile"
                 onClick={(e) => handleDeleteFile(e, file.file_name)}
                 style={{
                   color: '#f50057',

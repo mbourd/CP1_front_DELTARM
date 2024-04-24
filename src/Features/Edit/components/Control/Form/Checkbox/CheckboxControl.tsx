@@ -49,6 +49,9 @@ export const CheckboxControl: React.FC<React.PropsWithChildren<IProps>> = ({
       ? control.control_rejectable.is_rejected
       : false,
   );
+  const [apiRouteName, setApiRouteName] = useState<string>(
+    currentRoute?.props?.apiSaveControlRouteName,
+  );
 
   const selectedValue: Record<string, true> = {
     [currentValue || control.control_value || '']: true,
@@ -78,7 +81,7 @@ export const CheckboxControl: React.FC<React.PropsWithChildren<IProps>> = ({
       setErrorMessage(null);
       setCurrentValue(value);
       send(
-        currentRoute?.props?.apiSaveControlRouteName,
+        apiRouteName,
         {},
         {
           file_id: fileId,
@@ -93,7 +96,7 @@ export const CheckboxControl: React.FC<React.PropsWithChildren<IProps>> = ({
       fileId,
       control.control_id,
       control.control_family,
-      currentRoute,
+      apiRouteName,
       control.control_regex,
       trans,
     ],
@@ -125,6 +128,12 @@ export const CheckboxControl: React.FC<React.PropsWithChildren<IProps>> = ({
       setErrorMessage(trans('errorReselect'));
     }
   }, [error, trans]);
+
+  if (window?.['Cypress']) {
+    window['Features_Edit_Control_Form_Checkbox_CheckboxControl'] = {
+      setApiRouteName,
+    };
+  }
 
   return (
     <Grid item xs={6}>

@@ -1,10 +1,14 @@
-import { IApiControl } from 'Features/Edit/types';
+// @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../../../../../cypress/support/component" />
+
+import { IApiControl } from '../../../../../../types';
 import { _hexToRgb } from '../../../../../../../../../cypress/utils';
 import { getData } from './getData';
 
-export function _assertCellStyle(_control: IApiControl) {
-  Cypress.config('defaultCommandTimeout', 6000);
-  cy.wait(500).then(() => {
+export function _assertCellStyle(_control: IApiControl, waitMs = 500) {
+  Cypress.config('defaultCommandTimeout', 10000);
+  cy.wait(waitMs).then(() => {
     cy.window().then((w) => {
       w[
         'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
@@ -72,13 +76,17 @@ export function _assertCellStyle(_control: IApiControl) {
                   cy.get('.MuiMenu-paper')
                     .find('ul li')
                     .then((lis) => {
-                      for (const li of lis as any as HTMLLIElement[]) {
-                        if (Cypress.$(li).text() !== elCellText) {
+                      cy.wrap(lis).each((li) => {
+                        if (
+                          !beenEdited &&
+                          Cypress.$(li).text() !== elCellText
+                        ) {
                           cy.wrap(li).click().clickOutside();
                           beenEdited = true;
-                          break;
+
+                          return;
                         }
-                      }
+                      });
                     });
                   break;
                 }

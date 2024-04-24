@@ -15,12 +15,12 @@ describe('<ModalRejectControl />', function () {
       <SetupTestsComponents>
         <ModalRejectControl
           open={false}
-          onClose={function (): void {}}
+          onClose={() => undefined}
           controlId={''}
           fileId={''}
           isRejected={false}
-          setSuccessCallRejection={function (): void {}}
-          setRejectComments={function (): void {}}
+          setSuccessCallRejection={() => undefined}
+          setRejectComments={() => undefined}
         />
       </SetupTestsComponents>,
     ).waitReactApp();
@@ -33,12 +33,12 @@ describe('<ModalRejectControl />', function () {
       <SetupTestsComponents>
         <ModalRejectControl
           open={true}
-          onClose={function (): void {}}
+          onClose={() => undefined}
           controlId={''}
           fileId={''}
           isRejected={false}
-          setSuccessCallRejection={function (): void {}}
-          setRejectComments={function (): void {}}
+          setSuccessCallRejection={() => undefined}
+          setRejectComments={() => undefined}
         />
       </SetupTestsComponents>,
     ).waitReactApp();

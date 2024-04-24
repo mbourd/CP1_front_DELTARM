@@ -33,8 +33,8 @@ describe('<DatePickerModalDynamic />', function () {
         <DatePickerModalDynamic
           element={element}
           index={0}
-          handleChangeValue={function (): void {}}
-          register={function (): void {}}
+          handleChangeValue={() => undefined}
+          register={() => undefined}
           defaultDate={''}
         />
       </SetupTestsComponents>,
@@ -54,8 +54,8 @@ describe('<DatePickerModalDynamic />', function () {
         <DatePickerModalDynamic
           element={element}
           index={0}
-          handleChangeValue={function (): void {}}
-          register={function (): void {}}
+          handleChangeValue={() => undefined}
+          register={() => undefined}
           defaultDate={`${year}-${month}-${day}`}
         />
       </SetupTestsComponents>,
@@ -77,8 +77,8 @@ describe('<DatePickerModalDynamic />', function () {
   //       <DatePickerModalDynamic
   //         element={element}
   //         index={0}
-  //         handleChangeValue={function (): void {}}
-  //         register={function (): void {}}
+  //         handleChangeValue={() => undefined}
+  //         register={() => undefined}
   //         defaultDate={`${year}-${month}-${day}`}
   //       />
   //     </SetupTestsComponents>,

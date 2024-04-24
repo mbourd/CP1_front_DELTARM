@@ -36,6 +36,9 @@ export const LongTextControl: React.FC<React.PropsWithChildren<IProps>> = ({
   );
   const { currentRoute } = useRouter();
   const [trans] = useTrans('Edit');
+  const [apiRouteName, setApiRouteName] = useState<string>(
+    currentRoute?.props?.apiSaveControlRouteName,
+  );
 
   useEffect(() => {
     setCurrentValue(control.control_value);
@@ -73,7 +76,7 @@ export const LongTextControl: React.FC<React.PropsWithChildren<IProps>> = ({
 
       setCurrentValue(value);
       send(
-        currentRoute?.props?.apiSaveControlRouteName,
+        apiRouteName,
         {},
         {
           file_id: fileId,
@@ -87,7 +90,6 @@ export const LongTextControl: React.FC<React.PropsWithChildren<IProps>> = ({
       send,
       fileId,
       control.control_id,
-      currentRoute,
       control.control_family,
       control.control_regex,
       control.control_regex_msg,
@@ -95,6 +97,7 @@ export const LongTextControl: React.FC<React.PropsWithChildren<IProps>> = ({
       setCurrentValue,
       control.mandatory,
       trans,
+      apiRouteName,
     ],
   );
 
@@ -118,6 +121,13 @@ export const LongTextControl: React.FC<React.PropsWithChildren<IProps>> = ({
       setIsRejected(false);
     }
   }, [isRejected]);
+
+  if (window?.['Cypress']) {
+    window['Features_Edit_Control_LongTextControl'] = {
+      setErrorMessage,
+      setApiRouteName,
+    };
+  }
 
   return (
     <Grid item xs={6}>

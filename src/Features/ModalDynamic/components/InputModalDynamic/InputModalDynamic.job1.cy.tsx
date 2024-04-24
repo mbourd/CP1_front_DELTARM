@@ -34,8 +34,8 @@ describe('<InputModalDynamic />', function () {
         <InputModalDynamic
           element={element}
           index={0}
-          handleChangeValue={function (): void {}}
-          register={function (): void {}}
+          handleChangeValue={() => undefined}
+          register={() => undefined}
         />
       </SetupTestsComponents>,
     );
@@ -51,8 +51,8 @@ describe('<InputModalDynamic />', function () {
         <InputModalDynamic
           element={_element}
           index={0}
-          handleChangeValue={function (): void {}}
-          register={function (): void {}}
+          handleChangeValue={() => undefined}
+          register={() => undefined}
         />
       </SetupTestsComponents>,
     );
@@ -77,8 +77,8 @@ describe('<InputModalDynamic />', function () {
         <InputModalDynamic
           element={_element}
           index={0}
-          handleChangeValue={function (): void {}}
-          register={function (): void {}}
+          handleChangeValue={() => undefined}
+          register={() => undefined}
         />
       </SetupTestsComponents>,
     );

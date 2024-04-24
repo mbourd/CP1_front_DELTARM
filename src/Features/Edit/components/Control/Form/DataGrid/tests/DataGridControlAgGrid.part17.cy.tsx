@@ -121,28 +121,28 @@ describe('<DataGridControlAgGrid /> - part 17', function () {
       <SetupTestsComponents>
         <DataGridControlAgGrid control={_control} fileId={''} />
       </SetupTestsComponents>,
-    );
-    cy.waitReactApp();
-    _assertCellStyle(_control);
+    )
+      .waitReactApp()
+      .then(() => _assertCellStyle(_control));
   });
-  // TODO: sometime fails on github actions
-  // it('Should apply cell styles - controlExample5', function () {
-  //   cy.viewport(3500, 720);
-  //   const _control = {
-  //     ...structuredClone(controlExample5),
-  //     mandatory: false,
-  //     upload_detail: null,
-  //     rich_text_detail: null,
-  //     control_rejectable: null,
-  //   } as any as IApiControl;
-  //   cy.mount(
-  //     <SetupTestsComponents>
-  //       <DataGridControlAgGrid control={_control} fileId={''} />
-  //     </SetupTestsComponents>,
-  //   );
-  //   cy.waitReactApp();
-  //   _assertCellStyle(_control);
-  // });
+  //// TODO: sometime fails on github actions
+  it('Should apply cell styles - controlExample5', function () {
+    cy.viewport(3500, 720);
+    const _control = {
+      ...structuredClone(controlExample5),
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    )
+      .waitReactApp()
+      .then(() => _assertCellStyle(_control));
+  });
   it('Should apply cell styles - controlExample6', function () {
     const _control = {
       ...structuredClone(controlExample6),

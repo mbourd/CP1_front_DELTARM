@@ -37,7 +37,6 @@ describe('<BPITooltip />', () => {
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.wait(1);
     cy.get('#child').each(($el) => {
       cy.wrap($el).trigger('mouseover');
       cy.get('[role="tooltip"]').should('exist').should('be.visible');

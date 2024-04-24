@@ -36,6 +36,9 @@ export const CommentControl: React.FC<React.PropsWithChildren<IProps>> = ({
       : false,
   );
   const { currentRoute } = useRouter();
+  const [apiRouteName, setApiRouteName] = useState<string>(
+    currentRoute?.props?.apiSaveControlRouteName,
+  );
 
   useEffect(() => {
     setCurrentValue(control.control_value);
@@ -73,7 +76,7 @@ export const CommentControl: React.FC<React.PropsWithChildren<IProps>> = ({
 
       setCurrentValue(value);
       send(
-        currentRoute?.props?.apiSaveControlRouteName,
+        apiRouteName,
         {},
         {
           file_id: fileId,
@@ -87,7 +90,7 @@ export const CommentControl: React.FC<React.PropsWithChildren<IProps>> = ({
       send,
       fileId,
       control.control_id,
-      currentRoute,
+      apiRouteName,
       control.control_family,
       control.control_regex,
       control.control_regex_msg,
@@ -118,6 +121,13 @@ export const CommentControl: React.FC<React.PropsWithChildren<IProps>> = ({
       setErrorMessage(trans('errorRecording'));
     }
   }, [error, trans]);
+
+  if (window?.['Cypress']) {
+    window['Features/Edit/Control/Form/Comment/CommentControl'] = {
+      setErrorMessage,
+      setApiRouteName,
+    };
+  }
 
   return (
     <Grid item xs={6}>

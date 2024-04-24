@@ -112,7 +112,7 @@ export const SwitchControlItem: React.FC<React.PropsWithChildren<IProps>> = ({
         .then((data: any) => {
           setget_value_response(data?.data);
           let condition = control.conditional?.conditional_formula;
-          if (data.data) {
+          if (data?.data) {
             if (data.data.data) {
               condition = condition?.replaceAll(
                 '$',

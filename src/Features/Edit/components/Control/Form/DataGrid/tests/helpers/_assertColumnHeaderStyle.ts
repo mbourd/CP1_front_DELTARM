@@ -1,9 +1,13 @@
-import { IApiControl } from 'Features/Edit/types';
+// @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../../../../../cypress/support/component" />
+
+import { IApiControl } from '../../../../../../types';
 import { _hexToRgb } from '../../../../../../../../../cypress/utils';
 import { getData } from './getData';
 
-export function _assertColumnHeaderStyle(_control: IApiControl) {
-  cy.wait(500).then(() => {
+export function _assertColumnHeaderStyle(_control: IApiControl, waitMs = 500) {
+  cy.wait(waitMs).then(() => {
     const withControlData = getData(_control);
 
     withControlData(1, ({ columns }) => {
@@ -15,12 +19,15 @@ export function _assertColumnHeaderStyle(_control: IApiControl) {
 
         cy.waitUntil(() => {
           const $col = Cypress.$(
-            `.ag-theme-alpine .ag-header-row.ag-header-row-column .ag-header-cell[col-id="${colId}"]`,
+            `.ag-header-row.ag-header-row-column .ag-header-cell[col-id="${colId}"]`,
           );
 
           if (col.hide) return true;
 
-          return cy.realPress('ArrowRight').then(() => $col.is(':visible'));
+          return cy
+            .wrap(Array.from({ length: 1 }))
+            .each(() => cy.realPress('ArrowRight'))
+            .then(() => $col.is(':visible'));
         }).then(() => {
           if (col.hide) return;
 

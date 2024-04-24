@@ -133,7 +133,7 @@
           "control_regex_msg": null,
           "reference_value": null,
           "row_num": 3,
-          "value": "hello;POST;test/test"
+          "value": "hello;POST;control/data_grid/save_value"
         },
         "rdg_2": {
           "choice_options": null,
