@@ -16,8 +16,9 @@ export const uploadComplianceFile = (
   setErrorMessage: React.Dispatch<SetStateAction<string | null>>,
 ) => {
   const formData = new FormData();
-  formData.append('file', newUploadFile);
   const fileName = newUploadFile.name;
+
+  formData.append('file', newUploadFile);
   axios
     .post(
       `${getEnv('API_PROTOCOL')}://${getEnv(

@@ -90,7 +90,7 @@ export function _assertRequestPayloadQueries(
                   cy.wait(255).then(() => {
                     expect(_reqTest.count).to.be.eq(1);
 
-                    if (cell.component == 'action_button') {
+                    if (cell.component === 'action_button') {
                       cy.wrap(query).should('have.property', 'row_num');
                       cy.wrap(query).should('have.property', 'control_id');
                     } else {

@@ -6,11 +6,11 @@ import { IApiControl } from '../../../../types';
 import { RichTextControlStyled } from './RichTextControl.style';
 import { ControlLabel } from '../ControlLabel';
 import { Grid } from '@mui/material';
-import { saveEditor } from './apiRoutes/saveEditor';
+// import { saveEditor } from './apiRoutes/saveEditor';
 import { IUser, security } from '../../../../../../Packages/Security';
 import { FormError } from '../../../../../../Packages/Design/components';
 import { RejectControl } from '../RejectByPointControl/RejectControl';
-import { useTrans } from '../../../../../../Services';
+import { useTrans, useApi } from '../../../../../../Services';
 
 interface IProps {
   control: IApiControl;
@@ -24,8 +24,9 @@ export const RichTextControl: React.FC<React.PropsWithChildren<IProps>> = ({
   context,
 }) => {
   const [user] = useState<IUser>(security.getUser());
-  const jwt = user.getJwt();
+  // const jwt = user.getJwt();
   const [trans] = useTrans('Edit');
+  const { send } = useApi({ promise: true });
 
   const [message, setMessage] = useState<string | null>(null);
   const [isRejected, setIsRejected] = useState(
@@ -47,8 +48,23 @@ export const RichTextControl: React.FC<React.PropsWithChildren<IProps>> = ({
     const editorContentConvertedToRaws = convertToRaw(
       editorState.getCurrentContent(),
     );
-    saveEditor(fileId, control, editorContentConvertedToRaws, jwt, setMessage);
-  }, [control, jwt, fileId, editorState]);
+    send(
+      'setControlValue',
+      {},
+      {
+        file_id: fileId,
+        elm_id: control.control_id,
+        control_family: control.control_family,
+        elm_val: '',
+      },
+      editorContentConvertedToRaws,
+    )?.catch((err) => {
+      if (err?.response?.body?.data?.error_msg) {
+        return setMessage(err.response.body.data.error_msg);
+      }
+    });
+    // saveEditor(fileId, control, editorContentConvertedToRaws, jwt, setMessage);
+  }, [send, control, fileId, editorState]);
 
   useEffect(() => {
     if (control.mandatory && control.editable) {

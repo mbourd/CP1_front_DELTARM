@@ -3,7 +3,7 @@
 /// <reference types="../../../../../cypress/support/component" />
 
 // NOTE: Run CLI:
-// yarn cypress:run:component --browser chrome --config video=false --spec "src/Packages/Design/components/Popper/Popper.cy.tsx"
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Packages/Design/components/Popper/Popper.job1.cy.tsx"
 
 import React, { useRef, useState } from 'react';
 
@@ -43,7 +43,6 @@ describe('<Popper />', () => {
     );
     cy.waitReactApp();
     cy.react('DummyFC').get('span').realClick();
-    cy.wait(1);
     cy.react('Popper').should('exist');
   });
 
@@ -80,7 +79,6 @@ describe('<Popper />', () => {
     );
     cy.waitReactApp();
     cy.react('DummyFC').get('span').realClick();
-    cy.wait(1);
     cy.react('Popper').contains(children);
   });
   it('Should render children as React.FC', () => {
@@ -119,7 +117,6 @@ describe('<Popper />', () => {
     );
     cy.waitReactApp();
     cy.react('DummyFC').get('span').realClick();
-    cy.wait(1);
     cy.react('Popper').contains(content);
   });
 
@@ -159,10 +156,8 @@ describe('<Popper />', () => {
     );
     cy.waitReactApp();
     cy.react('DummyFC').get('span').realClick();
-    cy.wait(1);
     cy.react('Popper').should('be.visible');
     cy.react('Popper').clickOutside();
-    cy.wait(1);
     cy.react('Popper', { options: { timeout: 1 } }).should('not.exist');
   });
 });
