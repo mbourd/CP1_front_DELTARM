@@ -8,6 +8,7 @@ import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../../cypress/utils/SetupTestsComponents';
 import { IApiControl } from '../../../../../types';
 import { DataGridControlAgGrid } from '../DataGridControlAgGrid';
+import { _getRandomNumberBetween } from '../../../../../../../../cypress/utils';
 
 describe('<DataGridControlAgGrid /> - part 1', function () {
   // int,dec,fin,perc
@@ -197,5 +198,68 @@ describe('<DataGridControlAgGrid /> - part 1', function () {
     );
     cy.waitReactApp();
     cy.react('DataGridControlAgGrid').react('AgGridReact').should('exist');
+  });
+
+  it('should make on request at a time and payload/queries not empty when call method refresh_grid - controlExample1', function () {
+    const _control = {
+      ...structuredClone(controlExample1),
+      data_grid_detail: {
+        ...structuredClone(controlExample1.data_grid_detail),
+        datagrid_options: {
+          ...structuredClone(
+            controlExample1.data_grid_detail?.datagrid_options || {},
+          ),
+          delete_row_button_display: true,
+        },
+        source: 'source',
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+      control_id: '9865435',
+    } as IApiControl;
+    const fileid = 'fileid' + _getRandomNumberBetween(113, 58735);
+    let reqCount = 0;
+
+    cy.intercept('GET', '/control/data_grid/refresh_values\\?*', (req) => {
+      reqCount++;
+      req.reply({
+        statusCode: 200,
+        fixture: 'controlDataGridAgGrid-1-refresh_grid.json',
+      });
+    }).as('reqGetRefreshValues');
+
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={fileid} />
+      </SetupTestsComponents>,
+    ).waitReactApp();
+
+    cy.window()
+      .then((w) => {
+        w[
+          'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
+        ].refresh_grid();
+      })
+      .then(() => {
+        cy.wait('@reqGetRefreshValues').then((interception) => {
+          const { request } = interception;
+          const { query } = request;
+
+          // eslint-disable-next-line cypress/no-unnecessary-waiting
+          cy.wait(300).then(() => {
+            expect(reqCount).to.eq(1);
+            cy.wrap(query).should('have.property', 'file_id');
+            cy.wrap(query).should('have.property', 'control_id');
+            cy.wrap(query).should('have.property', 'source');
+            cy.then(() => {
+              expect(query.file_id).to.eq(fileid);
+              expect(query.control_id).to.eq(_control.control_id);
+              expect(query.source).to.eq(_control.data_grid_detail?.source);
+            });
+          });
+        });
+      });
   });
 });

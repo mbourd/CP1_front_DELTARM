@@ -1,5 +1,6 @@
 import React from 'react';
-import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
+// import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
+import { useApi } from 'Services';
 
 const CustomDateRenderer: React.FC<React.PropsWithChildren<any>> = ({
   props,
@@ -8,6 +9,7 @@ const CustomDateRenderer: React.FC<React.PropsWithChildren<any>> = ({
   jwt,
   seterrors,
 }) => {
+  const { send } = useApi({ promise: true });
   const data = props?.colDef?.field?.split('.')[0];
   const field_data = Object.entries(props?.data).reduce(
     (accum: any, current: any) => {
@@ -22,16 +24,33 @@ const CustomDateRenderer: React.FC<React.PropsWithChildren<any>> = ({
   );
   const checkedHandler = (event: any) => {
     props.setValue(event.target.value);
-    saveValueDataGrid(
-      fileId,
-      props?.data?.row_uuid,
-      field_data?.col_elm_id,
-      field_data?.row_num,
-      jwt,
-      event.target.value,
-      seterrors,
-      event.target.value,
+    const p = send(
+      'saveDataGridAgGridValues',
+      {},
+      {
+        fileId,
+        row_uuid: props?.data?.row_uuid,
+        elm_val: event.target.value,
+        col_elm_id: field_data?.col_elm_id,
+      },
     );
+
+    if (p instanceof Promise) {
+      p.catch(() => {
+        seterrors('Une erreur est survenue');
+      });
+    }
+
+    // saveValueDataGrid(
+    //   fileId,
+    //   props?.data?.row_uuid,
+    //   field_data?.col_elm_id,
+    //   field_data?.row_num,
+    //   jwt,
+    //   event.target.value,
+    //   seterrors,
+    //   event.target.value,
+    // );
   };
 
   return (

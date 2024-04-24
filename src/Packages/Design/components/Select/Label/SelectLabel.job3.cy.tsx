@@ -100,6 +100,7 @@ describe('<SelectLabel />', function () {
     );
     cy.waitReactApp();
     cy.react('SelectLabel').realClick();
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(1).then(() => expect(v).to.eq('change'));
   });
 });

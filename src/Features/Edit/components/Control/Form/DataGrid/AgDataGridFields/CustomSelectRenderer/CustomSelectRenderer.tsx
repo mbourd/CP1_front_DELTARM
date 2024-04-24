@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
+// import { saveValueDataGrid } from '../../apiRoutes/saveValueDataGrid';
 import {
   CustomSelectRendererStyled,
   OptionStyled,
   CustomSelectStyled,
 } from './CustomSelectRenderer.style';
 import './style.css';
+import { useApi } from 'Services';
 
 const CustomSelectRenderer: React.FC<React.PropsWithChildren<any>> = ({
   props,
@@ -19,6 +20,7 @@ const CustomSelectRenderer: React.FC<React.PropsWithChildren<any>> = ({
   const select_id_to_show = field_data?.choice_options.filter((option: any) => {
     return props.value?.toString() === option?.choice_id?.toString();
   });
+  const { send } = useApi({ promise: true });
 
   // console.log('defaultValue', select_id_to_show[0]?.choice_lib, props.value);
   const handleChange = (event: any) => {
@@ -30,17 +32,31 @@ const CustomSelectRenderer: React.FC<React.PropsWithChildren<any>> = ({
     // console.log('value to save in grid', event?.target?.value, select_id);
     props.setValue(select_id[0]?.choice_id?.toString());
 
-    if (canSendApi)
-      saveValueDataGrid(
-        fileId,
-        props?.data?.row_uuid,
-        field_data?.col_elm_id,
-        field_data?.row_num,
-        jwt,
-        select_id[0]?.choice_id.toString(),
-        seterrors,
-        select_id[0]?.choice_id.toString(),
-      );
+    if (canSendApi) {
+      send(
+        'saveDataGridAgGridValues',
+        {},
+        {
+          fileId,
+          row_uuid: props?.data?.row_uuid,
+          elm_val: select_id[0]?.choice_id.toString(),
+          col_elm_id: field_data?.col_elm_id,
+        },
+      )?.catch(() => {
+        seterrors('Une erreur est survenue');
+      });
+
+      // saveValueDataGrid(
+      //   fileId,
+      //   props?.data?.row_uuid,
+      //   field_data?.col_elm_id,
+      //   field_data?.row_num,
+      //   jwt,
+      //   select_id[0]?.choice_id.toString(),
+      //   seterrors,
+      //   select_id[0]?.choice_id.toString(),
+      // );
+    }
   };
 
   // expose for Cypress API
