@@ -4,11 +4,17 @@
 
 import { keyCodeDefinitions } from 'cypress-real-events/keyCodeDefinitions';
 import '../../../../../../../../Features/Edit/translations';
-import { DataGridDetailsColumnType, IApiControl } from 'Features/Edit/types';
+import {
+  IApiControl,
+  DataGridDetailsColumnType,
+} from '../../../../../../types';
 import { getData } from './getData';
 
-export function _assertPinnedPositionColumns(_control: IApiControl) {
-  cy.wait(500).then(() => {
+export function _assertPinnedPositionColumns(
+  _control: IApiControl,
+  waitMs = 500,
+) {
+  cy.wait(waitMs).then(() => {
     const classHeaderCellSelector =
       '.ag-header-row.ag-header-row-column .ag-header-cell';
     const withControlData = getData(_control);
@@ -52,29 +58,29 @@ export function _assertPinnedPositionColumns(_control: IApiControl) {
           switch (col.pinned) {
             case 'left':
               if (col.hide) {
-                expect(isPinned.left, col.headerName).to.be.false;
+                expect(isPinned.left, col.headerName + ' left.').to.be.false;
                 expect(isPinned.right, col.headerName).to.be.false;
               } else {
-                expect(isPinned.left, col.headerName).to.be.true;
+                expect(isPinned.left, col.headerName + ' left..').to.be.true;
                 expect(isPinned.right, col.headerName).to.be.false;
               }
               break;
             case 'right':
               if (col.hide) {
-                expect(isPinned.left, col.headerName).to.be.false;
+                expect(isPinned.left, col.headerName + ' left...').to.be.false;
                 expect(isPinned.right, col.headerName).to.be.false;
               } else {
-                expect(isPinned.left, col.headerName).to.be.false;
+                expect(isPinned.left, col.headerName + ' left....').to.be.false;
                 expect(isPinned.right, col.headerName).to.be.true;
               }
               break;
             default:
-              expect(isPinned.left, col.headerName).to.be.false;
+              expect(isPinned.left, col.headerName + ' left.....').to.be.false;
               expect(isPinned.right, col.headerName).to.be.false;
               break;
           }
         } else {
-          expect(isPinned.left, col.headerName).to.be.false;
+          expect(isPinned.left, col.headerName + ' left......').to.be.false;
           expect(isPinned.right, col.headerName).to.be.false;
         }
 
@@ -84,7 +90,7 @@ export function _assertPinnedPositionColumns(_control: IApiControl) {
               cy.wrap(columns).each(() => {
                 cy.realPress(arrowDir).then(() => {
                   const isVisible = Cypress.$(
-                    `.ag-theme-alpine ${classHeaderCellSelector}[col-id="${col.field}"]`,
+                    /*'.ag-theme-alpine ' +*/ `${classHeaderCellSelector}[col-id="${col.field}"]`,
                   ).is(':visible');
 
                   if (col.hide) expect(isVisible).to.be.false;

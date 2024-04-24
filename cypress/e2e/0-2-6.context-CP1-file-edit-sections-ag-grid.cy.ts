@@ -135,7 +135,7 @@ describe(
               // assert each column names matches with the api
               getCyElementControl(info[0], indexChapter, indexControl)
                 .find(
-                  '.ag-theme-alpine .ag-header-row.ag-header-row-column .ag-header-cell',
+                  /*'.ag-theme-alpine ' +*/ '.ag-header-row.ag-header-row-column .ag-header-cell',
                 )
                 .should('be.visible')
                 .should('have.length', columns.length)

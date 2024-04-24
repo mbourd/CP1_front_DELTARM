@@ -1,4 +1,8 @@
-import { IApiControl } from 'Features/Edit/types';
+// @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../../../../../cypress/support/component" />
+
+import { IApiControl } from '../../../../../../types';
 import { formatDecimalDigit } from './formatDecimalDigit';
 import { generateRandExp } from './generateRandExp';
 import { getData } from './getData';
@@ -6,8 +10,11 @@ import { kFormatter } from './kFormatter';
 import { create as mathCreate, all as mathAll } from 'mathjs';
 
 // validate the correctness of formulas in a data grid by simulating user input, recalculating formula cells, and checking the evaluated results against expected values.
-export function _assertFormatAndEvalFormula(_control: IApiControl) {
-  cy.wait(500).then(() => {
+export function _assertFormatAndEvalFormula(
+  _control: IApiControl,
+  waitMs = 500,
+) {
+  cy.wait(waitMs).then(() => {
     cy.window().then((w) => {
       w[
         'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
@@ -28,7 +35,7 @@ export function _assertFormatAndEvalFormula(_control: IApiControl) {
         }[] = [];
 
         cy.react('DataGridControlAgGrid')
-          .find('.ag-theme-alpine')
+          .react('AgGridReact')
           .getAgGridElements()
           .then((elRows) => {
             for (const indexCell in rowValues) {
@@ -42,7 +49,7 @@ export function _assertFormatAndEvalFormula(_control: IApiControl) {
                   formulas.push({
                     formula: rowValues[indexCell].value,
                     ids: [
-                      ...new Set(
+                      ...new Set<string>(
                         rowValues[indexCell].value.match(/#\d+/g) || [],
                       ),
                     ],
@@ -86,7 +93,7 @@ export function _assertFormatAndEvalFormula(_control: IApiControl) {
           });
 
         cy.react('DataGridControlAgGrid')
-          .find('.ag-theme-alpine')
+          .react('AgGridReact')
           .getAgGridElements()
           .then((elRows) => {
             for (const formula of formulas) {

@@ -3,7 +3,7 @@
 /// <reference types="../../../../../cypress/support/component" />
 
 // NOTE: Run CLI:
-// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/SwitchControlItem.cy.tsx"
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/Control/SwitchControlItem.job2.cy.tsx"
 
 import React from 'react';
 
@@ -30,6 +30,10 @@ import { DataGridControlStyled } from './Form/DataGrid/DataGridControl.style';
 import { RichTextControlStyled } from './Form/RichText/RichTextControl.style';
 import { UploadControlStyled } from './Form/Upload/UploadControl.style';
 import { InfoBlockControlStyled } from './Form/InfoBlock/InfoBlockControl.style';
+import {
+  EditValidationContext,
+  IEditValidationContext,
+} from '../../EditValidationContext';
 
 describe('<SwitchControlItem />', () => {
   let control: IApiControl;
@@ -38,6 +42,62 @@ describe('<SwitchControlItem />', () => {
   before(() => {
     cy.fixture('switchControlItem_control.json').then((d) => (control = d));
     cy.fixture('switchControlItem_chapters.json').then((d) => (chapters = d));
+  });
+
+  it('should make one request at a time and payload or queries not empty', function () {
+    let reqCount = 0;
+    const _control: IApiControl = {
+      ...structuredClone(control),
+      control_type: 'text',
+      control_conditional: true,
+      conditional: { conditional_by_field_id: 123 },
+    };
+    const _chapters = [...structuredClone(chapters)];
+    const contextValue: IEditValidationContext = {
+      data: null,
+      fileId: 'file_id',
+    };
+
+    cy.intercept('GET', '/control/get_value?*', (req) => {
+      reqCount++;
+      req.on('response', (resp) => {
+        resp.send(200, {});
+      });
+    }).as('reqGetValue');
+
+    cy.mount(
+      <SetupTestsComponents>
+        <EditValidationContext.Provider value={contextValue}>
+          <SwitchControlItem
+            control={_control}
+            formState={_chapters}
+            setFormState={() => undefined}
+            context={'edit'}
+          />
+        </EditValidationContext.Provider>
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+
+    cy.wait('@reqGetValue').then((interception) => {
+      const { request } = interception;
+      const { query } = request;
+
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(500).then(() => {
+        expect(reqCount).to.be.eq(1);
+
+        cy.wrap(query).should('have.property', 'file_id');
+        cy.wrap(query)
+          .should('have.property', 'control_id')
+          .then(() => {
+            expect(query.file_id).to.be.eq(contextValue.fileId);
+            expect(query.control_id).to.be.eq(
+              _control.conditional.conditional_by_field_id + '',
+            );
+          });
+      });
+    });
   });
 
   it('Should render <TextControl /> for control_type=text', function () {

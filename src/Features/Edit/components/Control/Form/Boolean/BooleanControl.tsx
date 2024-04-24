@@ -39,6 +39,10 @@ export const BooleanControl: React.FC<React.PropsWithChildren<IProps>> = ({
   );
 
   const { currentRoute } = useRouter();
+  const [apiRouteName, setApiRouteName] = useState<string>(
+    currentRoute?.props?.apiSaveControlRouteName,
+  );
+
   useEffect(() => {
     setCurrentValue(control.control_value);
   }, [control.control_value]);
@@ -64,13 +68,13 @@ export const BooleanControl: React.FC<React.PropsWithChildren<IProps>> = ({
       elm_val: booleanValue.toString(),
     };
 
-    send(currentRoute?.props?.apiSaveControlRouteName, {}, q);
+    send(apiRouteName, {}, q);
   }, [
     currentValue,
     send,
     fileId,
     control.control_id,
-    currentRoute,
+    apiRouteName,
     control.control_family,
     setCurrentValue,
     control.mandatory,
@@ -100,6 +104,13 @@ export const BooleanControl: React.FC<React.PropsWithChildren<IProps>> = ({
   }, [error, trans]);
 
   const booleanValue = stringToBoolean(currentValue);
+
+  if (window?.['Cypress']) {
+    window['Features/Edit/Control/Form/Boolean/BooleanControl'] = {
+      setErrorMessage,
+      setApiRouteName,
+    };
+  }
 
   return (
     <Grid item xs={6}>

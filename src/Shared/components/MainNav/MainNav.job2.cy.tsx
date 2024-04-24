@@ -105,6 +105,49 @@ describe('<MainNav />', () => {
     cy.get('.menu-icon').should('be.visible');
   });
 
+  it('should make one request at a time and payload or queries not empty', function () {
+    let reqCount = 0;
+
+    cy.intercept('GET', '/user/info', (req) => {
+      reqCount++;
+      req.reply({});
+    }).as('reqUserInfo');
+
+    cy.then(() => {
+      const security = {
+        _roles: [],
+        _email: null,
+        _jwt: 'fake jwt',
+        _lang: 'fr',
+        _username: 'anon',
+        _expireAt: '2023-09-02T11:49:04.000Z',
+      };
+      window.localStorage.setItem('security', JSON.stringify(security));
+    }).then(() => {
+      cy.mount(
+        <SetupTestsComponents
+          securityContextValue={{
+            user: security.getUser(),
+            jwt: security.getUser().getJwt(),
+            data: { context: 'CP1' },
+            login: () => undefined,
+            logout: () => undefined,
+          }}
+        >
+          <MainNav />
+        </SetupTestsComponents>,
+      );
+      cy.waitReactApp();
+
+      cy.wait('@reqUserInfo').then(() => {
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(255).then(() => {
+          expect(reqCount).to.be.eq(1);
+        });
+      });
+    });
+  });
+
   it('should display <Popper /> on click menu and hide when click outside', () => {
     cy.mount(
       <SetupTestsComponents
@@ -122,9 +165,9 @@ describe('<MainNav />', () => {
     cy.waitReactApp();
     cy.get('.menu-icon').each(($el) => {
       cy.wrap($el).realClick();
-      cy.wait(1);
       cy.react('Popper').should('be.visible');
       cy.react('Popper').clickOutside();
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(1);
       cy.react('Popper', { options: { timeout: 1 } }).should('not.exist');
     });
@@ -153,6 +196,7 @@ describe('<MainNav />', () => {
     cy.waitReactApp();
     cy.get('.menu-icon').each(($el) => {
       cy.wrap($el).realClick();
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(255).then(() => {
         cy.wrap(transListKey).each((v: string) => {
           const en = _translate('en', 'Default', v) || v;
@@ -188,7 +232,6 @@ describe('<MainNav />', () => {
       const transes = [en, fr, de];
 
       cy.wrap($el).realClick();
-      cy.wait(255);
       cy.react('Popper').contains(new RegExp(transes.join('|'), 'gu'));
     });
   });
@@ -322,6 +365,7 @@ describe('<MainNav />', () => {
     cy.waitReactApp();
     cy.get('.menu-icon').each(($el) => {
       cy.wrap($el).realClick();
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(255).then(() => {
         cy.get('.contr_perm_menus').each(($menu, i) => {
           expect($menu.text()).to.be.eq(sortedMenus[i].menu_lib);

@@ -30,6 +30,46 @@ describe('<DataGridControlAgGrid /> - part 13', function () {
 
   let originalTimeout: number;
 
+  // because v31 we can't pin all columns so at least one not pinned
+  const fakeColumn = {
+    alignment: 'left',
+    borderRight: null,
+    borderRightColor: null,
+    borderRightWidth: null,
+    col_header_display_tooltip: false,
+    col_header_tooltip: 'Integer',
+    currency_symbol: null,
+    decimal_digit: 0,
+    field: 'rdg_0.value',
+    field_type: 'integer',
+    filter: true,
+    floatingFilter: false,
+    headerColor: '#FFFFFF',
+    headerName: 'Fake',
+    hide: false,
+    lockPinned: false,
+    pinned: null,
+    resizable: true,
+    sortable: true,
+    thousand_separator: false,
+    track_modification: false,
+    track_modification_option: null,
+    track_modification_tooltip: false,
+  };
+  const fakeCell_rdg0 = {
+    choice_options: [],
+    col_elm_id: 7915,
+    component: 'integer',
+    control_editable: true,
+    control_mandatory: false,
+    control_options: null,
+    control_regex: '^-?[0-9]\\d*$',
+    control_regex_msg: "La valeur saisie n'est pas une valeur entière",
+    reference_value: null,
+    row_num: 1,
+    value: null,
+  };
+
   before(() => {
     cy.fixture('controlDataGridAgGrid-1.json').then(
       (d) => (controlExample1 = d),
@@ -76,14 +116,39 @@ describe('<DataGridControlAgGrid /> - part 13', function () {
       ...structuredClone(controlExample1),
       data_grid_detail: {
         ...structuredClone(controlExample1.data_grid_detail),
-        columns: structuredClone(
-          controlExample1.data_grid_detail?.columns || [],
-        ).map((col) => {
-          col.lockPinned = false;
-          col.pinned = null;
+        columns: (() => {
+          const _columns = structuredClone(
+            controlExample1.data_grid_detail?.columns || [],
+          );
 
-          return col;
-        }),
+          // @ts-ignore
+          _columns.unshift(fakeColumn);
+
+          return _columns.map((col, i) => {
+            col.lockPinned = i > 0 ? false : true;
+            col.pinned = null;
+
+            return col;
+          });
+        })(),
+        rows: structuredClone(controlExample1.data_grid_detail?.rows || []).map(
+          (row) => {
+            const _row = structuredClone(row);
+
+            // @ts-ignore
+            _row['rdg_0'] = fakeCell_rdg0;
+
+            return row;
+          },
+        ),
+        // columns: structuredClone(
+        //   controlExample1.data_grid_detail?.columns || [],
+        // ).map((col) => {
+        //   col.lockPinned = false;
+        //   col.pinned = null;
+
+        //   return col;
+        // }),
       },
       mandatory: false,
       upload_detail: null,
@@ -103,14 +168,31 @@ describe('<DataGridControlAgGrid /> - part 13', function () {
       ...structuredClone(controlExample2),
       data_grid_detail: {
         ...structuredClone(controlExample2.data_grid_detail),
-        columns: structuredClone(
-          controlExample2.data_grid_detail?.columns || [],
-        ).map((col) => {
-          col.lockPinned = false;
-          col.pinned = null;
+        columns: (() => {
+          const _columns = structuredClone(
+            controlExample2.data_grid_detail?.columns || [],
+          );
 
-          return col;
-        }),
+          // @ts-ignore
+          _columns.unshift(fakeColumn);
+
+          return _columns.map((col, i) => {
+            col.lockPinned = i > 0 ? false : true;
+            col.pinned = null;
+
+            return col;
+          });
+        })(),
+        rows: structuredClone(controlExample2.data_grid_detail?.rows || []).map(
+          (row) => {
+            const _row = structuredClone(row);
+
+            // @ts-ignore
+            _row['rdg_0'] = fakeCell_rdg0;
+
+            return row;
+          },
+        ),
       },
       mandatory: false,
       upload_detail: null,
@@ -130,14 +212,31 @@ describe('<DataGridControlAgGrid /> - part 13', function () {
       ...structuredClone(controlExample3),
       data_grid_detail: {
         ...structuredClone(controlExample3.data_grid_detail),
-        columns: structuredClone(
-          controlExample3.data_grid_detail?.columns || [],
-        ).map((col) => {
-          col.lockPinned = false;
-          col.pinned = null;
+        columns: (() => {
+          const _columns = structuredClone(
+            controlExample3.data_grid_detail?.columns || [],
+          );
 
-          return col;
-        }),
+          // @ts-ignore
+          _columns.unshift(fakeColumn);
+
+          return _columns.map((col, i) => {
+            col.lockPinned = i > 0 ? false : true;
+            col.pinned = null;
+
+            return col;
+          });
+        })(),
+        rows: structuredClone(controlExample3.data_grid_detail?.rows || []).map(
+          (row) => {
+            const _row = structuredClone(row);
+
+            // @ts-ignore
+            _row['rdg_0'] = fakeCell_rdg0;
+
+            return row;
+          },
+        ),
       },
       mandatory: false,
       upload_detail: null,
@@ -157,14 +256,31 @@ describe('<DataGridControlAgGrid /> - part 13', function () {
       ...structuredClone(controlExample4),
       data_grid_detail: {
         ...structuredClone(controlExample4.data_grid_detail),
-        columns: structuredClone(
-          controlExample4.data_grid_detail?.columns || [],
-        ).map((col) => {
-          col.lockPinned = false;
-          col.pinned = null;
+        columns: (() => {
+          const _columns = structuredClone(
+            controlExample4.data_grid_detail?.columns || [],
+          );
 
-          return col;
-        }),
+          // @ts-ignore
+          _columns.unshift(fakeColumn);
+
+          return _columns.map((col, i) => {
+            col.lockPinned = i > 0 ? false : true;
+            col.pinned = null;
+
+            return col;
+          });
+        })(),
+        rows: structuredClone(controlExample4.data_grid_detail?.rows || []).map(
+          (row) => {
+            const _row = structuredClone(row);
+
+            // @ts-ignore
+            _row['rdg_0'] = fakeCell_rdg0;
+
+            return row;
+          },
+        ),
       },
       mandatory: false,
       upload_detail: null,
@@ -185,14 +301,31 @@ describe('<DataGridControlAgGrid /> - part 13', function () {
       ...structuredClone(controlExample5),
       data_grid_detail: {
         ...structuredClone(controlExample5.data_grid_detail),
-        columns: structuredClone(
-          controlExample5.data_grid_detail?.columns || [],
-        ).map((col) => {
-          col.lockPinned = false;
-          col.pinned = null;
+        columns: (() => {
+          const _columns = structuredClone(
+            controlExample5.data_grid_detail?.columns || [],
+          );
 
-          return col;
-        }),
+          // @ts-ignore
+          _columns.unshift(fakeColumn);
+
+          return _columns.map((col, i) => {
+            col.lockPinned = i > 0 ? false : true;
+            col.pinned = null;
+
+            return col;
+          });
+        })(),
+        rows: structuredClone(controlExample5.data_grid_detail?.rows || []).map(
+          (row) => {
+            const _row = structuredClone(row);
+
+            // @ts-ignore
+            _row['rdg_0'] = fakeCell_rdg0;
+
+            return row;
+          },
+        ),
       },
       mandatory: false,
       upload_detail: null,
@@ -203,23 +336,40 @@ describe('<DataGridControlAgGrid /> - part 13', function () {
       <SetupTestsComponents>
         <DataGridControlAgGrid control={_control} fileId={''} />
       </SetupTestsComponents>,
-    );
-    cy.waitReactApp();
-    _assertManuallyPinnedPositionColumns(_control);
+    )
+      .waitReactApp()
+      .then(() => _assertManuallyPinnedPositionColumns(_control, 3000));
   });
   it('Should be able to pin column manually - controlExample6', function () {
     const _control = {
       ...structuredClone(controlExample6),
       data_grid_detail: {
         ...structuredClone(controlExample6.data_grid_detail),
-        columns: structuredClone(
-          controlExample6.data_grid_detail?.columns || [],
-        ).map((col) => {
-          col.lockPinned = false;
-          col.pinned = null;
+        columns: (() => {
+          const _columns = structuredClone(
+            controlExample6.data_grid_detail?.columns || [],
+          );
 
-          return col;
-        }),
+          // @ts-ignore
+          _columns.unshift(fakeColumn);
+
+          return _columns.map((col, i) => {
+            col.lockPinned = i > 0 ? false : true;
+            col.pinned = null;
+
+            return col;
+          });
+        })(),
+        rows: structuredClone(controlExample6.data_grid_detail?.rows || []).map(
+          (row) => {
+            const _row = structuredClone(row);
+
+            // @ts-ignore
+            _row['rdg_0'] = fakeCell_rdg0;
+
+            return row;
+          },
+        ),
       },
       mandatory: false,
       upload_detail: null,
@@ -239,14 +389,33 @@ describe('<DataGridControlAgGrid /> - part 13', function () {
       ...structuredClone(controlExample7),
       data_grid_detail: {
         ...structuredClone(controlExample7.data_grid_detail),
-        columns: structuredClone(
-          controlExample7.data_grid_detail?.columns || [],
-        ).map((col) => {
-          col.lockPinned = false;
-          col.pinned = null;
+        columns: (() => {
+          const _columns = structuredClone(
+            controlExample7.data_grid_detail?.columns || [],
+          );
+          const _fakeC = structuredClone(fakeColumn);
+          _fakeC.field = 'rdg_00.value';
 
-          return col;
-        }),
+          // @ts-ignore
+          _columns.unshift(_fakeC);
+
+          return _columns.map((col, i) => {
+            col.lockPinned = i > 0 ? false : true;
+            col.pinned = null;
+
+            return col;
+          });
+        })(),
+        rows: structuredClone(controlExample7.data_grid_detail?.rows || []).map(
+          (row) => {
+            const _row = structuredClone(row);
+
+            // @ts-ignore
+            _row['rdg_00'] = fakeCell_rdg0;
+
+            return row;
+          },
+        ),
       },
       mandatory: false,
       upload_detail: null,
@@ -266,15 +435,34 @@ describe('<DataGridControlAgGrid /> - part 13', function () {
       ...structuredClone(controlExample8),
       data_grid_detail: {
         ...structuredClone(controlExample8.data_grid_detail),
-        columns: structuredClone(
-          controlExample8.data_grid_detail?.columns || [],
-        ).map((col) => {
-          col.lockPinned = false;
-          col.pinned = null;
+        columns: (() => {
+          const _columns = structuredClone(
+            controlExample8.data_grid_detail?.columns || [],
+          );
+          const _fakeC = structuredClone(fakeColumn);
+          _fakeC.field = 'rdg_00.value';
 
-          return col;
-        }),
-        rows: [controlExample8.data_grid_detail?.rows[0]],
+          // @ts-ignore
+          _columns.unshift(_fakeC);
+
+          return _columns.map((col, i) => {
+            col.lockPinned = i > 0 ? false : true;
+            col.pinned = null;
+
+            return col;
+          });
+        })(),
+        rows: structuredClone(controlExample8.data_grid_detail?.rows || []).map(
+          (row) => {
+            const _row = structuredClone(row);
+
+            // @ts-ignore
+            _row['rdg_00'] = fakeCell_rdg0;
+
+            return row;
+          },
+        ),
+        // rows: [controlExample8.data_grid_detail?.rows[0]],
       },
       mandatory: false,
       upload_detail: null,
@@ -285,9 +473,9 @@ describe('<DataGridControlAgGrid /> - part 13', function () {
       <SetupTestsComponents>
         <DataGridControlAgGrid control={_control} fileId={''} />
       </SetupTestsComponents>,
-    );
-    cy.waitReactApp();
-    _assertManuallyPinnedPositionColumns(_control);
+    )
+      .waitReactApp()
+      .then(() => _assertManuallyPinnedPositionColumns(_control, 3000));
   });
   it('Should NOT be able to pin column manually - controlExample1', function () {
     const _control = {
@@ -393,9 +581,9 @@ describe('<DataGridControlAgGrid /> - part 13', function () {
       <SetupTestsComponents>
         <DataGridControlAgGrid control={_control} fileId={''} />
       </SetupTestsComponents>,
-    );
-    cy.waitReactApp();
-    _assertManuallyPinnedPositionColumns(_control);
+    )
+      .waitReactApp()
+      .then(() => _assertManuallyPinnedPositionColumns(_control));
   });
   it('Should NOT be able to pin column manually - controlExample6', function () {
     const _control = {

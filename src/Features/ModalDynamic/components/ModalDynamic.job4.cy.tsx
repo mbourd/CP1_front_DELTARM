@@ -17,7 +17,7 @@ describe('<ModalDynamic />', function () {
   let import_TE_1_1: IDataModal;
   let import_TE_1_2_error: IDataModal;
   let import_TE_1_2_error_: IDataModal;
-  let import_TE_1_2_success_validate: IDataModal;
+  // let import_TE_1_2_success_validate: IDataModal;
 
   before(() => {
     cy.fixture('modalDynamic-import_TE-1-1.json').then((d) => {
@@ -29,9 +29,9 @@ describe('<ModalDynamic />', function () {
     cy.fixture('modalDynamic-import_TE-1-2-error_.json').then((d) => {
       import_TE_1_2_error_ = d;
     });
-    cy.fixture('modalDynamic-import_TE-1-2-validate-success.json').then((d) => {
-      import_TE_1_2_success_validate = d;
-    });
+    // cy.fixture('modalDynamic-import_TE-1-2-validate-success.json').then((d) => {
+    //   import_TE_1_2_success_validate = d;
+    // });
   });
 
   it('should render', function () {
@@ -133,7 +133,7 @@ describe('<ModalDynamic />', function () {
       });
   });
 
-  it('should render a loading logo if POST request takes some times (valiate) - import modal TE 1 1', function () {
+  it('should render a loading logo if POST request takes some times (validate) - import modal TE 1 1', function () {
     const _data = {
       ...structuredClone(import_TE_1_1),
       content: [
@@ -197,7 +197,7 @@ describe('<ModalDynamic />', function () {
       });
   });
 
-  it('should render the error msg if validate fails (valiate) - import modal TE 1 1', function () {
+  it('should render the error msg if validate fails (validate) - import modal TE 1 1', function () {
     cy.viewport(1920, 1080);
     cy.mount(
       <SetupTestsComponents>
@@ -223,10 +223,11 @@ describe('<ModalDynamic />', function () {
     let reqCount = 0;
     btn.action.endpoint = btn?.action.endpoint + 'bis';
 
-    cy.intercept('POST', btn?.action.endpoint + '?*', (req) => {
+    cy.intercept('POST', btn?.action.endpoint + '\\?*', (req) => {
       reqCount++;
+      // req.on('response', (_resp) => _resp.send(404, resp)); // not working
       req.reply(400, resp);
-    });
+    }).as('reqPostBtnEndpoint');
 
     cy.react('ModalDynamic')
       .find('input[type="file"]')
@@ -240,15 +241,33 @@ describe('<ModalDynamic />', function () {
         { force: true, action: 'drag-drop' },
       );
     cy.contains(btn?.btn_lib as string).click();
-    cy.react('ModalDynamic').formErrorShouldBeVisible([
-      _escapeForRegExp(resp.error_msg) as string,
-    ]);
-    cy.wait(10).then(() => {
-      expect(reqCount).to.be.eq(1);
+    cy.wait('@reqPostBtnEndpoint').then((interception) => {
+      const { request } = interception;
+      const { query } = request;
+      const reqBody = parseMultipartFormData(request.body);
+
+      cy.react('ModalDynamic').formErrorShouldBeVisible([
+        _escapeForRegExp(resp.error_msg) as string,
+      ]);
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(255).then(() => {
+        expect(reqCount).to.be.eq(1);
+        cy.wrap(query).should('have.property', 'deubg_mod');
+        cy.wrap(query).should('have.property', 'file');
+        cy.wrap(query).should('have.property', 'import_mode');
+        cy.then(() => {
+          expect(JSON.parse(reqBody)?.['file.txt']).to.not.null;
+          expect(JSON.parse(reqBody)?.['file.txt']).to.not.undefined;
+          expect(JSON.parse(reqBody)?.['file.txt']).to.not.eq('');
+          expect(query.deubg_mod).to.eq('False');
+          expect(query.file).to.eq('file.txt');
+          expect(query.import_mode).to.eq('create');
+        });
+      });
     });
   });
 
-  it('should render textarea (valiate) - import modal TE 1 2 error', function () {
+  it('should render textarea (validate) - import modal TE 1 2 error', function () {
     let contentStr = '';
 
     for (const element of import_TE_1_2_error.content) {
@@ -291,7 +310,7 @@ describe('<ModalDynamic />', function () {
         cy.react('ModalDynamic').should('not.exist');
       });
   });
-  it('should render textarea (valiate) - import modal TE 1 2 error (changed format)', function () {
+  it('should render textarea (validate) - import modal TE 1 2 error (changed format)', function () {
     let contentStr = '';
 
     for (const element of import_TE_1_2_error_.content) {
@@ -407,3 +426,39 @@ describe('<ModalDynamic />', function () {
   //   });
   // });
 });
+
+function parseMultipartFormData(multipartFormData) {
+  if (!multipartFormData.includes('------WebKitFormBoundary'))
+    return multipartFormData;
+
+  const formDataObject = {};
+
+  // Split the multipart content into individual parts
+  const parts = multipartFormData.split(/------WebKitFormBoundary.*/);
+
+  // Remove the first and last empty parts
+  parts.shift();
+  parts.pop();
+
+  // Iterate over each part to extract key-value pairs
+  parts.forEach((part) => {
+    const match = /name="([^"]+)"(?:\r\n|\r|\n)([\s\S]*)/.exec(part);
+    if (match) {
+      const key = match[1].replace(/\[\]$/, '');
+      const value = match[2].trim();
+
+      // If the key already exists, convert the value to an array
+      if (Object.hasOwnProperty.call(formDataObject, key)) {
+        if (Array.isArray(formDataObject[key])) {
+          formDataObject[key].push(value);
+        } else {
+          formDataObject[key] = [formDataObject[key], value];
+        }
+      } else {
+        formDataObject[key] = value;
+      }
+    }
+  });
+
+  return JSON.stringify(formDataObject);
+}

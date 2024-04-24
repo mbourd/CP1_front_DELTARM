@@ -29,13 +29,14 @@ export const JoditRichTextControl: React.FC<
   );
 
   const handleBlurContent = useCallback(
-    (newContent: any) => {
+    (newContent: string) => {
+      setContent(newContent);
       saveJoditEditor(fileId, control, newContent, jwt, setMessage);
     },
     [control, fileId, jwt],
   );
 
-  const config = {
+  const config: Record<any, any> = {
     readonly: !control.control_editable, // all options from http://rmamuzic.rs/node_modules/jodit/examples/index.html
     zIndex: 0,
     activeButtonsInReadOnly: ['fullsize', 'print', 'dots'],
@@ -54,7 +55,7 @@ export const JoditRichTextControl: React.FC<
     i18n: 'en',
     tabIndex: -1,
     toolbar: true,
-    enter: 'P',
+    enter: 'p',
     useSplitMode: false,
     colors: {
       greyscale: [
@@ -218,7 +219,7 @@ export const JoditRichTextControl: React.FC<
         value={content ? content : ''}
         config={config}
         onBlur={handleBlurContent} // preferred to use only this option to update the content for performance reasons
-        onChange={(newContent) => setContent(newContent)}
+        onChange={() => undefined}
       />
       {message ? (
         <p>
