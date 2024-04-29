@@ -26,6 +26,9 @@ export const LongTextCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
   const [currentValue, setCurrentValue] = useState<string | null>(
     compliance.compliance_elm_value,
   );
+  const [apiRouteName, setApiRouteName] = useState<string>(
+    currentRoute?.props?.apiSaveControlRouteName,
+  );
 
   const saveValue = useCallback(
     (value: string) => {
@@ -51,13 +54,13 @@ export const LongTextCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
         elm_val: value,
       };
 
-      send(currentRoute?.props?.apiSaveControlRouteName, {}, q);
+      send(apiRouteName, {}, q);
     },
     [
       send,
       fileId,
       controlId,
-      currentRoute,
+      apiRouteName,
       compliance.compliance_elm_family,
       compliance.compliance_elm_regex,
       compliance.compliance_id,
@@ -81,6 +84,7 @@ export const LongTextCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
   if (window?.['Cypress']) {
     window['Features_Edit_Control_Form_Compliance_LongTextCompliance'] = {
       setErrorMessage,
+      setApiRouteName,
     };
   }
 

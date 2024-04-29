@@ -36,8 +36,8 @@ describe('<UploadFileModalDynamic />', function () {
         <UploadFileModalDynamic
           element={element}
           index={0}
-          handleChangeValue={function (): void {}}
-          register={function (): void {}}
+          handleChangeValue={() => undefined}
+          register={() => undefined}
         />
       </SetupTestsComponents>,
     );
@@ -56,8 +56,8 @@ describe('<UploadFileModalDynamic />', function () {
         <UploadFileModalDynamic
           element={_element}
           index={0}
-          handleChangeValue={function (): void {}}
-          register={function (): void {}}
+          handleChangeValue={() => undefined}
+          register={() => undefined}
         />
       </SetupTestsComponents>,
     );
@@ -107,8 +107,8 @@ describe('<UploadFileModalDynamic />', function () {
         <UploadFileModalDynamic
           element={_element}
           index={0}
-          handleChangeValue={function (): void {}}
-          register={function (): void {}}
+          handleChangeValue={() => undefined}
+          register={() => undefined}
         />
       </SetupTestsComponents>,
     );

@@ -4,15 +4,15 @@ import { Grid, Fab } from '@mui/material';
 import { CloudUpload } from '@mui/icons-material';
 import { IApiControl, IUploadDetail } from 'Features/Edit/types';
 import { FormError } from 'Shared/components';
-import { IUser, security } from 'Services';
+import { IUser, security, useApi } from 'Services';
 import { ControlLabel } from '../ControlLabel';
 import { ControlFooter } from '../ControlFooter';
 import { Button, Container } from '@mui/material';
 import { useDropzone } from 'react-dropzone';
 import { uploadFile } from './apiRoutes/uploadFile';
 import { UploadList } from '../../../../../../Shared/components/UploadList/UploadList';
-import { deleteFile } from '../../../../../../Shared/components/UploadList/apiRoutes/deleteFile';
-import { downloadFile } from '../../../../../../Shared/components/UploadList/apiRoutes/downloadFile';
+// import { deleteFile } from '../../../../../../Shared/components/UploadList/apiRoutes/deleteFile';
+// import { downloadFile } from '../../../../../../Shared/components/UploadList/apiRoutes/downloadFile';
 import { RejectControl } from '../RejectByPointControl/RejectControl';
 import { useTrans } from '../../../../../../Services';
 
@@ -44,6 +44,13 @@ export const UploadControl: React.FC<React.PropsWithChildren<IProps>> = ({
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
   const [isUploading, setIsUploading] = useState(false); // Add this state
+  const { send } = useApi({ promise: true });
+  const { send: sendReturnBlob } = useApi({
+    promise: true,
+    responseType: 'blob',
+  });
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedUpload = useCallback(
     _.debounce((file) => {
       uploadFile(
@@ -111,24 +118,57 @@ export const UploadControl: React.FC<React.PropsWithChildren<IProps>> = ({
   const handleDeleteFile = useCallback(
     (e: any, name: any) => {
       e.preventDefault();
-      deleteFile(
-        fileId,
-        control.control_id,
-        name,
-        jwt,
-        setErrorMessage,
-        setCurrentUploadFile,
-      );
+      send(
+        'deleteUploadedFile',
+        {},
+        { file_id: fileId, control_id: control.control_id, file_name: name },
+      )
+        ?.then((response) => {
+          setErrorMessage(null);
+
+          return setCurrentUploadFile(response.body.data.file_detail);
+        })
+        .catch(() => {
+          setErrorMessage(
+            'Une erreur est survenue lors de la suppression du fichier',
+          );
+        });
+      // deleteFile(
+      //   fileId,
+      //   control.control_id,
+      //   name,
+      //   jwt,
+      //   setErrorMessage,
+      //   setCurrentUploadFile,
+      // );
     },
-    [jwt, control, fileId],
+    [send, fileId, control.control_id],
   );
 
   const handleDownloadFile = useCallback(
     (e: any, id: any, name: any) => {
       e.preventDefault();
-      downloadFile(id, name, jwt, setErrorMessage);
+      sendReturnBlob(
+        'downloadUploadedFile',
+        {},
+        { file_id: id, file_name: name },
+      )
+        ?.then((response) => {
+          const url = window.URL.createObjectURL(new Blob([response.body]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', name);
+          document.body.appendChild(link);
+          link.click();
+        })
+        .catch(() => {
+          return setErrorMessage(
+            'Une erreur est survenue lors du téléchargement du fichier',
+          );
+        });
+      // downloadFile(id, name, jwt, setErrorMessage);
     },
-    [jwt],
+    [sendReturnBlob],
   );
 
   useEffect(() => {

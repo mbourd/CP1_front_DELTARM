@@ -90,10 +90,17 @@ function login_v2(
 }
 Cypress.Commands.add('login_v2', login_v2);
 
-function waitReactApp(selector = '#main-content', timeout = 10000) {
+function waitReactApp(
+  selector = '#main-content',
+  timeout = 10000,
+  resqModulePath,
+) {
   cy.on('uncaught:exception', (err) => {
     // Check if the error is a ChunkLoadError
-    if (err.message.includes('ChunkLoadError')) {
+    if (
+      err.message.includes('ChunkLoadError') ||
+      err.message.includes('ResizeObserver')
+    ) {
       // // Handle the ChunkLoadError here, you can log it, retry, or perform other actions
       // // For example:
       // cy.log('ChunkLoadError occurred. Reloading the page...');
@@ -107,9 +114,10 @@ function waitReactApp(selector = '#main-content', timeout = 10000) {
   });
 
   cy.get(selector as any, { timeout });
-  cy.waitForReact(10000, selector as any);
+  cy.waitForReact(timeout, selector as string, resqModulePath);
 
-  return cy.wait(0);
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  return cy.wait(1);
 }
 Cypress.Commands.add('waitReactApp', waitReactApp);
 
@@ -232,8 +240,7 @@ function typeThenWait(
     }
   }
 
-  cy.wait(250);
-  cy.wait(250);
+  cy.wait(250).then(() => cy.wait(250));
 
   return cy.wrap(subject);
 }

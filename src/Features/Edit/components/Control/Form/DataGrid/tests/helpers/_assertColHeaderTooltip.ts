@@ -1,9 +1,13 @@
-import { IApiControl } from 'Features/Edit/types';
+// @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../../../../../cypress/support/component" />
+
+import { IApiControl } from '../../../../../../types';
 import { getData } from './getData';
 
-export function _assertColHeaderTooltip(_control: IApiControl) {
+export function _assertColHeaderTooltip(_control: IApiControl, waitMs = 500) {
   Cypress.config('defaultCommandTimeout', 6000);
-  cy.wait(500).then(() => {
+  cy.wait(waitMs).then(() => {
     const withControlData = getData(_control);
 
     withControlData(1, ({ columns }) => {
@@ -15,7 +19,7 @@ export function _assertColHeaderTooltip(_control: IApiControl) {
           cy.wrap($el).focus().realHover();
 
           if (columns[i].col_header_display_tooltip) {
-            cy.get('.ag-theme-alpine.ag-popup .ag-popup-child')
+            cy.get('.ag-popup .ag-popup-child')
               .should('be.visible')
               .invoke('text')
               .then((t) => {
@@ -23,9 +27,7 @@ export function _assertColHeaderTooltip(_control: IApiControl) {
               });
           } else {
             cy.wait(3000).then(() => {
-              cy.get(
-                '.ag-theme-alpine.ag-popup .ag-popup-child .custom-tooltip',
-              )
+              cy.get('.ag-popup .ag-popup-child .custom-tooltip')
                 // .should('have.css', 'display', 'none')
                 .should('not.be.visible');
             });

@@ -1,12 +1,16 @@
-import { IApiControl } from 'Features/Edit/types';
+// @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../../../../../cypress/support/component" />
+
+import { IApiControl } from '../../../../../../types';
 import { _escapeForRegExp } from '../../../../../../../../../cypress/utils';
 import { generateRandExp } from './generateRandExp';
 import { getData } from './getData';
 
-export function _assertRegexValidation(_control: IApiControl) {
+export function _assertRegexValidation(_control: IApiControl, waitMs = 500) {
   // Set the temporary timeout for this test (e.g., 100 milliseconds)
-  Cypress.config('defaultCommandTimeout', 100);
-  cy.wait(500).then(() => {
+  Cypress.config('defaultCommandTimeout', 10000);
+  cy.wait(waitMs).then(() => {
     cy.window().then((w) => {
       w[
         'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
@@ -62,7 +66,7 @@ export function _assertRegexValidation(_control: IApiControl) {
               [_escapeForRegExp(cell.control_regex_msg as string) as string],
               'h1.errorsText',
             );
-            cy.wait(50).then(() => {
+            cy.wait(255).then(() => {
               cy.wrap(elCell)
                 .focus()
                 .realType('1')

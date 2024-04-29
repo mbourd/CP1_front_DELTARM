@@ -96,15 +96,57 @@ describe('<ModalCompliance />', function () {
       <SetupTestsComponents>
         <ModalCompliance
           open={true}
-          onClose={function (): void {
-            //
-          }}
+          onClose={() => undefined}
           controlId={''}
           fileId={''}
         />
       </SetupTestsComponents>,
     ).waitReactApp();
     cy.react('ModalCompliance').should('exist');
+  });
+
+  it('should make one request at a time and payload/queries not empty', function () {
+    const fileId = 'fielqsdjqps';
+    const controlId = 'qspdkfdklsgnnkqsd';
+    let reqCount = 0;
+
+    cy.viewport(1500, 800);
+    cy.intercept('GET', '/control/get_compliance_values?*', (req) => {
+      reqCount++;
+      req.on('response', (resp) =>
+        resp.send({
+          statusCode: 200,
+          body: { data: dataCompliance },
+        }),
+      );
+    }).as('reqGetDataCompliance');
+
+    cy.mount(
+      <SetupTestsComponents>
+        <ModalCompliance
+          open={true}
+          onClose={() => undefined}
+          controlId={controlId}
+          fileId={fileId}
+        />
+      </SetupTestsComponents>,
+    ).waitReactApp();
+    cy.wait('@reqGetDataCompliance').then((interception) => {
+      const { request } = interception;
+      const { query } = request;
+
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(255).then(() => {
+        expect(reqCount).to.be.eq(1);
+        cy.wrap(query).should('have.property', 'file_id');
+        cy.wrap(query)
+          .should('have.property', 'elm_id')
+          .then(() => {
+            expect(query.file_id).to.be.eq(fileId);
+            expect(query.elm_id).to.be.eq(controlId);
+          });
+      });
+    });
   });
 
   it('should close', function () {

@@ -11,7 +11,8 @@ import { SetupTestsComponents } from '../../../../cypress/utils/SetupTestsCompon
 import { DashboardDynamic } from './DashboardDynamic';
 import '../reducer';
 import '../apiRoutes';
-import { IDashboard } from './types';
+import { IDashboard, ISearchBarOptions } from './types';
+import { Method } from 'cypress/types/net-stubbing';
 
 describe('<DashboardDynamic />', function () {
   let dashboardDynamic1: IDashboard;
@@ -78,7 +79,7 @@ describe('<DashboardDynamic />', function () {
   });
 
   it('should render card version 0 "Old"', function () {
-    cy.viewport(1000, 300);
+    cy.viewport(1000, 600);
     const listCard = structuredClone(
       dashboardDynamic1.data.cards?.card || [],
     ).map((card) => {
@@ -107,5 +108,72 @@ describe('<DashboardDynamic />', function () {
     );
     cy.waitReactApp();
     cy.react('Card').should('exist');
+  });
+
+  it('should make one request at a time and payload/queries params not empty', function () {
+    const search = 'aaa';
+
+    cy.viewport(1000, 600);
+    const _dashboard = {
+      ...structuredClone(dashboardDynamic1),
+    };
+
+    cy.intercept('GET', '/dashboard/contr_perm*', {
+      statusCode: 200,
+      body: _dashboard,
+    }).as('reqGetDashboardContrPerm');
+
+    cy.mount(
+      <SetupTestsComponents>
+        <DashboardDynamic />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+
+    cy.react('SearchBar')
+      .find('input[type="text"]')
+      .focus()
+      .realType(search)
+      .clickOutside();
+
+    cy.wrap(_dashboard.data.search_bar.options).each(
+      (searchBarOption: ISearchBarOptions, i) => {
+        let reqCount = 0;
+        cy.intercept(
+          searchBarOption.action.method as Method,
+          searchBarOption.action.endpoint + '*',
+          (req) => {
+            reqCount++;
+
+            req.on('response', (resp) => {
+              resp.send({ statusCode: 200, body: {} });
+            });
+          },
+        ).as('reqSearchVal' + i);
+
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(100);
+        cy.get('label.MuiFormControlLabel-root')
+          .contains(searchBarOption.lib)
+          .realClick();
+        cy.get('button')
+          .contains(_dashboard.data.search_bar.btn_lib)
+          .realClick();
+        cy.wait('@reqSearchVal' + i).then((interception) => {
+          const { request } = interception;
+          const { query } = request;
+
+          // eslint-disable-next-line cypress/no-unnecessary-waiting
+          cy.wait(500).then(() => {
+            expect(reqCount).to.be.eq(1);
+            cy.wrap(query)
+              .should('have.property', 'value')
+              .then(() => {
+                expect(query.value).to.be.eq(search);
+              });
+          });
+        });
+      },
+    );
   });
 });

@@ -2,12 +2,15 @@
 /// <reference types="cypress" />
 /// <reference types="../../../../../../../../../cypress/support/component" />
 
-import { IApiControl } from 'Features/Edit/types';
+import { IApiControl } from '../../../../../../types';
 import { getData } from './getData';
 import { _hexToRgb } from '../../../../../../../../../cypress/utils';
 
-export function _assertSelectListOptionsStyles(_control: IApiControl) {
-  cy.wait(500).then(() => {
+export function _assertSelectListOptionsStyles(
+  _control: IApiControl,
+  waitMs = 500,
+) {
+  cy.wait(waitMs).then(() => {
     const withControlData = getData(_control);
 
     withControlData(1, ({ rowValues, indexRow }) => {

@@ -24,6 +24,7 @@ export class ApiRequest implements IApiRequest {
   private _bearerToken: ApiRequestBearerTokenType = null;
   private _basicAuth: ApiRequestBasicAuthType = null;
   private _agent: SuperAgentRequest | null = null;
+  private _responseType: 'json' | 'blob' = 'json';
 
   constructor(
     host: ApiRequestHostType,
@@ -235,6 +236,10 @@ export class ApiRequest implements IApiRequest {
 
       agent.set(this._headers);
 
+      if (this._responseType) {
+        agent.responseType(this._responseType);
+      }
+
       if (this._bearerToken) {
         agent.set('Authorization', `Bearer ${this._bearerToken}`);
       }
@@ -246,5 +251,11 @@ export class ApiRequest implements IApiRequest {
       agent.query(this._queries).send(this._body);
       agent.then(resolve).catch(reject);
     });
+  }
+
+  setResponseType(responseType: 'json' | 'blob'): this {
+    this._responseType = responseType;
+
+    return this;
   }
 }

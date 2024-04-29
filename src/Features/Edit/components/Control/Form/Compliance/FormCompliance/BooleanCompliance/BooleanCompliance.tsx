@@ -28,6 +28,9 @@ export const BooleanCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
     compliance.compliance_elm_value,
   );
   const [isMandatory] = useState(compliance.compliance_elm_mandatory);
+  const [apiRouteName, setApiRouteName] = useState<string>(
+    currentRoute?.props?.apiSaveControlRouteName,
+  );
 
   const toggleAndSaveValue = useCallback(() => {
     const booleanValue = !stringToBoolean(currentValue);
@@ -53,7 +56,7 @@ export const BooleanCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
       elm_val: booleanValue.toString(),
     };
 
-    send(currentRoute?.props?.apiSaveControlRouteName, {}, q);
+    send(apiRouteName, {}, q);
   }, [
     currentValue,
     compliance.compliance_elm_regex,
@@ -63,7 +66,7 @@ export const BooleanCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
     fileId,
     controlId,
     send,
-    currentRoute?.props?.apiSaveControlRouteName,
+    apiRouteName,
   ]);
 
   useEffect(() => {
@@ -86,6 +89,7 @@ export const BooleanCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
   if (window?.['Cypress']) {
     window['Features_Edit_Control_Form_Compliance_BooleanCompliance'] = {
       setErrorMessage,
+      setApiRouteName,
     };
   }
 

@@ -28,6 +28,9 @@ export const FinancialCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
   const [currentValue, setCurrentValue] = useState<string | null>(
     compliance.compliance_elm_value,
   );
+  const [apiRouteName, setApiRouteName] = useState<string>(
+    currentRoute?.props?.apiSaveControlRouteName,
+  );
 
   const saveValue = useCallback(
     (value: string) => {
@@ -48,7 +51,7 @@ export const FinancialCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
       }
 
       send(
-        currentRoute?.props?.apiSaveControlRouteName,
+        apiRouteName,
         {},
         {
           file_id: fileId,
@@ -65,7 +68,7 @@ export const FinancialCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
       compliance.compliance_id,
       controlId,
       compliance.compliance_elm_family,
-      currentRoute,
+      apiRouteName,
       compliance.compliance_elm_regex,
       compliance.compliance_elm_regex_msg,
       isMandatory,
@@ -76,6 +79,7 @@ export const FinancialCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
   if (window?.['Cypress']) {
     window['Features_Edit_Control_Form_Compliance_FinancialCompliance'] = {
       setErrorMessage,
+      setApiRouteName,
     };
   }
 

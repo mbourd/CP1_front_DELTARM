@@ -10,11 +10,13 @@ import { cloneDeep } from 'lodash';
 
 import CustomSelectRenderer from './CustomSelectRenderer';
 
+import '../../../../../../apiRoutes/control';
+
 describe('<CustomSelectRenderer />', function () {
   const props = {
     value: '3',
     setValue: () => undefined,
-    data: { row_uuid: '', row_editable: true },
+    data: { row_uuid: 'qsdpoqkshdn-qsfqsffshfhjk-eazrt', row_editable: true },
   };
   const field_data = {
     choice_options: [
@@ -81,11 +83,9 @@ describe('<CustomSelectRenderer />', function () {
     );
     cy.waitReactApp();
     cy.react('CustomSelectRenderer').realClick();
-    cy.wait(25).then(() => {
-      cy.get('ul')
-        .find('li[aria-selected="true"]', { timeout: 50 })
-        .should('have.text', 'hello world2');
-    });
+    cy.get('ul')
+      .find('li[aria-selected="true"]', { timeout: 50 })
+      .should('have.text', 'hello world2');
   });
 
   it('should have the default value displayed', function () {
@@ -116,5 +116,64 @@ describe('<CustomSelectRenderer />', function () {
     );
     cy.waitReactApp();
     cy.react('CustomSelectRenderer').should('contain.text', 'hello world2');
+  });
+
+  it('should make one request at a time and payload/queries not empty', function () {
+    const _props = {
+      ...cloneDeep(props),
+      value: '2',
+    };
+    const _field_data = {
+      ...cloneDeep(field_data),
+      choice_options: [
+        ...cloneDeep(field_data.choice_options),
+        { choice_id: 2, choice_lib: 'hello world2' },
+      ],
+    };
+    const _control = cloneDeep(control);
+    const fileId = 'fileIDdpfjdsklfh';
+    let reqCount = 0;
+
+    cy.intercept('POST', '/control/data_grid/save_value\\?*', (req) => {
+      reqCount++;
+      req.reply({ statusCode: 200, body: {} });
+    }).as('reqPostControlValue');
+
+    cy.mount(
+      <SetupTestsComponents>
+        <CustomSelectRenderer
+          props={_props}
+          field_data={_field_data}
+          control={_control}
+          fileId={fileId}
+          jwt={''}
+          seterrors={() => undefined}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('CustomSelectRenderer').realClick();
+    cy.get('ul li').contains('hello world3').realClick();
+
+    cy.wait('@reqPostControlValue').then((interception) => {
+      const { request } = interception;
+      const { query } = request;
+
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(300).then(() => {
+        expect(reqCount).to.eq(1);
+        cy.wrap(query).should('have.property', 'row_uuid');
+        cy.wrap(query).should('have.property', 'elm_val');
+        cy.wrap(query).should('have.property', 'fileId');
+        cy.wrap(query)
+          .should('have.property', 'col_elm_id')
+          .then(() => {
+            expect(query['fileId']).to.be.eq(fileId);
+            expect(query['row_uuid']).to.be.eq(_props.data.row_uuid);
+            expect(query['elm_val']).to.be.eq('3');
+            expect(query['col_elm_id']).to.be.eq(_field_data.col_elm_id + '');
+          });
+      });
+    });
   });
 });

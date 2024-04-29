@@ -4,10 +4,10 @@
 // NOTE: Run CLI:
 // yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Login/components/Login.job1.cy.tsx"
 
-import React from 'react';
-import { SetupTestsComponents } from '../../../../cypress/utils/SetupTestsComponents';
+// import React from 'react';
+// import { SetupTestsComponents } from '../../../../cypress/utils/SetupTestsComponents';
 
-import { Login } from './Login';
+// import { Login } from './Login';
 
 describe('<Login />', function () {
   //// TODO: unable

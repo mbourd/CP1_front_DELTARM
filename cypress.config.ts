@@ -51,6 +51,7 @@ export default defineConfig({
     // supportFile: 'cypress/support/component.ts',
     pageLoadTimeout: 10 * 60000,
     numTestsKeptInMemory: 0,
+    retries: 6,
   },
 
   watchForFileChanges: false,

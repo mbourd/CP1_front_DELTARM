@@ -39,6 +39,9 @@ export const DateTimeControl: React.FC<React.PropsWithChildren<IProps>> = ({
   const [inputRef, setInputFocus] = useFocus();
   const { currentRoute } = useRouter();
   const [trans] = useTrans('Edit');
+  const [apiRouteName, setApiRouteName] = useState<string>(
+    currentRoute?.props?.apiSaveControlRouteName,
+  );
 
   useEffect(() => {
     setCurrentValue(control.control_value);
@@ -104,7 +107,7 @@ export const DateTimeControl: React.FC<React.PropsWithChildren<IProps>> = ({
 
       setCurrentValue(value);
       send(
-        currentRoute?.props?.apiSaveControlRouteName,
+        apiRouteName,
         {},
         {
           file_id: fileId,
@@ -119,7 +122,6 @@ export const DateTimeControl: React.FC<React.PropsWithChildren<IProps>> = ({
       fileId,
       control.control_id,
       control.control_family,
-      currentRoute,
       control.control_regex,
       control.control_regex_msg,
       currentValue,
@@ -128,6 +130,7 @@ export const DateTimeControl: React.FC<React.PropsWithChildren<IProps>> = ({
       control.control_options,
       setInputFocus,
       trans,
+      apiRouteName,
     ],
   );
 
@@ -151,6 +154,13 @@ export const DateTimeControl: React.FC<React.PropsWithChildren<IProps>> = ({
       setIsRejected(false);
     }
   }, [isRejected]);
+
+  if (window?.['Cypress']) {
+    window['Features/Edit/Control/Form/DateTime/DateTimeControl'] = {
+      setErrorMessage,
+      setApiRouteName,
+    };
+  }
 
   return (
     <Grid item xs={6}>

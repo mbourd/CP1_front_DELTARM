@@ -1,18 +1,18 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { UploadComplianceStyled } from './UploadCompliance.style';
 import { Grid, Fab } from '@mui/material';
 import { CloudUpload } from '@mui/icons-material';
 import { IApiComplianceFields, IUploadDetail } from 'Features/Edit/types';
 import { FormError } from 'Shared/components';
-import { IUser, security, useTrans } from 'Services';
+import { IUser, security, useTrans, useApi } from 'Services';
 import { ComplianceLabel } from '../ComplianceLabel';
 import { ComplianceFooter } from '../ComplianceFooter';
 import { useDropzone } from 'react-dropzone';
 import { uploadComplianceFile } from './apiRoutes/uploadComplianceFile';
 import { Container } from '@mui/material';
 import { UploadList } from '../../../../../../../../Shared/components/UploadList/UploadList';
-import { deleteComplianceFile } from '../../../../../../../../Shared/components/UploadList/apiRoutes/deleteComplianceFile';
-import { downloadFile } from '../../../../../../../../Shared/components/UploadList/apiRoutes/downloadFile';
+// import { deleteComplianceFile } from '../../../../../../../../Shared/components/UploadList/apiRoutes/deleteComplianceFile';
+// import { downloadFile } from '../../../../../../../../Shared/components/UploadList/apiRoutes/downloadFile';
 
 interface IProps {
   compliance: IApiComplianceFields;
@@ -34,6 +34,12 @@ export const UploadCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
   const [isMandatory] = useState(compliance.compliance_elm_mandatory);
+  const { send } = useApi({ promise: true });
+  const { send: sendReturnBlob } = useApi({
+    promise: true,
+    responseType: 'blob',
+  });
+  const inputFileRef = useRef<any>();
 
   const saveFileToUpload = useCallback((e: any) => {
     const file = e.target.files[0];
@@ -63,27 +69,72 @@ export const UploadCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
   }, [fileId, compliance, newUploadFile, jwt, controlId]);
 
   const handleDeleteFile = useCallback(
-    (e: any, name: any) => {
+    (e: React.MouseEvent<Element, MouseEvent>, name: string) => {
       e.preventDefault();
-      deleteComplianceFile(
-        fileId,
-        controlId,
-        name,
-        jwt,
-        setErrorMessage,
-        setCurrentUploadFile,
-        compliance,
-      );
+      send(
+        'deleteUploadedFile',
+        {},
+        {
+          file_id: fileId,
+          control_id: controlId,
+          file_name: name,
+          control_family: compliance.compliance_elm_family,
+          compliance_id: compliance.compliance_id,
+        },
+      )
+        ?.then((res) => {
+          setErrorMessage(null);
+
+          return setCurrentUploadFile(res.body.data.file_detail);
+        })
+        .catch(() => {
+          return setErrorMessage(
+            'Une erreur est survenue lors de la suppression du fichier',
+          );
+        });
+      // deleteComplianceFile(
+      //   fileId,
+      //   controlId,
+      //   name,
+      //   jwt,
+      //   setErrorMessage,
+      //   setCurrentUploadFile,
+      //   compliance,
+      // );
     },
-    [jwt, controlId, fileId, compliance],
+    [
+      send,
+      fileId,
+      controlId,
+      compliance.compliance_elm_family,
+      compliance.compliance_id,
+    ],
   );
 
   const handleDownloadFile = useCallback(
-    (e: any, id: any, name: any) => {
+    (e: React.MouseEvent<Element, MouseEvent>, id: string, name: string) => {
       e.preventDefault();
-      downloadFile(id, name, jwt, setErrorMessage);
+      sendReturnBlob(
+        'downloadUploadedFile',
+        {},
+        { file_id: id, file_name: name },
+      )
+        ?.then((response) => {
+          const url = window.URL.createObjectURL(new Blob([response.body]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', name);
+          document.body.appendChild(link);
+          link.click();
+        })
+        .catch(() => {
+          return setErrorMessage(
+            'Une erreur est survenue lors du téléchargement du fichier',
+          );
+        });
+      // downloadFile(id, name, jwt, setErrorMessage);
     },
-    [jwt],
+    [sendReturnBlob],
   );
 
   useEffect(() => {
@@ -123,7 +174,12 @@ export const UploadCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
           }}
           {...getRootProps({ onClick: (event) => event.stopPropagation() })}
         >
-          <label htmlFor={`compliance-file-upload${controlId}`}>
+          <label
+            htmlFor={`compliance-file-upload${controlId}`}
+            onClick={() => {
+              inputFileRef.current.value = null;
+            }}
+          >
             <input
               style={{ display: 'none' }}
               id={`compliance-file-upload${controlId}`}
@@ -131,6 +187,7 @@ export const UploadCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
               type="file"
               onChange={saveFileToUpload}
               {...getInputProps()}
+              ref={(el) => (inputFileRef.current = el)}
             />
             <Fab
               color="error"

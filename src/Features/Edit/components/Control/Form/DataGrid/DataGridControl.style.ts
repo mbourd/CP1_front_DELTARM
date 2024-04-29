@@ -127,17 +127,31 @@ export const AgDataGridStyle = styled.div<{
     /* --ag-header-column-resize-handle-color: rgb(126, 46, 132); */
 
     --ag-font-size: ${({ $font_size }) =>
-      $font_size ? `${$font_size}px` : '17px'};
-    --ag-font-family: monospace;
+      $font_size ? `${$font_size}px` : '12px'};
+    --ag-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+      Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
     /* color: #FAF5E3 */
+
+    .ag-menu-option {
+      font-weight: normal;
+    }
+
+    .ag-paging-panel {
+      font-size: 12px;
+    }
   }
 
-  .ag-theme-alpine .ag-header-cell-resize::after {
+  .ag-floating-filter-input input[aria-label='Contrôle Filter Input'] {
+    min-height: fit-content;
+  }
+
+  .ag-header-cell-resize::after {
     position: absolute;
     z-index: 1;
     top: 0 !important;
-    left: calc(50% - 1px);
+    left: 3px !important;
     display: block;
+    width: 1px;
     /* width: ${({ $is_border_color }) => ($is_border_color ? '5px' : '0')}; */
     height: 100% !important;
     background-color: ${({ $border_color, $is_border_color }) =>
