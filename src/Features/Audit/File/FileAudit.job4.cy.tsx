@@ -12,7 +12,6 @@ import {
   EditValidationContext,
   IEditValidationContext,
 } from '../../Edit/EditValidationContext';
-import { IDataFileAudit, IFileAudit } from '../types';
 import { _getRandomNumberBetween } from '../../../../cypress/utils';
 
 describe('<FileAudit />', function () {
@@ -49,9 +48,7 @@ describe('<FileAudit />', function () {
 
     cy.intercept('GET', '/file/audit\\?target=screen*', (req) => {
       reqCount++;
-      req.on('response', (resp) => {
-        resp.send(200, { data });
-      });
+      req.reply({ statusCode: 200, body: { data } });
     }).as('reqAuditFile');
 
     cy.mount(
@@ -110,15 +107,11 @@ describe('<FileAudit />', function () {
     const contentFile = 'dpofjdsfkdsfj' + _getRandomNumberBetween(0, 89897546);
 
     cy.intercept('GET', '/file/audit\\?target=screen*', (req) => {
-      req.on('response', (resp) => {
-        resp.send(200, { data });
-      });
+      req.reply({ statusCode: 200, body: { data } });
     }).as('reqAuditFile');
     cy.intercept('GET', '/file/audit\\?target=download_xls*', (req) => {
       reqCount++;
-      req.on('response', (resp) => {
-        resp.send(200, contentFile);
-      });
+      req.reply({ statusCode: 200, body: contentFile });
     }).as('reqDownloadAuditFile');
 
     cy.mount(

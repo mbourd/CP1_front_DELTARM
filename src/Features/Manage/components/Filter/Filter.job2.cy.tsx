@@ -53,12 +53,7 @@ describe('<Filter />', function () {
 
     cy.intercept('GET', '/manage/reference', (req) => {
       reqCount++;
-      req.on('response', (resp) =>
-        resp.send({
-          statusCode: 200,
-          body: dataManageReference,
-        }),
-      );
+      req.reply({ statusCode: 200, body: dataManageReference });
     }).as('reqGetManagefilters');
     cy.mount(
       <SetupTestsComponents>

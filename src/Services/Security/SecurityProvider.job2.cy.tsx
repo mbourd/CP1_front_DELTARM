@@ -45,20 +45,10 @@ describe('<SecurityProvider />', function () {
 
     cy.intercept('POST', '/session/open\\?*', (req) => {
       reqCount++;
-      req.on('response', (resp) =>
-        resp.send({
-          statusCode: 200,
-          body: { data: { jwt: '' } },
-        }),
-      );
+      req.reply({ statusCode: 200, body: { data: { jwt: '' } } });
     }).as('reqPostLogin');
     cy.intercept('POST', '/session/refresh', (req) => {
-      req.on('response', (resp) =>
-        resp.send({
-          statusCode: 200,
-          body: { data: { jwt: '' } },
-        }),
-      );
+      req.reply({ statusCode: 200, body: { data: { jwt: '' } } });
     }).as('reqPostRefresh');
 
     cy.mount(

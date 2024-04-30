@@ -33,7 +33,7 @@ describe('<ValidationPopper />', function () {
 
     cy.intercept('GET', '/validate/validator\\?*', (req) => {
       reqCount++;
-      req.on('response', (resp) => resp.send({ statusCode: 200, body: {} }));
+      req.reply({ statusCode: 200, body: {} });
     }).as('reqGetValidators');
 
     cy.mount(
@@ -68,12 +68,7 @@ describe('<ValidationPopper />', function () {
 
     cy.intercept('GET', '/validate/validator\\?*', (req) => {
       reqCount++;
-      req.on('response', (resp) =>
-        resp.send({
-          statusCode: 200,
-          body: {},
-        }),
-      );
+      req.reply({ statusCode: 200, body: {} });
     }).as('reqGetValidators');
 
     cy.mount(

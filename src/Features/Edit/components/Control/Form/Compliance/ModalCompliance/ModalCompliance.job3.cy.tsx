@@ -113,12 +113,7 @@ describe('<ModalCompliance />', function () {
     cy.viewport(1500, 800);
     cy.intercept('GET', '/control/get_compliance_values?*', (req) => {
       reqCount++;
-      req.on('response', (resp) =>
-        resp.send({
-          statusCode: 200,
-          body: { data: dataCompliance },
-        }),
-      );
+      req.reply({ statusCode: 200, body: { data: dataCompliance } });
     }).as('reqGetDataCompliance');
 
     cy.mount(
