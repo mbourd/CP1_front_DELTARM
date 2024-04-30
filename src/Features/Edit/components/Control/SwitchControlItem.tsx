@@ -25,8 +25,8 @@ import { SliderControl } from './Form/Slider/SliderControl';
 import { Box } from '@mui/material';
 import { DataGridControlAgGrid } from './Form/DataGrid/DataGridControlAgGrid';
 import { JoditRichTextControl } from './Form/JoditRichTextControl/JoditRichTextControl';
-import { getEnv, security, IUser } from 'Services';
-import axios from 'axios';
+import { getEnv, security, IUser, useApi } from 'Services';
+// import axios from 'axios';
 
 interface IProps {
   control: IApiControl;
@@ -44,9 +44,9 @@ export const SwitchControlItem: React.FC<React.PropsWithChildren<IProps>> = ({
   const { fileId } = useContext(EditValidationContext);
   const [user] = useState<IUser>(security.getUser());
   const [, setupdated_form_state] = useState([]);
-
   const jwt = user.getJwt();
   const [get_value_response, setget_value_response] = useState(null);
+  const { send } = useApi({ promise: true });
 
   useEffect(() => {
     const data = formState[0].controls
@@ -95,65 +95,109 @@ export const SwitchControlItem: React.FC<React.PropsWithChildren<IProps>> = ({
       }
       setupdated_form_state((formState: any) => formState.concat(control));
     } else if (control.control_conditional === true) {
-      axios
-        .get(
-          `${getEnv('API_PROTOCOL')}://${getEnv(
-            'API_HOST',
-          )}/control/get_value?file_id=${fileId}&control_id=${
-            control.conditional.conditional_by_field_id
-          }`,
-          {
-            headers: {
-              Authorization: jwt,
-              'Content-type': 'application/json',
-            },
-          },
-        )
-        .then((data: any) => {
-          setget_value_response(data?.data);
-          let condition = control.conditional?.conditional_formula;
-          if (data.data) {
-            if (data.data.data) {
-              condition = condition?.replaceAll(
-                '$',
-                `'${data.data.data.value}'`,
-              );
+      send(
+        'getControlValue',
+        {},
+        {
+          file_id: fileId,
+          control_id: control.conditional.conditional_by_field_id,
+        },
+      )?.then((data) => {
+        setget_value_response(data?.body);
+
+        let condition = control.conditional?.conditional_formula;
+
+        if (data?.body) {
+          if (data.body.data) {
+            condition = condition?.replaceAll('$', `'${data.body.data.value}'`);
+          }
+          if (!data.body.data) {
+            condition = condition?.replaceAll('$', `null`);
+          }
+          if (condition) {
+            const executeCondition = Function('return ' + condition);
+            if (executeCondition()) {
+              control.editable = true;
+              if (control.control_mandatory) {
+                control.mandatory = true;
+              }
             }
-            if (!data.data.data) {
-              condition = condition?.replaceAll('$', `null`);
+            if (!executeCondition()) {
+              control.editable = false;
+              if (control.control_mandatory) {
+                control.mandatory = false;
+              }
             }
-            if (condition) {
-              const executeCondition = Function('return ' + condition);
-              if (executeCondition()) {
-                control.editable = true;
-                if (control.control_mandatory) {
-                  control.mandatory = true;
-                }
-              }
-              if (!executeCondition()) {
-                control.editable = false;
-                if (control.control_mandatory) {
-                  control.mandatory = false;
-                }
-              }
-              // 2 keys in control object : editable is use in component and control_editable is the initial api state
-              if (!control.control_editable) {
-                control.editable = false;
-              }
+            // 2 keys in control object : editable is use in component and control_editable is the initial api state
+            if (!control.control_editable) {
+              control.editable = false;
             }
           }
+        }
 
-          setupdated_form_state((formState: any) => formState.concat(control));
-          // console.log('control', control);
-        })
-        .catch(() => {
-          //   console.log(error);
-        });
+        setupdated_form_state((formState: any) => formState.concat(control));
+        // console.log('control', control);
+      });
+
+      // axios
+      //   .get(
+      //     `${getEnv('API_PROTOCOL')}://${getEnv(
+      //       'API_HOST',
+      //     )}/control/get_value?file_id=${fileId}&control_id=${
+      //       control.conditional.conditional_by_field_id
+      //     }`,
+      //     {
+      //       headers: {
+      //         Authorization: jwt,
+      //         'Content-type': 'application/json',
+      //       },
+      //     },
+      //   )
+      //   .then((data: any) => {
+      //     setget_value_response(data?.data);
+      //     let condition = control.conditional?.conditional_formula;
+      //     if (data?.data) {
+      //       if (data.data.data) {
+      //         condition = condition?.replaceAll(
+      //           '$',
+      //           `'${data.data.data.value}'`,
+      //         );
+      //       }
+      //       if (!data.data.data) {
+      //         condition = condition?.replaceAll('$', `null`);
+      //       }
+      //       if (condition) {
+      //         const executeCondition = Function('return ' + condition);
+      //         if (executeCondition()) {
+      //           control.editable = true;
+      //           if (control.control_mandatory) {
+      //             control.mandatory = true;
+      //           }
+      //         }
+      //         if (!executeCondition()) {
+      //           control.editable = false;
+      //           if (control.control_mandatory) {
+      //             control.mandatory = false;
+      //           }
+      //         }
+      //         // 2 keys in control object : editable is use in component and control_editable is the initial api state
+      //         if (!control.control_editable) {
+      //           control.editable = false;
+      //         }
+      //       }
+      //     }
+
+      //     setupdated_form_state((formState: any) => formState.concat(control));
+      //     // console.log('control', control);
+      //   })
+      //   .catch(() => {
+      //     //   console.log(error);
+      //   });
     } else {
       setupdated_form_state((formState: any) => formState.concat(control));
       setget_value_response(null);
     }
-  }, [control, fileId, jwt, formState]);
+  }, [control, fileId, jwt, formState, send]);
 
   switch (control.control_type) {
     case 'text':

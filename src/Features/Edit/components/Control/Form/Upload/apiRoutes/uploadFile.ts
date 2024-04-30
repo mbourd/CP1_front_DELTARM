@@ -14,10 +14,10 @@ export const uploadFile = (
   if (!newUploadFile) return;
 
   const formData = new FormData();
-  formData.append('file', newUploadFile);
-  formData.append('file_name', newUploadFile.name);
   const fileName = newUploadFile.name.replace('#', ' ');
 
+  formData.append('file', newUploadFile);
+  formData.append('file_name', newUploadFile.name);
   axios
     .post(
       `${getEnv('API_PROTOCOL')}://${getEnv(

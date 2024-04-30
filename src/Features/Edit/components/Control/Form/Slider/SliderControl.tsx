@@ -36,6 +36,9 @@ export const SliderControl: React.FC<React.PropsWithChildren<IProps>> = ({
       : false,
   );
   const { currentRoute } = useRouter();
+  const [apiRouteName, setApiRouteName] = useState<string>(
+    currentRoute?.props?.apiSaveControlRouteName,
+  );
 
   useEffect(() => {
     updateFormState(formState, control.control_id, currentValue, setFormState);
@@ -65,16 +68,16 @@ export const SliderControl: React.FC<React.PropsWithChildren<IProps>> = ({
       elm_val: currentValue,
     };
 
-    send(currentRoute?.props?.apiSaveControlRouteName, {}, q);
+    send(apiRouteName, { ok: 1 }, q);
   }, [
     send,
     fileId,
     control.control_id,
-    currentRoute,
     control.control_family,
     currentValue,
     control.mandatory,
     trans,
+    apiRouteName,
   ]);
 
   useEffect(() => {
@@ -97,6 +100,13 @@ export const SliderControl: React.FC<React.PropsWithChildren<IProps>> = ({
       setIsRejected(false);
     }
   }, [isRejected]);
+
+  if (window?.['Cypress']) {
+    window['Features_Edit_Control_Form_Slider_SliderControl'] = {
+      setErrorMessage,
+      setApiRouteName,
+    };
+  }
 
   return (
     <Grid item xs={6}>

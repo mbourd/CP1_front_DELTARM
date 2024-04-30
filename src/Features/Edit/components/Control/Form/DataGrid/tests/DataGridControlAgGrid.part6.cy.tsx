@@ -72,32 +72,31 @@ describe('<DataGridControlAgGrid /> - part 6', function () {
       control_rejectable: null,
       control_id: '9865435',
     } as IApiControl;
+
     cy.mount(
       <SetupTestsComponents>
         <DataGridControlAgGrid control={_control} fileId={fileId} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
-    cy.wait(100).then(() => {
-      cy.intercept('POST', '/control/data_grid/add_row?*', {
-        statusCode: 200,
-        body: {},
-      }).as('addRowConfirmRequest');
-      cy.get('._Button')
-        .contains(new RegExp(translations.join('|')))
-        .click();
-      cy.react('ModalDynamic').should('exist');
-      cy.window().then((/*w*/) => {
-        cy.wait('@addRowConfirmRequest').then((intercept) => {
-          const { request } = intercept;
-          const { query } = request;
-          cy.wrap(query).should('have.property', 'file_id');
-          expect(query.file_id).to.eq(fileId);
-          cy.wrap(query).should('have.property', 'elm_id');
-          expect(query.elm_id).to.eq(_control.control_id);
-          cy.wrap(query).should('have.property', 'source');
-          expect(query.source).to.eq(_control.data_grid_detail?.source);
-        });
+    cy.intercept('POST', '/control/data_grid/add_row?*', {
+      statusCode: 200,
+      body: {},
+    }).as('addRowConfirmRequest');
+    cy.get('._Button')
+      .contains(new RegExp(translations.join('|')))
+      .click();
+    cy.react('ModalDynamic').should('exist');
+    cy.window().then((/*w*/) => {
+      cy.wait('@addRowConfirmRequest').then((intercept) => {
+        const { request } = intercept;
+        const { query } = request;
+        cy.wrap(query).should('have.property', 'file_id');
+        expect(query.file_id).to.eq(fileId);
+        cy.wrap(query).should('have.property', 'elm_id');
+        expect(query.elm_id).to.eq(_control.control_id);
+        cy.wrap(query).should('have.property', 'source');
+        expect(query.source).to.eq(_control.data_grid_detail?.source);
       });
     });
   });
@@ -133,6 +132,7 @@ describe('<DataGridControlAgGrid /> - part 6', function () {
     );
     cy.waitReactApp();
     cy.contains('Select All').click();
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(100).then(() => {
       cy.intercept('POST', '/control/data_grid/delete_row?file_id=*', {
         statusCode: 200,
@@ -201,6 +201,118 @@ describe('<DataGridControlAgGrid /> - part 6', function () {
       control_rejectable: null,
       control_id: '9865435',
     } as IApiControl;
+    let reqCount = 0;
+
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={fileId} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.contains('Select All').click();
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100).then(() => {
+      cy.intercept('POST', '/control/data_grid/delete_row?file_id=*', {
+        statusCode: 200,
+        body: responseModalDeleteRows,
+      });
+      cy.get('._Button')
+        .contains(new RegExp(translations.join('|')))
+        .click();
+      cy.window().then((w) => {
+        const { api: gridApi } =
+          w['Features_Edit_Control_DataGridControlAgGrid' + _control.control_id]
+            .gridRef.current;
+        const btnConfirmDel = responseModalDeleteRows.btn.find(
+          (d) => d.action.method === 'POST',
+        ) as IButtons;
+
+        cy.intercept('POST', btnConfirmDel.action.endpoint + '?*', (req) => {
+          reqCount++;
+          req.reply({ statusCode: 201, body: {} });
+        }).as('callAfterConfirmDeletionBtn');
+        cy.react('ModalDynamic')
+          .find('button')
+          .contains(btnConfirmDel.btn_lib)
+          .click();
+        cy.wait('@callAfterConfirmDeletionBtn').then((intercepted) => {
+          const { request } = intercepted;
+          const reqBody = parseMultipartFormData(request.body);
+          const { query } = request;
+          const selected: any[] = [];
+
+          // eslint-disable-next-line cypress/no-unnecessary-waiting
+          cy.wait(500).then(() => {
+            expect(reqCount).to.eq(1);
+            expect(request.url).to.match(
+              new RegExp(btnConfirmDel.action.endpoint),
+            );
+            gridApi.forEachNode((node) => {
+              if (
+                node.data[
+                  _control.data_grid_detail?.datagrid_options
+                    ?.select_all_button_col_ref as string
+                ]?.value === '1'
+              ) {
+                selected.push(node);
+              }
+            });
+            expect(JSON.parse(reqBody).rows.length).to.be.eq(selected.length);
+            expect(JSON.parse(reqBody).rows.length).to.be.gt(0);
+            selected.forEach((node: RowNode) => {
+              expect(JSON.parse(reqBody).rows).to.include(node.data.row_uuid);
+            });
+            cy.wrap(query).should('have.property', 'file_id');
+            cy.wrap(query).should('have.property', 'action_date');
+            cy.wrap(query).should('have.property', 'action_type');
+            cy.wrap(query)
+              .should('have.property', 'source')
+              .then(() => {
+                const today = new Date();
+                const year = today.getFullYear();
+                const month = ('0' + (today.getMonth() + 1)).slice(-2);
+                const day = ('0' + today.getDate()).slice(-2);
+
+                expect(query.file_id, 'query.file_id').to.eq(fileId);
+                expect(query.action_date, 'query.action_date').to.eq(
+                  `${year}-${month}-${day}`,
+                );
+                expect(query.action_type, 'query.action_type').to.eq('0');
+                expect(query.source, 'query.source').to.eq(
+                  _control.data_grid_detail?.source,
+                );
+              });
+          });
+        });
+      });
+    });
+  });
+  it('should match the endpoint after confirm delete rows modal and rows payload not empty - controlExample9', function () {
+    const fileId = '5e618715-7f5c-405d-830a-975109f8b5d4';
+    const trans_FR = _translate('fr', 'Edit', 'deleteRows');
+    const trans_EN = _translate('en', 'Edit', 'deleteRows');
+    const trans_DE = _translate('de', 'Edit', 'deleteRows');
+    const translations = [trans_FR, trans_EN, trans_DE];
+    const _control = {
+      ...structuredClone(controlExample9),
+      data_grid_detail: {
+        ...structuredClone(controlExample9.data_grid_detail),
+        datagrid_options: {
+          ...structuredClone(
+            controlExample9.data_grid_detail?.datagrid_options || {},
+          ),
+          delete_row_button_display: true,
+        },
+        source: 'TE_tobedeclared',
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+      control_id: '9865435',
+    } as IApiControl;
+    let reqCount = 0;
+
     cy.mount(
       <SetupTestsComponents>
         <DataGridControlAgGrid control={_control} fileId={fileId} />
@@ -227,10 +339,14 @@ describe('<DataGridControlAgGrid /> - part 6', function () {
             (d) => d.action.method === 'POST',
           ) as IButtons;
 
-          cy.intercept('POST', btnConfirmDel.action.endpoint + '?*', {
-            statusCode: 201,
-            body: {},
+          cy.intercept('POST', btnConfirmDel.action.endpoint + '?*', (req) => {
+            reqCount++;
+            req.reply({ statusCode: 201, body: {} });
           }).as('callAfterConfirmDeletionBtn');
+          cy.react('ModalDynamic').react('SelectModalDynamic').realClick();
+          cy.contains(
+            'Close (Object will still appear in Historical Data)',
+          ).realClick();
           cy.react('ModalDynamic')
             .find('button')
             .contains(btnConfirmDel.btn_lib)
@@ -241,6 +357,122 @@ describe('<DataGridControlAgGrid /> - part 6', function () {
             const { query } = request;
             const selected: any[] = [];
 
+            // eslint-disable-next-line cypress/no-unnecessary-waiting
+            cy.wait(500).then(() => {
+              expect(request.url).to.match(
+                new RegExp(btnConfirmDel.action.endpoint),
+              );
+              gridApi.forEachNode((node) => {
+                if (
+                  node.data[
+                    _control.data_grid_detail?.datagrid_options
+                      ?.select_all_button_col_ref as string
+                  ]?.value === '1'
+                ) {
+                  selected.push(node);
+                }
+              });
+              expect(JSON.parse(reqBody).rows.length).to.be.eq(selected.length);
+              expect(JSON.parse(reqBody).rows.length).to.be.gt(0);
+              selected.forEach((node: RowNode) => {
+                expect(JSON.parse(reqBody).rows).to.include(node.data.row_uuid);
+              });
+              cy.wrap(query).should('have.property', 'file_id');
+              cy.wrap(query).should('have.property', 'action_date');
+              cy.wrap(query).should('have.property', 'action_type');
+              cy.wrap(query)
+                .should('have.property', 'source')
+                .then(() => {
+                  const today = new Date();
+                  const year = today.getFullYear();
+                  const month = ('0' + (today.getMonth() + 1)).slice(-2);
+                  const day = ('0' + today.getDate()).slice(-2);
+
+                  expect(query.file_id, 'query.file_id').to.eq(fileId);
+                  expect(query.action_date, 'query.action_date').to.eq(
+                    `${year}-${month}-${day}`,
+                  );
+                  expect(query.action_type, 'query.action_type').to.eq('1');
+                  expect(query.source, 'query.source').to.eq(
+                    _control.data_grid_detail?.source,
+                  );
+                });
+            });
+          });
+        });
+      });
+    });
+  });
+  it('should match the endpoint after confirm delete rows modal and rows payload not empty - controlExample9', function () {
+    const fileId = '5e618715-7f5c-405d-830a-975109f8b5d4';
+    const trans_FR = _translate('fr', 'Edit', 'deleteRows');
+    const trans_EN = _translate('en', 'Edit', 'deleteRows');
+    const trans_DE = _translate('de', 'Edit', 'deleteRows');
+    const translations = [trans_FR, trans_EN, trans_DE];
+    const _control = {
+      ...structuredClone(controlExample9),
+      data_grid_detail: {
+        ...structuredClone(controlExample9.data_grid_detail),
+        datagrid_options: {
+          ...structuredClone(
+            controlExample9.data_grid_detail?.datagrid_options || {},
+          ),
+          delete_row_button_display: true,
+        },
+        source: 'TE_tobedeclared',
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+      control_id: '9865435',
+    } as IApiControl;
+    let reqCount = 0;
+
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={fileId} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.contains('Select All').click();
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100).then(() => {
+      cy.intercept('POST', '/control/data_grid/delete_row?file_id=*', {
+        statusCode: 200,
+        body: responseModalDeleteRows,
+      });
+      cy.get('._Button')
+        .contains(new RegExp(translations.join('|')))
+        .click();
+      cy.window().then((w) => {
+        const { api: gridApi } =
+          w['Features_Edit_Control_DataGridControlAgGrid' + _control.control_id]
+            .gridRef.current;
+        const btnConfirmDel = responseModalDeleteRows.btn.find(
+          (d) => d.action.method === 'POST',
+        ) as IButtons;
+
+        cy.intercept('POST', btnConfirmDel.action.endpoint + '?*', (req) => {
+          reqCount++;
+          req.reply({ statusCode: 201, body: {} });
+        }).as('callAfterConfirmDeletionBtn');
+        cy.react('ModalDynamic').react('SelectModalDynamic').realClick();
+        cy.contains('Remove (Object will no longer appear)').realClick();
+        cy.react('ModalDynamic').find('input[type="date"]').type('2023-03-23');
+        cy.react('ModalDynamic')
+          .find('button')
+          .contains(btnConfirmDel.btn_lib)
+          .click();
+        cy.wait('@callAfterConfirmDeletionBtn').then((intercepted) => {
+          const { request } = intercepted;
+          const reqBody = parseMultipartFormData(request.body);
+          const { query } = request;
+          const selected: any[] = [];
+
+          // eslint-disable-next-line cypress/no-unnecessary-waiting
+          cy.wait(500).then(() => {
+            expect(reqCount).to.eq(1);
             expect(request.url).to.match(
               new RegExp(btnConfirmDel.action.endpoint),
             );
@@ -260,15 +492,20 @@ describe('<DataGridControlAgGrid /> - part 6', function () {
               expect(JSON.parse(reqBody).rows).to.include(node.data.row_uuid);
             });
             cy.wrap(query).should('have.property', 'file_id');
-            expect(query.file_id, 'query.file_id').to.eq(fileId);
             cy.wrap(query).should('have.property', 'action_date');
-            // expect(query.action_date, 'query.action_date').to.eq();
             cy.wrap(query).should('have.property', 'action_type');
-            // expect(query.action_type, 'query.action_type').to.eq();
-            cy.wrap(query).should('have.property', 'source');
-            expect(query.source, 'query.source').to.eq(
-              _control.data_grid_detail?.source,
-            );
+            cy.wrap(query)
+              .should('have.property', 'source')
+              .then(() => {
+                expect(query.file_id, 'query.file_id').to.eq(fileId);
+                expect(query.action_date, 'query.action_date').to.eq(
+                  '2023-03-23',
+                );
+                expect(query.action_type, 'query.action_type').to.eq('2');
+                expect(query.source, 'query.source').to.eq(
+                  _control.data_grid_detail?.source,
+                );
+              });
           });
         });
       });
@@ -296,6 +533,21 @@ describe('<DataGridControlAgGrid /> - part 6', function () {
       rich_text_detail: null,
       control_rejectable: null,
     } as IApiControl;
+    const btnConfirmDel = responseModalDeleteRows.btn.find(
+      (d) => d.action.method === 'POST',
+    ) as IButtons;
+
+    cy.intercept('POST', '/control/data_grid/delete_row?*', {
+      statusCode: 200,
+      body: responseModalDeleteRows,
+    });
+    cy.intercept('POST', btnConfirmDel.action.endpoint + '?*', (req) => {
+      req.reply({
+        statusCode: 201,
+        fixture: 'controlDataGridAgGrid-resp-confirm-delete_rows-1.json',
+      });
+    }).as('callAfterConfirmDeletionBtn');
+
     cy.mount(
       <SetupTestsComponents>
         <DataGridControlAgGrid control={_control} fileId={''} />
@@ -303,59 +555,47 @@ describe('<DataGridControlAgGrid /> - part 6', function () {
     );
     cy.waitReactApp();
     cy.contains('Select All').click();
-    cy.wait(100).then(() => {
-      cy.intercept('POST', '/control/data_grid/delete_row?*', {
-        statusCode: 200,
-        body: responseModalDeleteRows,
-      });
-      cy.get('._Button')
-        .contains(new RegExp(translations.join('|')))
+    cy.get('._Button')
+      .contains(new RegExp(translations.join('|')))
+      .click();
+    cy.window().then((w) => {
+      // const selected: string[] = [];
+      const { api: gridApi } =
+        w['Features_Edit_Control_DataGridControlAgGrid' + _control.control_id]
+          .gridRef.current;
+
+      // gridApi.forEachNode((node: RowNode) => {
+      //   if (
+      //     node.data[
+      //       _control.data_grid_detail?.datagrid_options
+      //         ?.select_all_button_col_ref as string
+      //     ]?.value === '1'
+      //   ) {
+      //     selected.push(node.data?.row_uuid);
+      //   }
+      // });
+      cy.react('ModalDynamic')
+        .find('button')
+        .contains(btnConfirmDel.btn_lib)
         .click();
-      cy.window().then((w) => {
-        // const selected: string[] = [];
-        const { api: gridApi } =
-          w['Features_Edit_Control_DataGridControlAgGrid' + _control.control_id]
-            .gridRef.current;
-        const btnConfirmDel = responseModalDeleteRows.btn.find(
-          (d) => d.action.method === 'POST',
-        ) as IButtons;
+      cy.wait('@callAfterConfirmDeletionBtn').then((intercepted) => {
+        const { response } = intercepted;
 
-        // gridApi.forEachNode((node: RowNode) => {
-        //   if (
-        //     node.data[
-        //       _control.data_grid_detail?.datagrid_options
-        //         ?.select_all_button_col_ref as string
-        //     ]?.value === '1'
-        //   ) {
-        //     selected.push(node.data?.row_uuid);
-        //   }
-        // });
-        cy.intercept('POST', btnConfirmDel.action.endpoint + '?*', {
-          statusCode: 201,
-          fixture: 'controlDataGridAgGrid-resp-confirm-delete_rows-1.json',
-        }).as('callAfterConfirmDeletionBtn');
-        cy.react('ModalDynamic')
-          .find('button')
-          .contains(btnConfirmDel.btn_lib)
-          .click();
-        cy.wait('@callAfterConfirmDeletionBtn').then((intercepted) => {
-          const { response } = intercepted;
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(500).then(() => {
+          const remainingNode: string[] = [];
 
-          cy.wait(500).then(() => {
-            const remainingNode: string[] = [];
-
-            gridApi.forEachNode((node: RowNode) => {
-              remainingNode.push(node.data?.row_uuid);
-            });
-            // selected.forEach((uuid) => {
-            //   expect(remainingNode).not.include(uuid);
-            // });
-            // @ts-ignore
-            (response.body.row_deleted as string[]).forEach((uuid) => {
-              expect(remainingNode).not.include(uuid);
-            });
-            cy.react('ModalDynamic').should('not.exist');
+          gridApi.forEachNode((node: RowNode) => {
+            remainingNode.push(node.data?.row_uuid);
           });
+          // selected.forEach((uuid) => {
+          //   expect(remainingNode).not.include(uuid);
+          // });
+          // @ts-ignore
+          (response.body.row_deleted as string[]).forEach((uuid) => {
+            expect(remainingNode).not.include(uuid);
+          });
+          cy.react('ModalDynamic').should('not.exist');
         });
       });
     });
@@ -388,6 +628,7 @@ describe('<DataGridControlAgGrid /> - part 6', function () {
     );
     cy.waitReactApp();
     cy.contains('Select All').click();
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(100).then(() => {
       cy.intercept('POST', '/control/data_grid/delete_row?*', {
         statusCode: 200,
@@ -415,7 +656,8 @@ describe('<DataGridControlAgGrid /> - part 6', function () {
         cy.wait('@callAfterConfirmDeletionBtn').then((intercepted) => {
           const { response } = intercepted;
 
-          cy.wait(500).then(() => {
+          // eslint-disable-next-line cypress/no-unnecessary-waiting
+          cy.wait(300).then(() => {
             const remainingNode: string[] = [];
 
             gridApi.forEachNode((node: RowNode) => {
@@ -429,6 +671,102 @@ describe('<DataGridControlAgGrid /> - part 6', function () {
             cy.react('ModalDynamic').should('be.visible');
           });
         });
+      });
+    });
+  });
+
+  it('should display a error message when click "Delete rows" - controlExample2', function () {
+    const trans_FR = _translate('fr', 'Edit', 'deleteRows');
+    const trans_EN = _translate('en', 'Edit', 'deleteRows');
+    const trans_DE = _translate('de', 'Edit', 'deleteRows');
+    const translations = [trans_FR, trans_EN, trans_DE];
+    const _control = {
+      ...structuredClone(controlExample2),
+      data_grid_detail: {
+        ...structuredClone(controlExample2.data_grid_detail),
+        datagrid_options: {
+          ...structuredClone(
+            controlExample2.data_grid_detail?.datagrid_options || {},
+          ),
+          delete_row_button_display: true,
+        },
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as IApiControl;
+
+    cy.intercept('POST', '/control/data_grid/delete_row?*', {
+      statusCode: 500,
+      body: { error_msg: 'Error message' },
+    }).as('reqClickDeleteRowBtn');
+
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.contains('Select All').click();
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100).then(() => {
+      cy.get('button')
+        .contains(new RegExp(translations.join('|')))
+        .realClick();
+      cy.wait('@reqClickDeleteRowBtn').then((interception) => {
+        const { response } = interception;
+
+        cy.react('DataGridControlAgGrid').formErrorShouldBeVisible([
+          response?.body.error_msg,
+        ]);
+      });
+    });
+  });
+
+  it('should display a error message when click "Add row" - controlExample2', function () {
+    const trans_FR = _translate('fr', 'Edit', 'addLine');
+    const trans_EN = _translate('en', 'Edit', 'addLine');
+    const trans_DE = _translate('de', 'Edit', 'addLine');
+    const translations = [trans_FR, trans_EN, trans_DE];
+    const _control = {
+      ...structuredClone(controlExample2),
+      data_grid_detail: {
+        ...structuredClone(controlExample2.data_grid_detail),
+        datagrid_options: {
+          ...structuredClone(
+            controlExample2.data_grid_detail?.datagrid_options || {},
+          ),
+          delete_row_button_display: true,
+        },
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as IApiControl;
+
+    cy.intercept('POST', '/control/data_grid/add_row?*', {
+      statusCode: 500,
+      body: { error_msg: 'Error message' },
+    }).as('reqClickAddRowBtn');
+
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.contains('Select All').click();
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100).then(() => {
+      cy.get('button')
+        .contains(new RegExp(translations.join('|')))
+        .realClick();
+      cy.wait('@reqClickAddRowBtn').then(() => {
+        cy.react('DataGridControlAgGrid').formErrorShouldBeVisible([
+          "Une erreur est survenue lors de l'ajout de la ligne",
+        ]);
       });
     });
   });

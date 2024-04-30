@@ -253,4 +253,4 @@ jobs:
                     NODE_OPTIONS: "--max-old-space-size=8192"
                 with:
                     browser: chrome
-                    command: yarn cypress:run:component:chrome:ci --spec '**/*/DataGridControlAgGrid.part{24..26}.cy.tsx'
+                    command: yarn cypress:run:component:chrome:ci --spec '**/*/DataGridControlAgGrid.part{24..27}.cy.tsx'

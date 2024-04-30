@@ -37,6 +37,9 @@ export const RadioCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
     [compliance.compliance_elm_value, value],
   );
   const [isMandatory] = useState(compliance.compliance_elm_mandatory);
+  const [apiRouteName, setApiRouteName] = useState<string>(
+    currentRoute?.props?.apiSaveControlRouteName,
+  );
 
   const saveValue = useCallback(
     (value: string) => {
@@ -56,7 +59,7 @@ export const RadioCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
       }
 
       send(
-        currentRoute?.props?.apiSaveControlRouteName,
+        apiRouteName,
         {},
         {
           file_id: fileId,
@@ -72,7 +75,7 @@ export const RadioCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
       fileId,
       controlId,
       compliance.compliance_elm_family,
-      currentRoute,
+      apiRouteName,
       compliance.compliance_elm_regex,
       compliance.compliance_id,
       compliance.compliance_elm_regex_msg,
@@ -108,6 +111,7 @@ export const RadioCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
   if (window?.['Cypress']) {
     window['Features_Edit_Control_Form_Compliance_RadioCompliance'] = {
       setErrorMessage,
+      setApiRouteName,
     };
   }
 

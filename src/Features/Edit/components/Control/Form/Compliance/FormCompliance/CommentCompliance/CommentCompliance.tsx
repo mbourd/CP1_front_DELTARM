@@ -26,6 +26,9 @@ export const CommentCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
   const [currentValue, setCurrentValue] = useState<string | null>(
     compliance.compliance_elm_value,
   );
+  const [apiRouteName, setApiRouteName] = useState<string>(
+    currentRoute?.props?.apiSaveControlRouteName,
+  );
 
   const saveValue = useCallback(
     (value: string) => {
@@ -46,7 +49,7 @@ export const CommentCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
       }
 
       send(
-        currentRoute?.props?.apiSaveControlRouteName,
+        apiRouteName,
         {},
         {
           file_id: fileId,
@@ -60,7 +63,7 @@ export const CommentCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
     [
       send,
       fileId,
-      currentRoute,
+      apiRouteName,
       compliance.compliance_elm_family,
       compliance.compliance_elm_regex,
       compliance.compliance_id,
@@ -85,6 +88,7 @@ export const CommentCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
   if (window?.['Cypress']) {
     window['Features_Edit_Control_Form_Compliance_CommentCompliance'] = {
       setErrorMessage,
+      setApiRouteName,
     };
   }
 

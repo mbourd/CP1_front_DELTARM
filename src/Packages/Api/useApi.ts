@@ -21,6 +21,7 @@ export const useApi = <T>(
   protocol: ApiRequestProtocolType = 'https',
   router: IApiRouter,
   promise = false,
+  responseType: 'json' | 'blob' = 'json',
 ): UseApiReturnType<T> => {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -32,6 +33,8 @@ export const useApi = <T>(
     () => new ApiRequest(host, protocol),
     [host, protocol],
   );
+
+  request.setResponseType(responseType);
 
   const send = useCallback(
     (

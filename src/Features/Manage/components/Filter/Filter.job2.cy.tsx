@@ -2,7 +2,7 @@
 /// <reference types="cypress" />
 /// <reference types="../../../../../cypress/support/component" />
 // NOTE: Run CLI:
-// yarn cypress:run:component --browser chrome --config video=false --spec ""
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Manage/components/Filter/Filter.job2.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
@@ -49,16 +49,21 @@ describe('<Filter />', function () {
   };
 
   it('should render without crash', function () {
-    cy.intercept('GET', '/manage/reference', {
-      statusCode: 200,
-      body: dataManageReference,
-    });
+    let reqCount = 0;
+
+    cy.intercept('GET', '/manage/reference', (req) => {
+      reqCount++;
+      req.reply({ statusCode: 200, body: dataManageReference });
+    }).as('reqGetManagefilters');
     cy.mount(
       <SetupTestsComponents>
         <Filter />
       </SetupTestsComponents>,
     ).waitReactApp();
     cy.react('Filter').should('exist');
+    cy.wait('@reqGetManagefilters').then(() => {
+      expect(reqCount).to.be.eq(1);
+    });
   });
 
   //// TODO: continue

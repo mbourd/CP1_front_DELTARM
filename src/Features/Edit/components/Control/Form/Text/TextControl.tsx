@@ -44,6 +44,10 @@ export const TextControl: React.FC<React.PropsWithChildren<IProps>> = ({
   );
 
   const { currentRoute } = useRouter();
+  const [apiRouteName, setApiRouteName] = useState<string>(
+    currentRoute?.props?.apiSaveControlRouteName,
+  );
+
   useEffect(() => {
     setCurrentValue(control.control_value);
   }, [control.control_value]);
@@ -86,13 +90,12 @@ export const TextControl: React.FC<React.PropsWithChildren<IProps>> = ({
         elm_val: value,
       };
 
-      if (canSendApi) send(currentRoute?.props?.apiSaveControlRouteName, {}, q);
+      if (canSendApi) send(apiRouteName, {}, q);
     },
     [
       send,
       fileId,
       control.control_id,
-      currentRoute,
       control.control_family,
       control.control_regex,
       control.control_regex_msg,
@@ -101,6 +104,7 @@ export const TextControl: React.FC<React.PropsWithChildren<IProps>> = ({
       control.mandatory,
       trans,
       canSendApi,
+      apiRouteName,
     ],
   );
 
@@ -121,6 +125,7 @@ export const TextControl: React.FC<React.PropsWithChildren<IProps>> = ({
     window['Features_Edit_Control_TextControl'] = {
       setErrorMessage,
       setCanSendApi,
+      setApiRouteName,
     };
   }
 

@@ -5,6 +5,12 @@ class ApiRouter implements IApiRouter {
   private _routes: Record<string, IApiRouteDef> = {};
 
   public addRoute(route: IApiRouteDef): this {
+    if (
+      Object.hasOwnProperty.call(this._routes, route.name) &&
+      route.name !== 'loginDev'
+    )
+      throw new Error('A route "' + route.name + '" is already registered');
+
     this._routes[route.name] = route;
 
     return this;

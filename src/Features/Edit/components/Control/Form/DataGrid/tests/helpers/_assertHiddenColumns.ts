@@ -1,9 +1,16 @@
-import { DataGridDetailsColumnType, IApiControl } from 'Features/Edit/types';
+// @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../../../../../cypress/support/component" />
+
+import {
+  DataGridDetailsColumnType,
+  IApiControl,
+} from '../../../../../../types';
 import { getData } from './getData';
 import { keyCodeDefinitions } from 'cypress-real-events/keyCodeDefinitions';
 
-export function _assertHiddenColumns(_control: IApiControl) {
-  cy.wait(500).then(() => {
+export function _assertHiddenColumns(_control: IApiControl, waitMs = 500) {
+  cy.wait(waitMs).then(() => {
     const withControlData = getData(_control);
 
     withControlData(1, ({ columns }) => {

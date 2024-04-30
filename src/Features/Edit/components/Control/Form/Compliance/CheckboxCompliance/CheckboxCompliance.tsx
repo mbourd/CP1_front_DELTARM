@@ -1,8 +1,8 @@
 import React, { useCallback, useContext, useState } from 'react';
 import { Checkbox } from 'Shared/components';
 import { EditValidationContext } from '../../../../../EditValidationContext';
-import { getEnv, IUser, security } from '../../../../../../../Services';
-import axios from 'axios';
+import { getEnv, IUser, security, useApi } from '../../../../../../../Services';
+// import axios from 'axios';
 import { IColor } from '../../../../../../../Packages/Design';
 
 interface ICheckboxComplianceProps {
@@ -24,30 +24,47 @@ export const CheckboxCompliance: React.FC<
   checkedColor,
   uncheckedColor,
 }): React.ReactElement => {
-  const [user] = useState<IUser>(security.getUser());
-  const jwt = user.getJwt();
+  // const [user] = useState<IUser>(security.getUser());
+  // const jwt = user.getJwt();
+  const { send } = useApi({ promise: true });
   const { fileId } = useContext(EditValidationContext);
 
   const saveResolvedCompliance = useCallback(() => {
-    axios
-      .post(
-        `${getEnv('API_PROTOCOL')}://${getEnv(
-          'API_HOST',
-        )}/control/set_compliance?file_id=${fileId}&elm_id=${controlId}&compliance_resolved=${!checked}`,
-        {},
-        {
-          headers: {
-            Authorization: jwt,
-          },
-        },
-      )
-      .then(() => {
+    send(
+      'setComplianceValue',
+      {},
+      {
+        file_id: fileId,
+        elm_id: controlId,
+        compliance_resolved: !checked + '',
+      },
+    )
+      ?.then(() => {
         setIsResolved(!checked);
       })
       .catch(() => {
         setIsResolved(checked);
       });
-  }, [fileId, controlId, checked, setIsResolved, jwt]);
+
+    // axios
+    //   .post(
+    //     `${getEnv('API_PROTOCOL')}://${getEnv(
+    //       'API_HOST',
+    //     )}/control/set_compliance?file_id=${fileId}&elm_id=${controlId}&compliance_resolved=${!checked}`,
+    //     {},
+    //     {
+    //       headers: {
+    //         Authorization: jwt,
+    //       },
+    //     },
+    //   )
+    //   .then(() => {
+    //     setIsResolved(!checked);
+    //   })
+    //   .catch(() => {
+    //     setIsResolved(checked);
+    //   });
+  }, [send, fileId, controlId, checked, setIsResolved]);
 
   return (
     <Checkbox

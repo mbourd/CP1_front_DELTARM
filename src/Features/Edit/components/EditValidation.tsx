@@ -37,20 +37,25 @@ export const EditValidation: React.FC<React.PropsWithChildren<IProps>> = ({
   >({});
 
   useEffect(() => {
-    setSectionsLabels(
-      data?.sections
-        .map((section) => [section.id, section.label])
-        .reduce((acc, [id, label]) => {
-          acc[id] = label;
+    if (data)
+      setSectionsLabels(
+        data?.sections
+          .map((section) => [section.id, section.label])
+          .reduce((acc, [id, label]) => {
+            acc[id] = label;
 
-          return acc;
-        }, {}),
-    );
+            return acc;
+          }, {}),
+      );
   }, [data]);
 
   // To avoid (bpi specific)
   const { id } = router.getParams();
   const frontRouterQueries = router.getQueries();
+  const [fileId, setFileId] = useState<string>(
+    id ? id : frontRouterQueries?.file_id ?? '',
+  );
+
   if (!user.isLogged()) {
     logout();
   }
@@ -74,6 +79,12 @@ export const EditValidation: React.FC<React.PropsWithChildren<IProps>> = ({
       request.abort();
     };
   }, [send, id, currentSection, request, apiRouteName, frontRouterQueries]);
+
+  if (window?.['Cypress']) {
+    window['Features/Edit/components/EditValidation'] = {
+      setFileId,
+    };
+  }
 
   return (
     <SwitchCallState
@@ -99,7 +110,7 @@ export const EditValidation: React.FC<React.PropsWithChildren<IProps>> = ({
           <EditValidationContext.Provider
             value={{
               data,
-              fileId: id ? id : frontRouterQueries.file_id,
+              fileId,
               setSectionsLabels,
               sectionId: currentSection || data?.currentSection.id,
             }}

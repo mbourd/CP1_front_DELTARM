@@ -1,10 +1,14 @@
-import { IApiControl, DataGridDetailsRowsCell } from 'Features/Edit/types';
+// @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../../../../../cypress/support/component" />
+
+import { IApiControl, DataGridDetailsRowsCell } from '../../../../../../types';
 import { getData } from './getData';
 import { kFormatter } from './kFormatter';
 
-export function _assertTrackModifTooltip(_control: IApiControl) {
+export function _assertTrackModifTooltip(_control: IApiControl, waitMs = 500) {
   Cypress.config('defaultCommandTimeout', 6000);
-  cy.wait(500).then(() => {
+  cy.wait(waitMs).then(() => {
     cy.window().then((w) => {
       w[
         'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
@@ -81,9 +85,7 @@ export function _assertTrackModifTooltip(_control: IApiControl) {
                       columns[indexCell].track_modification &&
                       columns[indexCell].track_modification_tooltip
                     ) {
-                      cy.get(
-                        '.ag-theme-alpine.ag-popup .ag-popup-child .custom-tooltip',
-                      )
+                      cy.get('.ag-popup .ag-popup-child .custom-tooltip')
                         .should('be.visible')
                         .invoke('text')
                         .then((t) => {
@@ -105,9 +107,7 @@ export function _assertTrackModifTooltip(_control: IApiControl) {
                           );
                         });
                     } else
-                      cy.get(
-                        '.ag-theme-alpine.ag-popup .ag-popup-child .custom-tooltip',
-                      )
+                      cy.get('.ag-popup .ag-popup-child .custom-tooltip')
                         .should('have.css', 'display', 'none')
                         .should('not.be.visible');
 

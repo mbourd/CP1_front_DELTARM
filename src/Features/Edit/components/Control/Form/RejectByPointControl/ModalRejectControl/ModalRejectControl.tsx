@@ -5,11 +5,11 @@ import { FormControlStyled } from '../../../Display/FormControl.style';
 import { SearchModalFooterStyled } from '../../../../../../Manage/components/Search/Modal/SearchModal.style';
 import { HeadingTwo } from '../../../../../../../Shared/components';
 import { CommentRejectControl } from '../FormRejectControl/CommentRejectControl/CommentRejectControl';
-import { IUser, security } from '../../../../../../../Packages/Security';
-import axios from 'axios';
-import { getEnv } from '../../../../../../../Packages/Helpers';
+// import { IUser, security } from '../../../../../../../Packages/Security';
+// import axios from 'axios';
+// import { getEnv } from '../../../../../../../Packages/Helpers';
 import { IApiFileComment, IFileComment } from '../../../../../../Comments';
-import { useTrans } from '../../../../../../../Services';
+import { useApi, useTrans } from '../../../../../../../Services';
 
 interface IProps {
   open: boolean;
@@ -31,10 +31,11 @@ export const ModalRejectControl: React.FC<React.PropsWithChildren<IProps>> = ({
   setRejectComments,
 }): React.ReactElement => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [user] = useState<IUser>(security.getUser());
-  const jwt = user.getJwt();
+  // const [user] = useState<IUser>(security.getUser());
+  // const jwt = user.getJwt();
   const [trans] = useTrans('Edit');
   const [commentValue, setCommentValue] = useState<string | null>(null);
+  const { send } = useApi({ promise: true });
 
   const saveValue = useCallback(() => {
     setErrorMessage(null);
@@ -43,23 +44,22 @@ export const ModalRejectControl: React.FC<React.PropsWithChildren<IProps>> = ({
 
       return;
     }
-    axios
-      .post(
-        `${getEnv('API_PROTOCOL')}://${getEnv(
-          'API_HOST',
-        )}/control/reject/value?file_id=${fileId}&elm_id=${controlId}&reject_value=${isRejected}&reject_comment=${commentValue}`,
-        {},
-        {
-          headers: {
-            Authorization: jwt,
-            'Content-type': 'application/json',
-          },
-        },
-      )
-      .then(async (response) => {
+
+    send(
+      'rejectControlValue',
+      {},
+      {
+        file_id: fileId,
+        elm_id: controlId,
+        reject_value: isRejected + '',
+        reject_comment: commentValue,
+      },
+    )
+      ?.then(async (response) => {
         const rejectComments: IFileComment[] = [];
-        if (response.data.comment_list) {
-          response.data.comment_list.map((datum: IApiFileComment) => {
+
+        if (response?.body?.comment_list) {
+          response.body.comment_list.map((datum: IApiFileComment) => {
             const date = new Date(datum.comment_ts);
 
             rejectComments.push({
@@ -85,6 +85,7 @@ export const ModalRejectControl: React.FC<React.PropsWithChildren<IProps>> = ({
 
           return rejectComments;
         }
+
         setRejectComments(rejectComments);
         setSuccessCallRejection(true);
         setErrorMessage(null);
@@ -95,25 +96,85 @@ export const ModalRejectControl: React.FC<React.PropsWithChildren<IProps>> = ({
       .catch(async (error) => {
         if (error) {
           setSuccessCallRejection(false);
-          if (error.response.data.error_msg) {
-            setErrorMessage(error.response.data.error_msg);
-          } else {
-            setErrorMessage(trans('errorOccured'));
-          }
+
+          if (error?.response?.body?.error_msg) {
+            setErrorMessage(error.response.body.error_msg);
+          } else setErrorMessage(trans('errorOccured'));
 
           return;
         }
       });
+    // axios
+    //   .post(
+    //     `${getEnv('API_PROTOCOL')}://${getEnv(
+    //       'API_HOST',
+    //     )}/control/reject/value?file_id=${fileId}&elm_id=${controlId}&reject_value=${isRejected}&reject_comment=${commentValue}`,
+    //     {},
+    //     {
+    //       headers: {
+    //         Authorization: jwt,
+    //         'Content-type': 'application/json',
+    //       },
+    //     },
+    //   )
+    //   .then(async (response) => {
+    //     const rejectComments: IFileComment[] = [];
+    //     if (response.data.comment_list) {
+    //       response.data.comment_list.map((datum: IApiFileComment) => {
+    //         const date = new Date(datum.comment_ts);
+
+    //         rejectComments.push({
+    //           id: datum.comment_id,
+    //           message: datum.comment_text,
+    //           date:
+    //             date.getDate() +
+    //             '/' +
+    //             (date.getMonth() + 1) +
+    //             '/' +
+    //             date.getFullYear() +
+    //             ' à ' +
+    //             date.getHours() +
+    //             ':' +
+    //             date.getMinutes() +
+    //             ':' +
+    //             date.getSeconds(),
+    //           user: datum.comment_user_name,
+    //         });
+
+    //         return datum;
+    //       });
+
+    //       return rejectComments;
+    //     }
+    //     setRejectComments(rejectComments);
+    //     setSuccessCallRejection(true);
+    //     setErrorMessage(null);
+    //     onClose();
+
+    //     return;
+    //   })
+    //   .catch(async (error) => {
+    //     if (error) {
+    //       setSuccessCallRejection(false);
+    //       if (error.response.data.error_msg) {
+    //         setErrorMessage(error.response.data.error_msg);
+    //       } else {
+    //         setErrorMessage(trans('errorOccured'));
+    //       }
+
+    //       return;
+    //     }
+    //   });
   }, [
-    setRejectComments,
-    onClose,
-    setSuccessCallRejection,
+    send,
     commentValue,
     fileId,
     controlId,
-    jwt,
-    isRejected,
     trans,
+    isRejected,
+    setRejectComments,
+    setSuccessCallRejection,
+    onClose,
   ]);
 
   const footer = (

@@ -158,7 +158,6 @@ export const DataGridControl: React.FC<React.PropsWithChildren<IProps>> = ({
               rowNum={props.row[column].row_num}
               fileId={fileId}
               controlId={control.control_id}
-              key={index}
               value={props.row[column].value}
               regex={control.control_regex}
               regexMsg={control.control_regex_msg}
@@ -167,7 +166,7 @@ export const DataGridControl: React.FC<React.PropsWithChildren<IProps>> = ({
             />
           );
 
-          return <Row {...props} />;
+          return <Row {...props} key={index} />;
         case 'select_list': {
           const answerChoices: Record<string, ISelectData> = {};
           props.row[column].answer_choices.map(

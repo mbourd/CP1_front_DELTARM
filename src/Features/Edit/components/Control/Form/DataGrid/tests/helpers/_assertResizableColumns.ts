@@ -1,8 +1,15 @@
-import { IApiControl, DataGridDetailsColumnType } from 'Features/Edit/types';
+// @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../../../../../cypress/support/component" />
+
+import {
+  IApiControl,
+  DataGridDetailsColumnType,
+} from '../../../../../../types';
 import { getData } from './getData';
 
-export function _assertResizableColumns(_control: IApiControl) {
-  cy.wait(500).then(() => {
+export function _assertResizableColumns(_control: IApiControl, waitMs = 500) {
+  cy.wait(waitMs).then(() => {
     const withControlData = getData(_control);
 
     withControlData(1, ({ columns }) => {
@@ -12,7 +19,7 @@ export function _assertResizableColumns(_control: IApiControl) {
 
         cy.waitUntil(() => {
           const $col = Cypress.$(
-            `.ag-theme-alpine .ag-header-row.ag-header-row-column .ag-header-cell[col-id="${colId}"]`,
+            /*'.ag-theme-alpine ' +*/ `.ag-header-row.ag-header-row-column .ag-header-cell[col-id="${colId}"]`,
           );
 
           if (col.hide) return true;
@@ -24,9 +31,10 @@ export function _assertResizableColumns(_control: IApiControl) {
         }).then(() => {
           if (col.hide) return;
 
+          // eslint-disable-next-line cypress/no-unnecessary-waiting
           cy.wait(3).then(() => {
             const $col = Cypress.$(
-              `.ag-theme-alpine .ag-header-row.ag-header-row-column .ag-header-cell[col-id="${colId}"]`,
+              /*'.ag-theme-alpine ' +*/ `.ag-header-row.ag-header-row-column .ag-header-cell[col-id="${colId}"]`,
             );
             initialColWidth = $col[0]?.getBoundingClientRect().width;
 
@@ -42,7 +50,7 @@ export function _assertResizableColumns(_control: IApiControl) {
                   `.ag-header-row.ag-header-row-column .ag-header-cell[col-id="${colId}"] .ag-header-cell-resize`,
                 )
                 .realMouseDown()
-                .realMouseMove(Math.floor(-1 * (initialColWidth / 2)), 0)
+                .realMouseMove(-1, 0)
                 .realMouseUp();
               cy.react('AgGridReact')
                 .find(
@@ -65,7 +73,7 @@ export function _assertResizableColumns(_control: IApiControl) {
                   `.ag-header-row.ag-header-row-column .ag-header-cell[col-id="${colId}"] .ag-header-cell-resize`,
                 )
                 .realMouseDown()
-                .realMouseMove(Math.floor(-1 * (initialColWidth / 2)), 0)
+                .realMouseMove(-1, 0)
                 .realMouseUp();
               cy.react('AgGridReact')
                 .find(

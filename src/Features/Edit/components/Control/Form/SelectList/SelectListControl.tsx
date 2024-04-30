@@ -51,6 +51,9 @@ export const SelectListControl: React.FC<React.PropsWithChildren<IProps>> = ({
 
   const { currentRoute } = useRouter();
   const { send, error } = useApi<void>();
+  const [apiRouteName, setApiRouteName] = useState<string>(
+    currentRoute?.props?.apiSaveControlRouteName,
+  );
 
   const selectedValue: Record<string, true> = {
     [currentValue || control.control_value || '']: true,
@@ -86,7 +89,7 @@ export const SelectListControl: React.FC<React.PropsWithChildren<IProps>> = ({
       setErrorMessage(null);
       setCurrentValue(value);
       send(
-        currentRoute?.props?.apiSaveControlRouteName,
+        apiRouteName,
         {},
         {
           file_id: fileId,
@@ -101,7 +104,7 @@ export const SelectListControl: React.FC<React.PropsWithChildren<IProps>> = ({
       fileId,
       control.control_id,
       control.control_family,
-      currentRoute,
+      apiRouteName,
       control.control_regex,
       control.control_regex_msg,
     ],
@@ -127,6 +130,13 @@ export const SelectListControl: React.FC<React.PropsWithChildren<IProps>> = ({
       setErrorMessage(trans('errorReselect'));
     }
   }, [error, trans]);
+
+  if (window?.['Cypress']) {
+    window['Features_Edit_Control_SelectListControl'] = {
+      setErrorMessage,
+      setApiRouteName,
+    };
+  }
 
   return (
     <Grid item xs={6}>

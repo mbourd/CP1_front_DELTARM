@@ -36,6 +36,9 @@ export const FormulaControl: React.FC<React.PropsWithChildren<IProps>> = ({
   );
   const { currentRoute } = useRouter();
   const [trans] = useTrans('Edit');
+  const [apiRouteName, setApiRouteName] = useState<string>(
+    currentRoute?.props?.apiSaveControlRouteName,
+  );
 
   useEffect(() => {
     setCurrentValue(control.control_value);
@@ -78,13 +81,12 @@ export const FormulaControl: React.FC<React.PropsWithChildren<IProps>> = ({
         elm_val: value,
       };
 
-      send(currentRoute?.props?.apiSaveControlRouteName, {}, q);
+      send(apiRouteName, {}, q);
     },
     [
       send,
       fileId,
       control.control_id,
-      currentRoute,
       control.control_family,
       control.control_regex,
       control.control_regex_msg,
@@ -92,6 +94,7 @@ export const FormulaControl: React.FC<React.PropsWithChildren<IProps>> = ({
       setCurrentValue,
       control.mandatory,
       trans,
+      apiRouteName,
     ],
   );
 
@@ -122,6 +125,13 @@ export const FormulaControl: React.FC<React.PropsWithChildren<IProps>> = ({
     }
   }, [isRejected]);
 
+  if (window?.['Cypress']) {
+    window['Features/Edit/Control/Form/Formula/FormulaControl'] = {
+      setErrorMessage,
+      setApiRouteName,
+    };
+  }
+
   const controlValue =
     currentValue && !isNaN(Number(currentValue))
       ? parseFloat(currentValue)?.toFixed(
@@ -147,7 +157,8 @@ export const FormulaControl: React.FC<React.PropsWithChildren<IProps>> = ({
           }
           disabled={!control.editable}
           color={control.editable ? 'text' : 'disabled'}
-          value={controlValue ? controlValue : ''}
+          // value={controlValue ? controlValue : ''}
+          defaultValue={controlValue ? controlValue : ''}
           onBlur={(e) => saveValue(e.currentTarget.value)}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
