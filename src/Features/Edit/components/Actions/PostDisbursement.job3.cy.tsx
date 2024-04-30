@@ -47,9 +47,7 @@ describe('<PostDisbursement />', function () {
 
     cy.intercept('GET', '/file/dec_link_files\\?*', (req) => {
       reqCount1++;
-      req.on('response', (resp) =>
-        resp.send({ statusCode: 200, body: { data: [] } }),
-      );
+      req.reply({ statusCode: 200, body: { data: [] } });
     }).as('reqGetFileDisbursement');
     cy.intercept('POST', '/file/post_dec\\?*', (req) => {
       reqCount2++;

@@ -183,9 +183,7 @@ describe('<JoditRichTextControl />', () => {
 
     cy.intercept('POST', '/control/set_value?*', (req) => {
       reqCount++;
-      req.on('response', (resp) => {
-        resp.send(200, { data: {} });
-      });
+      req.reply({ statusCode: 200, body: { data: {} } });
     }).as('reqSaveJodit');
 
     cy.mount(

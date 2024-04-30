@@ -128,7 +128,7 @@ describe('<CreateModal />', function () {
 
     cy.intercept('POST', '/file/create\\?*', (req) => {
       reqCount++;
-      req.on('response', (resp) => resp.send({ statusCode: 401, body: {} }));
+      req.reply({ statusCode: 401, body: {} });
     }).as('reqPostFileCreate');
 
     cy.mount(

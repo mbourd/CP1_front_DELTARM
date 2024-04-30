@@ -145,9 +145,7 @@ describe('<DashboardDynamic />', function () {
           (req) => {
             reqCount++;
 
-            req.on('response', (resp) => {
-              resp.send({ statusCode: 200, body: {} });
-            });
+            req.reply({ statusCode: 200, body: {} });
           },
         ).as('reqSearchVal' + i);
 

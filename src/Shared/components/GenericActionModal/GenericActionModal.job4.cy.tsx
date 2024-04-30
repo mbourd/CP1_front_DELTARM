@@ -57,10 +57,7 @@ describe('<GenericActionModal />', function () {
       apiRouter.getRoutes()['actionClassify']?.path + '\\?*',
       (req) => {
         reqCount++;
-
-        req.on('response', (resp) => {
-          resp.send(200, {});
-        });
+        req.reply({ statusCode: 200, body: {} });
       },
     ).as('reqSaveValue');
 

@@ -54,22 +54,20 @@ describe('<UploadCompliance />', () => {
 
     cy.intercept('POST', '/control/set_value?*', (req) => {
       reqCount++;
-      req.on('response', (resp) => {
-        resp.send({
-          statusCode: 201,
-          body: {
-            data: {
-              file_detail: [
-                {
-                  file_id:
-                    'upload/dev/cli_8/2024-3/d325d065-7676-4b57-9c56-dd9cec05b4dd',
-                  file_name: 'file.txt',
-                },
-              ],
-              msg: 'ok',
-            },
+      req.reply({
+        statusCode: 201,
+        body: {
+          data: {
+            file_detail: [
+              {
+                file_id:
+                  'upload/dev/cli_8/2024-3/d325d065-7676-4b57-9c56-dd9cec05b4dd',
+                file_name: 'file.txt',
+              },
+            ],
+            msg: 'ok',
           },
-        });
+        },
       });
     }).as('reqUploadFileCompliance');
 

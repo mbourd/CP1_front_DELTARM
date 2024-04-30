@@ -55,13 +55,7 @@ describe('<Editvalidation />', function () {
 
     cy.intercept('GET', '/edit*', (req) => {
       reqCount++;
-      req.on('response', (resp) =>
-        resp.send({
-          statusCode: 200,
-          // fixture: 'editValidation-1.json',
-          body: editValidation1,
-        }),
-      );
+      req.reply({ statusCode: 200, body: editValidation1 });
     }).as('reqGetEditValidation');
     cy.intercept('GET', '/comment/file*', { statusCode: 200, body: {} });
     cy.intercept('GET', '/file/audit*', { statusCode: 200, body: {} });
@@ -105,33 +99,26 @@ describe('<Editvalidation />', function () {
 
           cy.intercept('POST', '/control/data_grid/delete_row\\?*', (req) => {
             reqCount1++;
-            req.on('response', (resp) =>
-              resp.send({
-                statusCode: 200,
-                body: responseModalDeleteRows,
-              }),
-            );
+            req.reply({ statusCode: 200, body: responseModalDeleteRows });
           }).as('reqConfirmDelete');
           cy.intercept(
             'POST',
             btnConfirmDel.action.endpoint + '\\?*',
             (req) => {
               reqCount2++;
-              req.on('response', (resp) =>
-                resp.send({
-                  statusCode: 201,
-                  body: {
-                    origin_fonction_callback: 'delete_row',
-                    row_deleted: [
-                      '46fba736-8fc4-4183-bd37-1c9bc2a94ecc',
-                      '32c428ac-6534-44fa-8cdd-f2e7a16d213a',
-                      '04b802b2-bc57-44f7-9303-dd5eea3abd9e',
-                      '53932e1a-8bde-4cf9-9f71-9ab13f2475d6',
-                    ],
-                    row_error: [],
-                  },
-                }),
-              );
+              req.reply({
+                statusCode: 201,
+                body: {
+                  origin_fonction_callback: 'delete_row',
+                  row_deleted: [
+                    '46fba736-8fc4-4183-bd37-1c9bc2a94ecc',
+                    '32c428ac-6534-44fa-8cdd-f2e7a16d213a',
+                    '04b802b2-bc57-44f7-9303-dd5eea3abd9e',
+                    '53932e1a-8bde-4cf9-9f71-9ab13f2475d6',
+                  ],
+                  row_error: [],
+                },
+              });
             },
           ).as('callAfterConfirmDeletionBtn');
           cy.then(() => {
