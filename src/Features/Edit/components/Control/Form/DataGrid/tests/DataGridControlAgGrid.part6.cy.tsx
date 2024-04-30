@@ -229,12 +229,7 @@ describe('<DataGridControlAgGrid /> - part 6', function () {
 
         cy.intercept('POST', btnConfirmDel.action.endpoint + '?*', (req) => {
           reqCount++;
-          req.on('response', (resp) =>
-            resp.send({
-              statusCode: 201,
-              body: {},
-            }),
-          );
+          req.reply({ statusCode: 201, body: {} });
         }).as('callAfterConfirmDeletionBtn');
         cy.react('ModalDynamic')
           .find('button')
@@ -346,12 +341,7 @@ describe('<DataGridControlAgGrid /> - part 6', function () {
 
           cy.intercept('POST', btnConfirmDel.action.endpoint + '?*', (req) => {
             reqCount++;
-            req.on('response', (resp) =>
-              resp.send({
-                statusCode: 201,
-                body: {},
-              }),
-            );
+            req.reply({ statusCode: 201, body: {} });
           }).as('callAfterConfirmDeletionBtn');
           cy.react('ModalDynamic').react('SelectModalDynamic').realClick();
           cy.contains(
@@ -465,12 +455,7 @@ describe('<DataGridControlAgGrid /> - part 6', function () {
 
         cy.intercept('POST', btnConfirmDel.action.endpoint + '?*', (req) => {
           reqCount++;
-          req.on('response', (resp) =>
-            resp.send({
-              statusCode: 201,
-              body: {},
-            }),
-          );
+          req.reply({ statusCode: 201, body: {} });
         }).as('callAfterConfirmDeletionBtn');
         cy.react('ModalDynamic').react('SelectModalDynamic').realClick();
         cy.contains('Remove (Object will no longer appear)').realClick();
@@ -557,12 +542,10 @@ describe('<DataGridControlAgGrid /> - part 6', function () {
       body: responseModalDeleteRows,
     });
     cy.intercept('POST', btnConfirmDel.action.endpoint + '?*', (req) => {
-      req.on('response', (resp) =>
-        resp.send({
-          statusCode: 201,
-          fixture: 'controlDataGridAgGrid-resp-confirm-delete_rows-1.json',
-        }),
-      );
+      req.reply({
+        statusCode: 201,
+        fixture: 'controlDataGridAgGrid-resp-confirm-delete_rows-1.json',
+      });
     }).as('callAfterConfirmDeletionBtn');
 
     cy.mount(

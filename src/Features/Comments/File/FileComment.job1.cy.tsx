@@ -42,9 +42,7 @@ describe('<FileComment />', function () {
 
     cy.intercept('GET', '/comment/file?*', (req) => {
       reqCount++;
-      req.on('response', (resp) => {
-        resp.send(200, { data: {} });
-      });
+      req.reply({ statusCode: 200, body: {} });
     }).as('reqCommentFile');
 
     cy.mount(
@@ -88,9 +86,7 @@ describe('<FileComment />', function () {
     }));
 
     cy.intercept('GET', '/comment/file?*', (req) => {
-      req.on('response', (resp) => {
-        resp.send(200, { data: comments });
-      });
+      req.reply({ statusCode: 200, body: { data: comments } });
     }).as('reqGetCommentFile');
 
     cy.mount(

@@ -55,9 +55,7 @@ describe('<CustomActionButtonRenderer />', function () {
       _props.data.val_0.value.split(';')[2] + '?*',
       (req) => {
         reqCount++;
-        req.on('response', (resp) => {
-          resp.send({ statusCode: 200, body: {} });
-        });
+        req.reply({ statusCode: 200, body: {} });
       },
     ).as('reqGetActionButton');
 
