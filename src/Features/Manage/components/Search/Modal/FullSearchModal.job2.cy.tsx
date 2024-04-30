@@ -86,12 +86,7 @@ describe('<FullSearchModal />', function () {
 
     cy.intercept('GET', '/file/search_full?*', (req) => {
       reqCount++;
-      req.on('response', (resp) =>
-        resp.send({
-          statusCode: 200,
-          body: { data },
-        }),
-      );
+      req.reply({ statusCode: 200, body: { data } });
     }).as('reqGetFileSearchFull');
 
     cy.mount(

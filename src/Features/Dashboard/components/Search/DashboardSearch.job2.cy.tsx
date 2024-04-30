@@ -32,9 +32,7 @@ describe('<DashboardSearch />', function () {
 
     cy.intercept('GET', '/file/search?*', (req) => {
       reqCount++;
-      req.on('response', (resp) => {
-        resp.send({ statusCode: 404, body: {} });
-      });
+      req.reply({ statusCode: 404, body: {} });
     }).as('reqSearchFile');
 
     cy.mount(

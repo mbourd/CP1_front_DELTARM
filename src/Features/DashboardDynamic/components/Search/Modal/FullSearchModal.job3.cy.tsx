@@ -20,7 +20,7 @@ describe('<FullSearchModal />', function () {
   });
   it('should render without crash', function () {
     cy.intercept('GET', '/file/search_full\\?*', (req) => {
-      req.on('response', (resp) => resp.send({ statusCode: 200, body: {} }));
+      req.reply({ statusCode: 200, body: {} });
     });
     cy.mount(
       <SetupTestsComponents>
@@ -36,7 +36,7 @@ describe('<FullSearchModal />', function () {
 
     cy.intercept('GET', '/file/search_full\\?*', (req) => {
       reqCount++;
-      req.on('response', (resp) => resp.send({ statusCode: 200, body: {} }));
+      req.reply({ statusCode: 200, body: {} });
     }).as('reqGetSearchResult');
 
     cy.mount(

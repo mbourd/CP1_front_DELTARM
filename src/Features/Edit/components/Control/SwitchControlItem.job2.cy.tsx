@@ -60,9 +60,7 @@ describe('<SwitchControlItem />', () => {
 
     cy.intercept('GET', '/control/get_value?*', (req) => {
       reqCount++;
-      req.on('response', (resp) => {
-        resp.send(200, {});
-      });
+      req.reply({ statusCode: 200, body: {} });
     }).as('reqGetValue');
 
     cy.mount(

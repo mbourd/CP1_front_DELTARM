@@ -94,10 +94,7 @@ describe('<DecimalControl />', () => {
       apiRouter.getRoutes()['setControlValue']?.path + '?*',
       (req) => {
         reqCount++;
-
-        req.on('response', (resp) => {
-          resp.send(200, {});
-        });
+        req.reply({ statusCode: 200, body: {} });
       },
     ).as('reqSaveValue');
 

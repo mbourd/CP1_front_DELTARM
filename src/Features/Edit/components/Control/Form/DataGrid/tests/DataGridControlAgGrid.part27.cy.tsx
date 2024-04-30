@@ -81,9 +81,7 @@ describe('<DataGridControlAgGrid /> - part 27', function () {
 
     cy.intercept('POST', '/control/data_grid/save_value?*', (req) => {
       _reqTest.count++;
-      req.on('response', (resp) => {
-        resp.send(200, { data: {} });
-      });
+      req.reply({ statusCode: 200, body: {} });
     }).as('reqSaveCellValue');
 
     cy.mount(
@@ -113,9 +111,7 @@ describe('<DataGridControlAgGrid /> - part 27', function () {
 
     cy.intercept('POST', '/control/data_grid/save_value?*', (req) => {
       _reqTest.count++;
-      req.on('response', (resp) => {
-        resp.send(200, { data: {} });
-      });
+      req.reply({ statusCode: 200, body: { data: {} } });
     }).as('reqSaveCellValue');
 
     cy.mount(
@@ -145,9 +141,7 @@ describe('<DataGridControlAgGrid /> - part 27', function () {
 
     cy.intercept('POST', '/control/data_grid/save_value?*', (req) => {
       _reqTest.count++;
-      req.on('response', (resp) => {
-        resp.send(200, { data: {} });
-      });
+      req.reply({ statusCode: 200, body: { data: {} } });
     }).as('reqSaveCellValue');
 
     cy.mount(
@@ -177,9 +171,7 @@ describe('<DataGridControlAgGrid /> - part 27', function () {
 
     cy.intercept('POST', '/control/data_grid/save_value?*', (req) => {
       _reqTest.count++;
-      req.on('response', (resp) => {
-        resp.send(200, { data: {} });
-      });
+      req.reply({ statusCode: 200, body: { data: {} } });
     }).as('reqSaveCellValue');
 
     cy.mount(
@@ -242,9 +234,7 @@ describe('<DataGridControlAgGrid /> - part 27', function () {
 
     cy.intercept('POST', '/control/data_grid/save_value?*', (req) => {
       _reqTest.count++;
-      req.on('response', (resp) => {
-        resp.send(200, { data: {} });
-      });
+      req.reply({ statusCode: 200, body: { data: {} } });
     }).as('reqSaveCellValue');
 
     cy.mount(
@@ -274,9 +264,7 @@ describe('<DataGridControlAgGrid /> - part 27', function () {
 
     cy.intercept('POST', '/control/data_grid/save_value?*', (req) => {
       _reqTest.count++;
-      req.on('response', (resp) => {
-        resp.send(200, { data: {} });
-      });
+      req.reply({ statusCode: 200, body: { data: {} } });
     }).as('reqSaveCellValue');
 
     cy.mount(
@@ -306,9 +294,7 @@ describe('<DataGridControlAgGrid /> - part 27', function () {
 
     cy.intercept('POST', '/control/data_grid/save_value?*', (req) => {
       _reqTest.count++;
-      req.on('response', (resp) => {
-        resp.send(200, { data: {} });
-      });
+      req.reply({ statusCode: 200, body: { data: {} } });
     }).as('reqSaveCellValue');
 
     cy.mount(
