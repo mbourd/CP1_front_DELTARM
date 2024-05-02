@@ -30,6 +30,7 @@ import {
   IApiControl,
 } from 'Features/Edit/types';
 import { DataGridControlAgGrid } from 'Features/Edit/components/Control/Form/DataGrid/DataGridControlAgGrid';
+import { GridReadyEvent } from 'ag-grid-community';
 
 type CardAgGridProps = {
   card: ICard;
@@ -268,21 +269,22 @@ const CardAgGrid: React.FC<React.PropsWithChildren<CardAgGridProps>> = ({
     triggerAction,
   ]);
 
-  const onGridReady = (params: any) => {
-    params.api.sizeColumnsToFit();
-    params.api.enableVirtualization = true;
+  const onGridReady = (params: GridReadyEvent) => {
+    setTimeout(() => {
+      params.api.sizeColumnsToFit();
 
-    if (columns.some((col) => col.floatingFilter !== false)) {
-      if (columns.some((col) => col.filter === false)) {
-        params.api.setHeaderHeight(48);
-        params.api.setFloatingFiltersHeight(0);
+      if (columns.some((col) => col.floatingFilter !== false)) {
+        if (columns.some((col) => col.filter === false)) {
+          params.api.setGridOption('headerHeight', 48);
+          params.api.setGridOption('floatingFiltersHeight', 0);
 
-        return;
+          return;
+        }
+
+        params.api.setGridOption('headerHeight', 24);
+        params.api.setGridOption('floatingFiltersHeight', 29);
       }
-
-      params.api.setHeaderHeight(24);
-      params.api.setFloatingFiltersHeight(29);
-    }
+    }, 1);
   };
 
   // const monthToComparableNumber = useCallback((date: string) => {

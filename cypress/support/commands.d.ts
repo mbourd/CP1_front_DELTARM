@@ -4,7 +4,11 @@ declare global {
   namespace Cypress {
     interface Chainable {
       login_v2(client?: string, user?: string, password?: string): void;
-      waitReactApp(selector?: string, timeout?: number): Chainable<any>;
+      waitReactApp(
+        selector?: string,
+        timeout?: number,
+        resqModulePath?: string,
+      ): Chainable<any>;
       reactChain(componentNames: string): Chainable<JQuery<HTMLElement>>;
       clickOutside(): void;
       formErrorShouldBeVisible(translations: string[], selector?: string): void;

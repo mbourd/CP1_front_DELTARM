@@ -188,22 +188,26 @@ describe('<UploadControl />', () => {
       .should('have.text', title);
   });
 
-  it('should attach file and make only one request at a time', function () {
-    let requestCount = 0;
+  it('should attach file and make only one request at a time and payload not empty', function () {
+    const fileid = 'dlqspfjkqspfj';
     const title = 'hello world';
     const _control: IApiControl = {
       ...structuredClone(control),
       control_title: title,
       editable: true,
+      control_id: 'sdfpihdfconid',
+      control_family: 'conttfamfdsfgjsdfj',
     };
+    let requestCount = 0;
+
     cy.mount(
       <SetupTestsComponents>
-        <UploadControl control={_control} fileId={''} context={'edit'} />
+        <UploadControl control={_control} fileId={fileid} context={'edit'} />
       </SetupTestsComponents>,
     );
     cy.waitReactApp();
 
-    cy.intercept('POST', '/control/set_value?*', (req) => {
+    cy.intercept('POST', '/control/set_value\\?*', (req) => {
       requestCount++;
       req.reply({});
     }).as('requestUploadFile');
@@ -228,9 +232,224 @@ describe('<UploadControl />', () => {
         },
         { force: true, action: 'drag-drop' },
       );
-    cy.wait(1000).then(() => {
-      expect(requestCount).to.be.eq(1);
+    cy.wait('@requestUploadFile').then((intercept) => {
+      const { request } = intercept;
+      const { query } = request;
+      const reqBody = parseMultipartFormData(request.body);
+
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(255).then(() => {
+        expect(requestCount).to.be.eq(1);
+        cy.wrap(query).should('have.property', 'file_id');
+        cy.wrap(query).should('have.property', 'elm_id');
+        cy.wrap(query).should('have.property', 'elm_val');
+        cy.wrap(query).should('have.property', 'control_family');
+        cy.then(() => {
+          expect(JSON.parse(reqBody)?.['file.txt']).to.not.null;
+          expect(JSON.parse(reqBody)?.['file.txt']).to.not.undefined;
+          expect(JSON.parse(reqBody)?.['file.txt']).to.not.eq('');
+          expect(query.file_id).to.eq(fileid);
+          expect(query.elm_id).to.eq(_control.control_id);
+          expect(query.elm_val).to.eq('file.txt');
+          expect(query.control_family).to.eq(_control.control_family);
+        });
+      });
+    });
+    // });
+  });
+
+  it('should delete the file and make one request at a time payload/queries not empty', function () {
+    const fileId = 'file_idd';
+    let requestCount = 0;
+    const title = 'hello world';
+    const _control: IApiControl = {
+      ...structuredClone(control),
+      control_title: title,
+      editable: true,
+      control_editable: true,
+    };
+    cy.mount(
+      <SetupTestsComponents>
+        <UploadControl control={_control} fileId={fileId} context={'edit'} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+
+    cy.intercept('POST', '/control/set_value?*', (req) => {
+      req.reply({
+        data: {
+          file_detail: [
+            {
+              file_id:
+                'upload/dev/cli_8/2024-3/d325d065-7676-4b57-9c56-dd9cec05b4dd',
+              file_name: 'file.txt',
+            },
+          ],
+          msg: 'ok',
+        },
+      });
+    }).as('requestUploadFile');
+    cy.intercept('POST', '/control/delete_upfile?*', (req) => {
+      requestCount++;
+      req.reply({
+        data: {
+          file_detail: [],
+        },
+      });
+    }).as('requestDeleteFile');
+
+    cy.react('UploadControl')
+      .find('input[type="file"]')
+      .selectFile(
+        {
+          contents: Cypress.Buffer.from('file contents'),
+          fileName: 'file.txt',
+          mimeType: 'text/plain',
+          lastModified: Date.now(),
+        },
+        { force: true, action: 'drag-drop' },
+      );
+    cy.wait('@requestUploadFile').then(() => {
+      cy.get('[data-testid="delete_icon_uploadfile"]').click();
+      cy.wait('@requestDeleteFile').then((interception) => {
+        const { request } = interception;
+        const { query } = request;
+
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(255).then(() => {
+          expect(requestCount).to.be.eq(1);
+
+          cy.wrap(query).should('have.property', 'file_id');
+          cy.wrap(query).should('have.property', 'control_id');
+          cy.wrap(query)
+            .should('have.property', 'file_name')
+            .then(() => {
+              expect(query.file_id).to.be.eq(fileId);
+              expect(query.control_id).to.be.eq(_control.control_id);
+              expect(query.file_name).to.be.eq('file.txt');
+            });
+
+          cy.react('UploadList').find('span').should('have.length', 0);
+        });
+      });
+    });
+  });
+
+  it('should attach file then able to download and make only one request at a time and payload not empty', function () {
+    const fileName = 'file.txt';
+    const contentFile = 'dspfojdspkfmdklqsfdskfsdf hello world';
+    const fileid = 'dlqspfjkqspfj';
+    const title = 'hello world';
+    const _control: IApiControl = {
+      ...structuredClone(control),
+      control_title: title,
+      editable: true,
+      control_id: 'sdfpihdfconid',
+      control_family: 'conttfamfdsfgjsdfj',
+    };
+    let requestCount = 0;
+
+    cy.mount(
+      <SetupTestsComponents>
+        <UploadControl control={_control} fileId={fileid} context={'edit'} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+
+    cy.intercept('POST', '/control/set_value\\?*', (req) => {
+      req.reply(201, {
+        data: {
+          file_detail: [
+            {
+              file_id:
+                'upload/dev/cli_8/2024-3/d325d065-7676-4b57-9c56-dd9cec05b4dd',
+              file_name: fileName,
+            },
+          ],
+          msg: 'ok',
+        },
+      });
+    }).as('requestUploadFile');
+    cy.intercept('GET', '**/*', (req) => {
+      requestCount++;
+      // req.on('response', (resp) => resp.send(200, { data: '' }));
+      req.reply({
+        statusCode: 200,
+        body: contentFile,
+      });
+    }).as('reqGetDownloadFile');
+
+    cy.react('UploadControl')
+      .find('input[type="file"]')
+      .selectFile(
+        {
+          contents: Cypress.Buffer.from(contentFile),
+          fileName: fileName,
+          mimeType: 'text/plain',
+          lastModified: Date.now(),
+        },
+        { force: true, action: 'drag-drop' },
+      );
+    cy.wait('@requestUploadFile').then(() => {
+      cy.contains(fileName).realClick();
+      cy.wait('@reqGetDownloadFile').then((intercept) => {
+        const { request } = intercept;
+        const { query } = request;
+
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(255).then(() => {
+          expect(requestCount).to.eq(1);
+          cy.wrap(query).should('have.property', 'file_id');
+          cy.wrap(query).should('have.property', 'file_name');
+          cy.then(() => {
+            expect(query.file_id).to.eq(
+              'upload/dev/cli_8/2024-3/d325d065-7676-4b57-9c56-dd9cec05b4dd',
+            );
+            expect(query.file_name).to.eq(fileName);
+          });
+          cy.readFile('cypress/downloads/' + fileName).should(
+            'contain',
+            contentFile,
+          );
+        });
+      });
     });
     // });
   });
 });
+
+function parseMultipartFormData(multipartFormData) {
+  if (!multipartFormData.includes('------WebKitFormBoundary'))
+    return multipartFormData;
+
+  const formDataObject = {};
+
+  // Split the multipart content into individual parts
+  const parts = multipartFormData.split(/------WebKitFormBoundary.*/);
+
+  // Remove the first and last empty parts
+  parts.shift();
+  parts.pop();
+
+  // Iterate over each part to extract key-value pairs
+  parts.forEach((part) => {
+    const match = /name="([^"]+)"(?:\r\n|\r|\n)([\s\S]*)/.exec(part);
+    if (match) {
+      const key = match[1].replace(/\[\]$/, '');
+      const value = match[2].trim();
+
+      // If the key already exists, convert the value to an array
+      if (Object.hasOwnProperty.call(formDataObject, key)) {
+        if (Array.isArray(formDataObject[key])) {
+          formDataObject[key].push(value);
+        } else {
+          formDataObject[key] = [formDataObject[key], value];
+        }
+      } else {
+        formDataObject[key] = value;
+      }
+    }
+  });
+
+  return JSON.stringify(formDataObject);
+}

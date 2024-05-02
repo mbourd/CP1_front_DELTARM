@@ -44,6 +44,9 @@ export const PercentControl: React.FC<React.PropsWithChildren<IProps>> = ({
   const [inputRef, setInputFocus] = useFocus();
   const { currentRoute } = useRouter();
   const [trans] = useTrans('Edit');
+  const [apiRouteName, setApiRouteName] = useState<string>(
+    currentRoute?.props?.apiSaveControlRouteName,
+  );
 
   useEffect(() => {
     setCurrentValue(control.control_value);
@@ -114,7 +117,7 @@ export const PercentControl: React.FC<React.PropsWithChildren<IProps>> = ({
 
       if (canSendApi)
         send(
-          currentRoute?.props?.apiSaveControlRouteName,
+          apiRouteName,
           {},
           {
             file_id: fileId,
@@ -129,7 +132,6 @@ export const PercentControl: React.FC<React.PropsWithChildren<IProps>> = ({
       fileId,
       control.control_id,
       control.control_family,
-      currentRoute,
       control.control_regex,
       control.control_regex_msg,
       currentValue,
@@ -139,6 +141,7 @@ export const PercentControl: React.FC<React.PropsWithChildren<IProps>> = ({
       setInputFocus,
       trans,
       canSendApi,
+      apiRouteName,
     ],
   );
 
@@ -154,6 +157,14 @@ export const PercentControl: React.FC<React.PropsWithChildren<IProps>> = ({
     }
   }, [isRejected]);
 
+  if (window?.['Cypress']) {
+    window['Features_Edit_Control_IntegerControl'] = {
+      setErrorMessage,
+      setCanSendApi,
+      setApiRouteName,
+    };
+  }
+
   const controlValue = currentValue
     ? parseFloat(currentValue)?.toFixed(
         control.control_options?.precision
@@ -168,6 +179,7 @@ export const PercentControl: React.FC<React.PropsWithChildren<IProps>> = ({
     window['Features_Edit_Control_PercentControl'] = {
       setErrorMessage,
       setCanSendApi,
+      setApiRouteName,
     };
   }
 

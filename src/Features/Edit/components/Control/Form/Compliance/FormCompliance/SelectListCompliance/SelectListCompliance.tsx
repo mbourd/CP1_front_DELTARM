@@ -20,6 +20,9 @@ export const SelectListCompliance: React.FC<
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { currentRoute } = useRouter();
   const [trans] = useTrans('Edit');
+  const [apiRouteName, setApiRouteName] = useState<string>(
+    currentRoute?.props?.apiSaveControlRouteName,
+  );
 
   const value = storage.getData<string>(
     fileId +
@@ -62,7 +65,7 @@ export const SelectListCompliance: React.FC<
         value,
       );
       send(
-        currentRoute?.props?.apiSaveControlRouteName,
+        apiRouteName,
         {},
         {
           file_id: fileId,
@@ -78,7 +81,7 @@ export const SelectListCompliance: React.FC<
       fileId,
       controlId,
       compliance.compliance_elm_family,
-      currentRoute,
+      apiRouteName,
       compliance.compliance_elm_regex,
       compliance.compliance_id,
       compliance.compliance_elm_regex_msg,
@@ -96,6 +99,7 @@ export const SelectListCompliance: React.FC<
   if (window?.['Cypress']) {
     window['Features_Edit_Control_Form_Compliance_SelectListCompliance'] = {
       setErrorMessage,
+      setApiRouteName,
     };
   }
 

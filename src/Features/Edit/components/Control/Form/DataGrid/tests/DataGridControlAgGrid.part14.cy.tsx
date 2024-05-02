@@ -98,6 +98,197 @@ describe('<DataGridControlAgGrid /> - part 14', function () {
     cy.waitReactApp();
     _assertResizableColumns(_control);
   });
+  //// TODO: fail because width fixed for some cols
+  // it('Should be able to resize column - controlExample2', function () {
+  //   const _control = {
+  //     ...structuredClone(controlExample2),
+  //     data_grid_detail: {
+  //       ...structuredClone(controlExample2.data_grid_detail),
+  //       columns: (() =>
+  //         structuredClone(controlExample2.data_grid_detail?.columns || []).map(
+  //           (col) => {
+  //             col.resizable = true;
+
+  //             return col;
+  //           },
+  //         ))(),
+  //     },
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   } as any as IApiControl;
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid control={_control} fileId={''} />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   _assertResizableColumns(_control);
+  // });
+  it('Should be able to resize column - controlExample3', function () {
+    const _control = {
+      ...structuredClone(controlExample3),
+      data_grid_detail: {
+        ...structuredClone(controlExample3.data_grid_detail),
+        columns: (() =>
+          structuredClone(controlExample3.data_grid_detail?.columns || []).map(
+            (col) => {
+              col.resizable = true;
+
+              return col;
+            },
+          ))(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertResizableColumns(_control);
+  });
+  it('Should be able to resize column - controlExample4', function () {
+    const _control = {
+      ...structuredClone(controlExample4),
+      data_grid_detail: {
+        ...structuredClone(controlExample4.data_grid_detail),
+        columns: (() =>
+          structuredClone(controlExample4.data_grid_detail?.columns || []).map(
+            (col) => {
+              col.resizable = true;
+
+              return col;
+            },
+          ))(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertResizableColumns(_control);
+  });
+  //// TODO: fail because width fixed for some cols
+  // it('Should be able to resize column - controlExample5', function () {
+  //   const _control = {
+  //     ...structuredClone(controlExample5),
+  //     data_grid_detail: {
+  //       ...structuredClone(controlExample5.data_grid_detail),
+  //       columns: (() =>
+  //         structuredClone(controlExample5.data_grid_detail?.columns || []).map(
+  //           (col) => {
+  //             col.resizable = true;
+
+  //             return col;
+  //           },
+  //         ))(),
+  //     },
+  //     mandatory: false,
+  //     upload_detail: null,
+  //     rich_text_detail: null,
+  //     control_rejectable: null,
+  //   } as any as IApiControl;
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <DataGridControlAgGrid control={_control} fileId={''} />
+  //     </SetupTestsComponents>,
+  //   );
+  //   cy.waitReactApp();
+  //   _assertResizableColumns(_control);
+  // });
+  it('Should be able to resize column - controlExample6', function () {
+    const _control = {
+      ...structuredClone(controlExample6),
+      data_grid_detail: {
+        ...structuredClone(controlExample6.data_grid_detail),
+        columns: (() =>
+          structuredClone(controlExample6.data_grid_detail?.columns || []).map(
+            (col) => {
+              col.resizable = true;
+
+              return col;
+            },
+          ))(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertResizableColumns(_control);
+  });
+  it('Should be able to resize column - controlExample7', function () {
+    const _control = {
+      ...structuredClone(controlExample7),
+      data_grid_detail: {
+        ...structuredClone(controlExample7.data_grid_detail),
+        columns: (() =>
+          structuredClone(controlExample7.data_grid_detail?.columns || []).map(
+            (col) => {
+              col.resizable = true;
+
+              return col;
+            },
+          ))(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertResizableColumns(_control);
+  });
+  it('Should be able to resize column - controlExample8', function () {
+    const _control = {
+      ...structuredClone(controlExample8),
+      data_grid_detail: {
+        ...structuredClone(controlExample8.data_grid_detail),
+        columns: (() =>
+          structuredClone(controlExample8.data_grid_detail?.columns || []).map(
+            (col) => {
+              col.resizable = true;
+
+              return col;
+            },
+          ))(),
+      },
+      mandatory: false,
+      upload_detail: null,
+      rich_text_detail: null,
+      control_rejectable: null,
+    } as any as IApiControl;
+    cy.mount(
+      <SetupTestsComponents>
+        <DataGridControlAgGrid control={_control} fileId={''} />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    _assertResizableColumns(_control);
+  });
   it('Should NOT be able to resize column - controlExample1', function () {
     const _control = {
       ...structuredClone(controlExample1),

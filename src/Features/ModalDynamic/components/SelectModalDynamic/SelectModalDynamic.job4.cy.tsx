@@ -63,8 +63,8 @@ describe('<SelectModalDynamic />', function () {
           element={_element}
           options={options}
           selectedValue={undefined}
-          handleChangeValue={function (): void {}}
-          register={function (): void {}}
+          handleChangeValue={() => undefined}
+          register={() => undefined}
         />
       </SetupTestsComponents>,
     );

@@ -12,7 +12,10 @@ interface IApiFileAudit {
 
 apiRouter.registerRoute({
   name: 'getFileAudit',
-  path: '/file/audit?target=screen',
+  queries: {
+    target: 'screen',
+  },
+  path: '/file/audit',
   method: 'get',
   handler: (response): IDataFileAudit => {
     const data: IApiFileAudit[] = response?.data?.audit ?? [];
@@ -50,4 +53,13 @@ apiRouter.registerRoute({
       audits,
     };
   },
+});
+
+apiRouter.registerRoute({
+  name: 'downloadUploadedAuditFile',
+  queries: {
+    target: 'download_xls',
+  },
+  path: '/file/audit',
+  method: 'get',
 });

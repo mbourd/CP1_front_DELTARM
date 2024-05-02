@@ -13,6 +13,7 @@ import { _translate } from '../../../../../../../cypress/utils';
 import { SelectListControl } from './SelectListControl';
 import { IApiControl } from '../../../../types';
 import '../../../../../Edit/translations';
+import { apiRouter } from '../../../../../../Services/Api';
 
 describe('<SelectListControl />', () => {
   const control: IApiControl = {
@@ -58,6 +59,89 @@ describe('<SelectListControl />', () => {
     );
     cy.waitReactApp();
     cy.react('SelectListControl');
+  });
+
+  it('should make one request at a time and payload/queries not empty', function () {
+    const val = '11';
+    const fileId = 'fileddd';
+    const _control: IApiControl = {
+      ...structuredClone(control),
+      control_editable: true,
+      editable: true,
+      control_id: 'control_idd',
+      control_family: 'cont_fam',
+      answerChoices: {
+        '11': {
+          id: '11',
+          label: 'value11',
+          value: 'string',
+          order: '1',
+          key: 'string',
+          isKo: false,
+          font_color: '',
+          font_style: '',
+          background: '',
+        },
+      },
+    };
+    let reqCount = 0;
+
+    cy.intercept(
+      'POST',
+      apiRouter.getRoutes()['setControlValue']?.path + '?*',
+      (req) => {
+        reqCount++;
+        req.reply({ statusCode: 200, body: {} });
+      },
+    ).as('reqSaveValue');
+
+    cy.mount(
+      <SetupTestsComponents>
+        <SelectListControl
+          control={_control}
+          context={'edit'}
+          fileId={fileId}
+          formState={[]}
+          setFormState={() => undefined}
+          multiple={false}
+        />
+      </SetupTestsComponents>,
+    )
+      .waitReactApp()
+      .then(() => {
+        cy.window()
+          .then((window) => {
+            window['Features_Edit_Control_SelectListControl'].setApiRouteName(
+              apiRouter.getRoutes()['setControlValue']?.name,
+            );
+          })
+          .then(() => {
+            cy.react('Select').realClick();
+            cy.get('._SelectContainer').find('ul li').eq(0).realClick();
+            cy.wait('@reqSaveValue').then((interception) => {
+              const { request } = interception;
+              const { query } = request;
+
+              // eslint-disable-next-line cypress/no-unnecessary-waiting
+              cy.wait(500).then(() => {
+                expect(reqCount).to.be.eq(1);
+                cy.wrap(query).should('have.property', 'file_id');
+                cy.wrap(query).should('have.property', 'elm_id');
+                cy.wrap(query).should('have.property', 'elm_val');
+                cy.wrap(query)
+                  .should('have.property', 'control_family')
+                  .then(() => {
+                    expect(query.file_id).to.be.eq(fileId);
+                    expect(query.elm_id).to.be.eq(_control.control_id);
+                    expect(query.elm_val).to.be.eq(val);
+                    expect(query.control_family).to.be.eq(
+                      _control.control_family,
+                    );
+                  });
+              });
+            });
+          });
+      });
   });
 
   it('should render <ControlLabel /> and <ControlFooter/>', () => {

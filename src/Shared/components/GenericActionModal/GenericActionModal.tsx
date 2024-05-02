@@ -84,6 +84,13 @@ export const GenericActionModal: React.FC<React.PropsWithChildren<IProps>> = ({
     trans,
   ]);
 
+  // expose for Cypress
+  if (window?.['Cypress']) {
+    window['Shared/components/GenericActionModal/GenericActionModal'] = {
+      storage,
+    };
+  }
+
   const footer: React.ReactNode = (
     <GenericActionModalStyled>
       <Button

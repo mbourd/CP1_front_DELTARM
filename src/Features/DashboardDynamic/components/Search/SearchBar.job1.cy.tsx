@@ -14,11 +14,7 @@ describe('<SearchBar />', function () {
   it('should render without crash', function () {
     cy.mount(
       <SetupTestsComponents>
-        <SearchBar
-          btn_lib={''}
-          options={[]}
-          setIsModalOpen={function (): void {}}
-        />
+        <SearchBar btn_lib={''} options={[]} setIsModalOpen={() => undefined} />
       </SetupTestsComponents>,
     ).waitReactApp();
     cy.react('SearchBar').should('exist');
@@ -32,7 +28,7 @@ describe('<SearchBar />', function () {
         <SearchBar
           btn_lib={btnLb}
           options={[]}
-          setIsModalOpen={function (): void {}}
+          setIsModalOpen={() => undefined}
         />
       </SetupTestsComponents>,
     ).waitReactApp();
@@ -83,7 +79,7 @@ describe('<SearchBar />', function () {
         <SearchBar
           btn_lib={''}
           options={options}
-          setIsModalOpen={function (): void {}}
+          setIsModalOpen={() => undefined}
         />
       </SetupTestsComponents>,
     ).waitReactApp();
@@ -139,7 +135,7 @@ describe('<SearchBar />', function () {
         <SearchBar
           btn_lib={''}
           options={options}
-          setIsModalOpen={function (): void {}}
+          setIsModalOpen={() => undefined}
         />
       </SetupTestsComponents>,
     ).waitReactApp();

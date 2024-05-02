@@ -335,7 +335,7 @@ export const PostDisbursement: React.FC<
                 [current_file_data]
                   .concat(Adata?.linkable_files)
                   .filter(function (item: any) {
-                    return selectedFiles.indexOf(item.file_uuid) !== -1;
+                    return selectedFiles.indexOf(item?.file_uuid) !== -1;
                   })
                   .map((file: any, index: any) => {
                     return (

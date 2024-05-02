@@ -1,14 +1,18 @@
+// @ts-check
+/// <reference types="cypress" />
+/// <reference types="../../../../../../../../../cypress/support/component" />
+
 import {
   IApiControl,
   DataGridDetailsRowsCell,
   DataGridDetailsColumnType,
-} from 'Features/Edit/types';
+} from '../../../../../../types';
 import { RowNode, GridApi } from 'ag-grid-community';
 import BigNumber from 'bignumber.js';
 import { create as mathCreate, all as mathAll } from 'mathjs';
 
-export function _assertSorting(_control: IApiControl) {
-  cy.wait(500).then(() => {
+export function _assertSorting(_control: IApiControl, waitMs = 500) {
+  cy.wait(waitMs).then(() => {
     cy.window().then((w) => {
       w[
         'Features_Edit_Control_DataGridControlAgGrid' + _control.control_id
