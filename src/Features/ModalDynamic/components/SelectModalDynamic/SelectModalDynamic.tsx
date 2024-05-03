@@ -1,0 +1,74 @@
+import React, { useCallback, useEffect, useState } from 'react';
+import {
+  FormError,
+  ISelectData,
+  Select,
+} from '../../../../Packages/Design/components';
+import { IElementModal } from '../types';
+import { FieldName } from 'react-hook-form/dist/types/fields';
+import { RegisterOptions } from 'react-hook-form/dist/types/validator';
+import { useSecurity } from '../../../../Packages/Security';
+import { security } from '../../../../Services';
+
+interface InputModalDynamicProps {
+  element: IElementModal;
+  options: Record<string, ISelectData>;
+  selectedValue: Record<string, true> | undefined;
+  handleChangeValue: (id: any, value: any) => void;
+  register: (name: FieldName<any>, rules?: RegisterOptions) => void;
+}
+
+export const SelectModalDynamic: React.FC<
+  React.PropsWithChildren<InputModalDynamicProps>
+> = ({ element, options, selectedValue, handleChangeValue, register }) => {
+  const { user } = useSecurity();
+  const jwt = user.getJwt();
+  const [value, setValue] = useState(element.value);
+  const [errorMessage, setErrorMessage] = useState('');
+  const user_language: any = security.decodeJwtToken(jwt ? jwt : '');
+
+  useEffect(() => {
+    if (element.attribute.mandatory && !value) {
+      setErrorMessage(
+        user_language?.lang === 'en' ? 'Mandatory value' : 'Valeur obligatoire',
+      );
+    }
+    if (element.attribute.mandatory && value) {
+      setErrorMessage('');
+    }
+  }, [value, element.attribute.mandatory, user_language?.lang]);
+
+  const checkMandatory = useCallback((value: any) => {
+    setValue(value);
+  }, []);
+
+  return (
+    <>
+      <Select
+        labelBdc={'text'}
+        closeOnSelect
+        name={'select_list' + element.attribute?.id}
+        data={options || {}}
+        selectedValues={selectedValue}
+        onChange={(selectedValues) => {
+          const value =
+            Object.keys(selectedValues).length >= 2
+              ? Object.keys(selectedValues).join(';')
+              : Object.keys(selectedValues)[0];
+          handleChangeValue(element.attribute?.id, value ? value : '');
+          checkMandatory(value ? value : '');
+
+          return value ? value : '';
+        }}
+        {...(register(`${element.attribute?.id}`, {
+          required: element.attribute?.mandatory,
+        }) as any as Record<string | number | symbol, any>)}
+      >
+        {user_language?.lang === 'en'
+          ? 'Select a value'
+          : 'Sélectionner une valeur'}
+      </Select>
+      {errorMessage ? <FormError>{errorMessage}</FormError> : null}
+    </>
+  );
+};

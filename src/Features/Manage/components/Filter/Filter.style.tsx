@@ -1,14 +1,14 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 export const FilterStyled = styled.section`
-  padding: ${({ theme }) => theme.spacing.normal};
   width: 500px;
+  padding: ${({ theme }) => theme.spacing.normal};
 
   .title {
+    padding: ${({ theme }) => theme.spacing.xSmall} 0;
+    margin-bottom: ${({ theme }) => theme.spacing.normal};
     background-color: ${({ theme }) => theme.color.primary.main};
     font-family: ${({ theme }) => theme.font.medium.main};
-    margin-bottom: ${({ theme }) => theme.spacing.normal};
-    padding: ${({ theme }) => theme.spacing.xSmall} 0;
     text-align: center;
   }
 
@@ -26,8 +26,8 @@ export const FilterStyled = styled.section`
       }
 
       &:first-child {
-        border-right: 1px dotted ${({ theme }) => theme.color.primary.main};
         padding-right: ${({ theme }) => theme.spacing.small};
+        border-right: 1px dotted ${({ theme }) => theme.color.primary.main};
       }
 
       &:last-child {
@@ -49,10 +49,10 @@ export const FilterStyled = styled.section`
 
 export const BadgeStyled = styled.section`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: ${({ theme }) => theme.spacing.small};
   height: 24px;
+  align-items: center;
+  justify-content: center;
+  margin-left: ${({ theme }) => theme.spacing.small};
 `;
 
 export const FooterStyled = styled.div`

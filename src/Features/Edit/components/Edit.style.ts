@@ -1,18 +1,18 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 export const EditStyled = styled.div`
-  padding-bottom: 20vh;
-  max-width: ${({ theme }) => theme.breakpoint.md};
-  margin: auto;
+  max-width: ${({ theme }) => theme.breakpoint.lg};
+  margin: 0 auto;
 
   .nav {
     position: relative;
-    padding-top: ${({ theme }) => theme.spacing.medium};
     width: 400px;
 
     .MuiList-root {
       position: sticky;
-      top: 310px;
+      top: 160px;
+      height: 80vh;
+      overflow-y: scroll;
     }
 
     .MuiListItem-root {
@@ -27,40 +27,45 @@ export const EditStyled = styled.div`
   }
 
   .content {
-    background-color: ${({ theme }) => theme.color.white.main};
+    width: 100%;
     min-height: 600px;
     padding: ${({ theme }) => theme.spacing.medium};
-    width: 100%;
+    padding-top: 10px;
+    background-color: ${({ theme }) => theme.color.white.main};
   }
 `;
 
 export const EditHeaderStyled = styled.div`
   position: fixed;
-  left: 0;
-  right: 0;
-  background: ${({ theme }) => theme.color.background.main};
-  background: ${({ theme }) => {
-    const color = theme.color.background.main;
-
-    return `linear-gradient(to bottom, ${color} 0%, ${color} 65%, transparent 100%)`;
-  }};
   z-index: 5;
+  right: 0;
+  left: 0;
+  height: 110px;
+  background: ${({ theme }) => theme.color.background.main};
 
   & + * {
-    padding-top: 200px;
+    padding-top: 100px;
   }
 `;
 
 export const EditTitleFileStyled = styled.p`
+  position: relative;
+  width: 120%;
+  height: auto;
   align-items: center;
-  display: inline-flex;
-  font-size: ${({ theme }) => theme.sizing.normal};
+  justify-content: center;
+  margin: 5px;
+  margin-top: 10px !important;
+  font-family: ${({ theme }) => theme.font.heading.main};
+  font-size: 1.4rem;
+  line-height: 25px;
+  text-align: center;
 
   .MuiSvgIcon-root,
   span {
+    margin: 0 ${({ theme }) => theme.spacing.xSmall};
     color: ${({ theme }) => theme.color.heading.main};
     cursor: default;
-    margin: 0 ${({ theme }) => theme.spacing.xSmall};
 
     &:hover {
       color: ${({ theme }) => theme.color.heading.main};

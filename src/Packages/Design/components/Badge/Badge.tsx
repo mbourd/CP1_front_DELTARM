@@ -1,9 +1,9 @@
 import React from 'react';
-import { Badge as MUIBadge } from '@material-ui/core';
+import { Badge as MUIBadge } from '@mui/material';
 import { IBadge } from './types';
 import { useStyles } from './Badge.style';
 
-export const Badge: React.FC<IBadge> = ({
+export const Badge: React.FC<React.PropsWithChildren<IBadge>> = ({
   children,
   showZero = false,
   content,

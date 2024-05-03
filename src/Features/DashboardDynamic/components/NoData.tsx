@@ -1,11 +1,13 @@
 import React from 'react';
 import { ErrorNoData } from 'Shared/components';
-import { DashboardStyled } from './Dashboard.style';
+import { DashboardDynamicStyled } from './DashboardDynamic.style';
 
-export const NoData: React.FC = (): React.ReactElement => {
+export const NoData: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
   return (
-    <DashboardStyled>
+    <DashboardDynamicStyled>
       <ErrorNoData message={'Aucun contrôle disponible'} />
-    </DashboardStyled>
+    </DashboardDynamicStyled>
   );
 };

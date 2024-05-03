@@ -1,5 +1,15 @@
 import { ISelectData } from 'Shared/components';
 import { IColor } from '../../../Packages/Design';
+import { RawDraftContentState } from 'draft-js';
+import { IApiFileComment, IFileComment } from '../../Comments';
+import { AgGridRow } from '../../DashboardDynamic/components/types';
+import {
+  CellStyle,
+  CellStyleFunc,
+  IFilterComp,
+  IFilterParams,
+} from 'ag-grid-community';
+import { ForwardRefExoticComponent, RefAttributes } from 'react';
 
 export type ControlTypeType =
   | 'text'
@@ -23,6 +33,10 @@ export type ControlTypeType =
   | 'time'
   | 'rich_text'
   | 'boolean'
+  | 'line_break'
+  | 'data_grid'
+  | 'ag_datagrid'
+  | 'jodit_rich_text'
   | 'slider';
 
 export type ControlFontSize = 'standard' | 'bold';
@@ -32,6 +46,9 @@ export interface IApiAnswerChoice {
   choice_lib: string;
   choice_is_ko?: boolean;
   choice_value: number | null;
+  choice_font_color?: any;
+  choice_font_style?: any;
+  choice_background_color?: any;
 }
 
 export interface IApiCompliance {
@@ -48,32 +65,24 @@ export interface IApiConditional {
   conditional_by_field_id: number;
   conditional_formula: string;
 }
-
-export interface IApiComplianceData {
+export interface IApiComplianceFields {
   compliance_elm_desc_1: string | null;
   compliance_elm_desc_2: string | null;
   compliance_elm_family: string;
   compliance_elm_lib: string;
+  compliance_elm_mandatory: boolean;
   compliance_elm_regex: RegExp;
   compliance_elm_regex_msg: string | null;
   compliance_elm_type: ControlTypeType;
   compliance_elm_value: string;
   compliance_id: string;
-  compliance_upload_detail: IUploadDetail[] | null;
+  control_answer_choices?: Record<string, ISelectData> | any;
+  compliance_file_detail: IUploadDetail[] | null;
 }
 
-export interface IComplianceData {
-  desc1: string | null;
-  desc2: string | null;
-  family: string;
-  id: string;
-  lib: string;
-  regex: RegExp;
-  regexMsg: string | null;
-  type: ControlTypeType;
-  value: string;
-  answerChoices?: Record<string, ISelectData>;
-  uploadDetail: IUploadDetail[] | null;
+export interface IApiComplianceData {
+  compliance_fields: IApiComplianceFields[];
+  compliance_modal_title: string | null;
 }
 
 export interface ICompliance {
@@ -158,9 +167,186 @@ export interface IControlOptions
     IPercentOptions {}
 
 export interface IUploadDetail {
-  file_id: string;
-  file_name: string;
+  file_id: string | any;
+  file_name: string | any;
 }
+
+export interface IAPIControlRejectable {
+  is_rejected: boolean | null;
+  control_reject_comment: IApiFileComment[] | null;
+}
+
+export interface ControlRejectable {
+  isRejected: boolean | null;
+  rejectComments: IFileComment[];
+}
+
+export interface DataGridDetail {
+  columns: DataGridDetailsColumnType[];
+  rows: DataGridDetailsRow[];
+  datagrid_options: DataGridDetailOptionsType;
+  buttons: DataGridDetailButtonsType[];
+  source: any;
+}
+export type DataGridDetailButtonsType = {
+  button_bg_color: string;
+  button_font_color: string;
+  button_id: number;
+  button_label: string;
+  button_method: 'POST' | 'GET';
+  button_order: number;
+  button_refresh_callback: boolean;
+  button_route: string;
+  button_row_selected: boolean;
+};
+export type DataGridDetailOptionsType = {
+  datagrid_bg_color?: string;
+  datagrid_border_color?: string;
+  datagrid_border?: boolean;
+  datagrid_font_color?: string;
+  datagrid_font_weight?: string;
+  datagrid_header_bg_color?: string;
+  datagrid_header_font_color?: string;
+  datagrid_odd_row_bg_color?: string;
+  add_row_button_display: boolean;
+  delete_row_button_display: boolean;
+  pagination_row_size: number;
+  select_all_button_col_ref: `rdg_${number}`;
+  select_all_button_display: boolean;
+  unselect_all_button_display: boolean;
+  datagrid_font_size?: string;
+};
+
+export interface IDataGridAgGridCol {
+  border_right: boolean;
+  field: string;
+  headerName: string;
+  width: number;
+  cellStyle: CellStyle | CellStyleFunc | undefined;
+  comparator:
+    | 'StringComparator'
+    | ((
+        valueA: any,
+        valueB: any,
+        nodeA: any,
+        nodeB: any,
+        isInverted: boolean,
+      ) => 0 | 1 | -1);
+  filter:
+    | 'StringFilter'
+    | ForwardRefExoticComponent<IFilterParams & RefAttributes<unknown>>;
+}
+
+export interface DataGridDetailAgGrid {
+  cols: {
+    values: IDataGridAgGridCol[];
+    header_visible: boolean;
+  };
+  lines: AgGridRow[];
+}
+
+export type HexStrType = `#${string}`;
+export type DataGridDetailsColumnType = {
+  alignment: 'left' | 'right' | 'center' | 'justify';
+  borderRight: boolean;
+  borderRightColor: string;
+  borderRightWidth: number | `${number}`;
+  col_header_display_tooltip: boolean;
+  col_header_tooltip: string;
+  currency_symbol: string;
+  decimal_digit: number;
+  field: string;
+  field_type: DataGridComponent;
+  filter:
+    | boolean
+    | 'agTextColumnFilter'
+    | 'agNumberColumnFilter'
+    | 'agDateColumnFilter'
+    | 'agSetColumnFilter'
+    | 'agMultiColumnFilter'
+    | IFilterComp;
+  floatingFilter: boolean;
+  headerColor: HexStrType;
+  headerName: string;
+  hide: boolean;
+  key: string;
+  name: string;
+  lockPinned: boolean;
+  pinned: 'left' | 'right' | null;
+  resizable: boolean;
+  sortable: boolean;
+  thousand_separator: boolean;
+  track_modification: boolean;
+  track_modification_option: string;
+  track_modification_tooltip: boolean;
+  width?: string | number;
+};
+export interface DataGridDetailsRow {
+  row_editable: boolean;
+  row_uuid: string;
+  [key: `rdg_${number}`]: DataGridDetailsRowsCell;
+}
+
+export interface DataGridDetailsRowsCell {
+  choice_options: DataGridDetailsRowsCellChoiceOption[];
+  component: DataGridComponent;
+  value: string;
+  upload_detail: IUploadDetail[] | null;
+  col_elm_id: number;
+  row_num: number;
+  control_editable: boolean;
+  control_mandatory: boolean;
+  control_regex: RegExp | null;
+  control_regex_msg: string | null;
+  answer_choices: Record<string, ISelectData> | null;
+  reference_value: string;
+}
+
+export type DataGridDetailsRowsCellChoiceOption = {
+  choice_bg_color: string;
+  choice_font_color: string;
+  choice_font_weight:
+    | 'normal'
+    | 'bold'
+    | 'boder'
+    | 'lighter'
+    | '100'
+    | '200'
+    | '300'
+    | '400'
+    | '500'
+    | '600'
+    | '700'
+    | '800'
+    | '900';
+  choice_id: number;
+  choice_lib: string;
+};
+
+export type DataGridComponent =
+  | 'action_button'
+  | 'boolean'
+  | 'checkbox'
+  | 'checkbox_select_datagrid'
+  | 'comment'
+  | 'date'
+  | 'date_string'
+  | 'decimal'
+  | 'delete'
+  | 'dynamic_select_list'
+  | 'file_upload'
+  | 'financial'
+  | 'formula'
+  | 'icon'
+  | 'integer'
+  | 'innerHTML'
+  | 'long_text'
+  | 'multiple_list'
+  | 'percent'
+  | 'radio'
+  | 'select_list'
+  | 'text'
+  | 'text_alt';
 
 export interface IApiControl {
   control_desc_1: string | null;
@@ -184,10 +370,17 @@ export interface IApiControl {
   control_regex_msg: string | null;
   control_manage_compliance: boolean;
   control_pg_base_type?: string | null;
-  conditional?: IApiConditional;
+  conditional?: IApiConditional | any;
   compliance?: IApiCompliance;
   formula?: IFormula;
   useCompliance?: ICompliance;
-  control_options: IControlOptions | null;
+  control_options: IControlOptions | null | any;
   upload_detail: IUploadDetail[] | null;
+  calculatedValue?: string;
+  rich_text_detail: RawDraftContentState | null;
+  jodit_rich_text_detail?: string | null;
+  control_rejectable: IAPIControlRejectable | null;
+  useRejection?: ControlRejectable;
+  data_grid_detail_ag_grid?: DataGridDetailAgGrid | null;
+  data_grid_detail?: DataGridDetail | null;
 }

@@ -20,14 +20,16 @@ import {
   Paper,
   Radio,
   RadioGroup,
-} from '@material-ui/core';
+} from '@mui/material';
 import { ICard } from './Card/types';
 import { SearchModal } from './Search/Modal/SearchModal';
 import { IsLoading } from './IsLoading';
 import { NoData } from './NoData';
 import { FullSearchModal } from './Search/Modal/FullSearchModal';
 
-export const Manage: React.FC = (): React.ReactElement => {
+export const Manage: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
   const [trans] = useTrans('Manage');
   const { request, callState, send, data } = useApi<ICard[]>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -40,6 +42,10 @@ export const Manage: React.FC = (): React.ReactElement => {
   if (!user.isLogged()) {
     logout();
   }
+
+  //   useEffect(() => {
+  //     console.log(data);
+  //   }, [data]);
 
   const initStages: Record<number | string, true> = {};
   const initStates: Record<number | string, true> = {};
@@ -142,8 +148,8 @@ export const Manage: React.FC = (): React.ReactElement => {
             <Search
               placeholder={
                 searchMode === 'fileNum'
-                  ? 'N°Dossier / N°Avenant'
-                  : 'Contrepartie emprunteuse ou nom de famille'
+                  ? trans('searchPlaceholder')
+                  : trans('counterpartyBorrowerOrSurname')
               }
             />
             <Divider className={'divider'} orientation="vertical" />
@@ -177,12 +183,12 @@ export const Manage: React.FC = (): React.ReactElement => {
                 <FormControlLabel
                   value="fileNum"
                   control={<Radio size="small" />}
-                  label="Rechercher par numéro "
+                  label={trans('searchByNumber')}
                 />
                 <FormControlLabel
                   value="full"
                   control={<Radio size="small" />}
-                  label="Rechercher par contrepartie ou utilisateur"
+                  label={trans('searchByCounterPartyOrUser')}
                 />
               </RadioGroup>
             </div>

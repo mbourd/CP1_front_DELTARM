@@ -1,0 +1,13 @@
+// @ts-check
+/// <reference types="cypress" />
+/// <reference types="../support/e2e" />
+
+describe('Page route not found (DISCONNECTED)', () => {
+  it('Should be redirected to a not found page', () => {
+    cy.visit(
+      Cypress.env('url_cp1_front') + '/qsidjqosidqocqohdfuiqshiqf/iqrdqsiodh',
+    );
+    cy.waitReactApp('#main-content');
+    cy.react('NotFoundComponent').should('exist').should('be.visible');
+  });
+});

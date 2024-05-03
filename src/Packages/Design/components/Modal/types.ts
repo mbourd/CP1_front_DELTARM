@@ -18,6 +18,10 @@ export interface IModal {
    */
   height?: string;
   /**
+   * Modal min height.
+   */
+  minHeight?: string;
+  /**
    * Modal max height.
    */
   maxHeight?: string;
@@ -30,10 +34,6 @@ export interface IModal {
    */
   onClose?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   /**
-   * Modal content.
-   */
-  children?: NonNullable<ReactNode>;
-  /**
    * Open / close modal.
    */
   open?: boolean;
@@ -45,4 +45,8 @@ export interface IModal {
    * Display the top and bottom dividers.
    */
   dividers?: boolean;
+  /**
+   * Footer borderTop
+   */
+  footerBorderTop?: boolean;
 }

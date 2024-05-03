@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { SearchBarStyled } from './SearchBar.style';
-import { FormControlLabel, Paper, Radio, RadioGroup } from '@material-ui/core';
+import { FormControlLabel, Paper, Radio, RadioGroup } from '@mui/material';
 import { Button, FormError } from 'Shared/components';
 import { Search } from 'Features/Manage/components/Search/Search';
 import { ISearchBarOptions } from '../types';
@@ -14,7 +14,7 @@ interface IProps {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const SearchBar: React.FC<IProps> = ({
+export const SearchBar: React.FC<React.PropsWithChildren<IProps>> = ({
   btn_lib,
   options,
   setIsModalOpen,
@@ -25,7 +25,7 @@ export const SearchBar: React.FC<IProps> = ({
   );
   const { user } = useSecurity();
   const jwt = user.getJwt();
-  const { actionButton } = useActionButton(jwt, setIsModalOpen);
+  const { actionButton } = useActionButton({ jwt, setIsModalOpen });
 
   const handleChangeOption = useCallback(
     (value: string) => {
@@ -61,7 +61,7 @@ export const SearchBar: React.FC<IProps> = ({
       <div className={'buttons-container'}>
         <div className="search-mode-toggle">
           <RadioGroup
-            value={currentOption.lib}
+            value={currentOption?.lib ?? ''}
             row
             onChange={(_, value) => handleChangeOption(value)}
           >
@@ -79,7 +79,7 @@ export const SearchBar: React.FC<IProps> = ({
         </div>
       </div>
       <Paper className={'search-container'} elevation={0}>
-        <Search placeholder={currentOption.placeholder} />
+        <Search placeholder={currentOption?.placeholder ?? ''} />
         {btn_lib && <Button onClick={onSearch}>{btn_lib}</Button>}
       </Paper>
     </SearchBarStyled>

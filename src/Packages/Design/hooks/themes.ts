@@ -1,4 +1,4 @@
-import { useTheme as useThemeStyled } from 'styled-components/macro';
+import { useTheme as useThemeStyled } from 'styled-components';
 import { IBreakpoint, IColor, IFont, ISizing, ISpacing } from '../types';
 
 export const useTheme = (key?: string) => {

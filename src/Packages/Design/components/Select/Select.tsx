@@ -7,7 +7,7 @@ import { useSizing } from '../../hooks';
 import { SelectContainer } from './Container/SelectContainer';
 import { SelectContext } from './SelectContext';
 
-export const Select: React.FC<ISelect> = ({
+export const Select: React.FC<React.PropsWithChildren<ISelect>> = ({
   labelColor = 'text',
   labelBdc = 'disabled',
   labelBgc = 'transparent',
@@ -38,6 +38,9 @@ export const Select: React.FC<ISelect> = ({
 
     selectedValues = first ? { [first]: true } : {};
   }
+  const current_value_styles: any = Object.values(data).filter((d) => {
+    return Number(d.id) === Number(Object.keys(selectedValues)[0]);
+  });
   if (multiple) {
     const values = Object.keys(selectedValues)[0].split(';');
     selectedValues = {};
@@ -119,7 +122,7 @@ export const Select: React.FC<ISelect> = ({
   );
 
   const labels = Object.keys(selected).map((id) => {
-    return data[id] ? data[id].label : null;
+    return data[id] ? data[id]?.label ?? data[id]?.value : null;
   });
 
   useEffect(() => {
@@ -144,12 +147,17 @@ export const Select: React.FC<ISelect> = ({
         onChange: onValueChange,
       }}
     >
-      <SelectStyled className={'_Select'} bdc={bdc} bdr={bdr || sizing.radius}>
+      <SelectStyled
+        className={'_Select'}
+        $bdc={bdc}
+        $bdr={bdr || sizing.radius}
+      >
         <SelectLabel
           bdc={labelBdc}
           color={labelColor}
           bgc={labelBgc}
           bdr={labelBdr || sizing.radius}
+          current_value_styles={current_value_styles}
           onClick={closable ? toggleSelect : undefined}
           isOpen={isOpen}
           isDisabled={disabled}

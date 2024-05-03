@@ -1,5 +1,7 @@
+import { expect } from '@jest/globals';
 import { injectCalculatedFields } from '../src/injectCalculatedFields';
 import { IChapter } from '../../../Features/Edit/types';
+
 const chapters: IChapter[] = [
   {
     label: 'Fake chapter 5',
@@ -26,6 +28,8 @@ const chapters: IChapter[] = [
         control_value: '5',
         control_options: null,
         upload_detail: null,
+        rich_text_detail: null,
+        control_rejectable: null,
       },
     ],
   },
@@ -54,6 +58,8 @@ const chapters: IChapter[] = [
         control_value: '5',
         control_options: null,
         upload_detail: null,
+        rich_text_detail: null,
+        control_rejectable: null,
       },
     ],
   },
@@ -82,6 +88,8 @@ const chapters: IChapter[] = [
         control_type: 'decimal',
         control_value: '5',
         upload_detail: null,
+        rich_text_detail: null,
+        control_rejectable: null,
       },
     ],
   },
@@ -113,6 +121,8 @@ const chapters: IChapter[] = [
           formula: '(#2307+#2308)*#2309',
           map: null,
         },
+        rich_text_detail: null,
+        control_rejectable: null,
       },
     ],
   },
@@ -144,6 +154,8 @@ const chapters: IChapter[] = [
           formula: '(#2307-#2308)/#2309',
           map: null,
         },
+        rich_text_detail: null,
+        control_rejectable: null,
       },
     ],
   },
@@ -175,6 +187,8 @@ const chapters: IChapter[] = [
           formula: '(#2307/#2308)*100',
           map: null,
         },
+        rich_text_detail: null,
+        control_rejectable: null,
       },
     ],
   },
@@ -222,6 +236,8 @@ const chapters: IChapter[] = [
         control_type: 'select_list',
         control_value: '1',
         upload_detail: null,
+        rich_text_detail: null,
+        control_rejectable: null,
       },
     ],
   },
@@ -269,6 +285,8 @@ const chapters: IChapter[] = [
         control_type: 'select_list',
         control_value: '1',
         upload_detail: null,
+        rich_text_detail: null,
+        control_rejectable: null,
       },
     ],
   },
@@ -316,6 +334,8 @@ const chapters: IChapter[] = [
         control_type: 'select_list',
         control_value: '1',
         upload_detail: null,
+        rich_text_detail: null,
+        control_rejectable: null,
       },
     ],
   },
@@ -373,6 +393,8 @@ const chapters: IChapter[] = [
             },
           ],
         },
+        rich_text_detail: null,
+        control_rejectable: null,
       },
     ],
   },
@@ -430,6 +452,8 @@ const chapters: IChapter[] = [
             },
           ],
         },
+        rich_text_detail: null,
+        control_rejectable: null,
       },
     ],
   },
@@ -437,9 +461,10 @@ const chapters: IChapter[] = [
 
 describe('Inject calculated fields into the form', () => {
   const mockFn = jest.fn((controls) => controls);
+
   it('Set the values of fields with the calculation of others', () => {
     const result = injectCalculatedFields(chapters);
-    expect(result).toStrictEqual([
+    const _chapters: IChapter[] = [
       {
         label: 'Fake chapter 5',
         id: '5',
@@ -465,6 +490,8 @@ describe('Inject calculated fields into the form', () => {
             control_type: 'decimal',
             control_value: '5',
             upload_detail: null,
+            rich_text_detail: null,
+            control_rejectable: null,
           },
         ],
       },
@@ -493,6 +520,8 @@ describe('Inject calculated fields into the form', () => {
             control_type: 'decimal',
             control_value: '5',
             upload_detail: null,
+            rich_text_detail: null,
+            control_rejectable: null,
           },
         ],
       },
@@ -521,6 +550,8 @@ describe('Inject calculated fields into the form', () => {
             control_type: 'decimal',
             control_value: '5',
             upload_detail: null,
+            rich_text_detail: null,
+            control_rejectable: null,
           },
         ],
       },
@@ -547,11 +578,14 @@ describe('Inject calculated fields into the form', () => {
             control_title: 'Calculé : (A + B) * C',
             control_type: 'formula',
             control_value: '50',
+            calculatedValue: '50',
             upload_detail: null,
             formula: {
               formula: '(#2307+#2308)*#2309',
               map: null,
             },
+            rich_text_detail: null,
+            control_rejectable: null,
           },
         ],
       },
@@ -578,11 +612,14 @@ describe('Inject calculated fields into the form', () => {
             control_title: 'Calculé: (A - B) / C',
             control_type: 'formula',
             control_value: '0',
+            calculatedValue: '0',
             upload_detail: null,
             formula: {
               formula: '(#2307-#2308)/#2309',
               map: null,
             },
+            rich_text_detail: null,
+            control_rejectable: null,
           },
         ],
       },
@@ -609,11 +646,14 @@ describe('Inject calculated fields into the form', () => {
             control_title: 'Calculé : (A / B) * 100',
             control_type: 'formula',
             control_value: '100',
+            calculatedValue: '100',
             upload_detail: null,
             formula: {
               formula: '(#2307/#2308)*100',
               map: null,
             },
+            rich_text_detail: null,
+            control_rejectable: null,
           },
         ],
       },
@@ -662,6 +702,8 @@ describe('Inject calculated fields into the form', () => {
             control_type: 'select_list',
             control_value: '1',
             upload_detail: null,
+            rich_text_detail: null,
+            control_rejectable: null,
           },
         ],
       },
@@ -710,6 +752,8 @@ describe('Inject calculated fields into the form', () => {
             control_type: 'select_list',
             control_value: '1',
             upload_detail: null,
+            rich_text_detail: null,
+            control_rejectable: null,
           },
         ],
       },
@@ -758,6 +802,8 @@ describe('Inject calculated fields into the form', () => {
             control_value: '1',
             control_options: null,
             upload_detail: null,
+            rich_text_detail: null,
+            control_rejectable: null,
           },
         ],
       },
@@ -786,6 +832,7 @@ describe('Inject calculated fields into the form', () => {
               'Avg_Simple(D;E;F) : Pas de coef ; Scale=>0-45:Bad;45-85:Mean;85-100:Ok',
             control_type: 'formula',
             control_value: 'Mauvais',
+            calculatedValue: 'Mauvais',
             formula: {
               formula: '(#2313+#2314+#2315)/3',
               map: [
@@ -815,6 +862,8 @@ describe('Inject calculated fields into the form', () => {
                 },
               ],
             },
+            rich_text_detail: null,
+            control_rejectable: null,
           },
         ],
       },
@@ -843,6 +892,7 @@ describe('Inject calculated fields into the form', () => {
               'Avg_Coef(D;E;F) : Coef =>10-20-70; Scale=>0-45:Bad;45-85:Mean;85-100:Ok',
             control_type: 'formula',
             control_value: 'Mauvais',
+            calculatedValue: 'Mauvais',
             formula: {
               formula: '(#2313*10+#2314*20+#2315*70)/100',
               map: [
@@ -872,11 +922,15 @@ describe('Inject calculated fields into the form', () => {
                 },
               ],
             },
+            rich_text_detail: null,
+            control_rejectable: null,
           },
         ],
       },
-    ]);
+    ];
+    expect(result).toStrictEqual(_chapters);
   });
+
   it('Return controls', () => {
     mockFn(chapters);
     expect(mockFn).toBeCalled();

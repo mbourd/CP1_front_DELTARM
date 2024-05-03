@@ -1,16 +1,16 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 export const ManageStyled = styled.div`
-  margin: auto;
   max-width: ${({ theme }) => theme.breakpoint.sm};
+  margin: auto;
 
   .search-container {
-    align-items: center;
-    border-radius: ${({ theme }) => theme.sizing.radius};
     display: flex;
-    margin-bottom: ${({ theme }) => theme.spacing.normal};
+    align-items: center;
     padding: ${({ theme }) =>
       '0 ' + theme.spacing.normal + ' 0 ' + theme.spacing.small};
+    border-radius: ${({ theme }) => theme.sizing.radius};
+    margin-bottom: ${({ theme }) => theme.spacing.normal};
 
     .divider {
       height: 28px;
@@ -24,8 +24,8 @@ export const ManageStyled = styled.div`
 
   .buttons-container {
     display: flex;
-    justify-content: flex-end;
     align-items: center;
+    justify-content: flex-end;
     margin-bottom: ${({ theme }) => theme.spacing.xLarge};
     text-transform: none;
 

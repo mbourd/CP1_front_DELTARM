@@ -1,4 +1,15 @@
 import { SvgIconComponent } from '@mui/icons-material';
+import { ForwardRefExoticComponent, RefAttributes } from 'react';
+import {
+  CellStyle,
+  CellStyleFunc,
+  IFilterComp,
+  IFilterParams,
+} from 'ag-grid-community';
+import {
+  DataGridDetailsColumnType,
+  DataGridDetailsRowsCell,
+} from 'Features/Edit/types';
 
 export interface IButtons {
   bg_color: string;
@@ -7,9 +18,24 @@ export interface IButtons {
   btn_lib: string;
   action: IActionButton;
 }
-interface ICardCol {
+export interface IAgGridCol {
   border_right: boolean;
-  header: string;
+  field: string;
+  headerName: string;
+  width: number;
+  cellStyle: CellStyle | CellStyleFunc | undefined;
+  comparator:
+    | 'StringComparator'
+    | ((
+        valueA: any,
+        valueB: any,
+        nodeA: any,
+        nodeB: any,
+        isInverted: boolean,
+      ) => 0 | 1 | -1);
+  filter:
+    | 'StringFilter'
+    | ForwardRefExoticComponent<IFilterParams & RefAttributes<unknown>>;
 }
 
 export interface IActionButton {
@@ -23,7 +49,7 @@ interface ICardIcon {
   size: number;
 }
 
-interface ICardValueItem {
+interface ICardValueItem extends DataGridDetailsRowsCell {
   action: IActionButton | null;
   content: string | null;
   hint: string | null;
@@ -31,9 +57,51 @@ interface ICardValueItem {
   border_right?: boolean;
 }
 
-interface ICardRow {
+interface AgGridRowType {
+  id: number;
+  border_bottom: boolean;
+}
+
+export interface ICardRow {
   id: number;
   item: ICardValueItem[];
+}
+
+export interface AgGridRowValue {
+  [key: string]: ICardValueItem[];
+}
+
+export type AgGridRow = AgGridRowValue & AgGridRowType;
+
+export interface ICardAgGrid {
+  cols: {
+    values: IAgGridCol[];
+    header_visible: boolean;
+  };
+  lines: AgGridRow[];
+  title: {
+    bg_color: string;
+    font_color: string;
+    lib: string;
+  };
+}
+
+interface ICardCol extends Omit<DataGridDetailsColumnType, 'key'> {
+  border_right: boolean;
+  label: string;
+  width: number;
+  field: string;
+  dataKey: string;
+  align: string;
+  filter:
+    | boolean
+    | 'agTextColumnFilter'
+    | 'agNumberColumnFilter'
+    | 'agDateColumnFilter'
+    | 'agSetColumnFilter'
+    | 'agMultiColumnFilter'
+    | IFilterComp;
+  floating_filter: boolean;
 }
 
 export interface ICard {
@@ -50,6 +118,11 @@ export interface ICard {
     font_color: string;
     lib: string;
   };
+  display: {
+    page_nb_rows: number;
+    type: 'page' | 'list';
+  };
+  version: 0 | 1;
 }
 
 export interface IIndicator {
@@ -84,13 +157,23 @@ interface ITitle {
   visible: boolean;
 }
 
+export type DashboardContrPermMenuType = {
+  action: { endpoint: string; method: 'GET'; params: any };
+  menu_lib: string;
+  menu_order: number;
+};
 export interface IDashboard {
   target: string;
   route_front: string;
   data: {
     btns: IButtons[];
-    cards: {
+    cards?: {
       card: ICard[];
+      visible: boolean;
+    };
+    menus: DashboardContrPermMenuType[];
+    ag_cards?: {
+      card: ICardAgGrid[];
       visible: boolean;
     };
     metrics: {

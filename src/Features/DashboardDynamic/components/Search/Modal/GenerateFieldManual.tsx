@@ -1,7 +1,7 @@
 import React from 'react';
 import { Control, Controller } from 'react-hook-form';
 import { FormLabel, Select } from '../../../../../Packages/Design/components';
-import { Input } from '@material-ui/core';
+import { Input } from '@mui/material';
 
 interface IProps {
   field: any;
@@ -9,7 +9,7 @@ interface IProps {
   setListMissingField: (values: Record<string, true>, key: any) => void;
   control: Control<Record<string, any>>;
 }
-export const GenerateFieldManual: React.FC<IProps> = ({
+export const GenerateFieldManual: React.FC<React.PropsWithChildren<IProps>> = ({
   field,
   handleLeaveField,
   setListMissingField,

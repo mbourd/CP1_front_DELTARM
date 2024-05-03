@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListItem } from '@material-ui/core';
+import { ListItem } from '@mui/material';
 import { NavItemTextStyled, NavItemStyled } from './NavItem.style';
 import { LockedIcon } from 'Styles';
 import { ISection } from '../../types';
@@ -9,17 +9,19 @@ interface INavItem {
   item: ISection;
   active: boolean;
   onClick?: (id: string) => void;
+  sectionLabel: string | null;
 }
 
-export const NavItem: React.FC<INavItem> = ({
+export const NavItem: React.FC<React.PropsWithChildren<INavItem>> = ({
   item,
   onClick,
   active = false,
+  sectionLabel,
 }): React.ReactElement => {
   let content = (
-    <NavItemStyled className={'item'} locked={item.locked} active={active}>
-      {item.locked ? <LockedIcon /> : null}
-      <NavItemTextStyled>{item.label}</NavItemTextStyled>
+    <NavItemStyled className={'item'} $locked={item.locked} $active={active}>
+      {item.locked && <LockedIcon />}
+      <NavItemTextStyled>{sectionLabel}</NavItemTextStyled>
     </NavItemStyled>
   );
 

@@ -7,11 +7,14 @@ import { IColor } from '../../types';
 
 export interface ISelectData {
   id: string;
-  label: NonNullable<React.ReactNode>;
+  label?: NonNullable<React.ReactNode>;
   value?: string;
   order?: string;
   key?: string;
   isKo?: boolean;
+  font_color?: any;
+  font_style?: any;
+  background?: any;
 }
 
 // export interface ISelectBody {
@@ -29,6 +32,7 @@ export interface ISelectLabel {
   isOpen?: boolean;
   isDisabled?: boolean;
   containerBdc?: keyof IColor;
+  current_value_styles: any;
 }
 
 export interface ISelect {
@@ -39,6 +43,7 @@ export interface ISelect {
   disabled?: boolean;
   closable?: boolean;
   closeOnSelect?: boolean;
+  colour_data?: any;
   /**
    * Start at 0.
    */

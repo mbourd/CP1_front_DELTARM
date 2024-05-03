@@ -1,29 +1,27 @@
 import React, { useEffect } from 'react';
 import { Button, Modal } from '../../../../../../../Packages/Design/components';
-import { ICompliance, IComplianceData } from '../../../../../types';
+import { IApiComplianceData, IApiComplianceFields } from '../../../../../types';
 import { SwitchControlCompliance } from '../SwitchControlCompliance';
-import { Grid } from '@material-ui/core';
-import { FormControlStyled } from '../../../Display/FormControl.style';
+import { Grid } from '@mui/material';
 import { SearchModalFooterStyled } from '../../../../../../Manage/components/Search/Modal/SearchModal.style';
 import { HeadingTwo } from '../../../../../../../Shared/components';
 import { useApi } from '../../../../../../../Services';
+import { FormComplianceContainer } from '../Compliance.style';
 
 interface IProps {
-  compliance: ICompliance;
   open: boolean;
   onClose: () => void;
   controlId: string;
   fileId: string;
 }
 
-export const ModalCompliance: React.FC<IProps> = ({
-  compliance,
+export const ModalCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
   open,
   onClose,
   controlId,
   fileId,
 }): React.ReactElement => {
-  const { send, data } = useApi<IComplianceData[]>();
+  const { send, data } = useApi<IApiComplianceData>();
 
   useEffect(() => {
     send(
@@ -45,21 +43,30 @@ export const ModalCompliance: React.FC<IProps> = ({
   );
 
   return (
-    <Modal open={open} height={'618px'} onClose={onClose} footer={footer}>
-      <HeadingTwo>{compliance.modaleTitle}</HeadingTwo>
-      <FormControlStyled>
+    <Modal
+      open={open}
+      height={'618px'}
+      onClose={onClose}
+      footer={footer}
+      className={'_ModalCompliance'}
+      footerBorderTop={true}
+    >
+      <HeadingTwo>{data?.compliance_modal_title}</HeadingTwo>
+      <FormComplianceContainer className={'_FormModalCompliance'}>
         <Grid container className={'control-container'}>
-          {data?.map((compliance: IComplianceData, index) => {
-            return (
-              <SwitchControlCompliance
-                compliance={compliance}
-                controlId={controlId}
-                key={index}
-              />
-            );
-          })}
+          {data?.compliance_fields.map(
+            (compliance: IApiComplianceFields, index) => {
+              return (
+                <SwitchControlCompliance
+                  compliance={compliance}
+                  controlId={controlId}
+                  key={index}
+                />
+              );
+            },
+          )}
         </Grid>
-      </FormControlStyled>
+      </FormComplianceContainer>
     </Modal>
   );
 };

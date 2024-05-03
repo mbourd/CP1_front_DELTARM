@@ -1,5 +1,5 @@
 import { apiRouter } from 'Services';
-import { IFileAudit } from './types';
+import { IDataFileAudit, IFileAudit } from './types';
 
 interface IApiFileAudit {
   event_id: number;
@@ -12,10 +12,15 @@ interface IApiFileAudit {
 
 apiRouter.registerRoute({
   name: 'getFileAudit',
+  queries: {
+    target: 'screen',
+  },
   path: '/file/audit',
   method: 'get',
-  handler: (response): IFileAudit[] => {
-    const data: IApiFileAudit[] = response.data.audit;
+  handler: (response): IDataFileAudit => {
+    const data: IApiFileAudit[] = response?.data?.audit ?? [];
+    const is_audit: boolean = response?.data?.is_audit ?? false;
+    const is_audit_xls: boolean = response?.data?.is_audit_xls ?? false;
     const audits: IFileAudit[] = [];
 
     data.map((audit, index) => {
@@ -25,23 +30,36 @@ apiRouter.registerRoute({
         event_id: audit.event_id,
         lib: audit.event_lib,
         date:
-          date.getDate() +
+          ('0' + date.getDate()).slice(-2) +
           '/' +
-          (date.getMonth() + 1) +
+          ('0' + (date.getMonth() + 1)).slice(-2) +
           '/' +
           date.getFullYear() +
           ' à ' +
-          date.getHours() +
+          ('0' + date.getHours()).slice(-2) +
           ':' +
-          date.getMinutes() +
+          ('0' + date.getMinutes()).slice(-2) +
           ':' +
-          date.getSeconds(),
+          ('0' + date.getSeconds()).slice(-2),
         params: audit.event_params,
       });
 
       return audit;
     });
 
-    return audits;
+    return {
+      is_audit,
+      is_audit_xls,
+      audits,
+    };
   },
+});
+
+apiRouter.registerRoute({
+  name: 'downloadUploadedAuditFile',
+  queries: {
+    target: 'download_xls',
+  },
+  path: '/file/audit',
+  method: 'get',
 });

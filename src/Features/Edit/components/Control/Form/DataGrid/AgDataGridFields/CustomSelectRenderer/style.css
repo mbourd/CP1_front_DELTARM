@@ -1,0 +1,18 @@
+.custom-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '';
+  width: 100%;
+  font-size: 13px !important;
+  width: auto;
+  height: auto;
+  border: none !important;
+  outline: none !important;
+}
+
+.custom-select:focus,
+.custom-select:active,
+.custom-select:hover {
+  border: none !important;
+}

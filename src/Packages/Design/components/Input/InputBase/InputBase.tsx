@@ -1,12 +1,12 @@
-import React from 'react';
-import { TextField as MUIInputBase } from '@material-ui/core';
+import React, { useEffect, useRef, useState } from 'react';
+import { TextField as MUIInputBase } from '@mui/material';
 import { InputBaseStyled, useStyles } from './InputBase.style';
 import { useTheme } from 'Styles';
 import { IInputBase } from '../types';
 
 // Todo: rename to Input
 
-export const InputBase: React.FC<IInputBase> = ({
+export const InputBase: React.FC<React.PropsWithChildren<IInputBase>> = ({
   color = 'text',
   bdr,
   status,
@@ -18,6 +18,8 @@ export const InputBase: React.FC<IInputBase> = ({
   id,
   onChange,
   onKeyPress,
+  onKeyUp,
+  onKeyDown,
   onBlur,
   placeholder,
   required,
@@ -30,7 +32,15 @@ export const InputBase: React.FC<IInputBase> = ({
   multilineRows = 2,
   unit,
   inputRef,
+  InputProps,
+  fullWidth,
+  selectAllOnClick,
+  onClick,
+  fontFamily,
+  fontSize,
+  style,
 }): React.ReactElement => {
+  const ref = useRef();
   const theme = useTheme();
   const c = theme.color[color];
   const classes = useStyles({
@@ -43,17 +53,21 @@ export const InputBase: React.FC<IInputBase> = ({
 
   return (
     <InputBaseStyled
-      borderSize={border}
-      bgc={bgc}
-      fontColor={c ? c.main : theme.color.text.main}
-      bdr={bdr || theme.sizing.radius}
+      $borderSize={border}
+      $bgc={bgc}
+      $fontColor={c ? c.main : theme.color.text.main}
+      $bdr={bdr || theme.sizing.radius}
       className={
         '_Input ' + (className || '') + (status ? ' _Input-' + status : '')
       }
+      $fontFamily={fontFamily}
+      $fontSize={fontSize}
     >
       {icon}
       <MUIInputBase
-        inputRef={inputRef}
+        variant="standard"
+        style={style}
+        inputRef={inputRef ?? ref}
         classes={MUIInputBaseClasse}
         name={name}
         autoFocus={autoFocus}
@@ -65,10 +79,19 @@ export const InputBase: React.FC<IInputBase> = ({
         type={type}
         value={value}
         onChange={onChange}
-        onKeyPress={onKeyPress}
+        // onKeyPress={onKeyPress}
+        onKeyUp={onKeyUp}
+        onKeyDown={onKeyDown ?? onKeyPress}
         onBlur={onBlur}
         multiline={multiline}
+        InputProps={InputProps}
         rows={multiline ? multilineRows : undefined}
+        fullWidth={fullWidth}
+        onClick={(e) => {
+          if (selectAllOnClick) (inputRef ?? ref).current.select();
+
+          onClick && onClick(e as any);
+        }}
       />
       <span style={{ padding: '5px' }}>{unit}</span>
     </InputBaseStyled>

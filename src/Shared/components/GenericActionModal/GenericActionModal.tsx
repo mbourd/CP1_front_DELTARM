@@ -15,11 +15,12 @@ import {
   GenericActionModalStyled,
   GenericActionCommentModalStyled,
 } from './GenericActionModal.style';
+import { useTrans } from '../../../Services';
 
 interface IProps {
   open: boolean;
   onClose: () => void;
-  fileId: string;
+  fileId?: string;
   actionLabel: string;
   cancelLabel?: string;
   successMessage: string;
@@ -32,9 +33,10 @@ interface IProps {
   commentParam?: string;
   forceRedirect?: boolean;
   queries?: Record<string, string>;
+  body?: any;
 }
 
-export const GenericActionModal: React.FC<IProps> = ({
+export const GenericActionModal: React.FC<React.PropsWithChildren<IProps>> = ({
   open,
   onClose,
   fileId,
@@ -50,17 +52,19 @@ export const GenericActionModal: React.FC<IProps> = ({
   commentParam,
   forceRedirect = false,
   queries = {},
+  body,
 }): React.ReactElement | null => {
   const { request, callState, send, error } = useApi<any>();
   const [commentError, setCommentError] = useState<string | null>(null);
+  const [trans] = useTrans('SharedComponents');
 
   const submit = useCallback(() => {
-    const q: Record<string, string> = { file_id: fileId };
+    const q: any = { file_id: fileId };
 
     if (comment) {
       const com = storage.getData<string>('validation.reject.comments');
       if (commentRequired && !com) {
-        return setCommentError('Ce champ est obligatoire');
+        return setCommentError(trans('requiredField'));
       }
 
       if (com && commentParam) {
@@ -68,7 +72,7 @@ export const GenericActionModal: React.FC<IProps> = ({
       }
     }
 
-    send(postRouteName, {}, Object.assign({}, q, queries));
+    send(postRouteName, {}, Object.assign({}, q, queries), body);
   }, [
     fileId,
     send,
@@ -77,7 +81,15 @@ export const GenericActionModal: React.FC<IProps> = ({
     commentRequired,
     commentParam,
     queries,
+    trans,
   ]);
+
+  // expose for Cypress
+  if (window?.['Cypress']) {
+    window['Shared/components/GenericActionModal/GenericActionModal'] = {
+      storage,
+    };
+  }
 
   const footer: React.ReactNode = (
     <GenericActionModalStyled>
@@ -101,7 +113,7 @@ export const GenericActionModal: React.FC<IProps> = ({
       >
         {(callState === 'SUCCESS' && successCloseLabel) ||
           cancelLabel ||
-          (callState === 'SUCCESS' ? 'Fermer' : 'Annuler')}
+          (callState === 'SUCCESS' ? trans('close') : trans('cancel'))}
       </Button>
       {callState === 'NOT_INIT' ? (
         <Button color={'success'} onClick={submit}>
@@ -133,20 +145,20 @@ export const GenericActionModal: React.FC<IProps> = ({
         states={{
           IS_LOADING: <StairsLoader size={'md'} />,
           SERVER_ERROR: (
-            <Error500 size={'md'} message={'Le serveur ne répond pas'} />
+            <Error500 size={'md'} message={trans('noServerResponding')} />
           ),
           SUCCESS: (
             <RequestSuccess
               size={'lg'}
               message={successMessage}
-              title={'Opération réussie'}
+              title={trans('successfullOperation')}
             />
           ),
           BAD_REQUEST: (
             <BadRequest
               size={'md'}
               message={error?.response ? error?.response.body.error_msg : ''}
-              title={'Echec !'}
+              title={trans('failure')}
             />
           ),
         }}
@@ -158,7 +170,7 @@ export const GenericActionModal: React.FC<IProps> = ({
             <InputBase
               multiline
               multilineRows={10}
-              placeholder={'Ajouter un commentaire'}
+              placeholder={trans('addComment')}
               onChange={(e) => {
                 storage.setData(
                   'validation.reject.comments',

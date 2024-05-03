@@ -4,7 +4,9 @@ import { FranceFlagIcon, UnitedStatesFlagIcon } from 'Styles';
 import { useTrans } from 'Services';
 import { FlagsContainerStyled } from './FlagsContainer.style';
 
-export const FlagsContainer: React.FC = (): React.ReactElement => {
+export const FlagsContainer: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
   const [trans, changeLanguage, currentLang] = useTrans('MainHeader');
   const [lang, setLang] = useState(currentLang);
 
@@ -22,7 +24,7 @@ export const FlagsContainer: React.FC = (): React.ReactElement => {
         <span>
           <FranceFlagIcon
             className={'flags'}
-            fontSize={lang === 'fr' ? 'default' : 'inherit'}
+            fontSize={lang === 'fr' ? 'medium' : 'inherit'}
             onClick={() => toggleLanguage('fr')}
           />
         </span>
@@ -32,7 +34,7 @@ export const FlagsContainer: React.FC = (): React.ReactElement => {
         <span>
           <UnitedStatesFlagIcon
             className={'flags'}
-            fontSize={lang === 'en' ? 'default' : 'inherit'}
+            fontSize={lang === 'en' ? 'medium' : 'inherit'}
             onClick={() => toggleLanguage('en')}
           />
         </span>

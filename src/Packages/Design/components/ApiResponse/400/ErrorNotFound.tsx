@@ -3,6 +3,8 @@ import { IError } from '../types';
 import { Error } from '../Error';
 import icon from './notFound.svg';
 
-export const ErrorNotFound: React.FC<IError> = (props): React.ReactElement => {
+export const ErrorNotFound: React.FC<React.PropsWithChildren<IError>> = (
+  props,
+): React.ReactElement => {
   return <Error {...props} icon={icon} />;
 };

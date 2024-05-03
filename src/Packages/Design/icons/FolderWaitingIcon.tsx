@@ -1,7 +1,9 @@
 import React from 'react';
-import { SvgIcon, SvgIconProps } from '@material-ui/core';
+import { SvgIcon, SvgIconProps } from '@mui/material';
 
-export const FolderWaitingIcon: React.FC<SvgIconProps> = (props) => {
+export const FolderWaitingIcon: React.FC<
+  React.PropsWithChildren<SvgIconProps>
+> = (props) => {
   return (
     <SvgIcon viewBox={'0 0 24 24'} {...props}>
       <path d="M23,5H12.5l-3-4H1A1,1,0,0,0,0,2V20a3,3,0,0,0,3,3H21a3,3,0,0,0,3-3V6A1,1,0,0,0,23,5ZM18,16H11V9h2v5h5Z" />

@@ -4,17 +4,14 @@ import { FolderOpenIcon } from 'Styles';
 import { IData } from '../types';
 
 interface IProps {
-  title: string;
   data: IData;
 }
 
-export const SubHeader: React.FC<IProps> = ({
-  title,
+export const SubHeader: React.FC<React.PropsWithChildren<IProps>> = ({
   data,
 }): React.ReactElement => {
   return (
-    <div>
-      <p>{title}</p>
+    <div style={{ width: '50%', margin: 'auto' }}>
       <EditTitleFileStyled>
         <FolderOpenIcon />
         {data.title ? (

@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect } from 'react';
-import { Card } from '@material-ui/core';
+import { Card } from '@mui/material';
 import { BPIBadge, Popper } from 'Shared/components';
 import { CommentIcon } from 'Styles';
 import { router, useApi } from 'Services';
@@ -11,12 +11,17 @@ import {
   FileCommentHeaderStyled,
 } from './FileComment.style';
 import { FileCommentFooter } from './Footer/FileCommentFooter';
+import { AppContext, AppContextType } from 'AppContext';
 
-export const FileComment: React.FC = (): React.ReactElement => {
+export const FileComment: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
+  const appContext: AppContextType & Record<any, any> = useContext(AppContext);
+  const { canSend } = appContext?.ForCompTests?.FileComment || {};
   const [anchorEl, setAnchorEl] = React.useState<
     SVGSVGElement | Element | null
   >(null);
-  const { request, send, data } = useApi<IFileComment[]>();
+  const { request, send, data } = useApi<IFileComment[]>({ canSend });
   const context = useContext(EditValidationContext);
 
   const queries = router.getQueries();
@@ -38,12 +43,8 @@ export const FileComment: React.FC = (): React.ReactElement => {
     send('getFileComments', {}, { file_id: fileId });
   }, [send, fileId]);
 
-  const handleClickAway = () => {
-    setAnchorEl(null);
-  };
-
   return (
-    <>
+    <div>
       <BPIBadge content={data?.length}>
         <CommentIcon
           fontSize={'large'}
@@ -52,7 +53,6 @@ export const FileComment: React.FC = (): React.ReactElement => {
           }
           onClick={(e) => {
             setAnchorEl(anchorEl ? null : e.currentTarget);
-            router.setQueries({});
           }}
         />
       </BPIBadge>
@@ -61,7 +61,7 @@ export const FileComment: React.FC = (): React.ReactElement => {
         placement={'bottom-start'}
         bdr={'0'}
         border={'0'}
-        onClickAway={handleClickAway}
+        onClickAway={() => setAnchorEl(null)}
         zIndex={2}
       >
         <FileCommentStyled>
@@ -74,6 +74,6 @@ export const FileComment: React.FC = (): React.ReactElement => {
           </Card>
         </FileCommentStyled>
       </Popper>
-    </>
+    </div>
   );
 };

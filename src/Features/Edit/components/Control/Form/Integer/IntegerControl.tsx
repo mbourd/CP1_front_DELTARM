@@ -1,5 +1,5 @@
 import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { IApiControl, IChapter } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
 import { IntegerControlStyled } from './IntegerControl.style';
@@ -10,25 +10,43 @@ import { checkIfSameValues } from '../../../../../../Packages/Helpers/src/checkI
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
 import { minMax } from '../../../../../../Packages/Helpers/src/minMax';
 import useFocus from '../../../../../../Packages/Helpers/src/useFocus';
+import { RejectControl } from '../RejectByPointControl/RejectControl';
+import { useTrans } from '../../../../../../Services';
 
 interface IProps {
   control: IApiControl;
   fileId: string;
   formState: IChapter[];
   setFormState: React.Dispatch<SetStateAction<IChapter[]>>;
+  context: 'edit' | 'validate';
 }
 
-export const IntegerControl: React.FC<IProps> = ({
+export const IntegerControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   formState,
   setFormState,
+  context,
 }): React.ReactElement => {
   const { send, error } = useApi<void>();
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [canSendApi, setCanSendApi] = useState(true);
+  const [errorMessage, setErrorMessage] = useState<string | null>(
+    control.mandatory && control.editable && !control.control_value
+      ? 'Valeur obligatoire'
+      : '',
+  );
   const [currentValue, setCurrentValue] = useState(control.control_value);
+  const [isRejected, setIsRejected] = useState(
+    control.control_rejectable?.is_rejected
+      ? control.control_rejectable.is_rejected
+      : false,
+  );
   const [inputRef, setInputFocus] = useFocus();
   const { currentRoute } = useRouter();
+  const [trans] = useTrans('Edit');
+  const [apiRouteName, setApiRouteName] = useState<string>(
+    currentRoute?.props?.apiSaveControlRouteName,
+  );
 
   useEffect(() => {
     setCurrentValue(control.control_value);
@@ -51,14 +69,15 @@ export const IntegerControl: React.FC<IProps> = ({
       }
 
       if (
-        (control.control_options?.min || control.control_options?.max) &&
+        (control.control_options?.min_value ||
+          control.control_options?.max_value) &&
         value.trim()
       ) {
         if (
           minMax(
             value,
-            control.control_options.min,
-            control.control_options.max,
+            control.control_options.min_value,
+            control.control_options.max_value,
           )
         ) {
           setErrorMessage(null);
@@ -66,8 +85,8 @@ export const IntegerControl: React.FC<IProps> = ({
         if (
           !minMax(
             value,
-            control.control_options.min,
-            control.control_options.max,
+            control.control_options.min_value,
+            control.control_options.max_value,
           )
         ) {
           setInputFocus();
@@ -95,23 +114,25 @@ export const IntegerControl: React.FC<IProps> = ({
       }
 
       setCurrentValue(value);
-      send(
-        currentRoute?.props?.apiSaveControlRouteName,
-        {},
-        {
-          file_id: fileId,
-          elm_id: control.control_id,
-          elm_val: value,
-          control_family: control.control_family,
-        },
-      );
+
+      if (canSendApi)
+        send(
+          apiRouteName,
+          {},
+          {
+            file_id: fileId,
+            elm_id: control.control_id,
+            elm_val: value,
+            control_family: control.control_family,
+          },
+        );
     },
     [
       send,
       fileId,
       control.control_id,
       control.control_family,
-      currentRoute,
+      apiRouteName,
       control.control_regex,
       control.control_regex_msg,
       currentValue,
@@ -119,23 +140,30 @@ export const IntegerControl: React.FC<IProps> = ({
       control.mandatory,
       control.control_options,
       setInputFocus,
+      trans,
+      canSendApi,
     ],
   );
-
-  useEffect(() => {
-    if (control.mandatory && control.editable && !currentValue) {
-      setErrorMessage('Valeur obligatoire');
-    }
-    if (!control.mandatory) {
-      setErrorMessage(null);
-    }
-  }, [control.mandatory, control.editable, currentValue]);
 
   useEffect(() => {
     if (error) {
       setErrorMessage("Une erreur s'est produite durant l'enregistrement");
     }
-  }, [error]);
+  }, [error, trans]);
+
+  useEffect(() => {
+    if (!isRejected) {
+      setIsRejected(false);
+    }
+  }, [isRejected]);
+
+  if (window?.['Cypress']) {
+    window['Features_Edit_Control_IntegerControl'] = {
+      setErrorMessage,
+      setCanSendApi,
+      setApiRouteName,
+    };
+  }
 
   return (
     <Grid item xs={6}>
@@ -147,8 +175,8 @@ export const IntegerControl: React.FC<IProps> = ({
             control.editable
               ? control.control_title
               : currentValue
-              ? currentValue
-              : ''
+                ? currentValue
+                : ''
           }
           disabled={!control.editable}
           color={control.editable ? 'text' : 'disabled'}
@@ -159,6 +187,15 @@ export const IntegerControl: React.FC<IProps> = ({
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ControlFooter control={control} />
       </IntegerControlStyled>
+      {control.useRejection && control.control_rejectable && (
+        <RejectControl
+          isRejected={isRejected}
+          setIsRejected={setIsRejected}
+          controlId={control.control_id}
+          context={context}
+          controlRejectable={control.useRejection}
+        />
+      )}
     </Grid>
   );
 };

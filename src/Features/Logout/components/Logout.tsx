@@ -1,7 +1,9 @@
 import React from 'react';
-import { Container } from '@material-ui/core';
+import { Container } from '@mui/material';
 
-export const Logout: React.FC = (): React.ReactElement | null => {
+export const Logout: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement | null => {
   return (
     <Container
       style={{

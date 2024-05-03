@@ -1,3 +1,4 @@
+import { expect } from '@jest/globals';
 import { randomInt } from '../src';
 
 describe('randomInt', () => {

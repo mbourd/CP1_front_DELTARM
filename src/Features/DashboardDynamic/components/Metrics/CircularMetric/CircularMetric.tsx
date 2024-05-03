@@ -4,15 +4,18 @@ import { CircularProgress } from '@mui/material';
 import { BPITooltip } from '../../../../../Shared/components';
 import { ICircularMetric } from './types';
 
-export const CircularMetric: React.FC<ICircularMetric> = ({
-  variant,
-  value,
-  hint,
-  style,
-}) => {
+export const CircularMetric: React.FC<
+  React.PropsWithChildren<ICircularMetric>
+> = ({ variant, value, hint, style, size }) => {
   return (
     <BPITooltip title={hint}>
-      <CircularProgress variant={variant} value={value} style={style} />
+      <CircularProgress
+        className="_CustomMetricProgress"
+        variant={variant}
+        value={value}
+        style={style}
+        size={size}
+      />
     </BPITooltip>
   );
 };

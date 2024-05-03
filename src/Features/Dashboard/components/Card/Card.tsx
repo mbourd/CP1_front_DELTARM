@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card as MUICard } from '@material-ui/core';
+import { Card as MUICard } from '@mui/material';
 import { CardStyled } from './Card.style';
 import { Header } from './Header/Header';
 import { Body } from './Body/Body';
@@ -15,7 +15,7 @@ export const CardContext = React.createContext<ICardContext>({
   context: 'EDIT',
 });
 
-export const Card: React.FC<ICard> = ({
+export const Card: React.FC<React.PropsWithChildren<ICard>> = ({
   header,
   body,
   footer,
@@ -23,7 +23,7 @@ export const Card: React.FC<ICard> = ({
 }): React.ReactElement => {
   return (
     <CardContext.Provider value={{ context }}>
-      <CardStyled cardColor={header.color}>
+      <CardStyled $cardColor={header.color}>
         <MUICard elevation={0}>
           <Header {...header}>{header.children}</Header>
           <Body {...body} />

@@ -1,6 +1,6 @@
 export * from 'Packages/Design/components';
 export * from './MainContent/MainContent';
-export * from './MainHeader/MainHeader';
+export * from './MainHeader';
 export * from './MainNav/MainNav';
 export * from './Heading';
 export * from './PreWrap';
@@ -10,3 +10,5 @@ export * from './Classify/ClassifyModal';
 export * from './Badge/BPIBadge';
 export * from './BreadCrumb/BreadCrumb';
 export * from './GenericActionModal/GenericActionModal';
+export * from '../../Features/Embedded/components/EmbeddedGate/EmbeddedGate';
+export * from './translation';

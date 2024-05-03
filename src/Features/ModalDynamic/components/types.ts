@@ -12,16 +12,19 @@ export interface IDataModalProps {
 }
 
 export interface IDataModal {
-  target: 'modal';
+  target: 'modal' | 'fixed_modal';
   title: string;
   subtitle: string | null;
   img: string | null;
   content: IElementModal[] | IElementPModal[] | IElementTableModal[];
   btn: IButtons[];
+  __extraData?: Record<any, any>;
+  callbackResponseConfirmation?: (...p) => undefined;
 }
 
-interface IElementPModal {
+export interface IElementPModal {
   element: 'p';
+  format?: string;
   attribute: {
     type: string;
     id: string;
@@ -30,12 +33,27 @@ interface IElementPModal {
     multiline: boolean;
     multilineRows: number | null;
     option?: ISelectData[];
+    mode?: string;
   } | null;
   value: string | null;
 }
 
-interface IElementModal {
-  element: 'input' | 'select';
+export interface IElementModal {
+  element:
+    | 'input'
+    | 'select'
+    | 'p'
+    | 'table'
+    | 'date_picker'
+    | 'upload'
+    | 'json_array';
+  format?: string;
+  items: {
+    cell: string;
+    control_step: string;
+    error_type: string;
+    sheet: string;
+  }[];
   attribute: {
     type: string;
     id: string;
@@ -44,34 +62,43 @@ interface IElementModal {
     multiline: boolean;
     multilineRows: number | null;
     option?: ISelectData[];
+    mode?: string;
   };
-  value: string | null;
+  value: ElementTableModalValueType | string | null;
+  editable?: boolean;
 }
+
+export type ElementTableModalValueType = {
+  row: ElementTableModalRowType;
+};
+type ElementTableModalRowType = {
+  value: {
+    cell: {
+      value: ElementTableModalCellType[];
+    };
+  }[];
+};
+type ElementTableModalCellType = {
+  action: IActionButton | null;
+  type: 'text' | 'btn';
+  value: string;
+  bg_color: string;
+  font_color: string;
+};
 
 interface IElementTextValueModal {
   cell: {
-    value: [
-      {
-        type: 'text';
-        value?: string;
-      },
-    ];
+    value: [ElementTableModalCellType];
   };
 }
 
 interface IElementButtonValueModal {
   cell: {
-    value: [
-      {
-        type: 'btn';
-        value?: string;
-        action: IActionButton | null;
-      },
-    ];
+    value: [ElementTableModalCellType];
   };
 }
 
-interface IElementTableModal {
+export interface IElementTableModal {
   element: 'table';
   attribute: null;
   value: {

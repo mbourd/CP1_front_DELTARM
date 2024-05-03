@@ -1,3 +1,4 @@
+import { expect } from '@jest/globals';
 import { isFormData } from '../src';
 
 describe('isFormData', () => {

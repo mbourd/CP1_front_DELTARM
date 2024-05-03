@@ -3,7 +3,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 
 import { IDispatchRoute } from './types';
 
-const DispatchRoute: React.FC<IDispatchRoute> = ({
+const DispatchRoute: React.FC<React.PropsWithChildren<IDispatchRoute>> = ({
   url,
   router,
   notFoundComponent,

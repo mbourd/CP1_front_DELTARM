@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Grid } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Grid } from '@mui/material';
 import { FormControlStyled } from './FormControl.style';
 import { IChapter } from 'Features/Edit/types';
 import { SwitchControlItem } from '..';
@@ -9,22 +9,18 @@ import { ContentTitle } from '../../ContentTitle/ContentTitle';
 
 export interface IProps {
   chapters: IChapter[];
+  context: 'edit' | 'validate';
 }
 
-export const FormControls: React.FC<IProps> = ({
+export const FormControls: React.FC<React.PropsWithChildren<IProps>> = ({
   chapters,
+  context,
 }): React.ReactElement => {
   const [formState, setFormState] = useState(chapters);
   const formStateWithCalculated = injectCalculatedFields(formState);
   const formStateWithDisabledAndCalculated = injectDisabledFields(
     formStateWithCalculated,
   );
-
-  useEffect(() => {
-    if (chapters) {
-      setFormState(chapters);
-    }
-  }, [chapters]);
 
   return (
     <FormControlStyled>
@@ -39,6 +35,7 @@ export const FormControls: React.FC<IProps> = ({
                   control={control}
                   formState={formState}
                   setFormState={setFormState}
+                  context={context}
                 />
               );
             })}

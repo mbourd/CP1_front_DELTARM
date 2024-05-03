@@ -7,51 +7,31 @@ import version from '../../build-version.json';
 
 export interface ISecurityProviderContext {
   user: IUser;
-  jwt: string | null;
+  jwt: string;
   data: any;
   login: (token: string) => void;
   logout: () => void;
 }
 
-export interface IAppContext {
-  logoUrl: string | null;
-  appName: string | null;
-  filePlaceholder: string | undefined;
-  fileRegex: RegExp | string | null;
-  titleName: string | null;
-}
-
 export const SecurityContext = React.createContext<ISecurityProviderContext>({
   user: new User(),
-  jwt: null,
+  jwt: '',
   data: {},
   login: () => undefined,
   logout: () => undefined,
-});
-
-export const AppContext = React.createContext<IAppContext>({
-  logoUrl: null,
-  appName: null,
-  filePlaceholder: undefined,
-  fileRegex: null,
-  titleName: null,
 });
 
 export interface ISecurityProviderProps {
   security: ISecurity;
 }
 
-export const SecurityProvider: React.FC<ISecurityProviderProps> = ({
-  security,
-  children,
-}): React.ReactElement => {
+export const SecurityProvider: React.FC<
+  React.PropsWithChildren<ISecurityProviderProps>
+> = ({ security, children }): React.ReactElement => {
   const [user, setUser] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
 
   const { send, request } = useApi<void>({ promise: true });
-  const { send: getClientInfos, data: clientInfos } = useApi<any>({
-    waitForAuthenticated: true,
-  });
   request.setBearerToken(jwt);
 
   const login = useCallback(
@@ -94,32 +74,16 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({
   );
 
   useEffect(() => {
-    if (context.data.cli_id) {
-      getClientInfos('clientInfo', {}, { cli_id: context.data.cli_id });
-    }
-  }, [context.data.cli_id, getClientInfos]);
-
-  const appContext = useMemo(
-    () => ({
-      logoUrl: clientInfos?.data[0].cli_logo_url,
-      appName: clientInfos?.data[0].cli_app_name,
-      filePlaceholder: clientInfos?.data[0].file_search_placeholder,
-      fileRegex: clientInfos?.data[0].cli_file_name_regex,
-      titleName: clientInfos?.data[0].cli_name,
-    }),
-    [clientInfos],
-  );
-
-  useEffect(() => {
     let timeout: ReturnType<typeof setTimeout> = setTimeout(() => '', 1000);
 
-    if (jwt && context.data.exp) {
+    if (jwt && context.data.exp && !user.isJwtExpired()) {
       const milliseconds = (context.data.exp * 1000 - Date.now()) / 2;
 
       timeout = setTimeout(async () => {
         const { body } = await send('refresh');
         const user = new User();
         user.fromJwt(body.data.jwt);
+        security.persistUser(user);
         setUser(user);
       }, milliseconds);
     }
@@ -129,16 +93,14 @@ export const SecurityProvider: React.FC<ISecurityProviderProps> = ({
         clearTimeout(timeout);
       }
     };
-  }, [send, jwt, context.data, setUser]);
+  }, [send, jwt, context.data.exp, setUser, user, security]);
 
   const idleTimeout = parseInt(getEnv('IDLE_TIMEOUT')) * 1000;
 
   return (
     <SecurityContext.Provider value={context}>
-      <AppContext.Provider value={appContext}>
-        <IdleTimer timeout={idleTimeout} onIdle={logout} />
-        {children}
-      </AppContext.Provider>
+      <IdleTimer timeout={idleTimeout} onIdle={logout} />
+      {children}
     </SecurityContext.Provider>
   );
 };

@@ -1,3 +1,4 @@
+import { expect } from '@jest/globals';
 import { getType } from '../src';
 
 describe('getType', () => {

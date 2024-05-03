@@ -1,20 +1,34 @@
 import React from 'react';
-
 import 'Services';
 import 'Features';
 import 'Shared';
 import 'Services/Api/registerCallState';
+import { security, SecurityProvider, useSecurity } from 'Services';
+import { MainContent, MainHeader } from './Shared/components';
+import { appStore, store } from 'Services';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { Persistor } from 'redux-persist';
 
-import { MainHeader } from 'Shared/components';
-import { MainContent } from 'Shared/components';
-import { security, SecurityProvider } from 'Services';
+interface AppProps {
+  isEmbedded: boolean;
+}
 
-const App = (): React.ReactElement => {
+const App: React.FC<AppProps> = ({ isEmbedded }): React.ReactElement => {
+  const { user } = useSecurity();
+
   return (
-    <SecurityProvider security={security}>
-      <MainHeader />
-      <MainContent />
-    </SecurityProvider>
+    <Provider store={store}>
+      <PersistGate
+        loading={null}
+        persistor={appStore.getPersistor() as Persistor}
+      >
+        <SecurityProvider security={security}>
+          {user.isLogged() && !isEmbedded && <MainHeader />}
+          <MainContent />
+        </SecurityProvider>
+      </PersistGate>
+    </Provider>
   );
 };
 

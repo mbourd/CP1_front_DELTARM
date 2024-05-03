@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { ContentHeaderStyled } from './ContentHeader.style';
 
 import {
@@ -17,23 +17,39 @@ import {
 } from '../Actions';
 
 import { EditValidationContext, FileComment, FileAudit } from 'Features';
-import { Button } from 'Shared/components';
+import { Button, PreWrapStyled } from 'Shared/components';
 import { useActionButton } from '../../../../Packages/Helpers/src/useActionButton';
 import { useSecurity } from '../../../../Packages/Security';
 import { ModalDynamic } from '../../../ModalDynamic/components/ModalDynamic';
 import { IDataModal } from '../../../ModalDynamic/components/types';
 import { useRecoilValue } from 'recoil';
+import { Alert } from '@mui/material';
+import { useTrans } from '../../../../Services';
 
-export const ContentHeader: React.FC = (): React.ReactElement => {
+export const ContentHeader: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
+  const [trans] = useTrans('Edit');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data } = useContext(EditValidationContext);
   const { user } = useSecurity();
   const jwt = user.getJwt();
-  const { actionButton, modalData } = useActionButton(jwt, setIsModalOpen);
+  const { actionButton, modalData } = useActionButton({ jwt, setIsModalOpen });
   const modal: IDataModal = useRecoilValue<any>(modalData);
 
   return (
     <ContentHeaderStyled>
+      <Grid container style={{ width: '100%' }}>
+        {data?.sectionHeader && (
+          <Alert
+            variant="outlined"
+            icon={false}
+            severity={data.sectionHeader.type === 'alert' ? 'error' : 'success'}
+          >
+            <PreWrapStyled>{data.sectionHeader.message}</PreWrapStyled>
+          </Alert>
+        )}
+      </Grid>
       <Grid container alignItems={'center'} wrap={'nowrap'}>
         <Grid item className={'icon-container'}>
           <FileComment />
@@ -83,11 +99,11 @@ export const ContentHeader: React.FC = (): React.ReactElement => {
                   <GenericAction
                     key={index}
                     action={action}
-                    message="Souhaitez-vous annuler la clôture du dossier ?"
-                    actionLabel="Oui"
-                    cancelLabel="Non"
-                    successMessage="La clôture du dossier a été annulée"
-                    successCloseLabel="Fermer"
+                    message={trans('cancelClosure')}
+                    actionLabel={trans('yes')}
+                    cancelLabel={trans('no')}
+                    successMessage={trans('closureFileCancelled')}
+                    successCloseLabel={trans('close')}
                     postRouteName="actionUnclose"
                     comment
                     commentRequired
@@ -100,11 +116,11 @@ export const ContentHeader: React.FC = (): React.ReactElement => {
                     key={index}
                     action={action}
                     color="secondary"
-                    message="Souhaitez-vous annuler le statut sans-suite ?"
-                    actionLabel="Oui"
-                    cancelLabel="Non"
-                    successMessage="Le statut sans-suite du dossier a été annulé"
-                    successCloseLabel="Fermer"
+                    message={trans('cancelNoActionStatus')}
+                    actionLabel={trans('yes')}
+                    cancelLabel={trans('no')}
+                    successMessage={trans('statusFileCancelled')}
+                    successCloseLabel={trans('close')}
                     postRouteName="actionUnnoncase"
                   />
                 );

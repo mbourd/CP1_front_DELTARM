@@ -1,6 +1,6 @@
 import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
 import { TimeControlStyled } from './TimeControl.style';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { IApiControl, IChapter } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
 import { useApi, useRouter } from 'Services';
@@ -10,25 +10,36 @@ import { checkIfSameValues } from '../../../../../../Packages/Helpers/src/checkI
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
 import { minMax } from '../../../../../../Packages/Helpers/src/minMax';
 import useFocus from '../../../../../../Packages/Helpers/src/useFocus';
+import { RejectControl } from '../RejectByPointControl/RejectControl';
 
 interface IProps {
   control: IApiControl;
   fileId: string;
   formState: IChapter[];
   setFormState: React.Dispatch<SetStateAction<IChapter[]>>;
+  context: 'edit' | 'validate';
 }
 
-export const TimeControl: React.FC<IProps> = ({
+export const TimeControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   formState,
   setFormState,
+  context,
 }): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);
+  const [isRejected, setIsRejected] = useState(
+    control.control_rejectable?.is_rejected
+      ? control.control_rejectable.is_rejected
+      : false,
+  );
   const [inputRef, setInputFocus] = useFocus();
   const { currentRoute } = useRouter();
+  const [apiRouteName, setApiRouteName] = useState<string>(
+    currentRoute?.props?.apiSaveControlRouteName,
+  );
 
   useEffect(() => {
     setCurrentValue(control.control_value);
@@ -96,7 +107,7 @@ export const TimeControl: React.FC<IProps> = ({
 
       setCurrentValue(value);
       send(
-        currentRoute?.props?.apiSaveControlRouteName,
+        apiRouteName,
         {},
         {
           file_id: fileId,
@@ -111,7 +122,6 @@ export const TimeControl: React.FC<IProps> = ({
       fileId,
       control.control_id,
       control.control_family,
-      currentRoute,
       control.control_regex,
       control.control_regex_msg,
       currentValue,
@@ -119,6 +129,7 @@ export const TimeControl: React.FC<IProps> = ({
       control.mandatory,
       control.control_options,
       setInputFocus,
+      apiRouteName,
     ],
   );
 
@@ -137,6 +148,19 @@ export const TimeControl: React.FC<IProps> = ({
     }
   }, [error]);
 
+  useEffect(() => {
+    if (!isRejected) {
+      setIsRejected(false);
+    }
+  }, [isRejected]);
+
+  if (window?.['Cypress']) {
+    window['Features/Edit/Control/Form/Time/TimeControl'] = {
+      setErrorMessage,
+      setApiRouteName,
+    };
+  }
+
   return (
     <Grid item xs={6}>
       <TimeControlStyled>
@@ -148,8 +172,8 @@ export const TimeControl: React.FC<IProps> = ({
             control.editable
               ? control.control_title
               : control.control_value
-              ? control.control_value
-              : ''
+                ? control.control_value
+                : ''
           }
           disabled={!control.editable}
           color={control.editable ? 'text' : 'disabled'}
@@ -160,6 +184,15 @@ export const TimeControl: React.FC<IProps> = ({
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ControlFooter control={control} />
       </TimeControlStyled>
+      {control.useRejection && control.control_rejectable && (
+        <RejectControl
+          isRejected={isRejected}
+          setIsRejected={setIsRejected}
+          controlId={control.control_id}
+          context={context}
+          controlRejectable={control.useRejection}
+        />
+      )}
     </Grid>
   );
 };

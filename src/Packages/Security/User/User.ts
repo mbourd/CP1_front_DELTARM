@@ -6,7 +6,8 @@ export class User implements IUser {
 
   private _roles: string[] = [];
   private _email: string | null = null;
-  private _jwt: string | null = null;
+  private _jwt = '';
+  private _lang = 'fr';
   private _username: string = User.Roles.ANON;
   private _expireAt: Date | null = null;
 
@@ -24,7 +25,7 @@ export class User implements IUser {
     return this._roles;
   }
 
-  public getJwt(): string | null {
+  public getJwt(): string {
     return this._jwt;
   }
 
@@ -32,21 +33,20 @@ export class User implements IUser {
     return this._username;
   }
 
+  public getLang(): string {
+    return this._lang;
+  }
+
   public hasRole(role: string): boolean {
     // Todo: Use role hierarchy
     return this._roles.includes(role);
-  }
-
-  public isGranted(role: string): boolean {
-    // Todo
-    return false;
   }
 
   /**
    * This function checks if user is logged. It based on JWT.
    */
   public isLogged(): boolean {
-    if (this._jwt === null) {
+    if (this._jwt === null || this._jwt === '' || this._jwt === undefined) {
       return false;
     }
 
@@ -106,6 +106,11 @@ export class User implements IUser {
       this._expireAt = new Date(decodedJwt.exp * 1000);
     }
 
+    // Set lang
+    if (decodedJwt.lang) {
+      this._lang = decodedJwt.lang;
+    }
+
     this._jwt = token;
 
     return { error: false };
@@ -132,7 +137,7 @@ export class User implements IUser {
     return this;
   }
 
-  public setJwt(token: string | null): this {
+  public setJwt(token: string): this {
     this._jwt = token;
 
     return this;
@@ -144,6 +149,12 @@ export class User implements IUser {
 
   public setUsername(username: string): this {
     this._username = username;
+
+    return this;
+  }
+
+  public setLang(lang: string): this {
+    this._lang = lang;
 
     return this;
   }

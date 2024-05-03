@@ -11,8 +11,12 @@ import {
 } from '../types';
 import { ISelectData } from 'Shared/components';
 import { IButtons } from '../../DashboardDynamic/components/types';
+import { IApiFileComment, IFileComment } from '../../Comments';
 
-export const editValidationHandlerCallback = (response: any) => {
+export const editValidationHandlerCallback = (
+  response: any,
+  context: 'edit' | 'validate',
+) => {
   const apiData: IApiDataEdit = response.data;
   const actions: IAction[] = [];
   const actions_contr_perm: IButtons[] = [];
@@ -31,6 +35,9 @@ export const editValidationHandlerCallback = (response: any) => {
             label: answer.choice_lib,
             value: '' + answer.choice_id,
             isKo: answer.choice_is_ko,
+            font_color: answer.choice_font_color,
+            font_style: answer.choice_font_style,
+            background: answer.choice_background_color,
           };
 
           return answer;
@@ -49,6 +56,45 @@ export const editValidationHandlerCallback = (response: any) => {
           modaleTitle: control.compliance.compliance_modale_title,
         };
       }
+
+      if (control.control_rejectable) {
+        const apiRejectComments: IApiFileComment[] | null =
+          control.control_rejectable.control_reject_comment;
+        const rejectComments: IFileComment[] = [];
+
+        if (apiRejectComments) {
+          apiRejectComments.map((datum: IApiFileComment) => {
+            const date = new Date(datum.comment_ts);
+
+            rejectComments.push({
+              id: datum.comment_id,
+              message: datum.comment_text,
+              date:
+                date.getDate() +
+                '/' +
+                (date.getMonth() + 1) +
+                '/' +
+                date.getFullYear() +
+                ' à ' +
+                date.getHours() +
+                ':' +
+                date.getMinutes() +
+                ':' +
+                date.getSeconds(),
+              user: datum.comment_user_name,
+            });
+
+            return datum;
+          });
+
+          return rejectComments;
+        }
+        control.useRejection = {
+          isRejected: control.control_rejectable.is_rejected,
+          rejectComments,
+        };
+      }
+
       controls.push(control);
 
       return control;
@@ -127,12 +173,15 @@ export const editValidationHandlerCallback = (response: any) => {
     productType: apiData.file_info.product_type,
     countComments: apiData.nb_comment,
     validationCount: apiData.valid_num,
+    linked_files: apiData.linked_files,
     sectionHeader:
       header_message && header_type
         ? { message: header_message, type: header_type }
         : undefined,
     sectionFooter: footer_message ? { message: footer_message } : undefined,
     title: apiData.file_info.title,
+    valid_mode: apiData.valid_mode,
+    context,
   };
 
   return data;
@@ -144,7 +193,7 @@ apiRouter.registerRoute({
   method: 'get',
   handler: (response: any) => {
     try {
-      return editValidationHandlerCallback(response);
+      return editValidationHandlerCallback(response, 'edit');
     } catch (e) {
       return null;
     }

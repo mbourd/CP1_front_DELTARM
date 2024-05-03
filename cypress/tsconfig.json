@@ -1,0 +1,19 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": [
+      "node",
+      "core-js",
+      "cypress",
+      "cypress-react-selector",
+      "cypress-real-events",
+      "cypress-wait-until",
+    ]
+  },
+  "eslint": {
+    "enable": false,
+    "files": [
+      "**/*"
+    ]
+  }
+}

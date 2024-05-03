@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { LinearMetric } from './LinearMetric/LinearMetric';
 import { BPITooltip } from '../../../../Shared/components';
 import { HelpIcon } from '../../../../Packages/Design';
@@ -10,7 +10,7 @@ interface ISwitchMetric {
   indicator: IIndicator;
 }
 
-export const SwitchMetric: React.FC<ISwitchMetric> = ({
+export const SwitchMetric: React.FC<React.PropsWithChildren<ISwitchMetric>> = ({
   indicator,
 }): React.ReactElement => {
   switch (indicator.style) {
@@ -26,6 +26,7 @@ export const SwitchMetric: React.FC<ISwitchMetric> = ({
                 color: indicator.color,
                 backgroundColor: indicator.bg_color,
                 height: 13,
+                cursor: 'initial',
               }}
             />
             <p>
@@ -35,7 +36,7 @@ export const SwitchMetric: React.FC<ISwitchMetric> = ({
           <Grid item component={'span'}>
             <BPITooltip title={indicator.info}>
               <span>
-                <HelpIcon fontSize={'small'} />
+                <HelpIcon style={{ cursor: 'initial' }} fontSize={'small'} />
               </span>
             </BPITooltip>
           </Grid>
@@ -51,7 +52,7 @@ export const SwitchMetric: React.FC<ISwitchMetric> = ({
               hint={indicator.hint}
               style={{
                 color: indicator.color,
-                cursor: 'pointer',
+                cursor: 'initial',
               }}
             />
             <p>

@@ -1,11 +1,15 @@
-import styled from 'styled-components/macro';
-import { makeStyles, Theme } from '@material-ui/core';
+import styled from 'styled-components';
+import { Theme } from '@mui/material';
+
+import makeStyles from '@mui/styles/makeStyles';
 
 interface IProps {
-  borderSize: number;
-  bgc: string;
-  fontColor: string;
-  bdr: string;
+  $borderSize: number;
+  $bgc: string;
+  $fontColor: string;
+  $bdr: string;
+  $fontFamily?: string;
+  $fontSize?: string;
 }
 
 interface IUseStylesProps {
@@ -21,26 +25,32 @@ export const useStyles = makeStyles<Theme, IUseStylesProps>({
 });
 
 export const InputBaseStyled = styled.label<IProps>`
-  align-items: center;
-  background-color: ${({ bgc }) => bgc};
-  border: ${({ borderSize }) => borderSize}px solid
-    ${({ fontColor }) => fontColor};
-  border-radius: ${({ bdr }) => bdr};
   display: flex;
+  align-items: center;
+  border: ${({ $borderSize }) => $borderSize}px solid
+    ${({ $fontColor }) => $fontColor};
+  border-radius: ${({ $bdr }) => $bdr};
+  background-color: ${({ $bgc }) => $bgc};
 
   .MuiSvgIcon-root {
-    color: ${({ fontColor }) => fontColor};
+    color: ${({ $fontColor }) => $fontColor};
     cursor: pointer;
+  }
+
+  .MuiInputBase-root {
+    font-family: ${({ $fontFamily }) =>
+      $fontFamily ? $fontFamily : 'inherit'};
+    font-size: ${({ $fontSize }) => ($fontSize ? $fontSize : 'inherit')};
   }
 
   .MuiInputBase-root,
   .MuiTextField-root {
-    .MuiInput-underline:hover:not(.Mui-disabled):before {
+    .MuiInput-underline:hover:not(.Mui-disabled)::before {
       border: none;
     }
 
-    .MuiInput-underline.Mui-disabled:before,
-    .MuiInput-underline:before {
+    .MuiInput-underline.Mui-disabled::before,
+    .MuiInput-underline::before {
       border: none;
     }
 
@@ -49,13 +59,13 @@ export const InputBaseStyled = styled.label<IProps>`
       background-color: transparent;
     }
 
-    color: ${({ fontColor }) => fontColor};
-    padding: 0 ${({ theme }) => theme.spacing.xSmall};
     width: 100%;
+    padding: 0 ${({ theme }) => theme.spacing.xSmall};
+    color: ${({ $fontColor }) => $fontColor};
   }
 
   &._Input-success {
-    border: 1px solid ${({ theme }) => theme.color.success.main};
+    /* border: 1px solid ${({ theme }) => theme.color.success.main}; */
 
     .MuiSvgIcon-root {
       color: ${({ theme }) => theme.color.success.main};
@@ -63,7 +73,7 @@ export const InputBaseStyled = styled.label<IProps>`
   }
 
   &._Input-warning {
-    border: 1px solid ${({ theme }) => theme.color.warning.main};
+    /* border: 1px solid ${({ theme }) => theme.color.warning.main}; */
 
     .MuiSvgIcon-root {
       color: ${({ theme }) => theme.color.warning.main};
@@ -71,7 +81,7 @@ export const InputBaseStyled = styled.label<IProps>`
   }
 
   &._Input-info {
-    border: 1px solid ${({ theme }) => theme.color.info.main};
+    /* border: 1px solid ${({ theme }) => theme.color.info.main}; */
 
     .MuiSvgIcon-root {
       color: ${({ theme }) => theme.color.info.main};
@@ -79,7 +89,7 @@ export const InputBaseStyled = styled.label<IProps>`
   }
 
   &._Input-error {
-    border: 1px solid ${({ theme }) => theme.color.error.main};
+    /* border: 1px solid ${({ theme }) => theme.color.error.main}; */
 
     .MuiSvgIcon-root {
       color: ${({ theme }) => theme.color.error.main};

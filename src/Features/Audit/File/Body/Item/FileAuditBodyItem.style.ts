@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 export const FileAuditBodyItemStyled = styled.div`
   .MuiGrid-item:first-child {
@@ -6,10 +6,10 @@ export const FileAuditBodyItemStyled = styled.div`
   }
 
   .MuiAvatar-root {
-    font-family: ${({ theme }) => theme.font.medium.main};
-    height: 40px;
-    line-height: 1px;
     width: 40px;
+    height: 40px;
+    font-family: ${({ theme }) => theme.font.medium.main};
+    line-height: 1px;
   }
 
   .author {

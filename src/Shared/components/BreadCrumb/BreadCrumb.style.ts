@@ -1,14 +1,14 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 export const BreadCrumbStyled = styled.div`
-  background-color: ${({ theme }) => theme.color.background.main};
-  left: 0;
-  margin-top: 0;
-  padding: ${({ theme }) => theme.spacing.small};
   position: fixed;
-  top: ${({ theme }) => theme.data.header.height};
-  width: 100%;
   z-index: 99;
+  top: ${({ theme }) => theme.data.header.height};
+  left: 0;
+  width: 25%;
+  padding: ${({ theme }) => theme.spacing.small};
+  margin-top: 0;
+  background-color: ${({ theme }) => theme.color.background.main};
 
   .MuiGrid-item {
     padding: 0 ${({ theme }) => theme.spacing.small};
