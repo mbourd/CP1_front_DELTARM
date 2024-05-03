@@ -7,22 +7,24 @@ import { DownloadFile } from './UploadList.style';
 interface IProps {
   currentUploadFile: IUploadDetail[] | null;
   handleDeleteFile: (e: any, name: any) => void;
-  handleDownloadFile: (e: any, id: string, name: any) => void;
+  handleDownloadFile?: (e: any, id: string, name: any) => void;
   disabled?: boolean;
+  style?: React.CSSProperties;
 }
 
-export const UploadList: React.FC<IProps> = ({
+export const UploadList: React.FC<React.PropsWithChildren<IProps>> = ({
   currentUploadFile,
   handleDeleteFile,
   handleDownloadFile,
   disabled = false,
+  style,
 }): React.ReactElement => {
   return (
-    <Container style={{ padding: '0', overflow: 'hidden' }}>
+    <Container style={{ padding: '0', overflow: 'hidden', ...style }}>
       {currentUploadFile?.map((file) => {
         return (
           <Container
-            key={file.file_id}
+            key={file?.file_id ? file.file_id : file.file_name}
             style={{
               margin: '10px 0',
               padding: '0',
@@ -32,10 +34,11 @@ export const UploadList: React.FC<IProps> = ({
             }}
           >
             <DownloadFile
-              href={file.file_id}
-              onClick={(e) =>
-                handleDownloadFile(e, file.file_id, file.file_name)
-              }
+              {...(handleDownloadFile ? { href: file.file_id } : {})}
+              onClick={(e) => {
+                if (handleDownloadFile)
+                  handleDownloadFile(e, file.file_id, file.file_name);
+              }}
               style={{
                 margin: '5px',
                 marginRight: '0',
@@ -49,6 +52,7 @@ export const UploadList: React.FC<IProps> = ({
             </DownloadFile>
             {!disabled && (
               <HighlightOff
+                data-testid="delete_icon_uploadfile"
                 onClick={(e) => handleDeleteFile(e, file.file_name)}
                 style={{
                   color: '#f50057',

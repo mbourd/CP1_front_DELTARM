@@ -1,7 +1,7 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 interface IProps {
-  bgc: string;
+  $bgc: string;
 }
 
 export const FileCommentBodyItemStyled = styled.div<IProps>`
@@ -10,11 +10,11 @@ export const FileCommentBodyItemStyled = styled.div<IProps>`
   }
 
   .MuiAvatar-root {
-    background-color: ${({ bgc }) => bgc};
-    font-family: ${({ theme }) => theme.font.medium.main};
-    height: 40px;
-    line-height: 1px;
     width: 40px;
+    height: 40px;
+    background-color: ${({ $bgc }) => $bgc};
+    font-family: ${({ theme }) => theme.font.medium.main};
+    line-height: 1px;
   }
 
   .author {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { TabHeaderStyled } from './TabHeader.style';
 import { IChapter } from 'Features/Edit/types';
 
@@ -9,7 +9,7 @@ interface ITabHeader {
   chapters: IChapter[];
 }
 
-export const TabHeader: React.FC<ITabHeader> = ({
+export const TabHeader: React.FC<React.PropsWithChildren<ITabHeader>> = ({
   chapters,
   index,
   setCurrentContent,

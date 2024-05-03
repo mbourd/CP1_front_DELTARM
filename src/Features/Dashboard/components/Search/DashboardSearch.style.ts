@@ -1,23 +1,23 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 export const DashboardSearchStyled = styled.div`
-  margin: auto;
   position: relative;
   width: ${({ theme }) => theme.breakpoint.sm};
+  margin: auto;
 
   .search-container {
-    align-items: center;
-    border-radius: ${({ theme }) => theme.sizing.radius};
     display: flex;
-    margin-bottom: ${({ theme }) => theme.spacing.normal};
+    align-items: center;
     padding: ${({ theme }) =>
       '0 ' + theme.spacing.normal + ' 0 ' + theme.spacing.small};
+    border-radius: ${({ theme }) => theme.sizing.radius};
+    margin-bottom: ${({ theme }) => theme.spacing.normal};
   }
 
   .buttons-container {
     display: flex;
-    justify-content: flex-end;
     align-items: center;
+    justify-content: flex-end;
     margin-bottom: ${({ theme }) => theme.spacing.small};
     text-transform: none;
 
@@ -28,8 +28,8 @@ export const DashboardSearchStyled = styled.div`
   }
 
   ._FormError {
-    padding-left: 0;
     position: absolute;
     top: -22px;
+    padding-left: 0;
   }
 `;

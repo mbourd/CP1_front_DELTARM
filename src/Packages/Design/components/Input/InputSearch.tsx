@@ -1,11 +1,11 @@
 import React from 'react';
-import { Search } from '@material-ui/icons';
+import { Search } from '@mui/icons-material';
 import { IInputBase } from './types';
 import { InputBase } from './InputBase';
 
-export const InputSearch: React.FC<Omit<IInputBase, 'type' | 'icon'>> = (
-  props,
-): React.ReactElement => {
+export const InputSearch: React.FC<
+  React.PropsWithChildren<Omit<IInputBase, 'type' | 'icon'>>
+> = (props): React.ReactElement => {
   return (
     <InputBase
       {...props}

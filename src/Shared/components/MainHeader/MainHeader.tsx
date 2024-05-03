@@ -1,33 +1,46 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import './translations';
 import { MainHeaderStyled } from './MainHeader.style';
-import { AppContext, router, useTrans } from 'Services';
+import { router, SecurityContext, useApi, useTrans } from 'Services';
 import { IconsContainer } from './IconsContainer/IconsContainer';
-// import { FlagsContainer } from './FlagsContainer/FlagsContainer';
-import { MainNav } from '..';
+import { MainNav, useTransMainHeader } from '..';
 
-export const MainHeader: React.FC = (): React.ReactElement => {
-  const [trans] = useTrans('MainHeader');
+export const MainHeader: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
+  const { trans, currentLang, changeLang } = useTransMainHeader();
+  const [optionValue, setOptionValue] = useState(currentLang);
   const dashboardPath = router.generatePath('dashboard');
-  const { titleName, logoUrl, appName } = useContext(AppContext);
+  const { data: context } = useContext(SecurityContext);
+  const { send: clientInfos, data: dataClientInfos } = useApi<any>();
 
-  if (titleName) {
-    // dynamic title by client
-    document.title = 'CP1 - ' + titleName;
+  useEffect(() => {
+    if (context.cli_id) {
+      clientInfos('clientInfo', {}, { cli_id: context.cli_id });
+    }
+  }, [context.cli_id, clientInfos]);
+
+  if (dataClientInfos?.data[0].cli_name) {
+    localStorage.setItem('client_info', JSON.stringify(dataClientInfos?.data));
+    document.title = 'CP1 - ' + dataClientInfos?.data[0].cli_name;
   }
 
   return (
     <MainHeaderStyled id={'main-header'}>
-      {logoUrl && (
+      {dataClientInfos?.data[0].cli_logo_url && (
         <Link to={dashboardPath ? dashboardPath : '/'} className={'brand'}>
-          <img src={logoUrl} alt={trans('brand')} />
+          <img
+            src={dataClientInfos?.data[0].cli_logo_url}
+            alt={trans('brand')}
+          />
         </Link>
       )}
-      {appName && <p className={'app-name'}>{appName}</p>}
+      {dataClientInfos?.data[0].cli_app_name && (
+        <p className={'app-name'}>{dataClientInfos?.data[0].cli_app_name}</p>
+      )}
       <IconsContainer />
-      {/* <FlagsContainer /> */}
       <MainNav />
     </MainHeaderStyled>
   );

@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { ICompliance } from '../../../../types';
 import { CheckboxCompliance } from './CheckboxCompliance/CheckboxCompliance';
 import { ModalCompliance } from './ModalCompliance/ModalCompliance';
-import { InsertDriveFile } from '@material-ui/icons';
+import { InsertDriveFile } from '@mui/icons-material';
 import { ActionsComplianceContainer } from './Compliance.style';
 
 interface IComplianceProps {
@@ -15,7 +15,9 @@ interface IComplianceProps {
   compliance: ICompliance;
 }
 
-export const Compliance: React.FC<IComplianceProps> = ({
+export const Compliance: React.FC<
+  React.PropsWithChildren<IComplianceProps>
+> = ({
   choiceIsKo,
   controlId,
   fileId,
@@ -35,8 +37,8 @@ export const Compliance: React.FC<IComplianceProps> = ({
       <ActionsComplianceContainer>
         {choiceIsKo ? (
           <CheckboxCompliance
-            checkedColor={compliance.complianceCheckColor}
-            uncheckedColor={compliance.complianceUncheckColor}
+            checkedColor={compliance?.complianceCheckColor}
+            uncheckedColor={compliance?.complianceUncheckColor}
             label={label}
             checked={checked}
             controlId={controlId}
@@ -56,7 +58,6 @@ export const Compliance: React.FC<IComplianceProps> = ({
         <ModalCompliance
           open={showComplianceFields}
           onClose={() => setShowComplianceFields(false)}
-          compliance={compliance}
           controlId={controlId}
           fileId={fileId}
         />

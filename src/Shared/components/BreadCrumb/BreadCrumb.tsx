@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { BreadCrumbStyled } from './BreadCrumb.style';
 import {
   ArrowRightAltIcon,
@@ -10,19 +10,27 @@ import {
 } from 'Styles';
 import { Link } from 'react-router-dom';
 import { router } from '../../../Packages/Router';
+import { useTrans } from '../../../Services';
 
-type BreadCrumbType = 'Dashboard' | 'Manage' | 'Edit' | 'Validation';
+type BreadCrumbType =
+  | 'Dashboard'
+  | 'Manage'
+  | 'Edit'
+  | 'Validation'
+  | 'Tableau de bord'
+  | 'Gestion';
 
 interface IBreadCrumb {
   values: BreadCrumbType[];
 }
 
-export const BreadCrumb: React.FC<IBreadCrumb> = ({
+export const BreadCrumb: React.FC<React.PropsWithChildren<IBreadCrumb>> = ({
   values,
 }): React.ReactElement => {
   const queries = router.getQueries();
   const { id } = router.getParams();
   const isComment = queries.comments === '1';
+  const [trans] = useTrans('Dashboard');
 
   return (
     <BreadCrumbStyled>
@@ -34,10 +42,10 @@ export const BreadCrumb: React.FC<IBreadCrumb> = ({
                 <Grid item key={index}>
                   <HomeIcon fontSize={'small'} />
                   {index === values.length - 1 ? (
-                    <span>Tableau de bord</span>
+                    <span>{trans('pageTitle')}</span>
                   ) : (
                     <Link to={router.generatePath('dashboard') || '/'}>
-                      Tableau de bord
+                      {trans('pageTitle')}
                     </Link>
                   )}
                 </Grid>
@@ -51,10 +59,10 @@ export const BreadCrumb: React.FC<IBreadCrumb> = ({
                   <Grid item>
                     <FolderIcon fontSize={'small'} />
                     {index === values.length - 1 ? (
-                      <span>Gestion</span>
+                      <span>{trans('manage')}</span>
                     ) : (
                       <Link to={router.generatePath('manage') || '/'}>
-                        Gestion
+                        {trans('manage')}
                       </Link>
                     )}
                   </Grid>

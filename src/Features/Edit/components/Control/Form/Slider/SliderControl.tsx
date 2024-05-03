@@ -1,6 +1,6 @@
 import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
 import { SliderControlStyled } from './SliderControl.style';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { IApiControl, IChapter } from 'Features/Edit/types';
 import { FormError } from 'Shared/components';
 import { useApi, useRouter } from 'Services';
@@ -8,24 +8,37 @@ import { ControlLabel } from '../ControlLabel';
 import { ControlFooter } from '../ControlFooter';
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
 import { Slider } from '@mui/material';
+import { RejectControl } from '../RejectByPointControl/RejectControl';
+import { useTrans } from '../../../../../../Services';
 
 interface IProps {
   control: IApiControl;
   fileId: string;
   formState: IChapter[];
   setFormState: React.Dispatch<SetStateAction<IChapter[]>>;
+  context: 'edit' | 'validate';
 }
 
-export const SliderControl: React.FC<IProps> = ({
+export const SliderControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   formState,
   setFormState,
+  context,
 }): React.ReactElement => {
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);
+  const [trans] = useTrans('Edit');
+  const [isRejected, setIsRejected] = useState(
+    control.control_rejectable?.is_rejected
+      ? control.control_rejectable.is_rejected
+      : false,
+  );
   const { currentRoute } = useRouter();
+  const [apiRouteName, setApiRouteName] = useState<string>(
+    currentRoute?.props?.apiSaveControlRouteName,
+  );
 
   useEffect(() => {
     updateFormState(formState, control.control_id, currentValue, setFormState);
@@ -37,7 +50,7 @@ export const SliderControl: React.FC<IProps> = ({
 
   const saveValue = useCallback(() => {
     if (!currentValue && control.mandatory) {
-      setErrorMessage('Valeur obligatoire');
+      setErrorMessage(trans('mandatoryValue'));
 
       return;
     }
@@ -55,31 +68,45 @@ export const SliderControl: React.FC<IProps> = ({
       elm_val: currentValue,
     };
 
-    send(currentRoute?.props?.apiSaveControlRouteName, {}, q);
+    send(apiRouteName, { ok: 1 }, q);
   }, [
     send,
     fileId,
     control.control_id,
-    currentRoute,
     control.control_family,
     currentValue,
     control.mandatory,
+    trans,
+    apiRouteName,
   ]);
 
   useEffect(() => {
     if (control.mandatory && control.editable && !currentValue) {
-      setErrorMessage('Valeur obligatoire');
+      setErrorMessage(trans('mandatoryValue'));
     }
     if (!control.mandatory) {
       setErrorMessage(null);
     }
-  }, [control.mandatory, control.editable, currentValue]);
+  }, [control.mandatory, control.editable, currentValue, trans]);
 
   useEffect(() => {
     if (error) {
-      setErrorMessage("Une erreur s'est produite durant l'enregistrement");
+      setErrorMessage(trans('errorRecording'));
     }
-  }, [error]);
+  }, [error, trans]);
+
+  useEffect(() => {
+    if (!isRejected) {
+      setIsRejected(false);
+    }
+  }, [isRejected]);
+
+  if (window?.['Cypress']) {
+    window['Features_Edit_Control_Form_Slider_SliderControl'] = {
+      setErrorMessage,
+      setApiRouteName,
+    };
+  }
 
   return (
     <Grid item xs={6}>
@@ -95,8 +122,8 @@ export const SliderControl: React.FC<IProps> = ({
             control.control_options?.boundaries
               ? control.control_options?.boundaries
               : control.control_options?.marks
-              ? control.control_options.marks
-              : false
+                ? control.control_options.marks
+                : false
           }
           min={control.control_options?.min ? control.control_options?.min : 0}
           max={
@@ -128,6 +155,15 @@ export const SliderControl: React.FC<IProps> = ({
         />
         <ControlFooter control={control} />
       </SliderControlStyled>
+      {control.useRejection && control.control_rejectable && (
+        <RejectControl
+          isRejected={isRejected}
+          setIsRejected={setIsRejected}
+          controlId={control.control_id}
+          context={context}
+          controlRejectable={control.useRejection}
+        />
+      )}
       {errorMessage ? <FormError>{errorMessage}</FormError> : null}
     </Grid>
   );

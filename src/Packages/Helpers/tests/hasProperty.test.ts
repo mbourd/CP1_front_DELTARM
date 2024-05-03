@@ -1,3 +1,4 @@
+import { expect } from '@jest/globals';
 import { hasProperty } from '../src';
 
 describe('hasProperty', () => {

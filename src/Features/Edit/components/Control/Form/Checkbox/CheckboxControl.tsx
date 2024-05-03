@@ -1,5 +1,5 @@
 import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { IApiControl, IChapter } from 'Features/Edit/types';
 import { FormError } from 'Shared/components';
 import { useApi, useRouter } from 'Services';
@@ -9,6 +9,8 @@ import { ControlFooter } from '../ControlFooter';
 import { Compliance } from '../Compliance/Compliance';
 import { CheckboxWrapper } from '../../../../../../Packages/Design/components/Checkbox/CheckboxWrapper';
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
+import { RejectControl } from '../RejectByPointControl/RejectControl';
+import { useTrans } from '../../../../../../Services';
 
 interface IProps {
   control: IApiControl;
@@ -16,15 +18,18 @@ interface IProps {
   multiple: boolean;
   formState: IChapter[];
   setFormState: React.Dispatch<SetStateAction<IChapter[]>>;
+  context: 'edit' | 'validate';
 }
 
-export const CheckboxControl: React.FC<IProps> = ({
+export const CheckboxControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   multiple,
   formState,
   setFormState,
+  context,
 }): React.ReactElement => {
+  const [trans] = useTrans('Edit');
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);
@@ -39,6 +44,15 @@ export const CheckboxControl: React.FC<IProps> = ({
       ? control.compliance.compliance_resolved
       : false,
   );
+  const [isRejected, setIsRejected] = useState(
+    control.control_rejectable?.is_rejected
+      ? control.control_rejectable.is_rejected
+      : false,
+  );
+  const [apiRouteName, setApiRouteName] = useState<string>(
+    currentRoute?.props?.apiSaveControlRouteName,
+  );
+
   const selectedValue: Record<string, true> = {
     [currentValue || control.control_value || '']: true,
   };
@@ -60,14 +74,14 @@ export const CheckboxControl: React.FC<IProps> = ({
   const saveValue = useCallback(
     (value: string) => {
       if (control.control_regex && !value.match(control.control_regex)) {
-        setErrorMessage("Le format attendu n'est pas valide");
+        setErrorMessage(trans('expectedFormat'));
 
         return;
       }
       setErrorMessage(null);
       setCurrentValue(value);
       send(
-        currentRoute?.props?.apiSaveControlRouteName,
+        apiRouteName,
         {},
         {
           file_id: fileId,
@@ -82,27 +96,44 @@ export const CheckboxControl: React.FC<IProps> = ({
       fileId,
       control.control_id,
       control.control_family,
-      currentRoute,
+      apiRouteName,
       control.control_regex,
+      trans,
     ],
   );
 
   useEffect(() => {
     if (control.mandatory && control.editable && !currentValue) {
-      setErrorMessage('Valeur obligatoire');
+      setErrorMessage(trans('mandatoryValue'));
     }
     if (!control.mandatory) {
       setErrorMessage(null);
     }
-  }, [control.control_id, control.mandatory, currentValue, control.editable]);
+  }, [
+    control.control_id,
+    control.mandatory,
+    currentValue,
+    control.editable,
+    trans,
+  ]);
+
+  useEffect(() => {
+    if (!isRejected) {
+      setIsRejected(false);
+    }
+  }, [isRejected]);
 
   useEffect(() => {
     if (error) {
-      setErrorMessage(
-        "Une erreur s'est produite, veuillez re-sélectionner une valeur",
-      );
+      setErrorMessage(trans('errorReselect'));
     }
-  }, [error]);
+  }, [error, trans]);
+
+  if (window?.['Cypress']) {
+    window['Features_Edit_Control_Form_Checkbox_CheckboxControl'] = {
+      setApiRouteName,
+    };
+  }
 
   return (
     <Grid item xs={6}>
@@ -140,6 +171,15 @@ export const CheckboxControl: React.FC<IProps> = ({
           fileId={fileId}
           choiceIsKo={choiceIsKo}
           compliance={control.useCompliance}
+        />
+      )}
+      {control.useRejection && control.control_rejectable && (
+        <RejectControl
+          isRejected={isRejected}
+          setIsRejected={setIsRejected}
+          controlId={control.control_id}
+          context={context}
+          controlRejectable={control.useRejection}
         />
       )}
     </Grid>

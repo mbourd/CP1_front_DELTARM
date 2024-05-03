@@ -11,6 +11,7 @@ interface IApiStage {
   nb_file_stage: number;
   stage_id: number;
   stage_name: string;
+  workflow?: number;
 }
 
 interface IApiFile {
@@ -36,7 +37,6 @@ apiRouter.registerRoute({
   },
   handler: (data) => {
     const files: IApiFile[] = data.data;
-
     const cards: ICard[] = [];
 
     files.map((file) => {
@@ -63,6 +63,7 @@ apiRouter.registerRoute({
           stageName: stage.stage_name,
           state: file.state_id,
           role: file.state_role,
+          workflow: stage.workflow,
         });
 
         return stage;

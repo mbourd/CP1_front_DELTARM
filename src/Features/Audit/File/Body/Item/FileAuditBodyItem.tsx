@@ -1,6 +1,6 @@
 import React from 'react';
 import { FileAuditBodyItemStyled } from './FileAuditBodyItem.style';
-import { Avatar, Grid } from '@material-ui/core';
+import { Avatar, Grid } from '@mui/material';
 import { IFileAudit } from '../../../types';
 import { randomColor } from 'Styles';
 
@@ -8,9 +8,9 @@ interface IFileAuditBodyItem {
   audit: IFileAudit;
 }
 
-export const FileAuditBodyItem: React.FC<IFileAuditBodyItem> = ({
-  audit,
-}): React.ReactElement => {
+export const FileAuditBodyItem: React.FC<
+  React.PropsWithChildren<IFileAuditBodyItem>
+> = ({ audit }): React.ReactElement => {
   return (
     <FileAuditBodyItemStyled>
       <Grid container alignItems={'center'} wrap={'nowrap'}>

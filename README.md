@@ -24,12 +24,21 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
-### `yarn test`
+### `yarn test --watchAll=false`
 
 Launches the test runner in the interactive watch mode.<br />
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 We use react-testing library for assertions. You can download the testing playground extension available for chrome https://chrome.google.com/webstore/detail/testing-playground/hejbmebodbijjdhflfknehhcgaklhano
 which allows you to use `screen.logTestingPlaygroundURL()` in your test. It gives an interactive environment for testing assertions and write tests.
+
+### `yarn cypress:open`
+
+Lauches the Cypress testing framework software
+
+### `yarn cypress:run:(e2e|component)`
+
+Launches the Cypress testing framework for E2E or Components
+Pass the param --config to specify additional configuration
 
 ### `yarn build`
 
@@ -51,6 +60,20 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+### Build image docker
+
+build the image before pushing it
+
+```bash
+docker build -t ghcr.io/deltarm/cp1-front/[env]:latest -f ci/[env]/Dockerfile .
+```
+
+pushing image
+
+```bash
+docker push ghcr.io/deltarm/cp1-front/[env]:latest
+```
+
 ### Deployment
 
 The front-end part is totally separate from the back-end part and run by itself on a docker container. The docker container is launch by the CI on GitLab and builds all the necessary assets for every environments.
@@ -68,9 +91,3 @@ The application is configurable in production to enable a maintenance mode. To a
 Then, change the constant variable `maintenanceMode` to `true` in index.tsx. You can configure which user can still see the app by add their user id in the white list configuration `adminUsers`.
 
 This is a temporary feature, we should have the role admin enables in app and the toggle of maintenance mode should be in a environment configuration.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).

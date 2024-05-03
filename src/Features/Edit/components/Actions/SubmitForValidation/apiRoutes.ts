@@ -10,7 +10,7 @@ interface IApiValidator {
 export interface IData {
   error: boolean;
   errorMessage?: string;
-  type: 'GET_VALIDATORS' | 'ASK_VALIDATION';
+  type: 'GET_VALIDATORS' | 'ASK_VALIDATION' | 'LINKED_FILES_VALIDATION';
   validators: Record<string, ISelectData>;
 }
 
@@ -18,7 +18,7 @@ apiRouter.registerRoute({
   name: 'getValidators',
   path: '/validate/validator',
   method: 'get',
-  handler: (response): IData => {
+  handler: (response): any => {
     const validators: Record<string, ISelectData> = {};
 
     const apiValidators: IApiValidator[] = response.data.validator_list;
@@ -31,10 +31,34 @@ apiRouter.registerRoute({
 
       return validator;
     });
+    // response?.data?.linkable_files
+
+    // [
+    //     {
+    //       file_avenant: '10c',
+    //       file_creation_by: 'Asim',
+    //       file_creation_date: 'Sun, 02 Oct 2022 00:00:00 GMT',
+    //       file_name: 'test',
+    //       file_selected: 0,
+    //       file_uuid: '6fa65sfgsrgd1-3789-4776-953b-a9fde5890e1a',
+    //     },
+    //     {
+    //       file_avenant: '10c',
+    //       file_creation_by: 'Boris Horowitz',
+    //       file_creation_date: 'Sun, 02 Oct 2022 00:00:00 GMT',
+    //       file_name: 'test',
+    //       file_selected: 1,
+    //       file_uuid: '6fa650d1-3789-4776-953b-a9fde5890e1a',
+    //     },
+    //   ],
 
     return {
       error: false,
-      validators,
+      response: {
+        linkable_files: response?.data?.linkable_files,
+        validators,
+        unmodified_validators: response?.data?.validator_list,
+      },
       type: 'GET_VALIDATORS',
     };
   },

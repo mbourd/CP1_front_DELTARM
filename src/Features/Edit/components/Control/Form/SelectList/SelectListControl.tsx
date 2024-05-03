@@ -1,5 +1,5 @@
 import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { IApiControl, IChapter } from 'Features/Edit/types';
 import { FormError, Select } from 'Shared/components';
 import { useApi, useRouter } from 'Services';
@@ -8,6 +8,8 @@ import { ControlLabel } from '../ControlLabel';
 import { ControlFooter } from '../ControlFooter';
 import { Compliance } from '../Compliance/Compliance';
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
+import { RejectControl } from '../RejectByPointControl/RejectControl';
+import { useTrans } from '../../../../../../Services';
 
 interface IProps {
   control: IApiControl;
@@ -15,19 +17,21 @@ interface IProps {
   multiple: boolean;
   formState: IChapter[];
   setFormState: React.Dispatch<SetStateAction<IChapter[]>>;
+  context: 'edit' | 'validate';
+  get_value_response?: any;
 }
 
-export const SelectListControl: React.FC<IProps> = ({
+export const SelectListControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   multiple,
   formState,
   setFormState,
+  context,
 }): React.ReactElement => {
-  const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);
-  const { currentRoute } = useRouter();
+  const [trans] = useTrans('Edit');
   const [choiceIsKo, setChoiceIsKo] = useState(
     control.compliance?.compliance_checkbox_resolved
       ? control.compliance.compliance_checkbox_resolved
@@ -37,6 +41,18 @@ export const SelectListControl: React.FC<IProps> = ({
     control.compliance?.compliance_resolved
       ? control.compliance.compliance_resolved
       : false,
+  );
+
+  const [isRejected, setIsRejected] = useState(
+    control.control_rejectable?.is_rejected
+      ? control.control_rejectable.is_rejected
+      : false,
+  );
+
+  const { currentRoute } = useRouter();
+  const { send, error } = useApi<void>();
+  const [apiRouteName, setApiRouteName] = useState<string>(
+    currentRoute?.props?.apiSaveControlRouteName,
   );
 
   const selectedValue: Record<string, true> = {
@@ -57,6 +73,12 @@ export const SelectListControl: React.FC<IProps> = ({
     }
   }, [choiceIsKo]);
 
+  useEffect(() => {
+    if (!isRejected) {
+      setIsRejected(false);
+    }
+  }, [isRejected]);
+
   const saveValue = useCallback(
     (value: string) => {
       if (control.control_regex && !value.match(control.control_regex)) {
@@ -67,7 +89,7 @@ export const SelectListControl: React.FC<IProps> = ({
       setErrorMessage(null);
       setCurrentValue(value);
       send(
-        currentRoute?.props?.apiSaveControlRouteName,
+        apiRouteName,
         {},
         {
           file_id: fileId,
@@ -82,7 +104,7 @@ export const SelectListControl: React.FC<IProps> = ({
       fileId,
       control.control_id,
       control.control_family,
-      currentRoute,
+      apiRouteName,
       control.control_regex,
       control.control_regex_msg,
     ],
@@ -90,20 +112,31 @@ export const SelectListControl: React.FC<IProps> = ({
 
   useEffect(() => {
     if (control.mandatory && control.editable && !currentValue) {
-      setErrorMessage('Valeur obligatoire');
+      setErrorMessage(trans('mandatoryValue'));
     }
     if (!control.mandatory) {
       setErrorMessage(null);
     }
-  }, [control.control_id, control.mandatory, currentValue, control.editable]);
+  }, [
+    control.control_id,
+    control.mandatory,
+    currentValue,
+    control.editable,
+    trans,
+  ]);
 
   useEffect(() => {
     if (error) {
-      setErrorMessage(
-        "Une erreur s'est produite, veuillez re-sélectionner une valeur",
-      );
+      setErrorMessage(trans('errorReselect'));
     }
-  }, [error]);
+  }, [error, trans]);
+
+  if (window?.['Cypress']) {
+    window['Features_Edit_Control_SelectListControl'] = {
+      setErrorMessage,
+      setApiRouteName,
+    };
+  }
 
   return (
     <Grid item xs={6}>
@@ -113,6 +146,7 @@ export const SelectListControl: React.FC<IProps> = ({
           closeOnSelect
           name={'select_list' + control.control_id}
           data={control.answerChoices || {}}
+          colour_data={control.control_answer_choices || {}}
           selectedValues={selectedValue}
           labelColor={control.editable ? 'text' : 'disabled'}
           labelBdc={control.editable ? 'text' : 'disabled'}
@@ -130,10 +164,10 @@ export const SelectListControl: React.FC<IProps> = ({
           choiceIsKo={choiceIsKo}
           setChoiceIsKo={setChoiceIsKo}
         >
-          {'Sélectionner une valeur'}
+          {trans('selectValue')}
         </Select>
-        {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ControlFooter control={control} />
+        {errorMessage ? <FormError>{errorMessage}</FormError> : null}
       </SelectListControlStyled>
       {control.useCompliance && control.compliance && (
         <Compliance
@@ -144,6 +178,15 @@ export const SelectListControl: React.FC<IProps> = ({
           fileId={fileId}
           choiceIsKo={choiceIsKo}
           compliance={control.useCompliance}
+        />
+      )}
+      {control.useRejection && control.control_rejectable && (
+        <RejectControl
+          isRejected={isRejected}
+          setIsRejected={setIsRejected}
+          controlId={control.control_id}
+          context={context}
+          controlRejectable={control.useRejection}
         />
       )}
     </Grid>

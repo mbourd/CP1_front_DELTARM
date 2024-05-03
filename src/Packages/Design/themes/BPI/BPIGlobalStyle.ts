@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components/macro';
+import { createGlobalStyle } from 'styled-components';
 
 import '../../reset.css';
 import '../../fonts/helvetica-neue.css';
@@ -21,8 +21,8 @@ export const BPIGlobalStyle = createGlobalStyle`
   }
 
   #root {
-    padding-top: ${({ theme }) => theme.data.header.height};
     position: relative;
+    padding-top: ${({ theme }) => theme.data.header.height};
   }
 
   a {

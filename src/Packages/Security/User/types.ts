@@ -3,15 +3,16 @@ export interface IUser {
   getEmail: () => string | null;
   setUsername: (username: string) => IUser;
   getUsername: () => string;
+  setLang: (lang: string) => IUser;
+  getLang: () => string;
   setRoles: (roles: string[]) => IUser;
   getRoles: () => string[];
   addRole: (role: string) => IUser;
   removeRole: (role: string) => IUser;
   hasRole: (role: string) => boolean;
-  isGranted: (role: string) => boolean;
-  setJwt: (token: string | null) => IUser;
+  setJwt: (token: string) => IUser;
   hasJwt: () => boolean;
-  getJwt: () => string | null;
+  getJwt: () => string;
   setExpireAt: (date: Date | null) => IUser;
   getExpireAt: () => Date | null;
   isLogged: () => boolean;
@@ -30,6 +31,7 @@ export type FromJwtUserType = {
   email: string;
   username: string;
   exp: number;
+  lang: string;
 };
 
 export type JwtData = {
@@ -38,4 +40,6 @@ export type JwtData = {
   cli_id: number;
   user_id: number;
   context: string;
+  lang: string;
+  session_id: string;
 };

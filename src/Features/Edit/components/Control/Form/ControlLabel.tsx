@@ -1,5 +1,6 @@
 import React from 'react';
-import { Grid, makeStyles, Theme } from '@material-ui/core';
+import { Grid, Theme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { BPITooltip, FormLabel } from 'Shared/components';
 import { HelpIcon } from 'Styles';
 import { ControlFontSize, IApiControl } from 'Features/Edit/types';
@@ -18,7 +19,7 @@ const useStyles = makeStyles<
   }),
 });
 
-export const ControlLabel: React.FC<IProps> = ({
+export const ControlLabel: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
 }): React.ReactElement => {
   const classes = useStyles({

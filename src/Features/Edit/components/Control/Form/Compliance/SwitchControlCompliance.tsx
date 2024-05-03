@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { IComplianceData } from 'Features/Edit/types';
+import { IApiComplianceFields } from 'Features/Edit/types';
 import { EditValidationContext } from 'Features/Edit';
 import { CommentCompliance } from './FormCompliance/CommentCompliance/CommentCompliance';
 import { DateCompliance } from './FormCompliance/DateCompliance/DateCompliance';
@@ -9,22 +9,33 @@ import { SelectListCompliance } from './FormCompliance/SelectListCompliance/Sele
 import { IntegerCompliance } from './FormCompliance/IntegerCompliance/IntegerCompliance';
 import { PercentCompliance } from './FormCompliance/PercentCompliance/PercentCompliance';
 import { UploadCompliance } from './FormCompliance/UploadCompliance/UploadCompliance';
+import { LongTextCompliance } from './FormCompliance/LongTextCompliance/LongTextCompliance';
+import { RadioCompliance } from './FormCompliance/RadioCompliance/RadioCompliance';
+import { ChexboxesCompliance } from './FormCompliance/CheckboxesCompliance/CheckboxCompliance';
+import { BooleanCompliance } from './FormCompliance/BooleanCompliance/BooleanCompliance';
 
 interface IProps {
-  compliance: IComplianceData;
+  compliance: IApiComplianceFields;
   controlId: string;
 }
 
-export const SwitchControlCompliance: React.FC<IProps> = ({
-  compliance,
-  controlId,
-}): React.ReactElement | null => {
+export const SwitchControlCompliance: React.FC<
+  React.PropsWithChildren<IProps>
+> = ({ compliance, controlId }): React.ReactElement | null => {
   const { fileId } = useContext(EditValidationContext);
 
-  switch (compliance.type) {
+  switch (compliance.compliance_elm_type) {
     case 'text':
       return (
         <TextCompliance
+          compliance={compliance}
+          fileId={fileId}
+          controlId={controlId}
+        />
+      );
+    case 'long_text':
+      return (
+        <LongTextCompliance
           compliance={compliance}
           fileId={fileId}
           controlId={controlId}
@@ -81,6 +92,30 @@ export const SwitchControlCompliance: React.FC<IProps> = ({
     case 'file_upload':
       return (
         <UploadCompliance
+          compliance={compliance}
+          fileId={fileId}
+          controlId={controlId}
+        />
+      );
+    case 'radio':
+      return (
+        <RadioCompliance
+          compliance={compliance}
+          fileId={fileId}
+          controlId={controlId}
+        />
+      );
+    case 'checkbox':
+      return (
+        <ChexboxesCompliance
+          compliance={compliance}
+          fileId={fileId}
+          controlId={controlId}
+        />
+      );
+    case 'boolean':
+      return (
+        <BooleanCompliance
           compliance={compliance}
           fileId={fileId}
           controlId={controlId}

@@ -1,56 +1,94 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { UploadControlStyled } from './UploadControl.style';
-import { Grid, Fab } from '@material-ui/core';
-import { CloudUpload } from '@material-ui/icons';
+import { Grid, Fab } from '@mui/material';
+import { CloudUpload } from '@mui/icons-material';
 import { IApiControl, IUploadDetail } from 'Features/Edit/types';
 import { FormError } from 'Shared/components';
-import { IUser, security } from 'Services';
+import { IUser, security, useApi } from 'Services';
 import { ControlLabel } from '../ControlLabel';
 import { ControlFooter } from '../ControlFooter';
 import { Button, Container } from '@mui/material';
 import { useDropzone } from 'react-dropzone';
 import { uploadFile } from './apiRoutes/uploadFile';
 import { UploadList } from '../../../../../../Shared/components/UploadList/UploadList';
-import { deleteFile } from '../../../../../../Shared/components/UploadList/apiRoutes/deleteFile';
-import { downloadFile } from '../../../../../../Shared/components/UploadList/apiRoutes/downloadFile';
+// import { deleteFile } from '../../../../../../Shared/components/UploadList/apiRoutes/deleteFile';
+// import { downloadFile } from '../../../../../../Shared/components/UploadList/apiRoutes/downloadFile';
+import { RejectControl } from '../RejectByPointControl/RejectControl';
+import { useTrans } from '../../../../../../Services';
+
+import _ from 'lodash';
 
 interface IProps {
   control: IApiControl;
   fileId: string;
+  context: 'edit' | 'validate';
 }
 
-export const UploadControl: React.FC<IProps> = ({
+export const UploadControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
+  context,
 }): React.ReactElement => {
+  const inputFileRef = useRef<any>();
+  const [trans] = useTrans('Edit');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [newUploadFile, setNewUploadFile] = useState<File | null>(null);
+  const [newUploadFile, setNewUploadFile] = useState<File | any>(null);
   const [currentUploadFile, setCurrentUploadFile] = useState<
     IUploadDetail[] | null
   >(control.upload_detail);
+  const [isRejected, setIsRejected] = useState(
+    control.control_rejectable?.is_rejected
+      ? control.control_rejectable.is_rejected
+      : false,
+  );
   const [user] = useState<IUser>(security.getUser());
   const jwt = user.getJwt();
+  const [isUploading, setIsUploading] = useState(false); // Add this state
+  const { send } = useApi({ promise: true });
+  const { send: sendReturnBlob } = useApi({
+    promise: true,
+    responseType: 'blob',
+  });
 
-  // @TODO
-  // mock api call to tests api calls
-
-  const saveFileToUpload = useCallback(
-    (e) => {
-      setNewUploadFile(e.target.files[0]);
-    },
-    [setNewUploadFile],
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedUpload = useCallback(
+    _.debounce((file) => {
+      uploadFile(
+        fileId,
+        control,
+        file,
+        jwt,
+        setCurrentUploadFile,
+        setErrorMessage,
+      );
+    }, 1),
+    [],
   );
 
-  const onDrop = useCallback((acceptedFiles) => {
+  const saveFileToUpload = useCallback((e: any) => {
+    setNewUploadFile(e.target.files[0]);
+  }, []);
+
+  useEffect(() => {
+    if (
+      control.mandatory &&
+      (currentUploadFile?.length === 0 || !currentUploadFile)
+    ) {
+      setErrorMessage(trans('mandatoryValue'));
+    }
+  }, [control, newUploadFile, trans, currentUploadFile]);
+
+  const onDrop = useCallback((acceptedFiles: any) => {
     acceptedFiles.forEach((file: File) => {
       setNewUploadFile(file);
+      setIsUploading(false);
     });
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   const handleUploadFile = useCallback(() => {
     if (control.mandatory && !newUploadFile) {
-      setErrorMessage('Valeur obligatoire');
+      setErrorMessage(trans('mandatoryValue'));
 
       return;
     }
@@ -58,53 +96,105 @@ export const UploadControl: React.FC<IProps> = ({
       setErrorMessage(null);
     }
     if (newUploadFile) {
-      uploadFile(
-        fileId,
-        control,
-        newUploadFile,
-        jwt,
-        setCurrentUploadFile,
-        setErrorMessage,
-      );
+      setIsUploading(true); // Set uploading flag
+      debouncedUpload(newUploadFile);
+      // setNewUploadFile(() => {
+      //   setTimeout(() => {
+      //     uploadFile(
+      //       fileId,
+      //       control,
+      //       newUploadFile,
+      //       jwt,
+      //       setCurrentUploadFile,
+      //       setErrorMessage,
+      //     );
+      //   }, 1500);
+
+      //   return null;
+      // });
     }
-  }, [fileId, control, newUploadFile, jwt]);
+  }, [control.mandatory, newUploadFile, trans, debouncedUpload]);
 
   const handleDeleteFile = useCallback(
-    (e, name) => {
+    (e: any, name: any) => {
       e.preventDefault();
-      deleteFile(
-        fileId,
-        control.control_id,
-        name,
-        jwt,
-        setErrorMessage,
-        setCurrentUploadFile,
-      );
+      send(
+        'deleteUploadedFile',
+        {},
+        { file_id: fileId, control_id: control.control_id, file_name: name },
+      )
+        ?.then((response) => {
+          setErrorMessage(null);
+
+          return setCurrentUploadFile(response.body.data.file_detail);
+        })
+        .catch(() => {
+          setErrorMessage(
+            'Une erreur est survenue lors de la suppression du fichier',
+          );
+        });
+      // deleteFile(
+      //   fileId,
+      //   control.control_id,
+      //   name,
+      //   jwt,
+      //   setErrorMessage,
+      //   setCurrentUploadFile,
+      // );
     },
-    [jwt, control, fileId],
+    [send, fileId, control.control_id],
   );
 
   const handleDownloadFile = useCallback(
-    (e, id, name) => {
+    (e: any, id: any, name: any) => {
       e.preventDefault();
-      downloadFile(id, name, jwt, setErrorMessage);
+      sendReturnBlob(
+        'downloadUploadedFile',
+        {},
+        { file_id: id, file_name: name },
+      )
+        ?.then((response) => {
+          const url = window.URL.createObjectURL(new Blob([response.body]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', name);
+          document.body.appendChild(link);
+          link.click();
+        })
+        .catch(() => {
+          return setErrorMessage(
+            'Une erreur est survenue lors du téléchargement du fichier',
+          );
+        });
+      // downloadFile(id, name, jwt, setErrorMessage);
     },
-    [jwt],
+    [sendReturnBlob],
   );
 
   useEffect(() => {
-    if (newUploadFile) {
+    if (newUploadFile && !isUploading) {
       handleUploadFile();
     }
-  }, [newUploadFile, handleUploadFile]);
+    // setNewUploadFile(null);
+  }, [newUploadFile, handleUploadFile, isUploading]);
+
+  useEffect(() => {
+    if (!isRejected) {
+      setIsRejected(false);
+    }
+  }, [isRejected]);
 
   return (
     <Grid item xs={6}>
       <ControlLabel control={control} />
       <UploadControlStyled>
         <Button
+          disableRipple
+          disableTouchRipple
+          disableFocusRipple
+          disableElevation
           disabled={!control.editable}
-          id={`disabled-button${control.control_id}`}
+          id={`upload-id${control.control_id}`}
           style={{
             display: 'block',
             width: '100%',
@@ -123,11 +213,20 @@ export const UploadControl: React.FC<IProps> = ({
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              height: '150px',
+              height: '50px',
             }}
-            {...getRootProps({ onClick: (event) => event.stopPropagation() })}
+            {...getRootProps({
+              onClick: (event: any) => event.stopPropagation(),
+            })}
           >
-            <label htmlFor={`compliance-file-upload${control.control_id}`}>
+            <label
+              htmlFor={`compliance-file-upload${control.control_id}`}
+              onClick={() => {
+                setNewUploadFile(null);
+                setIsUploading(false);
+                inputFileRef.current.value = null;
+              }}
+            >
               <input
                 style={{ display: 'none' }}
                 id={`compliance-file-upload${control.control_id}`}
@@ -135,12 +234,14 @@ export const UploadControl: React.FC<IProps> = ({
                 type="file"
                 onChange={saveFileToUpload}
                 {...getInputProps()}
+                ref={(el) => (inputFileRef.current = el)}
               />
               <Fab
-                color="secondary"
+                color="error"
                 size="small"
                 component="span"
                 aria-label="upload"
+                style={{ position: 'inherit' }}
               >
                 <CloudUpload color={'action'} />
               </Fab>
@@ -154,6 +255,15 @@ export const UploadControl: React.FC<IProps> = ({
           disabled={!control.control_editable}
         />
       </UploadControlStyled>
+      {control.useRejection && control.control_rejectable && (
+        <RejectControl
+          isRejected={isRejected}
+          setIsRejected={setIsRejected}
+          controlId={control.control_id}
+          context={context}
+          controlRejectable={control.useRejection}
+        />
+      )}
       {errorMessage ? (
         <p>
           <FormError>{errorMessage}</FormError>

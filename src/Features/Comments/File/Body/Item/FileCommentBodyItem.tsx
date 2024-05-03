@@ -1,6 +1,6 @@
 import React from 'react';
 import { FileCommentBodyItemStyled } from './FileCommentBodyItem.style';
-import { Avatar, Grid } from '@material-ui/core';
+import { Avatar, Grid } from '@mui/material';
 import { IFileComment } from '../../../types';
 import { randomColor } from 'Styles';
 
@@ -8,9 +8,9 @@ interface IFileCommentBodyItem {
   comment: IFileComment;
 }
 
-export const FileCommentBodyItem: React.FC<IFileCommentBodyItem> = ({
-  comment,
-}): React.ReactElement => {
+export const FileCommentBodyItem: React.FC<
+  React.PropsWithChildren<IFileCommentBodyItem>
+> = ({ comment }): React.ReactElement => {
   const lastFirst = comment.user.split(' ');
   let firstLetters = '';
   if (lastFirst.length > 0) {
@@ -22,7 +22,7 @@ export const FileCommentBodyItem: React.FC<IFileCommentBodyItem> = ({
   }
 
   return (
-    <FileCommentBodyItemStyled bgc={randomColor()}>
+    <FileCommentBodyItemStyled $bgc={randomColor()}>
       <Grid container alignItems={'center'} wrap={'nowrap'}>
         <Grid item>
           <Avatar>{firstLetters}</Avatar>

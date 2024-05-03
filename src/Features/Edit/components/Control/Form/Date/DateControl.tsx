@@ -1,6 +1,6 @@
 import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
 import { DateControlStyled } from './DateControl.style';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { IApiControl, IChapter } from 'Features/Edit/types';
 import { FormError, InputBase } from 'Shared/components';
 import { useApi, useRouter } from 'Services';
@@ -10,25 +10,179 @@ import { checkIfSameValues } from '../../../../../../Packages/Helpers/src/checkI
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
 import { minMax } from '../../../../../../Packages/Helpers/src/minMax';
 import useFocus from '../../../../../../Packages/Helpers/src/useFocus';
+import { RejectControl } from '../RejectByPointControl/RejectControl';
+import { useTrans } from '../../../../../../Services';
 
 interface IProps {
   control: IApiControl;
   fileId: string;
   formState: IChapter[];
   setFormState: React.Dispatch<SetStateAction<IChapter[]>>;
+  context: 'edit' | 'validate';
 }
 
-export const DateControl: React.FC<IProps> = ({
+export const DateControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   formState,
   setFormState,
+  context,
 }): React.ReactElement => {
+  const today = new Date();
+  const yesterday = new Date(today);
+  const tomorrow = new Date(today);
+  const day_after_tomorrow = new Date(today);
+  const next_month = new Date(today);
+
+  yesterday.setDate(yesterday.getDate() - 1);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  day_after_tomorrow.setDate(day_after_tomorrow.getDate() + 2);
+  next_month.setDate(next_month.getMonth() + 2);
+
+  const today_date = `${
+    today
+      .toLocaleString('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .split('/')[2]
+  }-${
+    today
+      .toLocaleString('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .split('/')[1]
+  }-${
+    today
+      .toLocaleString('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .split('/')[0]
+  }`;
+
+  // const yesterday_date = `${
+  //   yesterday
+  //     .toLocaleString('en-GB', {
+  //       year: 'numeric',
+  //       month: '2-digit',
+  //       day: '2-digit',
+  //     })
+  //     .split('/')[2]
+  // }-${
+  //   yesterday
+  //     .toLocaleString('en-GB', {
+  //       year: 'numeric',
+  //       month: '2-digit',
+  //       day: '2-digit',
+  //     })
+  //     .split('/')[1]
+  // }-${
+  //   yesterday
+  //     .toLocaleString('en-GB', {
+  //       year: 'numeric',
+  //       month: '2-digit',
+  //       day: '2-digit',
+  //     })
+  //     .split('/')[0]
+  // }`;
+
+  const tomorrow_date = `${
+    tomorrow
+      .toLocaleString('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .split('/')[2]
+  }-${
+    tomorrow
+      .toLocaleString('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .split('/')[1]
+  }-${
+    tomorrow
+      .toLocaleString('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .split('/')[0]
+  }`;
+
+  const day_after_tomorrow_date = `${
+    day_after_tomorrow
+      .toLocaleString('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .split('/')[2]
+  }-${
+    day_after_tomorrow
+      .toLocaleString('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .split('/')[1]
+  }-${
+    day_after_tomorrow
+      .toLocaleString('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .split('/')[0]
+  }`;
+
+  // const next_month_date = `${
+  //   next_month
+  //     .toLocaleString('en-GB', {
+  //       year: 'numeric',
+  //       month: '2-digit',
+  //       day: '2-digit',
+  //     })
+  //     .split('/')[2]
+  // }-${
+  //   next_month
+  //     .toLocaleString('en-GB', {
+  //       year: 'numeric',
+  //       month: '2-digit',
+  //       day: '2-digit',
+  //     })
+  //     .split('/')[1]
+  // }-${
+  //   next_month
+  //     .toLocaleString('en-GB', {
+  //       year: 'numeric',
+  //       month: '2-digit',
+  //       day: '2-digit',
+  //     })
+  //     .split('/')[0]
+  // }`;
+
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);
+  const [isRejected, setIsRejected] = useState(
+    control.control_rejectable?.is_rejected
+      ? control.control_rejectable.is_rejected
+      : false,
+  );
   const [inputRef, setInputFocus] = useFocus();
   const { currentRoute } = useRouter();
+  const [trans] = useTrans('Edit');
+  const [apiRouteName, setApiRouteName] = useState<string>(
+    currentRoute?.props?.apiSaveControlRouteName,
+  );
 
   useEffect(() => {
     setCurrentValue(control.control_value);
@@ -71,9 +225,7 @@ export const DateControl: React.FC<IProps> = ({
           )
         ) {
           setInputFocus();
-          setErrorMessage(
-            'La valeur saisie ne respecte pas les contraintes définies',
-          );
+          setErrorMessage(trans('enteredValueConstraints'));
 
           return;
         }
@@ -82,7 +234,7 @@ export const DateControl: React.FC<IProps> = ({
       if (!checkIfSameValues(value, currentValue)) {
         setErrorMessage(null);
         if (control.mandatory && !value.trim()) {
-          setErrorMessage('Valeur obligatoire');
+          setErrorMessage(trans('mandatoryValue'));
         }
 
         return;
@@ -91,12 +243,12 @@ export const DateControl: React.FC<IProps> = ({
       setErrorMessage(null);
 
       if (control.mandatory && !value.trim()) {
-        setErrorMessage('Valeur obligatoire');
+        setErrorMessage(trans('mandatoryValue'));
       }
 
       setCurrentValue(value);
       send(
-        currentRoute?.props?.apiSaveControlRouteName,
+        apiRouteName,
         {},
         {
           file_id: fileId,
@@ -111,7 +263,7 @@ export const DateControl: React.FC<IProps> = ({
       fileId,
       control.control_id,
       control.control_family,
-      currentRoute,
+      apiRouteName,
       control.control_regex,
       control.control_regex_msg,
       currentValue,
@@ -119,23 +271,59 @@ export const DateControl: React.FC<IProps> = ({
       control.mandatory,
       control.control_options,
       setInputFocus,
+      trans,
     ],
   );
 
   useEffect(() => {
     if (control.mandatory && control.editable && !currentValue) {
-      setErrorMessage('Valeur obligatoire');
+      setErrorMessage(trans('mandatoryValue'));
     }
     if (!control.mandatory) {
       setErrorMessage(null);
     }
-  }, [control.mandatory, control.editable, currentValue]);
+  }, [control.mandatory, control.editable, currentValue, trans]);
 
   useEffect(() => {
     if (error) {
-      setErrorMessage("Une erreur s'est produite durant l'enregistrement");
+      setErrorMessage(trans('errorRecording'));
     }
-  }, [error]);
+  }, [error, trans]);
+
+  useEffect(() => {
+    if (!isRejected) {
+      setIsRejected(false);
+    }
+  }, [isRejected]);
+
+  if (window?.['Cypress']) {
+    window['Features/Edit/Control/Form/Date/DateControl'] = {
+      setErrorMessage,
+      setApiRouteName,
+    };
+  }
+
+  const min_date =
+    control?.control_options?.min_date === 'today'
+      ? today_date
+      : control?.control_options?.min_date === 'tomorrow'
+        ? tomorrow_date
+        : control?.control_options?.min_date === 'day_after_tomorrow'
+          ? day_after_tomorrow_date
+          : control?.control_options?.min_date === 'next_month'
+            ? next_month
+            : control?.control_options?.min_date;
+
+  const max_date =
+    control?.control_options?.max_date === 'today'
+      ? today_date
+      : control?.control_options?.max_date === 'tomorrow'
+        ? tomorrow_date
+        : control?.control_options?.max_date === 'day_after_tomorrow'
+          ? day_after_tomorrow_date
+          : control?.control_options?.max_date === 'next_month'
+            ? next_month
+            : control?.control_options?.max_date;
 
   return (
     <Grid item xs={6}>
@@ -147,18 +335,34 @@ export const DateControl: React.FC<IProps> = ({
             control.editable
               ? control.control_title
               : control.control_value
-              ? control.control_value
-              : ''
+                ? control.control_value
+                : ''
           }
           disabled={!control.editable}
           color={control.editable ? 'text' : 'disabled'}
           defaultValue={currentValue ? currentValue : ''}
           onBlur={(e) => saveValue(e.currentTarget.value)}
           type={'date'}
+          InputProps={{
+            inputProps: {
+              min: min_date,
+              max: max_date,
+            },
+          }}
+          // InputProps={{ inputProps: { min: '2022-05-04', max: '2022-05-22' } }}
         />
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ControlFooter control={control} />
       </DateControlStyled>
+      {control.useRejection && control.control_rejectable && (
+        <RejectControl
+          isRejected={isRejected}
+          setIsRejected={setIsRejected}
+          controlId={control.control_id}
+          context={context}
+          controlRejectable={control.useRejection}
+        />
+      )}
     </Grid>
   );
 };

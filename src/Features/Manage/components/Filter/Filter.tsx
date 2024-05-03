@@ -5,12 +5,13 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { FilterStyled, BadgeStyled } from './Filter.style';
 import { FilterIcon, useTheme } from 'Styles';
 import { BPIBadge, Checkbox, Popper } from 'Shared/components';
 import { storage, useApi } from 'Services';
 import { IApiStage, IApiState } from '../../apiRoutes';
+import { useTrans } from '../../../../Services';
 
 interface IProps {
   initStages?: Record<number, true>;
@@ -18,12 +19,13 @@ interface IProps {
   initRoles?: Record<number, true>;
 }
 
-export const Filter: React.FC<IProps> = ({
+export const Filter: React.FC<React.PropsWithChildren<IProps>> = ({
   initStages = {},
   initStates = {},
   initRoles = {},
   children,
 }): React.ReactElement => {
+  const [trans] = useTrans('Manage');
   const { error, isLoading, send, data } = useApi<{
     stages: IApiStage[];
     states: IApiState[];
@@ -155,7 +157,7 @@ export const Filter: React.FC<IProps> = ({
         zIndex={10}
       >
         <FilterStyled>
-          <header className={'title'}>Filtrer les dossiers</header>
+          <header className={'title'}>{trans('filterFolders')}</header>
           <Grid container wrap={'nowrap'} alignItems={'center'}>
             {data ? (
               <>

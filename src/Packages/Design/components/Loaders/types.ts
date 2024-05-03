@@ -1,12 +1,12 @@
 export interface IStairsLoader {
-  barsColor?: string;
-  ballColor?: string;
+  $barsColor?: string;
+  $ballColor?: string;
   /**
    * Animation speed in second.
    * @default 4
    */
-  speed?: number;
-  size?: 'sm' | 'md' | 'lg';
+  $speed?: number;
+  $size?: 'sm' | 'md' | 'lg';
 }
 
 export interface ITextShineLoader {
@@ -15,10 +15,10 @@ export interface ITextShineLoader {
    * Gradient colors. Provide a least two colors.
    * @default ['#000000', '#FFFFFF']
    */
-  colors?: string[];
+  $colors?: string[];
   /**
    * Animation speed in second.
    * @default 4
    */
-  speed?: number;
+  $speed?: number;
 }

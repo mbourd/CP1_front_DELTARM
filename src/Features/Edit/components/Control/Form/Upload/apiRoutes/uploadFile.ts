@@ -7,13 +7,17 @@ export const uploadFile = (
   fileId: string,
   control: IApiControl,
   newUploadFile: File,
-  jwt: string | null,
+  jwt: string,
   setCurrentUploadFile: React.Dispatch<SetStateAction<IUploadDetail[] | null>>,
   setErrorMessage: React.Dispatch<SetStateAction<string | null>>,
 ) => {
+  if (!newUploadFile) return;
+
   const formData = new FormData();
+  const fileName = newUploadFile.name.replace('#', ' ');
+
   formData.append('file', newUploadFile);
-  const fileName = newUploadFile.name;
+  formData.append('file_name', newUploadFile.name);
   axios
     .post(
       `${getEnv('API_PROTOCOL')}://${getEnv(
@@ -35,6 +39,8 @@ export const uploadFile = (
       return setCurrentUploadFile(res.data.data.file_detail);
     })
     .catch((err) => {
-      return setErrorMessage(err.response.data.error_msg);
+      if (err?.response?.data?.error_msg) {
+        return setErrorMessage(err?.response?.data?.error_msg);
+      }
     });
 };

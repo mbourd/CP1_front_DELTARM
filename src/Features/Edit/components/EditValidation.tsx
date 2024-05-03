@@ -1,22 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Box, Grid, List } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+import { Box, Grid, List } from '@mui/material';
+import { Alert } from '@mui/material';
 import { EditHeaderStyled, EditStyled } from './Edit.style';
 import {
   isEmpty,
   router,
   SecurityContext,
-  storage,
   SwitchCallState,
   useApi,
   useSecurity,
 } from 'Services';
-import { HeadingOne, PreWrapStyled } from 'Shared/components';
+import { BreadCrumb, PreWrapStyled } from 'Shared/components';
 import { NavItem } from './NavItem/NavItem';
 import { IData } from '../types';
 import { EditValidationContext } from '../EditValidationContext';
 import { IsLoading } from './IsLoading/IsLoading';
-import { SwitchContentBody } from './ContentBody/SwitchContentBody';
+import { ContentBody } from './ContentBody';
 import { NotFound } from './NotFound/NotFound';
 import { SubHeader } from './SubHeader';
 
@@ -25,7 +24,7 @@ interface IProps {
   apiRouteName: string;
 }
 
-export const EditValidation: React.FC<IProps> = ({
+export const EditValidation: React.FC<React.PropsWithChildren<IProps>> = ({
   title,
   apiRouteName,
 }): React.ReactElement => {
@@ -33,10 +32,29 @@ export const EditValidation: React.FC<IProps> = ({
   const [currentSection, setCurrentSection] = useState<string | null>(null);
   const { user } = useSecurity();
   const { logout } = useContext(SecurityContext);
+  const [sectionsLabels, setSectionsLabels] = useState<
+    Record<any, any> | undefined
+  >({});
+
+  useEffect(() => {
+    if (data)
+      setSectionsLabels(
+        data?.sections
+          .map((section) => [section.id, section.label])
+          .reduce((acc, [id, label]) => {
+            acc[id] = label;
+
+            return acc;
+          }, {}),
+      );
+  }, [data]);
 
   // To avoid (bpi specific)
   const { id } = router.getParams();
   const frontRouterQueries = router.getQueries();
+  const [fileId, setFileId] = useState<string>(
+    id ? id : frontRouterQueries?.file_id ?? '',
+  );
 
   if (!user.isLogged()) {
     logout();
@@ -62,25 +80,40 @@ export const EditValidation: React.FC<IProps> = ({
     };
   }, [send, id, currentSection, request, apiRouteName, frontRouterQueries]);
 
+  if (window?.['Cypress']) {
+    window['Features/Edit/components/EditValidation'] = {
+      setFileId,
+    };
+  }
+
   return (
     <SwitchCallState
       callState={callState}
       states={{
-        IS_LOADING: <IsLoading title={title} />,
-        NOT_FOUND: <NotFound title={title} />,
-        BAD_REQUEST: <NotFound title={title} />,
+        IS_LOADING: <IsLoading title={data?.title} />,
+        NOT_FOUND: <NotFound title={data?.title} />,
+        BAD_REQUEST: <NotFound title={data?.title} />,
       }}
     >
       {data ? (
         <EditStyled>
           <EditHeaderStyled>
-            <HeadingOne>
-              <SubHeader title={title} data={data} />
-            </HeadingOne>
+            {data.context === 'edit' && (
+              <BreadCrumb values={['Dashboard', 'Edit']} />
+            )}
+            {data.context === 'validate' && (
+              <BreadCrumb values={['Dashboard', 'Validation']} />
+            )}
+            <SubHeader data={data} />
           </EditHeaderStyled>
 
           <EditValidationContext.Provider
-            value={{ data, fileId: id ? id : frontRouterQueries.file_id }}
+            value={{
+              data,
+              fileId,
+              setSectionsLabels,
+              sectionId: currentSection || data?.currentSection.id,
+            }}
           >
             <Grid container wrap={'nowrap'}>
               <Grid item className={'nav'}>
@@ -88,14 +121,11 @@ export const EditValidation: React.FC<IProps> = ({
                   {data?.sections.map((section, index) => {
                     const current = currentSection || data?.currentSection.id;
 
-                    if (section.id === current) {
-                      storage.setData('edit.section.active', section.code);
-                    }
-
                     return (
                       <NavItem
                         key={index}
                         item={section}
+                        sectionLabel={sectionsLabels?.[section.id] || ''}
                         active={section.id === current}
                         onClick={(id: string) => setCurrentSection(id)}
                       />
@@ -104,24 +134,7 @@ export const EditValidation: React.FC<IProps> = ({
                 </List>
               </Grid>
               <Grid item className={'content'}>
-                {data.sectionHeader && (
-                  <Box paddingBottom={5}>
-                    <Alert
-                      variant="outlined"
-                      icon={false}
-                      severity={
-                        data.sectionHeader.type === 'alert'
-                          ? 'error'
-                          : 'success'
-                      }
-                    >
-                      <PreWrapStyled>
-                        {data.sectionHeader.message}
-                      </PreWrapStyled>
-                    </Alert>
-                  </Box>
-                )}
-                <SwitchContentBody />
+                <ContentBody />
                 {data.sectionFooter && (
                   <Box paddingY={5}>
                     <Alert variant="outlined" severity="info">

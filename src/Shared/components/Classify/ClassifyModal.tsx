@@ -1,5 +1,6 @@
 import React from 'react';
 import { GenericActionModal } from 'Shared/components/GenericActionModal/GenericActionModal';
+import { useTrans } from '../../../Services';
 
 interface IProps {
   open: boolean;
@@ -7,19 +8,21 @@ interface IProps {
   fileId: string;
 }
 
-export const ClassifyModal: React.FC<IProps> = ({
+export const ClassifyModal: React.FC<React.PropsWithChildren<IProps>> = ({
   open,
   onClose,
   fileId,
 }): React.ReactElement | null => {
+  const [trans] = useTrans('SharedComponents');
+
   return (
     <GenericActionModal
       open={open}
       onClose={onClose}
       fileId={fileId}
-      actionLabel={'Classer sans suite'}
-      successMessage={'Le dossier a bien été classé'}
-      message={'Confirmez-vous le classement sans suite du dossier ?'}
+      actionLabel={trans('classifyFollowup')}
+      successMessage={trans('fileClassified')}
+      message={trans('confirmClassificationWithoutContinuation')}
       postRouteName={'actionClassify'}
       comment
       commentRequired

@@ -1,0 +1,14 @@
+{
+  "origin_fonction_callback": "delete_row",
+  "row_deleted": [
+    "90c6e08b-7f82-47e8-aeae-13195647b6b4",
+    "90c6e08b-7f82-47e8-aeae-13195647b6b41",
+    "90c6e08b-7f82-47e8-aeae-13195647b6b43"
+  ],
+  "row_error": [
+    {
+      "row": "90c6e08b-7f82-47e8-aeae-13195647b6b42",
+      "error": "Query Update Error #1.1"
+    }
+  ]
+}

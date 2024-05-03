@@ -29,7 +29,7 @@ export interface IInputBase {
   /**
    * Left icon.
    */
-  icon?: false | React.ReactNode;
+  icon?: false | React.ReactNode | any;
 
   /**
    * Input name.
@@ -63,6 +63,8 @@ export interface IInputBase {
    */
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  onKeyUp?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onBlur?: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 
   /**
@@ -104,4 +106,12 @@ export interface IInputBase {
    * Input ref.
    */
   inputRef?: any;
+
+  InputProps?: any;
+  fullWidth?: boolean;
+  selectAllOnClick?: boolean;
+  onClick?: React.MouseEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  fontFamily?: string;
+  fontSize?: string;
+  style?: React.CSSProperties;
 }

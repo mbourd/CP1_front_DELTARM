@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 
 import {
   useTrans,
@@ -16,15 +16,35 @@ import { IsLoading } from './IsLoading';
 import { NoData } from './NoData';
 import { DashboardSearch } from './Search/DashboardSearch';
 import { DashboardDynamic } from '../../DashboardDynamic';
+import { AgGridDashboard } from '../../AgGridDashboard';
 
 const Dashboard: React.FC = (): React.ReactElement => {
   const [trans] = useTrans('Dashboard');
   const { callState, send, data } = useApi<ICard[]>();
   const { data: dataSecurity, logout } = useContext(SecurityContext);
   const { user } = useSecurity();
+  //   useEffect(() => {
+  //     if (context.cli_id && clientInfoSignal === false) {
+  //       // checks whether client data came or not
+  //       if (review?.length > 0) {
+  //         setClientInfoSignal(true);
+  //         localStorage.removeItem('client_info');
+
+  //         return;
+  //       } else {
+  //         setClientInfoSignal(false);
+
+  //         return;
+  //       }
+  //     }
+  //   }, [context.cli_id, clientInfoSignal, review]);
+
   useEffect(() => {
     // Temporary if statements behavior
     if (dataSecurity.context === 'contr_perm') {
+      return;
+    }
+    if (dataSecurity.context === 'export') {
       return;
     }
     send('dashboard');
@@ -33,6 +53,10 @@ const Dashboard: React.FC = (): React.ReactElement => {
   // Temporary if statements behavior
   if (dataSecurity.context === 'contr_perm') {
     return <DashboardDynamic />;
+  }
+
+  if (dataSecurity.context === 'export') {
+    return <AgGridDashboard />;
   }
 
   if (!user.isLogged()) {

@@ -100,7 +100,7 @@ export interface ITranslation {
    * Sets language to use (overrides language detection).
    * @default 'en'
    */
-  setLanguage: (language: string) => ITranslation;
+  setLanguage: (language: any) => ITranslation;
   /**
    * Gets language to use.
    */

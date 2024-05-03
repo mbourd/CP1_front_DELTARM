@@ -1,18 +1,40 @@
-import React, { useState } from 'react';
-import { Grid } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { Grid } from '@mui/material';
 import { IApiControl } from 'Features/Edit/types';
+import DOMPurify from 'dompurify';
 import { InfoBlockControlStyled } from './InfoBlockControl.style';
 import { InfoBlockControlLabel } from './InfoBlockControlLabel';
 import { ControlFooter } from '../ControlFooter';
+import { RejectControl } from '../RejectByPointControl/RejectControl';
 
 interface IProps {
   control: IApiControl;
+  context: 'edit' | 'validate';
 }
 
-export const InfoBlockControl: React.FC<IProps> = ({
+export const InfoBlockControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
+  context,
 }): React.ReactElement => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isRejected, setIsRejected] = useState(
+    control.control_rejectable?.is_rejected
+      ? control.control_rejectable.is_rejected
+      : false,
+  );
+
+  useEffect(() => {
+    if (!isRejected) {
+      setIsRejected(false);
+    }
+  }, [isRejected]);
+
+  //expose for Cypress
+  if (window?.['Cypress']) {
+    window['Features_Edit_InfoBlockControl'] = {
+      setIsOpen,
+    };
+  }
 
   return (
     <Grid item xs={12}>
@@ -26,13 +48,24 @@ export const InfoBlockControl: React.FC<IProps> = ({
           <>
             <div
               dangerouslySetInnerHTML={{
-                __html: control.control_value ? control.control_value : '',
+                __html: control.control_value
+                  ? DOMPurify.sanitize(control.control_value)
+                  : '',
               }}
             />
             <ControlFooter control={control} />
           </>
         )}
       </InfoBlockControlStyled>
+      {control.useRejection && control.control_rejectable && (
+        <RejectControl
+          isRejected={isRejected}
+          setIsRejected={setIsRejected}
+          controlId={control.control_id}
+          context={context}
+          controlRejectable={control.useRejection}
+        />
+      )}
     </Grid>
   );
 };

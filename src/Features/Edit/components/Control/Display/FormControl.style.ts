@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 export const FormControlStyled = styled.div`
   .control-container {
@@ -8,17 +8,17 @@ export const FormControlStyled = styled.div`
   .MuiGrid-item {
     padding: 1.3rem;
   }
+
   ._FormError {
     padding: 0;
-    position: absolute;
   }
 
   ._FormLabel {
     width: 100%;
 
     .MuiGrid-item {
-      margin: 0;
       padding: 0;
+      margin: 0;
 
       &:last-child {
         height: 20px;
@@ -27,14 +27,14 @@ export const FormControlStyled = styled.div`
   }
 
   .control-footer {
-    margin-top: 2px;
     position: absolute;
     right: 0;
     width: auto;
+    margin-top: 2px;
 
     .MuiGrid-item {
-      margin: 0;
       padding: 0;
+      margin: 0;
     }
   }
 `;

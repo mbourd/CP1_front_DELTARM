@@ -1,48 +1,58 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { IColor } from '../../../types';
 
 interface IProps {
-  bdc: keyof IColor;
-  labelColor: keyof IColor;
-  bgc: keyof IColor;
-  bdr: string;
-  isOpen: boolean;
-  containerBdc: keyof IColor;
+  $bdc: keyof IColor;
+  $labelColor: keyof IColor;
+  $bgc: keyof IColor;
+  $bdr: string;
+  $isOpen: boolean;
+  $containerBdc: keyof IColor;
+  $font_style?: any;
+  $font_color?: any;
+  $background?: any;
 }
 
 export const SelectLabelStyled = styled.div<IProps>`
   ._SelectLabelButton {
-    background-color: ${({ theme, bgc }) => theme.color[bgc].main};
-    border: 1px solid
-      ${({ theme, bdc, isOpen, containerBdc }) =>
-        isOpen ? theme.color[containerBdc].main : theme.color[bdc].main};
-    border-bottom: 1px solid ${({ theme, bdc }) => theme.color[bdc].main};
-    border-radius: ${({ bdr, isOpen }) =>
-      isOpen ? bdr + ' ' + bdr + ' 0 0' : bdr};
-    color: ${({ theme, labelColor }) => theme.color[labelColor].main};
-    cursor: pointer;
     display: block;
-    font-family: ${({ theme, isOpen }) =>
-      theme.font[isOpen ? 'medium' : 'text'].main};
-    font-size: ${({ theme }) => theme.sizing.normal};
-    height: 38px;
-    line-height: 29px;
     overflow: hidden;
-    padding: 4px 8px;
-    text-align: left;
-    text-transform: none;
     width: 100%;
+    height: 38px;
+    padding: 4px 8px;
+    border: 1px solid
+      ${({ theme, $bdc, $isOpen, $containerBdc }) =>
+        $isOpen ? theme.color[$containerBdc].main : theme.color[$bdc].main};
+    border-radius: ${({ $bdr, $isOpen }) =>
+      $isOpen ? $bdr + ' ' + $bdr + ' 0 0' : $bdr};
+    border-bottom: 1px solid ${({ theme, $bdc }) => theme.color[$bdc].main};
+    background-color: ${({ $background }) =>
+      $background ? `#${$background}` : 'transparent'};
+    color: ${({ theme, $labelColor, $font_color }) =>
+      $font_color ? `#${$font_color}` : theme.color[$labelColor].main};
+    cursor: pointer;
+    font-family: ${({ theme, $isOpen }) =>
+      theme.font[$isOpen ? 'medium' : 'text'].main};
+    font-size: ${({ theme }) => theme.sizing.normal};
+    font-style: ${({ $font_style }) =>
+      $font_style ? `${$font_style}` : 'normal'};
+    font-weight: ${({ $font_style }) => ($font_style ? `${$font_style}` : 0)};
+    line-height: 29px;
+    text-align: left;
+    text-decoration: ${({ $font_style }) =>
+      $font_style ? `${$font_style}` : 'none'};
+    text-transform: none;
 
     .container {
-      align-items: center;
       display: inline-flex;
-      flex-wrap: nowrap;
       width: 100%;
+      flex-wrap: nowrap;
+      align-items: center;
 
       .left {
+        width: 20px;
         height: 20px;
         margin-left: 8px;
-        width: 20px;
       }
 
       .right {
@@ -51,12 +61,19 @@ export const SelectLabelStyled = styled.div<IProps>`
     }
 
     .MuiSvgIcon-root {
-      color: ${({ theme, bdc, isOpen }) =>
-        theme.color[isOpen ? 'active' : bdc].main};
+      color: ${({ theme, $bdc, $isOpen }) =>
+        theme.color[$isOpen ? 'active' : $bdc].main};
     }
+
     &:hover {
-      background-color: transparent;
       border: 1px solid ${({ theme }) => theme.color.hover.main};
+      background-color: ${({ $background }) =>
+        $background ? `#${$background}` : '#fff'};
+      font-style: ${({ $font_style }) =>
+        $font_style ? `${$font_style}` : 'normal'};
+      font-weight: ${({ $font_style }) => ($font_style ? `${$font_style}` : 0)};
+      text-decoration: ${({ $font_style }) =>
+        $font_style ? `${$font_style}` : 'none'};
     }
   }
 `;

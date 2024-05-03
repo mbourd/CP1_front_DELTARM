@@ -1,7 +1,9 @@
 import React from 'react';
-import { SvgIcon, SvgIconProps } from '@material-ui/core';
+import { SvgIcon, SvgIconProps } from '@mui/material';
 
-export const ListIcon: React.FC<SvgIconProps> = (props) => {
+export const ListIcon: React.FC<React.PropsWithChildren<SvgIconProps>> = (
+  props,
+) => {
   return (
     <SvgIcon viewBox={'0 0 24 24'} {...props}>
       <circle cx="4" cy="4" r="3" />

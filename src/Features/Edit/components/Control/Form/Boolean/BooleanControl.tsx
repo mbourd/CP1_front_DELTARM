@@ -1,6 +1,6 @@
 import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
 import { BooleanControlStyled } from './BooleanControl.style';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { IApiControl, IChapter } from 'Features/Edit/types';
 import { FormError } from 'Shared/components';
 import { useApi, useRouter } from 'Services';
@@ -9,24 +9,40 @@ import { ControlFooter } from '../ControlFooter';
 import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
 import { Checkbox } from '@mui/material';
 import { stringToBoolean } from '../../../../../../Packages/Helpers/src/stringToBoolean';
+import { RejectControl } from '../RejectByPointControl/RejectControl';
+
+import { useTrans } from '../../../../../../Services';
 
 interface IProps {
   control: IApiControl;
   fileId: string;
   formState: IChapter[];
   setFormState: React.Dispatch<SetStateAction<IChapter[]>>;
+  context: 'edit' | 'validate';
 }
 
-export const BooleanControl: React.FC<IProps> = ({
+export const BooleanControl: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   fileId,
   formState,
   setFormState,
+  context,
 }): React.ReactElement => {
+  const [trans] = useTrans('Edit');
   const { send, error } = useApi<void>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentValue, setCurrentValue] = useState(control.control_value);
+  const [isRejected, setIsRejected] = useState(
+    control.control_rejectable?.is_rejected
+      ? control.control_rejectable.is_rejected
+      : false,
+  );
+
   const { currentRoute } = useRouter();
+  const [apiRouteName, setApiRouteName] = useState<string>(
+    currentRoute?.props?.apiSaveControlRouteName,
+  );
+
   useEffect(() => {
     setCurrentValue(control.control_value);
   }, [control.control_value]);
@@ -38,10 +54,10 @@ export const BooleanControl: React.FC<IProps> = ({
   const toogleAndSaveValue = useCallback(() => {
     const booleanValue = !stringToBoolean(currentValue);
 
-    setErrorMessage(null);
+    if (booleanValue === true) setErrorMessage(null);
 
-    if (control.mandatory && currentValue !== null) {
-      setErrorMessage('Valeur obligatoire');
+    if (control.mandatory && booleanValue === false) {
+      setErrorMessage(trans('mandatoryValue'));
     }
 
     setCurrentValue(booleanValue.toString());
@@ -52,34 +68,49 @@ export const BooleanControl: React.FC<IProps> = ({
       elm_val: booleanValue.toString(),
     };
 
-    send(currentRoute?.props?.apiSaveControlRouteName, {}, q);
+    send(apiRouteName, {}, q);
   }, [
     currentValue,
     send,
     fileId,
     control.control_id,
-    currentRoute,
+    apiRouteName,
     control.control_family,
     setCurrentValue,
     control.mandatory,
+    trans,
   ]);
 
   useEffect(() => {
-    if (control.mandatory && control.editable && !currentValue) {
-      setErrorMessage('Valeur obligatoire');
+    if (
+      control.mandatory &&
+      control.editable &&
+      !stringToBoolean(control.control_value)
+    ) {
+      setErrorMessage(trans('mandatoryValue'));
     }
-    if (!control.mandatory) {
-      setErrorMessage(null);
+  }, [control.control_value, control.editable, control.mandatory, trans]);
+
+  useEffect(() => {
+    if (!isRejected) {
+      setIsRejected(false);
     }
-  }, [control.mandatory, control.editable, currentValue]);
+  }, [isRejected]);
 
   useEffect(() => {
     if (error) {
-      setErrorMessage("Une erreur s'est produite durant l'enregistrement");
+      setErrorMessage(trans('errorRecording'));
     }
-  }, [error]);
+  }, [error, trans]);
 
   const booleanValue = stringToBoolean(currentValue);
+
+  if (window?.['Cypress']) {
+    window['Features/Edit/Control/Form/Boolean/BooleanControl'] = {
+      setErrorMessage,
+      setApiRouteName,
+    };
+  }
 
   return (
     <Grid item xs={6}>
@@ -89,12 +120,13 @@ export const BooleanControl: React.FC<IProps> = ({
           id={`checkbox-boolean${control.control_id}`}
           style={{ display: 'block', paddingLeft: '0' }}
           disableRipple
+          // @ts-ignore
           placeholder={
             control.editable
               ? control.control_title
               : currentValue
-              ? currentValue
-              : ''
+                ? currentValue
+                : ''
           }
           disabled={!control.editable}
           checked={booleanValue ? booleanValue : false}
@@ -103,6 +135,15 @@ export const BooleanControl: React.FC<IProps> = ({
         {errorMessage ? <FormError>{errorMessage}</FormError> : null}
         <ControlFooter control={control} />
       </BooleanControlStyled>
+      {control.useRejection && control.control_rejectable && (
+        <RejectControl
+          isRejected={isRejected}
+          setIsRejected={setIsRejected}
+          controlId={control.control_id}
+          context={context}
+          controlRejectable={control.useRejection}
+        />
+      )}
     </Grid>
   );
 };

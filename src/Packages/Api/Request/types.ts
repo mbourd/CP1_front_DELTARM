@@ -77,4 +77,5 @@ export interface IApiRequest {
     queries: ApiRequestQueriesType,
   ): Promise<ApiResponseBodyType>;
   send(): Promise<ApiResponseBodyType>;
+  setResponseType(responseType: 'json' | 'blob'): IApiRequest;
 }

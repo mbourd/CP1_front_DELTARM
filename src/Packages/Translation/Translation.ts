@@ -28,9 +28,9 @@ import {
  */
 export class Translation implements ITranslation {
   private _options: InitOptionsType = {
-    lng: 'en',
-    fallbackLng: ['en', 'fr'],
-    supportedLngs: ['en', 'fr'],
+    lng: 'fr',
+    fallbackLng: 'fr',
+    supportedLngs: ['fr', 'en', 'de'],
     debug: false,
     defaultNS: 'common',
     fallbackNS: false,

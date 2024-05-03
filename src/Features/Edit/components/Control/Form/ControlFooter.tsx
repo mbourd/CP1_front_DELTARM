@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Grid } from '@material-ui/core';
+import { Box, Grid } from '@mui/material';
 import { BPITooltip } from 'Shared/components';
 import { UserCheckedIcon, WarningIcon } from 'Styles';
 import { IApiControl } from 'Features/Edit/types';
@@ -8,7 +8,7 @@ interface IProps {
   control: IApiControl;
 }
 
-export const ControlFooter: React.FC<IProps> = ({
+export const ControlFooter: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
 }): React.ReactElement => {
   const prev =

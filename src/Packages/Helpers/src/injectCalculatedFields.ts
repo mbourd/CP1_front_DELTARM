@@ -4,11 +4,12 @@ import { between } from './between';
 export const injectCalculatedFields = (formState: IChapter[]): IChapter[] => {
   formState.map((chapter: IChapter) => {
     chapter.controls.map((field) => {
-      if (field.formula) {
+      if (field.formula?.formula) {
         const regex = new RegExp(/#\d+/g);
         const fieldsToReplaceInFormula = field.formula.formula.match(regex);
         let formula = field.formula.formula;
         let oneOfValueIsMissing = false;
+        let minimumOneValueSelect = false;
 
         formState.map((chapter) => {
           chapter.controls.map(() => {
@@ -25,6 +26,9 @@ export const injectCalculatedFields = (formState: IChapter[]): IChapter[] => {
                     `${foundedField.control_value}`,
                   );
                 }
+                if (foundedField.control_value) {
+                  minimumOneValueSelect = true;
+                }
                 if (!foundedField.control_value) {
                   oneOfValueIsMissing = true;
                 }
@@ -39,6 +43,12 @@ export const injectCalculatedFields = (formState: IChapter[]): IChapter[] => {
                   fieldToReplace,
                   `${value?.choice_value}`,
                 );
+                if (value === undefined) {
+                  oneOfValueIsMissing = true;
+                }
+                if (value?.choice_value || value?.choice_value === 0) {
+                  minimumOneValueSelect = true;
+                }
               }
             });
           });
@@ -52,16 +62,23 @@ export const injectCalculatedFields = (formState: IChapter[]): IChapter[] => {
             isFinite(calculatedValue())
           ) {
             field.control_value = calculatedValue().toString();
+            field.calculatedValue = calculatedValue().toString();
           }
         }
         if (oneOfValueIsMissing) {
           field.control_value = '';
+          field.calculatedValue = '';
+        }
+        if (!minimumOneValueSelect) {
+          field.control_value = '';
+          field.calculatedValue = '';
         }
       }
       if (field.formula?.map) {
         field.formula.map.map((map) => {
           if (between(field.control_value, map.min, map.max)) {
             field.control_value = map.lib;
+            field.calculatedValue = map.lib;
           }
         });
       }

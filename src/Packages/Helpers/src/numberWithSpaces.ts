@@ -1,3 +1,6 @@
 export const numberWithSpaces = (number: string) => {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  const parts = number.toString().split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+
+  return parts.join('.');
 };

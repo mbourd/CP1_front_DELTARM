@@ -1,0 +1,53 @@
+{
+  "audit": [
+    {
+      "event_id": 30,
+      "lib": "Enregistrement du cas contrôlé",
+      "params": {
+        "1. Enregistrement du cas contrôlé": "Ok",
+        "2. Enregistré par": "Noe MEYERFELD"
+      },
+      "date": "12/09/2023 à 13:23:51"
+    },
+    {
+      "event_id": 11,
+      "lib": "Chargement d'un fichier attaché",
+      "params": {
+        "1. Point de contrôle": "Pièce(s) jointe(s)",
+        "2. Nom du fichier": "20230906_COA_CR.pdf",
+        "3. Chargé par": "Noe MEYERFELD"
+      },
+      "date": "12/09/2023 à 13:23:45"
+    },
+    {
+      "event_id": 10,
+      "lib": "Saisie d'une valeur",
+      "params": {
+        "1. Point de contrôle": "Résultat final du contrôle",
+        "2. Valeur saisie": "Très satisfaisant",
+        "3. Valeur saisie par": "Noe MEYERFELD"
+      },
+      "date": "12/09/2023 à 13:23:35"
+    },
+    {
+      "event_id": 10,
+      "lib": "Saisie d'une valeur",
+      "params": {
+        "1. Point de contrôle": "Référence dossier(s) contrôlé(s)",
+        "2. Valeur saisie": "CR du COA du 6 septembre 2023",
+        "3. Valeur saisie par": "Noe MEYERFELD"
+      },
+      "date": "12/09/2023 à 13:23:33"
+    },
+    {
+      "event_id": 1,
+      "lib": "Création",
+      "params": {
+        "1. Créé par ": "Noe MEYERFELD"
+      },
+      "date": "12/09/2023 à 13:23:10"
+    }
+  ],
+  "is_audit": true,
+  "is_audit_xls": false
+}

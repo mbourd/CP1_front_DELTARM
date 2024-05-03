@@ -1,11 +1,11 @@
 import React from 'react';
-import { Card as MUICard } from '@material-ui/core';
+import { Card as MUICard } from '@mui/material';
 import { CardStyled } from './Card.style';
 import { Body } from './Body/Body';
 import { Actions } from './Actions/Actions';
 import { ICard } from './types';
 
-export const Card: React.FC<ICard> = ({
+export const Card: React.FC<React.PropsWithChildren<ICard>> = ({
   id,
   color,
   comments,
@@ -13,7 +13,7 @@ export const Card: React.FC<ICard> = ({
   context,
 }): React.ReactElement => {
   return (
-    <CardStyled color={color}>
+    <CardStyled $color={color}>
       <MUICard elevation={0}>
         <div className={'state'} />
         <Body data={data} />

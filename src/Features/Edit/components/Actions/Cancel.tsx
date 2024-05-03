@@ -2,7 +2,9 @@ import React, { useContext, useState } from 'react';
 import { Button, GenericActionModal } from 'Shared/components';
 import { EditValidationContext } from 'Features/Edit';
 
-export const Cancel: React.FC = (): React.ReactElement => {
+export const Cancel: React.FC<
+  React.PropsWithChildren<unknown>
+> = (): React.ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { fileId } = useContext(EditValidationContext);
 

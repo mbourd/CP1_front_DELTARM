@@ -3,9 +3,11 @@ import { CheckboxStyled } from './Checkbox.style';
 import { ICheckboxData, ICheckboxWrapper } from './types';
 import { CheckboxContext } from './CheckboxContext';
 import { CheckboxContainer } from './Container/CheckboxContainer';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 
-export const CheckboxWrapper: React.FC<ICheckboxWrapper> = ({
+export const CheckboxWrapper: React.FC<
+  React.PropsWithChildren<ICheckboxWrapper>
+> = ({
   data,
   multiple = true,
   name,
@@ -22,7 +24,7 @@ export const CheckboxWrapper: React.FC<ICheckboxWrapper> = ({
     selectedValues = first ? { [first]: true } : {};
   }
   if (multiple) {
-    const values = Object.keys(selectedValues)[0].split(';');
+    const values = Object.keys(selectedValues)?.[0]?.split(';') ?? [];
     selectedValues = {};
     if (values.includes('undefined')) {
       values.splice(values.indexOf('undefined'), 1);

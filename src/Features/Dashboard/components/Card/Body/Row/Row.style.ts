@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { ICardBodyRow } from '../../types';
 
 export const RowStyled = styled.div<Pick<ICardBodyRow, 'color'>>`
@@ -12,15 +12,15 @@ export const RowStyled = styled.div<Pick<ICardBodyRow, 'color'>>`
     height: 60px;
 
     .number {
-      background-color: ${({ color }) => color};
+      width: 30px;
+      height: 30px;
       border-radius: ${({ theme }) => theme.sizing.radius};
+      background-color: ${({ color }) => color};
       color: ${({ theme }) => theme.color.white.main};
       font-family: ${({ theme }) => theme.font.medium.main};
       font-size: ${({ theme }) => theme.sizing.small};
-      height: 30px;
       line-height: 30px;
       text-align: center;
-      width: 30px;
     }
 
     .text {

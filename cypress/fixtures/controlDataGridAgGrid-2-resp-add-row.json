@@ -1,0 +1,185 @@
+{
+  "btn": [
+    {
+      "action": {
+        "endpoint": null,
+        "method": "CANCEL",
+        "params": null
+      },
+      "bg_color": "red",
+      "btn_lib": "Cancel",
+      "font_color": "white",
+      "hover_color": "orange"
+    },
+    {
+      "action": {
+        "endpoint": "/control/data_grid/add_row_te",
+        "method": "POST",
+        "params": {
+          "cat_id": "$cat_id",
+          "elm_id": "$elm_id",
+          "field_uuid": "$field_uuid",
+          "file_id": "$file_id",
+          "loc_name": "$loc_name",
+          "obj_name": "$obj_name",
+          "source": "$source",
+          "typloc_id": "$typloc_id"
+        }
+      },
+      "bg_color": "green",
+      "btn_lib": "Create New Object",
+      "font_color": "white",
+      "hover_color": "orange"
+    }
+  ],
+  "content": [
+    {
+      "attribute": {
+        "id": "file_id",
+        "type": "hidden"
+      },
+      "element": "input",
+      "value": "912aa605-0d77-44be-849a-d2aae031b261"
+    },
+    {
+      "attribute": {
+        "id": "elm_id",
+        "type": "hidden"
+      },
+      "element": "input",
+      "value": "27513"
+    },
+    {
+      "attribute": {
+        "id": "source",
+        "type": "hidden"
+      },
+      "element": "input",
+      "value": "TE_tobedeclared"
+    },
+    {
+      "attribute": null,
+      "element": "p",
+      "value": "Please select the Field Name associated to this new Object :"
+    },
+    {
+      "attribute": {
+        "id": "field_uuid",
+        "mandatory": true,
+        "option": [
+          {
+            "id": "557e5234-49d8-4849-ac27-b54e3996a28b",
+            "label": "DOLPHIN NORTH FIELD",
+            "value": "DOLPHIN NORTH FIELD"
+          }
+        ]
+      },
+      "element": "select",
+      "value": null
+    },
+    {
+      "attribute": null,
+      "element": "p",
+      "value": "Please input the Name of this new Object :"
+    },
+    {
+      "attribute": {
+        "id": "obj_name",
+        "mandatory": true,
+        "multiline": false,
+        "placeholder": "Object Name"
+      },
+      "element": "input",
+      "value": null
+    },
+    {
+      "attribute": null,
+      "element": "p",
+      "value": "Please select the Category of this new Object :"
+    },
+    {
+      "attribute": {
+        "id": "cat_id",
+        "mandatory": true,
+        "option": [
+          {
+            "id": 1,
+            "label": "Onshore",
+            "value": "Onshore"
+          },
+          {
+            "id": 2,
+            "label": "Offshore",
+            "value": "Offshore"
+          },
+          {
+            "id": 3,
+            "label": "Deep Offshore",
+            "value": "Deep Offshore"
+          }
+        ]
+      },
+      "element": "select",
+      "value": null
+    },
+    {
+      "attribute": null,
+      "element": "p",
+      "value": "Please input the Location Name of this new Object :"
+    },
+    {
+      "attribute": {
+        "id": "loc_name",
+        "mandatory": true,
+        "multiline": false,
+        "placeholder": "Location Name"
+      },
+      "element": "input",
+      "value": null
+    },
+    {
+      "attribute": null,
+      "element": "p",
+      "value": "Please select the Type of Location of this new Object :"
+    },
+    {
+      "attribute": {
+        "id": "typloc_id",
+        "mandatory": true,
+        "option": [
+          {
+            "id": 1,
+            "label": "Platform",
+            "value": "Platform"
+          },
+          {
+            "id": 2,
+            "label": "Standalone",
+            "value": "Standalone"
+          },
+          {
+            "id": 3,
+            "label": "Well cluster (Offshore)",
+            "value": "Well cluster (Offshore)"
+          },
+          {
+            "id": 4,
+            "label": "Wellpad (onshore)",
+            "value": "Wellpad (onshore)"
+          },
+          {
+            "id": 5,
+            "label": "Artificial island",
+            "value": "Artificial island"
+          }
+        ]
+      },
+      "element": "select",
+      "value": null
+    }
+  ],
+  "img": null,
+  "subtitle": "Add new Object",
+  "target": "modal",
+  "title": null
+}

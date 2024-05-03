@@ -1,4 +1,4 @@
-import React, { SetStateAction, useContext } from 'react';
+import React, { SetStateAction, useContext, useEffect, useState } from 'react';
 import { IApiControl, IChapter } from 'Features/Edit/types';
 import {
   TextControl,
@@ -17,22 +17,188 @@ import {
   TimeControl,
   DateTimeControl,
   BooleanControl,
+  RichTextControl,
+  DataGridControl,
 } from './Form';
 import { EditValidationContext } from 'Features/Edit';
 import { SliderControl } from './Form/Slider/SliderControl';
+import { Box } from '@mui/material';
+import { DataGridControlAgGrid } from './Form/DataGrid/DataGridControlAgGrid';
+import { JoditRichTextControl } from './Form/JoditRichTextControl/JoditRichTextControl';
+import { getEnv, security, IUser, useApi } from 'Services';
+// import axios from 'axios';
 
 interface IProps {
   control: IApiControl;
   formState: IChapter[];
   setFormState: React.Dispatch<SetStateAction<IChapter[]>>;
+  context: 'edit' | 'validate';
 }
 
-export const SwitchControlItem: React.FC<IProps> = ({
+export const SwitchControlItem: React.FC<React.PropsWithChildren<IProps>> = ({
   control,
   formState,
   setFormState,
+  context,
 }): React.ReactElement | null => {
   const { fileId } = useContext(EditValidationContext);
+  const [user] = useState<IUser>(security.getUser());
+  const [, setupdated_form_state] = useState([]);
+  const jwt = user.getJwt();
+  const [get_value_response, setget_value_response] = useState(null);
+  const { send } = useApi({ promise: true });
+
+  useEffect(() => {
+    const data = formState[0].controls
+      .map((c: any) => {
+        return c.control_id;
+      })
+      .includes(control?.conditional?.conditional_by_field_id);
+
+    if (data) {
+      let condition = control.conditional?.conditional_formula;
+      const findValueOfField: any = formState[0].controls.find((c: any) => {
+        return control?.conditional?.conditional_by_field_id === c.control_id;
+      });
+
+      if (findValueOfField) {
+        if (findValueOfField.control_value) {
+          condition = condition?.replaceAll(
+            '$',
+            `'${findValueOfField.control_value}'`,
+          );
+        }
+        if (!findValueOfField.control_value) {
+          condition = condition?.replaceAll('$', `null`);
+        }
+
+        if (condition) {
+          const executeCondition = Function('return ' + condition);
+
+          if (executeCondition()) {
+            control.editable = true;
+            if (control.control_mandatory) {
+              control.mandatory = true;
+            }
+          }
+          if (!executeCondition()) {
+            control.editable = false;
+            if (control.control_mandatory) {
+              control.mandatory = false;
+            }
+          }
+          // 2 keys in control object : editable is use in component and control_editable is the initial api state
+          if (!control.control_editable) {
+            control.editable = false;
+          }
+        }
+      }
+      setupdated_form_state((formState: any) => formState.concat(control));
+    } else if (control.control_conditional === true) {
+      send(
+        'getControlValue',
+        {},
+        {
+          file_id: fileId,
+          control_id: control.conditional.conditional_by_field_id,
+        },
+      )?.then((data) => {
+        setget_value_response(data?.body);
+
+        let condition = control.conditional?.conditional_formula;
+
+        if (data?.body) {
+          if (data.body.data) {
+            condition = condition?.replaceAll('$', `'${data.body.data.value}'`);
+          }
+          if (!data.body.data) {
+            condition = condition?.replaceAll('$', `null`);
+          }
+          if (condition) {
+            const executeCondition = Function('return ' + condition);
+            if (executeCondition()) {
+              control.editable = true;
+              if (control.control_mandatory) {
+                control.mandatory = true;
+              }
+            }
+            if (!executeCondition()) {
+              control.editable = false;
+              if (control.control_mandatory) {
+                control.mandatory = false;
+              }
+            }
+            // 2 keys in control object : editable is use in component and control_editable is the initial api state
+            if (!control.control_editable) {
+              control.editable = false;
+            }
+          }
+        }
+
+        setupdated_form_state((formState: any) => formState.concat(control));
+        // console.log('control', control);
+      });
+
+      // axios
+      //   .get(
+      //     `${getEnv('API_PROTOCOL')}://${getEnv(
+      //       'API_HOST',
+      //     )}/control/get_value?file_id=${fileId}&control_id=${
+      //       control.conditional.conditional_by_field_id
+      //     }`,
+      //     {
+      //       headers: {
+      //         Authorization: jwt,
+      //         'Content-type': 'application/json',
+      //       },
+      //     },
+      //   )
+      //   .then((data: any) => {
+      //     setget_value_response(data?.data);
+      //     let condition = control.conditional?.conditional_formula;
+      //     if (data?.data) {
+      //       if (data.data.data) {
+      //         condition = condition?.replaceAll(
+      //           '$',
+      //           `'${data.data.data.value}'`,
+      //         );
+      //       }
+      //       if (!data.data.data) {
+      //         condition = condition?.replaceAll('$', `null`);
+      //       }
+      //       if (condition) {
+      //         const executeCondition = Function('return ' + condition);
+      //         if (executeCondition()) {
+      //           control.editable = true;
+      //           if (control.control_mandatory) {
+      //             control.mandatory = true;
+      //           }
+      //         }
+      //         if (!executeCondition()) {
+      //           control.editable = false;
+      //           if (control.control_mandatory) {
+      //             control.mandatory = false;
+      //           }
+      //         }
+      //         // 2 keys in control object : editable is use in component and control_editable is the initial api state
+      //         if (!control.control_editable) {
+      //           control.editable = false;
+      //         }
+      //       }
+      //     }
+
+      //     setupdated_form_state((formState: any) => formState.concat(control));
+      //     // console.log('control', control);
+      //   })
+      //   .catch(() => {
+      //     //   console.log(error);
+      //   });
+    } else {
+      setupdated_form_state((formState: any) => formState.concat(control));
+      setget_value_response(null);
+    }
+  }, [control, fileId, jwt, formState, send]);
+
   switch (control.control_type) {
     case 'text':
       return (
@@ -41,6 +207,8 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
+          get_value_response={get_value_response}
         />
       );
     case 'email':
@@ -50,6 +218,8 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
+          get_value_response={get_value_response}
         />
       );
     case 'auth_num':
@@ -59,6 +229,8 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
+          get_value_response={get_value_response}
         />
       );
     case 'formula':
@@ -68,6 +240,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'select_list':
@@ -78,6 +251,8 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
+          get_value_response={get_value_response}
         />
       );
     case 'multiple_list':
@@ -88,6 +263,8 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
+          get_value_response={get_value_response}
         />
       );
     case 'radio':
@@ -98,6 +275,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'checkbox':
@@ -108,6 +286,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'financial':
@@ -117,6 +296,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'integer':
@@ -126,6 +306,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'decimal':
@@ -135,6 +316,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'date':
@@ -144,6 +326,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'time':
@@ -153,6 +336,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'timestamp':
@@ -162,6 +346,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'comment':
@@ -171,6 +356,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'long_text':
@@ -180,6 +366,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'percent':
@@ -189,6 +376,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'slider':
@@ -198,6 +386,7 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
     case 'boolean':
@@ -207,12 +396,33 @@ export const SwitchControlItem: React.FC<IProps> = ({
           fileId={fileId}
           formState={formState}
           setFormState={setFormState}
+          context={context}
         />
       );
+    case 'data_grid':
+      return <DataGridControl control={control} fileId={fileId} />;
+    case 'ag_datagrid':
+      return <DataGridControlAgGrid control={control} fileId={fileId} />;
+    case 'jodit_rich_text':
+      return (
+        <JoditRichTextControl
+          control={control}
+          fileId={fileId}
+          context={context}
+        />
+      );
+    case 'rich_text':
+      return (
+        <RichTextControl control={control} fileId={fileId} context={context} />
+      );
     case 'file_upload':
-      return <UploadControl control={control} fileId={fileId} />;
+      return (
+        <UploadControl control={control} fileId={fileId} context={context} />
+      );
     case 'info_block':
-      return <InfoBlockControl control={control} />;
+      return <InfoBlockControl control={control} context={context} />;
+    case 'line_break':
+      return <Box width="100%" />;
   }
 
   return null;
