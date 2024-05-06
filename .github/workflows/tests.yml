@@ -7,6 +7,7 @@ on:
             - 'staging'
             - 'preprod'
             - 'master'
+            - 'test'
     workflow_call:
 
 jobs:

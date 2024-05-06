@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+    front:
+        image: ghcr.io/deltarm/cp1-front/github-test
+        container_name: cp1_test_github
+        restart: always
+        ports:
+            - 80:80
+            - 443:443
+        volumes:
+            - /home/deltarm/etc/ssl:/etc/nginx/certs
