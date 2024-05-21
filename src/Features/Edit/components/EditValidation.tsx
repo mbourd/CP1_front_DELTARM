@@ -67,6 +67,7 @@ export const EditValidation: React.FC<React.PropsWithChildren<IProps>> = ({
     // NEW WAY FOR DYNAMIC PARAMETERS, THE GOAL IS TO HAVE DYNAMIC PARAMETERS FOR ALL CLIENTS
     if (!isEmpty(frontRouterQueries)) {
       queries = frontRouterQueries;
+      setFileId(frontRouterQueries.file_id);
     }
 
     if (currentSection) {
