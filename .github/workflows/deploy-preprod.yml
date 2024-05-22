@@ -69,4 +69,5 @@ jobs:
                     command: |
                         docker login ghcr.io/deltarm/cp1-front/github-preprod:latest -u ${{ github.repository_owner }} -p ${{ secrets.GITHUB_TOKEN }}
                         docker-compose -f /home/deltarm/client/docker-compose.preprod_github.yml pull
+                        docker-compose -f /home/deltarm/client/docker-compose.preprod_github.yml down --remove-orphans
                         docker-compose -f /home/deltarm/client/docker-compose.preprod_github.yml up -d --remove-orphans
