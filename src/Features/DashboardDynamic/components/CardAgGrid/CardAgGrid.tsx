@@ -86,6 +86,8 @@ const CardAgGrid: React.FC<React.PropsWithChildren<CardAgGridProps>> = ({
   //   return indexes;
   // }, [card.cols.values]);
 
+  console.log(card);
+
   const defaultColDef = useMemo(
     () => ({
       resizable: true,
@@ -274,15 +276,15 @@ const CardAgGrid: React.FC<React.PropsWithChildren<CardAgGridProps>> = ({
       params.api.sizeColumnsToFit();
 
       if (columns.some((col) => col.floatingFilter !== false)) {
-        if (columns.some((col) => col.filter === false)) {
-          params.api.setGridOption('headerHeight', 48);
-          params.api.setGridOption('floatingFiltersHeight', 0);
+        if (columns.some((col) => col.filter)) {
+          params.api.setGridOption('headerHeight', 24);
+          params.api.setGridOption('floatingFiltersHeight', 29);
 
           return;
         }
 
-        params.api.setGridOption('headerHeight', 24);
-        params.api.setGridOption('floatingFiltersHeight', 29);
+        params.api.setGridOption('headerHeight', 48);
+        params.api.setGridOption('floatingFiltersHeight', 0);
       }
     }, 1);
   };
