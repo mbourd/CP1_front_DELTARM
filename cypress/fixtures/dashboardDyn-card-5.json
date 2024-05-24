@@ -1,0 +1,118 @@
+{
+  "cols": {
+    "header_visible": true,
+    "values": [
+      {
+        "align": "center",
+        "border_right": true,
+        "dataKey": "Contrôle",
+        "filter": true,
+        "floating_filter": true,
+        "label": "Contrôle",
+        "width": 450
+      },
+      {
+        "align": "center",
+        "border_right": true,
+        "dataKey": "Période",
+        "filter": true,
+        "floating_filter": false,
+        "label": "Période",
+        "width": 120
+      },
+      {
+        "align": "center",
+        "border_right": false,
+        "dataKey": "Déclarer",
+        "filter": false,
+        "floating_filter": false,
+        "label": "Déclarer",
+        "width": 85
+      }
+    ]
+  },
+  "display": {
+    "page_nb_rows": null,
+    "type": "list"
+  },
+  "lines": {
+    "border_bottom": true,
+    "values": [
+      {
+        "id": "3e6f1cc7-535d-4ad3-abfc-31fa03030b42",
+        "item": [
+          {
+            "action": null,
+            "content": "<p style=\"color:#5a4749; font-weight:bold;\">BICICI</p>CI__0002-Libellé du contrôle (M)",
+            "hint": "Libellé du contrôle",
+            "icon": null
+          },
+          {
+            "action": null,
+            "content": "M5 - 2024",
+            "hint": null,
+            "icon": null
+          },
+          {
+            "action": null,
+            "content": null,
+            "hint": null,
+            "icon": null
+          }
+        ]
+      },
+      {
+        "id": "1fc9d0bb-0f4f-4f73-9976-f32b16f4e3fa",
+        "item": [
+          {
+            "action": null,
+            "content": "<p style=\"color:#5a4749; font-weight:bold;\">BICICI</p>CI__0002-Libellé du contrôle (M)",
+            "hint": "Libellé du contrôle",
+            "icon": null
+          },
+          {
+            "action": null,
+            "content": "M6 - 2024",
+            "hint": null,
+            "icon": null
+          },
+          {
+            "action": null,
+            "content": null,
+            "hint": null,
+            "icon": null
+          }
+        ]
+      },
+      {
+        "id": "47636002-b3b3-4c06-9d6d-597734e5e7fc",
+        "item": [
+          {
+            "action": null,
+            "content": "<p style=\"color:#5a4749; font-weight:bold;\">BICICI</p>CI__0002-Libellé du contrôle (M)",
+            "hint": "Libellé du contrôle",
+            "icon": null
+          },
+          {
+            "action": null,
+            "content": "M7 - 2024",
+            "hint": null,
+            "icon": null
+          },
+          {
+            "action": null,
+            "content": null,
+            "hint": null,
+            "icon": null
+          }
+        ]
+      }
+    ]
+  },
+  "title": {
+    "bg_color": "#3498DB",
+    "font_color": "#FFFFFF",
+    "lib": "AGENCE - Contrôles à réaliser"
+  },
+  "version": 1
+}
