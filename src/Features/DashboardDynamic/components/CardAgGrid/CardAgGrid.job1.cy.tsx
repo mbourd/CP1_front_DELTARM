@@ -27,12 +27,14 @@ describe('<CardAgGrid />', function () {
   let card2: ICard;
   let card3: ICard;
   let card4: ICard;
+  let card5: ICard;
 
   before(() => {
     cy.fixture('dashboardDyn-card-1.json').then((d) => (card1 = d));
     cy.fixture('dashboardDyn-card-2.json').then((d) => (card2 = d));
     cy.fixture('dashboardDyn-card-3.json').then((d) => (card3 = d));
     cy.fixture('dashboardDyn-card-4.json').then((d) => (card4 = d));
+    cy.fixture('dashboardDyn-card-5.json').then((d) => (card5 = d));
   });
 
   it('should render - card1', function () {
@@ -437,6 +439,33 @@ describe('<CardAgGrid />', function () {
           col.filter = true;
           col.floating_filter = true;
 
+          return col;
+        }),
+      },
+    };
+    cy.mount(
+      <SetupTestsComponents>
+        <CardAgGrid
+          card={_card}
+          triggerAction={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+    cy.react('AgGridReact')
+      .find('.ag-header-container')
+      .should('have.css', 'height', '53px');
+  });
+
+  it('should have the header compacted if col.floating_filter=true - card5', function () {
+    cy.viewport(800, 750);
+    const _card = {
+      ...structuredClone(card5),
+      cols: {
+        ...structuredClone(card5.cols),
+        values: [...structuredClone(card5.cols.values)].map((col) => {
           return col;
         }),
       },
