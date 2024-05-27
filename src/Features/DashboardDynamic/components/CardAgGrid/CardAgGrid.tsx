@@ -86,8 +86,6 @@ const CardAgGrid: React.FC<React.PropsWithChildren<CardAgGridProps>> = ({
   //   return indexes;
   // }, [card.cols.values]);
 
-  console.log(card);
-
   const defaultColDef = useMemo(
     () => ({
       resizable: true,
