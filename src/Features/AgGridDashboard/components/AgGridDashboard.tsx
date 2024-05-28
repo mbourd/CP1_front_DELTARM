@@ -31,7 +31,7 @@ const AgGridDashboard: React.FC<
   React.PropsWithChildren<unknown>
 > = (): React.ReactElement => {
   // const [trans] = useTrans('Dashboard');
-  const { /*data: dataSecurity,*/ logout } = useContext(SecurityContext);
+  const { data: context, logout } = useContext(SecurityContext);
   const { user } = useSecurity();
   const jwt = user.getJwt();
   const { send, data: response, callState } = useApi<IDashboard>();
@@ -41,9 +41,18 @@ const AgGridDashboard: React.FC<
     setIsModalOpen,
   });
   const modal: IDataModal = useRecoilValue<any>(recoilData);
+
   useEffect(() => {
-    send('dashboardControlPermanent');
-  }, [send]);
+    if (context?.source_mode) {
+      send(
+        'dashboardControlPermanent',
+        {},
+        { source_mode: context.source_mode },
+      );
+    } else {
+      send('dashboardControlPermanent');
+    }
+  }, [context?.source_mode, send]);
 
   useEffect(() => {
     console.log(response);
