@@ -80,8 +80,16 @@ const DashboardDynamic: React.FC<
   }, [context.cli_id, clientInfoSignal, review]);
 
   useEffect(() => {
-    send('dashboardControlPermanent');
-  }, [send]);
+    if (context?.source_mode) {
+      send(
+        'dashboardControlPermanent',
+        {},
+        { source_mode: context.source_mode },
+      );
+    } else {
+      send('dashboardControlPermanent');
+    }
+  }, [context?.source_mode, send]);
 
   return clientInfoSignal ? (
     <SwitchCallState

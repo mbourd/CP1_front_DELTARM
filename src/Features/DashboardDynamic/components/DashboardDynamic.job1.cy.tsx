@@ -3,7 +3,7 @@
 /// <reference types="../../../../cypress/support/component" />
 
 // NOTE: Run CLI:
-// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/DashboardDynamic/components/DashboardDynamic.cy.tsx"
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/DashboardDynamic/components/DashboardDynamic.job1.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../cypress/utils/SetupTestsComponents';
@@ -13,6 +13,7 @@ import '../reducer';
 import '../apiRoutes';
 import { IDashboard, ISearchBarOptions } from './types';
 import { Method } from 'cypress/types/net-stubbing';
+import { _getRandomNumberBetween } from '../../../../cypress/utils';
 
 describe('<DashboardDynamic />', function () {
   let dashboardDynamic1: IDashboard;
@@ -173,5 +174,94 @@ describe('<DashboardDynamic />', function () {
         });
       },
     );
+  });
+
+  it('should make one request at a time payload/queries params not empty if "source_mode"', function () {
+    const sourceMode = 'source_mode' + _getRandomNumberBetween(0, 5421645);
+    let reqC = 0;
+
+    cy.viewport(1000, 600);
+    const _dashboard = {
+      ...structuredClone(dashboardDynamic1),
+    };
+
+    cy.intercept('GET', '/dashboard/contr_perm*', (req) => {
+      reqC++;
+      req.reply({
+        statusCode: 200,
+        body: _dashboard,
+      });
+    }).as('reqGetDashboardContrPerm');
+
+    cy.mount(
+      <SetupTestsComponents
+        securityContextValue={{
+          user: 'security.getUser()',
+          jwt: 'security.getUser().getJwt()',
+          data: { context: 'CP1', source_mode: sourceMode },
+          login: () => undefined,
+          logout: () => undefined,
+        }}
+      >
+        <DashboardDynamic />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+
+    cy.wait('@reqGetDashboardContrPerm').then((interception) => {
+      const { request } = interception;
+      const { query } = request;
+
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(500).then(() => {
+        expect(reqC).to.eq(1);
+        cy.wrap(query).should('have.property', 'source_mode');
+        cy.then(() => {
+          expect(query.source_mode).to.eq(sourceMode);
+        });
+      });
+    });
+  });
+  it('should make one request at a time payload/queries params not empty and no "source_mode"', function () {
+    let reqC = 0;
+
+    cy.viewport(1000, 600);
+    const _dashboard = {
+      ...structuredClone(dashboardDynamic1),
+    };
+
+    cy.intercept('GET', '/dashboard/contr_perm*', (req) => {
+      reqC++;
+      req.reply({
+        statusCode: 200,
+        body: _dashboard,
+      });
+    }).as('reqGetDashboardContrPerm');
+
+    cy.mount(
+      <SetupTestsComponents
+        securityContextValue={{
+          user: 'security.getUser()',
+          jwt: 'security.getUser().getJwt()',
+          data: { context: 'CP1' },
+          login: () => undefined,
+          logout: () => undefined,
+        }}
+      >
+        <DashboardDynamic />
+      </SetupTestsComponents>,
+    );
+    cy.waitReactApp();
+
+    cy.wait('@reqGetDashboardContrPerm').then((interception) => {
+      const { request } = interception;
+      const { query } = request;
+
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(500).then(() => {
+        expect(reqC).to.eq(1);
+        cy.wrap(query).should('not.have.property', 'source_mode');
+      });
+    });
   });
 });
