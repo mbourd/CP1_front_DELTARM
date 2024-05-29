@@ -24,7 +24,7 @@ export const MainHeader: React.FC<
 
   if (dataClientInfos?.data[0].cli_name) {
     localStorage.setItem('client_info', JSON.stringify(dataClientInfos?.data));
-    document.title = 'CP1 - ' + dataClientInfos?.data[0].cli_name;
+    document.title = 'ADA - ' + dataClientInfos?.data[0].cli_name;
   }
 
   return (
