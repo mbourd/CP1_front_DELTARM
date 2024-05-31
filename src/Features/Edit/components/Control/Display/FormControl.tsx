@@ -30,13 +30,21 @@ export const FormControls: React.FC<React.PropsWithChildren<IProps>> = ({
           <Grid container className={'control-container'}>
             {chapter.controls.map((control, index) => {
               return (
-                <SwitchControlItem
-                  key={index}
-                  control={control}
-                  formState={formState}
-                  setFormState={setFormState}
-                  context={context}
-                />
+                <React.Fragment key={index}>
+                  <SwitchControlItem
+                    control={control}
+                    formState={formState}
+                    setFormState={setFormState}
+                    context={context}
+                  />
+                  {control?.control_carriage_return === true && (
+                    <Grid
+                      item
+                      xs={6}
+                      className="FormControl_carriage_return"
+                    ></Grid>
+                  )}
+                </React.Fragment>
               );
             })}
           </Grid>
