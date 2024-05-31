@@ -349,6 +349,7 @@ export type DataGridComponent =
   | 'text_alt';
 
 export interface IApiControl {
+  control_carriage_return?: boolean;
   control_desc_1: string | null;
   control_desc_2: string | null;
   control_editable: boolean;
