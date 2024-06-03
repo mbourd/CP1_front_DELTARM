@@ -3,7 +3,7 @@
 /// <reference types="../../../../cypress/support/component" />
 
 // NOTE: Run CLI:
-// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/DashboardDynamic/components/DashboardDynamic.cy.tsx"
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/DashboardDynamic/components/DashboardDynamic.job1.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../cypress/utils/SetupTestsComponents';
@@ -13,6 +13,7 @@ import '../reducer';
 import '../apiRoutes';
 import { IDashboard, ISearchBarOptions } from './types';
 import { Method } from 'cypress/types/net-stubbing';
+import { _getRandomNumberBetween } from '../../../../cypress/utils';
 
 describe('<DashboardDynamic />', function () {
   let dashboardDynamic1: IDashboard;

@@ -8,12 +8,14 @@ import React from 'react';
 import { SetupTestsComponents } from '../../../../../../cypress/utils/SetupTestsComponents';
 
 import { FormControls } from './FormControl';
+import { IApiControl } from '../../../types';
 
 describe('<FormControl />', function () {
   const chapters = [
     {
       controls: [
         {
+          control_carriage_return: true,
           control_conditional: false,
           control_desc_1: null,
           control_desc_2: null,
@@ -35,6 +37,7 @@ describe('<FormControl />', function () {
           mandatory: false,
         },
         {
+          control_carriage_return: true,
           control_conditional: false,
           control_desc_1: null,
           control_desc_2: null,
@@ -55,6 +58,7 @@ describe('<FormControl />', function () {
           mandatory: false,
         },
         {
+          control_carriage_return: null,
           control_conditional: false,
           control_desc_1: null,
           control_desc_2: null,
@@ -75,6 +79,7 @@ describe('<FormControl />', function () {
           mandatory: false,
         },
         {
+          control_carriage_return: null,
           control_conditional: false,
           control_desc_1: null,
           control_desc_2: null,
@@ -95,6 +100,7 @@ describe('<FormControl />', function () {
           mandatory: false,
         },
         {
+          control_carriage_return: true,
           control_conditional: false,
           control_desc_1: null,
           control_desc_2: null,
@@ -116,6 +122,7 @@ describe('<FormControl />', function () {
           mandatory: false,
         },
         {
+          control_carriage_return: null,
           control_conditional: false,
           control_desc_1: null,
           control_desc_2: null,
@@ -136,6 +143,7 @@ describe('<FormControl />', function () {
           mandatory: false,
         },
         {
+          control_carriage_return: null,
           control_conditional: false,
           control_desc_1: null,
           control_desc_2: null,
@@ -156,6 +164,7 @@ describe('<FormControl />', function () {
           mandatory: false,
         },
         {
+          control_carriage_return: null,
           control_conditional: false,
           control_desc_1: null,
           control_desc_2: null,
@@ -176,6 +185,7 @@ describe('<FormControl />', function () {
           mandatory: false,
         },
         {
+          control_carriage_return: null,
           control_conditional: false,
           control_desc_1: null,
           control_desc_2: null,
@@ -196,6 +206,7 @@ describe('<FormControl />', function () {
           mandatory: false,
         },
         {
+          control_carriage_return: true,
           control_conditional: false,
           control_desc_1: null,
           control_desc_2: null,
@@ -216,6 +227,7 @@ describe('<FormControl />', function () {
           mandatory: false,
         },
         {
+          control_carriage_return: null,
           control_conditional: false,
           control_desc_1: null,
           control_desc_2: null,
@@ -236,6 +248,7 @@ describe('<FormControl />', function () {
           mandatory: false,
         },
         {
+          control_carriage_return: null,
           control_conditional: false,
           control_desc_1: null,
           control_desc_2: null,
@@ -272,4 +285,25 @@ describe('<FormControl />', function () {
     ).waitReactApp();
     cy.react('FormControls').should('exist');
   });
+
+  // TODO:
+  // it('should insert a carriage return if control.control_carriage_return=true', function () {
+  //   const _chapters = structuredClone(chapters);
+
+  //   cy.viewport(1920, 1080);
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <FormControls chapters={_chapters} context={'edit'} />
+  //     </SetupTestsComponents>,
+  //   ).waitReactApp();
+
+  //   cy.wrap(_chapters[0].controls).each((c: IApiControl, i) => {
+  //     if (c?.control_carriage_return === true)
+  //       cy.get(
+  //         `.control-container .MuiGrid-root.MuiGrid-grid-xs-6:eq(${i * 2})`,
+  //       )
+  //         .next('.FormControl_carriage_return')
+  //         .should('exist');
+  //   });
+  // });
 });
