@@ -43,16 +43,8 @@ const AgGridDashboard: React.FC<
   const modal: IDataModal = useRecoilValue<any>(recoilData);
 
   useEffect(() => {
-    if (context?.source_mode) {
-      send(
-        'dashboardControlPermanent',
-        {},
-        { source_mode: context.source_mode },
-      );
-    } else {
-      send('dashboardControlPermanent');
-    }
-  }, [context?.source_mode, send]);
+    send('dashboardControlPermanent');
+  }, [send]);
 
   useEffect(() => {
     console.log(response);
