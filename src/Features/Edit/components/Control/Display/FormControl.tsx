@@ -40,8 +40,9 @@ export const FormControls: React.FC<React.PropsWithChildren<IProps>> = ({
                   {control?.control_carriage_return === true && (
                     <Grid
                       item
-                      xs={6}
+                      xs={12}
                       className="FormControl_carriage_return"
+                      style={{ padding: 0 }}
                     ></Grid>
                   )}
                 </React.Fragment>
