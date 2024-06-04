@@ -15,7 +15,16 @@ export const SubHeader: React.FC<React.PropsWithChildren<IProps>> = ({
       <EditTitleFileStyled>
         <FolderOpenIcon />
         {data.title ? (
-          <span>{data.title}</span>
+          <span>
+            {data.title.split('\r').map((line, index) => {
+              return (
+                <React.Fragment key={index}>
+                  {line}
+                  <br />
+                </React.Fragment>
+              );
+            })}
+          </span>
         ) : (
           <span>
             {data.number} &ndash; {data.contrepartie} / {data.productType}
