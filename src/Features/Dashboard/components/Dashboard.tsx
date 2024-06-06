@@ -23,21 +23,6 @@ const Dashboard: React.FC = (): React.ReactElement => {
   const { callState, send, data } = useApi<ICard[]>();
   const { data: dataSecurity, logout } = useContext(SecurityContext);
   const { user } = useSecurity();
-  //   useEffect(() => {
-  //     if (context.cli_id && clientInfoSignal === false) {
-  //       // checks whether client data came or not
-  //       if (review?.length > 0) {
-  //         setClientInfoSignal(true);
-  //         localStorage.removeItem('client_info');
-
-  //         return;
-  //       } else {
-  //         setClientInfoSignal(false);
-
-  //         return;
-  //       }
-  //     }
-  //   }, [context.cli_id, clientInfoSignal, review]);
 
   useEffect(() => {
     // Temporary if statements behavior
