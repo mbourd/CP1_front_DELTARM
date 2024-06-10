@@ -42,7 +42,7 @@ jobs:
                 run: docker build -t ghcr.io/deltarm/cp1-front/github-staging:latest -f ci/staging/Dockerfile .
 
             -   name: Login to Docker Hub
-                uses: docker/login-action@v2
+                uses: docker/login-action@v2 # ddd
                 with:
                     registry: ghcr.io
                     username: ${{ github.repository_owner }}
