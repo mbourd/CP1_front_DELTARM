@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { defineConfig } from 'cypress';
+import path from 'path';
 
 // Default environment variables
 const EnvConfig = {
@@ -43,6 +44,13 @@ export default defineConfig({
     devServer: {
       framework: 'create-react-app',
       bundler: 'webpack',
+      webpackConfig: {
+        resolve: {
+          alias: {
+            '@': path.resolve(__dirname, 'src'),
+          },
+        },
+      },
     },
     specPattern: ['src/**/*.cy.tsx', 'cypress/unit/**/*.cy.ts'],
     experimentalMemoryManagement: true,

@@ -1,30 +1,33 @@
 // @ts-check
 import React from 'react';
 import { RecoilRoot } from 'recoil';
-import { ThemeProvider } from 'styled-components';
-import { BPITheme, BPIGlobalStyle, ITheme } from '../../src/Packages/Design';
-import { AppContext, AppContextType } from '../../src/AppContext';
-import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Persistor } from 'redux-persist';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import { Store } from '@reduxjs/toolkit';
+import { StyledEngineProvider } from '@mui/material';
+// import { ThemeProvider } from 'styled-components';
+// import { BPITheme, BPIGlobalStyle, ITheme } from '../src/Packages/Design';
+import { AppContext, AppContextType } from '../AppContext';
 import {
   ISecurityProviderContext,
   SecurityContext,
   appStore,
   store,
-} from '../../src/Services';
-import { BrowserRouter } from 'react-router-dom';
-import { Store } from '@reduxjs/toolkit';
-import { IAppStore } from '../../src/Packages/ReduxToolkit/types';
-import { StyledEngineProvider } from '@mui/material';
+} from '../Services';
+import type { IAppStore } from '../Packages/ReduxToolkit/types';
 
-import '../../src/Services';
-import '../../src/Features';
-import '../../src/Shared';
-import '../../src/Services/Api/registerCallState';
+import '../Services';
+import '../Features';
+import '../Shared';
+import '../Services/Api/registerCallState';
 
-type SetupTestsComponentProps = Record<string | number | symbol, any> & {
-  theme?: ITheme;
+export type SetupTestsComponentPropsType = Record<
+  string | number | symbol,
+  any
+> & {
+  // theme?: ITheme;
   style?: React.CSSProperties;
   appContextValue?: AppContextType & Record<'ForCompTests', Record<any, any>>;
   securityContextValue?: ISecurityProviderContext;
@@ -34,10 +37,10 @@ type SetupTestsComponentProps = Record<string | number | symbol, any> & {
 };
 
 const SetupTestsComponents: React.FC<
-  React.PropsWithChildren<SetupTestsComponentProps>
+  React.PropsWithChildren<SetupTestsComponentPropsType>
 > = ({
   children,
-  theme,
+  // theme,
   style,
   appContextValue = {},
   securityContextValue = {
@@ -46,22 +49,20 @@ const SetupTestsComponents: React.FC<
     data: { context: 'CP1' },
     login: () => undefined,
     logout: () => undefined,
-  },
+  } as any as ISecurityProviderContext,
   altReduxStore,
   hasReduxPersist,
   altAppStore,
+  ...rest
 }) => {
   let content = (
-    <main id="main-content" style={style}>
+    <main style={style}>
       <AppContext.Provider value={appContextValue}>
         <SecurityContext.Provider value={securityContextValue}>
           <RecoilRoot>
             <BrowserRouter>
               <StyledEngineProvider injectFirst>
-                <ThemeProvider theme={theme ?? BPITheme}>
-                  <BPIGlobalStyle />
-                  {children}
-                </ThemeProvider>
+                {children}
               </StyledEngineProvider>
             </BrowserRouter>
           </RecoilRoot>

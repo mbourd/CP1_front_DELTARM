@@ -3,15 +3,13 @@
 /// <reference types="../../../../../cypress/support/component" />
 
 // NOTE: Run CLI:
-// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/NotFound/NotFound.cy.tsx"
+// yarn cypress:run:component --browser chrome --config video=false --spec "src/Features/Edit/components/NotFound/NotFound.job4.cy.tsx"
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../cypress/utils/SetupTestsComponents';
 import { _escapeForRegExp, _translate } from '../../../../../cypress/utils';
 
 import { NotFound } from './NotFound';
-import '../../../Edit/translations';
-import '../../../../Shared/translations/default';
 
 describe('<NotFound />', () => {
   it('should render', () => {
