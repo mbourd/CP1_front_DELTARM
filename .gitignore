@@ -36,3 +36,7 @@ cypress.env.json
 /cypress/downloads
 /cypress/videos
 /cypress/fixtures/token-cp1.txt
+
+# Storybook
+*storybook.log
+storybook-static

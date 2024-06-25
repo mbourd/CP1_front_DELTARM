@@ -118,9 +118,7 @@ describe('<FileComment />', function () {
     );
     cy.waitReactApp();
     cy.react('FileComment').find('.comment-icon').realClick();
-    cy.wait(3).then(() => {
-      cy.react('Popper').should('exist');
-    });
+    cy.react('Popper').should('exist');
   });
 
   it('should render FileCommentBody', function () {

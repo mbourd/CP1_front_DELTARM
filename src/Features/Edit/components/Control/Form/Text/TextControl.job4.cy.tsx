@@ -8,15 +8,16 @@
 import React from 'react';
 import { SetupTestsComponents } from '../../../../../../../cypress/utils/SetupTestsComponents';
 
-import '../../../../../Edit/translations';
 import { TextControl } from './TextControl';
-import { IApiControl } from '../../../../types';
+import type { IApiControl, IChapter } from '../../../../types';
 import {
   _escapeForRegExp,
   _translate,
 } from '../../../../../../../cypress/utils';
 import RandExp from 'randexp';
 import { apiRouter } from '../../../../../../Services/Api';
+// import { composeStories } from '@storybook/react';
+// import * as stories from './TextControl.stories';
 
 describe('<TextControl />', () => {
   const trans_EN =
@@ -51,10 +52,26 @@ describe('<TextControl />', () => {
     control_rejectable: null,
   };
   const fileId = '1234';
-  const formState = [{ controls: [control] }];
+  const formState: IChapter[] = [
+    {
+      controls: [control],
+      label: '',
+      id: '',
+    },
+  ];
   const setFormState = () => {
     return undefined;
   };
+
+  // it('poc: story book story component rendering', function () {
+  //   const { Default } = composeStories(stories);
+  //   cy.mount(
+  //     <SetupTestsComponents>
+  //       <Default />
+  //     </SetupTestsComponents>,
+  //   );
+  // });
+  // return;
 
   it('Should render', () => {
     const _control: IApiControl = {
@@ -268,8 +285,9 @@ describe('<TextControl />', () => {
     cy.react('TextControl');
     cy.window().then((w) => {
       w['Features_Edit_Control_TextControl'].setErrorMessage(error);
-      cy.wait(500);
-      cy.react('TextControl').find('._FormError').contains(error);
+      cy.then(() => {
+        cy.react('TextControl').find('._FormError').contains(error);
+      });
     });
   });
 
@@ -331,7 +349,7 @@ describe('<TextControl />', () => {
           context={'edit'}
           control={_control}
           fileId={fileId}
-          formState={[{ controls: [_control] }]}
+          formState={structuredClone(formState)}
           setFormState={setFormState}
         />
       </SetupTestsComponents>,
@@ -376,7 +394,7 @@ describe('<TextControl />', () => {
           context={'edit'}
           control={_control}
           fileId={fileId}
-          formState={[{ controls: [_control] }]}
+          formState={structuredClone(formState)}
           setFormState={setFormState}
         />
       </SetupTestsComponents>,
@@ -419,7 +437,7 @@ describe('<TextControl />', () => {
           context={'edit'}
           control={_control}
           fileId={fileId}
-          formState={[{ controls: [_control] }]}
+          formState={structuredClone(formState)}
           setFormState={setFormState}
         />
       </SetupTestsComponents>,
@@ -432,10 +450,8 @@ describe('<TextControl />', () => {
       .find('input[type="text"]')
       .type(generated, { parseSpecialCharSequences: false })
       .blur();
-    cy.wait(100).then(() => {
-      cy.react('TextControl')
-        .find('._FormError')
-        .should('have.text', _control.control_regex_msg);
-    });
+    cy.react('TextControl')
+      .find('._FormError')
+      .should('have.text', _control.control_regex_msg);
   });
 });
