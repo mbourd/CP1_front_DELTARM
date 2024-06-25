@@ -16,7 +16,6 @@ import { _getRandomNumberBetween, _translate } from '../../../../cypress/utils';
 import '../../../Features/Edit/translations';
 import { IButtons } from '../../DashboardDynamic/components/types';
 import { GridApi, RowNode } from 'ag-grid-community';
-import { IEditValidationContext } from '../EditValidationContext';
 
 describe('<Editvalidation />', function () {
   let editValidation1;
