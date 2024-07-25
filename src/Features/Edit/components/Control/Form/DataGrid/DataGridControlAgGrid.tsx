@@ -32,6 +32,7 @@ import 'ag-grid-enterprise';
 import {
   CellEditingStartedEvent,
   CellEditingStoppedEvent,
+  GridOptions,
   GridReadyEvent,
   RowNode,
 } from 'ag-grid-community';
@@ -167,10 +168,11 @@ export const DataGridControlAgGrid: React.FC<
 
   const paginationPageSize: number =
     control?.data_grid_detail?.datagrid_options?.pagination_row_size ?? 20;
-  const gridOptions = {
+  const gridOptions: GridOptions<any> = {
     rowClass: 'my-hover-class',
     rowData: GridDetails?.rows,
     stopEditingWhenCellsLoseFocus: true,
+    columnMenu: 'legacy',
   };
 
   useEffect(() => {
@@ -856,7 +858,11 @@ export const DataGridControlAgGrid: React.FC<
               cellStyle: (props: any) => cellStyleFunctions(props, g),
               cellRenderer: (props: any) => {
                 return (
-                  <>{props?.value !== null || undefined ? props.value : ''}</>
+                  <>
+                    {props?.value !== null || props?.value !== undefined
+                      ? props.value
+                      : ''}
+                  </>
                 );
               },
               tooltipComponent: (props) => CustomTooltip(props, g),
