@@ -86,6 +86,10 @@ export const AgDataGridStyle = styled.div<{
     return 'auto';
   }};
 
+  .ag-watermark {
+    display: none !important;
+  }
+
   .ag-header-cell {
     position: absolute;
     display: inline-flex;
