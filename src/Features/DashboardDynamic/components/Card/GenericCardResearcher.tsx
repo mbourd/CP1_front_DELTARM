@@ -8,7 +8,7 @@ import React, {
 import { IDoesFilterPassParams, IFilterParams } from 'ag-grid-community';
 
 // eslint-disable-next-line react/display-name
-export const GenericCardResearcher = forwardRef((props: IFilterParams, ref) => {
+export const GenericCardResearcher = forwardRef((props: any, ref) => {
   const [filterText, setFilterText] = useState<string>('');
   const refInput = useRef(null);
 
