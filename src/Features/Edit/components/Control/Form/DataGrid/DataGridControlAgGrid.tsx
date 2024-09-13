@@ -1881,7 +1881,7 @@ export const DataGridControlAgGrid: React.FC<
                   marginBottom: 14,
                 }}
               >
-                Add Row
+                {trans('addLine')}
               </Button>
             </BPITooltip>
           )}
@@ -1898,7 +1898,7 @@ export const DataGridControlAgGrid: React.FC<
                 marginBottom: 14,
               }}
             >
-              Delete Rows
+              {trans('deleteRows')}
             </Button>
           )}
           {(GridDetails?.buttons ?? []).length > 0 &&

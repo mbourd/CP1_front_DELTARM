@@ -41,6 +41,19 @@ export const MainHeader: React.FC<
         <p className={'app-name'}>{dataClientInfos?.data[0].cli_app_name}</p>
       )}
       <IconsContainer />
+      <select
+        value={optionValue}
+        className={'language-option'}
+        onChange={(e) => {
+          localStorage.setItem('lang', e.target.value);
+          setOptionValue(e.target.value);
+          changeLang(e.target.value);
+        }}
+      >
+        <option value="fr">French</option>
+        <option value="en">English</option>
+        <option value="de">German</option>
+      </select>
       <MainNav />
     </MainHeaderStyled>
   );
