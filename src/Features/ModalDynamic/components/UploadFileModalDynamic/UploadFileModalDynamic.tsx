@@ -170,7 +170,7 @@ const UploadFileModalDynamic: React.FC<UploadModalDynamicPropsType> = ({
         </Container>
       </Button>
       <UploadList
-        currentUploadFile={listFile.map((f) => {
+        files={listFile.map((f) => {
           return { file_id: '', file_name: f.name };
         })}
         handleDeleteFile={handleDeleteFile}
