@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getEnv } from '../../../../../../../Packages/Helpers';
+import { getEnv } from 'Packages/Helpers';
 import { IApiControl, IUploadDetail } from '../../../../../types';
 import React, { SetStateAction } from 'react';
 
@@ -18,6 +18,7 @@ export const uploadFile = (
 
   formData.append('file', newUploadFile);
   formData.append('file_name', newUploadFile.name);
+
   axios
     .post(
       `${getEnv('API_PROTOCOL')}://${getEnv(
@@ -35,7 +36,6 @@ export const uploadFile = (
     )
     .then((res) => {
       setErrorMessage(null);
-
       return setCurrentUploadFile(res.data.data.file_detail);
     })
     .catch((err) => {

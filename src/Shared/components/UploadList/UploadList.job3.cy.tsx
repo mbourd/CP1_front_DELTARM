@@ -7,7 +7,6 @@
 
 import React from 'react';
 import { SetupTestsComponents } from '../../../../cypress/utils/SetupTestsComponents';
-
 import { UploadList } from './UploadList';
 import { IUploadDetail } from '../../../Features/Edit/types';
 
@@ -16,7 +15,7 @@ describe('<UploadList />', () => {
     cy.mount(
       <SetupTestsComponents>
         <UploadList
-          currentUploadFile={null}
+          files={null}
           handleDeleteFile={function (): void {
             throw new Error('Function not implemented.');
           }}
@@ -39,7 +38,7 @@ describe('<UploadList />', () => {
     cy.mount(
       <SetupTestsComponents>
         <UploadList
-          currentUploadFile={currentUploadFile}
+          files={currentUploadFile}
           handleDeleteFile={function (): void {
             throw new Error('Function not implemented.');
           }}

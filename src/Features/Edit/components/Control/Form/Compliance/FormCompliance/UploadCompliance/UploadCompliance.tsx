@@ -201,7 +201,7 @@ export const UploadCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
           </label>
         </Container>
         <UploadList
-          currentUploadFile={currentUploadFile}
+          files={currentUploadFile}
           handleDeleteFile={handleDeleteFile}
           handleDownloadFile={handleDownloadFile}
         />

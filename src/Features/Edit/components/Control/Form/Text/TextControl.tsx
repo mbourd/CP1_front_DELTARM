@@ -27,6 +27,7 @@ export const TextControl: React.FC<React.PropsWithChildren<IProps>> = ({
   formState,
   setFormState,
   context,
+  // ...rest
 }): React.ReactElement => {
   const [trans] = useTrans('Edit');
   const { send, error } = useApi<void>();
@@ -121,7 +122,12 @@ export const TextControl: React.FC<React.PropsWithChildren<IProps>> = ({
   }, [isRejected]);
 
   // expose for Cypress API
-  if (window?.['Cypress']) {
+  if (
+    window?.['Cypress'] ||
+    window?.['__STORYBOOK_STORY_STORE__']
+    // @ts-ignore
+    //rest?.exposeForTestingPurpose //better way
+  ) {
     window['Features_Edit_Control_TextControl'] = {
       setErrorMessage,
       setCanSendApi,

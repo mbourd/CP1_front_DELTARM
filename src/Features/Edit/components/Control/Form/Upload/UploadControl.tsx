@@ -1,122 +1,128 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { UploadControlStyled } from './UploadControl.style';
-import { Grid, Fab } from '@mui/material';
+import { Button, Container, Fab, Grid } from '@mui/material';
 import { CloudUpload } from '@mui/icons-material';
 import { IApiControl, IUploadDetail } from 'Features/Edit/types';
 import { FormError } from 'Shared/components';
-import { IUser, security, useApi } from 'Services';
+import { security, useApi, useTrans } from 'Services';
 import { ControlLabel } from '../ControlLabel';
 import { ControlFooter } from '../ControlFooter';
-import { Button, Container } from '@mui/material';
 import { useDropzone } from 'react-dropzone';
 import { uploadFile } from './apiRoutes/uploadFile';
-import { UploadList } from '../../../../../../Shared/components/UploadList/UploadList';
-// import { deleteFile } from '../../../../../../Shared/components/UploadList/apiRoutes/deleteFile';
-// import { downloadFile } from '../../../../../../Shared/components/UploadList/apiRoutes/downloadFile';
 import { RejectControl } from '../RejectByPointControl/RejectControl';
-import { useTrans } from '../../../../../../Services';
-
-import _ from 'lodash';
+import { UploadList } from 'Shared/components/UploadList/UploadList';
 
 interface IProps {
-  control: IApiControl;
   fileId: string;
+  control: IApiControl;
   context: 'edit' | 'validate';
 }
 
+const errors = {
+  create: 'Une erreur est survenue lors du téléchargement du fichier',
+  delete: 'Une erreur est survenue lors de la suppression du fichier',
+};
+
+const styles = {
+  container: {
+    height: '50px',
+    padding: '5px',
+    display: 'flex',
+    borderRadius: '5px',
+    alignItems: 'center',
+    justifyContent: 'center',
+    border: '1px solid #E0DDDC',
+    transition: '.1s ease-in-out',
+  },
+  cta: {
+    display: 'block',
+    width: '100%',
+    padding: '0',
+    margin: '0',
+  },
+};
+
 export const UploadControl: React.FC<React.PropsWithChildren<IProps>> = ({
-  control,
   fileId,
+  control,
   context,
 }): React.ReactElement => {
-  const inputFileRef = useRef<any>();
+  /**
+   * -----------------------------------------------------------
+   * HOOKS
+   * -----------------------------------------------------------
+   */
   const [trans] = useTrans('Edit');
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [newUploadFile, setNewUploadFile] = useState<File | any>(null);
-  const [currentUploadFile, setCurrentUploadFile] = useState<
-    IUploadDetail[] | null
-  >(control.upload_detail);
-  const [isRejected, setIsRejected] = useState(
-    control.control_rejectable?.is_rejected
-      ? control.control_rejectable.is_rejected
-      : false,
-  );
-  const [user] = useState<IUser>(security.getUser());
-  const jwt = user.getJwt();
-  const [isUploading, setIsUploading] = useState(false); // Add this state
+
   const { send } = useApi({ promise: true });
-  const { send: sendReturnBlob } = useApi({
+
+  const { send: sendWithBlob } = useApi({
     promise: true,
     responseType: 'blob',
   });
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedUpload = useCallback(
-    _.debounce((file) => {
-      uploadFile(
-        fileId,
-        control,
-        file,
-        jwt,
-        setCurrentUploadFile,
-        setErrorMessage,
-      );
-    }, 1),
-    [],
+  /**
+   * -----------------------------------------------------------
+   * STATES
+   * -----------------------------------------------------------
+   */
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+
+  const [currentUploadedFiles, setCurrentUploadedFiles] = React.useState<
+    IUploadDetail[] | null
+  >(control.upload_detail);
+
+  const [isRejected, setIsRejected] = React.useState(
+    Boolean(control?.control_rejectable?.is_rejected),
   );
 
-  const saveFileToUpload = useCallback((e: any) => {
-    setNewUploadFile(e.target.files[0]);
+  /**
+   * -----------------------------------------------------------
+   * VARIABLES
+   * -----------------------------------------------------------
+   */
+  const jwt = security.getUser().getJwt();
+
+  /**
+   * -----------------------------------------------------------
+   * FUNCTIONS
+   * -----------------------------------------------------------
+   */
+  const onDrop = React.useCallback((acceptedFiles: any) => {
+    onUploadFiles(acceptedFiles);
   }, []);
 
-  useEffect(() => {
-    if (
-      control.mandatory &&
-      (currentUploadFile?.length === 0 || !currentUploadFile)
-    ) {
-      setErrorMessage(trans('mandatoryValue'));
-    }
-  }, [control, newUploadFile, trans, currentUploadFile]);
-
-  const onDrop = useCallback((acceptedFiles: any) => {
-    acceptedFiles.forEach((file: File) => {
-      setNewUploadFile(file);
-      setIsUploading(false);
-    });
-  }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
-  const handleUploadFile = useCallback(() => {
-    if (control.mandatory && !newUploadFile) {
-      setErrorMessage(trans('mandatoryValue'));
+  const onUploadFiles = React.useCallback(
+    async (filesToUpload: File[]) => {
+      if (control.mandatory && filesToUpload.length === 0) {
+        setErrorMessage(trans('mandatoryValue'));
+        return;
+      }
 
-      return;
-    }
-    if (!control.mandatory) {
-      setErrorMessage(null);
-    }
-    if (newUploadFile) {
-      setIsUploading(true); // Set uploading flag
-      debouncedUpload(newUploadFile);
-      // setNewUploadFile(() => {
-      //   setTimeout(() => {
-      //     uploadFile(
-      //       fileId,
-      //       control,
-      //       newUploadFile,
-      //       jwt,
-      //       setCurrentUploadFile,
-      //       setErrorMessage,
-      //     );
-      //   }, 1500);
+      if (!control.mandatory) {
+        setErrorMessage(null);
+      }
 
-      //   return null;
-      // });
-    }
-  }, [control.mandatory, newUploadFile, trans, debouncedUpload]);
+      if (filesToUpload.length > 0) {
+        filesToUpload.forEach((file, index) => {
+          uploadFile(
+            fileId,
+            control,
+            file,
+            jwt,
+            setCurrentUploadedFiles,
+            setErrorMessage,
+          );
+        });
+      }
+    },
+    [control.mandatory, trans],
+  );
 
-  const handleDeleteFile = useCallback(
-    (e: any, name: any) => {
+  const onDeleteFile = React.useCallback(
+    (e: React.MouseEvent<SVGSVGElement, MouseEvent>, name: string) => {
       e.preventDefault();
       send(
         'deleteUploadedFile',
@@ -125,34 +131,21 @@ export const UploadControl: React.FC<React.PropsWithChildren<IProps>> = ({
       )
         ?.then((response) => {
           setErrorMessage(null);
-
-          return setCurrentUploadFile(response.body.data.file_detail);
+          setCurrentUploadedFiles(response.body.data.file_detail);
         })
-        .catch(() => {
-          setErrorMessage(
-            'Une erreur est survenue lors de la suppression du fichier',
-          );
-        });
-      // deleteFile(
-      //   fileId,
-      //   control.control_id,
-      //   name,
-      //   jwt,
-      //   setErrorMessage,
-      //   setCurrentUploadFile,
-      // );
+        .catch(() => setErrorMessage(errors.delete));
     },
     [send, fileId, control.control_id],
   );
 
-  const handleDownloadFile = useCallback(
-    (e: any, id: any, name: any) => {
+  const onDownloadFile = React.useCallback(
+    (
+      e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+      id: string,
+      name: string,
+    ) => {
       e.preventDefault();
-      sendReturnBlob(
-        'downloadUploadedFile',
-        {},
-        { file_id: id, file_name: name },
-      )
+      sendWithBlob('downloadUploadedFile', {}, { file_id: id, file_name: name })
         ?.then((response) => {
           const url = window.URL.createObjectURL(new Blob([response.body]));
           const link = document.createElement('a');
@@ -161,84 +154,63 @@ export const UploadControl: React.FC<React.PropsWithChildren<IProps>> = ({
           document.body.appendChild(link);
           link.click();
         })
-        .catch(() => {
-          return setErrorMessage(
-            'Une erreur est survenue lors du téléchargement du fichier',
-          );
-        });
-      // downloadFile(id, name, jwt, setErrorMessage);
+        .catch(() => setErrorMessage(errors.create));
     },
-    [sendReturnBlob],
+    [sendWithBlob],
   );
 
-  useEffect(() => {
-    if (newUploadFile && !isUploading) {
-      handleUploadFile();
+  /**
+   * -----------------------------------------------------------
+   * CYCLE LIFE
+   * -----------------------------------------------------------
+   */
+  React.useEffect(() => {
+    if (control.mandatory && currentUploadedFiles?.length === 0) {
+      setErrorMessage(trans('mandatoryValue'));
     }
-    // setNewUploadFile(null);
-  }, [newUploadFile, handleUploadFile, isUploading]);
+  }, [control.mandatory, trans, currentUploadedFiles]);
 
-  useEffect(() => {
-    if (!isRejected) {
-      setIsRejected(false);
-    }
-  }, [isRejected]);
-
+  /**
+   * -----------------------------------------------------------
+   * RENDER
+   * -----------------------------------------------------------
+   */
   return (
     <Grid item xs={6}>
       <ControlLabel control={control} />
       <UploadControlStyled>
         <Button
           disableRipple
+          disableElevation
           disableTouchRipple
           disableFocusRipple
-          disableElevation
           disabled={!control.editable}
           id={`upload-id${control.control_id}`}
           style={{
-            display: 'block',
-            width: '100%',
-            padding: '0',
-            margin: '0',
             opacity: `${control.editable ? '1' : '0.5'}`,
+            ...styles.cta,
           }}
         >
           <Container
             style={{
-              padding: '5px',
-              border: '1px solid #E0DDDC',
-              borderRadius: '5px',
+              ...styles.container,
               backgroundColor: `${isDragActive ? 'white' : '#f0f0f0'}`,
-              transition: '.1s ease-in-out',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: '50px',
             }}
             {...getRootProps({
               onClick: (event: any) => event.stopPropagation(),
             })}
           >
-            <label
-              htmlFor={`compliance-file-upload${control.control_id}`}
-              onClick={() => {
-                setNewUploadFile(null);
-                setIsUploading(false);
-                inputFileRef.current.value = null;
-              }}
-            >
+            <label htmlFor={`compliance-file-upload${control.control_id}`}>
               <input
+                type="file"
                 style={{ display: 'none' }}
                 id={`compliance-file-upload${control.control_id}`}
                 name={`compliance-file-upload${control.control_id}`}
-                type="file"
-                onChange={saveFileToUpload}
                 {...getInputProps()}
-                ref={(el) => (inputFileRef.current = el)}
               />
               <Fab
-                color="error"
                 size="small"
+                color="error"
                 component="span"
                 aria-label="upload"
                 style={{ position: 'inherit' }}
@@ -249,26 +221,30 @@ export const UploadControl: React.FC<React.PropsWithChildren<IProps>> = ({
           </Container>
         </Button>
         <UploadList
-          currentUploadFile={currentUploadFile}
-          handleDeleteFile={handleDeleteFile}
-          handleDownloadFile={handleDownloadFile}
+          files={currentUploadedFiles}
+          handleDeleteFile={onDeleteFile}
+          handleDownloadFile={onDownloadFile}
           disabled={!control.control_editable}
         />
       </UploadControlStyled>
-      {control.useRejection && control.control_rejectable && (
+      {control.useRejection && control.control_rejectable ? (
         <RejectControl
+          context={context}
           isRejected={isRejected}
           setIsRejected={setIsRejected}
           controlId={control.control_id}
-          context={context}
           controlRejectable={control.useRejection}
         />
+      ) : (
+        <></>
       )}
       {errorMessage ? (
         <p>
           <FormError>{errorMessage}</FormError>
         </p>
-      ) : null}
+      ) : (
+        <></>
+      )}
       <ControlFooter control={control} />
     </Grid>
   );

@@ -58,7 +58,9 @@ export function _assertManuallyPinnedPositionColumns(
               .then(() => {
                 cy.wait(100);
                 if (col.lockPinned) {
-                  cy.get('.ag-menu .ag-menu-list .ag-menu-option [ref="eName"]')
+                  cy.get(
+                    '.ag-menu .ag-menu-list .ag-menu-option [ref="eName"], .ag-menu .ag-menu-list .ag-menu-option [data-ref="eName"]',
+                  )
                     .contains('Épingler la colonne')
                     .should('not.exist');
                   cy.realPress('Escape').then(() => {
@@ -75,12 +77,14 @@ export function _assertManuallyPinnedPositionColumns(
                       .focus();
                   });
                 } else
-                  cy.get('.ag-menu .ag-menu-list .ag-menu-option [ref="eName"]')
+                  cy.get(
+                    '.ag-menu .ag-menu-list .ag-menu-option [ref="eName"], .ag-menu .ag-menu-list .ag-menu-option [data-ref="eName"]',
+                  )
                     .contains('Épingler la colonne')
                     .realHover()
                     .then(() => {
                       cy.get(
-                        '.ag-menu.ag-popup-child[aria-label="SubMenu"] .ag-menu-option [ref="eName"]',
+                        '.ag-menu.ag-popup-child[aria-label="SubMenu"] .ag-menu-option [ref="eName"], .ag-menu.ag-popup-child[aria-label="SubMenu"] .ag-menu-option [data-ref="eName"]',
                       )
                         .contains(
                           direction === null

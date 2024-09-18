@@ -1,66 +1,88 @@
 import { Container } from '@mui/material';
 import { HighlightOff } from '@mui/icons-material';
 import React from 'react';
-import { IUploadDetail } from '../../../Features/Edit/types';
+import { IUploadDetail } from 'Features/Edit/types';
 import { DownloadFile } from './UploadList.style';
 
-interface IProps {
-  currentUploadFile: IUploadDetail[] | null;
-  handleDeleteFile: (e: any, name: any) => void;
-  handleDownloadFile?: (e: any, id: string, name: any) => void;
+export interface IUploadListProps {
   disabled?: boolean;
   style?: React.CSSProperties;
+  files: IUploadDetail[] | null;
+  handleDeleteFile: (
+    e: React.MouseEvent<SVGSVGElement, MouseEvent>,
+    name: string,
+  ) => void;
+  handleDownloadFile?: (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    name: string,
+    id: string,
+  ) => void;
 }
 
-export const UploadList: React.FC<React.PropsWithChildren<IProps>> = ({
-  currentUploadFile,
+const styles = {
+  container: {
+    padding: '0',
+    margin: '10px 0',
+    overflow: 'hidden',
+    alignItems: 'center',
+    textOverflow: 'ellipsis',
+  },
+  delete: {
+    fontSize: '15px',
+    color: '#f50057',
+    marginLeft: '2px',
+    cursor: 'pointer',
+  },
+  download: {
+    margin: '5px',
+    marginRight: '0',
+  },
+};
+
+export const UploadList: React.FC<
+  React.PropsWithChildren<IUploadListProps>
+> = ({
+  style,
+  files,
+  disabled = false,
   handleDeleteFile,
   handleDownloadFile,
-  disabled = false,
-  style,
 }): React.ReactElement => {
+  /**
+   * -----------------------------------------------------------
+   * RENDER
+   * -----------------------------------------------------------
+   */
   return (
     <Container style={{ padding: '0', overflow: 'hidden', ...style }}>
-      {currentUploadFile?.map((file) => {
+      {(files || []).map((file) => {
         return (
           <Container
-            key={file?.file_id ? file.file_id : file.file_name}
-            style={{
-              margin: '10px 0',
-              padding: '0',
-              alignItems: 'center',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-            }}
+            key={file?.file_id || file.file_name}
+            style={styles.container}
           >
             <DownloadFile
+              style={styles.download}
               {...(handleDownloadFile ? { href: file.file_id } : {})}
               onClick={(e) => {
                 if (handleDownloadFile)
                   handleDownloadFile(e, file.file_id, file.file_name);
               }}
-              style={{
-                margin: '5px',
-                marginRight: '0',
-              }}
             >
-              {file.file_name.length > 30 ? (
-                <span>{file.file_name.substring(0, 45) + '...'}</span>
-              ) : (
-                <span>{file.file_name}</span>
-              )}
+              <span>
+                {file.file_name.length > 30
+                  ? file.file_name.substring(0, 45).concat('...')
+                  : file.file_name}
+              </span>
             </DownloadFile>
-            {!disabled && (
+            {!disabled ? (
               <HighlightOff
+                style={styles.delete}
                 data-testid="delete_icon_uploadfile"
                 onClick={(e) => handleDeleteFile(e, file.file_name)}
-                style={{
-                  color: '#f50057',
-                  cursor: 'pointer',
-                  fontSize: '15px',
-                  marginLeft: '2px',
-                }}
               />
+            ) : (
+              <></>
             )}
           </Container>
         );

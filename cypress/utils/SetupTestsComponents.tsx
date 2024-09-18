@@ -18,7 +18,12 @@ import { Store } from '@reduxjs/toolkit';
 import { IAppStore } from '../../src/Packages/ReduxToolkit/types';
 import { StyledEngineProvider } from '@mui/material';
 
-type SetupTestsComponentProps = {
+import '../../src/Services';
+import '../../src/Features';
+import '../../src/Shared';
+import '../../src/Services/Api/registerCallState';
+
+type SetupTestsComponentProps = Record<string | number | symbol, any> & {
   theme?: ITheme;
   style?: React.CSSProperties;
   appContextValue?: AppContextType & Record<'ForCompTests', Record<any, any>>;
@@ -47,9 +52,9 @@ const SetupTestsComponents: React.FC<
   altAppStore,
 }) => {
   let content = (
-    <AppContext.Provider value={appContextValue}>
-      <SecurityContext.Provider value={securityContextValue}>
-        <main id="main-content" style={style}>
+    <main id="main-content" style={style}>
+      <AppContext.Provider value={appContextValue}>
+        <SecurityContext.Provider value={securityContextValue}>
           <RecoilRoot>
             <BrowserRouter>
               <StyledEngineProvider injectFirst>
@@ -60,9 +65,9 @@ const SetupTestsComponents: React.FC<
               </StyledEngineProvider>
             </BrowserRouter>
           </RecoilRoot>
-        </main>
-      </SecurityContext.Provider>
-    </AppContext.Provider>
+        </SecurityContext.Provider>
+      </AppContext.Provider>
+    </main>
   );
 
   if (hasReduxPersist) {

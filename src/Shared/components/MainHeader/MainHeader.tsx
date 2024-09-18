@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import './translations';
 import { MainHeaderStyled } from './MainHeader.style';
-import { router, SecurityContext, useApi, useTrans } from 'Services';
+import { router, SecurityContext, useApi } from 'Services';
 import { IconsContainer } from './IconsContainer/IconsContainer';
 import { MainNav, useTransMainHeader } from '..';
 
@@ -11,7 +11,6 @@ export const MainHeader: React.FC<
   React.PropsWithChildren<unknown>
 > = (): React.ReactElement => {
   const { trans, currentLang, changeLang } = useTransMainHeader();
-  const [optionValue, setOptionValue] = useState(currentLang);
   const dashboardPath = router.generatePath('dashboard');
   const { data: context } = useContext(SecurityContext);
   const { send: clientInfos, data: dataClientInfos } = useApi<any>();

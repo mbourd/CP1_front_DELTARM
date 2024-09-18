@@ -186,7 +186,7 @@ export const DataGridUpload: React.FC<React.PropsWithChildren<IProps>> = ({
       </Button>
       <UploadList
         style={{ overflowY: 'auto', maxHeight: '50px' }}
-        currentUploadFile={currentUploadFile}
+        files={currentUploadFile}
         handleDeleteFile={handleDeleteFile}
         handleDownloadFile={handleDownloadFile}
         disabled={!editable}

@@ -13,12 +13,73 @@
   "parser": "@typescript-eslint/parser",
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:prettier/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:import/typescript",
-    "plugin:cypress/recommended"
+    "plugin:prettier/recommended"
+  ],
+  "overrides": [
+    {
+      "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "plugin:import/typescript"
+      ],
+      "files": "**/*.{ts,tsx}",
+      "rules": {
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unused-vars": ["warn", {}]
+      }
+    },
+    {
+      "extends": [
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended"
+      ],
+      "files": "**/*.tsx",
+      "rules": {
+        "react/prop-types": ["off"],
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "react/no-array-index-key": "warn",
+        "react/no-children-prop": "error",
+        "react-refresh/only-export-components": "error",
+        "react/forbid-component-props": [
+          "error",
+          { "forbid": ["deprecatedPropName"] }
+        ],
+        "react/no-unescaped-entities": "warn"
+      },
+      "settings": {
+        "react": {
+          "version": "detect"
+        }
+      }
+    },
+    {
+      "extends": [
+        "plugin:storybook/recommended"
+      ],
+      "files": "**/*.stories.{ts,tsx}",
+      "rules": {
+        "import/no-anonymous-default-export": "off",
+        "storybook/no-uninstalled-addons": "error",
+        "storybook/story-exports": "warn"
+      }
+    },
+    {
+      "extends": [
+        "plugin:cypress/recommended"
+      ],
+      "files": "**/*.cy.{ts,tsx}",
+      "rules": {
+        "cypress/no-assigning-return-values": "warn",
+        "cypress/no-unnecessary-waiting": "warn",
+        "cypress/assertion-before-screenshot": "error",
+        "cypress/no-force": "warn",
+        "cypress/no-async-tests": "error",
+        "cypress/no-pause": "error",
+        "cypress/unsafe-to-chain-command": "off"
+      }
+    }
   ],
   "parserOptions": {
     "ecmaVersion": 2018,
@@ -28,41 +89,15 @@
     }
   },
   "rules": {
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-unused-vars": ["warn", {}],
     "newline-before-return": ["warn"],
     "no-console": ["warn", { "allow": ["warn", "error"] }],
     "no-eval": ["error"],
-    "react/prop-types": ["off"],
-    "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/ban-ts-comment": "off",
-    "react/forbid-component-props": [
-      "error",
-      { "forbid": ["deprecatedPropName"] }
-    ],
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
-    "react/no-array-index-key": "warn",
-    "react/no-children-prop": "error",
-    "react-refresh/only-export-components": "error",
-    "prettier/prettier": ["error", { "endOfLine": "auto" }],
     "no-empty-pattern": ["warn"],
     "no-empty-function": ["error"],
     "no-multiple-empty-lines": "error",
     "no-empty": "error",
     "no-unsafe-optional-chaining": "warn",
-    "cypress/no-assigning-return-values": "warn",
-    "cypress/no-unnecessary-waiting": "warn",
-    "cypress/assertion-before-screenshot": "error",
-    "cypress/no-force": "warn",
-    "cypress/no-async-tests": "error",
-    "cypress/no-pause": "error",
-    "cypress/unsafe-to-chain-command": "off"
-  },
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
+    "prettier/prettier": ["error", { "endOfLine": "auto" }]
   },
   "ignorePatterns": [
   ]

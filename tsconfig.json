@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "lib": [
       "dom",
       "dom.iterable",
@@ -25,22 +25,21 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": "src",
+    "paths": {
+      "@/*": ["./*"]
+    },
     "noFallthroughCasesInSwitch": true
   },
   "include": [
     "src"
-  ],
+, "src/.storybook/SetupTestsComponents.tsx", "src/.storybook/componentsDecorator.tsx"  ],
   "exclude": [
-    "src/**/*.test.tsx",
-    "src/**/*.test.ts",
-    "src/**/*.cy.tsx",
-    "src/**/*.cy.ts",
-    "src/**/*.cy.jsx",
-    "src/**/*.cy.js",
-    "src/**/tests",
-    "cypress/**/*.cy.ts",
-    "cypress/**/*.cy.tsx",
-    "cypress/**/*.cy.js",
-    "cypress/**/*.cy.jsx",
+    "**/*.cy.tsx",
+    "**/*.cy.ts",
+    "**/*.stories.tsx",
+    "**/*.stories.ts",
+    "**/*.test.tsx",
+    "**/*.test.ts",
+    "**/tests",
   ]
 }

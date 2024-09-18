@@ -13,7 +13,6 @@ import '../reducer';
 import '../apiRoutes';
 import { IDashboard, ISearchBarOptions } from './types';
 import { Method } from 'cypress/types/net-stubbing';
-import { _getRandomNumberBetween } from '../../../../cypress/utils';
 
 describe('<DashboardDynamic />', function () {
   let dashboardDynamic1: IDashboard;
@@ -55,20 +54,11 @@ describe('<DashboardDynamic />', function () {
         },
       },
     };
-    // cy.intercept(
-    //   {
-    //     method: 'GET',
-    //     url: '/dashboard/contr_perm',
-    //   },
-    //   (req) => {
-    //     req.on('response', (resp) => {
-    //       resp.send(200, { data: { ok: 1 } });
-    //     });
-    //   },
-    // );
-    cy.intercept('GET', '/dashboard/contr_perm*', {
-      statusCode: 200,
-      body: _dashboard,
+    cy.intercept('GET', '/dashboard/contr_perm*', (req) => {
+      req.reply({
+        statusCode: 200,
+        body: _dashboard,
+      });
     });
     cy.mount(
       <SetupTestsComponents>

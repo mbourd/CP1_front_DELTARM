@@ -176,7 +176,7 @@ export const AgDataGridUpload: React.FC<React.PropsWithChildren<IProps>> = ({
         </Container>
       </Button>
       <UploadList
-        currentUploadFile={currentUploadFile}
+        files={currentUploadFile}
         handleDeleteFile={handleDeleteFile}
         handleDownloadFile={handleDownloadFile}
         disabled={!editable}
