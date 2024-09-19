@@ -7,11 +7,14 @@ apiStorage.addCallState(
   'ERROR',
   <Error500 title={'Oops...'} message={'Le serveur ne répond pas'} />,
 );
+
 apiStorage.addCallState(
   'SERVER_ERROR',
   <Error500 title={'Oops...'} message={'Le serveur ne répond pas'} />,
 );
+
 apiStorage.addCallState('NOT_FOUND', <ErrorNotFound />);
+
 apiStorage.addCallState(
   'IS_LOADING',
   <PageLoader text={'Chargement des données...'} />,

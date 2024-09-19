@@ -1,116 +1,135 @@
-import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import { Grid } from '@mui/material';
 import { IApiControl, IChapter } from 'Features/Edit/types';
 import { FormError, Select } from 'Shared/components';
-import { useApi, useRouter } from 'Services';
+import { useApi, useRouter, useTrans } from 'Services';
 import { SelectListControlStyled } from './SelectListControl.style';
 import { ControlLabel } from '../ControlLabel';
 import { ControlFooter } from '../ControlFooter';
 import { Compliance } from '../Compliance/Compliance';
-import { updateFormState } from '../../../../../../Packages/Helpers/src/updateFormState';
+import { updateFormState } from 'Packages/Helpers/src/updateFormState';
 import { RejectControl } from '../RejectByPointControl/RejectControl';
-import { useTrans } from '../../../../../../Services';
+import { useAuth } from 'hooks';
 
 interface IProps {
   control: IApiControl;
   fileId: string;
   multiple: boolean;
   formState: IChapter[];
-  setFormState: React.Dispatch<SetStateAction<IChapter[]>>;
-  context: 'edit' | 'validate';
   get_value_response?: any;
+  context: 'edit' | 'validate';
+  setFormState: React.Dispatch<React.SetStateAction<IChapter[]>>;
 }
 
 export const SelectListControl: React.FC<React.PropsWithChildren<IProps>> = ({
-  control,
   fileId,
+  control,
+  context,
   multiple,
   formState,
   setFormState,
-  context,
 }): React.ReactElement => {
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [currentValue, setCurrentValue] = useState(control.control_value);
+  /**
+   * -----------------------------------------------------------
+   * HOOKS
+   * -----------------------------------------------------------
+   */
   const [trans] = useTrans('Edit');
-  const [choiceIsKo, setChoiceIsKo] = useState(
-    control.compliance?.compliance_checkbox_resolved
-      ? control.compliance.compliance_checkbox_resolved
-      : false,
-  );
-  const [isResolved, setIsResolved] = useState(
-    control.compliance?.compliance_resolved
-      ? control.compliance.compliance_resolved
-      : false,
-  );
-
-  const [isRejected, setIsRejected] = useState(
-    control.control_rejectable?.is_rejected
-      ? control.control_rejectable.is_rejected
-      : false,
-  );
-
   const { currentRoute } = useRouter();
   const { send, error } = useApi<void>();
-  const [apiRouteName, setApiRouteName] = useState<string>(
+  const { currentUser } = useAuth();
+
+  /**
+   * -----------------------------------------------------------
+   * STATES
+   * -----------------------------------------------------------
+   */
+  const [currentValue, setCurrentValue] = React.useState(control.control_value);
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+
+  const [choiceIsKo, setChoiceIsKo] = React.useState(
+    Boolean(control?.compliance?.compliance_checkbox_resolved),
+  );
+  const [isResolved, setIsResolved] = React.useState(
+    Boolean(control?.compliance?.compliance_resolved),
+  );
+
+  const [isRejected, setIsRejected] = React.useState(
+    Boolean(control?.control_rejectable?.is_rejected),
+  );
+
+  const [apiRouteName, setApiRouteName] = React.useState<string>(
     currentRoute?.props?.apiSaveControlRouteName,
   );
 
+  /**
+   * -----------------------------------------------------------
+   * VARIABLES
+   * -----------------------------------------------------------
+   */
   const selectedValue: Record<string, true> = {
     [currentValue || control.control_value || '']: true,
   };
 
-  useEffect(() => {
-    setCurrentValue(control.control_value);
-  }, [control.control_value]);
+  const isAuthoriseToCheck = React.useMemo(() => {
+    return !control.compliance?.compliance_profil_restrict
+      ? true
+      : currentUser?.user_profile_id ===
+          control.compliance.compliance_profil_restrict;
+  }, [currentUser?.user_profile_id, control?.compliance?.compliance_resolved]);
 
-  useEffect(() => {
-    updateFormState(formState, control.control_id, currentValue, setFormState);
-  }, [formState, control.control_id, currentValue, setFormState]);
+  const checkIsLocked = React.useMemo(() => {
+    return !isAuthoriseToCheck
+      ? true
+      : Boolean(control?.compliance?.compliance_locked_after_check) &&
+          Boolean(control?.compliance?.compliance_checkbox_resolved);
+  }, [
+    isAuthoriseToCheck,
+    control?.compliance?.compliance_checkbox_resolved,
+    control?.compliance?.compliance_locked_after_check,
+  ]);
 
-  useEffect(() => {
-    if (!choiceIsKo) {
-      setIsResolved(false);
-    }
-  }, [choiceIsKo]);
-
-  useEffect(() => {
-    if (!isRejected) {
-      setIsRejected(false);
-    }
-  }, [isRejected]);
-
-  const saveValue = useCallback(
+  /**
+   * -----------------------------------------------------------
+   * FUNCTIONS
+   * -----------------------------------------------------------
+   */
+  const saveValue = React.useCallback(
     (value: string) => {
       if (control.control_regex && !value.match(control.control_regex)) {
         setErrorMessage(control.control_regex_msg);
-
-        return;
+      } else {
+        setErrorMessage(null);
+        setCurrentValue(value);
+        send(
+          apiRouteName,
+          {},
+          {
+            elm_val: value,
+            file_id: fileId,
+            elm_id: control.control_id,
+            control_family: control.control_family,
+          },
+        );
       }
-      setErrorMessage(null);
-      setCurrentValue(value);
-      send(
-        apiRouteName,
-        {},
-        {
-          file_id: fileId,
-          elm_id: control.control_id,
-          elm_val: value,
-          control_family: control.control_family,
-        },
-      );
     },
     [
       send,
       fileId,
-      control.control_id,
-      control.control_family,
       apiRouteName,
+      control.control_id,
       control.control_regex,
+      control.control_family,
       control.control_regex_msg,
     ],
   );
 
-  useEffect(() => {
+  /**
+   * -----------------------------------------------------------
+   * CYCLE LIFE
+   * -----------------------------------------------------------
+   */
+  React.useEffect(() => {
     if (control.mandatory && control.editable && !currentValue) {
       setErrorMessage(trans('mandatoryValue'));
     }
@@ -120,17 +139,30 @@ export const SelectListControl: React.FC<React.PropsWithChildren<IProps>> = ({
   }, [
     control.control_id,
     control.mandatory,
-    currentValue,
     control.editable,
+    currentValue,
     trans,
   ]);
 
-  useEffect(() => {
+  React.useEffect(() => {
+    setCurrentValue(control.control_value);
+  }, [control.control_value]);
+
+  React.useEffect(() => {
+    updateFormState(formState, control.control_id, currentValue, setFormState);
+  }, [formState, control.control_id, currentValue, setFormState]);
+
+  React.useEffect(() => {
     if (error) {
       setErrorMessage(trans('errorReselect'));
     }
   }, [error, trans]);
 
+  /**
+   * -----------------------------------------------------------
+   * TESTING
+   * -----------------------------------------------------------
+   */
   if (window?.['Cypress']) {
     window['Features_Edit_Control_SelectListControl'] = {
       setErrorMessage,
@@ -138,20 +170,28 @@ export const SelectListControl: React.FC<React.PropsWithChildren<IProps>> = ({
     };
   }
 
+  /**
+   * -----------------------------------------------------------
+   * RENDER
+   * -----------------------------------------------------------
+   */
   return (
     <Grid item xs={6}>
       <SelectListControlStyled className={'control-container'}>
         <ControlLabel control={control} />
         <Select
           closeOnSelect
-          name={'select_list' + control.control_id}
-          data={control.answerChoices || {}}
-          colour_data={control.control_answer_choices || {}}
-          selectedValues={selectedValue}
-          labelColor={control.editable ? 'text' : 'disabled'}
-          labelBdc={control.editable ? 'text' : 'disabled'}
+          error={!!error}
           multiple={multiple}
+          choiceIsKo={choiceIsKo}
           disabled={!control.editable}
+          setChoiceIsKo={setChoiceIsKo}
+          selectedValues={selectedValue}
+          data={control.answerChoices || {}}
+          name={'select_list' + control.control_id}
+          labelBdc={control.editable ? 'text' : 'disabled'}
+          colour_data={control.control_answer_choices || {}}
+          labelColor={control.editable ? 'text' : 'disabled'}
           onChange={(selectedValues) => {
             const value =
               Object.keys(selectedValues).length >= 2
@@ -160,9 +200,6 @@ export const SelectListControl: React.FC<React.PropsWithChildren<IProps>> = ({
             const val = value ? value : '';
             saveValue('' + val);
           }}
-          error={!!error}
-          choiceIsKo={choiceIsKo}
-          setChoiceIsKo={setChoiceIsKo}
         >
           {trans('selectValue')}
         </Select>
@@ -171,21 +208,22 @@ export const SelectListControl: React.FC<React.PropsWithChildren<IProps>> = ({
       </SelectListControlStyled>
       {control.useCompliance && control.compliance && (
         <Compliance
-          label={control.compliance.compliance_lib}
+          fileId={fileId}
           checked={isResolved}
+          choiceIsKo={choiceIsKo}
+          isDisabled={checkIsLocked}
           setIsResolved={setIsResolved}
           controlId={control.control_id}
-          fileId={fileId}
-          choiceIsKo={choiceIsKo}
           compliance={control.useCompliance}
+          label={control.compliance.compliance_lib}
         />
       )}
       {control.useRejection && control.control_rejectable && (
         <RejectControl
+          context={context}
           isRejected={isRejected}
           setIsRejected={setIsRejected}
           controlId={control.control_id}
-          context={context}
           controlRejectable={control.useRejection}
         />
       )}

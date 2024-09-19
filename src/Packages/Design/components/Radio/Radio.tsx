@@ -14,8 +14,7 @@ export const Radio: React.FC<React.PropsWithChildren<IRadio>> = ({
   onChange,
   font_color,
   font_style,
-  // background,
-  // id,
+  disabled,
 }) => {
   return (
     <RadioStyled
@@ -26,6 +25,7 @@ export const Radio: React.FC<React.PropsWithChildren<IRadio>> = ({
       $checked={checked}
       $font_color={font_color}
       $font_style={font_style}
+      $disabled={Boolean(disabled)}
     >
       <input
         type={type}

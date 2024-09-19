@@ -1,12 +1,9 @@
 import React from 'react';
-
 import 'Services';
 import 'Features';
 import 'Shared';
 import 'Services/Api/registerCallState';
-
-import { MainHeader } from 'Shared/components';
-import { MainContent } from 'Shared/components';
+import { MainContent, MainHeader } from 'Shared/components';
 import {
   appStore,
   JwtData,
@@ -21,14 +18,34 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Persistor } from 'redux-persist';
 
-/* Maintenance mode below, use this component for maintenance mode, add admin users below so they still can see the app */
+const adminUsers = [352764, 3, 290346, 329563, 329565, 365010, 713596];
+
+/**
+ * Maintenance mode below, use this component for maintenance mode, add admin users below so they still can see the app
+ * @constructor
+ */
 const AppMaintenance = (): React.ReactElement => {
-  const adminUsers = [352764, 3, 290346, 329563, 329565, 365010, 713596];
+  /**
+   * -----------------------------------------------------------
+   * HOOKS
+   * -----------------------------------------------------------
+   */
   const { user } = useSecurity();
+
+  /**
+   * -----------------------------------------------------------
+   * VARIABLES
+   * -----------------------------------------------------------
+   */
   const jwt = user.getJwt();
   const userId: JwtData | null = security.decodeJwtToken(jwt ? jwt : '');
   const isAdmin = adminUsers.find((user) => userId?.user_id === user);
 
+  /**
+   * -----------------------------------------------------------
+   * RENDER
+   * -----------------------------------------------------------
+   */
   return (
     <Provider store={store}>
       <PersistGate

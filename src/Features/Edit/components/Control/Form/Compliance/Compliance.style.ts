@@ -7,8 +7,13 @@ export const ActionsComplianceContainer = styled.div`
     margin-top: 5px;
   }
 
-  .resolved-compliance {
+  .resolved-complianceŒ {
     margin: 5px;
+  }
+
+  .resolved-compliance-disabled {
+    margin: 5px;
+    opacity: 0.5;
   }
 `;
 

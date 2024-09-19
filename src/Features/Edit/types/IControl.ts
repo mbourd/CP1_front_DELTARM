@@ -1,7 +1,7 @@
 import { ISelectData } from 'Shared/components';
-import { IColor } from '../../../Packages/Design';
+import { IColor } from 'Packages/Design';
 import { RawDraftContentState } from 'draft-js';
-import { IApiFileComment, IFileComment } from '../../Comments';
+import { IApiFileComment, IFileComment } from 'Features';
 import { AgGridRow } from '../../DashboardDynamic/components/types';
 import {
   CellStyle,
@@ -59,12 +59,15 @@ export interface IApiCompliance {
   compliance_lib: string;
   compliance_checkbox_resolved: boolean;
   compliance_modale_title: string;
+  compliance_profil_restrict: 1 | 2 | 3 | null;
+  compliance_locked_after_check: boolean | null;
 }
 
 export interface IApiConditional {
   conditional_by_field_id: number;
   conditional_formula: string;
 }
+
 export interface IApiComplianceFields {
   compliance_elm_desc_1: string | null;
   compliance_elm_desc_2: string | null;
@@ -188,6 +191,7 @@ export interface DataGridDetail {
   buttons: DataGridDetailButtonsType[];
   source: any;
 }
+
 export type DataGridDetailButtonsType = {
   button_bg_color: string;
   button_font_color: string;
@@ -281,9 +285,11 @@ export type DataGridDetailsColumnType = {
   track_modification_tooltip: boolean;
   width?: string | number;
 };
+
 export interface DataGridDetailsRow {
   row_editable: boolean;
   row_uuid: string;
+
   [key: `rdg_${number}`]: DataGridDetailsRowsCell;
 }
 

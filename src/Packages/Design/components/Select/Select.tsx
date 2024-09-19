@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import { ClickAwayListener } from '@mui/material';
 import { SelectStyled } from './Select.style';
 import { ISelect, ISelectData } from './types';
@@ -8,39 +8,45 @@ import { SelectContainer } from './Container/SelectContainer';
 import { SelectContext } from './SelectContext';
 
 export const Select: React.FC<React.PropsWithChildren<ISelect>> = ({
-  labelColor = 'text',
-  labelBdc = 'disabled',
-  labelBgc = 'transparent',
-  labelBdr,
-  label,
-  open = false,
-  disabled = false,
-  closable = true,
   bdc = 'primary',
   bdr,
-  children,
   data,
-  multiple = false,
+  open = false,
   name,
-  selectedValues = {},
+  label,
+  error = false,
   onInit,
   onOpen,
   onClose,
+  labelBdc = 'disabled',
+  multiple = false,
+  children,
+  labelBdr,
+  labelBgc = 'transparent',
   onChange,
+  closable = true,
+  disabled = false,
+  labelColor = 'text',
   closeOnSelect = false,
-  error = false,
   setChoiceIsKo,
+  selectedValues = {},
 }): React.ReactElement => {
+  /**
+   * -----------------------------------------------------------
+   * HOOKS
+   * -----------------------------------------------------------
+   */
   const sizing = useSizing();
-  const [isOpen, setIsOpen] = useState(open);
+
   if (!multiple) {
     const first = Object.keys(selectedValues)[0];
-
     selectedValues = first ? { [first]: true } : {};
   }
+
   const current_value_styles: any = Object.values(data).filter((d) => {
     return Number(d.id) === Number(Object.keys(selectedValues)[0]);
   });
+
   if (multiple) {
     const values = Object.keys(selectedValues)[0].split(';');
     selectedValues = {};
@@ -48,20 +54,39 @@ export const Select: React.FC<React.PropsWithChildren<ISelect>> = ({
       values.splice(values.indexOf('undefined'), 1);
     }
     values.map((key) => {
-      if (key) {
-        return (selectedValues = { ...selectedValues, [key]: true });
-      }
-
-      return selectedValues;
+      return key
+        ? (selectedValues = { ...selectedValues, [key]: true })
+        : selectedValues;
     });
   }
-  const [selected, setSelected] = useState(selectedValues);
-  const [initialValues] = useState(selectedValues);
-  const [key] = useState<string>(name);
 
+  /**
+   * -----------------------------------------------------------
+   * STATES
+   * -----------------------------------------------------------
+   */
+  const [selected, setSelected] = React.useState(selectedValues);
+  const [initialValues] = React.useState(selectedValues);
+  const [isOpen, setIsOpen] = React.useState(open);
+  const [key] = React.useState(name);
+
+  /**
+   * -----------------------------------------------------------
+   * VARIABLES
+   * -----------------------------------------------------------
+   */
   const selectContainerRef = React.createRef<HTMLDivElement>();
 
-  const toggleSelect = useCallback(() => {
+  const labels = Object.keys(selected).map((id) => {
+    return data[id] ? data[id]?.label ?? data[id]?.value : null;
+  });
+
+  /**
+   * -----------------------------------------------------------
+   * FUNCTIONS
+   * -----------------------------------------------------------
+   */
+  const toggleSelect = React.useCallback(() => {
     setIsOpen(!isOpen);
 
     if (isOpen && onClose) {
@@ -73,7 +98,7 @@ export const Select: React.FC<React.PropsWithChildren<ISelect>> = ({
     }
   }, [onClose, onOpen, selected, isOpen]);
 
-  const closeSelect = useCallback(() => {
+  const closeSelect = React.useCallback(() => {
     if (!closable) {
       return;
     }
@@ -84,7 +109,7 @@ export const Select: React.FC<React.PropsWithChildren<ISelect>> = ({
     }
   }, [onClose, selected, closable, key]);
 
-  const onValueChange = useCallback(
+  const onValueChange = React.useCallback(
     (input: HTMLInputElement, value: ISelectData) => {
       let selectedVal = {};
 
@@ -121,47 +146,53 @@ export const Select: React.FC<React.PropsWithChildren<ISelect>> = ({
     [selected, multiple, onChange, closeOnSelect, closeSelect, setChoiceIsKo],
   );
 
-  const labels = Object.keys(selected).map((id) => {
-    return data[id] ? data[id]?.label ?? data[id]?.value : null;
-  });
-
-  useEffect(() => {
+  /**
+   * -----------------------------------------------------------
+   * CYCLE LIFE
+   * -----------------------------------------------------------
+   */
+  React.useEffect(() => {
     if (onInit) {
       onInit(selected, key);
     }
   }, [onInit, selected, key]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (error) {
       setSelected(initialValues);
     }
   }, [error, initialValues]);
 
+  /**
+   * -----------------------------------------------------------
+   * RENDER
+   * -----------------------------------------------------------
+   */
   return (
     <SelectContext.Provider
       value={{
         data,
-        multiple,
         name,
-        selectedValues: selected,
+        multiple,
         onChange: onValueChange,
+        selectedValues: selected,
       }}
     >
       <SelectStyled
-        className={'_Select'}
         $bdc={bdc}
+        className={'_Select'}
         $bdr={bdr || sizing.radius}
       >
         <SelectLabel
-          bdc={labelBdc}
-          color={labelColor}
           bgc={labelBgc}
+          bdc={labelBdc}
+          isOpen={isOpen}
+          color={labelColor}
+          containerBdc={bdc}
+          isDisabled={disabled}
           bdr={labelBdr || sizing.radius}
           current_value_styles={current_value_styles}
           onClick={closable ? toggleSelect : undefined}
-          isOpen={isOpen}
-          isDisabled={disabled}
-          containerBdc={bdc}
         >
           {labels.length > 0 ? labels.join(' | ') : label || children}
         </SelectLabel>
