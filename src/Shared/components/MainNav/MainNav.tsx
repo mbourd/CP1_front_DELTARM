@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import version from '../../../build-version.json';
 import { List, ListItem, ListItemText } from '@mui/material';
@@ -14,13 +14,7 @@ import {
 } from 'Styles';
 import { MainNavStyled } from './MainNav.style';
 import { Popper } from 'Shared/components';
-import {
-  router,
-  SecurityContext,
-  useApi,
-  useSecurity,
-  useTrans,
-} from 'Services';
+import { router, SecurityContext, useSecurity, useTrans } from 'Services';
 import { useDashboardDynamicReducer } from 'Features/DashboardDynamic/dashboardDynamic.reducer';
 import { RoundFilledIcon } from 'Packages/Design/icons/RoundFilledIcon';
 import { ModalDynamic } from 'Features/ModalDynamic/components/ModalDynamic';
@@ -28,41 +22,65 @@ import { useActionButton } from 'Packages/Helpers/src/useActionButton';
 import { IDataModal } from 'Features/ModalDynamic/components/types';
 import { useRecoilValue } from 'recoil';
 import { DashboardContrPermMenuType } from 'Features/DashboardDynamic/components/types';
+import { useAuth } from 'hooks';
 
 export const MainNav: React.FC<
   React.PropsWithChildren<unknown>
 > = (): React.ReactElement => {
-  const { stateDashboardDynamic } = useDashboardDynamicReducer();
+  /**
+   * -----------------------------------------------------------
+   * STATES
+   * -----------------------------------------------------------
+   */
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState<SVGSVGElement | null>(null);
+
+  /**
+   * -----------------------------------------------------------
+   * HOOKS
+   * -----------------------------------------------------------
+   */
   const theme = useTheme();
-  const [trans] = useTrans('Default');
-  const { data: dataSecurity, logout } = useContext(SecurityContext);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const { user } = useSecurity();
-  const jwt = user.getJwt();
+  const [trans] = useTrans('Default');
+  const { data: dataSecurity, logout } = React.useContext(SecurityContext);
+  const { onGetCurrentUser, currentUser } = useAuth();
+  const { stateDashboardDynamic } = useDashboardDynamicReducer();
   const { modalData: recoilData, actionButton } = useActionButton({
-    jwt,
+    jwt: user.getJwt(),
     setIsModalOpen,
   });
+
   const modalData: IDataModal = useRecoilValue<any>(recoilData);
 
-  const handleClick = useCallback(
+  /**
+   * -----------------------------------------------------------
+   * FUNCTIONS
+   * -----------------------------------------------------------
+   */
+  const handleClick = React.useCallback(
     (event: React.MouseEvent<SVGSVGElement>) => {
       setAnchorEl(anchorEl ? null : event.currentTarget);
     },
     [anchorEl],
   );
 
-  const hideNav = () => {
-    setAnchorEl(null);
-  };
+  const hideNav = () => setAnchorEl(null);
 
-  const { send, data: userInfos } = useApi<any>({ waitForAuthenticated: true });
+  /**
+   * -----------------------------------------------------------
+   * CYCLE LIFE
+   * -----------------------------------------------------------
+   */
+  React.useEffect(() => {
+    onGetCurrentUser();
+  }, [onGetCurrentUser]);
 
-  useEffect(() => {
-    send('userInfo');
-  }, [send]);
-
+  /**
+   * -----------------------------------------------------------
+   * RENDER
+   * -----------------------------------------------------------
+   */
   return (
     <>
       <MenuIcon
@@ -71,20 +89,19 @@ export const MainNav: React.FC<
         className={'menu-icon' + (anchorEl ? ' active' : '')}
       />
       <Popper
+        bdr={'0'}
         element={anchorEl}
         placement={'bottom-end'}
-        bdr={'0'}
-        border={'1px solid ' + theme.color.secondary.main}
         onClickAway={() => setAnchorEl(null)}
+        border={'1px solid ' + theme.color.secondary.main}
       >
         <MainNavStyled>
           <List component={'nav'}>
             <ListItem>
               <UserIcon />
-              {userInfos && (
+              {currentUser && (
                 <ListItemText>
-                  {userInfos.data.user_first_name}{' '}
-                  {userInfos.data.user_last_name}
+                  {currentUser.user_first_name} {currentUser.user_last_name}
                 </ListItemText>
               )}
             </ListItem>
@@ -93,11 +110,11 @@ export const MainNav: React.FC<
               <>
                 <ListItem
                   component={Link}
+                  onClick={hideNav}
                   to={
                     router.generatePath('manage', {}, { state_id: 1 }) ||
                     '/manage'
                   }
-                  onClick={hideNav}
                 >
                   <FolderOpenIcon />
                   <ListItemText>{trans('filesToBeProcessed')}</ListItemText>
@@ -198,9 +215,9 @@ export const MainNav: React.FC<
       </Popper>
       {isModalOpen && modalData ? (
         <ModalDynamic
+          data={modalData}
           open={isModalOpen}
           setIsModalOpen={setIsModalOpen}
-          data={modalData}
         />
       ) : null}
     </>

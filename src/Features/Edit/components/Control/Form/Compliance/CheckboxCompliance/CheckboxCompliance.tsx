@@ -1,17 +1,18 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React from 'react';
 import { Checkbox } from 'Shared/components';
-import { EditValidationContext } from '../../../../../EditValidationContext';
-import { getEnv, IUser, security, useApi } from '../../../../../../../Services';
-// import axios from 'axios';
-import { IColor } from '../../../../../../../Packages/Design';
+import { useApi } from 'Services';
+import { IColor } from 'Packages/Design';
+import { toast } from 'sonner';
+import { EditValidationContext } from 'Features';
 
 interface ICheckboxComplianceProps {
   label: string;
   checked: boolean;
   controlId: string;
-  setIsResolved: React.Dispatch<React.SetStateAction<boolean>>;
+  isDisabled?: boolean;
   checkedColor: keyof IColor;
   uncheckedColor: keyof IColor;
+  setIsResolved: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const CheckboxCompliance: React.FC<
@@ -20,16 +21,25 @@ export const CheckboxCompliance: React.FC<
   label,
   checked,
   controlId,
+  isDisabled,
   setIsResolved,
   checkedColor,
   uncheckedColor,
 }): React.ReactElement => {
-  // const [user] = useState<IUser>(security.getUser());
-  // const jwt = user.getJwt();
+  /**
+   * -----------------------------------------------------------
+   * HOOKS
+   * -----------------------------------------------------------
+   */
+  const { fileId } = React.useContext(EditValidationContext);
   const { send } = useApi({ promise: true });
-  const { fileId } = useContext(EditValidationContext);
 
-  const saveResolvedCompliance = useCallback(() => {
+  /**
+   * -----------------------------------------------------------
+   * FUNCTIONS
+   * -----------------------------------------------------------
+   */
+  const onSaveResolvedCompliance = React.useCallback(() => {
     send(
       'setComplianceValue',
       {},
@@ -39,40 +49,27 @@ export const CheckboxCompliance: React.FC<
         compliance_resolved: !checked + '',
       },
     )
-      ?.then(() => {
-        setIsResolved(!checked);
-      })
-      .catch(() => {
-        setIsResolved(checked);
-      });
-
-    // axios
-    //   .post(
-    //     `${getEnv('API_PROTOCOL')}://${getEnv(
-    //       'API_HOST',
-    //     )}/control/set_compliance?file_id=${fileId}&elm_id=${controlId}&compliance_resolved=${!checked}`,
-    //     {},
-    //     {
-    //       headers: {
-    //         Authorization: jwt,
-    //       },
-    //     },
-    //   )
-    //   .then(() => {
-    //     setIsResolved(!checked);
-    //   })
-    //   .catch(() => {
-    //     setIsResolved(checked);
-    //   });
+      ?.then(() => setIsResolved(!checked))
+      .catch(() => setIsResolved(checked));
   }, [send, fileId, controlId, checked, setIsResolved]);
 
+  /**
+   * -----------------------------------------------------------
+   * RENDER
+   * -----------------------------------------------------------
+   */
   return (
     <Checkbox
-      checkedColor={checkedColor}
-      color={uncheckedColor}
       label={label}
-      onChange={saveResolvedCompliance}
       checked={checked}
+      disabled={isDisabled}
+      color={uncheckedColor}
+      checkedColor={checkedColor}
+      onChange={
+        isDisabled
+          ? () => toast.error('Action non autorisée')
+          : onSaveResolvedCompliance
+      }
     />
   );
 };

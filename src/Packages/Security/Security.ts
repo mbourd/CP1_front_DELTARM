@@ -1,5 +1,4 @@
 import jwt_decode from 'jwt-decode';
-
 import { ISecurity, LoginLogoutReturnType } from './types';
 import { IUser, User } from './User';
 

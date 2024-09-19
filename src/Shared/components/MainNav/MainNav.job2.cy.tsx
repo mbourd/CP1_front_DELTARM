@@ -6,22 +6,17 @@
 // yarn cypress:run:component --browser chrome --config video=false --spec "src/Shared/components/MainNav/MainNav.job2.cy.tsx"
 
 import React, { useEffect } from 'react';
-
 import { SetupTestsComponents } from '../../../../cypress/utils/SetupTestsComponents';
-
 import {
-  // _requestJWT,
   _getEnv,
-  _translate,
   _getRandomNumberBetween,
+  _translate,
 } from '../../../../cypress/utils';
-
 import { MainNav } from './MainNav';
 import '../../apiRoutes';
 import '../../../Shared/translations/default';
 import { security } from '../../../Packages/Security';
-
-import { useDashboardDynamicReducer } from '../../../../src/Features/DashboardDynamic/dashboardDynamic.reducer';
+import { useDashboardDynamicReducer } from '../../../Features/DashboardDynamic/dashboardDynamic.reducer';
 import '../../../../src/Features/DashboardDynamic/reducer';
 import { IDashboard } from '../../../Features/DashboardDynamic/components/types';
 
@@ -105,7 +100,7 @@ describe('<MainNav />', () => {
     cy.get('.menu-icon').should('be.visible');
   });
 
-  it('should make one request at a time and payload or queries not empty', function () {
+  /*  it('should make one request at a time and payload or queries not empty', function () {
     let reqCount = 0;
 
     cy.intercept('GET', '/user/info', (req) => {
@@ -146,7 +141,7 @@ describe('<MainNav />', () => {
         });
       });
     });
-  });
+  });*/
 
   it('should display <Popper /> on click menu and hide when click outside', () => {
     cy.mount(

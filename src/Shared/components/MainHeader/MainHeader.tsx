@@ -1,6 +1,5 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-
 import './translations';
 import { MainHeaderStyled } from './MainHeader.style';
 import { router, SecurityContext, useApi } from 'Services';
@@ -10,34 +9,57 @@ import { MainNav, useTransMainHeader } from '..';
 export const MainHeader: React.FC<
   React.PropsWithChildren<unknown>
 > = (): React.ReactElement => {
-  const { trans, currentLang, changeLang } = useTransMainHeader();
-  const dashboardPath = router.generatePath('dashboard');
-  const { data: context } = useContext(SecurityContext);
-  const { send: clientInfos, data: dataClientInfos } = useApi<any>();
+  /**
+   * -----------------------------------------------------------
+   * HOOKS
+   * -----------------------------------------------------------
+   */
+  const { trans } = useTransMainHeader();
+  const { data: context } = React.useContext(SecurityContext);
+  const { send: sendClientInfos, data: clientInfos } = useApi<any>();
 
-  useEffect(() => {
-    if (context.cli_id) {
-      clientInfos('clientInfo', {}, { cli_id: context.cli_id });
-    }
-  }, [context.cli_id, clientInfos]);
-
-  if (dataClientInfos?.data[0].cli_name) {
-    localStorage.setItem('client_info', JSON.stringify(dataClientInfos?.data));
-    document.title = 'ADA - ' + dataClientInfos?.data[0].cli_name;
+  /**
+   * -----------------------------------------------------------
+   * FUNCTIONS
+   * -----------------------------------------------------------
+   */
+  if (clientInfos?.data[0].cli_name) {
+    localStorage.setItem('client_info', JSON.stringify(clientInfos?.data));
+    document.title = 'ADA - ' + clientInfos?.data[0].cli_name;
   }
 
+  /**
+   * -----------------------------------------------------------
+   * VARIABLES
+   * -----------------------------------------------------------
+   */
+  const dashboardPath = router.generatePath('dashboard');
+
+  /**
+   * -----------------------------------------------------------
+   * CYCLE LIFE
+   * -----------------------------------------------------------
+   */
+  React.useEffect(() => {
+    if (context.cli_id) {
+      sendClientInfos('clientInfo', {}, { cli_id: context.cli_id });
+    }
+  }, [context.cli_id, sendClientInfos]);
+
+  /**
+   * -----------------------------------------------------------
+   * RENDER
+   * -----------------------------------------------------------
+   */
   return (
     <MainHeaderStyled id={'main-header'}>
-      {dataClientInfos?.data[0].cli_logo_url && (
+      {clientInfos?.data[0].cli_logo_url && (
         <Link to={dashboardPath ? dashboardPath : '/'} className={'brand'}>
-          <img
-            src={dataClientInfos?.data[0].cli_logo_url}
-            alt={trans('brand')}
-          />
+          <img src={clientInfos?.data[0].cli_logo_url} alt={trans('brand')} />
         </Link>
       )}
-      {dataClientInfos?.data[0].cli_app_name && (
-        <p className={'app-name'}>{dataClientInfos?.data[0].cli_app_name}</p>
+      {clientInfos?.data[0].cli_app_name && (
+        <p className={'app-name'}>{clientInfos?.data[0].cli_app_name}</p>
       )}
       <IconsContainer />
       <MainNav />

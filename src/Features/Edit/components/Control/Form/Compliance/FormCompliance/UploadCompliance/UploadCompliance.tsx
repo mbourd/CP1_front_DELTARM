@@ -1,23 +1,20 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { UploadComplianceStyled } from './UploadCompliance.style';
-import { Grid, Fab } from '@mui/material';
+import { Container, Fab, Grid } from '@mui/material';
 import { CloudUpload } from '@mui/icons-material';
 import { IApiComplianceFields, IUploadDetail } from 'Features/Edit/types';
 import { FormError } from 'Shared/components';
-import { IUser, security, useTrans, useApi } from 'Services';
+import { IUser, security, useApi, useTrans } from 'Services';
 import { ComplianceLabel } from '../ComplianceLabel';
 import { ComplianceFooter } from '../ComplianceFooter';
 import { useDropzone } from 'react-dropzone';
 import { uploadComplianceFile } from './apiRoutes/uploadComplianceFile';
-import { Container } from '@mui/material';
-import { UploadList } from '../../../../../../../../Shared/components/UploadList/UploadList';
-// import { deleteComplianceFile } from '../../../../../../../../Shared/components/UploadList/apiRoutes/deleteComplianceFile';
-// import { downloadFile } from '../../../../../../../../Shared/components/UploadList/apiRoutes/downloadFile';
+import { UploadList } from 'Shared/components/UploadList/UploadList';
 
 interface IProps {
-  compliance: IApiComplianceFields;
   fileId: string;
   controlId: string;
+  compliance: IApiComplianceFields;
 }
 
 export const UploadCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
@@ -25,36 +22,56 @@ export const UploadCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
   fileId,
   controlId,
 }): React.ReactElement => {
+  /**
+   * -----------------------------------------------------------
+   * HOOKS
+   * -----------------------------------------------------------
+   */
   const [trans] = useTrans('Edit');
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [newUploadFile, setNewUploadFile] = useState<File | null>(null);
-  const [currentUploadFile, setCurrentUploadFile] = useState<
-    IUploadDetail[] | null
-  >(compliance.compliance_file_detail);
-  const [user] = useState<IUser>(security.getUser());
-  const jwt = user.getJwt();
-  const [isMandatory] = useState(compliance.compliance_elm_mandatory);
   const { send } = useApi({ promise: true });
   const { send: sendReturnBlob } = useApi({
     promise: true,
     responseType: 'blob',
   });
-  const inputFileRef = useRef<any>();
 
-  const saveFileToUpload = useCallback((e: any) => {
-    const file = e.target.files[0];
+  /**
+   * -----------------------------------------------------------
+   * STATES
+   * -----------------------------------------------------------
+   */
+  const [user] = React.useState<IUser>(security.getUser());
+  const [isMandatory] = React.useState(compliance.compliance_elm_mandatory);
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+  const [newUploadFile, setNewUploadFile] = React.useState<File | null>(null);
+  const [currentUploadFile, setCurrentUploadFile] = React.useState<
+    IUploadDetail[] | null
+  >(compliance.compliance_file_detail);
 
-    setNewUploadFile(file);
+  /**
+   * -----------------------------------------------------------
+   * VARIABLES
+   * -----------------------------------------------------------
+   */
+  const jwt = user.getJwt();
+  const inputFileRef = React.useRef<any>();
+
+  /**
+   * -----------------------------------------------------------
+   * FUNCTIONS
+   * -----------------------------------------------------------
+   */
+  const saveFileToUpload = React.useCallback((e: any) => {
+    setNewUploadFile(e.target.files[0]);
   }, []);
 
-  const onDrop = useCallback((acceptedFiles: any) => {
+  const onDrop = React.useCallback((acceptedFiles: any) => {
     acceptedFiles.forEach((file: File) => {
       setNewUploadFile(file);
     });
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
-  const handleUploadFile = useCallback(() => {
+  const handleUploadFile = React.useCallback(() => {
     if (newUploadFile) {
       uploadComplianceFile(
         fileId,
@@ -68,7 +85,7 @@ export const UploadCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
     }
   }, [fileId, compliance, newUploadFile, jwt, controlId]);
 
-  const handleDeleteFile = useCallback(
+  const handleDeleteFile = React.useCallback(
     (e: React.MouseEvent<Element, MouseEvent>, name: string) => {
       e.preventDefault();
       send(
@@ -92,15 +109,6 @@ export const UploadCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
             'Une erreur est survenue lors de la suppression du fichier',
           );
         });
-      // deleteComplianceFile(
-      //   fileId,
-      //   controlId,
-      //   name,
-      //   jwt,
-      //   setErrorMessage,
-      //   setCurrentUploadFile,
-      //   compliance,
-      // );
     },
     [
       send,
@@ -111,7 +119,7 @@ export const UploadCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
     ],
   );
 
-  const handleDownloadFile = useCallback(
+  const handleDownloadFile = React.useCallback(
     (e: React.MouseEvent<Element, MouseEvent>, id: string, name: string) => {
       e.preventDefault();
       sendReturnBlob(
@@ -132,18 +140,22 @@ export const UploadCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
             'Une erreur est survenue lors du téléchargement du fichier',
           );
         });
-      // downloadFile(id, name, jwt, setErrorMessage);
     },
     [sendReturnBlob],
   );
 
-  useEffect(() => {
+  /**
+   * -----------------------------------------------------------
+   * CYCLE LIFE
+   * -----------------------------------------------------------
+   */
+  React.useEffect(() => {
     if (newUploadFile) {
       handleUploadFile();
     }
   }, [newUploadFile, handleUploadFile]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (isMandatory && !currentUploadFile && !compliance.compliance_elm_value) {
       setErrorMessage('Valeur obligatoire');
     }
@@ -156,6 +168,11 @@ export const UploadCompliance: React.FC<React.PropsWithChildren<IProps>> = ({
     };
   }
 
+  /**
+   * -----------------------------------------------------------
+   * RENDER
+   * -----------------------------------------------------------
+   */
   return (
     <Grid item xs={6}>
       <ComplianceLabel compliance={compliance} />

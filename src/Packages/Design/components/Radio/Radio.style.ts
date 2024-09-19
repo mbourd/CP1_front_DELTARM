@@ -8,6 +8,7 @@ interface IProps {
   $checked: any;
   $font_style: any;
   $font_color: any;
+  $disabled: boolean;
 }
 
 export const RadioStyled = styled.label<IProps>`
@@ -15,6 +16,7 @@ export const RadioStyled = styled.label<IProps>`
   flex-wrap: nowrap;
   align-items: center;
   cursor: pointer;
+  opacity: ${({ $disabled }) => ($disabled ? 0.5 : 1)};
 
   ._CheckboxRadioCheckmark {
     position: relative;

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React from 'react';
 import IdleTimer from 'react-idle-timer';
 import { ISecurity, IUser, JwtData, User } from 'Packages/Security';
 import { useApi } from 'Services/Api';
@@ -9,8 +9,8 @@ export interface ISecurityProviderContext {
   user: IUser;
   jwt: string;
   data: any;
-  login: (token: string) => void;
   logout: () => void;
+  login: (token: string) => void;
 }
 
 export const SecurityContext = React.createContext<ISecurityProviderContext>({
@@ -28,13 +28,26 @@ export interface ISecurityProviderProps {
 export const SecurityProvider: React.FC<
   React.PropsWithChildren<ISecurityProviderProps>
 > = ({ security, children }): React.ReactElement => {
-  const [user, setUser] = useState<IUser>(security.getUser());
-  const jwt = user.getJwt();
-
+  /**
+   * -----------------------------------------------------------
+   * HOOKS
+   * -----------------------------------------------------------
+   */
   const { send, request } = useApi<void>({ promise: true });
-  request.setBearerToken(jwt);
 
-  const login = useCallback(
+  /**
+   * -----------------------------------------------------------
+   * STATES
+   * -----------------------------------------------------------
+   */
+  const [user, setUser] = React.useState<IUser>(security.getUser());
+
+  /**
+   * -----------------------------------------------------------
+   * FUNCTIONS
+   * -----------------------------------------------------------
+   */
+  const login = React.useCallback(
     async (token: string) => {
       const { body } = await send(
         'login',
@@ -52,7 +65,7 @@ export const SecurityProvider: React.FC<
     [send, security, setUser],
   );
 
-  const logout = useCallback(() => {
+  const logout = React.useCallback(() => {
     const { error } = security.logout(user);
     if (!error) {
       setUser(new User());
@@ -60,20 +73,34 @@ export const SecurityProvider: React.FC<
     window.location.href = getEnv('LOGOUT_REDIRECT');
   }, [security, user, setUser]);
 
-  const context = useMemo(
+  /**
+   * -----------------------------------------------------------
+   * VARIABLES
+   * -----------------------------------------------------------
+   */
+  const idleTimeout = parseInt(getEnv('IDLE_TIMEOUT')) * 1000;
+  const jwt = user.getJwt();
+  request.setBearerToken(jwt);
+
+  const context = React.useMemo(
     () => ({
       user,
       jwt,
+      login,
+      logout,
       data: (jwt
         ? security.decodeJwtToken<JwtData>(jwt)
         : {}) as Partial<JwtData>,
-      login,
-      logout,
     }),
     [security, user, jwt, login, logout],
   );
 
-  useEffect(() => {
+  /**
+   * -----------------------------------------------------------
+   * CYCLE LIFE
+   * -----------------------------------------------------------
+   */
+  React.useEffect(() => {
     let timeout: ReturnType<typeof setTimeout> = setTimeout(() => '', 1000);
 
     if (jwt && context.data.exp && !user.isJwtExpired()) {
@@ -95,8 +122,11 @@ export const SecurityProvider: React.FC<
     };
   }, [send, jwt, context.data.exp, setUser, user, security]);
 
-  const idleTimeout = parseInt(getEnv('IDLE_TIMEOUT')) * 1000;
-
+  /**
+   * -----------------------------------------------------------
+   * RENDER
+   * -----------------------------------------------------------
+   */
   return (
     <SecurityContext.Provider value={context}>
       <IdleTimer timeout={idleTimeout} onIdle={logout} />
