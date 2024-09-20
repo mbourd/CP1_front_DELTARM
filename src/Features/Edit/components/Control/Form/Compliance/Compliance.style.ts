@@ -7,7 +7,7 @@ export const ActionsComplianceContainer = styled.div`
     margin-top: 5px;
   }
 
-  .resolved-complianceŒ {
+  .resolved-compliance {
     margin: 5px;
   }
 

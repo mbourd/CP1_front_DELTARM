@@ -12,9 +12,9 @@ import { RejectControl } from '../RejectByPointControl/RejectControl';
 import { useAuth } from 'hooks';
 
 interface IProps {
-  control: IApiControl;
   fileId: string;
   multiple: boolean;
+  control: IApiControl;
   formState: IChapter[];
   get_value_response?: any;
   context: 'edit' | 'validate';
@@ -72,21 +72,28 @@ export const SelectListControl: React.FC<React.PropsWithChildren<IProps>> = ({
   };
 
   const isAuthoriseToCheck = React.useMemo(() => {
-    return !control.compliance?.compliance_profil_restrict
+    const isSameProfile =
+      currentUser?.user_profile_id ===
+      control?.compliance?.compliance_profil_restrict;
+
+    return !control?.compliance?.compliance_profil_restrict
       ? true
-      : currentUser?.user_profile_id ===
-          control.compliance.compliance_profil_restrict;
-  }, [currentUser?.user_profile_id, control?.compliance?.compliance_resolved]);
+      : isSameProfile;
+  }, [
+    control?.compliance?.compliance_profil_restrict,
+    currentUser?.user_profile_id,
+  ]);
 
   const checkIsLocked = React.useMemo(() => {
-    return !isAuthoriseToCheck
-      ? true
-      : Boolean(control?.compliance?.compliance_locked_after_check) &&
-          Boolean(control?.compliance?.compliance_checkbox_resolved);
+    const isLock =
+      control?.compliance?.compliance_locked_after_check === true &&
+      control?.compliance?.compliance_resolved === true;
+
+    return !isAuthoriseToCheck || isLock;
   }, [
-    isAuthoriseToCheck,
-    control?.compliance?.compliance_checkbox_resolved,
     control?.compliance?.compliance_locked_after_check,
+    control?.compliance?.compliance_resolved,
+    isAuthoriseToCheck,
   ]);
 
   /**
@@ -216,6 +223,7 @@ export const SelectListControl: React.FC<React.PropsWithChildren<IProps>> = ({
           controlId={control.control_id}
           compliance={control.useCompliance}
           label={control.compliance.compliance_lib}
+          profilRestrictCode={control.compliance.compliance_profil_restrict}
         />
       )}
       {control.useRejection && control.control_rejectable && (
