@@ -1,5 +1,5 @@
 import React from 'react';
-import { ICompliance } from '../../../../types';
+import { IApiCompliance, ICompliance } from '../../../../types';
 import { CheckboxCompliance } from 'Features/Edit/components/Control';
 import { ModalCompliance } from './ModalCompliance/ModalCompliance';
 import { InsertDriveFile } from '@mui/icons-material';
@@ -15,7 +15,14 @@ interface IComplianceProps {
   isDisabled?: boolean;
   compliance: ICompliance;
   setIsResolved: React.Dispatch<React.SetStateAction<boolean>>;
+  profilRestrictCode?: IApiCompliance['compliance_profil_restrict'];
 }
+
+const profil_restrict_labels = {
+  1: 'déclarants',
+  2: 'contrôleurs',
+  3: 'superviseurs',
+};
 
 export const Compliance: React.FC<
   React.PropsWithChildren<IComplianceProps>
@@ -28,6 +35,7 @@ export const Compliance: React.FC<
   choiceIsKo,
   compliance,
   setIsResolved,
+  profilRestrictCode,
 }): React.ReactElement | null => {
   /**
    * -----------------------------------------------------------
@@ -36,6 +44,14 @@ export const Compliance: React.FC<
    */
   const [showComplianceFields, setShowComplianceFields] =
     React.useState<boolean>(false);
+
+  const errorMessage = React.useMemo(() => {
+    const profilLabel = (
+      profilRestrictCode ? profil_restrict_labels[profilRestrictCode] : null
+    ) as keyof typeof profil_restrict_labels | null;
+
+    return `Action non autorisée ${profilLabel ? `(réservée au profil ${profilLabel})` : ''}`;
+  }, [profilRestrictCode]);
 
   /**
    * -----------------------------------------------------------
@@ -60,6 +76,7 @@ export const Compliance: React.FC<
             checked={checked}
             controlId={controlId}
             isDisabled={isDisabled}
+            errorMessage={errorMessage}
             setIsResolved={setIsResolved}
             checkedColor={compliance?.complianceCheckColor}
             uncheckedColor={compliance?.complianceUncheckColor}
@@ -69,7 +86,7 @@ export const Compliance: React.FC<
           <span
             onClick={
               isDisabled
-                ? () => toast.error('Action non autorisée')
+                ? () => toast.error(errorMessage)
                 : handleClickDetailsCompliance
             }
             className={

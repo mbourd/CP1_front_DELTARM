@@ -12,6 +12,7 @@ interface ICheckboxComplianceProps {
   isDisabled?: boolean;
   checkedColor: keyof IColor;
   uncheckedColor: keyof IColor;
+  errorMessage: string;
   setIsResolved: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -25,6 +26,7 @@ export const CheckboxCompliance: React.FC<
   setIsResolved,
   checkedColor,
   uncheckedColor,
+  errorMessage,
 }): React.ReactElement => {
   /**
    * -----------------------------------------------------------
@@ -66,9 +68,7 @@ export const CheckboxCompliance: React.FC<
       color={uncheckedColor}
       checkedColor={checkedColor}
       onChange={
-        isDisabled
-          ? () => toast.error('Action non autorisée')
-          : onSaveResolvedCompliance
+        isDisabled ? () => toast.error(errorMessage) : onSaveResolvedCompliance
       }
     />
   );
